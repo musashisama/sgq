@@ -1,0 +1,46 @@
+  
+class RiscoDao {
+
+    constructor(db) {
+        this._db = db;
+
+    }
+
+    buscaPorEmail(email) {
+        return new Promise((resolve, reject) => {
+            this._db.get(
+                `
+                    SELECT *
+                    FROM usuarios
+                    WHERE email = ?
+                `,
+                [email],
+                (erro, usuario) => {
+                    if (erro) {
+                        return reject('Não foi possível encontrar o usuário!');
+                    }
+
+                    return resolve(usuario);
+                }
+            )
+        });
+    }
+
+    lista() {
+        return new Promise((resolve, reject) => {
+
+            this._db.riscos.find().toArray(function(erro, res){
+                if(erro){
+                    return reject('Não foi possível listar os riscos.');
+                } 
+                return resolve(res);
+                console.log(res);
+                this._db.close();
+            });
+             
+        });
+    }
+
+}
+
+module.exports = RiscoDao;
