@@ -1,9 +1,9 @@
 const conn = require('../../config/mongodb');
-const RiscoDao = require('../infra/risco-dao');
+const NCDao = require('../infra/nc-dao');
 
 const templates = require('../views/templates');
 
-class RiscoControlador {
+class NCControlador {
 
     static rotas() {
         return {
@@ -15,13 +15,13 @@ class RiscoControlador {
 
     lista() {
         return function(req, resp) {
-            const riscoDao = new RiscoDao(conn);
+            const ncDao = new NCDao(conn);
             console.log("Cheguei aqui");
-            riscoDao.lista()
-                    .then(riscos => resp.marko(
-                        templates.riscos.lista,
+            ncDao.lista()
+                    .then(nc => resp.marko(
+                        templates.nc.lista,
                         {
-                            riscos: riscos
+                            nc: nc
                         }
                     ))
                     .catch(erro => console.log(erro));
@@ -29,4 +29,4 @@ class RiscoControlador {
     }
 }
 
-module.exports = RiscoControlador;
+module.exports = NCControlador;

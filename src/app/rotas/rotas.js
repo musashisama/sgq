@@ -1,6 +1,6 @@
-const riscoRotas = require('./risco-rotas');
+const ncRotas = require('./nc-rotas');
 
 
 module.exports = (app) => {
-    riscoRotas(app);
+    ncRotas(app);
 };

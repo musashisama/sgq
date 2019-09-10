@@ -1,3 +1,3 @@
 module.exports = {    
-    riscos: require('./riscos')
+    nc: require('./riscos')
 }

@@ -1,5 +1,5 @@
   
-class RiscoDao {
+class NCDao {
 
     constructor(db) {
         this._db = db;
@@ -29,13 +29,15 @@ class RiscoDao {
     lista() {
         return new Promise((resolve, reject) => {
 
-            this._db.riscos.find().toArray(function(erro, res){
-                if(erro){
-                    return reject('Não foi possível listar os riscos.');
-                } 
-                return resolve(res);
-                console.log(res);
-                this._db.close();
+            this._db.nc                
+                .find({$or: [ {Macroprocesso:'Julgar'},{Macroprocesso:'Admissibilidade'}]})                
+                .project({})
+                .toArray(function(erro, res){
+                    if(erro){
+                        return reject('Não foi possível listar os riscos.');
+                    } 
+                //console.log(res);
+                return resolve(res);            
             });
              
         });
@@ -43,4 +45,4 @@ class RiscoDao {
 
 }
 
-module.exports = RiscoDao;
+module.exports = NCDao;

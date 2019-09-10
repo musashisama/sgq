@@ -18,37 +18,35 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.w("<html><head><meta charset=\"utf-8\"> </head><body>");
+  out.w("<!DOCTYPE html><html><head><meta charset=\"utf-8\"> <link rel=\"stylesheet\" href=\"/estatico/css/libs/normalize.css\"><link rel=\"stylesheet\" href=\"/estatico/css/libs/materialize.css\"><link rel=\"stylesheet\" href=\"/estatico/css/libs/google-fonts.css\"><link rel=\"stylesheet\" href=\"/estatico/css/main.css\"></head><body>");
 
   component_globals_tag({}, out);
 
-  out.w("<header class=\"cabecalhoPrincipal\"><div class=\"container\"><div class=\"row align-items-center\"><div class=\"col-4\"></div><div class=\"cabecalhoPrincipal-navegacao col-8\"><a href=\"#\" class=\"login\"><i class=\"fas fa-sign-in-alt\"></i>Login</a></div></div></div></header><main class=\"conteudoPrincipal\"><div class=\"container\"><h1> Listagem de livros </h1><table id=\"riscos\" class=\"table table-striped table-hover\"><thead class=\"thead-dark\"><tr><th>ID</th><th>Título</th><th>Preço</th><th>Editar</th><th>Remover</th></tr></thead><tbody>");
+  out.w("<header></header><main class=\"conteudoPrincipal\"><div class=\"container\"><h1 class=\"center-align\">Lista de Não Conformidades</h1><table id=\"riscos\" class=\"striped highlight centered z-depth-3 responsive-table\"><thead class=\"white-text grey darken-4\"><tr><th>Macroprocesso</th><th>Não conformidade</th> <th>Editar</th><th>Remover</th></tr></thead><tbody>");
 
   var $for$0 = 0;
 
-  marko_forEach(data.riscos, function(risco) {
+  marko_forEach(data.nc, function(nc) {
     var $keyScope$0 = "[" + (($for$0++) + "]");
 
     out.w("<tr" +
-      marko_attr("id", "risco_" + risco.idRisco) +
+      marko_attr("id", "risco_" + nc._id) +
       "><td>" +
-      marko_escapeXml(risco.idRisco) +
+      marko_escapeXml(nc.Macroprocesso) +
       "</td><td>" +
-      marko_escapeXml(risco.NomeRisco) +
-      "</td><td>" +
-      marko_escapeXml(risco.descRisco) +
-      "</td><td><a" +
-      marko_attr("href", "/livros/form/" + risco.id) +
-      ">Editar</a></td><td><a href=\"#\"" +
-      marko_attr("data-ref", "" + risco.id) +
-      " data-type=\"remocao\">Remover</a></td></tr>");
+      marko_escapeXml(nc.nconformidade) +
+      "</td> <td><a" +
+      marko_attr("href", "/livros/form/" + nc._id) +
+      "><i class=\"small material-icons icones center-align\">edit</i></a></td><td><a href=\"#\"" +
+      marko_attr("data-ref", "" + nc._id) +
+      " data-type=\"remocao\"><i class=\"md-dark md-inactive small material-icons icones center-align\">remove_circle</i></a></td></tr>");
   });
 
-  out.w("</tbody></table></div></main><footer class=\"rodape\"></footer>");
+  out.w("</tbody></table> </div></main><footer class=\"rodape\"></footer><script src=\"estatico/js/materialize.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "32");
+  await_reorderer_tag({}, out, __component, "31");
 
   out.w("</body></html>");
 }

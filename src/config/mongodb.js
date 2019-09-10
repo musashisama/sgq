@@ -9,13 +9,10 @@ const dados = {};
 
 cliente.connect(url, opcoes,function(err, cliente) {
     if (err) throw err;
-    console.log("Conectado");
-    const dbo = cliente.db('grci');
-     dados.riscos = dbo.collection('riscos');
-     dados.causas = dbo.collection('causas');
-
-    //console.log(dados.riscos);
-       
+    console.log(`Conectado à base ${url}`);
+    const dbo = cliente.db('sgq');
+     dados.nc = dbo.collection('naoconformidades');
+     //dados.causas = dbo.collection('causas');
 });
 
   
