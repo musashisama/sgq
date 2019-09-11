@@ -30,10 +30,10 @@ function render(input, out, __component, component, state) {
     var $keyScope$0 = "[" + (($for$0++) + "]");
 
     out.w("<tr" +
-      marko_attr("id", "nc_" + nc._id) +
-      "><td>" +
+      marko_attr("id", "" + nc._id) +
+      "><td class=\"mp\">" +
       marko_escapeXml(nc.Macroprocesso) +
-      "</td><td>" +
+      "</td><td class=\"desc\">" +
       marko_escapeXml(nc.nconformidade) +
       "</td> <td class=\"td-edit\"><a" +
       marko_attr("href", "/livros/form/" + nc._id) +
@@ -42,11 +42,11 @@ function render(input, out, __component, component, state) {
       " data-type=\"remocao\">remove_circle</i></a></td></tr> ");
   });
 
-  out.w("</tbody></table><a class=\"btn-floating btn-large waves-effect waves-light green\"><i class=\"material-icons\">add</i></a> </div></main><footer class=\"rodape\"></footer> <div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4>Modal Header</h4><p class=\"pModal\">A bunch of text</p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat\">Disagree</a><a href=\"#!\" class=\"modal-close waves-effect waves-green btn-flat concorda\">Agree</a></div></div><script src=\"/estatico/js/materialize.js\"></script><script src=\"/estatico/js/remove-nc.js\"></script>");
+  out.w("</tbody></table><a class=\"btn-floating btn-large waves-effect waves-light green\"><i class=\"material-icons\">add</i></a> </div></main><footer class=\"rodape\"></footer> <div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\">A bunch of text</p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat\">Cancela</a><a href=\"#!\" class=\"modal-close waves-effect waves-green btn-flat concorda\">Confirma</a></div></div> <script src=\"/estatico/js/jquery-3.4.1.js\"></script><script src=\"/estatico/js/materialize.js\"></script> <script src=\"/estatico/js/remove-nc.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "41");
+  await_reorderer_tag({}, out, __component, "42");
 
   out.w("</body></html>");
 }

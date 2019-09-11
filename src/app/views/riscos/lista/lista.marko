@@ -25,9 +25,9 @@
                     </thead>
                     <tbody>
                         <for|nc| of=data.nc>
-                            <tr id=`nc_${nc._id}`>
-                                <td>${nc.Macroprocesso}</td>
-                                <td>${nc.nconformidade}</td>                           
+                            <tr id=`${nc._id}`>
+                                <td class="mp">${nc.Macroprocesso}</td>
+                                <td class="desc">${nc.nconformidade}</td>                           
                                 <td class="td-edit"><a href=`/livros/form/${nc._id}`><i class="small material-icons icones center-align">edit</i></a></td>
                                 <td class= "td-remove"><a class="modal-trigger" href="#modal1"><i class="aRemove small material-icons icones iconeRemove" data-ref=`${nc._id}` data-type="remocao">remove_circle</i></a></td>
                             </tr>                        
@@ -47,18 +47,17 @@
         <!-- Modal Structure -->
         <div id="modal1" class="modal">
             <div class="modal-content">
-            <h4>Modal Header</h4>
+            <h4 class="hModal">Modal Header</h4>
             <p class="pModal">A bunch of text</p>
             </div>
             <div class="modal-footer">
-                <a href="#!" class="modal-close waves-effect waves-red btn-flat">Disagree</a>
-                <a href="#!"  class="modal-close waves-effect waves-green btn-flat concorda">Agree</a>
+                <a href="#!" class="modal-close waves-effect waves-red btn-flat">Cancela</a>
+                <a href="#!"  class="modal-close waves-effect waves-green btn-flat concorda">Confirma</a>
             </div>
-        </div>
-
-        
-        <!-- <script src="/estatico/js/modal.js"></script> -->
-        <script src="/estatico/js/materialize.js"></script>
+        </div>        
+       
+        <script src="/estatico/js/jquery-3.4.1.js"></script>
+        <script src="/estatico/js/materialize.js"></script>        
         <script src="/estatico/js/remove-nc.js"></script>
         
     </body>

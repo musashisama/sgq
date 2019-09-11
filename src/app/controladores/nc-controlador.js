@@ -8,15 +8,14 @@ class NCControlador {
     static rotas() {
         return {
             
-            lista: '/listanc'
+            lista: '/lista'
             
         };
     }
 
     lista() {
         return function(req, resp) {
-            const ncDao = new NCDao(conn);
-            console.log("Cheguei aqui");
+            const ncDao = new NCDao(conn);            
             ncDao.lista()
                     .then(nc => resp.marko(
                         templates.nc.lista,

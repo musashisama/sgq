@@ -1,78 +1,24 @@
-/* document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.modal');
-    var instances = M.Modal.init(elems);
-}); */
+let tr ='';
 
-let modal = document.querySelectorAll('.modal');
-document.addEventListener('DOMContentLoaded', function() {    
-    M.Modal.init(modal, {
-        onCloseEnd: ''//remove()
-    });
-    
-  });
+$(document).ready(function(){
+    $('.modal').modal();
+    $('tr').click(function(){
+    tr = $(this).attr('id');
+    $('.hModal').text("Exclusão de Não Conformidade");
+    $('.pModal').text(`Confirma a exclusão da não conformidade "${$(this).children(".desc").text()}" do macroprocesso "${$(this).children(".mp").text()}"?`);
+    }); 
+});
 
-  let concorda = document.querySelector('.concorda');
-  concorda.addEventListener('click', (evento)=>{
-      console.log(evento);
-        remove();
-  })
+$('.concorda').click(function(){
+    console.log("Fui clicado");  
+    remove(tr);  
+});
 
-//TODO: Adicionar classe remoção ao botao "agree" e depois remover;
-
-  function remove(){           
-                 
-    let tabelaNC = document.querySelector('#naoconformidades');
-    tabelaNC.addEventListener('click', (evento) => {
-    /* evento.preventDefault(); */
-
-    let elementoClicado = evento.target;
-    console.log(evento.currentTarget);
-    console.log("Elemento clicado:" + elementoClicado);
-
-    if (elementoClicado.dataset.type == 'remocao') {
-            let ncId = elementoClicado.dataset.ref;
-            console.log("NCID = "+ ncId);
-            //fetch(`http://localhost:3000/livros/${ncId}`, { method: 'DELETE' })
-            fetch(``, { method: 'DELETE' })
-                .then(resposta => {                
-                    //let tr = document.querySelector(`#nc_${ncId}`);
-                    
-                    let tr = elementoClicado.closest(`#nc_${ncId}`);
-                    console.log(tr);
-                    tr.remove();                
-                    console.log("Removido");   
-                                      
-                })
-                .catch(erro => console.log(erro));
-        }
-    });   
-    //return '';
-    tabelaNC.removeEventListener('click', null);
-}
-/* let tabelaNC = document.querySelector('#naoconformidades');
-tabelaNC.addEventListener('click', (evento) => {
-    evento.preventDefault();
-    
-    let elementoClicado = evento.target;
-    console.log(evento.currentTarget);
-console.log("Elemento clicado:" + elementoClicado);
-
-
-
-
-if (elementoClicado.dataset.type == 'remocao') {
-        let ncId = elementoClicado.dataset.ref;
-        console.log("NCID = "+ ncId);
-        //fetch(`http://localhost:3000/livros/${ncId}`, { method: 'DELETE' })
-        fetch(``, { method: 'DELETE' })
-            .then(resposta => {                
-                //let tr = document.querySelector(`#nc_${ncId}`);
-                
-                let tr = elementoClicado.closest(`#nc_${ncId}`);
-                console.log(tr);
-                tr.remove();                
-                console.log("Removido");
-            })
-            .catch(erro => console.log(erro));
-    }
-}); */
+function remove(tr){      
+    fetch(`http://localhost:3000/lista/${tr}`, { method: 'DELETE' })
+        .then(resposta => {     
+            $(`#${tr}`).fadeOut(600);                          
+            console.log("Removido");
+        })
+        .catch(erro => console.log(erro));
+}    
