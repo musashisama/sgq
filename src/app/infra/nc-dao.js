@@ -27,19 +27,33 @@ class NCDao {
     }
 
     lista() {
+        
         return new Promise((resolve, reject) => {
 
             this._db.nc                
-                .find({$or: [ {Macroprocesso:'Julgar'},{Macroprocesso:'Admissibilidade'}]})                
+                .find()                
                 .project({})
                 .toArray(function(erro, res){
                     if(erro){
-                        return reject('Não foi possível listar os riscos.');
+                        return reject('Não foi possível listar as Não conformidades.');
                     } 
                 //console.log(res);
                 return resolve(res);            
             });
              
+        });
+    }
+
+    insere(macroprocesso,nconf) {
+
+        return new Promise((resolve, reject) => {
+            let objeto = {Macroprocesso: macroprocesso, nconformidade: nconf};
+            this._db.nc.insertOne(objeto, function(erro, res){
+                if(erro) {
+                    return reject('Não foi possível inserir o registro.');
+                }
+                return resolve(res);
+            })
         });
     }
 

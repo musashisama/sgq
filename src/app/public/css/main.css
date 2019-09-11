@@ -2,3 +2,23 @@
     vertical-align: middle;
     color: orange;
 }
+
+#naoconformidades, th, td {
+    border: 1px solid grey;
+    padding: 10px;
+    text-align: left;
+}
+
+.td-remove, .td-edit, #naoconformidades th {
+    text-align: center;
+}
+
+.iconeRemove {
+    color: #c62828;
+}
+
+.btn-floating {
+    position: fixed;
+    bottom:5%;
+    right:10%;
+}

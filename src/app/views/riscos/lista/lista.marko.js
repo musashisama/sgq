@@ -22,7 +22,7 @@ function render(input, out, __component, component, state) {
 
   component_globals_tag({}, out);
 
-  out.w("<header></header><main class=\"conteudoPrincipal\"><div class=\"container\"><h1 class=\"center-align\">Lista de Não Conformidades</h1><table id=\"riscos\" class=\"striped highlight centered z-depth-3 responsive-table\"><thead class=\"white-text grey darken-4\"><tr><th>Macroprocesso</th><th>Não conformidade</th> <th>Editar</th><th>Remover</th></tr></thead><tbody>");
+  out.w("<header></header><main class=\"conteudoPrincipal\"><div class=\"container\"><h1 class=\"center-align\">Lista de Não Conformidades</h1><table id=\"naoconformidades\" class=\"striped highlight z-depth-3 responsive-table\"><thead class=\"white-text grey darken-4 colunas\"><tr><th>Macroprocesso</th><th>Não conformidade</th> <th>Editar</th><th>Remover</th></tr></thead><tbody>");
 
   var $for$0 = 0;
 
@@ -30,23 +30,23 @@ function render(input, out, __component, component, state) {
     var $keyScope$0 = "[" + (($for$0++) + "]");
 
     out.w("<tr" +
-      marko_attr("id", "risco_" + nc._id) +
+      marko_attr("id", "nc_" + nc._id) +
       "><td>" +
       marko_escapeXml(nc.Macroprocesso) +
       "</td><td>" +
       marko_escapeXml(nc.nconformidade) +
-      "</td> <td><a" +
+      "</td> <td class=\"td-edit\"><a" +
       marko_attr("href", "/livros/form/" + nc._id) +
-      "><i class=\"small material-icons icones center-align\">edit</i></a></td><td><a href=\"#\"" +
+      "><i class=\"small material-icons icones center-align\">edit</i></a></td><td class=\"td-remove\"><a class=\"modal-trigger\" href=\"#modal1\"><i class=\"aRemove small material-icons icones iconeRemove\"" +
       marko_attr("data-ref", "" + nc._id) +
-      " data-type=\"remocao\"><i class=\"md-dark md-inactive small material-icons icones center-align\">remove_circle</i></a></td></tr>");
+      " data-type=\"remocao\">remove_circle</i></a></td></tr> ");
   });
 
-  out.w("</tbody></table> </div></main><footer class=\"rodape\"></footer><script src=\"estatico/js/materialize.js\"></script>");
+  out.w("</tbody></table><a class=\"btn-floating btn-large waves-effect waves-light green\"><i class=\"material-icons\">add</i></a> </div></main><footer class=\"rodape\"></footer> <div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4>Modal Header</h4><p class=\"pModal\">A bunch of text</p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat\">Disagree</a><a href=\"#!\" class=\"modal-close waves-effect waves-green btn-flat concorda\">Agree</a></div></div><script src=\"/estatico/js/materialize.js\"></script><script src=\"/estatico/js/remove-nc.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "31");
+  await_reorderer_tag({}, out, __component, "41");
 
   out.w("</body></html>");
 }

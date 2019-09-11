@@ -14,8 +14,8 @@
             <div class="container">
                 <h1 class="center-align">Lista de Não Conformidades</h1>
 
-                <table id="riscos" class="striped highlight centered z-depth-3 responsive-table">
-                    <thead class="white-text grey darken-4">
+                <table id="naoconformidades" class="striped highlight z-depth-3 responsive-table">
+                    <thead class="white-text grey darken-4 colunas">
                         <tr>
                             <th>Macroprocesso</th>
                             <th>Não conformidade</th>                            
@@ -25,23 +25,41 @@
                     </thead>
                     <tbody>
                         <for|nc| of=data.nc>
-                        <tr id=`risco_${nc._id}`>
-                            <td>${nc.Macroprocesso}</td>
-                            <td>${nc.nconformidade}</td>                           
-                            <td><a href=`/livros/form/${nc._id}`><i class="small material-icons icones center-align">edit</i></a></td>
-                            <td><a href="#" data-ref=`${nc._id}` data-type="remocao"><i class="md-dark md-inactive small material-icons icones center-align">remove_circle</i></a></td>
-                        </tr>
-                    </for>
+                            <tr id=`nc_${nc._id}`>
+                                <td>${nc.Macroprocesso}</td>
+                                <td>${nc.nconformidade}</td>                           
+                                <td class="td-edit"><a href=`/livros/form/${nc._id}`><i class="small material-icons icones center-align">edit</i></a></td>
+                                <td class= "td-remove"><a class="modal-trigger" href="#modal1"><i class="aRemove small material-icons icones iconeRemove" data-ref=`${nc._id}` data-type="remocao">remove_circle</i></a></td>
+                            </tr>                        
+                        </for>
                     </tbody>
-                </table>                 
+                </table>
+                
+                <a class="btn-floating btn-large waves-effect waves-light green"><i class="material-icons">add</i></a>             
+
             </div>
         </main>
+        
         <footer class="rodape">
            
-        </footer>
+        </footer>       
+        
+        <!-- Modal Structure -->
+        <div id="modal1" class="modal">
+            <div class="modal-content">
+            <h4>Modal Header</h4>
+            <p class="pModal">A bunch of text</p>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-red btn-flat">Disagree</a>
+                <a href="#!"  class="modal-close waves-effect waves-green btn-flat concorda">Agree</a>
+            </div>
+        </div>
 
-        <!-- <script src="/estatico/js/remove-livro.js">
-        </script> -->
-        <script src="estatico/js/materialize.js"></script>
+        
+        <!-- <script src="/estatico/js/modal.js"></script> -->
+        <script src="/estatico/js/materialize.js"></script>
+        <script src="/estatico/js/remove-nc.js"></script>
+        
     </body>
 </html>

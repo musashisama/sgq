@@ -8,7 +8,7 @@ class NCControlador {
     static rotas() {
         return {
             
-            lista: '/riscos'
+            lista: '/listanc'
             
         };
     }
@@ -26,6 +26,13 @@ class NCControlador {
                     ))
                     .catch(erro => console.log(erro));
         };
+    }
+
+    insere() {
+        return function(req, resp) {
+            const ncDao = new NCDao(conn);
+            ncDao.insere(mp, nc);
+        }
     }
 }
 
