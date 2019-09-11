@@ -44,11 +44,11 @@ class NCDao {
         });
     }
 
-    insere(macroprocesso,nconf) {
+    insere(registro) {
 
         return new Promise((resolve, reject) => {
-            let objeto = {Macroprocesso: macroprocesso, nconformidade: nconf};
-            this._db.nc.insertOne(objeto, function(erro, res){
+                        
+            this._db.registroNC.insertOne(registro, function(erro, res){
                 if(erro) {
                     return reject('Não foi possível inserir o registro.');
                 }

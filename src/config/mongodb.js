@@ -12,6 +12,7 @@ cliente.connect(url, opcoes,function(err, cliente) {
     console.log(`Conectado à base ${url}`);
     const dbo = cliente.db('sgq');
      dados.nc = dbo.collection('naoconformidades');
+     dados.registroNC = dbo.collection('registroNC');
      //dados.causas = dbo.collection('causas');
 });
 

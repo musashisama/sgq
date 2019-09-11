@@ -8,7 +8,8 @@ class NCControlador {
     static rotas() {
         return {
             
-            lista: '/lista'
+            lista: '/lista',
+            form: '/form'
             
         };
     }
@@ -27,10 +28,20 @@ class NCControlador {
         };
     }
 
-    insere() {
+    formularioCadastro(){
         return function(req, resp) {
+            resp.marko(templates.nc.form, { registroNC: {} });
+        };
+    }
+
+    cadastra() {
+        return function(req, resp) {
+            console.log(req.body);
+            const registro = req.body;
             const ncDao = new NCDao(conn);
-            ncDao.insere(mp, nc);
+            ncDao.insere(registro)
+                .then(resp.redirect(NCControlador.rotas().lista))
+                .catch(erro => console.log(erro));
         }
     }
 }

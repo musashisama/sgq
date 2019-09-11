@@ -2,7 +2,7 @@
 "use strict";
 
 var marko_template = module.exports = require("marko/src/html").t(__filename),
-    marko_componentType = "/sgq$1.0.0/src/app/views/riscos/lista/lista.marko",
+    marko_componentType = "/sgq$1.0.0/src/app/views/nc/lista/lista.marko",
     components_helpers = require("marko/src/runtime/components/helpers"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
@@ -22,7 +22,7 @@ function render(input, out, __component, component, state) {
 
   component_globals_tag({}, out);
 
-  out.w("<header></header><main class=\"conteudoPrincipal\"><div class=\"container\"><h1 class=\"center-align\">Lista de Não Conformidades</h1><table id=\"naoconformidades\" class=\"striped highlight z-depth-3 responsive-table\"><thead class=\"white-text grey darken-4 colunas\"><tr><th>Macroprocesso</th><th>Não conformidade</th> <th>Editar</th><th>Remover</th></tr></thead><tbody>");
+  out.w("<header></header><main class=\"conteudoPrincipal\"><div class=\"container\"><h2 class=\"center-align\">Lista de Não Conformidades</h2><div class=\"pagination\"><table id=\"naoconformidades\" class=\"striped highlight z-depth-3 responsive-table\"><thead class=\"white-text grey darken-4 colunas\"><tr><th>Macroprocesso</th><th>Não conformidade</th> <th>Editar</th><th>Remover</th></tr></thead><tbody>");
 
   var $for$0 = 0;
 
@@ -42,11 +42,11 @@ function render(input, out, __component, component, state) {
       " data-type=\"remocao\">remove_circle</i></a></td></tr> ");
   });
 
-  out.w("</tbody></table><a class=\"btn-floating btn-large waves-effect waves-light green\"><i class=\"material-icons\">add</i></a> </div></main><footer class=\"rodape\"></footer> <div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\">A bunch of text</p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat\">Cancela</a><a href=\"#!\" class=\"modal-close waves-effect waves-green btn-flat concorda\">Confirma</a></div></div> <script src=\"/estatico/js/jquery-3.4.1.js\"></script><script src=\"/estatico/js/materialize.js\"></script> <script src=\"/estatico/js/remove-nc.js\"></script>");
+  out.w("</tbody></table></div><a class=\"btn-floating btn-large waves-effect waves-light green\"><i class=\"material-icons\">add</i></a> </div></main><footer class=\"rodape\"></footer> <div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\">A bunch of text</p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat\">Cancela</a><a href=\"#!\" class=\"modal-close waves-effect waves-green btn-flat concorda\">Confirma</a></div></div> <script src=\"/estatico/js/jquery-3.4.1.js\"></script><script src=\"/estatico/js/materialize.js\"></script> <script src=\"/estatico/js/remove-nc.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "42");
+  await_reorderer_tag({}, out, __component, "43");
 
   out.w("</body></html>");
 }
@@ -59,7 +59,7 @@ marko_template._ = marko_renderer(render, {
 marko_template.Component = marko_defineComponent({}, marko_template._);
 
 marko_template.meta = {
-    id: "/sgq$1.0.0/src/app/views/riscos/lista/lista.marko",
+    id: "/sgq$1.0.0/src/app/views/nc/lista/lista.marko",
     tags: [
       "marko/src/core-tags/components/component-globals-tag",
       "marko/src/core-tags/components/init-components-tag",
