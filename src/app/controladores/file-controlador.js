@@ -19,6 +19,11 @@ class FileControlador {
         };
     }
 
+    upload(storage) {
+
+        multer({ storage }).single('file');
+    }
+
     lista() {
         return function(req, resp) {
             const ncDao = new NCDao(conn);            
@@ -44,16 +49,19 @@ class FileControlador {
                 file: (req, file) => {
                   return new Promise((resolve, reject) => {
                       const filename = file.originalname;
-                      console.log("Entrou na promise");
+                      //console.log("Entrou na promise");
+                      //console.log(req.file);
                       const fileInfo = {
                         filename: filename,
                         bucketName: 'uploads'
-                      };
+                      }
                       resolve(fileInfo);
                   });
                 }
             });
-            return multer({ storage }).single('file');      
+            let envio = multer({ storage }).single('file');            
+            return envio;  
+            
     }     
 }
 module.exports = FileControlador;

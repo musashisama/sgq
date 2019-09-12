@@ -63,7 +63,7 @@ $(document).ready(function(){
             
         }
     });
-   fetch(`http://localhost:3000/listaNC`, { method: 'GET'})
+   fetch(`http://localhost:3010/listaNC`, { method: 'GET', mode:'no-cors'})
             .then(resposta => {                
                 return resposta.json();
             })
