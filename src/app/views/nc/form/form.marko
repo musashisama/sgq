@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8">   
+        <meta charset="utf-8">  
         <link rel="stylesheet" href="/estatico/css/libs/normalize.css" />
         <link rel="stylesheet" href="/estatico/css/libs/materialize.css" />
         <link rel="stylesheet" href="/estatico/css/libs/google-fonts.css">
         <link rel="stylesheet" href="/estatico/css/main.css" />
+        <title>Registro de Não Conformidades</title>
     </head>
     <body>
         <header>
         </header>
         <main class="conteudoPrincipal">
             <div class="container">
-                <h2 class="center-align">Registro de Não Conformidades</h2>
+                <h2>Registro de Não Conformidades</h2>
                 
                 <form action="/form" method="post">
                     <if(data.registroNC._id)>
@@ -21,17 +22,112 @@
                         <input type="hidden" name="id" value=data.registroNC._id>
                     </div>
                     </if>
+                    <div class="row">
+                    <div class="form-group input-field  col s3">
+                        <label for="titulo">Documento de referência:</label>
+                        <input required type="text" id="titulo" name="docRef" value=data.registroNC.ssdocRef placeholder="Opcional (ex.: n° do Processo)"
+                         class="form-control"/>
+                    </div> 
 
-                    <div class="form-group">
-                        <label for="titulo">Macroprocesso:</label>
-                        <input type="text" id="titulo" name="titulo" value=data.registroNC.Macroprocesso placeholder="coloque o titulo" class="form-control"/>
-                    </div>                    
-                    <div class="form-group">
-                        <label for="descricao">Não Conformidade:</label>
-                        <textarea cols="20" rows="10"  id="descricao" name="descricao" placeholder="fale sobre o livro" class="form-control">${data.registroNC.desc}</textarea>
+                    <div class="form-group input-field col s3">
+                        <select name="mpProcUser">
+                          <option class="form-group" value="" disabled selected>Clique para selecionar</option>
+                          <for|mp| of=data.mp>
+                          <option class="form-group" value=data.registroNC.mprocUser>${mp.macroprocesso}</option>
+                          </for>
+                        </select>
+                        <label for="mProcUser">Qual o seu macroprocesso?</label>
                     </div>
 
-                    <input type="submit" value="Salvar" class="btn btn-primary"/>
+                    <div class="form-group input-field col s3">
+                        <select name="mProcOrigem">
+                          <option class="form-group" value="" disabled selected>Clique para selecionar</option>
+                          <for|mp| of=data.mp>
+                          <option class="form-group" value=data.registroNC.mprocOrigem>${mp.macroprocesso}</option>
+                          </for>
+                        </select>
+                        <label for="mProcOrigem">Em qual macroprocesso a NC teve origem?</label>
+                    </div>
+
+                    <div class="form-group input-field col s3">
+                        <label for="titulo">Unidade onde ocorreu a Não Conformidade</label>
+                        <input required type="text" id="titulo" name="equipeNC" value=data.registroNC.equipe placeholder="Opcional (ex.: Equipe CARF/Unidade)"
+                         class="form-control"/>
+                    </div>
+                </div>
+
+                    
+                    <div class="row">
+                        <div class="input-field col s6">                            
+                            <i class="material-icons prefix">textsms</i>
+                            <input name ="descNC" type="text" id="autocomplete-input" class="autocomplete">
+                            <label for="autocomplete-input">Descrição da Não Conformidade</label>
+                        </div>
+                        <div class="input-field col s6">                            
+                            <i class="material-icons prefix">mode_edit</i>
+                            <textarea name="obsParticipante" placeholder="Detalhamento maior de como ocorreu a não conformidade." id="icon_prefix2" class="materialize-textarea">${data.registroNC.obs}</textarea>
+                            <label for="icon_prefix2">Comentários do participante (opcional):</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s3">
+                            <p>
+                                <label>Ação Imediata</label>
+                            </p>
+                            <p>
+                                <label>
+                                <input name="acaoImediata" type="radio" value="Correção" checked />
+                                <span>Correção</span>
+                                </label>
+                            </p>                        
+                            <p>
+                                <label>
+                                <input name="acaoImediata" type="radio" value="Encaminhada para Correção"/>
+                                <span>NC encaminhada para correção</span>
+                                </label>
+                            </p>
+                        </div>
+                        <div class="input-field col s4">
+                            <input type="text" id="dataNC" name="dataNC" class="datepicker">
+                            <label for="dataNC">Quando ocorreu a NC?</label>
+                        </div>                        
+                            
+                        
+                    </div>
+
+                    <div class="row">
+                        <div class="col s6 offset-s11">
+                            <button class="btn-floating btn-large waves-effect waves-light green hoverable " type="submit">
+                                <i class="material-icons right-align">add</i>
+                            </button>
+                        </div>                        
+                    </div>
+                    
+
+
+                    
+                       
+
+                    <!-- <input type="submit" value="Salvar" class="waves-effect waves-light btn btn-primary blue"/> -->
+                
+                </form>
+                <form action="/upload" method="POST" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="file-field input-field col s3">
+                      <div class="btn">
+                        <span>Arquivo</span>
+                        <input type="file" name="file" id="file">
+                      </div>
+                      <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text" placeholder="Deseja enviar algum arquivo?">
+                      </div>
+                    </div> 
+                    <div class="col s1">
+                        <button class="btn-floating btn-large waves-effect waves-light green hoverable " type="submit">
+                            <i class="material-icons right-align">attach_file</i>
+                        </button>
+                    </div>     
+                </div>
                 </form>
                 <!-- <a class="btn-floating btn-large waves-effect waves-light green"><i class="material-icons">add</i></a>  -->            
 
@@ -55,6 +151,9 @@
         </div>        
        
         <script src="/estatico/js/jquery-3.4.1.js"></script>
-        <script src="/estatico/js/materialize.js"></script>  
+        <script src="/estatico/js/materialize.js"></script>
+        <script src="/estatico/js/services/HttpService.js"></script>
+        <script src="/estatico/js/formcontrol.js"></script>  
+        
     </body>
 </html>
