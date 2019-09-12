@@ -1,13 +1,13 @@
 const mongo = require('mongodb');
 const cliente = require('mongodb').MongoClient;
-const url = "mongodb://localhost:27017/";
+const url = "mongodb://localhost:27017/sgq";
 const opcoes = { 
   useNewUrlParser: true, 
   useUnifiedTopology: true  
 }
 const dados = {};
 const dbo ='';
-const db = new mongo.Db('sgq', new mongo.Server("127.0.0.1", 27017));
+const db = new mongo.Db('sgq', new mongo.Server("127.0.0.1", 27017), opcoes);
 
 
 cliente.connect(url, opcoes,function(err, cliente) {
@@ -17,8 +17,8 @@ cliente.connect(url, opcoes,function(err, cliente) {
      dados.nc = dbo.collection('naoconformidades');
      dados.registroNC = dbo.collection('registroNC');
      dados.macroprocessos = dbo.collection('macroprocessos');
-     dados.fschunks = dbo.collection('fs.chunks');
-     dados.fsfiles = dbo.collection('fs.files');    
+     dados.fschunks = dbo.collection('uploads.chunks');
+     dados.fsfiles = dbo.collection('uploads.files');
 });
 
   

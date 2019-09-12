@@ -1,7 +1,6 @@
 const conn = require('../../config/mongodb').dados;
 const mongo = require('../../config/mongodb').mongo;
 const url = require('../../config/mongodb').url;
-const dbo = require('../../config/mongodb').dbo;
 const db = require('../../config/mongodb').db;
 const FileDao = require('../infra/file-dao');
 const path = require('path');
@@ -34,12 +33,12 @@ class FileControlador {
         };
     }
    
-    envia() {
-        return function(req, resp) {
-            const fileDao = new FileDao(conn);                     
-            let gfs = grid(db, mongo);
-            gfs.collection('uploads');
-
+    envia() {        
+            let gfs;
+            db.once('open', () => {
+                gfs = grid(db, mongo);
+                gfs.collection('uploads');
+            })
             const storage = new gridFsStorage({
                 url: url,
                 file: (req, file) => {
@@ -54,16 +53,7 @@ class FileControlador {
                   });
                 }
             });
-            const upload = multer({ storage });
-
-
-            console.log('Req Body:' +req.body);
-            const registro = req.body;
-            fileDao.upload(registro)
-                .then(console.log("Registro: "+registro))
-                .catch(erro => console.log(erro));
-        }
-    }
+            return multer({ storage }).single('file');      
+    }     
 }
-
 module.exports = FileControlador;

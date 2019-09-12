@@ -16,8 +16,7 @@ class FileDao {
                 return resolve(res);
             })
         });
-    }
-
+    }       
 }
 
 module.exports = FileDao;
