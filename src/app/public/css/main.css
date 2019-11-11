@@ -1,15 +1,38 @@
+.container-header {
+width: 100%;
+overflow-x:hidden;
+}
+
+body {
+display: flex;
+min-height: 100vh;
+flex-direction: column;
+}
+
+main {
+flex: 1 0 auto;
+}
+
+body{
+overflow-x:hidden;
+}
+.cabecalho, .rodape {
+    background-color: #509EE3;
+    width:100%;
+    overflow-x:hidden;
+}
 .icones {
     vertical-align: middle;
     color: orange;
 }
 
-#naoconformidades, th, td {
+#naoconformidades,#naoconformidades > th,#naoconformidades > td {
     border: 1px solid grey;
     padding: 10px;
     text-align: left;
 }
 
-.td-remove, .td-edit, #naoconformidades th {
+.td-remove, .td-edit, #naoconformidades > th {
     text-align: center;
 }
 
@@ -46,4 +69,10 @@
     height:100%;
     opacity:0.7;   
     user-select: none; 
+}
+
+.collection-item {
+}
+.collection{{
+   white-space: nowrap;
 }

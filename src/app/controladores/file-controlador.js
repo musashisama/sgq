@@ -8,7 +8,7 @@ const multer = require('multer');
 const gridFsStorage = require('multer-gridfs-storage');
 const grid = require('gridfs-stream');
 
-class FileControlador {
+class FileControlador { 
 
     static rotas() {
         return {

@@ -10,7 +10,8 @@ class NCControlador {
             
             lista: '/lista',
             listaNC:'/listaNC',
-            form: '/form'
+            form: '/form',
+            sucesso: '/sucesso'
             
         };
     }
@@ -61,8 +62,14 @@ class NCControlador {
             const registro = req.body;
             const ncDao = new NCDao(conn);
             ncDao.insere(registro)
-                .then(resp.redirect(NCControlador.rotas().form))
+                .then(resp.redirect(NCControlador.rotas().sucesso))
                 .catch(erro => console.log(erro));
+        }
+    }
+    
+    sucesso() {
+    return function(req,resp) {
+    	resp.marko(templates.nc.sucesso)
         }
     }
 }

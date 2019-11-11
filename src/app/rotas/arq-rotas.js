@@ -10,6 +10,6 @@ module.exports = (app) => {
         res.end();//res = JSON.parse(res); 
         resposta = res;       
         console.log(typeof(res));
-        console.log(res);        
+        console.log(res);     
     });
 }

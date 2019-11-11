@@ -11,4 +11,6 @@ module.exports = (app) => {
     app.route(rotasNC.form)
         .get(ncControlador.formularioCadastro())
         .post(ncControlador.cadastra());
+
+    app.get(rotasNC.sucesso,ncControlador.sucesso());
 }

@@ -9,13 +9,23 @@
         <title>Registro de Não Conformidades</title>
     </head>
     <body>
-        <header>
-        </header>
-        <main class="conteudoPrincipal">
+		 <div class="container-header cabecalho">
+		                   <nav class="cabecalho">
+					                            <div class="nav-wrapper">
+									                              <a href="" class="brand-logo">Sistema Integrado de Gestão</a>
+												                                    <ul id="nav-mobile" class="right hide-on-med-and-down">
+																	                                    <li><a href="/form">Registro de Não Conformidades</a></li>
+																					                                    <li><a href="http://10.202.24.111:3005/public/dashboard/9e707956-2b3a-4f87-bbef-254e6ea90c8d">Dashboard</a></li>
+																									                                </ul>
+																													                          </div>
+																																                           </nav>
+													   </div>
+	    <main class="conteudoPrincipal">
             <div class="container">
-                <h2>Registro de Não Conformidades</h2>
-                
-                <form action="/form" method="post">
+                <h3>Registro de Não Conformidades</h3>
+		<br>
+		<br>
+                <form action="/sgq/form" method="post">
                     <if(data.registroNC._id)>
                     <div>
                         <input type="hidden" name="_method" value="PUT">
@@ -25,12 +35,12 @@
                     <div class="row">
                     <div class="form-group input-field  col s3">
                         <label for="titulo">Documento de referência:</label>
-                        <input required type="text" id="titulo" name="docRef" value=data.registroNC.ssdocRef placeholder="Opcional (ex.: n° do Processo)"
+                        <input type="text" id="titulo" name="docRef" value=data.registroNC.ssdocRef placeholder="Opcional (ex.: n° do Processo)"
                          class="form-control"/>
                     </div> 
 
                     <div class="form-group input-field col s3">
-                        <select name="mpProcUser">
+                        <select required name="mpProcUser">
                           <option class="form-group" value="" disabled selected>Clique para selecionar</option>
                           <for|mp| of=data.mp>
                           <option class="form-group" value=data.registroNC.mprocUser>${mp.macroprocesso}</option>
@@ -40,7 +50,7 @@
                     </div>
 
                     <div class="form-group input-field col s3">
-                        <select name="mProcOrigem">
+                        <select required name="mProcOrigem">
                           <option class="form-group" value="" disabled selected>Clique para selecionar</option>
                           <for|mp| of=data.mp>
                           <option class="form-group" value=data.registroNC.mprocOrigem>${mp.macroprocesso}</option>
@@ -51,7 +61,7 @@
 
                     <div class="form-group input-field col s3">
                         <label for="titulo">Unidade onde ocorreu a Não Conformidade</label>
-                        <input required type="text" id="titulo" name="equipeNC" value=data.registroNC.equipe placeholder="Opcional (ex.: Equipe CARF/Unidade)"
+                        <input required type="text" id="titulo" name="equipeNC" value=data.registroNC.equipe placeholder="(ex.: Equipe CARF/Unidade)"
                          class="form-control"/>
                     </div>
                 </div>
@@ -60,7 +70,7 @@
                     <div class="row">
                         <div class="input-field col s6">                            
                             <i class="material-icons prefix">textsms</i>
-                            <input name ="descNC" type="text" id="autocomplete-input" class="autocomplete">
+                            <input required name ="descNC" type="text" id="autocomplete-input" class="autocomplete">
                             <label for="autocomplete-input">Descrição da Não Conformidade</label>
                         </div>
                         <div class="input-field col s6">                            
@@ -90,18 +100,16 @@
                         <div class="input-field col s4">
                             <input type="text" id="dataNC" name="dataNC" class="datepicker">
                             <label for="dataNC">Quando ocorreu a NC?</label>
+			</div>   
+                            <div class="col s5 offset-s11">
+                                <button class="btn-floating btn-large waves-effect waves-light green hoverable " type="submit">
+                                <i class="material-icons right-align">add</i>
+                                </button>
+                            </div>                        
                         </div>                        
                             
                         
-                    </div>
 
-                    <div class="row">
-                        <div class="col s6 offset-s11">
-                            <button class="btn-floating btn-large waves-effect waves-light green hoverable " type="submit">
-                                <i class="material-icons right-align">add</i>
-                            </button>
-                        </div>                        
-                    </div>
                     
 
 
@@ -135,10 +143,31 @@
             </div>
         </main>
         
-        <footer class="rodape">
-           
-        </footer>       
-        
+	<footer class="page-footer rodape">
+		<div class="container">
+			<div class="row">
+				<div class="col l6 s12">
+					<h5 class="white-text">Conteúdo</h5>
+					<p class="grey-text text-lighten-4">Contúedo futuro</p>
+				</div>
+				<div class="col l4 offset-l2 s12">
+					<h5 class="white-text">Links</h5>
+					<ul>
+						<li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+						<li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+						<li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+						<li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="footer-copyright">
+			<div class="container">
+				© 2019 Conselho Administrativo de Recursos Fiscais - CARF
+				<a class="grey-text text-lighten-4 right" href="#!">..</a>
+			</div>
+		</div>
+	</footer>
         <!-- Modal Structure -->
         <div id="modal1" class="modal">
             <div class="modal-content">
