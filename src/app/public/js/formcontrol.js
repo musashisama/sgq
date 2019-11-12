@@ -63,6 +63,7 @@ $(document).ready(function(){
             
         }
     });
+//fetch(`http://localhost:3010/sgq/listaNC`, { method: 'GET'})
    fetch(`http://aplicativos.carf/sgq/listaNC`, { method: 'GET'})
             .then(resposta => {                
                 return resposta.json();

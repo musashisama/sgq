@@ -36,7 +36,7 @@ function render(input, out, __component, component, state) {
       "</td><td class=\"desc\">" +
       marko_escapeXml(nc.nconformidade) +
       "</td> <td class=\"td-edit\"><a" +
-      marko_attr("href", "/livros/form/" + nc._id) +
+      marko_attr("href", "/lista/" + nc._id) +
       "><i class=\"small material-icons icones center-align\">edit</i></a></td><td class=\"td-remove\"><a class=\"modal-trigger\" href=\"#modal1\"><i class=\"aRemove small material-icons icones iconeRemove\"" +
       marko_attr("data-ref", "" + nc._id) +
       " data-type=\"remocao\">remove_circle</i></a></td></tr> ");
