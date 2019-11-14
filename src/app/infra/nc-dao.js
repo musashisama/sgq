@@ -34,7 +34,7 @@ class NCDao {
                 .project(filtro)
                 .toArray(function(erro, res){
                     if(erro){
-                        return reject('Não foi possível listar as Não conformidades.');
+                        return reject('Não foi possível listar as Não Conformidades.');
                     } 
                 //console.log(res);
                 return resolve(res);            
