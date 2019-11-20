@@ -22,7 +22,7 @@ function render(input, out, __component, component, state) {
 
   component_globals_tag({}, out);
 
-  out.w("<div class=\"container-header cabecalho\"><nav class=\"cabecalho\"><div class=\"nav-wrapper\"><a href=\"\" class=\"brand-logo\">Sistema Integrado de Gestão</a><ul id=\"nav-mobile\" class=\"right hide-on-med-and-down\"><li><a href=\"/form\">Registro de Não Conformidades</a></li><li><a href=\"http://10.202.24.111:3005/public/dashboard/9e707956-2b3a-4f87-bbef-254e6ea90c8d\">Dashboard</a></li></ul></div></nav></div><main class=\"conteudoPrincipal\"><div class=\"container\"><h3>Registro de Não Conformidades</h3><br><br><form action=\"/sgq/form\" method=\"post\">");
+  out.w("<div class=\"container-header cabecalho\"><nav class=\"cabecalho\"><div class=\"nav-wrapper\"><a href=\"\" class=\"brand-logo\">Sistema Integrado de Gestão</a><ul id=\"nav-mobile\" class=\"right hide-on-med-and-down\"><li><a href=\"/form\">Registro de Não Conformidades</a></li><li><a href=\"http://10.202.24.111:3005/public/dashboard/9e707956-2b3a-4f87-bbef-254e6ea90c8d\">Dashboard</a></li></ul></div> </nav></div><main class=\"conteudoPrincipal\"><div class=\"container\"><h3>Registro de Não Conformidades</h3><br><br><form action=\"/sgq/form\" method=\"post\">");
 
   if (data.registroNC._id) {
     out.w("<div><input type=\"hidden\" name=\"_method\" value=\"PUT\"><input type=\"hidden\" name=\"id\"" +
@@ -60,6 +60,20 @@ function render(input, out, __component, component, state) {
       "</option>");
   });
 
+  out.w("</select><label for=\"mProcOrigem\">Em qual macroprocesso a NC teve origem?</label></div><div class=\"form-group input-field col s3\"><select required name=\"unidadeUser\"><option class=\"form-group\" value=\"\" disabled selected>Clique para selecionar</option>");
+
+  var $for$2 = 0;
+
+  marko_forEach(data.mp, function(mp) {
+    var $keyScope$2 = "[" + (($for$2++) + "]");
+
+    out.w("<option class=\"form-group\"" +
+      marko_attr("value", data.registroNC.mprocOrigem) +
+      ">" +
+      marko_escapeXml(mp.macroprocesso) +
+      "</option>");
+  });
+
   out.w("</select><label for=\"mProcOrigem\">Em qual macroprocesso a NC teve origem?</label></div><div class=\"form-group input-field col s3\"><label for=\"titulo\">Unidade onde ocorreu a Não Conformidade</label><input required type=\"text\" id=\"titulo\" name=\"equipeNC\"" +
     marko_attr("value", data.registroNC.equipe) +
     " placeholder=\"(ex.: Equipe CARF/Unidade)\" class=\"form-control\"></div></div><div class=\"row\"><div class=\"input-field col s6\"> <i class=\"material-icons prefix\">textsms</i><input required name=\"descNC\" type=\"text\" id=\"autocomplete-input\" class=\"autocomplete\"><label for=\"autocomplete-input\">Descrição da Não Conformidade</label></div><div class=\"input-field col s6\"> <i class=\"material-icons prefix\">mode_edit</i><textarea name=\"obsParticipante\" placeholder=\"Detalhamento maior de como ocorreu a não conformidade.\" id=\"icon_prefix2\" class=\"materialize-textarea\">" +
@@ -68,7 +82,7 @@ function render(input, out, __component, component, state) {
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "102");
+  await_reorderer_tag({}, out, __component, "107");
 
   out.w("</body></html>");
 }
