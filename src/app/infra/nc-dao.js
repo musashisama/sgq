@@ -25,7 +25,7 @@ class NCDao {
         });
     }
 
-    lista(filtro={}) {
+    listaNC(filtro={}) {
         
         return new Promise((resolve, reject) => {
 
@@ -35,32 +35,56 @@ class NCDao {
                 .toArray(function(erro, res){
                     if(erro){
                         return reject('Não foi possível listar as Não Conformidades.');
-                    } 
-                //console.log(res);
+                    }                 
                 return resolve(res);            
             });
              
         });
     }
 
-    listaMacro() {
+    listaUnidades(filtro={_id:0, Sigla:1, Nome:1}) {
+        
+        return new Promise((resolve, reject) => {
+
+            this._db.unidadesCARF                
+                .find()     
+                .sort({Sigla:1})           
+                .project(filtro)
+                .toArray(function(erro, res){
+                    if(erro){
+                        return reject('Não foi possível listar as Unidades.');
+                    }                 
+                return resolve(res);            
+            });
+             
+        });
+    }
+
+    listaMacro(filtro={}) {
         
         return new Promise((resolve, reject) => {
 
             this._db.macroprocessos               
                 .find()
                 .sort({macroprocesso:1})               
-                .project({})
+                .project(filtro)
                 .toArray(function(erro, res){
                     if(erro){
                         return reject('Não foi possível listar os macroprocessos.');
-                    } 
-                //console.log(res);
-                return resolve(res);            
+                    }                 
+                return resolve(res);           
             });
              
         });
     }
+
+    getDadosForm() {
+        return new Promise((resolve, reject) => {
+            //Cria uma promise com todas as queries necessárias para preencher o form.
+            return resolve([this.listaMacro(), this.listaNC(), this.listaUnidades()]);
+        });
+    }
+
 
     insere(registro) {
 

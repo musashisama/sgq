@@ -7,6 +7,7 @@ module.exports = (app) => {
 
     app.get(rotasNC.lista, ncControlador.lista());
     app.get(rotasNC.listaNC,ncControlador.listaNC());
+    app.get(rotasNC.principal, ncControlador.principal());
     
     app.route(rotasNC.form)
         .get(ncControlador.formularioCadastro())

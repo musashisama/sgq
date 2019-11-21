@@ -11,7 +11,8 @@ class NCControlador {
             lista: '/lista',
             listaNC:'/listaNC',
             form: '/form',
-            sucesso: '/sucesso'
+            sucesso: '/sucesso',
+            principal: '/'
             
         };
     }
@@ -19,7 +20,7 @@ class NCControlador {
     lista() {
         return function(req, resp) {
             const ncDao = new NCDao(conn);            
-            ncDao.lista()
+            ncDao.listaNC()
                     .then(nc => resp.marko(
                         templates.nc.lista,
                         {
@@ -33,28 +34,51 @@ class NCControlador {
     listaNC() {
         return function(req, resp) {
             const ncDao = new NCDao(conn);            
-            ncDao.lista({_id:0})
+            ncDao.listaNC({_id:0})
                     .then(lista =>{
-                        resp.json(lista);                        
+                        console.log(lista);
+                        resp.json(lista);
+                        
                     })
                     .catch(erro => console.log(erro));
         };
     }
+
+    
 
 
 
     formularioCadastro(){
         return function(req, resp) {
             const ncDao = new NCDao(conn);
-            ncDao.listaMacro()
-            .then(mp => {
-                resp.marko(templates.nc.form, { registroNC: {}, mp:mp  })                
+            ncDao.getDadosForm()
+            .then(dadosForm => {                
+                resp.marko(templates.nc.form, { 
+                    registroNC: {}, 
+                    mp:dadosForm[0], 
+                    ncf:dadosForm[1], 
+                    und:dadosForm[2]
+                })
+                console.log(dadosForm[0]);
             })            
             .catch(erro => console.log(erro));
 
             
         };
     }
+
+    // formularioCadastro(){
+    //     return function(req, resp) {
+    //         const ncDao = new NCDao(conn);
+    //         ncDao.listaMacro()
+    //         .then(mp => {
+    //             resp.marko(templates.nc.form, { registroNC: {}, mp:mp  })                
+    //         })            
+    //         .catch(erro => console.log(erro));
+
+            
+    //     };
+    // }
 
     cadastra() {
         return function(req, resp) {
@@ -70,6 +94,11 @@ class NCControlador {
     sucesso() {
     return function(req,resp) {
     	resp.marko(templates.nc.sucesso)
+        }
+    }
+    principal(){
+        return function(req, resp) {
+        resp.marko(templates.nc.principal)
         }
     }
 }

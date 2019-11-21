@@ -70,9 +70,9 @@ $(document).ready(function(){
             })
             .then(dados => {
                 dados.forEach(dado => resp.push(`"${dado.nconformidade}": null`));
-                console.log("Resp:"+ resp);
+                //console.log("Resp:"+ resp);
                 obj = JSON.parse("{"+resp+"}");                
-                console.log("Obj:" +typeof(obj));
+                //console.log("Obj:" +typeof(obj));
                 $('input.autocomplete').autocomplete({
                     data:obj,                    
                     minLenght:3}

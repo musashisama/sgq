@@ -24,12 +24,12 @@
                 <h3>Registro de Não Conformidades</h3>
 		<br>
 		<br>
-                <form action="/sgq/form" method="post">
+                <form action="/form" method="post">
                     <if(data.registroNC._id)>
-                    <div>
-                        <input type="hidden" name="_method" value="PUT">
-                        <input type="hidden" name="id" value=data.registroNC._id>
-                    </div>
+                        <div>
+                            <input type="hidden" name="_method" value="PUT">
+                            <input type="hidden" name="id" value=data.registroNC._id>
+                        </div>
                     </if>
                     <div class="row">
                     <div class="form-group input-field  col s3">
@@ -58,10 +58,19 @@
                         <label for="mProcOrigem">Em qual macroprocesso a NC teve origem?</label>
                     </div>            
 
-                    <div class="form-group input-field col s3">
+                    <!-- <div class="form-group input-field col s3">
                         <label for="titulo">Unidade onde ocorreu a Não Conformidade</label>
                         <input required type="text" id="titulo" name="equipeNC" value=data.registroNC.equipe placeholder="(ex.: Equipe CARF/Unidade)"
                          class="form-control"/>
+                    </div> -->
+                     <div class="form-group input-field col s3">
+                        <select name="equipeNC">
+                          <option class="form-group" value="" disabled selected>Clique para selecionar</option>
+                          <for|und| of=data.und>
+                          <option class="form-group" value=data.und.Sigla>${und.Sigla}</option>
+                          </for>
+                        </select>
+                        <label for="equipeNC">Unidade onde ocorreu a Não Conformidade</label>
                     </div>
                 </div>
 
