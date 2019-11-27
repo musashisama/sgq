@@ -44,10 +44,6 @@ class NCControlador {
         };
     }
 
-    
-
-
-
     formularioCadastro(){
         return function(req, resp) {
             const ncDao = new NCDao(conn);
@@ -55,30 +51,16 @@ class NCControlador {
             .then(dadosForm => {                
                 resp.marko(templates.nc.form, { 
                     registroNC: {}, 
-                    mp:dadosForm[0], 
-                    ncf:dadosForm[1], 
+                    mp:dadosForm[0],
+                    nconf:dadosForm[1],
                     und:dadosForm[2]
+
                 })
                 console.log(dadosForm[0]);
             })            
-            .catch(erro => console.log(erro));
-
-            
+            .catch(erro => console.log(erro));            
         };
     }
-
-    // formularioCadastro(){
-    //     return function(req, resp) {
-    //         const ncDao = new NCDao(conn);
-    //         ncDao.listaMacro()
-    //         .then(mp => {
-    //             resp.marko(templates.nc.form, { registroNC: {}, mp:mp  })                
-    //         })            
-    //         .catch(erro => console.log(erro));
-
-            
-    //     };
-    // }
 
     cadastra() {
         return function(req, resp) {

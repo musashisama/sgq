@@ -78,13 +78,9 @@ class NCDao {
         });
     }
 
-    getDadosForm() {
-        return new Promise((resolve, reject) => {
-            //Cria uma promise com todas as queries necessárias para preencher o form.
-            return resolve([this.listaMacro(), this.listaNC(), this.listaUnidades()]);
-        });
+    getDadosForm(){
+        return Promise.all([this.listaMacro(),this.listaNC(),this.listaUnidades()]);
     }
-
 
     insere(registro) {
 
