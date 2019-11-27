@@ -9,28 +9,27 @@
         <title>Registro de Não Conformidades</title>
     </head>
     <body>
-		 <div class="container-header cabecalho">
-		                   <nav class="cabecalho">
-					                            <div class="nav-wrapper">
-									                              <a href="" class="brand-logo">Sistema Integrado de Gestão</a>
-												                                    <ul id="nav-mobile" class="right hide-on-med-and-down">
-																	                                    <li><a href="/form">Registro de Não Conformidades</a></li>
-																					                                    <li><a href="http://10.202.24.111:3005/public/dashboard/9e707956-2b3a-4f87-bbef-254e6ea90c8d">Dashboard</a></li>
-																									                                </ul>
-																													                          </div>
-																																                           </nav>
-													   </div>
+		<div class="container-header cabecalho">
+		    <nav class="cabecalho">
+				<div class="nav-wrapper">
+					<a href="" class="brand-logo">Sistema Integrado de Gestão</a>
+						<ul id="nav-mobile" class="right hide-on-med-and-down">
+							<li><a href="/form">Registro de Não Conformidades</a></li>
+						        <li><a href="http://10.202.24.111:3005/public/dashboard/9e707956-2b3a-4f87-bbef-254e6ea90c8d">Dashboard</a></li>
+						</ul>
+				</div>																										                           </nav>
+		</div>
 	    <main class="conteudoPrincipal">
             <div class="container">
                 <h3>Registro de Não Conformidades</h3>
 		<br>
 		<br>
-                <form action="/sgq/form" method="post">
+                <form action="/form" method="post">
                     <if(data.registroNC._id)>
-                    <div>
-                        <input type="hidden" name="_method" value="PUT">
-                        <input type="hidden" name="id" value=data.registroNC._id>
-                    </div>
+                        <div>
+                            <input type="hidden" name="_method" value="PUT">
+                            <input type="hidden" name="id" value=data.registroNC._id>
+                        </div>
                     </if>
                     <div class="row">
                     <div class="form-group input-field  col s3">
@@ -57,12 +56,21 @@
                           </for>
                         </select>
                         <label for="mProcOrigem">Em qual macroprocesso a NC teve origem?</label>
-                    </div>
+                    </div>            
 
-                    <div class="form-group input-field col s3">
+                    <!-- <div class="form-group input-field col s3">
                         <label for="titulo">Unidade onde ocorreu a Não Conformidade</label>
                         <input required type="text" id="titulo" name="equipeNC" value=data.registroNC.equipe placeholder="(ex.: Equipe CARF/Unidade)"
                          class="form-control"/>
+                    </div> -->
+                     <div class="form-group input-field col s3">
+                        <select name="equipeNC">
+                          <option class="form-group" value="" disabled selected>Clique para selecionar</option>
+                          <for|und| of=data.und>
+                          <option class="form-group" value=data.und.Sigla>${und.Sigla}</option>
+                          </for>
+                        </select>
+                        <label for="equipeNC">Unidade onde ocorreu a Não Conformidade</label>
                     </div>
                 </div>
 
@@ -148,7 +156,7 @@
 			<div class="row">
 				<div class="col l6 s12">
 					<h5 class="white-text">Conteúdo</h5>
-					<p class="grey-text text-lighten-4">Contúedo futuro</p>
+					<p class="grey-text text-lighten-4">Conteúdo futuro</p>
 				</div>
 				<div class="col l4 offset-l2 s12">
 					<h5 class="white-text">Links</h5>
@@ -178,8 +186,13 @@
                 <a href="#!" class="modal-close waves-effect waves-red btn-flat">Cancela</a>
                 <a href="#!"  class="modal-close waves-effect waves-green btn-flat concorda">Confirma</a>
             </div>
-        </div>        
-       
+        </div>
+
+        <div id="naoconfs" class="controle">        
+        <for|nconf| of=data.nconf>
+         "${nconf.nconformidade}":null,
+        </for>
+        </div>       
         <script src="/estatico/js/jquery-3.4.1.js"></script>
         <script src="/estatico/js/materialize.js"></script>
         <script src="/estatico/js/services/HttpService.js"></script>

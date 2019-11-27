@@ -27,7 +27,7 @@ $(document).ready(function(){
             monthsShort:	
                         [
                           'Jan',
-                          'Fevb',
+                          'Fev',
                           'Mar',
                           'Abr',
                           'Mai',
@@ -63,20 +63,10 @@ $(document).ready(function(){
             
         }
     });
-//fetch(`http://localhost:3010/sgq/listaNC`, { method: 'GET'})
-   fetch(`http://aplicativos.carf/sgq/listaNC`, { method: 'GET'})
-            .then(resposta => {                
-                return resposta.json();
-            })
-            .then(dados => {
-                dados.forEach(dado => resp.push(`"${dado.nconformidade}": null`));
-                console.log("Resp:"+ resp);
-                obj = JSON.parse("{"+resp+"}");                
-                console.log("Obj:" +typeof(obj));
-                $('input.autocomplete').autocomplete({
-                    data:obj,                    
-                    minLenght:3}
-                ); 
-            })
-            .catch(erro => console.log(erro));       
+    obj = $("#naoconfs").text();
+    json = JSON.parse("{"+obj.slice(0,-1)+"}");      
+    $('input.autocomplete').autocomplete({
+        data:json,            
+        minLength:3}
+    );       
 });

@@ -71,6 +71,10 @@ overflow-x:hidden;
     user-select: none; 
 }
 
+.controle{
+    display: none;    
+}
+
 .collection-item {
 }
 .collection{{
