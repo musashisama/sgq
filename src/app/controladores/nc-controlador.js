@@ -55,8 +55,7 @@ class NCControlador {
                     nconf:dadosForm[1],
                     und:dadosForm[2]
 
-                })
-                console.log(dadosForm[0]);
+                })                
             })            
             .catch(erro => console.log(erro));            
         };

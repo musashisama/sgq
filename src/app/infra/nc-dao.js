@@ -96,5 +96,4 @@ class NCDao {
     }
 
 }
-
 module.exports = NCDao;
