@@ -3,14 +3,13 @@ const cliente = require('mongodb').MongoClient;
 const url = "mongodb://localhost:27017/sgq";
 const opcoes = { 
   useNewUrlParser: true, 
-  useUnifiedTopology: true  
+  useUnifiedTopology: true
 }
 const dados = {};
 const dbo ='';
 const db = new mongo.Db('sgq', new mongo.Server("127.0.0.1", 27017), opcoes);
 
-
-cliente.connect(url, opcoes,function(err, cliente) {
+cliente.connect(url,opcoes,function(err, cliente) {
     if (err) throw err;
     console.log(`Conectado à base ${url}`);
     const dbo = cliente.db('sgq');      
