@@ -63,8 +63,10 @@ class NCControlador {
 
     cadastra() {
         return function(req, resp) {
-            console.log(req.body);
+            //console.log(req.body);
             const registro = req.body;
+            registro['horaCriacao'] = new Date().toUTCString();
+            //console.log(registro);
             const ncDao = new NCDao(conn);
             ncDao.insere(registro)
                 .then(resp.redirect(NCControlador.rotas().sucesso))

@@ -16,8 +16,12 @@ flex: 1 0 auto;
 body{
 overflow-x:hidden;
 }
+
+h3 {
+    color: #3867b7;
+}
 .cabecalho, .rodape {
-    background-color: #509EE3;
+    background-color: #1659bf;    
     width:100%;
     overflow-x:hidden;
 }
@@ -77,6 +81,12 @@ overflow-x:hidden;
 
 .collection-item {
 }
-.collection{{
+.collection{
    white-space: nowrap;
+}
+
+.titulo-sistema {
+    font-size: 2.5em;
+    color:white;
+    padding-left: 2.5%;;
 }

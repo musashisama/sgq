@@ -9,24 +9,10 @@
     <title>Registro de Não Conformidades</title>
   </head>
   <body>
-    <div class="container-header cabecalho">
-      <nav class="cabecalho">
-        <div class="nav-wrapper">
-          <a href="" class="brand-logo">Sistema Integrado de Gestão</a>
-          <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li>
-              <a href="/form">Registro de Não Conformidades</a>
-            </li>
-            <li>
-              <a href="http://10.202.24.111:3005/public/dashboard/9e707956-2b3a-4f87-bbef-254e6ea90c8d">Dashboard</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    </div>
+    <header class="container-header cabecalho"/>
     <main class="conteudoPrincipal">
       <div class="container">
-        <h3>Registro de Não Conformidades</h3>
+        <h3 class="center-align">Registro de Não Conformidades</h3>
         <br/>
         <br/>
         <form action="/form" method="post">
@@ -37,15 +23,23 @@
             </div>
           </if>
           <div class="row">
-            <div class="form-group input-field  col s3">
-              <label for="titulo">Documento de referência:</label>
-              <input type="text" id="titulo" name="docRef" value=data.registroNC.ssdocRef placeholder="Opcional (ex.: n° do Processo)" class="form-control"/>
+            <div class="form-group input-field  col s2">
+              <label for="titulo" class="tooltipped" data-position="bottom" data-tooltip="Não se preocupe, seu CPF não irá constar nos dashboards!">CPF:</label>
+              <input required type="text" id="titulo" name="cpfUser" value=data.registroNC.cpfUser placeholder="Digite seu CPF" class="form-control tooltipped" data-position="bottom" data-tooltip="Não se preocupe, seu CPF não irá constar nos dashboards!"/>
             </div>
-            <div class="form-group input-field  col s3">
+            <div class="form-group input-field  col s4">
               <label for="titulo">Documento de referência:</label>
-              <input type="text" id="titulo" name="docRef" value=data.registroNC.ssdocRef placeholder="Opcional (ex.: n° do Processo)" class="form-control"/>
+              <input type="text" id="titulo" name="docRef" value=data.registroNC.ssdocRef placeholder="(ex.: n° do Processo)" class="form-control docref chips chips-placeholder"/>
             </div>
-            <div class="form-group input-field col s3">
+            <div class="form-group input-field col s1">
+              <a href="">
+                <i class="material-icons addDoc tooltipped" data-position="bottom" data-tooltip="Clique aqui para incluir mais de um processo.">add</i>
+              </a>
+            </div>
+            <div class="areachip form-group input-field col s5"/>
+          </div>
+          <div class="row">
+            <div class="form-group input-field col s4">
               <select required name="mpProcUser">
                 <option class="form-group" value="" disabled selected>Clique para selecionar</option>
                 <for|mp| of=data.mp>
@@ -54,7 +48,7 @@
               </select>
               <label for="mProcUser">Qual o seu macroprocesso?</label>
             </div>
-            <div class="form-group input-field col s3">
+            <div class="form-group input-field col s4">
               <select required name="mProcOrigem">
                 <option class="form-group" value="" disabled selected>Clique para selecionar</option>
                 <for|mp| of=data.mp>
@@ -63,7 +57,7 @@
               </select>
               <label for="mProcOrigem">Em qual macroprocesso a NC teve origem?</label>
             </div>
-            <div class="form-group input-field col s3">
+            <div class="form-group input-field col s4">
               <select name="equipeNC">
                 <option class="form-group" value="" disabled selected>Clique para selecionar</option>
                 <for|und| of=data.und>
@@ -92,13 +86,13 @@
               </p>
               <p>
                 <label>
-                  <input name="acaoImediata" type="radio" value="Correção" checked/>
+                  <input name="acaoImediata" type="radio" value="Correção" checked class="hoverable"/>
                   <span>Correção</span>
                 </label>
               </p>
               <p>
                 <label>
-                  <input name="acaoImediata" type="radio" value="Encaminhada para Correção"/>
+                  <input name="acaoImediata" type="radio" value="Encaminhada para Correção" class="hoverable"/>
                   <span>NC encaminhada para correção</span>
                 </label>
               </p>
@@ -106,6 +100,10 @@
             <div class="input-field col s4">
               <input type="text" id="dataNC" name="dataNC" class="datepicker"/>
               <label for="dataNC">Quando ocorreu a NC?</label>
+            </div>
+            <div class="input-field col s4">
+              <input type="text" id="EncCorNC" name="EncCorNC" class="datepicker"/>
+              <label for="EncCorNC">Quando a NC foi encaminhada/Corrigida?</label>
             </div>
             <div class="col s5 offset-s11">
               <button class="btn-floating btn-large waves-effect waves-light green hoverable " type="submit">
@@ -116,38 +114,7 @@
         </form>
       </div>
     </main>
-    <footer class="page-footer rodape">
-      <div class="container">
-        <div class="row">
-          <div class="col l6 s12">
-            <h5 class="white-text">Conteúdo</h5>
-            <p class="grey-text text-lighten-4">Conteúdo futuro</p>
-          </div>
-          <div class="col l4 offset-l2 s12">
-            <h5 class="white-text">Links</h5>
-            <ul>
-              <li>
-                <a class="grey-text text-lighten-3" href="#!">Link 1</a>
-              </li>
-              <li>
-                <a class="grey-text text-lighten-3" href="#!">Link 2</a>
-              </li>
-              <li>
-                <a class="grey-text text-lighten-3" href="#!">Link 3</a>
-              </li>
-              <li>
-                <a class="grey-text text-lighten-3" href="#!">Link 4</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="footer-copyright">
-        <div class="container">
-          © 2019 Conselho Administrativo de Recursos Fiscais - CARF<a class="grey-text text-lighten-4 right" href="#!">..</a>
-        </div>
-      </div>
-    </footer>
+    <footer class="page-footer rodape"/>
     <!--Modal Structure-->
     <div id="modal1" class="modal">
       <div class="modal-content">
@@ -164,6 +131,7 @@
     </div>
     <script src="/estatico/js/jquery-3.4.1.js"/>
     <script src="/estatico/js/materialize.js"/>
+    <script src="/estatico/js/loadtemplate.js"/>
     <script src="/estatico/js/services/HttpService.js"/>
     <script src="/estatico/js/formcontrol.js"/>
   </body>

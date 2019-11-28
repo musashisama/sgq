@@ -30,7 +30,8 @@ class NCDao {
         return new Promise((resolve, reject) => {
 
             this._db.nc                
-                .find()                
+                .find()
+                .sort({nconformidade:1})                
                 .project(filtro)
                 .toArray(function(erro, res){
                     if(erro){
