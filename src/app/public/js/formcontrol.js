@@ -1,8 +1,12 @@
-var resp = [];
-var obj = '';
-
 $(document).ready(function(){
     $('select').formSelect();
+    json = JSON.parse("{"+$("#naoconfs").text().slice(0,-1)+"}");      
+    $('input.autocomplete').autocomplete({
+        data:json,            
+        minLength:0}
+    );
+
+
     $('.datepicker').datepicker({
         autoClose:true,
         format:'dd-mm-yyyy',
@@ -62,11 +66,5 @@ $(document).ready(function(){
             weekdaysAbbrev:	['D','S','T','Q','Q','S','S']
             
         }
-    });
-    obj = $("#naoconfs").text();
-    json = JSON.parse("{"+obj.slice(0,-1)+"}");      
-    $('input.autocomplete').autocomplete({
-        data:json,            
-        minLength:3}
-    );       
+    });           
 });
