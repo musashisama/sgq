@@ -63,15 +63,29 @@ class NCControlador {
 
     cadastra() {
         return function(req, resp) {
-            //console.log(req.body);
+            //console.log(req.body.dataNC);            
+            var arrayData1 = req.body.dataNC.split("-");
+            var dataAjustada1 = new Date(arrayData1[2],arrayData1[1]-1,arrayData1[0], new Date().getHours()).toUTCString();
+            req.body.dataNC = dataAjustada1;
+            var arrayData2 = req.body.EncCorNC.split("-");
+            var dataAjustada2 = new Date(arrayData2[2],arrayData2[1]-1,arrayData2[0], new Date().getHours()).toUTCString();
+            req.body.EncCorNC = dataAjustada2;
             const registro = req.body;
             registro['horaCriacao'] = new Date().toUTCString();
-            //console.log(registro);
+            console.log(registro);
             const ncDao = new NCDao(conn);
             ncDao.insere(registro)
                 .then(resp.redirect(NCControlador.rotas().sucesso))
                 .catch(erro => console.log(erro));
         }
+    }
+
+    ajustaData(data){
+        arrayData = data.split("-");
+        console.log(arrayData[2]+' '+arrayData[1]+' '+arrayData[0]);
+        dataAjustada = new Date(arrayData[2],arrayData[1]-1,arrayData[0], new Date().getHours()).toUTCString();
+        console.log('Data Ajustada: ', dataAjustada);    
+        return dataAjustada;
     }
     
     sucesso() {

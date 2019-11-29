@@ -22,7 +22,7 @@ function render(input, out, __component, component, state) {
 
   component_globals_tag({}, out);
 
-  out.w("<header class=\"container-header cabecalho\"></header><main class=\"conteudoPrincipal\"><div class=\"container\"><h3 class=\"center-align\">Registro de Não Conformidades</h3><br><br><form id=\"formNC\" action=\"/form\" method=\"post\">");
+  out.w("<header class=\"container-header cabecalho\"></header><main class=\"conteudoPrincipal\"><div class=\"container\"><h3 class=\"center-align\">Registro de Não Conformidades</h3><br><br><form id=\"formNC\" name=\"formNC\" action=\"/form\" method=\"post\">");
 
   if (data.registroNC._id) {
     out.w("<div><input type=\"hidden\" name=\"_method\" value=\"PUT\"><input type=\"hidden\" name=\"id\"" +
@@ -30,11 +30,11 @@ function render(input, out, __component, component, state) {
       "></div>");
   }
 
-  out.w("<div class=\"row\"><div class=\"form-group input-field  col s2\"><label for=\"titulo\" class=\"tooltipped\" data-position=\"bottom\" data-tooltip=\"Não se preocupe, seu CPF não irá constar nos dashboards!\">CPF:</label><input required type=\"text\" id=\"titulo\" name=\"cpfUser\"" +
+  out.w("<div class=\"row\"><div class=\"form-group input-field cpfUser col s2\"><label for=\"titulo\" class=\"tooltipped\" data-position=\"bottom\" data-tooltip=\"Não se preocupe, seu CPF não irá constar nos dashboards!\">Seu CPF:</label><input required type=\"text\" id=\"titulo\" name=\"cpfUser\"" +
     marko_attr("value", data.registroNC.cpfUser) +
-    " placeholder=\"Digite seu CPF\" class=\"form-control tooltipped\" data-position=\"bottom\" data-tooltip=\"Não se preocupe, seu CPF não irá constar nos dashboards!\"></div><div class=\"form-group input-field  col s4\"><label for=\"titulo\">Documento de referência:</label><input type=\"text\" id=\"titulo\" name=\"docRef\"" +
+    " placeholder=\"Digite seu CPF\" class=\"form-control cpfuser tooltipped\" data-position=\"bottom\" data-tooltip=\"Não se preocupe, seu CPF não irá constar nos dashboards!\"></div><div class=\"form-group input-field  col s4\"><label for=\"titulo\">Documento de referência:</label><input type=\"text\" id=\"titulo\" name=\"docRef\"" +
     marko_attr("value", data.registroNC.ssdocRef) +
-    " placeholder=\"(ex.: n° do Processo)\" class=\"form-control docref chips chips-placeholder\"></div><div class=\"form-group input-field col s1\"><a class=\"btn-floating btn-small waves-effect waves-light blue hoverable\" href=\"\"><i class=\"material-icons addDoc tooltipped\" data-position=\"bottom\" data-tooltip=\"Clique aqui para incluir mais de um processo.\">add</i></a></div><div class=\"areachip form-group input-field col s5\"></div></div><div class=\"row\"><div class=\"form-group input-field col s4\"><select required name=\"mpProcUser\"><option class=\"form-group\" value=\"\" disabled selected>Clique para selecionar</option>");
+    " placeholder=\"(ex.: n° do Processo). Após digitar, clique em &quot;+&quot; para adicionar o processo.\" class=\"form-control docref chips chips-placeholder\"></div><div class=\"form-group input-field col s1\"><a class=\"btn-floating btn-small waves-effect waves-light blue hoverable\" href=\"\"><i class=\"material-icons addDoc tooltipped\" data-position=\"bottom\" data-tooltip=\"Clique aqui para incluir mais de um processo.\">add</i></a></div><div class=\"areachip form-group input-field col s5\"></div></div><div class=\"row\"><div class=\"form-group input-field mpProcUser col s4\"><select required name=\"mpProcUser\"><option class=\"form-group\" value=\"\" disabled selected>Clique para selecionar</option>");
 
   var $for$0 = 0;
 
@@ -48,7 +48,7 @@ function render(input, out, __component, component, state) {
       "</option>");
   });
 
-  out.w("</select><label for=\"mProcUser\">Qual o seu macroprocesso?</label></div><div class=\"form-group input-field col s4\"><select required name=\"mProcOrigem\"><option class=\"form-group\" value=\"\" disabled selected>Clique para selecionar</option>");
+  out.w("</select><label for=\"mProcUser\">Qual o seu macroprocesso?</label></div><div class=\"form-group input-field mProcOrigem col s4\"><select required name=\"mProcOrigem\"><option class=\"form-group\" value=\"\" disabled selected>Clique para selecionar</option>");
 
   var $for$1 = 0;
 
@@ -62,7 +62,7 @@ function render(input, out, __component, component, state) {
       "</option>");
   });
 
-  out.w("</select><label for=\"mProcOrigem\">Em qual macroprocesso a NC teve origem?</label></div><div class=\"form-group input-field col s4\"><select name=\"equipeNC\"><option class=\"form-group\" value=\"\" disabled selected>Clique para selecionar</option>");
+  out.w("</select><label for=\"mProcOrigem\">Em qual macroprocesso a <strong>não conformidade</strong> teve origem?</label></div><div class=\"form-group input-field equipeNC col s4\"><select name=\"equipeNC\"><option class=\"form-group\" value=\"\" disabled selected>Clique para selecionar</option>");
 
   var $for$2 = 0;
 
@@ -76,7 +76,7 @@ function render(input, out, __component, component, state) {
       "</option>");
   });
 
-  out.w("</select><label for=\"equipeNC\">Unidade onde ocorreu a Não Conformidade</label></div></div><div class=\"row\"><div class=\"form-group input-field col s6\"><select name=\"descNC\"><option class=\"form-group\" value=\"\" disabled selected>Clique para selecionar</option>");
+  out.w("</select><label for=\"equipeNC\">Unidade onde ocorreu a <strong>não conformidade</strong>:</label></div></div><div class=\"row\"><div class=\"form-group input-field descNC col s6\"><select name=\"descNC\"><option class=\"form-group\" value=\"\" disabled selected>Clique para selecionar</option>");
 
   var $for$3 = 0;
 
@@ -90,9 +90,9 @@ function render(input, out, __component, component, state) {
       "</option>");
   });
 
-  out.w("</select><label for=\"descNC\">Descrição da Não Conformidade</label></div><div class=\"input-field col s6\"><i class=\"material-icons prefix\">mode_edit</i><textarea name=\"obsParticipante\" placeholder=\"Detalhamento maior de como ocorreu a não conformidade.\" id=\"icon_prefix2\" class=\"materialize-textarea\">" +
+  out.w("</select><label for=\"descNC\">Descrição da <strong>não conformidade</strong>:</label></div><div class=\"input-field col s6\"><i class=\"material-icons prefix\">mode_edit</i><textarea name=\"obsParticipante\" placeholder=\"Detalhamento maior de como ocorreu a não conformidade.\" id=\"icon_prefix2\" class=\"materialize-textarea\">" +
     marko_escapeXml(data.registroNC.obs) +
-    "</textarea><label for=\"icon_prefix2\">Comentários do participante (opcional):</label></div></div><div class=\"row\"><div class=\"input-field col s3\"><p><label>Ação Imediata</label></p><p><label><input name=\"acaoImediata\" type=\"radio\" value=\"Correção\" checked class=\"hoverable\"><span>Correção</span></label></p><p><label><input name=\"acaoImediata\" type=\"radio\" value=\"Encaminhada para Correção\" class=\"hoverable\"><span>NC encaminhada para correção</span></label></p></div><div class=\"input-field col s4\"><input type=\"text\" id=\"dataNC\" name=\"dataNC\" class=\"datepicker\"><label for=\"dataNC\">Quando ocorreu a NC?</label></div><div class=\"input-field col s4\"><input type=\"text\" id=\"EncCorNC\" name=\"EncCorNC\" class=\"datepicker\"><label for=\"EncCorNC\">Quando a NC foi encaminhada/Corrigida?</label></div><div class=\"col s5 offset-s11\"><a class=\"modal-trigger btn-floating btn-large waves-effect waves-light green hoverable\" href=\"#modal1\"><i class=\"material-icons\">add</i></a></div></div></form></div></main><footer class=\"page-footer rodape\"></footer><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\">A bunch of text</p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div><div id=\"naoconfs\" class=\"controle\">");
+    "</textarea><label for=\"icon_prefix2\">Comentários do participante (opcional):</label></div></div><div class=\"row\"><div class=\"input-field col s2\"><p><label>Ação Imediata</label></p><p><label><input name=\"acaoImediata\" type=\"radio\" value=\"Correção\" checked class=\"hoverable\"><span>Correção</span></label></p><p><label><input name=\"acaoImediata\" type=\"radio\" value=\"Encaminhada para Correção\" class=\"hoverable\"><span><strong>Não conformidade</strong> encaminhada para correção</span></label></p></div><div class=\"input-field dataNC col s5\"><input type=\"text\" id=\"dataNC\" name=\"dataNC\" class=\"datepicker\"><label for=\"dataNC\" class=\"lbdataNC\">Quando ocorreu a <strong>não conformidade</strong>?</label></div><div class=\"input-field EncCorNC col s5\"><input type=\"text\" id=\"EncCorNC\" name=\"EncCorNC\" class=\"datepicker\"><label for=\"EncCorNC\" class=\"lbEncCorNC\">Quando a <strong>não conformidade</strong> foi encaminhada/Corrigida?</label></div><div class=\"col s5 offset-s11\"><a id=\"aModal\" class=\"btn-floating btn-large waves-effect waves-light green hoverable btn-insere\" href=\"#modal1\"><i class=\"material-icons\">note_add</i></a></div></div></form></div></main><footer class=\"page-footer rodape\"></footer><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div><div id=\"naoconfs\" class=\"controle\">");
 
   marko_forEach(data.nconf, function(nconf) {
     out.w("\"" +
@@ -100,11 +100,11 @@ function render(input, out, __component, component, state) {
       "\":null,");
   });
 
-  out.w("</div><script src=\"/estatico/js/jquery-3.4.1.js\"></script><script src=\"/estatico/js/materialize.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script><script src=\"/estatico/js/services/HttpService.js\"></script><script src=\"/estatico/js/formcontrol.js\"></script>");
+  out.w("</div><script src=\"/estatico/js/jquery-3.4.1.js\"></script><script src=\"/estatico/js/materialize.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script><script src=\"/estatico/js/services/HttpService.js\"></script><script src=\"/estatico/js/valida.js\"></script><script src=\"/estatico/js/formcontrol.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "92");
+  await_reorderer_tag({}, out, __component, "99");
 
   out.w("</body></html>");
 }
