@@ -5,14 +5,14 @@ function inicializaComponentes(){
         initSelect();
         $('.tooltipped').tooltip();    
         initDatePicker();
-        initChips();
-        initModal();         
-        btnInsere();                   
+        initChips();                   
+        btnInsere();
+        initModal();                   
     });
 }
 
 function initSelect(){
-    $('select').formSelect();   
+    $('select').formSelect(); 
 }
 
 function btnInsere(){    
@@ -21,6 +21,7 @@ function btnInsere(){
         $('docref').val(pegaChips());      
         if(validaForm()){
             $('#aModal').addClass('modal-trigger');
+            
             montaModal();
         };           
     });
@@ -38,12 +39,26 @@ function initModal(){
     $('.modal').modal();     
 }
 
+function insereChips(){      
+            $("#formNC").submit();
+}
+
+function ajustaData(data){
+    arrayData = data.split("-");
+    console.log(arrayData[2]+' '+arrayData[1]+' '+arrayData[0]);
+    dataAjustada = new Date(arrayData[2],arrayData[1]-1,arrayData[0], new Date().getHours()).toUTCString();
+    console.log('dataAjustada:', dataAjustada);    
+    return dataAjustada;
+}
+
 function montaModal(){
     var data = pegaChips();      
         $('.hModal').text("Confirmação de Inclusão de Registro");
         $('.docref').val(pegaChips());
         $('.pModal').append(
             `<p class="pModal">
+            <br/>
+            Verifique se os dados abaixo estão corretos e clique em "Confirma" para efetuar o registro.<br/><br/>
             <strong>Dados da não conformidade:</strong><br/>
             ${$('.chip').length} processo(s): ${document.formNC.docRef.value} <br/>
             <strong>Seu macroprocesso:</strong><br/>
@@ -51,24 +66,36 @@ function montaModal(){
             <strong>Macroprocesso de origem da não conformidade:</strong><br/>
             ${document.formNC.mProcOrigem.value}<br/>
             <strong>Equipe onde ocorreu a não conformidade:</strong><br/>
-            ${document.formNC.equipeNC.value}
+            ${document.formNC.equipeNC.value}<br/>
+            <strong>Descrição da não conformidade</strong><br/>
+            ${document.formNC.descNC.value}<br/>
+            <strong>Observações adicionais sobre a não conformidade:</strong><br/>
+            ${document.formNC.obsParticipante.value}<br/>
+            <strong>Ação imediata:</strong><br/>
+            ${document.formNC.acaoImediata.value}<br/>
+            <strong>Data de ocorrência da não conformidade:</strong><br/>
+            ${document.formNC.dataNC.value}<br/>
+            <strong>Data de encaminhamento ou correção da não conformidade:</strong><br/>
+            ${document.formNC.EncCorNC.value}
             </p>`
-        ); 
-        console.log("Data: "+data.toString());
-        $('.concorda').click(function(){    
-            console.log("Clicou confirma");  
-            $("#formNC").submit();     
+        );
+            $('.concorda').click(function(){
+                //document.formNC.dataNC.value = ajustaData(document.formNC.dataNC.value);
+                //document.formNC.EncCorNC.value = ajustaData(document.formNC.EncCorNC.value);           
+                $('.chip').each(function(index){
+                    var dados = $(this).text().split("close");
+                    var rm = dados.slice(0,dados.length-1).toString();
+                    $('.docref').val(rm);
+                    console.log(index+': '+rm);
+                    console.log("Data: "+dados.toString());                    
+                    insereChips();
+                });             
         });
         $('.cancela').click(function(){
             $('.pModal').text('');
-            $('.docref').val('');
-        })
+            $('.docref').val('');            
+        })        
 }
-
-
-
-
-
 function initChips(){
     $('.docref').keypress(function (event) {
         var keycode = (event.keyCode ? event.keyCode : event.which);
