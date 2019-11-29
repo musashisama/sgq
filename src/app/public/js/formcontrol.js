@@ -80,16 +80,19 @@ function montaModal(){
             </p>`
         );
             $('.concorda').click(function(){
-                //document.formNC.dataNC.value = ajustaData(document.formNC.dataNC.value);
-                //document.formNC.EncCorNC.value = ajustaData(document.formNC.EncCorNC.value);           
-                $('.chip').each(function(index){
-                    var dados = $(this).text().split("close");
-                    var rm = dados.slice(0,dados.length-1).toString();
-                    $('.docref').val(rm);
-                    console.log(index+': '+rm);
-                    console.log("Data: "+dados.toString());                    
-                    insereChips();
-                });             
+                if($('.chip').length>0){
+                    $('.chip').each(function(index){
+                        var dados = $(this).text().split("close");
+                        var rm = dados.slice(0,dados.length-1).toString();
+                        $('.docref').val(rm);
+                        console.log(index+': '+rm);
+                        console.log("Data: "+dados.toString());                    
+                        insereChips();
+                    });                    
+                }else {
+                    $("#formNC").submit();
+                 }
+                                   
         });
         $('.cancela').click(function(){
             $('.pModal').text('');
