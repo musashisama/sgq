@@ -90,3 +90,10 @@ h3 {
     color:white;
     padding-left: 2.5%;;
 }
+
+#toast-container {
+    top: auto !important;
+    right: auto !important;
+    bottom: 80%;
+    left: 50%;  
+  }

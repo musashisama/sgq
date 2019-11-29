@@ -15,7 +15,7 @@
         <h3 class="center-align">Registro de Não Conformidades</h3>
         <br/>
         <br/>
-        <form id="formNC" action="/form" method="post">
+        <form id="formNC" name="formNC" action="/form" method="post">
           <if(data.registroNC._id)>
             <div>
               <input type="hidden" name="_method" value="PUT"/>
@@ -23,9 +23,9 @@
             </div>
           </if>
           <div class="row">
-            <div class="form-group input-field  col s2">
-              <label for="titulo" class="tooltipped" data-position="bottom" data-tooltip="Não se preocupe, seu CPF não irá constar nos dashboards!">CPF:</label>
-              <input required type="text" id="titulo" name="cpfUser" value=data.registroNC.cpfUser placeholder="Digite seu CPF" class="form-control tooltipped" data-position="bottom" data-tooltip="Não se preocupe, seu CPF não irá constar nos dashboards!"/>
+            <div class="form-group input-field cpfUser col s2">
+              <label for="titulo" class="tooltipped" data-position="bottom" data-tooltip="Não se preocupe, seu CPF não irá constar nos dashboards!">Seu CPF:</label>
+              <input required type="text" id="titulo" name="cpfUser" value=data.registroNC.cpfUser placeholder="Digite seu CPF" class="form-control cpfuser tooltipped" data-position="bottom" data-tooltip="Não se preocupe, seu CPF não irá constar nos dashboards!"/>
             </div>
             <div class="form-group input-field  col s4">
               <label for="titulo">Documento de referência:</label>
@@ -39,7 +39,7 @@
             <div class="areachip form-group input-field col s5"/>
           </div>
           <div class="row">
-            <div class="form-group input-field col s4">
+            <div class="form-group input-field mpProcUser col s4">
               <select required name="mpProcUser">
                 <option class="form-group" value="" disabled selected>Clique para selecionar</option>
                 <for|mp| of=data.mp>
@@ -48,39 +48,40 @@
               </select>
               <label for="mProcUser">Qual o seu macroprocesso?</label>
             </div>
-            <div class="form-group input-field col s4">
+            <div class="form-group input-field mProcOrigem col s4">
               <select required name="mProcOrigem">
                 <option class="form-group" value="" disabled selected>Clique para selecionar</option>
                 <for|mp| of=data.mp>
                   <option class="form-group" value=data.registroNC.mprocOrigem>${mp.macroprocesso}</option>
                 </for>
               </select>
-              <label for="mProcOrigem">Em qual macroprocesso a NC teve origem?</label>
+              <label for="mProcOrigem">
+                Em qual macroprocesso a <strong>não conformidade</strong> teve origem?
+              </label>
             </div>
-            <div class="form-group input-field col s4">
+            <div class="form-group input-field equipeNC col s4">
               <select name="equipeNC">
                 <option class="form-group" value="" disabled selected>Clique para selecionar</option>
                 <for|und| of=data.und>
                   <option class="form-group" value=data.und.Sigla>${und.Sigla}</option>
                 </for>
               </select>
-              <label for="equipeNC">Unidade onde ocorreu a Não Conformidade</label>
+              <label for="equipeNC">
+                Unidade onde ocorreu a <strong>não conformidade</strong>:
+              </label>
             </div>
           </div>
           <div class="row">
-            <!-- <div class="input-field col s6">
-              <i class="material-icons prefix">textsms</i>
-              <input required name="descNC" type="text" id="autocomplete-input" class="autocomplete"/>
-              <label for="autocomplete-input">Descrição da Não Conformidade</label>
-            </div> -->
-            <div class="form-group input-field col s6">
+            <div class="form-group input-field descNC col s6">
               <select name="descNC">
                 <option class="form-group" value="" disabled selected>Clique para selecionar</option>
                 <for|nconf| of=data.nconf>
                   <option class="form-group" value=data.nconf.nconformidade>${nconf.nconformidade}</option>
                 </for>
               </select>
-              <label for="descNC">Descrição da Não Conformidade</label>
+              <label for="descNC">
+                Descrição da <strong>não conformidade</strong>:
+              </label>
             </div>
             <div class="input-field col s6">
               <i class="material-icons prefix">mode_edit</i>
@@ -89,7 +90,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="input-field col s3">
+            <div class="input-field col s2">
               <p>
                 <label>Ação Imediata</label>
               </p>
@@ -102,17 +103,23 @@
               <p>
                 <label>
                   <input name="acaoImediata" type="radio" value="Encaminhada para Correção" class="hoverable"/>
-                  <span>NC encaminhada para correção</span>
+                  <span>
+                    <strong>Não conformidade</strong> encaminhada para correção
+                  </span>
                 </label>
               </p>
             </div>
-            <div class="input-field col s4">
+            <div class="input-field dataNC col s5">
               <input type="text" id="dataNC" name="dataNC" class="datepicker"/>
-              <label for="dataNC">Quando ocorreu a NC?</label>
+              <label for="dataNC" class="lbdataNC">
+                Quando ocorreu a <strong>não conformidade</strong>?
+              </label>
             </div>
-            <div class="input-field col s4">
+            <div class="input-field EncCorNC col s5">
               <input type="text" id="EncCorNC" name="EncCorNC" class="datepicker"/>
-              <label for="EncCorNC">Quando a NC foi encaminhada/Corrigida?</label>
+              <label for="EncCorNC" class="lbEncCorNC">
+                Quando a <strong>não conformidade</strong> foi encaminhada/Corrigida?
+              </label>
             </div>
             <!-- <div class="col s5 offset-s11">
               <button class="btn-floating btn-large waves-effect waves-light green hoverable " type="submit">
@@ -120,8 +127,8 @@
               </button>
             </div> -->
             <div class="col s5 offset-s11">
-              <a class="modal-trigger btn-floating btn-large waves-effect waves-light green hoverable" href="#modal1">
-                <i class="material-icons">add</i>
+              <a id="aModal" class="btn-floating btn-large waves-effect waves-light green hoverable btn-insere" href="#modal1">
+                <i class="material-icons">note_add</i>
               </a>
             </div>
           </div>
@@ -133,10 +140,10 @@
     <div id="modal1" class="modal">
       <div class="modal-content">
         <h4 class="hModal">Modal Header</h4>
-        <p class="pModal">A bunch of text</p>
+        <p class="pModal"></p>
       </div>
       <div class="modal-footer">
-        <a href="#!" class="modal-close waves-effect waves-red btn-flat">Cancela</a>
+        <a href="#!" class="modal-close waves-effect waves-red btn-flat cancela">Cancela</a>
         <button class="btn waves-effect waves-light concorda" type="submit" name="action">
           Confirma <i class="material-icons right">send</i>
         </button>
@@ -149,6 +156,7 @@
     <script src="/estatico/js/materialize.js"/>
     <script src="/estatico/js/loadtemplate.js"/>
     <script src="/estatico/js/services/HttpService.js"/>
+    <script src="/estatico/js/valida.js"/>
     <script src="/estatico/js/formcontrol.js"/>
   </body>
 </html>

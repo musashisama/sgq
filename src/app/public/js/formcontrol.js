@@ -1,137 +1,117 @@
-
 inicializaComponentes();
 
 function inicializaComponentes(){
-    $(document).ready(function () {
-    
-        $('select').formSelect();
-    
-        json = JSON.parse("{" + $("#naoconfs").text().slice(0, -1) + "}");
-        $('input.autocomplete').autocomplete({
-            data: json,
-            minLength: 0
-        }
-        );
-    
-        
-            $('.hModal').text("Confirmação de Inclusão de Registro");
-            $('.pModal').text(`Confirma a inclusão da não conformidade?`);
-        
-       
-    
-        $('.concorda').click(function(){      
+    $(document).ready(function () {        
+        initSelect();
+        $('.tooltipped').tooltip();    
+        initDatePicker();
+        initChips();
+        initModal();         
+        btnInsere();                   
+    });
+}
+
+function initSelect(){
+    $('select').formSelect();   
+}
+
+function btnInsere(){    
+    $('.btn-insere').click(function(event){
+        event.preventDefault();  
+        $('docref').val(pegaChips());      
+        if(validaForm()){
+            $('#aModal').addClass('modal-trigger');
+            montaModal();
+        };           
+    });
+}
+
+function pegaChips(){
+    var n = $('.chip').length;
+    var data = $('.chip').text().split("close");
+    var rm = data.slice(0,data.length-1).toString();
+    console.log(n+' '+rm.split(',')+' '+typeof(rm.split(',')));
+    return rm.split(',');
+}
+
+function initModal(){    
+    $('.modal').modal();     
+}
+
+function montaModal(){
+    var data = pegaChips();      
+        $('.hModal').text("Confirmação de Inclusão de Registro");
+        $('.docref').val(pegaChips());
+        $('.pModal').append(
+            `<p class="pModal">
+            <strong>Dados da não conformidade:</strong><br/>
+            ${$('.chip').length} processo(s): ${document.formNC.docRef.value} <br/>
+            <strong>Seu macroprocesso:</strong><br/>
+            ${document.formNC.mpProcUser.value} <br/>
+            <strong>Macroprocesso de origem da não conformidade:</strong><br/>
+            ${document.formNC.mProcOrigem.value}<br/>
+            <strong>Equipe onde ocorreu a não conformidade:</strong><br/>
+            ${document.formNC.equipeNC.value}
+            </p>`
+        ); 
+        console.log("Data: "+data.toString());
+        $('.concorda').click(function(){    
+            console.log("Clicou confirma");  
             $("#formNC").submit();     
         });
-    
-        // var obj = [
-        //     {"name": "Afghanistan", "code": "AF"}, 
-        //     {"name": "Åland Islands", "code": "AX"}, 
-        //     {"name": "Albania", "code": "AL"}, 
-        //     {"name": "Algeria", "code": "DZ"}
-        //   ];
-          
-        //   // the code you're looking for
-        //   var needle = 'AL';
-          
-        //   // iterate over each element in the array
-        //   for (var i = 0; i < obj.length; i++){
-        //     // look for the entry with a matching `code` value
-        //     if (obj[i].code == needle){
-        //        // we found it
-        //       // obj[i].name is the matched result
-        //     }
-        //   }
-        
-        $('.modal').modal();
-        $('.tooltipped').tooltip();
-    
-        $('.docref').keypress(function (event) {
-            var keycode = (event.keyCode ? event.keyCode : event.which);
-            if (keycode == '13' && $('.docref').val()) {
-                event.preventDefault();
-                $('.areachip').append(
-                    `<div class="chip">
-                ${$('.docref').val()}
-                <i class="close material-icons">close</i>
-              </div>
-              `);
-                $('.docref').val("")
-            }
-        });
-    
-        $('.addDoc').click(function (event) {
+        $('.cancela').click(function(){
+            $('.pModal').text('');
+            $('.docref').val('');
+        })
+}
+
+
+
+
+
+function initChips(){
+    $('.docref').keypress(function (event) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13' && $('.docref').val()) {
             event.preventDefault();
-            if($('.docref').val()){
-                $('.areachip').append(
-                    `<div class="chip">
-                    ${$('.docref').val()}
-                    <i class="close material-icons">close</i>
-                </div>
-                `);
-                $('.docref').val("");
-            }
-        });
-    
-    
-        $('.datepicker').datepicker({
-            autoClose: true,
-            format: 'dd-mm-yyyy',
-            i18n:
-            {
-                cancel: 'Cancelar',
-                clear: 'Limpar',
-                done: 'Ok',
-                months: ['Janeiro',
-                    'Fevereiro',
-                    'Março',
-                    'Abril',
-                    'Maio',
-                    'Junho',
-                    'Julho',
-                    'Agosto',
-                    'Setembro',
-                    'Outubro',
-                    'Novembro',
-                    'Dezembro'
-                ],
-                monthsShort:
-                    [
-                        'Jan',
-                        'Fev',
-                        'Mar',
-                        'Abr',
-                        'Mai',
-                        'Jun',
-                        'Jul',
-                        'Ago',
-                        'Set',
-                        'Out',
-                        'Nov',
-                        'Dez'
-                    ],
-                weekdays:
-                    [
-                        'Domingo',
-                        'Segunda',
-                        'Terça',
-                        'Quarta',
-                        'Quinta',
-                        'Sexta',
-                        'Sábado'
-                    ],
-                weekdaysShort:
-                    [
-                        'Dom',
-                        'Seg',
-                        'Ter',
-                        'Qua',
-                        'Qui',
-                        'Sex',
-                        'Sáb'
-                    ],
-                weekdaysAbbrev: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
-    
-            }
-        });
+            $('.areachip').append(`<div class="chip">${$('.docref').val()}<i class="close material-icons">close</i></div>`);
+            $('.docref').val("")
+        }
+    });    
+    $('.addDoc').click(function (event) {
+        event.preventDefault();
+        if($('.docref').val()){
+            $('.areachip').append(`<div class="chip">${$('.docref').val()}<i class="close material-icons">close</i></div>`);
+            $('.docref').val("");
+        }
+    });
+}
+function initDatePicker(){
+    $('.datepicker').click(function(event){
+        event.preventDefault();
+        $('.lbdataNC').css('color','#9e9e9e');
+        $('.lbEncCorNC').css('color','#9e9e9e');   
+
+    });
+    let formato = 'dd-mm-yyyy'
+    let meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+    let mesesCurtos = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+    let diasDaSemana = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
+    let diasCurtos = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb']
+    let diasAbrev = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
+    $('.datepicker').datepicker({
+        autoClose: true,
+        format: formato,
+        i18n:
+        {
+            cancel: 'Cancelar',
+            clear: 'Limpar',
+            done: 'Ok',
+            months: meses,
+            monthsShort: mesesCurtos,
+            weekdays: diasDaSemana,
+            weekdaysShort: diasCurtos,
+            weekdaysAbbrev: diasAbrev
+        }
     });
 }

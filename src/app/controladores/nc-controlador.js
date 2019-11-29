@@ -66,7 +66,7 @@ class NCControlador {
             //console.log(req.body);
             const registro = req.body;
             registro['horaCriacao'] = new Date().toUTCString();
-            //console.log(registro);
+            console.log(registro);
             const ncDao = new NCDao(conn);
             ncDao.insere(registro)
                 .then(resp.redirect(NCControlador.rotas().sucesso))
