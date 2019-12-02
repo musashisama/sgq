@@ -25,13 +25,13 @@ class NCDao {
         });
     }
 
-    listaNC(filtro={}) {
+    listaNC(ordena={},filtro={}) {
         
         return new Promise((resolve, reject) => {
 
             this._db.nc                
                 .find()
-                .sort({nconformidade:1})                
+                .sort(ordena)                
                 .project(filtro)
                 .toArray(function(erro, res){
                     if(erro){

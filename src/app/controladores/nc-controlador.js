@@ -12,11 +12,25 @@ class NCControlador {
             listaNC:'/listaNC',
             form: '/form',
             sucesso: '/sucesso',
-            principal: '/'
+            principal: '/',
+            listagem: '/listagem'
             
         };
     }
 
+    listagem(){
+        return function(req, resp) {
+            const ncDao = new NCDao(conn);            
+            ncDao.listaNC()
+                    .then(nc => resp.marko(
+                        templates.nc.listagem,
+                        {
+                            nc: nc
+                        }
+                    ))
+                    .catch(erro => console.log(erro));
+        };
+    }
     lista() {
         return function(req, resp) {
             const ncDao = new NCDao(conn);            
