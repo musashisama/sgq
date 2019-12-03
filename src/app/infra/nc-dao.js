@@ -80,7 +80,7 @@ class NCDao {
     }
 
     getDadosForm(){
-        return Promise.all([this.listaMacro(),this.listaNC(),this.listaUnidades()]);
+        return Promise.all([this.listaMacro(),this.listaNC({nconformidade:1},{}),this.listaUnidades()]);
     }
 
     insere(registro) {
