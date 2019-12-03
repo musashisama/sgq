@@ -18,11 +18,11 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.w("<!DOCTYPE html><html><head><meta charset=\"utf-8\"> <link rel=\"stylesheet\" href=\"/estatico/css/libs/normalize.css\"><link rel=\"stylesheet\" href=\"/estatico/css/libs/materialize.css\"><link rel=\"stylesheet\" href=\"/estatico/css/libs/google-fonts.css\"><link rel=\"stylesheet\" href=\"/estatico/css/main.css\"></head><body>");
+  out.w("<!DOCTYPE html><html><head><meta charset=\"utf-8\"><link rel=\"stylesheet\" href=\"/estatico/css/libs/normalize.css\"><link rel=\"stylesheet\" href=\"/estatico/css/libs/materialize.css\"><link rel=\"stylesheet\" href=\"/estatico/css/libs/google-fonts.css\"><link rel=\"stylesheet\" href=\"/estatico/css/main.css\"></head><body>");
 
   component_globals_tag({}, out);
 
-  out.w("<header class=\"container-header cabecalho\"></header><main class=\"conteudoPrincipal\"><div class=\"container\"><h2 class=\"center-align\">Lista de Não Conformidades</h2> <table id=\"naoconformidades\" class=\"striped highlight z-depth-3 responsive-table\"><thead class=\"white-text grey darken-4 colunas\"><tr><th>Macroprocesso</th><th>Não conformidade</th> <th>Editar</th><th>Remover</th></tr></thead><tbody>");
+  out.w("<header class=\"container-header cabecalho\"></header><main class=\"conteudoPrincipal\"><div class=\"container\"><h2 class=\"center-align\">Lista de Não Conformidades</h2><table id=\"naoconformidades\" class=\"striped highlight z-depth-3 responsive-table\"><thead class=\"white-text grey darken-4 colunas\"><tr><th>Macroprocesso</th><th>Não conformidade</th><th>Editar</th><th>Remover</th></tr></thead><tbody>");
 
   var $for$0 = 0;
 
@@ -35,14 +35,14 @@ function render(input, out, __component, component, state) {
       marko_escapeXml(nc.Macroprocesso) +
       "</td><td class=\"desc\">" +
       marko_escapeXml(nc.nconformidade) +
-      "</td> <td class=\"td-edit\"><a" +
+      "</td><td class=\"td-edit\"><a" +
       marko_attr("href", "/lista/" + nc._id) +
       "><i class=\"small material-icons icones center-align\">edit</i></a></td><td class=\"td-remove\"><a class=\"modal-trigger\" href=\"#modal1\"><i class=\"aRemove small material-icons icones iconeRemove\"" +
       marko_attr("data-ref", "" + nc._id) +
-      " data-type=\"remocao\">remove_circle</i></a></td></tr> ");
+      " data-type=\"remocao\">remove_circle</i></a></td></tr>");
   });
 
-  out.w("</tbody></table><a class=\"btn-floating btn-large waves-effect waves-light green addListaNC\"><i class=\"material-icons\">add</i></a> </div></main><footer class=\"rodape\"> </footer> <div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\">A bunch of text</p> </div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat\">Cancela</a><a href=\"#!\" class=\"modal-close waves-effect waves-green btn-flat concorda\">Confirma</a></div></div> <script src=\"/estatico/js/jquery-3.4.1.js\"></script><script src=\"/estatico/js/materialize.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script> <script src=\"/estatico/js/remove-nc.js\"></script>");
+  out.w("</tbody></table><a class=\"btn-floating btn-large waves-effect waves-light green addListaNC\"><i class=\"material-icons\">add</i></a></div></main><footer class=\"rodape\"></footer><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\">A bunch of text</p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat\">Cancela</a><a href=\"#!\" class=\"modal-close waves-effect waves-green btn-flat concorda\">Confirma</a></div></div><script src=\"/estatico/js/jquery-3.4.1.js\"></script><script src=\"/estatico/js/materialize.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script><script src=\"/estatico/js/remove-nc.js\"></script>");
 
   init_components_tag({}, out);
 

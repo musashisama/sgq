@@ -1,5 +1,6 @@
 const conn = require('../../config/mongodb').dados;
 const NCDao = require('../infra/nc-dao');
+const requestIp = require('request-ip');
 
 const templates = require('../views/templates');
 
@@ -12,11 +13,25 @@ class NCControlador {
             listaNC:'/listaNC',
             form: '/form',
             sucesso: '/sucesso',
-            principal: '/'
+            principal: '/',
+            listagem: '/listagem'
             
         };
     }
 
+    listagem(){
+        return function(req, resp) {
+            const ncDao = new NCDao(conn);            
+            ncDao.listaNC()
+                    .then(nc => resp.marko(
+                        templates.nc.listagem,
+                        {
+                            nc: nc
+                        }
+                    ))
+                    .catch(erro => console.log(erro));
+        };
+    }
     lista() {
         return function(req, resp) {
             const ncDao = new NCDao(conn);            
@@ -45,7 +60,7 @@ class NCControlador {
     }
 
     formularioCadastro(){
-        return function(req, resp) {
+        return function(req, resp) {            
             const ncDao = new NCDao(conn);
             ncDao.getDadosForm()
             .then(dadosForm => {                
@@ -63,7 +78,8 @@ class NCControlador {
 
     cadastra() {
         return function(req, resp) {
-            //console.log(req.body.dataNC);            
+            //console.log(req.body.dataNC);  
+            const clientIp = requestIp.getClientIp(req);                  
             var arrayData1 = req.body.dataNC.split("-");
             var dataAjustada1 = new Date(arrayData1[2],arrayData1[1]-1,arrayData1[0], new Date().getHours()).toUTCString();
             req.body.dataNC = dataAjustada1;
@@ -72,6 +88,8 @@ class NCControlador {
             req.body.EncCorNC = dataAjustada2;
             const registro = req.body;
             registro['horaCriacao'] = new Date().toUTCString();
+            registro['clientIP'] = clientIp;
+            console.log(clientIp);
             console.log(registro);
             const ncDao = new NCDao(conn);
             ncDao.insere(registro)

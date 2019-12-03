@@ -25,13 +25,13 @@ class NCDao {
         });
     }
 
-    listaNC(filtro={}) {
+    listaNC(ordena={},filtro={}) {
         
         return new Promise((resolve, reject) => {
 
             this._db.nc                
                 .find()
-                .sort({nconformidade:1})                
+                .sort(ordena)                
                 .project(filtro)
                 .toArray(function(erro, res){
                     if(erro){
@@ -80,7 +80,7 @@ class NCDao {
     }
 
     getDadosForm(){
-        return Promise.all([this.listaMacro(),this.listaNC(),this.listaUnidades()]);
+        return Promise.all([this.listaMacro(),this.listaNC({nconformidade:1},{}),this.listaUnidades()]);
     }
 
     insere(registro) {

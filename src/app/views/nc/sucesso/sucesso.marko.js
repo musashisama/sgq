@@ -15,15 +15,15 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.w("<!DOCTYPE html><html><head><meta charset=\"utf-8\"><link rel=\"stylesheet\" href=\"/estatico/css/libs/normalize.css\"><link rel=\"stylesheet\" href=\"/estatico/css/libs/materialize.css\"><link rel=\"stylesheet\" href=\"/estatico/css/libs/google-fonts.css\"><link rel=\"stylesheet\" href=\"/estatico/css/main.css\"><title>Não Conformidade registrada com sucesso!</title></head><body>");
+  out.w("<!DOCTYPE html><html><head><meta charset=\"utf-8\"><link rel=\"stylesheet\" href=\"/estatico/css/libs/normalize.css\"><link rel=\"stylesheet\" href=\"/estatico/css/libs/materialize.css\"><link rel=\"stylesheet\" href=\"/estatico/css/libs/google-fonts.css\"><link rel=\"stylesheet\" href=\"/estatico/css/main.css\"><title>Sistema Integrado de Gestão</title></head><body>");
 
   component_globals_tag({}, out);
 
-  out.w("<header class=\"container-header cabecalho\"></header><main class=\"conteudoPrincipal\"><div class=\"container\"><h3 class=\"center-align\">Não Conformidade registrada com sucesso!</h3><div class=\"row\"><div class=\"col s6 offset-s3 center-align\"><table class=\"centered highlight z-depth-3 responsive-table\" border-width=0><thead></thead><tbody><tr><td><strong>Cadastrar nova não conformidade</strong></td><td><a href=\"/form\"><i class=\"large material-icons circle\">add</i></a></td></tr><tr><td><strong>Ir para o Dashboard</strong></td><td><a href=\"http://10.202.24.111:3005/public/dashboard/9e707956-2b3a-4f87-bbef-254e6ea90c8d\"><i class=\"large material-icons circle\">insert_chart</i></a></td></tr></tbody></table></div></div></div></main><footer class=\"page-footer rodape\"></footer><script src=\"/estatico/js/jquery-3.4.1.js\"></script><script src=\"/estatico/js/materialize.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script>");
+  out.w("<header class=\"container-header cabecalho\"></header><main class=\"conteudoPrincipal\"><div class=\"container\"><h2>Não conformidade Registrada com Sucesso.</h2><div class=\"row\"><div class=\"col s6 offset-s3 center-align\"><table class=\"centered highlight z-depth-3 responsive-table\" border-width=0><thead><br><br></thead><tbody><tr><td><a href=\"/form\"><strong>Cadastrar nova não conformidade</strong></a></td><td><a href=\"/form\"><i class=\"large material-icons circle\">add</i></a></td></tr><tr><td><a href=\"http://10.202.24.111:3005/public/dashboard/9e707956-2b3a-4f87-bbef-254e6ea90c8d\"><strong>Ir para o Dashboard</strong></a></td><td><a href=\"http://10.202.24.111:3005/public/dashboard/9e707956-2b3a-4f87-bbef-254e6ea90c8d\"><i class=\"large material-icons circle\">insert_chart</i></a></td></tr><tr><td><a href=\"/listagem\"><strong>Listar não conformidades</strong></a></td><td><a href=\"/listagem\"><i class=\"large material-icons circle\">format_list_bulleted</i></a></td></tr></tbody></table></div></div></div></main><footer class=\"page-footer rodape\"></footer><script src=\"/estatico/js/jquery-3.4.1.js\"></script><script src=\"/estatico/js/materialize.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "34");
+  await_reorderer_tag({}, out, __component, "45");
 
   out.w("</body></html>");
 }
