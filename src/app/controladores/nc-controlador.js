@@ -11,7 +11,8 @@ class NCControlador {
             lista: '/lista',
             listaNC: '/listaNC',
             form: '/form',            
-            listagem: '/listagem'      
+            listagem: '/listagem',
+            listaRNC: '/gestao/listaregistronc'
 
         };
     }
@@ -66,6 +67,20 @@ class NCControlador {
                         mp: dadosForm[0],
                         nconf: dadosForm[1],
                         und: dadosForm[2]
+
+                    })
+                })
+                .catch(erro => console.log(erro));
+        };
+    }
+
+    listaRNC(){
+        return function (req, resp) {
+            const ncDao = new NCDao(conn);
+            ncDao.getRegistrosNC({},{})
+                .then(registroNC => {
+                    resp.marko(templates.gestao.listaregistros, {
+                        registroNC: registroNC,            
 
                     })
                 })

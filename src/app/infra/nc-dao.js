@@ -23,13 +23,13 @@ class NCDao {
         });
     }
 
-    listaUnidades(filtro = { _id: 0, Sigla: 1, Nome: 1 }) {
+    listaUnidades(filtro, ordena) {
 
         return new Promise((resolve, reject) => {
 
             this._db.unidadesCARF
                 .find()
-                .sort({ Sigla: 1 })
+                .sort(ordena)
                 .project(filtro)
                 .toArray(function (erro, res) {
                     if (erro) {
@@ -41,13 +41,13 @@ class NCDao {
         });
     }
 
-    listaMacro(filtro = {}) {
+    listaMacro(filtro, ordena) {
 
         return new Promise((resolve, reject) => {
 
             this._db.macroprocessos
                 .find()
-                .sort({ macroprocesso: 1 })
+                .sort(ordena)
                 .project(filtro)
                 .toArray(function (erro, res) {
                     if (erro) {
@@ -60,7 +60,26 @@ class NCDao {
     }
 
     getDadosForm() {
-        return Promise.all([this.listaMacro(), this.listaNC({ nconformidade: 1 }, {}), this.listaUnidades()]);
+        return Promise.all([
+            this.listaMacro({}, { macroprocesso: 1 }),
+            this.listaNC({ nconformidade: 1 }, {}),
+            this.listaUnidades({ _id: 0, Sigla: 1, Nome: 1 }, { Sigla: 1 })
+        ]);
+    }
+
+    getRegistrosNC(filtro, ordena) {
+        return new Promise((resolve, reject) => {
+            this._db.registroNC
+                .find()
+                .sort(ordena)
+                .project(filtro)
+                .toArray(function (erro, res) {
+                    if (erro) {
+                        return reject('Não foi possível listar os registros de não conformidades.');
+                    }
+                    return resolve(res);
+                });
+        });
     }
 
     insere(registro) {
