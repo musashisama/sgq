@@ -24,6 +24,9 @@ app.use(methodOverride(function (req, res) {
     }
 }));
 
+const sessaoAutenticacao = require('./auth');
+sessaoAutenticacao(app);
+
 const rotas = require('../app/rotas/rotas');
 rotas(app);
 

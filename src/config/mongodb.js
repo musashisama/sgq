@@ -17,6 +17,7 @@ cliente.connect(url,opcoes,function(err, cliente) {
      dados.registroNC = dbo.collection('registroNC');
      dados.macroprocessos = dbo.collection('macroprocessos');
      dados.unidadesCARF = dbo.collection('unidadesCARF');
+     dados.usuarios = dbo.collection('usuarios');
      dados.fschunks = dbo.collection('uploads.chunks');
      dados.fsfiles = dbo.collection('uploads.files');
 });

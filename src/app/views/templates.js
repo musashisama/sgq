@@ -1,3 +1,4 @@
 module.exports = {    
-    nc: require('./nc')
+    nc: require('./nc'),
+    base:require('./base')
 }

@@ -3,16 +3,14 @@ const ncControlador = new NCControlador();
 
 module.exports = (app) => {
 
-    const rotasNC = NCControlador.rotas();
+    const rotasNC = NCControlador.rotas();    
 
     app.get(rotasNC.lista, ncControlador.lista());
     app.get(rotasNC.listagem,ncControlador.listagem());
     app.get(rotasNC.listaNC,ncControlador.listaNC());
-    app.get(rotasNC.principal, ncControlador.principal());
+    
     
     app.route(rotasNC.form)
         .get(ncControlador.formularioCadastro())
-        .post(ncControlador.cadastra());
-
-    app.get(rotasNC.sucesso,ncControlador.sucesso());
+        .post(ncControlador.cadastra());       
 }
