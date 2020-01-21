@@ -50,6 +50,7 @@ module.exports = (app) => {
 
     app.use(sessao({
         secret: 'teste',
+        name:'cksgi',
         genid: function (req) {
             return uuid();
         },
