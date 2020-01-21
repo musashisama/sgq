@@ -6,30 +6,30 @@
     <link rel="stylesheet" href="/estatico/css/libs/materialize.css"/>
     <link rel="stylesheet" href="/estatico/css/libs/google-fonts.css"/>
     <link rel="stylesheet" href="/estatico/css/main.css"/>
-    <title>Cadastrar Não Conformidade</title>
+    <title>Adicionar Usuário</title>
   </head>
   <body>
     <header class="container-header cabecalho"/>
     <main class="conteudoPrincipal">
       <div class="container">
-        <h3 class="center-align">Cadastrar Não Conformidade</h3>
+        <h3 class="center-align">Adicionar Usuário</h3>
         <br/>
         <br/>
-        <form id="formNC" name="formNC" action="/form" method="post">
+        <form id="formNC" name="formNC" action="/newuser" method="post">
           <if(data.registroNC._id)>
             <div>
               <input type="hidden" name="_method" value="PUT"/>
-              <input type="hidden" name="id" value=data.registroNC._id/>
+              <input type="hidden" name="id" value=data.registroUser._id/>
             </div>
           </if>
           <div class="row">
             <div class="form-group input-field cpfUser col s2">
-              <label for="titulo" class="tooltipped" data-position="bottom" data-tooltip="Não se preocupe, seu CPF não irá constar nos dashboards!">Seu CPF:</label>
-              <input required type="text" id="titulo" name="cpfUser" value=data.registroNC.cpfUser placeholder="Digite seu CPF" class="form-control cpfuser tooltipped" data-position="bottom" data-tooltip="Não se preocupe, seu CPF não irá constar nos dashboards!"/>
+              <label for="titulo">CPF do Usuário:</label>
+              <input required type="text" id="titulo" name="cpfUser" value=data.registroUser.cpfUser placeholder="Digite seu CPF" class="form-control cpfuser tooltipped" data-position="bottom" data-tooltip="Não se preocupe, seu CPF não irá constar nos dashboards!"/>
             </div>
             <div class="form-group input-field  col s4">
-              <label for="docRef">Documento de referência:</label>
-              <input type="text" id="docRef" name="docRef" value=data.registroNC.ssdocRef placeholder="(ex.: n° do Processo). Após digitar, clique em \"+\" para adicionar o processo." class="form-control docref chips chips-placeholder"/>
+              <label for="docRef">Nome do Usuário:</label>
+              <input type="text" id="nomeUser" name="docRef" value=data.registroNC.ssdocRef placeholder="(ex.: n° do Processo). Após digitar, clique em \"+\" para adicionar o processo." class="form-control docref chips chips-placeholder"/>
             </div>
             <div class="form-group input-field col s1">
               <a class="btn-floating btn-small waves-effect waves-light blue hoverable" href="">
