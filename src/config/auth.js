@@ -29,18 +29,19 @@ module.exports = (app) => {
                         return done(null, false, {
                             mensagem: "Usuário ou senha incorretos!"
                         });
-                    }
+                    }                    
                     return done(null, cpf);
                 })
                 .catch(erro => done(erro, false));
         }
     ));
 
-    passport.serializeUser((usuario, done) => {
+    passport.serializeUser((cpf, done) => {
         const usuarioSessao = {
-            nome: usuario.nome,
-            cpf: usuario.cpf
-        };
+            nome: cpf[0].nome,
+            cpf: cpf[0].cpf,
+            perfis: cpf[0].perfil
+        };        
         done(null, usuarioSessao);
     });
 
@@ -49,20 +50,21 @@ module.exports = (app) => {
     });
 
     app.use(sessao({
-        secret: 'teste',
+        secret: '044e0263-58b7-4c7f-a032-056cd81069e3',
         name:'cksgi',
         genid: function (req) {
             return uuid();
         },
         resave: false,
-        saveUninitialized: false
+        saveUninitialized: false,
+        cookie : { httpOnly: true, maxAge: 2419200000 }
     }));
 
     app.use(passport.initialize());
     app.use(passport.session());
 
     app.use(function (req, resp, next) {
-        req.passport = passport;
+        req.passport = passport;        
         next();
     })
 }

@@ -24,7 +24,7 @@ class BaseControlador {
     }
     efetuaLogin() {
         return function (req, resp, next) {
-
+            console.log(req.session);
             const passport = req.passport;
             passport.authenticate('local', (erro, usuario, msg) => {
                 if (msg) {
@@ -36,10 +36,10 @@ class BaseControlador {
 
                 req.login(usuario, (erro) => {
                     if (erro) {
+                        
                         return next(erro);
-                    }
-
-                    return resp.redirect(BaseControlador.rotas().principal);
+                    }                    
+                    return resp.redirect(req.session.baseUrl);
                 })
             })(req, resp, next);
         }

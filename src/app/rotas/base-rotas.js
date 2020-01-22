@@ -4,9 +4,10 @@ const baseControlador = new BaseControlador();
 module.exports = (app) => {
 
     const rotasBase = BaseControlador.rotas();
-
-    app.use(rotasBase.autenticadas, function(req, resp, next){
-        if(req.isAuthenticated()){
+   
+    app.use(rotasBase.autenticadas, function(req, resp, next){   
+        req.session.baseUrl = req.baseUrl;
+        if(req.isAuthenticated()){                     
             next();
         } else{
             resp.redirect(rotasBase.login);

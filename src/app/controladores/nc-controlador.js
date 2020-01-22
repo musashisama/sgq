@@ -74,18 +74,23 @@ class NCControlador {
         };
     }
 
-    listaRNC(){
-        return function (req, resp) {
-            const ncDao = new NCDao(conn);
-            ncDao.getRegistrosNC({},{})
-                .then(registroNC => {
-                    resp.marko(templates.gestao.listaregistros, {
-                        registroNC: registroNC,            
+    listaRNC(){        
+            return function (req, resp) {
 
-                    })
-                })
-                .catch(erro => console.log(erro));
-        };
+                if(req.user.cpf=='71283242168'){
+                    const ncDao = new NCDao(conn);
+                    console.log(req.user);
+                    ncDao.getRegistrosNC({},{})
+                        .then(registroNC => {
+                            resp.marko(templates.gestao.listaregistros, {
+                                registroNC: registroNC,            
+        
+                            })
+                        })
+                        .catch(erro => console.log(erro));
+                }else resp.marko(templates.base.principal);              
+                
+            };              
     }
 
     cadastra() {
