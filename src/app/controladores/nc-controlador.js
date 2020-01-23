@@ -76,10 +76,13 @@ class NCControlador {
 
     listaRNC(){        
             return function (req, resp) {
-
-                if(req.user.cpf=='71283242168'){
+                const role = 'admina';
+                const perfil = req.user.perfis;
+                if(req.user.cpf=='71283242168' && perfil.indexOf(role)>-1){
                     const ncDao = new NCDao(conn);
                     console.log(req.user);
+                    
+                    console.log(perfil.indexOf(role));
                     ncDao.getRegistrosNC({},{})
                         .then(registroNC => {
                             resp.marko(templates.gestao.listaregistros, {
@@ -88,7 +91,7 @@ class NCControlador {
                             })
                         })
                         .catch(erro => console.log(erro));
-                }else resp.marko(templates.base.principal);              
+                }else resp.marko(templates.base.principal, {msg:"Usuário não autorizado a executar esta operação."});              
                 
             };              
     }
