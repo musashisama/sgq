@@ -1,62 +1,62 @@
 inicializaComponentes();
 
-function inicializaComponentes(){
-    $(document).ready(function () {        
+function inicializaComponentes() {
+    $(document).ready(function () {
         initSelect();
-        $('.tooltipped').tooltip();    
+        $('.tooltipped').tooltip();
         initDatePicker();
-        initChips();                   
+        initChips();
         btnInsere();
-        initModal();                   
+        initModal();
     });
 }
 
-function initSelect(){
-    $('select').formSelect(); 
+function initSelect() {
+    $('select').formSelect();
 }
 
-function btnInsere(){    
-    $('.btn-insere').click(function(event){
-        event.preventDefault();  
-        $('docref').val(pegaChips());      
-        if(validaForm()){
+function btnInsere() {
+    $('.btn-insere').click(function (event) {
+        event.preventDefault();
+        $('docref').val(pegaChips());
+        if (validaForm()) {
             $('#aModal').addClass('modal-trigger');
-            
+
             montaModal();
-        };           
+        };
     });
 }
 
-function pegaChips(){
+function pegaChips() {
     var n = $('.chip').length;
     var data = $('.chip').text().split("close");
-    var rm = data.slice(0,data.length-1).toString();
-    console.log(n+' '+rm.split(',')+' '+typeof(rm.split(',')));
+    var rm = data.slice(0, data.length - 1).toString();
+    console.log(n + ' ' + rm.split(',') + ' ' + typeof (rm.split(',')));
     return rm.split(',');
 }
 
-function initModal(){    
-    $('.modal').modal();     
+function initModal() {
+    $('.modal').modal();
 }
 
-function insereChips(){      
-            $("#formNC").submit();
+function insereChips() {
+    $("#formNC").submit();
 }
 
-function ajustaData(data){
+function ajustaData(data) {
     arrayData = data.split("-");
-    console.log(arrayData[2]+' '+arrayData[1]+' '+arrayData[0]);
-    dataAjustada = new Date(arrayData[2],arrayData[1]-1,arrayData[0], new Date().getHours()).toUTCString();
-    console.log('dataAjustada:', dataAjustada);    
+    console.log(arrayData[2] + ' ' + arrayData[1] + ' ' + arrayData[0]);
+    dataAjustada = new Date(arrayData[2], arrayData[1] - 1, arrayData[0], new Date().getHours()).toUTCString();
+    console.log('dataAjustada:', dataAjustada);
     return dataAjustada;
 }
 
-function montaModal(){
-    var data = pegaChips();      
-        $('.hModal').text("Confirmação de Inclusão de Registro");
-        $('.docref').val(pegaChips());
-        $('.pModal').append(
-            `<p class="pModal">
+function montaModal() {
+    var data = pegaChips();
+    $('.hModal').text("Confirmação de Inclusão de Registro");
+    $('.docref').val(pegaChips());
+    $('.pModal').append(
+        `<p class="pModal">
             <br/>
             Verifique se os dados abaixo estão corretos e clique em "Confirma" para efetuar o registro.<br/><br/>
             <strong>Dados da não conformidade:</strong><br/>
@@ -78,28 +78,28 @@ function montaModal(){
             <strong>Data de encaminhamento ou correção da não conformidade:</strong><br/>
             ${document.formNC.EncCorNC.value}
             </p>`
-        );
-            $('.concorda').click(function(){
-                if($('.chip').length>0){
-                    $('.chip').each(function(index){
-                        var dados = $(this).text().split("close");
-                        var rm = dados.slice(0,dados.length-1).toString();
-                        $('.docref').val(rm);
-                        console.log(index+': '+rm);
-                        console.log("Data: "+dados.toString());                    
-                        insereChips();
-                    });                    
-                }else {
-                    $("#formNC").submit();
-                 }
-                                   
-        });
-        $('.cancela').click(function(){
-            $('.pModal').text('');
-            $('.docref').val('');            
-        })        
+    );
+    $('.concorda').click(function () {
+        if ($('.chip').length > 0) {
+            $('.chip').each(function (index) {
+                var dados = $(this).text().split("close");
+                var rm = dados.slice(0, dados.length - 1).toString();
+                $('.docref').val(rm);
+                console.log(index + ': ' + rm);
+                console.log("Data: " + dados.toString());
+                insereChips();
+            });
+        } else {
+            $("#formNC").submit();
+        }
+
+    });
+    $('.cancela').click(function () {
+        $('.pModal').text('');
+        $('.docref').val('');
+    })
 }
-function initChips(){
+function initChips() {
     $('.docref').keypress(function (event) {
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13' && $('.docref').val()) {
@@ -107,27 +107,27 @@ function initChips(){
             $('.areachip').append(`<div class="chip">${$('.docref').val()}<i class="close material-icons">close</i></div>`);
             $('.docref').val("")
         }
-    });    
+    });
     $('.addDoc').click(function (event) {
         event.preventDefault();
-        if($('.docref').val()){
+        if ($('.docref').val()) {
             $('.areachip').append(`<div class="chip">${$('.docref').val()}<i class="close material-icons">close</i></div>`);
             $('.docref').val("");
         }
     });
 }
-function initDatePicker(){
-    $('.datepicker').click(function(event){
+function initDatePicker() {
+    $('.datepicker').click(function (event) {
         event.preventDefault();
-        $('.lbdataNC').css('color','#9e9e9e');
-        $('.lbEncCorNC').css('color','#9e9e9e');   
+        $('.lbdataNC').css('color', '#9e9e9e');
+        $('.lbEncCorNC').css('color', '#9e9e9e');
 
     });
     let formato = 'dd-mm-yyyy'
-    let meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-    let mesesCurtos = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
-    let diasDaSemana = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
-    let diasCurtos = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb']
+    let meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+    let mesesCurtos = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+    let diasDaSemana = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+    let diasCurtos = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']
     let diasAbrev = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
     $('.datepicker').datepicker({
         autoClose: true,

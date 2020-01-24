@@ -5,7 +5,11 @@ module.exports = (app) => {
 
     const rotasNC = NCControlador.rotas(); 
 
-    app.get(rotasNC.listaRNC, ncControlador.listaRNC())
+    app.get(rotasNC.listaRNC, ncControlador.listaRNC());
+
+    app.route(rotasNC.cadastraNC)
+    .get(ncControlador.formCadastraNC())
+    .post(ncControlador.cadastraNC());
 }   
     
     

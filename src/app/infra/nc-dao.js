@@ -95,5 +95,18 @@ class NCDao {
         });
     }
 
+    cadastraNC(registro) {
+
+        return new Promise((resolve, reject) => {
+
+            this._db.nc.insertOne(registro, function (erro, res) {
+                if (erro) {
+                    return reject('Não foi possível inserir o registro.');
+                }
+                return resolve(res);
+            })
+        });
+    }
+
 }
 module.exports = NCDao;

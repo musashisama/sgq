@@ -35,7 +35,9 @@ function render(input, out, __component, component, state) {
       marko_escapeXml(nc.Macroprocesso) +
       "</td><td class=\"desc\">" +
       marko_escapeXml(nc.nconformidade) +
-      "</td><td class=\"descDet\"></td></tr>");
+      "</td><td class=\"descDet\">" +
+      marko_escapeXml(nc.descDet) +
+      "</td></tr>");
   });
 
   out.w("</tbody></table></div></div></main><footer class=\"rodape\"></footer><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\">A bunch of text</p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat\">Cancela</a><a href=\"#!\" class=\"modal-close waves-effect waves-green btn-flat concorda\">Confirma</a></div></div><script src=\"/estatico/js/jquery-3.4.1.js\"></script><script src=\"/estatico/js/materialize.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script><script src=\"/estatico/js/formcontrol.js\"></script>");
