@@ -2,6 +2,7 @@ const uuid = require('uuid/v4');
 const sessao = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcryptjs');
 
 const UserDao = require('../app/infra/user-dao');
 const db = require('./mongodb').dados;
@@ -24,7 +25,15 @@ module.exports = (app) => {
                             mensagem: "Usuário ou senha incorretos!"
                         });
                     }
-                    if (Object.keys(cpf).length>0 && senha != cpf[0].senha) {
+                    // var salt = bcrypt.genSaltSync(10);
+                    // var hash = bcrypt.hashSync(senha, salt);
+                    // let compara = bcrypt.compareSync(senha, hash)
+                    // console.log(compara);
+                    // let compara = bcrypt.compareSync(senha, cpf[0].senha)
+                    //     console.log(senha);
+                    //     console.log(cpf[0].senha);
+                    //     console.log(compara);
+                    if (Object.keys(cpf).length>0 && !bcrypt.compareSync(senha, cpf[0].senha)) {                        
                         console.log("Senha errada");
                         return done(null, false, {
                             mensagem: "Usuário ou senha incorretos!"
