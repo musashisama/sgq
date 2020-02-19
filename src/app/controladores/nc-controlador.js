@@ -8,7 +8,7 @@ class NCControlador {
 
     static rotas() {
         return {
-            lista: '/lista',
+            lista: '/gestao/lista',
             listaNC: '/listaNC',
             form: '/form',
             listagem: '/listagem',

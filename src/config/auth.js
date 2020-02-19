@@ -25,8 +25,9 @@ module.exports = (app) => {
                             mensagem: "Usuário ou senha incorretos!"
                         });
                     }
-                    // var salt = bcrypt.genSaltSync(10);
-                    // var hash = bcrypt.hashSync(senha, salt);
+                     //var salt = bcrypt.genSaltSync(10);
+                     //var hash = bcrypt.hashSync(senha, salt);
+                     //console.log(hash);
                     // let compara = bcrypt.compareSync(senha, hash)
                     // console.log(compara);
                     // let compara = bcrypt.compareSync(senha, cpf[0].senha)

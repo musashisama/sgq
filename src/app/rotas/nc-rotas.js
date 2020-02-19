@@ -5,7 +5,7 @@ module.exports = (app) => {
 
     const rotasNC = NCControlador.rotas();    
 
-    app.get(rotasNC.lista, ncControlador.lista());
+    //app.get(rotasNC.lista, ncControlador.lista());
     app.get(rotasNC.listagem,ncControlador.listagem());
     app.get(rotasNC.listaNC,ncControlador.listaNC());
     
