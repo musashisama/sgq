@@ -21,7 +21,6 @@ function btnInsere() {
         $('docref').val(pegaChips());
         if (validaForm()) {
             $('#aModal').addClass('modal-trigger');
-
             montaModal();
         };
     });

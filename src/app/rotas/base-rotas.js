@@ -5,14 +5,14 @@ module.exports = (app) => {
 
     const rotasBase = BaseControlador.rotas();
    
-    app.use(rotasBase.autenticadas, function(req, resp, next){   
-        req.session.baseUrl = req.baseUrl;
-        if(req.isAuthenticated()){                     
-            next();
-        } else{
-            resp.redirect(rotasBase.login);
-        }
-    });
+    // app.use(rotasBase.autenticadas, function(req, resp, next){   
+    //     req.session.baseUrl = req.baseUrl;
+    //     if(req.isAuthenticated()){                     
+    //         next();
+    //     } else{
+    //         resp.redirect(rotasBase.login);
+    //     }
+    // });
 
     app.get(rotasBase.principal, baseControlador.principal());
 

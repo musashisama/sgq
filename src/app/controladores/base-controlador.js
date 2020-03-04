@@ -4,8 +4,7 @@ const templates = require('../views/templates');
 class BaseControlador {
 
     static rotas() {
-        return {
-            autenticadas: '/gestao*',
+        return {       
             principal: '/',
             login: '/login'
         };
@@ -38,7 +37,7 @@ class BaseControlador {
 
                         return next(erro);
                     }
-                    if (req.session.baseUrl) {
+                    if (req.session.baseUrl) {                        
                         return resp.redirect(req.session.baseUrl);
                     } else return resp.redirect(BaseControlador.rotas().principal);
 

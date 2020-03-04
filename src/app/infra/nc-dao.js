@@ -5,6 +5,32 @@ class NCDao {
 
     }
 
+    buscaNCPorId(nc) {
+
+        return new Promise((resolve, reject) => {
+
+            this._db.nc
+                .find({ _id: nc })
+                .toArray(function (erro, res) {
+                    if (erro) {
+                        return reject('Não foi possível listar as Não Conformidades.');
+                    }
+                    return resolve(res);
+                });
+
+        });
+    }
+
+    atualiza(req) {
+
+        return new Promise((resolve, reject) => {
+            console.log(req);
+            console.log("Veio aqui o safado");
+
+        });
+
+    }
+
     listaNC(ordena = {}, filtro = {}) {
 
         return new Promise((resolve, reject) => {
@@ -59,13 +85,7 @@ class NCDao {
         });
     }
 
-    getDadosForm() {
-        return Promise.all([
-            this.listaMacro({}, { macroprocesso: 1 }),
-            this.listaNC({ nconformidade: 1 }, {}),
-            this.listaUnidades({ _id: 0, Sigla: 1, Nome: 1 }, { Sigla: 1 })
-        ]);
-    }
+    
 
     getRegistrosNC(filtro, ordena) {
         return new Promise((resolve, reject) => {
@@ -106,6 +126,19 @@ class NCDao {
                 return resolve(res);
             })
         });
+    }
+    getDadosForm() {
+        return Promise.all([
+            this.listaMacro({}, { macroprocesso: 1 }),
+            this.listaNC({ nconformidade: 1 }, {}),
+            this.listaUnidades({ _id: 0, Sigla: 1, Nome: 1 }, { Sigla: 1 })
+        ]);
+    }
+    getListaTipos() {
+        return Promise.all([
+            this.listaMacro({}, { macroprocesso: 1 }),
+            this.listaNC({ nconformidade: 1 }, {})            
+        ]);
     }
 
 }

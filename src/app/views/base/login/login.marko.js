@@ -29,15 +29,15 @@ function render(input, out, __component, component, state) {
       "</h6>");
   }
 
-  out.w("<div class=\"col s6 offset-s3 center-align\"><form action=\"/login\" method=\"post\"><div class=\"form-group input-field cpf\"><label for=\"cpf\">CPF:</label><input type=\"text\" autocomplete=\"username\" id=\"cpf\" name=\"cpf\"" +
+  out.w("<div class=\"col s6 offset-s3 center-align\"><form action=\"/login\" method=\"post\"><div class=\"form-group input-field cpf\"><i class=\"material-icons prefix\">account_circle</i><label for=\"cpf\">CPF:</label><input type=\"text\" autocomplete=\"username\" id=\"cpf\" name=\"cpf\"" +
     marko_attr("value", data.id) +
-    " placeholder=\"Digite seu CPF.\" class=\"form-control tooltipped\" data-position=\"bottom\" data-tooltip=\"Somente números.\"></div><div class=\"form-group\"><input type=\"password\" autocomplete=\"current-password\" id=\"pwd\" name=\"pwd\"" +
+    " placeholder=\"Digite seu CPF.\" class=\"form-control tooltipped\" data-position=\"bottom\" data-tooltip=\"Somente números.\"></div><div class=\"form-group input-field pwd\"><i class=\"material-icons prefix\">lock</i><input type=\"password\" autocomplete=\"current-password\" id=\"pwd\" name=\"pwd\"" +
     marko_attr("value", data.pwd) +
     " placeholder=\"Digite sua senha.\" class=\"form-control\"></div><div class=\"form-group\"><button class=\"btn waves-effect waves-light concorda right\" type=\"submit\" name=\"action\">Efetuar login <i class=\"material-icons right\">send</i></button></div></form></div></div></div></main><footer class=\"page-footer rodape\"></footer><script src=\"/estatico/js/jquery-3.4.1.js\"></script><script src=\"/estatico/js/materialize.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "29");
+  await_reorderer_tag({}, out, __component, "31");
 
   out.w("</body></html>");
 }

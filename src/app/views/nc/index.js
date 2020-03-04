@@ -3,6 +3,6 @@ module.exports = {
     form: require('./form/form.marko'),   
     listagem: require('./listagem/listagem.marko'),
     listaregistros: require('./listaregistros/listaregistros.marko'),
-    cadastranc: require('./cadastra-nc/cadastra-nc.marko')
+    cadastranc: require('./cadastra-nc/cadastranc.marko')
 }
     

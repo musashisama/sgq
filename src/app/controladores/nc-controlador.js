@@ -3,17 +3,21 @@ const NCDao = require('../infra/nc-dao');
 const requestIp = require('request-ip');
 
 const templates = require('../views/templates');
+const { ObjectID } = require('mongodb');
 
 class NCControlador {
 
     static rotas() {
         return {
-            lista: '/gestao/lista',
+            autenticadas: '/gestao*',
+            lista: '/lista',
             listaNC: '/listaNC',
             form: '/form',
             listagem: '/listagem',
             listaRNC: '/gestao/listaregistronc',
-            cadastraNC: '/gestao/cadastranc'
+            cadastraNC: '/gestao/cadastranc',
+            edicao: '/gestao/cadastranc/:id',
+            delecao: '/gestao/:id'
         };
     }
 
@@ -43,11 +47,12 @@ class NCControlador {
     lista() {
         return function (req, resp) {
             const ncDao = new NCDao(conn);
-            ncDao.listaNC({ nconformidade: 1 }, {})
+            ncDao.getListaTipos()
                 .then(nc => resp.marko(
                     templates.nc.lista,
                     {
-                        nc: nc
+                        mp: nc[0],
+                        nc: nc[1]
                     }
                 ))
                 .catch(erro => console.log(erro));
@@ -57,7 +62,7 @@ class NCControlador {
     listaNC() {
         return function (req, resp) {
             const ncDao = new NCDao(conn);
-            ncDao.listaNC({},{ _id: 0})
+            ncDao.listaNC({}, { _id: 0 })
                 .then(lista => {
                     console.log(lista);
                     resp.json(lista);
@@ -83,7 +88,7 @@ class NCControlador {
                 .catch(erro => console.log(erro));
         };
     }
-    //Lista os registros de não conformidade. Fechado.
+    //Lista os registros de não conformidade. Auth.
     listaRNC() {
         return function (req, resp) {
             const role = 'admin';
@@ -123,27 +128,31 @@ class NCControlador {
                 .catch(erro => console.log(erro));
         }
     }
-    //Carrega o formulário de registro de nova possível não conformidade. Fechado.
+    //Carrega o formulário de registro de nova possível não conformidade. Auth.
     formCadastraNC() {
+
         return function (req, resp) {
             const role = 'gestaoNC';
-            const perfil = req.user.perfis;
-            if (req.isAuthenticated() && perfil.indexOf(role) > -1) {
-                const ncDao = new NCDao(conn);
-                ncDao.getDadosForm()
-                    .then(dadosForm => {
-                        resp.marko(templates.nc.cadastranc, {
-                            cadastraNC: {},
-                            mp: dadosForm[0]
+            if (req.isAuthenticated()) {
+                const perfil = req.user.perfis;
+                if (perfil.indexOf(role) > -1) {
+                    const ncDao = new NCDao(conn);
+                    ncDao.getDadosForm()
+                        .then(dadosForm => {
+                            resp.marko(templates.nc.cadastranc, {
+                                cadastraNC: {},
+                                mp: dadosForm[0]
+                            })
                         })
-                    })
-                    .catch(erro => console.log(erro));
-            } else resp.marko(templates.base.principal, { msg: "Usuário não autorizado a executar esta operação." });
+                        .catch(erro => console.log(erro));
+                } else resp.marko(templates.base.principal, { msg: "Usuário não autorizado a executar esta operação." });
+            }
         };
 
     }
-    //Chamado pelo formulário. Cadastra nova possível não conformidade.
+       //Chamado pelo formulário. Cadastra nova possível não conformidade.
     cadastraNC() {
+
         return function (req, resp) {
             const registro = req.body;
             const clientIp = requestIp.getClientIp(req);
@@ -155,6 +164,49 @@ class NCControlador {
                 .then(resp.marko(templates.base.principal, { msg: "Não Conformidade cadastrada com sucesso!" }))
                 .catch(erro => console.log(erro));
         };
+    }
+
+    formEdicao() {
+        return function (req, resp) {
+            const id = new ObjectID(req.params.id);
+            const ncDao = new NCDao(conn);
+            console.log(id);
+            ncDao.buscaNCPorId(id)
+                .then(nc => {
+                    console.log(nc);
+                    console.log(nc[0]);
+                    resp.marko(
+                        templates.nc.cadastranc, {
+                        cadastraNC: nc
+                    }
+                    )
+                }
+                )
+                .catch(erro => console.log(erro));
+        };
+    }
+
+    edita() {
+
+        return function (req, resp) {
+            console.log(req.body);
+            const ncDao = new NCDao(conn);
+            ncDao.atualiza(req.body)
+                .then(resp.redirect(NCControlador.rotas().lista))
+                .catch(erro => console.log(erro));
+        };
+    }
+
+    remove() {
+
+        // return function(req, resp) {
+        //     const id = req.params.id;
+
+        //     const livroDao = new LivroDao(db);
+        //     livroDao.remove(id)
+        //             .then(() => resp.status(200).end())
+        //             .catch(erro => console.log(erro));
+        // };
     }
 
 }
