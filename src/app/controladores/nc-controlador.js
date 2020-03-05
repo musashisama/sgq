@@ -169,15 +169,13 @@ class NCControlador {
     formEdicao() {
         return function (req, resp) {
             const id = new ObjectID(req.params.id);
-            const ncDao = new NCDao(conn);
-            console.log(id);
-            ncDao.buscaNCPorId(id)
-                .then(nc => {
-                    console.log(nc);
-                    console.log(nc[0]);
+            const ncDao = new NCDao(conn);            
+            ncDao.getFormEdicao(id)
+                .then(nc => {                    
                     resp.marko(
                         templates.nc.cadastranc, {
-                        cadastraNC: nc
+                        mp: nc[0],
+                        cadastraNC: nc[1]              
                     }
                     )
                 }
@@ -188,9 +186,8 @@ class NCControlador {
 
     edita() {
 
-        return function (req, resp) {
-            console.log(req.body);
-            const ncDao = new NCDao(conn);
+        return function (req, resp) {            
+            const ncDao = new NCDao(conn);            
             ncDao.atualiza(req.body)
                 .then(resp.redirect(NCControlador.rotas().lista))
                 .catch(erro => console.log(erro));

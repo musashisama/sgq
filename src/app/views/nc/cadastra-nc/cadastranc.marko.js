@@ -9,9 +9,9 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_helpers = require("marko/src/runtime/html/helpers"),
     marko_loadTag = marko_helpers.t,
     component_globals_tag = marko_loadTag(require("marko/src/core-tags/components/component-globals-tag")),
+    marko_attr = marko_helpers.a,
     marko_forEach = marko_helpers.f,
     marko_escapeXml = marko_helpers.x,
-    marko_attr = marko_helpers.a,
     init_components_tag = marko_loadTag(require("marko/src/core-tags/components/init-components-tag")),
     await_reorderer_tag = marko_loadTag(require("marko/src/core-tags/core/await/reorderer-renderer"));
 
@@ -22,7 +22,15 @@ function render(input, out, __component, component, state) {
 
   component_globals_tag({}, out);
 
-  out.w("<header class=\"container-header cabecalho\"></header><main class=\"conteudoPrincipal\"><div class=\"container\"><h3 class=\"center-align\">Registrar Nova Não Conformidade</h3><br><br><form id=\"formCadNC\" name=\"formCadNC\" action=\"/gestao/cadastranc\" method=\"post\"><div class=\"row\"><div class=\"form-group input-field Macroprocesso col s4\"><select required name=\"Macroprocesso\"><option class=\"form-group\" value=\"\" disabled selected>Clique para selecionar</option>");
+  out.w("<header class=\"container-header cabecalho\"></header><main class=\"conteudoPrincipal\"><div class=\"container\"><h3 class=\"center-align\">Registrar Nova Não Conformidade</h3><br><br><form id=\"formCadNC\" name=\"formCadNC\" action=\"/gestao/cadastranc\" method=\"post\"><div class=\"row\">");
+
+  if (data.cadastraNC[0]._id) {
+    out.w("<div><input type=\"hidden\" name=\"_method\" value=\"PUT\"><input type=\"hidden\" name=\"_id\"" +
+      marko_attr("value", "" + data.cadastraNC[0]._id) +
+      "></div>");
+  }
+
+  out.w("<div class=\"form-group input-field Macroprocesso col s4\"><select required name=\"Macroprocesso\"><option class=\"form-group\" value=\"\" disabled selected>Clique para selecionar</option>");
 
   var $for$0 = 0;
 
@@ -30,17 +38,21 @@ function render(input, out, __component, component, state) {
     var $keyScope$0 = "[" + (($for$0++) + "]");
 
     out.w("<option class=\"form-group\"" +
-      marko_attr("value", data.mp.Macroprocesso) +
+      marko_attr("value", "" + mp.macroprocesso) +
       ">" +
       marko_escapeXml(mp.macroprocesso) +
       "</option>");
   });
 
-  out.w("</select><label for=\"mProcUser\">Qual o seu macroprocesso?</label></div></div><div class=\"row\"><div class=\"form-group input-field cpfUser col s6\"><label for=\"nconformidade\">Não Conformidade:</label><input required type=\"text\" id=\"nconformidade\" name=\"nconformidade\" value=\"\" class=\"form-control nconformidade\"></div></div><div class=\"row\"><div class=\"form-group input-field descDet col s6\"><label for=\"descDet\">Descrição detalhada da <strong>não conformidade:</strong></label><input required type=\"text\" id=\"descDet\" name=\"descDet\" value=\"\" class=\"form-control descDet\"></div><div class=\"col s6 offset-s6\"><a id=\"aModal\" class=\"btn-floating btn-large waves-effect waves-light green hoverable btn-insere\" href=\"#modal1\"><i class=\"material-icons\">note_add</i></a></div></div></form></div></main><footer class=\"page-footer rodape\"></footer><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div><script src=\"/estatico/js/jquery-3.4.1.js\"></script><script src=\"/estatico/js/materialize.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script><script src=\"/estatico/js/valida.js\"></script><script src=\"/estatico/js/cadNCControl.js\"></script>");
+  out.w("</select><label for=\"mProcUser\">Qual o seu macroprocesso?</label></div></div><div class=\"row\"><div class=\"form-group input-field cpfUser col s6\"><label for=\"nconformidade\">Não Conformidade:</label><input required type=\"text\" id=\"nconformidade\" name=\"nconformidade\"" +
+    marko_attr("value", "" + data.cadastraNC[0].nconformidade) +
+    " class=\"form-control nconformidade\"></div></div><div class=\"row\"><div class=\"form-group input-field descDet col s6\"><label for=\"descDet\">Descrição detalhada da <strong>não conformidade:</strong></label><input required type=\"text\" id=\"descDet\" name=\"descDet\"" +
+    marko_attr("value", "" + data.cadastraNC[0].descDet) +
+    " class=\"form-control descDet\"></div><div class=\"col s6 offset-s6\"><a id=\"aModal\" class=\"btn-floating btn-large waves-effect waves-light green hoverable btn-insere\" href=\"#modal1\"><i class=\"material-icons\">note_add</i></a></div></div></form></div></main><footer class=\"page-footer rodape\"></footer><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div><script src=\"/estatico/js/jquery-3.4.1.js\"></script><script src=\"/estatico/js/materialize.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script><script src=\"/estatico/js/valida.js\"></script><script src=\"/estatico/js/cadNCControl.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "48");
+  await_reorderer_tag({}, out, __component, "51");
 
   out.w("</body></html>");
 }

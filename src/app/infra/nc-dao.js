@@ -1,3 +1,4 @@
+const { ObjectID } = require('mongodb');
 class NCDao {
 
     constructor(db) {
@@ -23,9 +24,17 @@ class NCDao {
 
     atualiza(req) {
 
-        return new Promise((resolve, reject) => {
-            console.log(req);
-            console.log("Veio aqui o safado");
+        return new Promise((resolve, reject) => {                        
+            let id = new ObjectID(req._id);
+            delete req._id;
+            this._db.nc
+            .updateOne({_id:id}, { $set: req}, function(erro, res){
+                if(erro){
+                    return reject(erro);
+                }
+                console.log("1 documento atualizado");
+                return resolve(res);
+            });
 
         });
 
@@ -138,6 +147,12 @@ class NCDao {
         return Promise.all([
             this.listaMacro({}, { macroprocesso: 1 }),
             this.listaNC({ nconformidade: 1 }, {})            
+        ]);
+    }
+    getFormEdicao(id) {
+        return Promise.all([
+            this.listaMacro({}, { macroprocesso: 1 }),
+            this.buscaNCPorId(id)            
         ]);
     }
 
