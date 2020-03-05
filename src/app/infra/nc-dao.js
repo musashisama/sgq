@@ -32,7 +32,6 @@ class NCDao {
                 if(erro){
                     return reject(erro);
                 }
-                console.log("1 documento atualizado");
                 return resolve(res);
             });
 

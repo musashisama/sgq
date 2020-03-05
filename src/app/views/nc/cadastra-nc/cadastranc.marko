@@ -20,14 +20,14 @@
             <if (data.cadastraNC[0]._id)>
               <div>
                 <input type="hidden" name="_method" value="PUT"/>
-                <input type="hidden" name="_id" value="${data.cadastraNC[0]._id}"/>
+                <input type="hidden" name="_id" value=`${data.cadastraNC[0]._id}`/>
               </div>
             </if>
             <div class="form-group input-field Macroprocesso col s4">
               <select required name="Macroprocesso">
                 <option class="form-group" value="" disabled selected>Clique para selecionar</option>
                 <for|mp| of=data.mp>
-                  <option class="form-group" value="${mp.macroprocesso}">${mp.macroprocesso}</option>
+                  <option class="form-group" value=`${mp.macroprocesso}`>${mp.macroprocesso}</option>
                 </for>
               </select>
               <label for="mProcUser">Qual o seu macroprocesso?</label>
@@ -36,7 +36,7 @@
           <div class="row">
             <div class="form-group input-field cpfUser col s6">
               <label for="nconformidade">Não Conformidade:</label>
-              <input required type="text" id="nconformidade" name="nconformidade" value="${data.cadastraNC[0].nconformidade}" class="form-control nconformidade"/>
+              <input required type="text" id="nconformidade" name="nconformidade" value=`${data.cadastraNC[0].nconformidade}` class="form-control nconformidade"/>
             </div>
           </div>
           <div class="row">
@@ -44,7 +44,7 @@
               <label for="descDet">
                 Descrição detalhada da <strong>não conformidade:</strong>
               </label>
-              <input required type="text" id="descDet" name="descDet" value="${data.cadastraNC[0].descDet}" class="form-control descDet"/>
+              <input required type="text" id="descDet" name="descDet" value=`${data.cadastraNC[0].descDet}` class="form-control descDet"/>
             </div>
             <div class="col s6 offset-s6">
               <a id="aModal" class="btn-floating btn-large waves-effect waves-light green hoverable btn-insere" href="#modal1">

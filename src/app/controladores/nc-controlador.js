@@ -140,7 +140,7 @@ class NCControlador {
                     ncDao.getDadosForm()
                         .then(dadosForm => {
                             resp.marko(templates.nc.cadastranc, {
-                                cadastraNC: {},
+                                cadastraNC: [{nconformidade:"",descDet:""}],
                                 mp: dadosForm[0]
                             })
                         })
