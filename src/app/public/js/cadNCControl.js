@@ -25,17 +25,17 @@ function initModal() {
 }
 
 function montaModal() {
-    $('.hModal').text("Confirmação dsazdcase Inclusão de Registro");
+    $('.hModal').text("Confirmação de Inclusão de Registro");
     $('.pModal').append(
         `<p class="pModal">
             <br/>
             Verifique se os dados abaixo estão corretos e clique em "Confirma" para efetuar o registro.<br/><br/>
-            <strong>Dados da não conformidade:</strong><br/>            
-            <strong>Seu macroprocesso:</strong><br/>
+            <strong>Dados do novo tipo de não conformidade:</strong><br/>            
+            <strong>Macroprocesso ao qual a NC pertence:</strong><br/>
             ${document.formCadNC.Macroprocesso.value} <br/>            
-            <strong>Descrição da não conformidade</strong><br/>
+            <strong>Tipologia da não conformidade</strong><br/>
             ${document.formCadNC.nconformidade.value}<br/>
-            <strong>Observações adicionais sobre a não conformidade:</strong><br/>
+            <strong>Descrição detalhada da não conformidade:</strong><br/>
             ${document.formCadNC.descDet.value}<br/>            
             </p>`
     );

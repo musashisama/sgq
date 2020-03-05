@@ -44,7 +44,7 @@ function render(input, out, __component, component, state) {
       "</option>");
   });
 
-  out.w("</select><label for=\"mProcUser\">Qual o seu macroprocesso?</label></div></div><div class=\"row\"><div class=\"form-group input-field cpfUser col s6\"><label for=\"nconformidade\">Não Conformidade:</label><input required type=\"text\" id=\"nconformidade\" name=\"nconformidade\"" +
+  out.w("</select><label for=\"mProcUser\">Esta NC pertence a qual macroprocesso?</label></div></div><div class=\"row\"><div class=\"form-group input-field cpfUser col s6\"><label for=\"nconformidade\">Tipologia (descrição) da Não Conformidade:</label><input required type=\"text\" id=\"nconformidade\" name=\"nconformidade\"" +
     marko_attr("value", "" + data.cadastraNC[0].nconformidade) +
     " class=\"form-control nconformidade\"></div></div><div class=\"row\"><div class=\"form-group input-field descDet col s6\"><label for=\"descDet\">Descrição detalhada da <strong>não conformidade:</strong></label><input required type=\"text\" id=\"descDet\" name=\"descDet\"" +
     marko_attr("value", "" + data.cadastraNC[0].descDet) +
