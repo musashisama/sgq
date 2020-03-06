@@ -18,6 +18,9 @@ class UserDao {
 
         });
     }
+    getDadosForm(){
+        // <-ARRUMAR
+    }
 }
 
 module.exports = UserDao;

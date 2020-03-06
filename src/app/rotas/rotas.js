@@ -1,12 +1,12 @@
 const ncRotas = require('./nc-rotas');
-const rotasArq = require('./arq-rotas')
+const arqRotas = require('./arq-rotas')
 const baseRotas = require('./base-rotas');
-//const gestaoRotas = require('./gestao-rotas')
+const adminRotas = require('./admin-rotas')
 
 
 module.exports = (app) => {
     ncRotas(app);
-    rotasArq(app);
+    arqRotas(app);
     baseRotas(app);
-    //gestaoRotas(app);
+    adminRotas(app);
 };

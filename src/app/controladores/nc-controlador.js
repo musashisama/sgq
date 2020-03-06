@@ -150,7 +150,7 @@ class NCControlador {
         };
 
     }
-       //Chamado pelo formulário. Cadastra nova possível não conformidade.
+       //Chamado pelo POST do formulário. Cadastra nova possível não conformidade.
     cadastraNC() {
 
         return function (req, resp) {
@@ -183,7 +183,7 @@ class NCControlador {
                 .catch(erro => console.log(erro));
         };
     }
-
+    //Chamado pelo hidden PUT do formulário. Edita tipologia de não conformidade.
     edita() {
 
         return function (req, resp) {            
