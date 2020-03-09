@@ -1,6 +1,6 @@
 const mongo = require('mongodb');
 const cliente = require('mongodb').MongoClient;
-const url = "mongodb://localhost:27017/sgq";
+const url = "mongodb://sgi:X19T2eOt!Z6BDaT#yt4w!24nI@localhost:27017";
 const opcoes = { 
   useNewUrlParser: true, 
   useUnifiedTopology: true
@@ -11,7 +11,7 @@ const db = new mongo.Db('sgq', new mongo.Server("127.0.0.1", 27017), opcoes);
 
 cliente.connect(url,opcoes,function(err, cliente) {
     if (err) throw err;
-    console.log(`Conectado à base ${url}`);
+    console.log(`Conectado à base de dados.`);    
     const dbo = cliente.db('sgq');      
      dados.nc = dbo.collection('naoconformidades');
      dados.registroNC = dbo.collection('registroNC');
