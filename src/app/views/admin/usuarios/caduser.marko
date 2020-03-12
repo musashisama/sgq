@@ -34,7 +34,7 @@
           </div>
           <div class="row">
             <div class="form-group input-field  col s4">
-              <label for="nomeUser">Nome do Usuário:</label>
+              <label for="nomeUser">Endereço e-mail do Usuário:</label>
               <input type="text" id="nomeUser" name="mail" value=data.registroUser.mailUser placeholder="Endereço de e-mail no formato XXX.XXX@carf.economia.gov.br" class="form-control docref"/>
             </div>
             <div class="form-group input-field equipeNC col s4">
@@ -44,22 +44,25 @@
                   <option class="form-group" value=data.registroUser.Sigla>${und.Sigla}</option>
                 </for>
               </select>
-              <label for="unidadeLotacao">
-                Unidade onde ocorreu a <strong>não conformidade</strong>:
-              </label>
+              <label for="unidadeLotacao">Qual a unidade de lotação do usuário?</label>
             </div>
-          </div>
-          <div class="row">
-            <div class="form-group input-field descNC col s6">
-              <select name="descNC">
+            <div class="form-group input-field perfis col s4">
+              <select name="cargo">
                 <option class="form-group" value="" disabled selected>Clique para selecionar</option>
-                <for|nconf| of=data.nconf>
-                  <option class="form-group" value=data.nconf.nconformidade>${nconf.nconformidade}</option>
+                <for|und| of=data.und>
+                  <option class="form-group" value=data.registroUser.Sigla>${und.Sigla}</option>
                 </for>
               </select>
-              <label for="descNC">
-                Descrição da <strong>não conformidade</strong>:
-              </label>
+              <label for="cargo">Qual o cargo/função do usuário?</label>
+            </div>
+            <div class="form-group input-field perfis col s4">
+              <select name="perfil">
+                <option class="form-group" value="" disabled selected>Clique para selecionar</option>
+                <for|und| of=data.und>
+                  <option class="form-group" value=data.registroUser.Sigla>${und.Sigla}</option>
+                </for>
+              </select>
+              <label for="perfil">Qual o perfil do usuário?</label>
             </div>
           </div>
         </form>
@@ -78,7 +81,7 @@
           Confirma <i class="material-icons right">send</i>
         </button>
       </div>
-    </div>    
+    </div>
     <script src="/estatico/js/jquery-3.4.1.js"/>
     <script src="/estatico/js/materialize.js"/>
     <script src="/estatico/js/loadtemplate.js"/>

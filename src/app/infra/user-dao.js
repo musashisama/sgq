@@ -8,18 +8,30 @@ class UserDao {
         return new Promise((resolve, reject) => {
 
             this._db.usuarios
-                .find({ cpf: cpf })                
+                .find({ cpf: cpf })
                 .toArray(function (erro, res) {
-                    if (erro) {                        
+                    if (erro) {
                         return reject('Erro na base de dados. Tente novamente mais tarde.');
-                    }                    
+                    }
                     return resolve(res);
                 });
 
         });
     }
-    getDadosForm(){
-        // <-ARRUMAR
+
+    getUsers() {
+        return new Promise((resolve, reject) => {
+
+            this._db.usuarios
+                .find()
+                .toArray(function (erro, res) {
+                    if (erro) {
+                        return reject('Erro na base de dados. Tente novamente mais tarde.');
+                    }
+                    return resolve(res);
+                });
+
+        });
     }
 }
 

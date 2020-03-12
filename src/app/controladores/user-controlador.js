@@ -19,12 +19,11 @@ class UserControlador {
     formCadastra() {
         return function (req, resp) {
             const userDao = new UserDao(conn);
-            userDao.getDadosForm() // <-ARRUMAR
+            
+            userDao.getUsers()
                 .then(dadosForm => {
                     resp.marko(templates.admin.caduser, {
-                        registroNC: {},
-                        mp: dadosForm[0],
-                        nconf: dadosForm[1],
+                        registroUser: {},                        
                         und: dadosForm[2]
 
                     })

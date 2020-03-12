@@ -27,26 +27,30 @@ function btnInsere() {
 }
 
 function pegaChips() {
-    var n = $('.chip').length;
-    var data = $('.chip').text().split("close");
-    var rm = data.slice(0, data.length - 1).toString();
-    console.log(n + ' ' + rm.split(',') + ' ' + typeof (rm.split(',')));
-    return rm.split(',');
+    let n = $('.chip').length;
+    let data = $('.chip').text().split("close");
+    console.log(`A porra da data é essa: ${data}`);
+    let arrayData = data.toString().split(",", data.length - 1);
+    console.log(`A porra da arrayData é essa ${arrayData}`);
+    // let rm = data.slice(0, data.length - 1).toString();
+    // //console.log(`${data} são os dados. \n ${n} documentos. \n${rm} e splitado fica: ${rm.split(',')} do tipo ${typeof (rm.split(','))}`);
+    // return rm.split(',');
+    return arrayData;
 }
 
 function initModal() {
     $('.modal').modal();
 }
 
-async function insereChips() {
-   await $("#formNC").submit();
+function insereChips() {
+    $("#formNC").submit();
 }
 
 function ajustaData(data) {
     arrayData = data.split("-");
-    console.log(arrayData[2] + ' ' + arrayData[1] + ' ' + arrayData[0]);
+    //console.log(arrayData[2] + ' ' + arrayData[1] + ' ' + arrayData[0]);
     dataAjustada = new Date(arrayData[2], arrayData[1] - 1, arrayData[0], new Date().getHours()).toUTCString();
-    console.log('dataAjustada:', dataAjustada);
+    //console.log('dataAjustada:', dataAjustada);
     return dataAjustada;
 }
 
@@ -80,14 +84,22 @@ function montaModal() {
     );
     $('.concorda').click(function () {
         if ($('.chip').length > 0) {
-            $('.chip').each(function (index) {
-                var dados = $(this).text().split("close");
-                var rm = dados.slice(0, dados.length - 1).toString();
-                $('.docref').val(rm);
-                console.log(index + ': ' + rm);
-                console.log("Data: " + dados.toString());
+            dados = $('.docref').val();
+            console.log(dados);
+            dados.split(",").forEach(docref => {
+                $('.docref').val(docref);
+                console.log($('.docref').val());
                 insereChips();
-            });
+            })
+
+            // $('.chip').each(function (index) {
+            //     var dados = $(this).text().split("close");
+            //     var rm = dados.slice(0, dados.length - 1).toString();
+            //     $('.docref').val(rm);
+            //     console.log(index + ': ' + rm);
+            //     console.log("Data: " + dados.toString());
+            //     insereChips();
+            // });
         } else {
             $("#formNC").submit();
         }
@@ -103,14 +115,26 @@ function initChips() {
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13' && $('.docref').val()) {
             event.preventDefault();
-            $('.areachip').append(`<div class="chip">${$('.docref').val()}<i class="close material-icons">close</i></div>`);
+            arrayChips = $('.docref').val().split(/[\s,;]+/);
+            //console.log(arrayChips);            
+            arrayChips.forEach(element => {
+                //console.log(element);
+                $('.areachip').append(`<div class="chip">${element}<i class="close material-icons">close</i></div>`)
+            });
+            //$('.areachip').append(`<div class="chip">${$('.docref').val()}<i class="close material-icons">close</i></div>`);
             $('.docref').val("")
         }
     });
     $('.addDoc').click(function (event) {
         event.preventDefault();
         if ($('.docref').val()) {
-            $('.areachip').append(`<div class="chip">${$('.docref').val()}<i class="close material-icons">close</i></div>`);
+            arrayChips = $('.docref').val().split(/[\s,;]+/);
+            //console.log(arrayChips);            
+            arrayChips.forEach(element => {
+                //console.log(element);
+                $('.areachip').append(`<div class="chip">${element}<i class="close material-icons">close</i></div>`)
+            });
+            // $('.areachip').append(`<div class="chip">${$('.docref').val()}<i class="close material-icons">close</i></div>`);
             $('.docref').val("");
         }
     });

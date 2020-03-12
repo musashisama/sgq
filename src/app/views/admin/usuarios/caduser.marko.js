@@ -34,7 +34,7 @@ function render(input, out, __component, component, state) {
     marko_attr("value", data.registroUser.cpfUser) +
     " placeholder=\"Digite seu CPF\" class=\"form-control cpfuser\"></div><div class=\"form-group input-field  col s8\"><label for=\"nomeUser\">Nome do Usuário:</label><input type=\"text\" id=\"nomeUser\" name=\"nome\"" +
     marko_attr("value", data.registroUser.nomeUser) +
-    " placeholder=\"Nome completo\" class=\"form-control\"></div></div><div class=\"row\"><div class=\"form-group input-field  col s4\"><label for=\"nomeUser\">Nome do Usuário:</label><input type=\"text\" id=\"nomeUser\" name=\"mail\"" +
+    " placeholder=\"Nome completo\" class=\"form-control\"></div></div><div class=\"row\"><div class=\"form-group input-field  col s4\"><label for=\"nomeUser\">Endereço e-mail do Usuário:</label><input type=\"text\" id=\"nomeUser\" name=\"mail\"" +
     marko_attr("value", data.registroUser.mailUser) +
     " placeholder=\"Endereço de e-mail no formato XXX.XXX@carf.economia.gov.br\" class=\"form-control docref\"></div><div class=\"form-group input-field equipeNC col s4\"><select name=\"unidadeLotacao\"><option class=\"form-group\" value=\"\" disabled selected>Clique para selecionar</option>");
 
@@ -50,25 +50,39 @@ function render(input, out, __component, component, state) {
       "</option>");
   });
 
-  out.w("</select><label for=\"unidadeLotacao\">Unidade onde ocorreu a <strong>não conformidade</strong>:</label></div></div><div class=\"row\"><div class=\"form-group input-field descNC col s6\"><select name=\"descNC\"><option class=\"form-group\" value=\"\" disabled selected>Clique para selecionar</option>");
+  out.w("</select><label for=\"unidadeLotacao\">Qual a unidade de lotação do usuário?</label></div><div class=\"form-group input-field perfis col s4\"><select name=\"cargo\"><option class=\"form-group\" value=\"\" disabled selected>Clique para selecionar</option>");
 
   var $for$1 = 0;
 
-  marko_forEach(data.nconf, function(nconf) {
+  marko_forEach(data.und, function(und) {
     var $keyScope$1 = "[" + (($for$1++) + "]");
 
     out.w("<option class=\"form-group\"" +
-      marko_attr("value", data.nconf.nconformidade) +
+      marko_attr("value", data.registroUser.Sigla) +
       ">" +
-      marko_escapeXml(nconf.nconformidade) +
+      marko_escapeXml(und.Sigla) +
       "</option>");
   });
 
-  out.w("</select><label for=\"descNC\">Descrição da <strong>não conformidade</strong>:</label></div></div></form></div></main><footer class=\"page-footer rodape\"></footer><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div> <script src=\"/estatico/js/jquery-3.4.1.js\"></script><script src=\"/estatico/js/materialize.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script><script src=\"/estatico/js/services/HttpService.js\"></script><script src=\"/estatico/js/valida.js\"></script><script src=\"/estatico/js/formcontrol.js\"></script>");
+  out.w("</select><label for=\"cargo\">Qual o cargo/função do usuário?</label></div><div class=\"form-group input-field perfis col s4\"><select name=\"perfil\"><option class=\"form-group\" value=\"\" disabled selected>Clique para selecionar</option>");
+
+  var $for$2 = 0;
+
+  marko_forEach(data.und, function(und) {
+    var $keyScope$2 = "[" + (($for$2++) + "]");
+
+    out.w("<option class=\"form-group\"" +
+      marko_attr("value", data.registroUser.Sigla) +
+      ">" +
+      marko_escapeXml(und.Sigla) +
+      "</option>");
+  });
+
+  out.w("</select><label for=\"perfil\">Qual o perfil do usuário?</label></div></div></form></div></main><footer class=\"page-footer rodape\"></footer><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div><script src=\"/estatico/js/jquery-3.4.1.js\"></script><script src=\"/estatico/js/materialize.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script><script src=\"/estatico/js/services/HttpService.js\"></script><script src=\"/estatico/js/valida.js\"></script><script src=\"/estatico/js/formcontrol.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "58");
+  await_reorderer_tag({}, out, __component, "60");
 
   out.w("</body></html>");
 }
