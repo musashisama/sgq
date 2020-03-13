@@ -25,7 +25,8 @@ class NCControlador {
 
         const arrayData = data.split("-");
         console.log(arrayData[2] + ' ' + arrayData[1] + ' ' + arrayData[0]);
-        const dataAjustada = new Date(arrayData[2], arrayData[1] - 1, arrayData[0], new Date().getHours()).toUTCString();
+        //const dataAjustada = new Date(arrayData[2], arrayData[1] - 1, arrayData[0], new Date().getHours()).toUTCString();
+        const dataAjustada = new Date(arrayData[2], arrayData[1] - 1, arrayData[0]);
         console.log('Data Ajustada: ', dataAjustada);
         return dataAjustada;
     }
@@ -118,7 +119,7 @@ class NCControlador {
             const clientIp = requestIp.getClientIp(req);
             req.body.EncCorNC = NCControlador.ajustaData(req.body.EncCorNC);
             req.body.dataNC = NCControlador.ajustaData(req.body.dataNC);
-            registro['horaCriacao'] = new Date().toUTCString();
+            registro['horaCriacao'] = new Date().toISOString();
             registro['clientIP'] = clientIp;
             console.log(clientIp);
             console.log(registro);

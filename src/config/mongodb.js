@@ -1,6 +1,7 @@
 const mongo = require('mongodb');
 const cliente = require('mongodb').MongoClient;
-const url = "mongodb://sgi:X19T2eOt!Z6BDaT#yt4w!24nI@localhost:27017";
+//const url = "mongodb://sgi:X19T2eOt!Z6BDaT#yt4w!24nI@localhost:27017";
+const url = "mongodb://localhost:27017/sgq";
 const opcoes = { 
   useNewUrlParser: true, 
   useUnifiedTopology: true
