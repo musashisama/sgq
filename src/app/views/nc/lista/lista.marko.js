@@ -36,17 +36,25 @@ function render(input, out, __component, component, state) {
       "</td><td class=\"desc\">" +
       marko_escapeXml(nc.nconformidade) +
       "</td><td class=\"td-edit\"><a" +
-      marko_attr("href", "/lista/" + nc._id) +
+      marko_attr("href", "/gestao/cadastranc/" + nc._id) +
       "><i class=\"small material-icons icones center-align\">edit</i></a></td><td class=\"td-remove\"><a class=\"modal-trigger\" href=\"#modal1\"><i class=\"aRemove small material-icons icones iconeRemove\"" +
       marko_attr("data-ref", "" + nc._id) +
       " data-type=\"remocao\">remove_circle</i></a></td></tr>");
   });
 
-  out.w("</tbody></table><a class=\"btn-floating btn-large waves-effect waves-light green addListaNC\"><i class=\"material-icons\">add</i></a></div></main><footer class=\"rodape\"></footer><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\">A bunch of text</p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat\">Cancela</a><a href=\"#!\" class=\"modal-close waves-effect waves-green btn-flat concorda\">Confirma</a></div></div><script src=\"/estatico/js/jquery-3.4.1.js\"></script><script src=\"/estatico/js/materialize.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script><script src=\"/estatico/js/remove-nc.js\"></script>");
+  out.w("</tbody></table><a class=\"btn-floating btn-large waves-effect waves-light green addListaNC\" href=\"/gestao/cadastranc\"><i class=\"material-icons\">add</i></a></div></main><div id=\"macroprocessos\" class=\"controle\">");
+
+  marko_forEach(data.mp, function(mp) {
+    out.w("\"" +
+      marko_escapeXml(mp.macroprocesso) +
+      "\"");
+  });
+
+  out.w("<br></div><footer class=\"rodape\"></footer><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat\">Cancela</a><a href=\"#!\" class=\"modal-close waves-effect waves-green btn-flat concorda\">Confirma</a></div></div><script src=\"/estatico/js/jquery-3.4.1.js\"></script><script src=\"/estatico/js/materialize.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script><script src=\"/estatico/js/gestaoNC.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "43");
+  await_reorderer_tag({}, out, __component, "45");
 
   out.w("</body></html>");
 }

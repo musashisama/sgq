@@ -30,6 +30,10 @@ h3 {
     color: orange;
 }
 
+.erro {
+    color: red;
+}
+
 #naoconformidades,#naoconformidades > th,#naoconformidades > td {
     border: 1px solid grey;
     padding: 10px;

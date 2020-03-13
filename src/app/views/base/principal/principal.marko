@@ -12,8 +12,11 @@
     <header class="container-header cabecalho"/>
     <main class="conteudoPrincipal">
       <div class="container">
-        <h2>Não conformidade Registrada com Sucesso.</h2>
         <div class="row">
+          <if(data.msg)>
+            <div id="toastsucesso" class="ctoastsucesso"/>
+            <div id="msg" class="controle">${data.msg}</div>
+          </if>
           <div class="col s6 offset-s3 center-align">
             <table class="centered highlight z-depth-3 responsive-table" border-width=0>
               <thead>
@@ -66,6 +69,7 @@
     <footer class="page-footer rodape"/>
     <script src="/estatico/js/jquery-3.4.1.js"/>
     <script src="/estatico/js/materialize.js"/>
+    <script src="/estatico/js/scprincipal.js"/>
     <script src="/estatico/js/loadtemplate.js"/>
   </body>
 </html>
