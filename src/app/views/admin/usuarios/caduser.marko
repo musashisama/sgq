@@ -15,7 +15,7 @@
         <h3 class="center-align">Adicionar Usuário</h3>
         <br/>
         <br/>
-        <form id="formuser" name="formUser" action="/admin/caduser" method="post">
+        <form id="formUser" name="formUser" action="/admin/usuario" method="post">
           <if(data.registroUser._id)>
             <div>
               <input type="hidden" name="_method" value="PUT"/>
@@ -34,8 +34,8 @@
           </div>
           <div class="row">
             <div class="form-group input-field  col s4">
-              <label for="nomeUser">Endereço e-mail do Usuário:</label>
-              <input type="text" id="nomeUser" name="mail" value=data.registroUser.mailUser placeholder="Endereço de e-mail no formato XXX.XXX@carf.economia.gov.br" class="form-control docref"/>
+              <label for="mailUser">Endereço e-mail do Usuário:</label>
+              <input type="text" id="mailUser" name="mail" value=data.registroUser.mailUser placeholder="Endereço de e-mail no formato XXX.XXX@carf.economia.gov.br" class="form-control docref"/>
             </div>
             <div class="form-group input-field equipeNC col s4">
               <select name="unidadeLotacao">
@@ -46,25 +46,27 @@
               </select>
               <label for="unidadeLotacao">Qual a unidade de lotação do usuário?</label>
             </div>
-            <div class="form-group input-field perfis col s4">
-              <select name="cargo">
-                <option class="form-group" value="" disabled selected>Clique para selecionar</option>
-                <for|und| of=data.und>
-                  <option class="form-group" value=data.registroUser.Sigla>${und.Sigla}</option>
-                </for>
-              </select>
-              <label for="cargo">Qual o cargo/função do usuário?</label>
-            </div>
-            <div class="form-group input-field perfis col s4">
-              <select name="perfil">
-                <option class="form-group" value="" disabled selected>Clique para selecionar</option>
-                <for|und| of=data.und>
-                  <option class="form-group" value=data.registroUser.Sigla>${und.Sigla}</option>
-                </for>
-              </select>
-              <label for="perfil">Qual o perfil do usuário?</label>
-            </div>
           </div>
+          <div class="row">
+            <div class="form-group input-field perfis col s4">
+              <label for="cargoUser">Cargo do Usuário:</label>
+              <input type="text" id="cargoUser" name="cargo" value=data.registroUser.cargoUser placeholder="Cargo do Usuário" class="form-control"/>
+            </div>
+            <div class="form-group input-field perfis col s4">
+              <select name="perfilUser">
+                <option class="form-group" value="" disabled selected>Clique para selecionar</option>
+                <for|perfil| of=data.prf>
+                  <option class="form-group" value=data.registroUser.perfil>${perfil.perfil}</option>
+                </for>
+              </select>
+              <label for="perfilUser">Qual o perfil do usuário?</label>
+            </div>
+            <div class="col s5 offset-s9">
+              <a id="aModal" class="btn-floating btn-large waves-effect waves-light green hoverable btn-insere" href="#modal1">
+                <i class="material-icons">note_add</i>
+              </a>
+            </div>
+          </div>          
         </form>
       </div>
     </main>
@@ -86,7 +88,7 @@
     <script src="/estatico/js/materialize.js"/>
     <script src="/estatico/js/loadtemplate.js"/>
     <script src="/estatico/js/services/HttpService.js"/>
-    <script src="/estatico/js/valida.js"/>
-    <script src="/estatico/js/formcontrol.js"/>
+    <script src="/estatico/js/validaUser.js"/>
+    <script src="/estatico/js/formcontrolUser.js"/>
   </body>
 </html>

@@ -157,7 +157,7 @@ class NCControlador {
         return function (req, resp) {
             const registro = req.body;
             const clientIp = requestIp.getClientIp(req);
-            registro['horaCriacao'] = new Date().toUTCString();
+            registro['horaCriacao'] = new Date().toISOString();
             registro['clientIP'] = clientIp;
             registro['cpfUsuario'] = req.user.cpf;
             const ncDao = new NCDao(conn);
