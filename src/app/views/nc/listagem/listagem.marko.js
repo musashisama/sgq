@@ -22,7 +22,7 @@ function render(input, out, __component, component, state) {
 
   component_globals_tag({}, out);
 
-  out.w("<header class=\"container-header cabecalho\"></header><main class=\"conteudoPrincipal\"><div class=\"container\"><div class=\"row\"><h3 class=\"center-align\">Lista de Não Conformidades</h3><table class=\"striped centered highlight z-depth-3 responsive-table\"><thead><tr><th>Macroprocesso</th><th>Não conformidade</th><th>Descrição detalhada</th></tr></thead><tbody>");
+  out.w("<header class=\"container-header cabecalho\"></header><main class=\"conteudoPrincipal\"><div class=\"container\"><div class=\"row\"><h3 class=\"center-align\">Lista de Não Conformidades</h3><table class=\"striped highlight z-depth-3 responsive-table\"><thead><tr><th>Macroprocesso</th><th>Não conformidade</th></tr></thead><tbody>");
 
   var $for$0 = 0;
 
@@ -33,18 +33,18 @@ function render(input, out, __component, component, state) {
       marko_attr("id", "" + nc._id) +
       "><td class=\"mp\">" +
       marko_escapeXml(nc.Macroprocesso) +
-      "</td><td class=\"desc\">" +
+      "</td><td><details><summary>" +
       marko_escapeXml(nc.nconformidade) +
-      "</td><td class=\"descDet\">" +
-      marko_escapeXml(nc.descDet) +
-      "</td></tr>");
+      "</summary><p>" +
+      marko_escapeXml(nc.nconformidade) +
+      "</p></details></td></tr>");
   });
 
   out.w("</tbody></table></div></div></main><footer class=\"rodape\"></footer><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\">A bunch of text</p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat\">Cancela</a><a href=\"#!\" class=\"modal-close waves-effect waves-green btn-flat concorda\">Confirma</a></div></div><script src=\"/estatico/js/jquery-3.4.1.js\"></script><script src=\"/estatico/js/materialize.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script><script src=\"/estatico/js/formcontrol.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "37");
+  await_reorderer_tag({}, out, __component, "38");
 
   out.w("</body></html>");
 }

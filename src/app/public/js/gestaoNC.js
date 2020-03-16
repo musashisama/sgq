@@ -14,7 +14,7 @@ function initSelect() {
 
 function btnInsere() {
   $('.addListaNC').click(function (event) {
-       
+
   });
 }
 
@@ -50,7 +50,7 @@ function montaModal() {
     </form>
     </p>
   `);
-  
+
   $('.concorda').click(function () {
   });
   $('.cancela').click(function () {

@@ -14,20 +14,23 @@
       <div class="container">
         <div class="row">
           <h3 class="center-align">Lista de Não Conformidades</h3>
-          <table class="striped centered highlight z-depth-3 responsive-table">
+          <table class="striped highlight z-depth-3 responsive-table">
             <thead>
               <tr>
                 <th>Macroprocesso</th>
                 <th>Não conformidade</th>
-                <th>Descrição detalhada</th>
               </tr>
             </thead>
             <tbody>
               <for|nc| of=data.nc>
                 <tr id=`${nc._id}`>
                   <td class="mp">${nc.Macroprocesso}</td>
-                  <td class="desc">${nc.nconformidade}</td>
-                  <td class="descDet">${nc.descDet}</td>
+                  <td>
+                    <details>
+                      <summary>${nc.nconformidade}</summary>
+                      <p>${nc.nconformidade}</p>
+                    </details>
+                  </td>
                 </tr>
               </for>
             </tbody>
