@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="/estatico/css/libs/normalize.css"/>
+    <link rel="stylesheet" href="/estatico/css/libs/materialize.css"/>
+    <link rel="stylesheet" href="/estatico/css/libs/google-fonts.css"/>
+    <link rel="stylesheet" href="/estatico/css/libs/tabulator_materialize.min.css"/>
+    <link rel="stylesheet" href="/estatico/css/main.css"/>
+    <title>Relação de Pessoal do CARF</title>
+  </head>
+  <body>
+    <header class="container-header cabecalho"/>
+    <main class="conteudoPrincipal">
+      <div class="container">
+        <h3 class="center-align">Relação de Pessoal do CARF</h3>
+        <br/>
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs">
+              <li class="tab col s3">
+                <a href="#tabCons">Conselheiros</a>
+              </li>
+              <li class="tab col s3">
+                <a href="#tabColab">Colaboradores</a>
+              </li>
+              <li class="tab col s3">
+                <a href="#tabServ">Servidores</a>
+              </li>
+              <li class="tab col s3">
+                <a href="#tabTerc">Terceirizados</a>
+              </li>
+            </ul>
+          </div>
+          <div id="tabCons" class="col s12">
+            <div class="row">
+              <!-- <if(data.pessoas)>
+                <div>
+                  <input type="hidden" name="_method" value="PUT"/>
+                </div>
+              </if>
+              <p id="resultado"/> -->
+              <!-- <div class="row">
+                <div class="col s2">
+                  <select id="filter-field" name="campoSelect">
+                    <option/>
+                    <option value="" disabled selected>Filtro</option>
+                    <option value="nome">Nome</option>
+                    <option value="cpf">CPF</option>
+                    <option value="cargo">Cargo</option>
+                    <option value="funcao">Função</option>
+                    <option value="setor">Setor</option>
+                  </select>
+                  <label for="campoSelect">Filtro:</label>
+                </div>
+                <div class="col s2">
+                  <select id="filter-type">
+                    <option value="like">Como</option>
+                    <option value="=">Igual</option>
+                    <option value="!=">Diferente</option>
+                    <option value="<">Menor</option>
+                    <option value="<=">Menor ou igual</option>
+                    <option value=">">Maior que</option>
+                    <option value=">=">Maior ou igual</option>
+                  </select>
+                </div>
+                <div class="col s4">
+                  <input id="filter-value" type="text" placeholder="Filtro..."/>
+                </div>
+                <div class="col s1">
+                  <a href=`#` id="filter-clear" title="Limpar filtros">
+                    <i class="small material-icons icones center-align">clear</i>
+                  </a>
+                </div>
+              </div> -->
+              <div class="row">
+                <div class="tabelaCons">
+                  <div id="tabelaCons"/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="tabColab" class="col s12">
+            <div class="row">
+              <!-- <if(data.pessoas)>
+                <div>
+                  <input type="hidden" name="_method" value="PUT"/>
+                </div>
+              </if>
+              <p id="resultado"/> -->
+              <!-- <div class="row">
+                <div class="col s2">
+                  <select id="filter-field" name="campoSelect">
+                    <option/>
+                    <option value="" disabled selected>Filtro</option>
+                    <option value="nome">Nome</option>
+                    <option value="cpf">CPF</option>
+                    <option value="cargo">Cargo</option>
+                    <option value="funcao">Função</option>
+                    <option value="setor">Setor</option>
+                  </select>
+                  <label for="campoSelect">Filtro:</label>
+                </div>
+                <div class="col s2">
+                  <select id="filter-type">
+                    <option value="like">Como</option>
+                    <option value="=">Igual</option>
+                    <option value="!=">Diferente</option>
+                    <option value="<">Menor</option>
+                    <option value="<=">Menor ou igual</option>
+                    <option value=">">Maior que</option>
+                    <option value=">=">Maior ou igual</option>
+                  </select>
+                </div>
+                <div class="col s4">
+                  <input id="filter-value" type="text" placeholder="Filtro..."/>
+                </div>
+                <div class="col s1">
+                  <a href=`#` id="filter-clear" title="Limpar filtros">
+                    <i class="small material-icons icones center-align">clear</i>
+                  </a>
+                </div>
+              </div> -->
+              <div class="row">
+                <div class="tabelaCol">
+                  <div id="tabelaCol"/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="tabServ" class="col s12">
+            <div class="row">
+              <!-- <if(data.pessoas)>
+                <div>
+                  <input type="hidden" name="_method" value="PUT"/>
+                </div>
+              </if>
+              <p id="resultado"/> -->
+              <!-- <div class="row">
+                <div class="col s2">
+                  <select id="filter-field" name="campoSelect">
+                    <option/>
+                    <option value="" disabled selected>Filtro</option>
+                    <option value="nome">Nome</option>
+                    <option value="cpf">CPF</option>
+                    <option value="cargo">Cargo</option>
+                    <option value="funcao">Função</option>
+                    <option value="setor">Setor</option>
+                  </select>
+                  <label for="campoSelect">Filtro:</label>
+                </div>
+                <div class="col s2">
+                  <select id="filter-type">
+                    <option value="like">Como</option>
+                    <option value="=">Igual</option>
+                    <option value="!=">Diferente</option>
+                    <option value="<">Menor</option>
+                    <option value="<=">Menor ou igual</option>
+                    <option value=">">Maior que</option>
+                    <option value=">=">Maior ou igual</option>
+                  </select>
+                </div>
+                <div class="col s4">
+                  <input id="filter-value" type="text" placeholder="Filtro..."/>
+                </div>
+                <div class="col s1">
+                  <a href=`#` id="filter-clear" title="Limpar filtros">
+                    <i class="small material-icons icones center-align">clear</i>
+                  </a>
+                </div>
+              </div> -->
+              <div class="row">
+                <div class="tabelaServ">
+                  <div id="tabelaServ"/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="tabTerc" class="col s12">
+            <div class="row">
+              <!-- <if(data.pessoas)>
+                <div>
+                  <input type="hidden" name="_method" value="PUT"/>
+                </div>
+              </if>
+              <p id="resultado"/> -->
+              <!-- <div class="row">
+                <div class="col s2">
+                  <select id="filter-field" name="campoSelect">
+                    <option/>
+                    <option value="" disabled selected>Filtro</option>
+                    <option value="nome">Nome</option>
+                    <option value="cpf">CPF</option>
+                    <option value="cargo">Cargo</option>
+                    <option value="funcao">Função</option>
+                    <option value="setor">Setor</option>
+                  </select>
+                  <label for="campoSelect">Filtro:</label>
+                </div>
+                <div class="col s2">
+                  <select id="filter-type">
+                    <option value="like">Como</option>
+                    <option value="=">Igual</option>
+                    <option value="!=">Diferente</option>
+                    <option value="<">Menor</option>
+                    <option value="<=">Menor ou igual</option>
+                    <option value=">">Maior que</option>
+                    <option value=">=">Maior ou igual</option>
+                  </select>
+                </div>
+                <div class="col s4">
+                  <input id="filter-value" type="text" placeholder="Filtro..."/>
+                </div>
+                <div class="col s1">
+                  <a href=`#` id="filter-clear" title="Limpar filtros">
+                    <i class="small material-icons icones center-align">clear</i>
+                  </a>
+                </div>
+              </div> -->
+              <div class="row">
+                <div class="tabelaTerc">
+                  <div id="tabelaTerc"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="dadosCons" class="controle">${data.cons}</div>
+      <div id="dadosCol" class="controle">${data.col}</div>
+      <div id="dadosServ" class="controle">${data.serv}</div>
+      <div id="dadosTerc" class="controle">${data.terc}</div>
+    </main>
+    <footer class="page-footer rodape"/>
+    <!--Modal Structure-->
+    <div id="modal1" class="modal">
+      <div class="modal-content">
+        <h4 class="hModal">Modal Header</h4>
+        <p class="pModal"/>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-red btn-flat cancela">Cancela</a>
+        <button class="btn waves-effect waves-light concorda" type="submit" name="action">
+          Confirma <i class="material-icons right">send</i>
+        </button>
+      </div>
+    </div>
+    <script src="/estatico/js/libs/jquery-3.4.1.js"/>
+    <script src="/estatico/js/libs/materialize.js"/>
+    <script src="/estatico/js/libs/tabulator.min.js"/>
+    <script src="/estatico/js/loadtemplate.js"/>
+    <script src="/estatico/js/pessoas.js"/>
+  </body>
+</html>

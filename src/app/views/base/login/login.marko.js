@@ -33,7 +33,7 @@ function render(input, out, __component, component, state) {
     marko_attr("value", data.id) +
     " placeholder=\"Digite seu CPF.\" class=\"form-control tooltipped\" data-position=\"bottom\" data-tooltip=\"Somente números.\"></div><div class=\"form-group input-field pwd\"><i class=\"material-icons prefix\">lock</i><input type=\"password\" autocomplete=\"current-password\" id=\"pwd\" name=\"pwd\"" +
     marko_attr("value", data.pwd) +
-    " placeholder=\"Digite sua senha.\" class=\"form-control\"></div><div class=\"form-group\"><button class=\"btn waves-effect waves-light concorda right\" type=\"submit\" name=\"action\">Efetuar login <i class=\"material-icons right\">send</i></button></div></form></div></div></div></main><footer class=\"page-footer rodape\"></footer><script src=\"/estatico/js/jquery-3.4.1.js\"></script><script src=\"/estatico/js/materialize.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script>");
+    " placeholder=\"Digite sua senha.\" class=\"form-control\"></div><div class=\"form-group\"><button class=\"btn waves-effect waves-light concorda right\" type=\"submit\" name=\"action\">Efetuar login <i class=\"material-icons right\">send</i></button></div></form></div></div></div></main><footer class=\"page-footer rodape\"></footer><script src=\"/estatico/js/libs/jquery-3.4.1.js\"></script><script src=\"/estatico/js/libs/materialize.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script>");
 
   init_components_tag({}, out);
 

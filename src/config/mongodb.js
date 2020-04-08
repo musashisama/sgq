@@ -20,6 +20,7 @@ cliente.connect(url, opcoes, function (err, cliente) {
   dados.unidadesCARF = dbo.collection('unidadesCARF');
   dados.usuarios = dbo.collection('usuarios');
   dados.perfis = dbo.collection('perfis');
+  dados.relatorios = dbo.collection('relatorios');
   dados.fschunks = dbo.collection('uploads.chunks');
   dados.fsfiles = dbo.collection('uploads.files');
 });

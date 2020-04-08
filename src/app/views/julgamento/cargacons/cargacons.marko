@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="/estatico/css/libs/normalize.css"/>
+    <link rel="stylesheet" href="/estatico/css/libs/materialize.css"/>
+    <link rel="stylesheet" href="/estatico/css/libs/google-fonts.css"/>
+    <link rel="stylesheet" href="/estatico/css/libs/tabulator_materialize.min.css"/>
+    <link rel="stylesheet" href="/estatico/css/main.css"/>
+    <title>Diagnóstico da Carga de Processos dos Conselheiros</title>
+  </head>
+  <body>
+    <header class="container-header cabecalho"/>
+    <main class="conteudoPrincipal">
+      <div class="container">
+        <h3 class="center-align">Diagnóstico da Carga de Processos dos Conselheiros</h3>
+        <br/>
+        <br/>
+        <form id="formGerencial" name="formGerencial" action="/julgamento/restrito/diagnostico-carga" method="post">
+          <div class="row">
+            <!-- <if(data.dados)>
+              <div>
+                <input type="hidden" name="_method" value="PUT"/>
+              </div>
+            </if> -->
+            <div class="form-group input-field relatorio col s3">
+              <select name="relatorio" id="relatorio">
+                <!-- <option class="form-group" value="" disabled selected>Clique para selecionar</option> -->
+                <for|dado| of=data.dados>
+                  <option class="form-group" value=`${dado}`>${dado}</option>
+                </for>
+              </select>
+              <label for="relatorio">Qual relatório deseja carregar?</label>
+            </div>
+            <a class="waves-effect waves-light btn-small orange" id="botaoAbre">
+              <i class="material-icons left">cloud</i>Abrir
+            </a>
+            <p id="resultado"/>
+            <div class="tabelaCarga">
+              <div id="tabelaCarga"/>
+            </div>
+            <div id="dadosCarga" class="controle">${data.relatorio}</div>            
+          </div>
+        </form>
+      </div>
+    </main>
+    <footer class="page-footer rodape"/>
+    <!--Modal Structure-->
+    <div id="modal1" class="modal">
+      <div class="modal-content">
+        <h4 class="hModal">Modal Header</h4>
+        <p class="pModal"/>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-red btn-flat cancela">Cancela</a>
+        <button class="btn waves-effect waves-light concorda" type="submit" name="action">
+          Confirma <i class="material-icons right">send</i>
+        </button>
+      </div>
+    </div>
+    <script src="/estatico/js/libs/jquery-3.4.1.js"/>
+    <script src="/estatico/js/libs/materialize.js"/>
+    <script src="/estatico/js/libs/tabulator.min.js"/>
+    <script src="/estatico/js/loadtemplate.js"/>
+    <script src="/estatico/js/cargacons.js"/>
+  </body>
+</html>

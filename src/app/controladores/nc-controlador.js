@@ -10,7 +10,7 @@ class NCControlador {
     static rotas() {
         return {
             autenticadas: '/gestao*',
-            lista: '/lista',
+            lista: '/gestao/lista',
             listaNC: '/listaNC',
             form: '/form',
             listagem: '/listagem',
