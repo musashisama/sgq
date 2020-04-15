@@ -16,5 +16,20 @@ class JulgamentoDao {
             })
         });
     }
+
+    getRelatorios(filtro={}){
+        return new Promise((resolve, reject) => {            
+            this._db.relatorios
+            .find(filtro)
+            .sort({ _id: -1 })
+            .project()
+            .toArray(function (erro, res) {
+                if (erro) {
+                    return reject(`Não foi possível listar os relatórios. Erro: ${erro}`);
+                }
+                return resolve(res);
+            });
+        });
+    }
 }
 module.exports = JulgamentoDao;

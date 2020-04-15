@@ -16,11 +16,9 @@ module.exports = (app) => {
             resp.redirect(rotasBase.login);
         }
     });
-
     
     app.get(rotasNC.listagem,ncControlador.listagem());
-    app.get(rotasNC.listaNC,ncControlador.listaNC());
-    
+    app.get(rotasNC.listaNC,ncControlador.listaNC());    
     
     app.route(rotasNC.form)
         .get(ncControlador.formularioCadastro())

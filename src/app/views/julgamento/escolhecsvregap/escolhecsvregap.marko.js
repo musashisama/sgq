@@ -2,7 +2,7 @@
 "use strict";
 
 var marko_template = module.exports = require("marko/src/html").t(__filename),
-    marko_componentType = "/sgq$1.0.0/src/app/views/julgamento/escolhecsv/escolhecsv.marko",
+    marko_componentType = "/sgq$1.0.0/src/app/views/julgamento/escolhecsvregap/escolhecsvregap.marko",
     components_helpers = require("marko/src/runtime/components/helpers"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
@@ -10,8 +10,8 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_loadTag = marko_helpers.t,
     component_globals_tag = marko_loadTag(require("marko/src/core-tags/components/component-globals-tag")),
     marko_forEach = marko_helpers.f,
-    marko_escapeXml = marko_helpers.x,
     marko_attr = marko_helpers.a,
+    marko_escapeXml = marko_helpers.x,
     init_components_tag = marko_loadTag(require("marko/src/core-tags/components/init-components-tag")),
     await_reorderer_tag = marko_loadTag(require("marko/src/core-tags/core/await/reorderer-renderer"));
 
@@ -22,24 +22,44 @@ function render(input, out, __component, component, state) {
 
   component_globals_tag({}, out);
 
-  out.w("<header class=\"container-header cabecalho\"></header><main class=\"conteudoPrincipal\"><ul id=\"slide-out\" class=\"sidenav\"></ul><div class=\"container\"><h3 class=\"center-align\">Selecione o relatório que deseja visualizar:</h3><br><br><br><br><div class=\"row conteudoPrincipal\">");
+  out.w("<header class=\"container-header cabecalho\"></header> <main class=\"conteudoPrincipal\"><ul id=\"slide-out\" class=\"sidenav\"></ul><div class=\"container\"><h3 class=\"center-align\">Selecione o relatório que deseja visualizar:</h3><br><br><br><br><div class=\"row conteudoPrincipal\">");
 
   var $for$0 = 0;
 
   marko_forEach(data.dados, function(dado) {
+    out.w(" ");
+
     var $keyScope$0 = "[" + (($for$0++) + "]");
 
-    out.w("<div class=\"card conteudoPrincipalCard\"><div class=\"card-image waves-effect waves-block waves-light\"><img class=\"activator scaleImg\" alt=\"Clique para informações do relatório\" title=\"Clique para informações do relatório\" src=\"/estatico/imagens/CSV.png\"></div><div class=\"card-content\"><span class=\"card-title activator grey-text text-darken-4\">Relatório Extraído em " +
+    out.w("<div class=\"card conteudoPrincipalCard \"><div class=\"card-image activator waves-effect waves-block waves-light\"" +
+      marko_attr("id", "" + dado.semana) +
+      "><img class=\"activator scaleImg\" alt=\"Clique para informações do relatório\" title=\"Clique para informações do relatório\" src=\"/estatico/imagens/CSV.png\"></div><div class=\"card-content\"><span class=\"card-title activator grey-text text-darken-4 \">Relatório Extraído em " +
       marko_escapeXml(dado.dtExtracao) +
       "<i class=\"material-icons right\">more_vert</i></span><p>" +
       marko_escapeXml(dado.total) +
       " processos distribuídos. " +
       marko_escapeXml(dado.totalHoras) +
-      " horas. </p><p><br><a class=\"btn-floating btn-insere halfway-fab waves-effect waves-light red\"" +
-      marko_attr("href", "/julgamento/restrito/diagnostico-carga/" + dado.caminho) +
+      " horas.</p>");
+
+    if (dado.semana) {
+      out.w("<p>Semana: " +
+        marko_escapeXml(dado.semana) +
+        ".</p>");
+    }
+
+    out.w("<p><br><a class=\"btn-floating btn-insere halfway-fab waves-effect waves-light red\"" +
+      marko_attr("href", "/julgamento/restrito/regapCojul/" + dado.caminho) +
       "><i class=\"material-icons\">send</i></a><div class=\"controle\">" +
       marko_escapeXml(dado.caminho) +
-      "</div></p></div><div class=\"card-reveal\"><span class=\"card-title grey-text text-darken-4\">Informações do relatório:<i class=\"material-icons right\">close</i></span><p>Este relatório foi extraído em " +
+      "</div></p></div><div class=\"card-reveal\"><span class=\"card-title grey-text text-darken-4\">Informações do relatório:<i class=\"material-icons right\">close</i></span>");
+
+    if (dado.semana) {
+      out.w("<p>Semana: " +
+        marko_escapeXml(dado.semana) +
+        ".</p>");
+    }
+
+    out.w("<p>Este relatório foi extraído em " +
       marko_escapeXml(dado.dtExtracao) +
       ".</p><p>Há " +
       marko_escapeXml(dado.total) +
@@ -70,7 +90,7 @@ function render(input, out, __component, component, state) {
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "44");
+  await_reorderer_tag({}, out, __component, "46");
 
   out.w("</body></html>");
 }
@@ -83,7 +103,7 @@ marko_template._ = marko_renderer(render, {
 marko_template.Component = marko_defineComponent({}, marko_template._);
 
 marko_template.meta = {
-    id: "/sgq$1.0.0/src/app/views/julgamento/escolhecsv/escolhecsv.marko",
+    id: "/sgq$1.0.0/src/app/views/julgamento/escolhecsvregap/escolhecsvregap.marko",
     tags: [
       "marko/src/core-tags/components/component-globals-tag",
       "marko/src/core-tags/components/init-components-tag",

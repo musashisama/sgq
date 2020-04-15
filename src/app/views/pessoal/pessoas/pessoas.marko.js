@@ -20,7 +20,7 @@ function render(input, out, __component, component, state) {
 
   component_globals_tag({}, out);
 
-  out.w("<header class=\"container-header cabecalho\"></header><main class=\"conteudoPrincipal\"><div class=\"container\"><h3 class=\"center-align\">Relação de Pessoal do CARF</h3><br><div class=\"row\"><div class=\"col s12\"><ul class=\"tabs\"><li class=\"tab col s3\"><a href=\"#tabCons\">Conselheiros</a></li><li class=\"tab col s3\"><a href=\"#tabColab\">Colaboradores</a></li><li class=\"tab col s3\"><a href=\"#tabServ\">Servidores</a></li><li class=\"tab col s3\"><a href=\"#tabTerc\">Terceirizados</a></li></ul></div><div id=\"tabCons\" class=\"col s12\"><div class=\"row\"><div class=\"row\"><div class=\"tabelaCons\"><div id=\"tabelaCons\"></div></div></div></div></div><div id=\"tabColab\" class=\"col s12\"><div class=\"row\"><div class=\"row\"><div class=\"tabelaCol\"><div id=\"tabelaCol\"></div></div></div></div></div><div id=\"tabServ\" class=\"col s12\"><div class=\"row\"><div class=\"row\"><div class=\"tabelaServ\"><div id=\"tabelaServ\"></div></div></div></div></div><div id=\"tabTerc\" class=\"col s12\"><div class=\"row\"><div class=\"row\"><div class=\"tabelaTerc\"><div id=\"tabelaTerc\"></div></div></div></div></div></div></div><div id=\"dadosCons\" class=\"controle\">" +
+  out.w("<header class=\"container-header cabecalho\"></header><main class=\"conteudoPrincipal\"><ul id=\"slide-out\" class=\"sidenav\"></ul><div class=\"container\"><h3 class=\"center-align\">Relação de Pessoal do CARF</h3><br><div class=\"row\"><div class=\"col s12\"><ul class=\"tabs\"><li class=\"tab col s3\"><a href=\"#tabCons\">Conselheiros</a></li><li class=\"tab col s3\"><a href=\"#tabColab\">Colaboradores</a></li><li class=\"tab col s3\"><a href=\"#tabServ\">Servidores</a></li><li class=\"tab col s3\"><a href=\"#tabTerc\">Terceirizados</a></li></ul></div><div id=\"tabCons\" class=\"col s12\"><div class=\"row\"><div class=\"row\"><div class=\"tabelaCons\"><div id=\"tabelaCons\"></div></div></div></div></div><div id=\"tabColab\" class=\"col s12\"><div class=\"row\"><div class=\"row\"><div class=\"tabelaCol\"><div id=\"tabelaCol\"></div></div></div></div></div><div id=\"tabServ\" class=\"col s12\"><div class=\"row\"><div class=\"row\"><div class=\"tabelaServ\"><div id=\"tabelaServ\"></div></div></div></div></div><div id=\"tabTerc\" class=\"col s12\"><div class=\"row\"><div class=\"row\"><div class=\"tabelaTerc\"><div id=\"tabelaTerc\"></div></div></div></div></div></div></div><div id=\"dadosCons\" class=\"controle\">" +
     marko_escapeXml(data.cons) +
     "</div><div id=\"dadosCol\" class=\"controle\">" +
     marko_escapeXml(data.col) +
@@ -32,7 +32,7 @@ function render(input, out, __component, component, state) {
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "64");
+  await_reorderer_tag({}, out, __component, "65");
 
   out.w("</body></html>");
 }

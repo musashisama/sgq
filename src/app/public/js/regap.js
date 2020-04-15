@@ -14,9 +14,9 @@ function initSelect() {
 }
 
 function dataTable(msg) {
-    let tabledata = JSON.parse($('#dadosCarga').text());
+    let tabledata = JSON.parse($('#dadosRegap').text());
     var table = null;
-    table = new Tabulator("#tabelaCarga", {
+    table = new Tabulator("#tabelaRegap", {
         data: tabledata,
         pagination: "local",
         height: "1000px",
@@ -31,19 +31,9 @@ function dataTable(msg) {
             { title: "Turma", field: "turma", sorter: "string", hozAlign: "center", headerFilter: "input", editor: false, },
             { title: "Câmara", field: "camara", sorter: "string", hozAlign: "center", headerFilter: "input", editor: false, },
             { title: "Seção", field: "setor", sorter: "string", hozAlign: "center", headerFilter: "input", editor: false, },
-            { title: "Quantidade", field: "qtdeProc", sorter: "number", hozAlign: "center", editor: false, },
+            { title: "Processo", field: "Processo", sorter: "number", hozAlign: "center", editor: false, },
             { title: "Carga em horas", field: "HE_CARF", sorter: "number", hozAlign: "center", editor: false, },
-            {
-                title: "", field: "HE_CARF", sorter: "number", hozAlign: "left", width: 250, formatter: "progress", formatterParams: {
-                    min: 0,
-                    max: 1000,
-                    color: function (value) {
-                        if (value <= 126) return "red";
-                        if (value > 126 && value <= 252) return "orange";
-                        if (value > 252) return "green";
-                    },
-                }
-            }],
+            ],
         autoColumns: false,
         locale: true,
         langs: {
@@ -81,3 +71,15 @@ function dataTable(msg) {
         },
     });
 }
+
+// {
+//     title: "", field: "HE_CARF", sorter: "number", hozAlign: "left", width: 250, formatter: "progress", formatterParams: {
+//         min: 0,
+//         max: 1000,
+//         color: function (value) {
+//             if (value <= 126) return "red";
+//             if (value > 126 && value <= 252) return "orange";
+//             if (value > 252) return "green";
+//         },
+//     }
+// }

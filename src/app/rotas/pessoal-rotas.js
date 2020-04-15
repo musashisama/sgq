@@ -20,7 +20,9 @@ module.exports = (app) => {
         .get(pessoalControlador.carregaPaginaPessoal())
         .post(pessoalControlador.carregaPaginaPessoal());
         //.put(julgControlador.carregaRel());
-        
+    app.route(rotasPessoal.cadastra)
+    .get(pessoalControlador.carregaPaginaCadastro())
+    .post(pessoalControlador.carregaPaginaCadastro())
         
     // app.route(rotasPessoal.carregacsv)
     //     .get(pessoalControlador.carregaPaginaInsereCSV())

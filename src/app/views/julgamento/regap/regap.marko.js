@@ -2,7 +2,7 @@
 "use strict";
 
 var marko_template = module.exports = require("marko/src/html").t(__filename),
-    marko_componentType = "/sgq$1.0.0/src/app/views/julgamento/cargacons/cargacons.marko",
+    marko_componentType = "/sgq$1.0.0/src/app/views/julgamento/regap/regap.marko",
     components_helpers = require("marko/src/runtime/components/helpers"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
@@ -20,7 +20,7 @@ function render(input, out, __component, component, state) {
 
   component_globals_tag({}, out);
 
-  out.w("<header class=\"container-header cabecalho\"></header><main class=\"conteudoPrincipal\"><ul id=\"slide-out\" class=\"sidenav\"></ul><div class=\"container\"><h3 class=\"center-align\">Diagnóstico da Carga de Processos dos Conselheiros</h3><br><br><form id=\"formGerencial\" name=\"formGerencial\" action=\"/julgamento/restrito/diagnostico-carga\" method=\"post\"><div class=\"row\"> <p id=\"resultado\"></p><div class=\"tabelaCarga\"><div id=\"tabelaCarga\"></div></div><div id=\"dadosCarga\" class=\"controle\">" +
+  out.w("<header class=\"container-header cabecalho\"></header> <main class=\"conteudoPrincipal\"><ul id=\"slide-out\" class=\"sidenav\"></ul><div class=\"container\"><h3 class=\"center-align\">Diagnóstico da Carga de Processos dos Conselheiros</h3><br><br><form id=\"formGerencial\" name=\"formGerencial\" action=\"/julgamento/restrito/diagnostico-carga\" method=\"post\"><div class=\"row\"> <p id=\"resultado\"></p><div class=\"tabelaCarga\"><div id=\"tabelaCarga\"></div></div><div id=\"dadosCarga\" class=\"controle\">" +
     marko_escapeXml(data.relatorio) +
     "</div> </div></form></div></main><footer class=\"page-footer rodape\"></footer><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div><script src=\"/estatico/js/libs/jquery-3.4.1.js\"></script><script src=\"/estatico/js/libs/materialize.js\"></script><script src=\"/estatico/js/libs/tabulator.min.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script><script src=\"/estatico/js/cargacons.js\"></script>");
 
@@ -39,7 +39,7 @@ marko_template._ = marko_renderer(render, {
 marko_template.Component = marko_defineComponent({}, marko_template._);
 
 marko_template.meta = {
-    id: "/sgq$1.0.0/src/app/views/julgamento/cargacons/cargacons.marko",
+    id: "/sgq$1.0.0/src/app/views/julgamento/regap/regap.marko",
     tags: [
       "marko/src/core-tags/components/component-globals-tag",
       "marko/src/core-tags/components/init-components-tag",

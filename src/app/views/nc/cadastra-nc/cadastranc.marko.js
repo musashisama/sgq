@@ -22,7 +22,7 @@ function render(input, out, __component, component, state) {
 
   component_globals_tag({}, out);
 
-  out.w("<header class=\"container-header cabecalho\"></header><main class=\"conteudoPrincipal\"><div class=\"container\"><h3 class=\"center-align\">Registrar Nova Não Conformidade</h3><br><br><form id=\"formCadNC\" name=\"formCadNC\" action=\"/gestao/cadastranc\" method=\"post\"><div class=\"row\">");
+  out.w("<header class=\"container-header cabecalho\"></header> <main class=\"conteudoPrincipal\"><ul id=\"slide-out\" class=\"sidenav\"></ul><div class=\"container\"><h3 class=\"center-align\">Registrar Nova Não Conformidade</h3><br><br><form id=\"formCadNC\" name=\"formCadNC\" action=\"/gestao/cadastranc\" method=\"post\"><div class=\"row\">");
 
   if (data.cadastraNC[0]._id) {
     out.w("<div><input type=\"hidden\" name=\"_method\" value=\"PUT\"><input type=\"hidden\" name=\"_id\"" +
@@ -52,7 +52,7 @@ function render(input, out, __component, component, state) {
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "51");
+  await_reorderer_tag({}, out, __component, "52");
 
   out.w("</body></html>");
 }

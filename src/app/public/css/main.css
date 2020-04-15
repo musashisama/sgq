@@ -85,16 +85,104 @@ h3 {
     user-select: none;
 }
 
+.scaleImg {
+    max-width: 10%;
+    max-height: auto;
+}
+
+.conteudoPrincipal {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.conteudoPrincipalCard {
+    width: 30%;
+    margin: 1%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    transition: .3s;
+    box-shadow: 2px 2px 2px #CCC;
+    position: relative;
+    height: 250px;    
+    background-color: #F2F5F7;
+}
+
+#mostraMenu{
+    width: 5%;
+    margin: 20%;
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    transition: .3s;
+    color: #1659bf;    
+    vertical-align: middle;
+    text-align: center;
+    font-size: 30px;
+}
+
+#Verde{
+    background-color: #a5d6a7;
+}
+
+#Amarela{
+    background-color: #fff59d;
+}
+
+#Azul{
+    background-color: #90caf9;
+}
+
 .controle {
     display: none;
 }
-
-.collection-item {}
 
 .collection {
     white-space: nowrap;
 }
 
+.login_error {
+    color: #D8000C;
+    background-color: #FFD2D2;
+    border-radius: 10px;
+    transition: background-color .15s;
+}
+.login_error i {
+    margin:5px 5px;
+    font-size:1.5em;
+    vertical-align:middle;
+}
+
+#mostraColunas{
+    color: #F2F5F7;
+}
+
+.subheader{
+    
+    font-style: oblique;
+    
+}
+
+.tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-title {
+    white-space: normal;
+}
+#slide-out{
+    width:auto
+}
+
+.bgMenu {    
+    max-width: 100%;
+    height: auto;
+  }
+
+.tabulator-responsive-collapse-toggle-open{
+    color: #1659bf;
+    background-color: #F2F5F7;
+}
+.tabulator-responsive-collapse-toggle-close{
+    color: #1659bf;
+    background-color: #F2F5F7;
+}
 .titulo-sistema {
     font-size: 2.5em;
     color: white;
@@ -111,8 +199,8 @@ h3 {
 
 details {
     margin: 1rem auto;
-    padding: 0 1rem;    
-    border-radius: 6px;    
+    padding: 0 1rem;
+    border-radius: 6px;
     transition: background-color .15s;
 }
 
@@ -135,30 +223,29 @@ summary {
     cursor: pointer;
 }
 
-
-summary::-webkit-details-marker {    
+summary::-webkit-details-marker {
     content: attr('teste');
 }
 
-.tabs .tab a{
-    color:#3867b7;
-} 
+.tabs .tab a {
+    color: #3867b7;
+}
 
 .tabs .tab a:hover {
-    background-color:#eee;
-    color:#3867b7;
-} 
+    background-color: #eee;
+    color: #3867b7;
+}
 
 .tabs .tab a.active {
-    background-color:rgba(56, 103, 183, 0.1);
-    color:#3867b7;
-} 
+    background-color: rgba(56, 103, 183, 0.1);
+    color: #3867b7;
+}
 
 .tabs .tab a:focus, .tabs .tab a:focus.active {
     background-color: rgba(56, 103, 183, 0.1);
     outline: none;
-  }
+}
 
 .tabs .indicator {
-    background-color:#3867b7;
+    background-color: #3867b7;
 }

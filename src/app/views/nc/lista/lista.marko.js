@@ -22,7 +22,7 @@ function render(input, out, __component, component, state) {
 
   component_globals_tag({}, out);
 
-  out.w("<header class=\"container-header cabecalho\"></header><main class=\"conteudoPrincipal\"><div class=\"container\"><h2 class=\"center-align\">Lista de Não Conformidades</h2><table id=\"naoconformidades\" class=\"striped highlight z-depth-3 responsive-table\"><thead class=\"white-text grey darken-4 colunas\"><tr> <th>Macroprocesso</th><th>Não conformidade</th><th>Editar</th><th>Remover</th></tr></thead><tbody>");
+  out.w("<header class=\"container-header cabecalho\"></header> <main class=\"conteudoPrincipal\"><ul id=\"slide-out\" class=\"sidenav\"></ul><div class=\"container\"><h2 class=\"center-align\">Lista de Não Conformidades</h2><table id=\"naoconformidades\" class=\"striped highlight z-depth-3 responsive-table\"><thead class=\"white-text grey darken-4 colunas\"><tr> <th>Macroprocesso</th><th>Não conformidade</th><th>Editar</th><th>Remover</th></tr></thead><tbody>");
 
   var $for$0 = 0;
 
@@ -56,7 +56,7 @@ function render(input, out, __component, component, state) {
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "48");
+  await_reorderer_tag({}, out, __component, "49");
 
   out.w("</body></html>");
 }

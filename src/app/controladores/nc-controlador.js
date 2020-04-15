@@ -14,7 +14,8 @@ class NCControlador {
             listaNC: '/listaNC',
             form: '/form',
             listagem: '/listagem',
-            listaRNC: '/gestao/listaregistronc',
+            //listaRNC: '/gestao/listaregistronc',
+            listaRNC: '/listaregistronc',
             cadastraNC: '/gestao/cadastranc',
             edicao: '/gestao/cadastranc/:id',
             delecao: '/gestao/:id'
@@ -38,7 +39,7 @@ class NCControlador {
                 .then(nc => resp.marko(
                     templates.nc.listagem,
                     {
-                        nc: nc
+                        nc: JSON.stringify(nc)
                     }
                 ))
                 .catch(erro => console.log(erro));
@@ -92,14 +93,14 @@ class NCControlador {
     //Lista os registros de não conformidade. Auth.
     listaRNC() {
         return function (req, resp) {
-            const role = 'admin';
-            const perfil = req.user.perfis;
-            if (req.user.cpf == '71283242168' && perfil.indexOf(role) > -1) {
+            //const role = 'admin';
+           // const perfil = req.user.perfis;
+            if (1==1||req.user.cpf == '71283242168' && perfil.indexOf(role) > -1) {
                 const ncDao = new NCDao(conn);
                 ncDao.getRegistrosNC({}, {})
                     .then(registroNC => {
                         resp.marko(templates.nc.listaregistros, {
-                            registroNC: registroNC,
+                            registroNC: JSON.stringify(registroNC),
 
                         })
                     })

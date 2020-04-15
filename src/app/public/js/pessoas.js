@@ -44,11 +44,6 @@ var langs = {
     }
 
 };
-
-
-
-
-
 function inicializaComponentes() {
     $(document).ready(function () {
         initSelect();
@@ -166,6 +161,4 @@ function dataTable() {
 
     });
     tableTerc.setFilter("funcao", "=", "Terceirizado");
-
-
 }

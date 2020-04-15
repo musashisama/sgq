@@ -16,14 +16,11 @@ module.exports = (app) => {
     //         resp.redirect(rotasBase.login);
     //     }
     // });
-    app.get(rotasJulgamento.escolhecsv, julgControlador.escolheCSV());
-
-    app.route(rotasJulgamento.cargacons)
-        .get(julgControlador.carregaPaginaDiag())
-        .post(julgControlador.carregaPaginaDiag());
-    //.put(julgControlador.carregaRel());
-
-
+    app.get(rotasJulgamento.regap,julgControlador.carregaPaginaRegap());
+    app.get(rotasJulgamento.regapCojul,julgControlador.carregaPaginaRegapCojul());
+    app.get(rotasJulgamento.escolhecsvregap,julgControlador.escolheCSVRegap());
+    app.get(rotasJulgamento.escolhecsv,julgControlador.escolheCSV());
+    app.get(rotasJulgamento.detalha,julgControlador.carregaPaginaDiag())
     app.route(rotasJulgamento.carregacsv)
         .get(julgControlador.carregaPaginaInsereCSV())
         .post(julgControlador.carregaCSV());

@@ -4,46 +4,23 @@
     <meta charset="utf-8"/>
     <link rel="stylesheet" href="/estatico/css/libs/normalize.css"/>
     <link rel="stylesheet" href="/estatico/css/libs/materialize.css"/>
-    <link rel="stylesheet" href="/estatico/css/libs/google-fonts.css"/>
+    <link rel="stylesheet" href="/estatico/css/libs/google-fonts.css"/>    
+    <link rel="stylesheet" href="/estatico/css/libs/tabulator_materialize.min.css"/>
     <link rel="stylesheet" href="/estatico/css/main.css"/>
     <title>Registro de Não Conformidades</title>
   </head>
   <body>
     <header class="container-header cabecalho"/>
     <main class="conteudoPrincipal">
+    <ul id="slide-out" class="sidenav"/>
       <div class="container">
         <div class="row">
           <h3 class="center-align">Registro de Não Conformidades</h3>
-          <table class="striped centered highlight z-depth-3 responsive-table">
-            <thead>
-              <tr>
-                <th>Documento de Referência</th>
-                <th>Macroprocesso do Usuário</th>
-                <th>Macroprocesso de Origem</th>
-                <th>Equipe</th>
-                <th>Descrição da Não Conformidade</th>
-                <th>Observações</th>
-                <th>Ação Imediata</th>
-                <th>Data de Ocorrência</th>
-                <th>Data de Encaminhamento/Correção</th>
-              </tr>
-            </thead>
-            <tbody>
-              <for|registroNC| of=data.registroNC>
-                <tr id=`${registroNC._id}`>
-                  <td class="docref">${registroNC.docRef}</td>
-                  <td class="mpprocuser">${registroNC.mpProcUser}</td>
-                  <td class="mpprocorigem">${registroNC.mProcOrigem}</td>
-                  <td class="equipenc">${registroNC.equipeNC}</td>
-                  <td class="descnc">${registroNC.descNC}</td>
-                  <td class="obs">${registroNC.obsParticipante}</td>
-                  <td class="acao">${registroNC.acaoImediata}</td>
-                  <td class="datanc">${registroNC.dataNC}</td>
-                  <td class="dataenccor">${registroNC.EncCorNC}</td>
-                </tr>
-              </for>
-            </tbody>
-          </table>
+          <div class="col s3 offset-s9">
+           <a href="#!"  id="mostraColunas" class="waves-effect waves-green btn-flat blue ">Mostrar colunas ocultas</a>
+          </div>
+          <form data-nc=`${data.registroNC}`/>
+          <div id="tabelaNC"/>
         </div>
       </div>
     </main>
@@ -62,6 +39,8 @@
     <script src="/estatico/js/libs/jquery-3.4.1.js"/>
     <script src="/estatico/js/libs/materialize.js"/>
     <script src="/estatico/js/loadtemplate.js"/>
-    <script src="/estatico/js/formcontrol.js"/>
+    <script src="/estatico/js/libs/moment.min.js"/>
+    <script src="/estatico/js/libs/tabulator.min.js"/>
+    <script src="/estatico/js/listaregistronc.js"/>
   </body>
 </html>

@@ -24,9 +24,9 @@ function render(input, out, __component, component, state) {
   out.w("<header class=\"container-header cabecalho\"></header><main class=\"conteudoPrincipal\"><div class=\"container\"><h3 class=\"center-align\">Autenticação de Usuário</h3><div class=\"row\">");
 
   if (data.msg) {
-    out.w("<h6 class=\"erro center-align\">" +
+    out.w("<div class=\"login_error col s4 offset-s4 center-align\"> <h6><i class=\"material-icons prefix\">error</i>" +
       marko_escapeXml(data.msg) +
-      "</h6>");
+      "</h6></div>");
   }
 
   out.w("<div class=\"col s6 offset-s3 center-align\"><form action=\"/login\" method=\"post\"><div class=\"form-group input-field cpf\"><i class=\"material-icons prefix\">account_circle</i><label for=\"cpf\">CPF:</label><input type=\"text\" autocomplete=\"username\" id=\"cpf\" name=\"cpf\"" +
@@ -37,7 +37,7 @@ function render(input, out, __component, component, state) {
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "31");
+  await_reorderer_tag({}, out, __component, "33");
 
   out.w("</body></html>");
 }

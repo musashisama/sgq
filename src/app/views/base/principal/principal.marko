@@ -11,6 +11,7 @@
   <body>
     <header class="container-header cabecalho"/>
     <main class="conteudoPrincipal">
+    <ul id="slide-out" class="sidenav"/>
       <div class="container">
         <div class="row">
           <if(data.msg)>
@@ -40,8 +41,17 @@
                     </li>
                     <li class="collection-item avatar">
                       <i class="material-icons circle blue">insert_chart</i>
-                      <a href="/julgamento/restrito/diagnostico-carga">
+                      <a href="/julgamento/restrito/escolhecsv">
                         <span class="title">Diagnóstico de Estoque dos Conselheiros</span>
+                      </a>
+                      <a href="/julgamento/restrito/diagnostico-carga" class="secondary-content">
+                        <i class="material-icons">lock</i>
+                      </a>
+                    </li>
+                    <li class="collection-item avatar">
+                      <i class="material-icons circle blue">insert_chart</i>
+                      <a href="/julgamento/restrito/escolhecsvregap">
+                        <span class="title">Acompanhamento de Prazos dos Conselheiros</span>
                       </a>
                       <a href="/julgamento/restrito/diagnostico-carga" class="secondary-content">
                         <i class="material-icons">lock</i>
@@ -64,7 +74,15 @@
                   <i class="material-icons">trending_down</i>Gestão de Riscos
                 </div>
                 <div class="collapsible-body">
-                  <span>Em construção.</span>
+                  <li class="collection-item avatar">
+                      <i class="material-icons circle blue">insert_chart</i>
+                      <a href="http://diris.carf">
+                        <span class="title">Ambiente GRCI</span>
+                      </a>
+                      <a href="http://diris.carf" class="secondary-content">
+                        <i class="material-icons">lock</i>
+                      </a>
+                      </li>
                 </div>
               </li>
               <li>

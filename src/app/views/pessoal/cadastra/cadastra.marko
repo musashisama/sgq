@@ -7,27 +7,12 @@
     <link rel="stylesheet" href="/estatico/css/libs/google-fonts.css"/>
     <link rel="stylesheet" href="/estatico/css/libs/tabulator_materialize.min.css"/>
     <link rel="stylesheet" href="/estatico/css/main.css"/>
-    <title>Diagnóstico da Carga de Processos dos Conselheiros</title>
+    <title>Cadastro de Pessoal do CARF</title>
   </head>
   <body>
-    <header class="container-header cabecalho"/>
-    <main class="conteudoPrincipal">
+    <header class="container-header cabecalho"/>    
+    <main class="conteudoPrincipal"/>    
     <ul id="slide-out" class="sidenav"/>
-      <div class="container">
-        <h3 class="center-align">Diagnóstico da Carga de Processos dos Conselheiros</h3>
-        <br/>
-        <br/>
-        <form id="formGerencial" name="formGerencial" action="/julgamento/restrito/diagnostico-carga" method="post">
-          <div class="row">          
-            <p id="resultado"/>
-            <div class="tabelaCarga">
-              <div id="tabelaCarga"/>
-            </div>
-            <div id="dadosCarga" class="controle">${data.relatorio}</div>            
-          </div>
-        </form>
-      </div>
-    </main>
     <footer class="page-footer rodape"/>
     <!--Modal Structure-->
     <div id="modal1" class="modal">
@@ -42,10 +27,9 @@
         </button>
       </div>
     </div>
-    <script src="/estatico/js/libs/jquery-3.4.1.js"/>
+    <script src="/estatico/js/libs/jquery-3.4.1.js"/>    
+    <script src="/estatico/js/loadtemplate.js"/>
     <script src="/estatico/js/libs/materialize.js"/>
     <script src="/estatico/js/libs/tabulator.min.js"/>
-    <script src="/estatico/js/loadtemplate.js"/>
-    <script src="/estatico/js/cargacons.js"/>
   </body>
 </html>

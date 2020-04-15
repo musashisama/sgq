@@ -15,12 +15,14 @@
         <h3 class="center-align">Autenticação de Usuário</h3>
         <div class="row">
           <if(data.msg)>
-            <h6 class="erro center-align">${data.msg}</h6>
+            <div class="login_error col s4 offset-s4 center-align">            
+            <h6><i class="material-icons prefix">error</i>${data.msg}</h6>
+            </div>
           </if>
           <div class="col s6 offset-s3 center-align">
             <form action="/login" method="post">
               <div class="form-group input-field cpf">
-               <i class="material-icons prefix">account_circle</i>
+                <i class="material-icons prefix">account_circle</i>
                 <label for="cpf">CPF:</label>
                 <input type="text" autocomplete="username" id="cpf" name="cpf" value=data.id placeholder="Digite seu CPF." class="form-control tooltipped" data-position="bottom" data-tooltip="Somente números."/>
               </div>
