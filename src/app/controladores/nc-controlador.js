@@ -14,8 +14,7 @@ class NCControlador {
             listaNC: '/listaNC',
             form: '/form',
             listagem: '/listagem',
-            //listaRNC: '/gestao/listaregistronc',
-            listaRNC: '/listaregistronc',
+            listaRNC: '/gestao/listaregistronc',            
             cadastraNC: '/gestao/cadastranc',
             edicao: '/gestao/cadastranc/:id',
             delecao: '/gestao/:id'

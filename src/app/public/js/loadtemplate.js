@@ -1,19 +1,12 @@
 inicializaComponentes();
-
 function inicializaComponentes() {
-  $(document).ready(function () {   
-    initSidenav();
-    pegaHeader();    
-    pegaSideNav();
-    pegaMenuSideNav()
+  $(document).ready(function () {
+    pegaHeader();
+    pegaNavBar()
     pegaFooter();
-    
   });
 }
 
-function initSidenav() {
-  $('.sidenav').sidenav();
-}
 function pegaHeader() {
   fetch("/estatico/html/header.html")
     .then(response => {
@@ -21,6 +14,16 @@ function pegaHeader() {
     })
     .then(data => {
       document.querySelector("header").innerHTML = data;
+    });
+}
+function pegaNavBar() {
+  fetch("/estatico/html/navbar.html")
+    .then(response => {
+      return response.text()
+    })
+    .then(data => {
+      document.querySelector(".sidenav").innerHTML = data;
+      $(".dropdown-trigger").dropdown({ coverTrigger: false, hover: false, constrainWidth: false });
     });
 }
 function pegaFooter() {
@@ -32,24 +35,3 @@ function pegaFooter() {
       document.querySelector("footer").innerHTML = data;
     });
 }
-
-function pegaMenuSideNav() {
-  fetch("/estatico/html/menusidenav.html")
-    .then(response => {      
-      return response.text()
-    })
-    .then(data => {
-      $('header').after(data);
-    });
-}
-
-function pegaSideNav() {
-  fetch("/estatico/html/sidenav.html")
-    .then(response => {      
-      return response.text()
-    })
-    .then(data => {
-      $('#slide-out').append(data);
-    });
-}
-

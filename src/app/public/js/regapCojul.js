@@ -34,7 +34,7 @@ function dataTable(msg) {
         pagination: "local",
         height: "1000px",
         minHeight: '300px',
-        maxHeight: '1000px',
+        //maxHeight: '1000px',
         layout: layout,
         responsiveLayout: 'collapse',
         responsiveLayoutCollapseStartOpen: false,
@@ -44,7 +44,7 @@ function dataTable(msg) {
         initialSort: [{ column: "Dias_na_Atividade", dir: "desc" }],
         columns: [
             { formatter: "responsiveCollapse", width: 30, minWidth: 30, hozAlign: "left", resizable: false, headerSort: false },
-            { title: "CPF", field: "CPF", sorter: "string", hozAlign: "left", headerFilter: "input", editor: false, responsive: 0 },
+            { title: "CPF", field: "CPF", sorter: "string", hozAlign: "left", headerFilter: "input", editor: false, responsive: 0, formatter: formatNome },
             { title: "Responsável Atual", field: "nome", sorter: "string", hozAlign: "left", headerFilter: "input", editor: false, responsive: 0 },
             { title: "Turma", field: "turma", sorter: "string", hozAlign: "center", headerFilter: "input", editor: false, responsive: 2 },
             { title: "Câmara", field: "camara", sorter: "string", hozAlign: "center", headerFilter: "input", editor: false, responsive: 2 },
@@ -99,4 +99,8 @@ function dataTable(msg) {
             }
         },
     });
+}
+
+let formatNome = function formatNome(cell){
+    return `<a href='/julgamento/restrito/regapCojul/detalha/${cell.getValue()}'>${cell.getValue()}</a>`    
 }

@@ -19,11 +19,20 @@ module.exports = (app) => {
     app.route(rotasPessoal.pessoas)
         .get(pessoalControlador.carregaPaginaPessoal())
         .post(pessoalControlador.carregaPaginaPessoal());
-        //.put(julgControlador.carregaRel());
+    //.put(julgControlador.carregaRel());
     app.route(rotasPessoal.cadastra)
-    .get(pessoalControlador.carregaPaginaCadastro())
-    .post(pessoalControlador.carregaPaginaCadastro())
-        
+        .get(pessoalControlador.carregaPaginaCadastro())
+        .post(pessoalControlador.carregaPaginaCadastro())
+
+    app.route(rotasPessoal.conselheiros)
+        .get(pessoalControlador.carregaPaginaCons())
+        .post(pessoalControlador.carregaPaginaCons())
+
+    //app.post(rotasPessoal.editacons, pessoalControlador.editaCons());
+
+    app.route(rotasPessoal.detalhacons)
+        .get(pessoalControlador.carregaPaginaDetCons())
+        .post(pessoalControlador.editaCons());
     // app.route(rotasPessoal.carregacsv)
     //     .get(pessoalControlador.carregaPaginaInsereCSV())
     //     .post(pessoalControlador.carregaCSV());

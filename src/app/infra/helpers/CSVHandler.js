@@ -173,27 +173,20 @@ class CSVHandler {
         return dataAjustada;
     }
 
-    static pegaRegap(arq, semana, cpf) {
+    static pegaRegap(arq, tipo, CPF) {
         return new Promise((resolve, reject) => {
             let flat = [];
             let hoje = new Date().getTime();
             let dias = 1000 * 60 * 60 * 24;
+            console.log(CPF);
             let regap = this.readCSV(arq)
                 .then(regap => {
                     let porCPF = d3.nest()
-                        .key(d => { return d.CPF; }).sortKeys(d3.ascending)
+                        .key(d => { return d.CPF }).sortKeys(d3.ascending)
                         .entries(regap);
                     //console.log(porCPF[10]);
                     porCPF.forEach(cpf => {
-                        cpf.values.forEach(valor => {
-                            
-                            if (
-                                   ((valor.Ind_Apenso == 'N' || (valor.Questionamento_CARF != '' && valor.Ind_Apenso != 'S')) && (valor.Atividade == 'Para Relatar' && Math.floor(((hoje - CSVHandler._ajustaData(valor.Entrada_na_Atividade)) / dias)) >= 180))
-                                || ((valor.Ind_Apenso == 'N' || (valor.Questionamento_CARF != '' && valor.Ind_Apenso != 'S')) && (valor.Atividade == 'Formalizar Decisao' && Math.floor(((hoje - CSVHandler._ajustaData(valor.Entrada_na_Atividade)) / dias)) >= 30))
-                                || ((valor.Ind_Apenso == 'N' || (valor.Questionamento_CARF != '' && valor.Ind_Apenso != 'S')) && (valor.Atividade == 'Formalizar Voto Vencedor' && Math.floor(((hoje - CSVHandler._ajustaData(valor.Entrada_na_Atividade)) / dias)) >= 30))
-                                || ((valor.Ind_Apenso == 'N' || (valor.Questionamento_CARF != '' && valor.Ind_Apenso != 'S')) && (valor.Atividade == 'Apreciar e Assinar Documento' && Math.floor(((hoje - CSVHandler._ajustaData(valor.Entrada_na_Atividade)) / dias)) >= 15))
-                                || ((valor.Ind_Apenso == 'N' || (valor.Questionamento_CARF != '' && valor.Ind_Apenso != 'S')) && (valor.Atividade == 'Corrigir Decisão' && Math.floor(((hoje - CSVHandler._ajustaData(valor.Entrada_na_Atividade)) / dias)) >= 1))
-                            ) {
+                        cpf.values.forEach(valor => {                             
                                 flat.push({
                                     Observacoes: valor.Observacoes,
                                     CPF: cpf.key,
@@ -219,12 +212,34 @@ class CSVHandler {
                                     Dias_da_SJ: Math.floor(((hoje - CSVHandler._ajustaData(valor.Data_da_Sessao_Julgamento)) / dias)),
                                     Dias_da_Dist: Math.floor(((hoje - CSVHandler._ajustaData(valor.Data_ultima_distribuicao)) / dias)),
                                     Retorno_Sepoj: (valor.Equipe_Ultima.includes("SEPOJ-COSUP-CARF-MF-DF") ? "Sim" : "Não")
-                                })
-                            }
-
+                                })  
                         })
                     })
-                    return resolve(flat);
+                    if(tipo=='COJUL'){
+                        let filtro = [];
+                        flat.forEach(valor => {
+                            if (
+                                ((valor.Ind_Apenso == 'N' || (valor.Questionamento_CARF != '' && valor.Ind_Apenso != 'S')) && (valor.Atividade == 'Para Relatar' && Math.floor(((hoje - CSVHandler._ajustaData(valor.Entrada_na_Atividade)) / dias)) >= 180))
+                                || ((valor.Ind_Apenso == 'N' || (valor.Questionamento_CARF != '' && valor.Ind_Apenso != 'S')) && (valor.Atividade == 'Formalizar Decisao' && Math.floor(((hoje - CSVHandler._ajustaData(valor.Entrada_na_Atividade)) / dias)) >= 30))
+                                || ((valor.Ind_Apenso == 'N' || (valor.Questionamento_CARF != '' && valor.Ind_Apenso != 'S')) && (valor.Atividade == 'Formalizar Voto Vencedor' && Math.floor(((hoje - CSVHandler._ajustaData(valor.Entrada_na_Atividade)) / dias)) >= 30))
+                                || ((valor.Ind_Apenso == 'N' || (valor.Questionamento_CARF != '' && valor.Ind_Apenso != 'S')) && (valor.Atividade == 'Apreciar e Assinar Documento' && Math.floor(((hoje - CSVHandler._ajustaData(valor.Entrada_na_Atividade)) / dias)) >= 15))
+                                || ((valor.Ind_Apenso == 'N' || (valor.Questionamento_CARF != '' && valor.Ind_Apenso != 'S')) && (valor.Atividade == 'Corrigir Decisão' && Math.floor(((hoje - CSVHandler._ajustaData(valor.Entrada_na_Atividade)) / dias)) >= 1))
+                            ){filtro.push(valor)}
+                            return resolve(filtro)
+                        })
+                        
+
+                    }
+                    if(CPF){
+                        let filtro = []
+                        flat.forEach(resp => {
+                            if(resp.CPF == CPF){
+                                filtro.push(resp);
+                            }
+                            return resolve(filtro)
+                        })
+                    }
+                    else return resolve(flat);
                 })
             return reject;
         });
@@ -278,8 +293,8 @@ class CSVHandler {
             return resolve(csvmongo);
         });
     }
-    //subset(saida2,aida2$Nome_saida2$Nome_Atividade_Atual_11 == "Corrigir Decisão")
 
+    //
     static _filtroTipo(tipoRel) {
         return new Promise((resolve, reject) => {
             if (tipoRel == 'REGAP') {
@@ -306,7 +321,6 @@ class CSVHandler {
             }
         });
     }
-
 
     static _HorasCARF(dados) {
         return new Promise((resolve, reject) => {

@@ -100,11 +100,11 @@ function render(input, out, __component, component, state) {
       "\":null,");
   });
 
-  out.w("</div><script src=\"/estatico/js/libs/jquery-3.4.1.js\"></script><script src=\"/estatico/js/libs/materialize.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script><script src=\"/estatico/js/services/HttpService.js\"></script><script src=\"/estatico/js/valida.js\"></script> <script src=\"/estatico/js/formcontrol.js\"></script>");
+  out.w("</div><script src=\"/estatico/js/libs/jquery-3.4.1.js\"></script><script src=\"/estatico/js/libs/materialize.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script><script src=\"/estatico/js/base/navbar.js\"></script><script src=\"/estatico/js/services/HttpService.js\"></script><script src=\"/estatico/js/valida.js\"></script> <script src=\"/estatico/js/formcontrol.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "100");
+  await_reorderer_tag({}, out, __component, "101");
 
   out.w("</body></html>");
 }

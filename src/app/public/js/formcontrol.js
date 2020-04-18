@@ -42,8 +42,8 @@ function insereChips() {
 
 function montaModal() {
     var data = pegaChips();
-    $('.hModal').text("Confirmação de Inclusão de Registro");
     $('.docref').val(pegaChips());
+    $('.hModal').text("Confirmação de Inclusão de Registro");    
     $('.pModal').append(
         `<p class="pModal">
             <br/>
@@ -115,7 +115,7 @@ function initDatePicker() {
         $('.lbEncCorNC').css('color', '#9e9e9e');
 
     });
-    let formato = 'dd-mm-yyyy'
+    let formato = 'dd/mm/yyyy'
     let meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
     let mesesCurtos = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
     let diasDaSemana = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];

@@ -1,4 +1,5 @@
-const BaseControlador = require('../controladores/base-controlador')
+const BaseControlador = require('../controladores/base-controlador');
+const { rotas } = require('../controladores/base-controlador');
 const baseControlador = new BaseControlador();
 
 module.exports = (app) => {
@@ -15,6 +16,15 @@ module.exports = (app) => {
     // });
 
     app.get(rotasBase.principal, baseControlador.principal());
+    app.post(rotasBase.enviamail, baseControlador.enviaMail());
+
+    app.post(rotasBase.formalterasenha,baseControlador.alteraSenha());
+    
+    app.get(rotasBase.trocasenhaSemID,baseControlador.login());
+
+    app.route(rotasBase.trocasenha)
+    .get(baseControlador.paginaAlteracao())
+    .post(baseControlador.alteraSenha()); 
 
     app.route(rotasBase.login)
     .get(baseControlador.login())

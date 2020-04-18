@@ -19,6 +19,7 @@ module.exports = (app) => {
     app.get(rotasJulgamento.regap,julgControlador.carregaPaginaRegap());
     app.get(rotasJulgamento.regapCojul,julgControlador.carregaPaginaRegapCojul());
     app.get(rotasJulgamento.escolhecsvregap,julgControlador.escolheCSVRegap());
+    app.get(rotasJulgamento.detalharegap,julgControlador.carregaPaginaRegap());
     app.get(rotasJulgamento.escolhecsv,julgControlador.escolheCSV());
     app.get(rotasJulgamento.detalha,julgControlador.carregaPaginaDiag())
     app.route(rotasJulgamento.carregacsv)

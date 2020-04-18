@@ -4,6 +4,7 @@ const PessoalDao = require('../infra/pessoal-dao');
 const requestIp = require('request-ip');
 const templates = require('../views/templates');
 const formidable = require('formidable');
+const Mailer = require('../infra/helpers/Mailer')
 const fs = require('fs');
 const fse = require('fs-extra');
 const d3 = require('d3');
@@ -14,6 +15,7 @@ let registro = {};
 let dados = [];
 let nome = "";
 let newpath = "";
+const url = require('url');
 
 class JulgamentoControlador {
     static rotas() {
@@ -69,9 +71,9 @@ class JulgamentoControlador {
             const julgamentoDao = new JulgamentoDao(conn);
             let options = { day: '2-digit', month: '2-digit', year: 'numeric', weekday: 'long' };
             const formato = { minimumFractionDigits: 2, style: 'currency', currency: 'BRL' }
-            julgamentoDao.getRelatorios({tipoRel:'REGAP'})
+            julgamentoDao.getRelatorios({ tipoRel: 'REGAP' })
                 .then(dados => {
-                    dados.forEach(dado => {                        
+                    dados.forEach(dado => {
                         dado.semana = dado.semana;
                         dado.dataEnvio = new Date(dado.dataEnvio).toLocaleString();
                         dado.caminho = dado.caminho.split("/")
@@ -92,7 +94,7 @@ class JulgamentoControlador {
         return function (req, resp) {
             const julgamentoDao = new JulgamentoDao(conn);
             let options = { day: '2-digit', month: '2-digit', year: 'numeric', weekday: 'long' };
-            julgamentoDao.getRelatorios({tipoRel: {$not:/REGAP/}})
+            julgamentoDao.getRelatorios({ tipoRel: { $not: /REGAP/ } })
                 .then(dados => {
                     dados.forEach(dado => {
                         dado.dataEnvio = new Date(dado.dataEnvio).toLocaleString();
@@ -143,7 +145,7 @@ class JulgamentoControlador {
     carregaPaginaRegapCojul() {
         return function (req, resp) {
             let caminho = req.params.id;
-            dados = CSVHandler.pegaRegap(`${path}${caminho}`)
+            dados = CSVHandler.pegaRegap(`${path}${caminho}`,'COJUL')
                 .then(dados => {
                     const pessoalDao = new PessoalDao(conn);
                     pessoalDao.getUsers()
@@ -154,11 +156,11 @@ class JulgamentoControlador {
                                         dado.nome = user.nome;
                                         dado.setor = user.setor;
                                         dado.camara = user.camara;
-                                        dado.turma = user.turma;                                        
+                                        dado.turma = user.turma;
                                         dado._id = new ObjectID(user._id);
                                     }
                                 })
-                            })                            
+                            })
                             resp.marko(templates.julgamento.regapCojul, { relatorio: JSON.stringify(dados) });
                         })
                 })
@@ -167,9 +169,13 @@ class JulgamentoControlador {
     carregaPaginaRegap() {
         return function (req, resp) {
             let cpf = req.params.id;
-            dados = CSVHandler.pegaRegap(`${path}${caminho}`, cpf)
+            let caminho = (req.headers.referrer || req.headers.referer).split('/');
+            caminho = caminho[caminho.length-1];
+            console.log(caminho);
+            console.log(cpf);
+            dados = CSVHandler.pegaRegap(`${path}${caminho}`,'CONS', cpf)
                 .then(dados => {
-                    const pessoalDao = new PessoalDao(conn);                    
+                    const pessoalDao = new PessoalDao(conn);
                     pessoalDao.getUsers()
                         .then(users => {
                             dados.forEach(dado => {
@@ -179,8 +185,7 @@ class JulgamentoControlador {
                                         dado.setor = user.setor;
                                         dado.camara = user.camara;
                                         dado.turma = user.turma;
-                                        dado.diasAtividade = new Date() - dado.Entrada_na_Atividade
-                                        console.log(dado.diasAtividade);
+                                        dado.diasAtividade = new Date() - dado.Entrada_na_Atividade                                        
                                         dado._id = new ObjectID(user._id);
                                     }
                                 })

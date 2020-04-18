@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="/estatico/css/libs/normalize.css"/>
+    <link rel="stylesheet" href="/estatico/css/libs/materialize.css"/>
+    <link rel="stylesheet" href="/estatico/css/libs/google-fonts.css"/>
+    <link rel="stylesheet" href="/estatico/css/libs/tabulator_materialize.min.css"/>
+    <link rel="stylesheet" href="/estatico/css/main.css"/>
+    <title>Gestão de Pessoas do CARF</title>
+  </head>
+  <body>
+    <header class="container-header cabecalho"/>
+    <main class="conteudoPrincipal">
+      <ul id="slide-out" class="sidenav"/>
+      <div class="container">
+        <h3 class="center-align">${data.conselheiro.nome} - ${data.conselheiro.cpf}</h3>
+        <br/>
+        <div class="card-panel hoverable blue lighten-5 z-depth-4 col s9">
+          <div class="row">
+            <form id="formCons" data-conselheiros=`${data.conselheiro}` name="formCons" action=`/pessoal/restrito/conselheiros/${data.conselheiro.cpf}/` method="post">
+              <h4>Dados Pessoais</h4>
+              <div class="row">
+                <div class="input-field col s5">
+                  <i class="material-icons prefix">account_circle</i>
+                  <input disabled id="nome" name="nome" value=`${data.conselheiro.nome}` type="text" class="validate"/>
+                  <label class="active" for="nome">Nome:</label>
+                </div>
+                <div class="input-field col s5">
+                  <i class="material-icons prefix">contact_mail</i>
+                  <input disabled id="email" name="email" value=`${data.conselheiro.email}` type="email" class="validate"/>
+                  <label class="active" for="email">e-mail:</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s2">
+                  <i class="material-icons prefix">info</i>
+                  <input disabled id="cpf" name="cpf" value=`${data.conselheiro.cpf}` type="text" class="validate"/>
+                  <label class="active" for="cpf">CPF:</label>
+                </div>
+                <div class="input-field col s2">
+                  <i class="material-icons prefix">info_outline</i>
+                  <input disabled id="siape" name="siape" value=`${data.conselheiro.siape}` type="text" class="validate"/>
+                  <label class="active" for="siape">Siape:</label>
+                </div>
+                <div class="input field col s3">
+                  <input disabled id="dtNasc" name="dtNasc" value=`${data.conselheiro.dtNasc}` type="text" class="datepicker"/>
+                  <!-- <i class="material-icons prefix">date_range</i> -->
+                  <label for="dtNasc">Data de Nascimento</label>
+                </div>
+                <div class="input-field col s2">
+                  <i class="material-icons prefix">contact_phone</i>
+                  <input disabled id="telefone" name="telefone" value=`${data.conselheiro.telefone}` type="text" class="validate"/>
+                  <label class="active" for="telefone">Telefone:</label>
+                </div>
+                <div class="input-field col s2">
+                  <i class="material-icons prefix">phone_iphone</i>
+                  <input disabled id="celular" name="celular" value=`${data.conselheiro.celular}` type="text" class="validate"/>
+                  <label class="active" for="celular">Celular:</label>
+                </div>
+              </div>
+              <h4>Dados do Mandato</h4>
+              <div class="row">
+              <div class='form-group input-field turmaCons col s4'>
+              <i class="material-icons prefix">event_seat</i>
+               <select disabled name="turmaCons">   
+                <option class="form-group" value=`${data.conselheiro.turmaCons}`>${data.conselheiro.turmaCons}</option>             
+                <for|unidade| of=data.unidades>
+                  <option class="form-group" value=`${unidade.unidade}`>${unidade.unidade}</option>
+                </for>
+              </select>
+              <label for="turmaCons">
+                Turma/Câmara/Seção:
+              </label>
+              </div>
+                <div class="input-field col s2">
+                  <i class="material-icons prefix">event_seat</i>
+                  <input disabled id="turma" name="turma" value=`${data.conselheiro.turma}` type="text" class="validate"/>
+                  <label class="active" for="turma">Turma:</label>
+                </div>
+                <div class="input-field col s2">
+                  <i class="material-icons prefix">event_seat</i>
+                  <input disabled id="camara" name="camara" value=`${data.conselheiro.camara}` type="text" class="validate"/>
+                  <label class="active" for="camara">Câmara:</label>
+                </div>
+                <div class="input-field col s2">
+                  <i class="material-icons prefix">event_seat</i>
+                  <input disabled id="setor" name="setor" value=`${data.conselheiro.setor}` type="text" class="validate"/>
+                  <label class="active" for="setor">Seção:</label>
+                </div>
+                <div class="input-field col s3">
+                  <i class="material-icons prefix">gps_fixed</i>
+                  <input disabled id="origem" name="origem" value=`${data.conselheiro.origem}` type="text" class="validate"/>
+                  <label class="active" for="origem">Representação:</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s3">
+                  <i class="material-icons prefix">details</i>
+                  <select disabled id="tipo" name="tipo">
+                    <option value="Titular">Titular</option>
+                    <option value="Suplente">Suplente</option>
+                  </select>
+                  <label>Titular/Suplente</label>
+                </div>
+                <div class="input field col s3">
+                  <!-- <i class="material-icons prefix">insert_invitation</i> -->
+                  <input disabled id="dtInicio" name="dtInicio" value=`${data.conselheiro.dtInicio}` type="text" class="datepicker"/>
+                  <label for="dtInicio">Início do Último Mandato:</label>
+                </div>
+                <div class="input-field col s2">
+                  <i class="material-icons prefix">domain</i>
+                  <input disabled id="funcao" name="funcao" value=`${data.conselheiro.funcao}` type="text" class="validate"/>
+                  <label class="active" for="funcao">Função:</label>
+                </div>
+                <div class="input-field col s3">
+                  <i class="material-icons prefix">event_note</i>
+                  <select disabled id="mandatoAt" name="mandatoAt">
+                    <option value=true>Sim</option>
+                    <option value=false>Não</option>
+                  </select>
+                  <label>Mandato Ativo?</label>
+                </div>
+              </div>
+              <div class="card-action right-align">
+                <a class="btn-cons-edita btn-floating red waves-effect waves-light hoverable z-depth-3" title="Editar Dados">
+                  <i class="material-icons">edit</i>
+                </a>
+                <a disabled class="btn-cons-salva btn-floating blue waves-effect waves-light hoverable z-depth-3" type="submit" title="Salvar">
+                  <i class="material-icons">save</i>
+                </a>
+                <a id="aModal" class="btn-cons-adiciona btn-floating green waves-effect waves-light hoverable z-depth-3" title="Adicionar ocorrência" href="#modal1">
+                  <i class="material-icons">add</i>
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+        <if(data.ocorrencias)>
+          <div id="tabelaOcorrencias" data-ocorrencias=`${data.ocorrencias}`/>
+          <div data-tipoOcorrencias=`${data.tipoOcorrencias}`/>
+        </if>
+      </div>
+    </main>
+    <footer class="page-footer rodape"/>
+    <!--Modal Structure-->
+    <div id="modal1" class="modal">
+      <div class="modal-content">
+        <h4 class="hModal">Modal Header</h4>
+        <p class="pModal"/>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-red btn-flat cancela">Cancela</a>
+        <button class="btn waves-effect waves-light concorda" type="submit" name="action">
+          Confirma <i class="material-icons right">send</i>
+        </button>
+      </div>
+    </div>
+    <script src="/estatico/js/libs/jquery-3.4.1.js"/>
+    <script src="/estatico/js/libs/materialize.js"/>
+    <script src="/estatico/js/libs/tabulator.min.js"/>    
+    <script src="/estatico/js/loadtemplate.js"/>
+    <script src="/estatico/js/base/navbar.js"/> 
+    <script src="/estatico/js/pessoal/conselheiro.js"/>
+  </body>
+</html>

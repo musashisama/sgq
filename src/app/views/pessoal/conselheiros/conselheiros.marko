@@ -7,25 +7,24 @@
     <link rel="stylesheet" href="/estatico/css/libs/google-fonts.css"/>
     <link rel="stylesheet" href="/estatico/css/libs/tabulator_materialize.min.css"/>
     <link rel="stylesheet" href="/estatico/css/main.css"/>
-    <title>Relatório Gerencial de Acompanhamento de Prazos</title>
+    <title>Gestão de Pessoas do CARF</title>
   </head>
   <body>
-    <header class="container-header cabecalho"/>    
+    <header class="container-header cabecalho"/>
     <main class="conteudoPrincipal">
-    <ul id="slide-out" class="sidenav"/>
+      <ul id="slide-out" class="sidenav"/>
       <div class="container">
-        <h3 class="center-align">Relatório Gerencial de Acompanhamento de Prazos</h3>
+        <h3 class="center-align">Cadastro de Conselheiros do CARF</h3>
         <br/>
-        <br/>
-        <form id="formGerencial" data-regapCojul=`${data.relatorio}` name="formGerencial" action="/julgamento/restrito/regapCojul/detalha/" method="post">
+        <form id="formCons" data-conselheiros=`${data.conselheiros}` name="formCons" action="/pessoal/restrito/conselheiros/detalha/" method="post">
           <div class="row">
             <div class="col s3 offset-s9">
               <a href="#!" id="mostraColunas" class="waves-effect waves-green btn-flat blue ">Agrupar/Desagrupar</a>
             </div>
-            <div id="tabelaRegap"/>            
+            <div id="tabelaCons"/>            
           </div>
         </form>
-      </div>
+        </div>
     </main>
     <footer class="page-footer rodape"/>
     <!--Modal Structure-->
@@ -46,7 +45,6 @@
     <script src="/estatico/js/libs/tabulator.min.js"/>
     <script src="/estatico/js/loadtemplate.js"/>
     <script src="/estatico/js/base/navbar.js"/>
-    <script src="/estatico/js/libs/moment.min.js"/>
-    <script src="/estatico/js/regapCojul.js"/>
+    <script src="/estatico/js/pessoal/conselheiros.js"/>
   </body>
 </html>

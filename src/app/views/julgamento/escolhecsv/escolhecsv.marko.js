@@ -66,11 +66,11 @@ function render(input, out, __component, component, state) {
       ".</p></div></div>");
   });
 
-  out.w("</div></div></main><footer class=\"page-footer rodape\"></footer><script src=\"/estatico/js/libs/jquery-3.4.1.js\"></script><script src=\"/estatico/js/libs/materialize.js\"></script><script src=\"/estatico/js/scprincipal.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script><script src=\"/estatico/js/escolhe.js\"></script>");
+  out.w("</div></div></main><footer class=\"page-footer rodape\"></footer><script src=\"/estatico/js/libs/jquery-3.4.1.js\"></script><script src=\"/estatico/js/libs/materialize.js\"></script><script src=\"/estatico/js/scprincipal.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script><script src=\"/estatico/js/base/navbar.js\"></script><script src=\"/estatico/js/escolhe.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "44");
+  await_reorderer_tag({}, out, __component, "45");
 
   out.w("</body></html>");
 }

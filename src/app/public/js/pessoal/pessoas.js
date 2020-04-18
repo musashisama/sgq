@@ -62,34 +62,34 @@ function initSelect() {
 
 function dataTable() {
 
-    let tabledataCons = JSON.parse($('#dadosCons').text());
-    //define table
-    tableCons = new Tabulator("#tabelaCons", {
-        data: tabledataCons,
-        autoColumns: autoColumns,
-        locale: locale,
-        langs: langs,
-        pagination: pagination,
-        height: height,
-        minHeight: minHeight,
-        maxHeight: maxHeight,
-        layout: layout,
-        initialSort: initialSort,
-        responsiveLayout: responsiveLayout,      
-        columns: [
+    // let tabledataCons = JSON.parse($('#dadosCons').text());
+    // //define table
+    // tableCons = new Tabulator("#tabelaCons", {
+    //     data: tabledataCons,
+    //     autoColumns: autoColumns,
+    //     locale: locale,
+    //     langs: langs,
+    //     pagination: pagination,
+    //     height: height,
+    //     minHeight: minHeight,
+    //     maxHeight: maxHeight,
+    //     layout: layout,
+    //     initialSort: initialSort,
+    //     responsiveLayout: responsiveLayout,      
+    //     columns: [
             
-            { title: "Nome", field: "nome", sorter: "string", hozAlign: "left", editor: false, headerFilter:"input", bottomCalc: "count", responsive:0 },
-            { title: "CPF", field: "cpf", sorter: "string", hozAlign: "center", width: 150, editor: false, headerFilter:"input", responsive:3 },
-            { title: "Siape", field: "siape", sorter: "string", hozAlign: "center", editor: false, headerFilter:"input", responsive:4 },
-            { title: "Turma", field: "turma", sorter: "string", hozAlign: "center", editor: false, headerFilter:"input", responsive:2},
-            { title: "Câmara", field: "camara", sorter: "string", hozAlign: "center", width: 150, editor: false, headerFilter:"input", responsive:2},
-            { title: "Seção", field: "setor", sorter: "string", hozAlign: "left", headerFilter:"input", editor: false, responsive:2},            
-            { title: "Função", field: "funcao", sorter: "string", hozAlign: "left", headerFilter:"input", editor: false, responsive:4},
-            { title: "e-mail", field: "email", sorter: "string", hozAlign: "left", headerFilter:"input", editor: false, responsive:2},
+    //         { title: "Nome", field: "nome", sorter: "string", hozAlign: "left", editor: false, headerFilter:"input", bottomCalc: "count", responsive:0 },
+    //         { title: "CPF", field: "cpf", sorter: "string", hozAlign: "center", width: 150, editor: false, headerFilter:"input", responsive:3 },
+    //         { title: "Siape", field: "siape", sorter: "string", hozAlign: "center", editor: false, headerFilter:"input", responsive:4 },
+    //         { title: "Turma", field: "turma", sorter: "string", hozAlign: "center", editor: false, headerFilter:"input", responsive:2},
+    //         { title: "Câmara", field: "camara", sorter: "string", hozAlign: "center", width: 150, editor: false, headerFilter:"input", responsive:2},
+    //         { title: "Seção", field: "setor", sorter: "string", hozAlign: "left", headerFilter:"input", editor: false, responsive:2},            
+    //         { title: "Função", field: "funcao", sorter: "string", hozAlign: "left", headerFilter:"input", editor: false, responsive:4},
+    //         { title: "e-mail", field: "email", sorter: "string", hozAlign: "left", headerFilter:"input", editor: false, responsive:2},
             
-        ],
+    //     ],
 
-    });
+    // });
     
     let tabledataCol = JSON.parse($('#dadosCol').text());
     tableCol = new Tabulator("#tabelaCol", {
