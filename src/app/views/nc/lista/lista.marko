@@ -1,58 +1,19 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8"/>
-    <link rel="stylesheet" href="/estatico/css/libs/normalize.css"/>
-    <link rel="stylesheet" href="/estatico/css/libs/materialize.css"/>
-    <link rel="stylesheet" href="/estatico/css/libs/google-fonts.css"/>
-    <link rel="stylesheet" href="/estatico/css/main.css"/>
-    <title>Lista de Não Conformidades</title>
-  </head>
+  <app-scripts-css/>
   <body>
-    <header class="container-header cabecalho"/>    
+    <app-header/>
     <main class="conteudoPrincipal">
-    <ul id="slide-out" class="sidenav"/>
+      <app-navbar id="slide-out" class="sidenav"/>
       <div class="container">
         <h2 class="center-align">Lista de Não Conformidades</h2>
-        <table id="naoconformidades" class="striped highlight z-depth-3 responsive-table">
-          <thead class="white-text grey darken-4 colunas">
-            <tr>              
-              <th>Macroprocesso</th>
-              <th>Não conformidade</th>
-              <th>Editar</th>
-              <th>Remover</th>
-            </tr>
-          </thead>
-          <tbody>
-            <for|nc| of=data.nc>
-              <tr id=`${nc._id}`>
-                <td class="mp">${nc.Macroprocesso}</td>
-                <td>
-                  <details>
-                    <summary>${nc.nconformidade}</summary>
-                    <p>${nc.nconformidade}</p>
-                  </details>
-                </td>
-                <td class="td-edit">
-                  <a href=`/gestao/cadastranc/${nc._id}`>
-                    <!-- <a class="modal-trigger" href="#modal1"> --> <i class="small material-icons icones center-align">edit</i>
-                  </a>
-                </td>
-                <td class="td-remove">
-                  <a class="modal-trigger" href="#modal1">
-                    <i class="aRemove small material-icons icones iconeRemove" data-ref=`${nc._id}` data-type="remocao">remove_circle</i>
-                  </a>
-                </td>
-              </tr>
-            </for>
-          </tbody>
-        </table>
-        <a class="btn-floating btn-large waves-effect waves-light green addListaNC" href="/gestao/cadastranc">
-          <i class="material-icons">add</i>
-        </a>
+        <form data-nc=`${data.nc}`/>
+        <div data-msg=`${data.msg}`/>
+        <a class="btn waves-effect waves-light green addListaNC right" href="/gestao/cadastranc">
+          Adicionar Tipo de Não Conformidade</a>
+        <div id="tabelaNC"/>
       </div>
     </main>
-    <footer class="rodape"/>
     <!-- Modal Structure -->
     <div id="modal1" class="modal">
       <div class="modal-content">
@@ -64,14 +25,8 @@
         <a href="#!" class="modal-close waves-effect waves-green btn-flat concorda">Confirma</a>
       </div>
     </div>
-    <script src="/estatico/js/libs/jquery-3.4.1.js"/>
-    <script src="/estatico/js/libs/materialize.js"/>
-    <script src="/estatico/js/loadtemplate.js"/>
-    <script src="/estatico/js/base/navbar.js"/>
-    <script src="/estatico/js/gestaoNC.js"/>
-    <div id="macroprocessos" class="controle">
-      <for|mp| of=data.mp>"${mp.macroprocesso}"</for>
-      <br/>
-    </div>
+    <app-footer/>
+    <app-scripts-js/>
+    <script src="/estatico/js/nc/gestaoNC.js"/>
   </body>
 </html>

@@ -8,9 +8,20 @@ module.exports = (app) => {
     const rotasJulgamento = JulgamentoControlador.rotas();
     const rotasBase = BaseControlador.rotas();
 
+    app.use('/*', function(req,resp,next){
+        if (req.isAuthenticated()) {
+            resp.set('autenticado',true);           
+            next();
+        } else {
+            resp.set('autenticado',false);
+            next();
+        }
+    })
+
     app.use(rotasJulgamento.autenticadas, function (req, resp, next) {
         req.session.baseUrl = req.baseUrl;
         if (req.isAuthenticated()) {
+            resp.set('autenticado',true);           
             next();
         } else {
             resp.redirect(rotasBase.login);

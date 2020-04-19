@@ -1,18 +1,10 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8"/>
-    <link rel="stylesheet" href="/estatico/css/libs/normalize.css"/>
-    <link rel="stylesheet" href="/estatico/css/libs/materialize.css"/>
-    <link rel="stylesheet" href="/estatico/css/libs/google-fonts.css"/>
-    <link rel="stylesheet" href="/estatico/css/libs/tabulator_materialize.min.css"/>
-    <link rel="stylesheet" href="/estatico/css/main.css"/>
-    <title>Gestão de Pessoas do CARF</title>
-  </head>
+  <app-scripts-css/>
   <body>
-    <header class="container-header cabecalho"/>
+    <app-header/>
     <main class="conteudoPrincipal">
-      <ul id="slide-out" class="sidenav"/>
+      <app-navbar id="slide-out" class="sidenav"/>
       <div class="container">
         <h3 class="center-align">${data.conselheiro.nome} - ${data.conselheiro.cpf}</h3>
         <br/>
@@ -109,7 +101,7 @@
                 <div class="form-group input-field funcao col s4">
                   <i class="material-icons prefix">domain</i>
                   <select disabled name="funcao">
-                  <option selected class="form-group" value=`${data.conselheiro.funcao}`>${data.conselheiro.funcao}</option>
+                    <option selected class="form-group" value=`${data.conselheiro.funcao}`>${data.conselheiro.funcao}</option>
                     <for|funcao| of=data.funcoes>
                       <option class="form-group" value=`${funcao.funcao}`>${funcao.funcao}</option>
                     </for>
@@ -146,7 +138,6 @@
         <div/>
       </div>
     </main>
-    <footer class="page-footer rodape"/>
     <!--Modal Structure-->
     <div id="modal1" class="modal">
       <div class="modal-content">
@@ -187,25 +178,24 @@
                 <input id="dtOcorrencia" name="dtOcorrencia" value="" type="text" class="datepicker"/>
                 <label for="dtOcorrencia">Data da Ocorrência</label>
               </div>
-            
-            <div class="col s2">
-              <div class="form-group">
-                <p>
-                  <label>Altera a data de início de mandato?</label>
-                </p>
-                <p>
-                  <label>
-                    <input class="with-gap" value="Sim" name="alteraDtInicio" type="radio" checked/>
-                    <span>Sim</span>
-                  </label>
-                </p>
-                <p>
-                  <label>
-                    <input class="with-gap" value="Não" name="alteraDtInicio" type="radio"/>
-                    <span>Não</span>
-                  </label>
-                </p>
-              </div>
+              <div class="col s2">
+                <div class="form-group">
+                  <p>
+                    <label>Altera a data de início de mandato?</label>
+                  </p>
+                  <p>
+                    <label>
+                      <input class="with-gap" value="Sim" name="alteraDtInicio" type="radio" checked/>
+                      <span>Sim</span>
+                    </label>
+                  </p>
+                  <p>
+                    <label>
+                      <input class="with-gap" value="Não" name="alteraDtInicio" type="radio"/>
+                      <span>Não</span>
+                    </label>
+                  </p>
+                </div>
               </div>
             </div>
           </form>
@@ -218,12 +208,8 @@
         </button>
       </div>
     </div>
-    <script src="/estatico/js/libs/jquery-3.4.1.js"/>
-    <script src="/estatico/js/libs/materialize.js"/>
-    <script src="/estatico/js/libs/tabulator.min.js"/>
-    <script src="/estatico/js/libs/moment.min.js"/>
-    <script src="/estatico/js/loadtemplate.js"/>
-    <script src="/estatico/js/base/navbar.js"/>
+    <app-footer/>
+    <app-scripts-js/>
     <script src="/estatico/js/pessoal/conselheiro.js"/>
   </body>
 </html>

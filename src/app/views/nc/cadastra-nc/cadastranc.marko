@@ -1,17 +1,10 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8"/>
-    <link rel="stylesheet" href="/estatico/css/libs/normalize.css"/>
-    <link rel="stylesheet" href="/estatico/css/libs/materialize.css"/>
-    <link rel="stylesheet" href="/estatico/css/libs/google-fonts.css"/>
-    <link rel="stylesheet" href="/estatico/css/main.css"/>
-    <title>Registrar Nova Não Conformidade</title>
-  </head>
+<app-scripts-css/>
   <body>
-    <header class="container-header cabecalho"/>    
+    <app-header />  
     <main class="conteudoPrincipal">
-    <ul id="slide-out" class="sidenav"/>
+    <app-navbar id="slide-out" class="sidenav"/>
       <div class="container">
         <h3 class="center-align">Registrar Nova Não Conformidade</h3>
         <br/>
@@ -24,7 +17,7 @@
                 <input type="hidden" name="_id" value=`${data.cadastraNC[0]._id}`/>
               </div>
             </if>
-            <div class="form-group input-field Macroprocesso col s4">
+            <div class="form-group input-field Macroprocesso col s6">
               <select required name="Macroprocesso">
                 <option class="form-group" value="" disabled selected>Clique para selecionar</option>
                 <for|mp| of=data.mp>
@@ -35,13 +28,13 @@
             </div>
           </div>
           <div class="row">
-            <div class="form-group input-field cpfUser col s6">
+            <div class="form-group input-field cpfUser col s12">
               <label for="nconformidade">Tipologia (descrição) da Não Conformidade:</label>
               <input required type="text" id="nconformidade" name="nconformidade" value=`${data.cadastraNC[0].nconformidade}` class="form-control nconformidade"/>
             </div>
           </div>
           <div class="row">
-            <div class="form-group input-field descDet col s6">
+            <div class="form-group input-field descDet col s12">
               <label for="descDet">
                 Descrição detalhada da <strong>não conformidade:</strong>
               </label>
@@ -56,7 +49,6 @@
         </form>
       </div>
     </main>
-    <footer class="page-footer rodape"/>
     <!--Modal Structure-->
     <div id="modal1" class="modal">
       <div class="modal-content">
@@ -70,11 +62,8 @@
         </button>
       </div>
     </div>
-    <script src="/estatico/js/libs/jquery-3.4.1.js"/>
-    <script src="/estatico/js/libs/materialize.js"/>
-    <script src="/estatico/js/loadtemplate.js"/>
-    <script src="/estatico/js/base/navbar.js"/>
-    <script src="/estatico/js/valida.js"/>
-    <script src="/estatico/js/cadNCControl.js"/>
+    <app-footer/>
+    <app-scripts-js/>
+    <script src="/estatico/js/nc/cadNCControl.js"/>
   </body>
 </html>

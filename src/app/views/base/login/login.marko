@@ -1,17 +1,10 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8"/>
-    <link rel="stylesheet" href="/estatico/css/libs/normalize.css"/>
-    <link rel="stylesheet" href="/estatico/css/libs/materialize.css"/>
-    <link rel="stylesheet" href="/estatico/css/libs/google-fonts.css"/>
-    <link rel="stylesheet" href="/estatico/css/main.css"/>
-    <title>Sistema de Gestão Integrada</title>
-  </head>
+<app-scripts-css/>
   <body>
-    <header class="container-header cabecalho"/>
+    <app-header />
     <main class="conteudoPrincipal">
-      <ul id="slide-out" class="sidenav"/>       
+      <app-navbar id="slide-out" class="sidenav"/>    
       <div class="container">
         <div class="row">
          <if(data.msg)>
@@ -63,11 +56,8 @@
       </div>
       <div class="modal-footer"/>
     </div>
-    <footer class="page-footer rodape"/>
-    <script src="/estatico/js/libs/jquery-3.4.1.js"/>
-    <script src="/estatico/js/libs/materialize.js"/>
-    <script src="/estatico/js/loadtemplate.js"/>
-    <script src="/estatico/js/base/navbar.js"/>
+   <app-footer/>
+    <app-scripts-js/>
     <script src="/estatico/js/base/login.js"/>
   </body>
 </html>

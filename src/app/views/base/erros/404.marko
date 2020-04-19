@@ -1,23 +1,16 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8"/>
-    <link rel="stylesheet" href="/estatico/css/libs/normalize.css"/>
-    <link rel="stylesheet" href="/estatico/css/libs/materialize.css"/>
-    <link rel="stylesheet" href="/estatico/css/libs/google-fonts.css"/>
-    <link rel="stylesheet" href="/estatico/css/main.css"/>
-    <title>Sistema de Gestão Integrada</title>
-  </head>
+<app-scripts-css/>
   <body>
-    <header class="container-header cabecalho"/>
+    <app-header />
     <main class="conteudoPrincipal">
-    <ul id="slide-out" class="sidenav"/>
+      <app-navbar id="slide-out" class="sidenav"/>
       <div class="container">
-      <div class='row center'>
-        <h1>Erro 404 - NOT FOUND</h1>
-        <p>Página não encontrada!</p>
-        <a href="/">Voltar</a>
-      </div>
+        <div class="row center">
+          <h1>Erro 404 - NOT FOUND</h1>
+          <p>Página não encontrada!</p>
+          <a href="/">Voltar</a>
+        </div>
       </div>
     </main>
     <!--Modal Structure-->
@@ -28,11 +21,7 @@
       </div>
       <div class="modal-footer"/>
     </div>
-    <footer class="page-footer rodape"/>
-    <script src="/estatico/js/libs/jquery-3.4.1.js"/>
-    <script src="/estatico/js/libs/materialize.js"/>
-    <script src="/estatico/js/loadtemplate.js"/>
-    <script src="/estatico/js/base/navbar.js"/>
-    <script src="/estatico/js/base/login.js"/>
+    <app-footer/>
+    <app-scripts-js/>
   </body>
 </html>

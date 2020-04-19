@@ -1,18 +1,10 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8"/>
-    <link rel="stylesheet" href="/estatico/css/libs/normalize.css"/>
-    <link rel="stylesheet" href="/estatico/css/libs/materialize.css"/>
-    <link rel="stylesheet" href="/estatico/css/libs/google-fonts.css"/>
-    <link rel="stylesheet" href="/estatico/css/libs/tabulator_materialize.min.css"/>
-    <link rel="stylesheet" href="/estatico/css/main.css"/>
-    <title>Relação de Pessoal do CARF</title>
-  </head>
+<app-scripts-css/>
   <body>
-    <header class="container-header cabecalho"/>
+    <app-header />
     <main class="conteudoPrincipal">
-    <ul id="slide-out" class="sidenav"/>
+      <app-navbar id="slide-out" class="sidenav"/>
       <div class="container">
         <h3 class="center-align">Relação de Pessoal do CARF</h3>
         <br/>
@@ -63,7 +55,7 @@
       <div id="dadosServ" class="controle">${data.serv}</div>
       <div id="dadosTerc" class="controle">${data.terc}</div>
     </main>
-    <footer class="page-footer rodape"/>
+
     <!--Modal Structure-->
     <div id="modal1" class="modal">
       <div class="modal-content">
@@ -77,11 +69,8 @@
         </button>
       </div>
     </div>
-    <script src="/estatico/js/libs/jquery-3.4.1.js"/>
-    <script src="/estatico/js/libs/materialize.js"/>
-    <script src="/estatico/js/libs/tabulator.min.js"/>
-    <script src="/estatico/js/loadtemplate.js"/>
-    <script src="/estatico/js/base/navbar.js"/>
+<app-footer/>
+    <app-scripts-js/>
     <script src="/estatico/js/pessoal/pessoas.js"/>
   </body>
 </html>

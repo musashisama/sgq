@@ -99,8 +99,7 @@ class PessoalControlador {
                                         pessoalDao.getOcorrencias({ cpf: req.params.id })
                                             .then(ocorrencias => {
                                                 pessoalDao.getfuncoesCarf()
-                                                    .then(funcoes => {
-                                                        console.log(funcoes);
+                                                    .then(funcoes => {                                                        
                                                         resp.marko(templates.pessoal.detalhacons, {
                                                             conselheiro: conselheiro[0],
                                                             unidades: tipo,

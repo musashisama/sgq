@@ -8,18 +8,26 @@ module.exports = (app) => {
 
     const rotasPessoal = PessoalControlador.rotas();
     const rotasBase = BaseControlador.rotas();
-
-    app.use(rotasPessoal.autenticadas, function(req, resp, next){   
-        req.session.baseUrl = req.baseUrl;
-        if(req.isAuthenticated()){                     
+    app.use('/*', function (req, resp, next) {
+        if (req.isAuthenticated()) {
+            resp.set('autenticado', true);
             next();
-        } else{
+        } else {
+            resp.set('autenticado', false);
+            next();
+        }
+    })
+    app.use(rotasPessoal.autenticadas, function (req, resp, next) {
+        req.session.baseUrl = req.baseUrl;
+        if (req.isAuthenticated()) {
+            next();
+        } else {
             resp.redirect(rotasBase.login);
         }
     });
 
     app.use(rotasPessoal.autenticadas, function (req, resp, next) {
-        if (ACL.checaACL(req.user.perfis,'pessoal')) {
+        if (ACL.checaACL(req.user.perfis, 'pessoal')) {
             next();
         } else { resp.render(403) };
 
@@ -36,7 +44,7 @@ module.exports = (app) => {
         .get(pessoalControlador.carregaPaginaCons())
         .post(pessoalControlador.carregaPaginaCons())
 
-    app.get(rotasPessoal.cadastraCons,pessoalControlador.carregaPaginaCadCons())
+    app.get(rotasPessoal.cadastraCons, pessoalControlador.carregaPaginaCadCons())
 
     app.post(rotasPessoal.insOcorrencia, pessoalControlador.insereOcorrencia());
 
