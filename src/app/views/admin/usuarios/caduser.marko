@@ -35,13 +35,13 @@
           <div class="row">
             <div class="form-group input-field  col s4">
               <label for="mailUser">Endereço e-mail do Usuário:</label>
-              <input type="text" id="mailUser" name="mail" value=data.registroUser.mailUser placeholder="Endereço de e-mail no formato XXX.XXX@carf.economia.gov.br" class="form-control docref"/>
+              <input type="text" id="mailUser" name="mail" value=data.registroUser.mailUser class="form-control docref"/>
             </div>
             <div class="form-group input-field equipeNC col s4">
               <select name="unidadeLotacao">
                 <option class="form-group" value="" disabled selected>Clique para selecionar</option>
                 <for|und| of=data.und>
-                  <option class="form-group" value=data.registroUser.Sigla>${und.Sigla}</option>
+                  <option class="form-group" value=data.registroUser.Sigla>${und.sigla}</option>
                 </for>
               </select>
               <label for="unidadeLotacao">Qual a unidade de lotação do usuário?</label>

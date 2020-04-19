@@ -21,6 +21,7 @@ cliente.connect(url, opcoes, function (err, cliente) {
   dados.usuarios = dbo.collection('usuarios');
   dados.tipoOcorrencias = dbo.collection('tipoOcorrencias');
   dados.ocorrencias = dbo.collection('ocorrencias');
+  dados.funcoesCarf = dbo.collection('funcoesCARF');
   dados.perfis = dbo.collection('perfis');
   dados.trocasenha = dbo.collection('trocasenha');
   dados.relatorios = dbo.collection('relatorios');

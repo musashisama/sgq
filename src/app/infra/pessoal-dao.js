@@ -31,6 +31,17 @@ class PessoalDao {
         )
     }
 
+    insereOcorrencia(registro){
+        return new Promise((resolve, reject) => {
+            this._db.ocorrencias.insertOne(registro, function (erro, res) {
+                if (erro) {
+                    return reject('Não foi possível inserir o registro.');
+                }
+                return resolve(res);
+            })
+        });
+    }
+
     getUsers(filtro) {
         return new Promise((resolve, reject) => {
 
@@ -46,11 +57,56 @@ class PessoalDao {
 
         });
     }
-    
+
     getUnidades(filtro) {
         return new Promise((resolve, reject) => {
 
             this._db.unidadesCARF
+                .find(filtro)
+                .project()
+                .toArray(function (erro, res) {
+                    if (erro) {
+                        return reject('Erro na base de dados. Tente novamente mais tarde.');
+                    }
+                    return resolve(res);
+                });
+
+        });
+    }
+    getTipoOcorrencias(filtro) {
+        return new Promise((resolve, reject) => {
+
+            this._db.tipoOcorrencias
+                .find(filtro)
+                .project()
+                .toArray(function (erro, res) {
+                    if (erro) {
+                        return reject('Erro na base de dados. Tente novamente mais tarde.');
+                    }
+                    return resolve(res);
+                });
+
+        });
+    }
+
+    getfuncoesCarf(filtro) {
+        return new Promise((resolve, reject) => {
+            this._db.funcoesCarf
+                .find(filtro)
+                .project()
+                .toArray(function (erro, res) {
+                    if (erro) {
+                        return reject('Erro na base de dados. Tente novamente mais tarde.');
+                    }
+                    return resolve(res);
+                });
+
+        });
+    }
+
+    getOcorrencias(filtro) {
+        return new Promise((resolve, reject) => {
+            this._db.ocorrencias
                 .find(filtro)
                 .project()
                 .toArray(function (erro, res) {

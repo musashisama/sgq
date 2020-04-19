@@ -46,7 +46,7 @@ function render(input, out, __component, component, state) {
     out.w("<option class=\"form-group\"" +
       marko_attr("value", data.registroUser.Sigla) +
       ">" +
-      marko_escapeXml(und.Sigla) +
+      marko_escapeXml(und.sigla) +
       "</option>");
   });
 

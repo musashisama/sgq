@@ -13,8 +13,10 @@ class PessoalControlador {
             detalha: '/pessoal/restrito/pessoas/:id',
             cadastra: '/pessoal/restrito/pessoas/cadastra',
             conselheiros: '/pessoal/restrito/conselheiros',
-            detalhacons:'/pessoal/restrito/conselheiros/:id',
-            editacons: '/pessoal/restrito/conselheiros/edita'
+            detalhacons: '/pessoal/restrito/conselheiros/:id',
+            editacons: '/pessoal/restrito/conselheiros/edita',
+            insOcorrencia: '/pessoal/restrito/conselheiros/:id/ocorrencia',
+            cadastraCons: '/pessoal/restrito/conselheiros/cadastra',
         };
     }
 
@@ -29,14 +31,13 @@ class PessoalControlador {
 
     carregaPaginaPessoal() {
         return function (req, resp) {
-            // const role = 'admin';
-            // const perfil = req.user.perfis;
-            if (1 == 1) {//req.user.cpf == '71283242168' && perfil.indexOf(role) > -1) {
+            const role = 'pessoal';
+            const perfil = req.user.perfis;
+            if (perfil.indexOf(role) > -1) {
                 const pessoalDao = new PessoalDao(conn);
                 pessoalDao.getUsersCargo()
                     .then(pessoas => {
                         resp.marko(templates.pessoal.pessoas, {
-                            
                             col: JSON.stringify(pessoas[0]),
                             serv: JSON.stringify(pessoas[1]),
                             terc: JSON.stringify(pessoas[2])
@@ -49,14 +50,14 @@ class PessoalControlador {
     }
     carregaPaginaCons() {
         return function (req, resp) {
-            // const role = 'admin';
-            // const perfil = req.user.perfis;
-            if (1 == 1) {//req.user.cpf == '71283242168' && perfil.indexOf(role) > -1) {
+            const role = 'pessoal';
+            const perfil = req.user.perfis;
+            if (perfil.indexOf(role) > -1) {
                 const pessoalDao = new PessoalDao(conn);
-                pessoalDao.getUsers({cargo:"Conselheiro"})
+                pessoalDao.getUsers({ cargo: "Conselheiro" })
                     .then(conselheiros => {
                         resp.marko(templates.pessoal.conselheiros, {
-                            conselheiros: JSON.stringify(conselheiros),                            
+                            conselheiros: JSON.stringify(conselheiros),
                         })
                     })
                     .catch(erro => console.log(erro));
@@ -64,37 +65,87 @@ class PessoalControlador {
 
         };
     }
+    carregaPaginaCadCons() {
+        return function (req, resp) {
+            const role = 'pessoal';
+            const perfil = req.user.perfis;
+            if (perfil.indexOf(role) > -1) {
+                const pessoalDao = new PessoalDao(conn);
+                pessoalDao.getUnidades({ tipo: 'judicante' })
+                    .then(tipo => {
+                        pessoalDao.getfuncoesCarf()
+                            .then(funcoes => {
+                                resp.marko(templates.pessoal.cadcons, { unidades: tipo, funcoes: funcoes })
+                            })
+                    })
+
+
+            } else resp.marko(templates.base.principal, { msg: "Usuário não autorizado a executar esta operação." });
+
+        };
+    }
     carregaPaginaDetCons() {
         return function (req, resp) {
-            // const role = 'admin';
-            // const perfil = req.user.perfis;
-            
-            if (1 == 1) {//req.user.cpf == '71283242168' && perfil.indexOf(role) > -1) {
+            const role = 'pessoal';
+            const perfil = req.user.perfis;
+            if (perfil.indexOf(role) > -1) {
                 const pessoalDao = new PessoalDao(conn);
                 pessoalDao.buscaUser(req.params.id)
-                    .then(conselheiro => {     
-                        pessoalDao.getUnidades({tipo:'judicante'}).then(tipo => {resp.marko(templates.pessoal.detalhacons, {
-                            conselheiro: conselheiro[0], 
-                            unidades:tipo                        
-                        })})                   
-                        
+                    .then(conselheiro => {
+                        pessoalDao.getUnidades({ tipo: 'judicante' })
+                            .then(tipo => {
+                                pessoalDao.getTipoOcorrencias()
+                                    .then(tpOcorrencias => {
+                                        pessoalDao.getOcorrencias({ cpf: req.params.id })
+                                            .then(ocorrencias => {
+                                                pessoalDao.getfuncoesCarf()
+                                                    .then(funcoes => {
+                                                        console.log(funcoes);
+                                                        resp.marko(templates.pessoal.detalhacons, {
+                                                            conselheiro: conselheiro[0],
+                                                            unidades: tipo,
+                                                            tipoOcorrencias: tpOcorrencias,
+                                                            ocorrencias: JSON.stringify(ocorrencias),
+                                                            funcoes: funcoes
+                                                        })
+                                                    })
+                                            })
+                                    })
+                            })
                     })
                     .catch(erro => console.log(erro));
             } else resp.marko(templates.base.principal, { msg: "Usuário não autorizado a executar esta operação." });
 
         };
     }
-    editaCons(){
+    editaCons() {
         return function (req, resp) {
-            //console.log(req.body);
-            //console.log(req.params.id);
-            console.log(req.user);
-            if (1 == 1) {//req.user.cpf == '71283242168' && perfil.indexOf(role) > -1) {
+            const role = 'pessoal';
+            const perfil = req.user.perfis;
+            if (perfil.indexOf(role) > -1) {
                 const pessoalDao = new PessoalDao(conn);
                 pessoalDao.editaCons(req.body)
-                    .then(conselheiro => {                        
+                    .then(conselheiro => {
                         resp.marko(templates.pessoal.detalhacons, {
-                            conselheiro: req.body,                            
+                            conselheiro: req.body,
+                        })
+                    })
+                    .catch(erro => console.log(erro));
+            } else resp.marko(templates.base.principal, { msg: "Usuário não autorizado a executar esta operação." });
+
+        };
+    }
+
+    insereOcorrencia() {
+        return function (req, resp) {
+            const role = 'pessoal';
+            const perfil = req.user.perfis;
+            if (perfil.indexOf(role) > -1) {
+                const pessoalDao = new PessoalDao(conn);
+                pessoalDao.insereOcorrencia(req.body)
+                    .then(conselheiro => {
+                        resp.marko(templates.pessoal.detalhacons, {
+                            conselheiro: req.body,
                         })
                     })
                     .catch(erro => console.log(erro));

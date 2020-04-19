@@ -44,11 +44,11 @@ function render(input, out, __component, component, state) {
     marko_attr("value", "" + data.conselheiro.telefone) +
     " type=\"text\" class=\"validate\"><label class=\"active\" for=\"telefone\">Telefone:</label></div><div class=\"input-field col s2\"><i class=\"material-icons prefix\">phone_iphone</i><input disabled id=\"celular\" name=\"celular\"" +
     marko_attr("value", "" + data.conselheiro.celular) +
-    " type=\"text\" class=\"validate\"><label class=\"active\" for=\"celular\">Celular:</label></div></div><h4>Dados do Mandato</h4><div class=\"row\"><div class=\"form-group input-field turmaCons col s4\"><i class=\"material-icons prefix\">event_seat</i><select disabled name=\"turmaCons\"> <option class=\"form-group\"" +
+    " type=\"text\" class=\"validate\"><label class=\"active\" for=\"celular\">Celular:</label></div></div><h4>Dados do Mandato</h4><div class=\"row\"><div class=\"form-group input-field turmaCons col s4\"><i class=\"material-icons prefix\">event_seat</i><select disabled name=\"turmaCons\"><option class=\"form-group\"" +
     marko_attr("value", "" + data.conselheiro.turmaCons) +
     ">" +
     marko_escapeXml(data.conselheiro.turmaCons) +
-    "</option> ");
+    "</option>");
 
   var $for$0 = 0;
 
@@ -72,23 +72,57 @@ function render(input, out, __component, component, state) {
     marko_attr("value", "" + data.conselheiro.origem) +
     " type=\"text\" class=\"validate\"><label class=\"active\" for=\"origem\">Representação:</label></div></div><div class=\"row\"><div class=\"input-field col s3\"><i class=\"material-icons prefix\">details</i><select disabled id=\"tipo\" name=\"tipo\"><option value=\"Titular\">Titular</option><option value=\"Suplente\">Suplente</option></select><label>Titular/Suplente</label></div><div class=\"input field col s3\"><input disabled id=\"dtInicio\" name=\"dtInicio\"" +
     marko_attr("value", "" + data.conselheiro.dtInicio) +
-    " type=\"text\" class=\"datepicker\"><label for=\"dtInicio\">Início do Último Mandato:</label></div><div class=\"input-field col s2\"><i class=\"material-icons prefix\">domain</i><input disabled id=\"funcao\" name=\"funcao\"" +
+    " type=\"text\" class=\"datepicker\"><label for=\"dtInicio\">Início do Último Mandato:</label></div><div class=\"form-group input-field funcao col s4\"><i class=\"material-icons prefix\">domain</i><select disabled name=\"funcao\"><option selected class=\"form-group\"" +
     marko_attr("value", "" + data.conselheiro.funcao) +
-    " type=\"text\" class=\"validate\"><label class=\"active\" for=\"funcao\">Função:</label></div><div class=\"input-field col s3\"><i class=\"material-icons prefix\">event_note</i><select disabled id=\"mandatoAt\" name=\"mandatoAt\"><option value>Sim</option><option>Não</option></select><label>Mandato Ativo?</label></div></div><div class=\"card-action right-align\"><a class=\"btn-cons-edita btn-floating red waves-effect waves-light hoverable z-depth-3\" title=\"Editar Dados\"><i class=\"material-icons\">edit</i></a><a disabled class=\"btn-cons-salva btn-floating blue waves-effect waves-light hoverable z-depth-3\" type=\"submit\" title=\"Salvar\"><i class=\"material-icons\">save</i></a><a id=\"aModal\" class=\"btn-cons-adiciona btn-floating green waves-effect waves-light hoverable z-depth-3\" title=\"Adicionar ocorrência\" href=\"#modal1\"><i class=\"material-icons\">add</i></a></div></form></div></div>");
+    ">" +
+    marko_escapeXml(data.conselheiro.funcao) +
+    "</option>");
+
+  var $for$1 = 0;
+
+  marko_forEach(data.funcoes, function(funcao) {
+    var $keyScope$1 = "[" + (($for$1++) + "]");
+
+    out.w("<option class=\"form-group\"" +
+      marko_attr("value", "" + funcao.funcao) +
+      ">" +
+      marko_escapeXml(funcao.funcao) +
+      "</option>");
+  });
+
+  out.w("</select><label for=\"funcao\">Função:</label></div><div class=\"input-field col s3\"><i class=\"material-icons prefix\">event_note</i><select disabled id=\"mandatoAt\" name=\"mandatoAt\"><option value>Sim</option><option>Não</option></select><label>Mandato Ativo?</label></div></div><div class=\"card-action right-align\"><a class=\"btn-cons-edita btn-floating red waves-effect waves-light hoverable z-depth-3\" title=\"Editar Dados\"><i class=\"material-icons\">edit</i></a><a disabled class=\"btn-cons-salva btn-floating blue waves-effect waves-light hoverable z-depth-3\" type=\"submit\" title=\"Salvar\"><i class=\"material-icons\">save</i></a><a id=\"aModal\" class=\"btn-cons-adiciona btn-floating green waves-effect waves-light hoverable z-depth-3\" title=\"Adicionar ocorrência\" href=\"#modal1\"><i class=\"material-icons\">add</i></a></div></form></div></div>");
 
   if (data.ocorrencias) {
-    out.w("<div id=\"tabelaOcorrencias\"" +
+    out.w("<h3 class=\"center-align\">Ocorrências do Conselheiro</h3><div id=\"tabelaOcorrencias\"" +
       marko_attr("data-ocorrencias", "" + data.ocorrencias) +
-      "></div><div" +
-      marko_attr("data-tipoOcorrencias", "" + data.tipoOcorrencias) +
       "></div>");
   }
 
-  out.w("</div></main><footer class=\"page-footer rodape\"></footer><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div><script src=\"/estatico/js/libs/jquery-3.4.1.js\"></script><script src=\"/estatico/js/libs/materialize.js\"></script><script src=\"/estatico/js/libs/tabulator.min.js\"></script> <script src=\"/estatico/js/loadtemplate.js\"></script><script src=\"/estatico/js/base/navbar.js\"></script> <script src=\"/estatico/js/pessoal/conselheiro.js\"></script>");
+  out.w("<div></div></div></main><footer class=\"page-footer rodape\"></footer><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Inclusão de Ocorrência</h4><p class=\"pModal\"><form id=\"formOcorrencia\"" +
+    marko_attr("data-tipoOcorrencias", "" + data.tipoOcorrencias) +
+    " name=\"formOcorrencia\"" +
+    marko_attr("action", ("/pessoal/restrito/conselheiros/" + data.conselheiro.cpf) + "/ocorrencia") +
+    " method=\"post\"><div class=\"row\"><br></div><input hidden id=\"cpfOcorrencia\" name=\"cpf\"" +
+    marko_attr("value", "" + data.conselheiro.cpf) +
+    " type=\"text\"><div class=\"row\"><div class=\" input-field col s4\"><i class=\"material-icons prefix\">border_color</i><select name=\"tipoOcorrencia\">");
+
+  var $for$2 = 0;
+
+  marko_forEach(data.tipoOcorrencias, function(ocorrencia) {
+    var $keyScope$2 = "[" + (($for$2++) + "]");
+
+    out.w("<option class=\"form-group\"" +
+      marko_attr("value", "" + ocorrencia.tipoOcorrencia) +
+      ">" +
+      marko_escapeXml(ocorrencia.tipoOcorrencia) +
+      "</option>");
+  });
+
+  out.w("</select><label for=\"tipoOcorrencia\">Selecione o tipo de ocorrência:</label></div></div><div class=\"row\"><br></div><div class=\"row\"><div class=\"input-field col s12\"><i class=\"material-icons prefix\">mode_edit</i><textarea name=\"ocorDet\" id=\"ocorDet\" class=\"materialize-textarea\" placeholder=\"Este campo aceita &lt;ENTER>. Descreva aqui o nº da Portaria, Detalhes da notificação (arts do RICARF), nº do processo, nº SEI etc.\"></textarea><label for=\"ocorDet\">Detalhes da Ocorrência:</label></div></div><div class=\"row\"><br></div><div class=\"row\"><div class=\"input field col s3\"><i class=\"material-icons prefix\">insert_invitation</i><input id=\"dtOcorrencia\" name=\"dtOcorrencia\" value=\"\" type=\"text\" class=\"datepicker\"><label for=\"dtOcorrencia\">Data da Ocorrência</label></div><div class=\"col s2\"><div class=\"form-group\"><p><label>Altera a data de início de mandato?</label></p><p><label><input class=\"with-gap\" value=\"Sim\" name=\"alteraDtInicio\" type=\"radio\" checked><span>Sim</span></label></p><p><label><input class=\"with-gap\" value=\"Não\" name=\"alteraDtInicio\" type=\"radio\"><span>Não</span></label></p></div></div></div></form></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"modal-close btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div><script src=\"/estatico/js/libs/jquery-3.4.1.js\"></script><script src=\"/estatico/js/libs/materialize.js\"></script><script src=\"/estatico/js/libs/tabulator.min.js\"></script><script src=\"/estatico/js/libs/moment.min.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script><script src=\"/estatico/js/base/navbar.js\"></script><script src=\"/estatico/js/pessoal/conselheiro.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "117");
+  await_reorderer_tag({}, out, __component, "157");
 
   out.w("</body></html>");
 }

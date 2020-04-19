@@ -92,9 +92,9 @@ class NCControlador {
     //Lista os registros de não conformidade. Auth.
     listaRNC() {
         return function (req, resp) {
-            //const role = 'admin';
-           // const perfil = req.user.perfis;
-            if (1==1||req.user.cpf == '71283242168' && perfil.indexOf(role) > -1) {
+            const role = 'admin';
+            const perfil = req.user.perfis;
+            if (perfil.indexOf(role) > -1) {
                 const ncDao = new NCDao(conn);
                 ncDao.getRegistrosNC({}, {})
                     .then(registroNC => {
@@ -133,7 +133,7 @@ class NCControlador {
     formCadastraNC() {
 
         return function (req, resp) {
-            const role = 'gestaoNC';
+            const role = 'qualidade';
             if (req.isAuthenticated()) {
                 const perfil = req.user.perfis;
                 if (perfil.indexOf(role) > -1) {
@@ -184,6 +184,7 @@ class NCControlador {
                 .catch(erro => console.log(erro));
         };
     }
+    
     //Chamado pelo hidden PUT do formulário. Edita tipologia de não conformidade.
     edita() {
 

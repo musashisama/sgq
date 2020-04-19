@@ -2,6 +2,7 @@ const NCControlador = require('../controladores/nc-controlador');
 const ncControlador = new NCControlador();
 const BaseControlador = require('../controladores/base-controlador')
 const baseControlador = new BaseControlador();
+const ACL = require('../infra/helpers/ACL');
 
 module.exports = (app) => {
 
@@ -15,6 +16,12 @@ module.exports = (app) => {
         } else{
             resp.redirect(rotasBase.login);
         }
+    });
+
+    app.use(rotasNC.autenticadas, function (req, resp, next) {
+        if (ACL.checaACL(req.user.perfis,'qualidade')) {
+            next();
+        } else { resp.render(403) };
     });
     
     app.get(rotasNC.listagem,ncControlador.listagem());

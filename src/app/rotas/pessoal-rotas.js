@@ -1,6 +1,7 @@
 const PessoalControlador = require('../controladores/pessoal-controlador');
 const pessoalControlador = new PessoalControlador();
 const BaseControlador = require('../controladores/base-controlador')
+const ACL = require('../infra/helpers/ACL');
 
 
 module.exports = (app) => {
@@ -8,14 +9,21 @@ module.exports = (app) => {
     const rotasPessoal = PessoalControlador.rotas();
     const rotasBase = BaseControlador.rotas();
 
-    // app.use(rotasPessoal.autenticadas, function(req, resp, next){   
-    //     req.session.baseUrl = req.baseUrl;
-    //     if(req.isAuthenticated()){                     
-    //         next();
-    //     } else{
-    //         resp.redirect(rotasBase.login);
-    //     }
-    // });
+    app.use(rotasPessoal.autenticadas, function(req, resp, next){   
+        req.session.baseUrl = req.baseUrl;
+        if(req.isAuthenticated()){                     
+            next();
+        } else{
+            resp.redirect(rotasBase.login);
+        }
+    });
+
+    app.use(rotasPessoal.autenticadas, function (req, resp, next) {
+        if (ACL.checaACL(req.user.perfis,'pessoal')) {
+            next();
+        } else { resp.render(403) };
+
+    });
     app.route(rotasPessoal.pessoas)
         .get(pessoalControlador.carregaPaginaPessoal())
         .post(pessoalControlador.carregaPaginaPessoal());
@@ -28,7 +36,9 @@ module.exports = (app) => {
         .get(pessoalControlador.carregaPaginaCons())
         .post(pessoalControlador.carregaPaginaCons())
 
-    //app.post(rotasPessoal.editacons, pessoalControlador.editaCons());
+    app.get(rotasPessoal.cadastraCons,pessoalControlador.carregaPaginaCadCons())
+
+    app.post(rotasPessoal.insOcorrencia, pessoalControlador.insereOcorrencia());
 
     app.route(rotasPessoal.detalhacons)
         .get(pessoalControlador.carregaPaginaDetCons())

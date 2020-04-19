@@ -18,8 +18,11 @@
         <br/>
         <form id="formCons" data-conselheiros=`${data.conselheiros}` name="formCons" action="/pessoal/restrito/conselheiros/detalha/" method="post">
           <div class="row">
-            <div class="col s3 offset-s9">
-              <a href="#!" id="mostraColunas" class="waves-effect waves-green btn-flat blue ">Agrupar/Desagrupar</a>
+            <div class="col s3 right">
+              <a href="#!" id="mostraColunas" class="waves-effect waves-green btn-flat blue ">Agrupar/Desagrupar</a>              
+            </div>
+            <div class="col s3 right">
+            <a href="/pessoal/restrito/conselheiros/cadastra" id="cadastraCons" class="waves-effect waves-yellow btn-flat green">Cadastrar novo Conselheiro</a>
             </div>
             <div id="tabelaCons"/>            
           </div>
