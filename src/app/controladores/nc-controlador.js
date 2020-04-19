@@ -10,11 +10,11 @@ class NCControlador {
     static rotas() {
         return {
             autenticadas: '/gestao*',
-            lista: '/lista',
+            lista: '/gestao/lista',
             listaNC: '/listaNC',
             form: '/form',
             listagem: '/listagem',
-            listaRNC: '/gestao/listaregistronc',
+            listaRNC: '/gestao/listaregistronc',            
             cadastraNC: '/gestao/cadastranc',
             edicao: '/gestao/cadastranc/:id',
             delecao: '/gestao/:id'
@@ -38,7 +38,7 @@ class NCControlador {
                 .then(nc => resp.marko(
                     templates.nc.listagem,
                     {
-                        nc: nc
+                        nc: JSON.stringify(nc)
                     }
                 ))
                 .catch(erro => console.log(erro));
@@ -94,12 +94,12 @@ class NCControlador {
         return function (req, resp) {
             const role = 'admin';
             const perfil = req.user.perfis;
-            if (req.user.cpf == '71283242168' && perfil.indexOf(role) > -1) {
+            if (perfil.indexOf(role) > -1) {
                 const ncDao = new NCDao(conn);
                 ncDao.getRegistrosNC({}, {})
                     .then(registroNC => {
                         resp.marko(templates.nc.listaregistros, {
-                            registroNC: registroNC,
+                            registroNC: JSON.stringify(registroNC),
 
                         })
                     })
@@ -133,7 +133,7 @@ class NCControlador {
     formCadastraNC() {
 
         return function (req, resp) {
-            const role = 'gestaoNC';
+            const role = 'qualidade';
             if (req.isAuthenticated()) {
                 const perfil = req.user.perfis;
                 if (perfil.indexOf(role) > -1) {
@@ -157,7 +157,7 @@ class NCControlador {
         return function (req, resp) {
             const registro = req.body;
             const clientIp = requestIp.getClientIp(req);
-            registro['horaCriacao'] = new Date().toUTCString();
+            registro['horaCriacao'] = new Date().toISOString();
             registro['clientIP'] = clientIp;
             registro['cpfUsuario'] = req.user.cpf;
             const ncDao = new NCDao(conn);
@@ -184,6 +184,7 @@ class NCControlador {
                 .catch(erro => console.log(erro));
         };
     }
+    
     //Chamado pelo hidden PUT do formulário. Edita tipologia de não conformidade.
     edita() {
 

@@ -22,7 +22,7 @@ function render(input, out, __component, component, state) {
 
   component_globals_tag({}, out);
 
-  out.w("<header class=\"container-header cabecalho\"></header><main class=\"conteudoPrincipal\"><div class=\"container\"><h3 class=\"center-align\">Cadastrar Não Conformidade</h3><br><br><form id=\"formNC\" name=\"formNC\" action=\"/form\" method=\"post\">");
+  out.w("<header class=\"container-header cabecalho\"></header> <main class=\"conteudoPrincipal\"><ul id=\"slide-out\" class=\"sidenav\"></ul><div class=\"container\"><h3 class=\"center-align\">Cadastrar Não Conformidade</h3><br><br><form id=\"formNC\" name=\"formNC\" action=\"/form\" method=\"post\">");
 
   if (data.registroNC._id) {
     out.w("<div><input type=\"hidden\" name=\"_method\" value=\"PUT\"><input type=\"hidden\" name=\"id\"" +
@@ -100,11 +100,11 @@ function render(input, out, __component, component, state) {
       "\":null,");
   });
 
-  out.w("</div><script src=\"/estatico/js/jquery-3.4.1.js\"></script><script src=\"/estatico/js/materialize.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script><script src=\"/estatico/js/services/HttpService.js\"></script><script src=\"/estatico/js/valida.js\"></script><script src=\"/estatico/js/formcontrol.js\"></script>");
+  out.w("</div><script src=\"/estatico/js/libs/jquery-3.4.1.js\"></script><script src=\"/estatico/js/libs/materialize.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script><script src=\"/estatico/js/base/navbar.js\"></script><script src=\"/estatico/js/services/HttpService.js\"></script><script src=\"/estatico/js/valida.js\"></script> <script src=\"/estatico/js/formcontrol.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "99");
+  await_reorderer_tag({}, out, __component, "101");
 
   out.w("</body></html>");
 }

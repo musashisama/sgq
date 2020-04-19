@@ -14,7 +14,7 @@ function initSelect() {
 
 function btnInsere() {
   $('.addListaNC').click(function (event) {
-       
+
   });
 }
 
@@ -30,7 +30,7 @@ function montaModal() {
     <div class="form-group input-field mProcOrigem col s4">
       <select required name="mProcOrigem">
         <option class="form-group" value="" disabled selected>Clique para selecionar</option>        
-          <option class="form-group" value="1">Tetse</option>
+          <option class="form-group" value="1">Teste</option>
         
       </select>
       <label for="mProcOrigem">
@@ -50,7 +50,7 @@ function montaModal() {
     </form>
     </p>
   `);
-  
+
   $('.concorda').click(function () {
   });
   $('.cancela').click(function () {

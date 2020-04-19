@@ -17,23 +17,14 @@ module.exports = (app) => {
         },
         (cpf, senha, done) => {
             const userDao = new UserDao(db);
-            userDao.buscaUser(cpf)
+            userDao.buscaUser({cpf:cpf})
                 .then(cpf => {
                     if (Object.keys(cpf).length==0) {    
                         console.log("No user");                    
                         return done(null, false, {
                             mensagem: "Usuário ou senha incorretos!"
                         });
-                    }
-                     //var salt = bcrypt.genSaltSync(10);
-                     //var hash = bcrypt.hashSync(senha, salt);
-                     //console.log(hash);
-                    // let compara = bcrypt.compareSync(senha, hash)
-                    // console.log(compara);
-                    // let compara = bcrypt.compareSync(senha, cpf[0].senha)
-                    //     console.log(senha);
-                    //     console.log(cpf[0].senha);
-                    //     console.log(compara);
+                    }                    
                     if (Object.keys(cpf).length>0 && !bcrypt.compareSync(senha, cpf[0].senha)) {                        
                         console.log("Senha errada");
                         return done(null, false, {

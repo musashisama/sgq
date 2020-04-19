@@ -6,15 +6,17 @@
     <link rel="stylesheet" href="/estatico/css/libs/materialize.css"/>
     <link rel="stylesheet" href="/estatico/css/libs/google-fonts.css"/>
     <link rel="stylesheet" href="/estatico/css/main.css"/>
+    <title>Lista de Não Conformidades</title>
   </head>
   <body>
-    <header class="container-header cabecalho"/>
+    <header class="container-header cabecalho"/>    
     <main class="conteudoPrincipal">
+    <ul id="slide-out" class="sidenav"/>
       <div class="container">
         <h2 class="center-align">Lista de Não Conformidades</h2>
         <table id="naoconformidades" class="striped highlight z-depth-3 responsive-table">
           <thead class="white-text grey darken-4 colunas">
-            <tr>
+            <tr>              
               <th>Macroprocesso</th>
               <th>Não conformidade</th>
               <th>Editar</th>
@@ -25,11 +27,15 @@
             <for|nc| of=data.nc>
               <tr id=`${nc._id}`>
                 <td class="mp">${nc.Macroprocesso}</td>
-                <td class="desc">${nc.nconformidade}</td>
+                <td>
+                  <details>
+                    <summary>${nc.nconformidade}</summary>
+                    <p>${nc.nconformidade}</p>
+                  </details>
+                </td>
                 <td class="td-edit">
                   <a href=`/gestao/cadastranc/${nc._id}`>
-                  <!-- <a class="modal-trigger" href="#modal1"> -->
-                    <i class="small material-icons icones center-align">edit</i>
+                    <!-- <a class="modal-trigger" href="#modal1"> --> <i class="small material-icons icones center-align">edit</i>
                   </a>
                 </td>
                 <td class="td-remove">
@@ -46,11 +52,7 @@
         </a>
       </div>
     </main>
-    <div id="macroprocessos" class="controle">
-      <for|mp| of=data.mp>"${mp.macroprocesso}"</for>
-      <br/>
-    </div>
-        <footer class="rodape"/>
+    <footer class="rodape"/>
     <!-- Modal Structure -->
     <div id="modal1" class="modal">
       <div class="modal-content">
@@ -62,9 +64,14 @@
         <a href="#!" class="modal-close waves-effect waves-green btn-flat concorda">Confirma</a>
       </div>
     </div>
-    <script src="/estatico/js/jquery-3.4.1.js"/>
-    <script src="/estatico/js/materialize.js"/>
+    <script src="/estatico/js/libs/jquery-3.4.1.js"/>
+    <script src="/estatico/js/libs/materialize.js"/>
     <script src="/estatico/js/loadtemplate.js"/>
+    <script src="/estatico/js/base/navbar.js"/>
     <script src="/estatico/js/gestaoNC.js"/>
+    <div id="macroprocessos" class="controle">
+      <for|mp| of=data.mp>"${mp.macroprocesso}"</for>
+      <br/>
+    </div>
   </body>
 </html>

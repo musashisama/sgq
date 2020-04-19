@@ -28,5 +28,22 @@ app.use(methodOverride(function (req, res) {
 sessaoAutenticacao(app);
 rotas(app);
 
+app.use(function (erro, req, resp, next) {
+  return resp.status(403).marko(
+      require('../app/views/base/erros/403.marko')
+  );
+});
+
+app.use(function (req, resp, next) {
+  return resp.status(404).marko(
+      require('../app/views/base/erros/404.marko')
+  );
+});
+
+app.use(function (erro, req, resp, next) {
+  return resp.status(500).marko(
+      require('../app/views/base/erros/500.marko')
+  );
+});
 
 module.exports = app;

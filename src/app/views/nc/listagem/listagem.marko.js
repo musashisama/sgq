@@ -9,8 +9,6 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_helpers = require("marko/src/runtime/html/helpers"),
     marko_loadTag = marko_helpers.t,
     component_globals_tag = marko_loadTag(require("marko/src/core-tags/components/component-globals-tag")),
-    marko_forEach = marko_helpers.f,
-    marko_escapeXml = marko_helpers.x,
     marko_attr = marko_helpers.a,
     init_components_tag = marko_loadTag(require("marko/src/core-tags/components/init-components-tag")),
     await_reorderer_tag = marko_loadTag(require("marko/src/core-tags/core/await/reorderer-renderer"));
@@ -18,33 +16,17 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.w("<!DOCTYPE html><html><head><meta charset=\"utf-8\"><link rel=\"stylesheet\" href=\"/estatico/css/libs/normalize.css\"><link rel=\"stylesheet\" href=\"/estatico/css/libs/materialize.css\"><link rel=\"stylesheet\" href=\"/estatico/css/libs/google-fonts.css\"><link rel=\"stylesheet\" href=\"/estatico/css/main.css\"><title>Lista de Não Conformidades</title></head><body>");
+  out.w("<!DOCTYPE html><html><head><meta charset=\"utf-8\"><link rel=\"stylesheet\" href=\"/estatico/css/libs/normalize.css\"><link rel=\"stylesheet\" href=\"/estatico/css/libs/materialize.css\"><link rel=\"stylesheet\" href=\"/estatico/css/libs/google-fonts.css\"><link rel=\"stylesheet\" href=\"/estatico/css/libs/tabulator_materialize.min.css\"><link rel=\"stylesheet\" href=\"/estatico/css/main.css\"><title>Lista de Não Conformidades</title></head><body>");
 
   component_globals_tag({}, out);
 
-  out.w("<header class=\"container-header cabecalho\"></header><main class=\"conteudoPrincipal\"><div class=\"container\"><div class=\"row\"><h3 class=\"center-align\">Lista de Não Conformidades</h3><table class=\"striped centered highlight z-depth-3 responsive-table\"><thead><tr><th>Macroprocesso</th><th>Não conformidade</th><th>Descrição detalhada</th></tr></thead><tbody>");
-
-  var $for$0 = 0;
-
-  marko_forEach(data.nc, function(nc) {
-    var $keyScope$0 = "[" + (($for$0++) + "]");
-
-    out.w("<tr" +
-      marko_attr("id", "" + nc._id) +
-      "><td class=\"mp\">" +
-      marko_escapeXml(nc.Macroprocesso) +
-      "</td><td class=\"desc\">" +
-      marko_escapeXml(nc.nconformidade) +
-      "</td><td class=\"descDet\">" +
-      marko_escapeXml(nc.descDet) +
-      "</td></tr>");
-  });
-
-  out.w("</tbody></table></div></div></main><footer class=\"rodape\"></footer><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\">A bunch of text</p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat\">Cancela</a><a href=\"#!\" class=\"modal-close waves-effect waves-green btn-flat concorda\">Confirma</a></div></div><script src=\"/estatico/js/jquery-3.4.1.js\"></script><script src=\"/estatico/js/materialize.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script><script src=\"/estatico/js/formcontrol.js\"></script>");
+  out.w("<header class=\"container-header cabecalho\"></header><main class=\"conteudoPrincipal\"><ul id=\"slide-out\" class=\"sidenav\"></ul><div class=\"container\"><div class=\"row\"><h3 class=\"center-align\">Lista de Não Conformidades</h3><form" +
+    marko_attr("data-nc", "" + data.nc) +
+    "></form><div id=\"tabelaNC\"></div> </div></div></main><footer class=\"rodape\"></footer><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\">A bunch of text</p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat\">Cancela</a><a href=\"#!\" class=\"modal-close waves-effect waves-green btn-flat concorda\">Confirma</a></div></div><script src=\"/estatico/js/libs/jquery-3.4.1.js\"></script><script src=\"/estatico/js/libs/materialize.js\"></script> <script src=\"/estatico/js/loadtemplate.js\"></script> <script src=\"/estatico/js/base/navbar.js\"></script><script src=\"/estatico/js/libs/tabulator.min.js\"></script> <script src=\"/estatico/js/listagem.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "37");
+  await_reorderer_tag({}, out, __component, "32");
 
   out.w("</body></html>");
 }

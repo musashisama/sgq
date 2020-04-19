@@ -1,5 +1,7 @@
 module.exports = {    
     nc: require('./nc'),
     base: require('./base'),
-    admin: require('./admin')
+    admin: require('./admin'),
+    julgamento: require('./julgamento'),
+    pessoal: require('./pessoal')
 }

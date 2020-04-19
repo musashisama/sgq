@@ -11,8 +11,12 @@ class DateHelper {
         /* return data.getDate()
         + '/' + (data.getMonth()+1)
         + '/' + data.getFullYear(); */
-    }
+    }   
 
+    static dataAtual(){
+        let data = `${new Date().getDate()}/${new Date().getMonth()+1}/${new Date().getFullYear()}`
+        return data;
+    }
     static textoParaData(texto) {
 
         // mudamos a validação para aceitar o novo formato!
@@ -24,3 +28,4 @@ class DateHelper {
     }
         
 } 
+module.exports = DateHelper;

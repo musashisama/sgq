@@ -22,7 +22,7 @@ function render(input, out, __component, component, state) {
 
   component_globals_tag({}, out);
 
-  out.w("<header class=\"container-header cabecalho\"></header><main class=\"conteudoPrincipal\"><div class=\"container\"><h3 class=\"center-align\">Registrar Nova Não Conformidade</h3><br><br><form id=\"formCadNC\" name=\"formCadNC\" action=\"/gestao/cadastranc\" method=\"post\"><div class=\"row\">");
+  out.w("<header class=\"container-header cabecalho\"></header> <main class=\"conteudoPrincipal\"><ul id=\"slide-out\" class=\"sidenav\"></ul><div class=\"container\"><h3 class=\"center-align\">Registrar Nova Não Conformidade</h3><br><br><form id=\"formCadNC\" name=\"formCadNC\" action=\"/gestao/cadastranc\" method=\"post\"><div class=\"row\">");
 
   if (data.cadastraNC[0]._id) {
     out.w("<div><input type=\"hidden\" name=\"_method\" value=\"PUT\"><input type=\"hidden\" name=\"_id\"" +
@@ -48,11 +48,11 @@ function render(input, out, __component, component, state) {
     marko_attr("value", "" + data.cadastraNC[0].nconformidade) +
     " class=\"form-control nconformidade\"></div></div><div class=\"row\"><div class=\"form-group input-field descDet col s6\"><label for=\"descDet\">Descrição detalhada da <strong>não conformidade:</strong></label><input required type=\"text\" id=\"descDet\" name=\"descDet\"" +
     marko_attr("value", "" + data.cadastraNC[0].descDet) +
-    " class=\"form-control descDet\"></div><div class=\"col s6 offset-s6\"><a id=\"aModal\" class=\"btn-floating btn-large waves-effect waves-light green hoverable btn-insere\" href=\"#modal1\"><i class=\"material-icons\">note_add</i></a></div></div></form></div></main><footer class=\"page-footer rodape\"></footer><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div><script src=\"/estatico/js/jquery-3.4.1.js\"></script><script src=\"/estatico/js/materialize.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script><script src=\"/estatico/js/valida.js\"></script><script src=\"/estatico/js/cadNCControl.js\"></script>");
+    " class=\"form-control descDet\"></div><div class=\"col s6 offset-s6\"><a id=\"aModal\" class=\"btn-floating btn-large waves-effect waves-light green hoverable btn-insere\" href=\"#modal1\"><i class=\"material-icons\">note_add</i></a></div></div></form></div></main><footer class=\"page-footer rodape\"></footer><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div><script src=\"/estatico/js/libs/jquery-3.4.1.js\"></script><script src=\"/estatico/js/libs/materialize.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script><script src=\"/estatico/js/base/navbar.js\"></script><script src=\"/estatico/js/valida.js\"></script><script src=\"/estatico/js/cadNCControl.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "51");
+  await_reorderer_tag({}, out, __component, "53");
 
   out.w("</body></html>");
 }
