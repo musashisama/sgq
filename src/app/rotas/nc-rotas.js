@@ -9,9 +9,20 @@ module.exports = (app) => {
     const rotasNC = NCControlador.rotas();
     const rotasBase = BaseControlador.rotas();
 
+    app.use('/*', function(req,resp,next){
+        if (req.isAuthenticated()) {
+            resp.set('autenticado',true);           
+            next();
+        } else {
+            resp.set('autenticado',false);
+            next();
+        }
+    })
+    
     app.use(rotasNC.autenticadas, function(req, resp, next){   
         req.session.baseUrl = req.baseUrl;
-        if(req.isAuthenticated()){                     
+        if(req.isAuthenticated()){   
+            resp.set('autenticado',true);                 
             next();
         } else{
             resp.redirect(rotasBase.login);
@@ -34,10 +45,13 @@ module.exports = (app) => {
     app.get(rotasNC.listaRNC, ncControlador.listaRNC());
     app.get(rotasNC.lista, ncControlador.lista());
 
+
     app.route(rotasNC.cadastraNC)
     .get(ncControlador.formCadastraNC())
     .post(ncControlador.cadastraNC())
     .put(ncControlador.edita());
+
+    app.delete(rotasNC.deletaNC,ncControlador.removeNC())
 
     app.get(rotasNC.edicao, ncControlador.formEdicao());
 }

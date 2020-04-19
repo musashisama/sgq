@@ -1,17 +1,10 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8"/>
-    <link rel="stylesheet" href="/estatico/css/libs/normalize.css"/>
-    <link rel="stylesheet" href="/estatico/css/libs/materialize.css"/>
-    <link rel="stylesheet" href="/estatico/css/libs/google-fonts.css"/>
-    <link rel="stylesheet" href="/estatico/css/main.css"/>
-    <title>Sistema de Gestão Integrada</title>
-  </head>
+  <app-scripts-css/>
   <body>
-    <header class="container-header cabecalho"/>    
+    <app-header/>
     <main class="conteudoPrincipal">
-    <ul id="slide-out" class="sidenav"/>
+      <app-navbar id="slide-out" class="sidenav"/>
       <div class="container">
         <h3 class="center-align">Selecione o relatório que deseja visualizar:</h3>
         <br/>
@@ -19,8 +12,8 @@
         <br/>
         <br/>
         <div class="row conteudoPrincipal">
-          <for|dado| of=data.dados>            
-            <div  class="card conteudoPrincipalCard ">
+          <for|dado| of=data.dados>
+            <div class="card conteudoPrincipalCard ">
               <div class="card-image activator waves-effect waves-block waves-light" id=`${dado.semana}`>
                 <img class="activator scaleImg" alt="Clique para informações do relatório" title="Clique para informações do relatório" src="/estatico/imagens/CSV.png"/>
               </div>
@@ -57,12 +50,8 @@
         </div>
       </div>
     </main>
-    <footer class="page-footer rodape"/>
-    <script src="/estatico/js/libs/jquery-3.4.1.js"/>
-    <script src="/estatico/js/libs/materialize.js"/>
-    <script src="/estatico/js/scprincipal.js"/>
-    <script src="/estatico/js/loadtemplate.js"/>
-    <script src="/estatico/js/base/navbar.js"/>
-    <script src="/estatico/js/escolhe.js"/>
+    <app-footer/>
+    <app-scripts-js/>
+    <script src="/estatico/js/julgamento/escolhe.js"/>
   </body>
 </html>

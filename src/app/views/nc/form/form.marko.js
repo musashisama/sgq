@@ -6,23 +6,46 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     components_helpers = require("marko/src/runtime/components/helpers"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
+    app_scripts_css_template = require("../../components/app-scripts-css.marko"),
     marko_helpers = require("marko/src/runtime/html/helpers"),
     marko_loadTag = marko_helpers.t,
+    app_scripts_css_tag = marko_loadTag(app_scripts_css_template),
     component_globals_tag = marko_loadTag(require("marko/src/core-tags/components/component-globals-tag")),
+    app_header_template = require("../../components/app-header.marko"),
+    app_header_tag = marko_loadTag(app_header_template),
+    app_navbar_template = require("../../components/app-navbar.marko"),
+    app_navbar_tag = marko_loadTag(app_navbar_template),
     marko_attr = marko_helpers.a,
     marko_forEach = marko_helpers.f,
     marko_escapeXml = marko_helpers.x,
+    app_footer_template = require("../../components/app-footer.marko"),
+    app_footer_tag = marko_loadTag(app_footer_template),
+    app_scripts_js_template = require("../../components/app-scripts-js.marko"),
+    app_scripts_js_tag = marko_loadTag(app_scripts_js_template),
     init_components_tag = marko_loadTag(require("marko/src/core-tags/components/init-components-tag")),
     await_reorderer_tag = marko_loadTag(require("marko/src/core-tags/core/await/reorderer-renderer"));
 
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.w("<!DOCTYPE html><html><head><meta charset=\"utf-8\"><link rel=\"stylesheet\" href=\"/estatico/css/libs/normalize.css\"><link rel=\"stylesheet\" href=\"/estatico/css/libs/materialize.css\"><link rel=\"stylesheet\" href=\"/estatico/css/libs/google-fonts.css\"><link rel=\"stylesheet\" href=\"/estatico/css/main.css\"><title>Cadastrar Não Conformidade</title></head><body>");
+  out.w("<!DOCTYPE html><html>");
+
+  app_scripts_css_tag({}, out, __component, "1");
+
+  out.w("<body>");
 
   component_globals_tag({}, out);
 
-  out.w("<header class=\"container-header cabecalho\"></header> <main class=\"conteudoPrincipal\"><ul id=\"slide-out\" class=\"sidenav\"></ul><div class=\"container\"><h3 class=\"center-align\">Cadastrar Não Conformidade</h3><br><br><form id=\"formNC\" name=\"formNC\" action=\"/form\" method=\"post\">");
+  app_header_tag({}, out, __component, "3");
+
+  out.w("<main class=\"conteudoPrincipal\">");
+
+  app_navbar_tag({
+      id: "slide-out",
+      class: "sidenav"
+    }, out, __component, "5");
+
+  out.w("<div class=\"container\"><h3 class=\"center-align\">Cadastrar Não Conformidade</h3><br><br><form id=\"formNC\" name=\"formNC\" action=\"/form\" method=\"post\">");
 
   if (data.registroNC._id) {
     out.w("<div><input type=\"hidden\" name=\"_method\" value=\"PUT\"><input type=\"hidden\" name=\"id\"" +
@@ -70,9 +93,9 @@ function render(input, out, __component, component, state) {
     var $keyScope$2 = "[" + (($for$2++) + "]");
 
     out.w("<option class=\"form-group\"" +
-      marko_attr("value", data.und.Sigla) +
+      marko_attr("value", data.und.sigla) +
       ">" +
-      marko_escapeXml(und.Sigla) +
+      marko_escapeXml(und.sigla) +
       "</option>");
   });
 
@@ -90,9 +113,15 @@ function render(input, out, __component, component, state) {
       "</option>");
   });
 
-  out.w("</select> <label for=\"descNC\">Descrição da <strong>não conformidade</strong>:</label></div><div class=\"input-field col s6\"><i class=\"material-icons prefix\">mode_edit</i><textarea name=\"obsParticipante\" placeholder=\"Detalhamento maior de como ocorreu a não conformidade.\" id=\"icon_prefix2\" class=\"materialize-textarea\">" +
+  out.w("</select><label for=\"descNC\">Descrição da <strong>não conformidade</strong>:</label></div><div class=\"input-field col s6\"><i class=\"material-icons prefix\">mode_edit</i><textarea name=\"obsParticipante\" placeholder=\"Detalhamento maior de como ocorreu a não conformidade.\" id=\"icon_prefix2\" class=\"materialize-textarea\">" +
     marko_escapeXml(data.registroNC.obs) +
-    "</textarea><label for=\"icon_prefix2\">Comentários do participante (opcional):</label></div></div><div class=\"row\"><div class=\"input-field col s2\"><p><label>Ação Imediata</label></p><p><label><input name=\"acaoImediata\" type=\"radio\" value=\"Correção\" checked class=\"hoverable\"><span>Correção</span></label></p><p><label><input name=\"acaoImediata\" type=\"radio\" value=\"Encaminhada para Correção\" class=\"hoverable\"><span><strong>Não conformidade</strong> encaminhada para correção</span></label></p></div><div class=\"input-field dataNC col s5\"><input type=\"text\" id=\"dataNC\" name=\"dataNC\" class=\"datepicker\"><label for=\"dataNC\" class=\"lbdataNC\">Quando ocorreu a <strong>não conformidade</strong>?</label></div><div class=\"input-field EncCorNC col s5\"><input type=\"text\" id=\"EncCorNC\" name=\"EncCorNC\" class=\"datepicker\"><label for=\"EncCorNC\" class=\"lbEncCorNC\">Quando a <strong>não conformidade</strong> foi encaminhada/Corrigida?</label></div> <div class=\"col s5 offset-s11\"><a id=\"aModal\" class=\"btn-floating btn-large waves-effect waves-light green hoverable btn-insere\" href=\"#modal1\"><i class=\"material-icons\">note_add</i></a></div></div></form></div></main><footer class=\"page-footer rodape\"></footer><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div><div id=\"naoconfs\" class=\"controle\">");
+    "</textarea><label for=\"icon_prefix2\">Comentários do participante (opcional):</label></div></div><div class=\"row\"><div class=\"input-field col s2\"><p><label>Ação Imediata</label></p><p><label><input name=\"acaoImediata\" type=\"radio\" value=\"Correção\" checked class=\"hoverable\"><span>Correção</span></label></p><p><label><input name=\"acaoImediata\" type=\"radio\" value=\"Encaminhada para Correção\" class=\"hoverable\"><span><strong>Não conformidade</strong> encaminhada para correção</span></label></p></div><div class=\"input-field dataNC col s5\"><input type=\"text\" id=\"dataNC\" name=\"dataNC\" class=\"datepicker\"><label for=\"dataNC\" class=\"lbdataNC\">Quando ocorreu a <strong>não conformidade</strong>?</label></div><div class=\"input-field EncCorNC col s5\"><input type=\"text\" id=\"EncCorNC\" name=\"EncCorNC\" class=\"datepicker\"><label for=\"EncCorNC\" class=\"lbEncCorNC\">Quando a <strong>não conformidade</strong> foi encaminhada/Corrigida?</label></div><div class=\"col s5 offset-s11\"><a id=\"aModal\" class=\"btn-floating btn-large waves-effect waves-light green hoverable btn-insere\" href=\"#modal1\"><i class=\"material-icons\">note_add</i></a></div></div></form></div></main>");
+
+  app_footer_tag({}, out, __component, "78");
+
+  app_scripts_js_tag({}, out, __component, "79");
+
+  out.w("<div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div><div id=\"naoconfs\" class=\"controle\">");
 
   marko_forEach(data.nconf, function(nconf) {
     out.w("\"" +
@@ -100,11 +129,11 @@ function render(input, out, __component, component, state) {
       "\":null,");
   });
 
-  out.w("</div><script src=\"/estatico/js/libs/jquery-3.4.1.js\"></script><script src=\"/estatico/js/libs/materialize.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script><script src=\"/estatico/js/base/navbar.js\"></script><script src=\"/estatico/js/services/HttpService.js\"></script><script src=\"/estatico/js/valida.js\"></script> <script src=\"/estatico/js/formcontrol.js\"></script>");
+  out.w("</div><script src=\"/estatico/js/nc/valida.js\"></script><script src=\"/estatico/js/nc/formcontrol.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "101");
+  await_reorderer_tag({}, out, __component, "91");
 
   out.w("</body></html>");
 }
@@ -119,7 +148,12 @@ marko_template.Component = marko_defineComponent({}, marko_template._);
 marko_template.meta = {
     id: "/sgq$1.0.0/src/app/views/nc/form/form.marko",
     tags: [
+      "../../components/app-scripts-css.marko",
       "marko/src/core-tags/components/component-globals-tag",
+      "../../components/app-header.marko",
+      "../../components/app-navbar.marko",
+      "../../components/app-footer.marko",
+      "../../components/app-scripts-js.marko",
       "marko/src/core-tags/components/init-components-tag",
       "marko/src/core-tags/core/await/reorderer-renderer"
     ]

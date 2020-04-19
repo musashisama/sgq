@@ -6,29 +6,50 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     components_helpers = require("marko/src/runtime/components/helpers"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
+    app_scripts_css_template = require("../../components/app-scripts-css.marko"),
     marko_helpers = require("marko/src/runtime/html/helpers"),
     marko_loadTag = marko_helpers.t,
+    app_scripts_css_tag = marko_loadTag(app_scripts_css_template),
     component_globals_tag = marko_loadTag(require("marko/src/core-tags/components/component-globals-tag")),
+    app_header_template = require("../../components/app-header.marko"),
+    app_header_tag = marko_loadTag(app_header_template),
+    app_navbar_template = require("../../components/app-navbar.marko"),
+    app_navbar_tag = marko_loadTag(app_navbar_template),
     marko_forEach = marko_helpers.f,
     marko_attr = marko_helpers.a,
     marko_escapeXml = marko_helpers.x,
+    app_footer_template = require("../../components/app-footer.marko"),
+    app_footer_tag = marko_loadTag(app_footer_template),
+    app_scripts_js_template = require("../../components/app-scripts-js.marko"),
+    app_scripts_js_tag = marko_loadTag(app_scripts_js_template),
     init_components_tag = marko_loadTag(require("marko/src/core-tags/components/init-components-tag")),
     await_reorderer_tag = marko_loadTag(require("marko/src/core-tags/core/await/reorderer-renderer"));
 
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.w("<!DOCTYPE html><html><head><meta charset=\"utf-8\"><link rel=\"stylesheet\" href=\"/estatico/css/libs/normalize.css\"><link rel=\"stylesheet\" href=\"/estatico/css/libs/materialize.css\"><link rel=\"stylesheet\" href=\"/estatico/css/libs/google-fonts.css\"><link rel=\"stylesheet\" href=\"/estatico/css/main.css\"><title>Sistema de Gestão Integrada</title></head><body>");
+  out.w("<!DOCTYPE html><html>");
+
+  app_scripts_css_tag({}, out, __component, "1");
+
+  out.w("<body>");
 
   component_globals_tag({}, out);
 
-  out.w("<header class=\"container-header cabecalho\"></header> <main class=\"conteudoPrincipal\"><ul id=\"slide-out\" class=\"sidenav\"></ul><div class=\"container\"><h3 class=\"center-align\">Selecione o relatório que deseja visualizar:</h3><br><br><br><br><div class=\"row conteudoPrincipal\">");
+  app_header_tag({}, out, __component, "3");
+
+  out.w("<main class=\"conteudoPrincipal\">");
+
+  app_navbar_tag({
+      id: "slide-out",
+      class: "sidenav"
+    }, out, __component, "5");
+
+  out.w("<div class=\"container\"><h3 class=\"center-align\">Selecione o relatório que deseja visualizar:</h3><br><br><br><br><div class=\"row conteudoPrincipal\">");
 
   var $for$0 = 0;
 
   marko_forEach(data.dados, function(dado) {
-    out.w(" ");
-
     var $keyScope$0 = "[" + (($for$0++) + "]");
 
     out.w("<div class=\"card conteudoPrincipalCard \"><div class=\"card-image activator waves-effect waves-block waves-light\"" +
@@ -86,11 +107,17 @@ function render(input, out, __component, component, state) {
       ".</p></div></div>");
   });
 
-  out.w("</div></div></main><footer class=\"page-footer rodape\"></footer><script src=\"/estatico/js/libs/jquery-3.4.1.js\"></script><script src=\"/estatico/js/libs/materialize.js\"></script><script src=\"/estatico/js/scprincipal.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script><script src=\"/estatico/js/base/navbar.js\"></script><script src=\"/estatico/js/escolhe.js\"></script>");
+  out.w("</div></div></main>");
+
+  app_footer_tag({}, out, __component, "34");
+
+  app_scripts_js_tag({}, out, __component, "35");
+
+  out.w("<script src=\"/estatico/js/julgamento/escolhe.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "47");
+  await_reorderer_tag({}, out, __component, "37");
 
   out.w("</body></html>");
 }
@@ -105,7 +132,12 @@ marko_template.Component = marko_defineComponent({}, marko_template._);
 marko_template.meta = {
     id: "/sgq$1.0.0/src/app/views/julgamento/escolhecsvregap/escolhecsvregap.marko",
     tags: [
+      "../../components/app-scripts-css.marko",
       "marko/src/core-tags/components/component-globals-tag",
+      "../../components/app-header.marko",
+      "../../components/app-navbar.marko",
+      "../../components/app-footer.marko",
+      "../../components/app-scripts-js.marko",
       "marko/src/core-tags/components/init-components-tag",
       "marko/src/core-tags/core/await/reorderer-renderer"
     ]

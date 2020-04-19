@@ -15,6 +15,7 @@ class BaseControlador {
         return {
             principal: '/',
             login: '/login',
+            logout: '/logout',
             trocasenhaSemID: '/altera-senha',
             trocasenha: '/altera-senha/:id',
             formalterasenha: '/form-altera-senha',
@@ -28,11 +29,20 @@ class BaseControlador {
             resp.marko(templates.base.principal)
         }
     }
+
     login() {
         return function (req, resp) {
             resp.marko(templates.base.login)
         }
     }
+
+    logout() {
+        return function (req, resp) {
+            req.logout();
+            resp.redirect('/');
+        }
+    }
+
     efetuaLogin() {
         return function (req, resp, next) {
             const passport = req.passport;
@@ -71,7 +81,7 @@ class BaseControlador {
                     registro.expirado = false;
                     const clientIp = requestIp.getClientIp(req);
                     registro['requestIP'] = clientIp;
-                    let URL = url.parse((req.headers.referrer || req.headers.referer).replace("/login", ""));                    
+                    let URL = url.parse((req.headers.referrer || req.headers.referer).replace("/login", ""));
                     let corpo = `<h2>Sistema de Gestão Integrada do CARF</h2>
                     <p>Olá!</p>
                     <p>Uma solicitação de alteração de senha foi feita utilizando o seu email (${registro.email}).</p>

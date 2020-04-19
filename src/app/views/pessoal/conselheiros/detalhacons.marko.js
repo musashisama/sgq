@@ -6,23 +6,46 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     components_helpers = require("marko/src/runtime/components/helpers"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
+    app_scripts_css_template = require("../../components/app-scripts-css.marko"),
     marko_helpers = require("marko/src/runtime/html/helpers"),
     marko_loadTag = marko_helpers.t,
+    app_scripts_css_tag = marko_loadTag(app_scripts_css_template),
     component_globals_tag = marko_loadTag(require("marko/src/core-tags/components/component-globals-tag")),
+    app_header_template = require("../../components/app-header.marko"),
+    app_header_tag = marko_loadTag(app_header_template),
+    app_navbar_template = require("../../components/app-navbar.marko"),
+    app_navbar_tag = marko_loadTag(app_navbar_template),
     marko_escapeXml = marko_helpers.x,
     marko_attr = marko_helpers.a,
     marko_forEach = marko_helpers.f,
+    app_footer_template = require("../../components/app-footer.marko"),
+    app_footer_tag = marko_loadTag(app_footer_template),
+    app_scripts_js_template = require("../../components/app-scripts-js.marko"),
+    app_scripts_js_tag = marko_loadTag(app_scripts_js_template),
     init_components_tag = marko_loadTag(require("marko/src/core-tags/components/init-components-tag")),
     await_reorderer_tag = marko_loadTag(require("marko/src/core-tags/core/await/reorderer-renderer"));
 
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.w("<!DOCTYPE html><html><head><meta charset=\"utf-8\"><link rel=\"stylesheet\" href=\"/estatico/css/libs/normalize.css\"><link rel=\"stylesheet\" href=\"/estatico/css/libs/materialize.css\"><link rel=\"stylesheet\" href=\"/estatico/css/libs/google-fonts.css\"><link rel=\"stylesheet\" href=\"/estatico/css/libs/tabulator_materialize.min.css\"><link rel=\"stylesheet\" href=\"/estatico/css/main.css\"><title>Gestão de Pessoas do CARF</title></head><body>");
+  out.w("<!DOCTYPE html><html>");
+
+  app_scripts_css_tag({}, out, __component, "1");
+
+  out.w("<body>");
 
   component_globals_tag({}, out);
 
-  out.w("<header class=\"container-header cabecalho\"></header><main class=\"conteudoPrincipal\"><ul id=\"slide-out\" class=\"sidenav\"></ul><div class=\"container\"><h3 class=\"center-align\">" +
+  app_header_tag({}, out, __component, "3");
+
+  out.w("<main class=\"conteudoPrincipal\">");
+
+  app_navbar_tag({
+      id: "slide-out",
+      class: "sidenav"
+    }, out, __component, "5");
+
+  out.w("<div class=\"container\"><h3 class=\"center-align\">" +
     marko_escapeXml(data.conselheiro.nome) +
     " - " +
     marko_escapeXml(data.conselheiro.cpf) +
@@ -98,7 +121,7 @@ function render(input, out, __component, component, state) {
       "></div>");
   }
 
-  out.w("<div></div></div></main><footer class=\"page-footer rodape\"></footer><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Inclusão de Ocorrência</h4><p class=\"pModal\"><form id=\"formOcorrencia\"" +
+  out.w("<div></div></div></main><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Inclusão de Ocorrência</h4><p class=\"pModal\"><form id=\"formOcorrencia\"" +
     marko_attr("data-tipoOcorrencias", "" + data.tipoOcorrencias) +
     " name=\"formOcorrencia\"" +
     marko_attr("action", ("/pessoal/restrito/conselheiros/" + data.conselheiro.cpf) + "/ocorrencia") +
@@ -118,11 +141,17 @@ function render(input, out, __component, component, state) {
       "</option>");
   });
 
-  out.w("</select><label for=\"tipoOcorrencia\">Selecione o tipo de ocorrência:</label></div></div><div class=\"row\"><br></div><div class=\"row\"><div class=\"input-field col s12\"><i class=\"material-icons prefix\">mode_edit</i><textarea name=\"ocorDet\" id=\"ocorDet\" class=\"materialize-textarea\" placeholder=\"Este campo aceita &lt;ENTER>. Descreva aqui o nº da Portaria, Detalhes da notificação (arts do RICARF), nº do processo, nº SEI etc.\"></textarea><label for=\"ocorDet\">Detalhes da Ocorrência:</label></div></div><div class=\"row\"><br></div><div class=\"row\"><div class=\"input field col s3\"><i class=\"material-icons prefix\">insert_invitation</i><input id=\"dtOcorrencia\" name=\"dtOcorrencia\" value=\"\" type=\"text\" class=\"datepicker\"><label for=\"dtOcorrencia\">Data da Ocorrência</label></div><div class=\"col s2\"><div class=\"form-group\"><p><label>Altera a data de início de mandato?</label></p><p><label><input class=\"with-gap\" value=\"Sim\" name=\"alteraDtInicio\" type=\"radio\" checked><span>Sim</span></label></p><p><label><input class=\"with-gap\" value=\"Não\" name=\"alteraDtInicio\" type=\"radio\"><span>Não</span></label></p></div></div></div></form></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"modal-close btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div><script src=\"/estatico/js/libs/jquery-3.4.1.js\"></script><script src=\"/estatico/js/libs/materialize.js\"></script><script src=\"/estatico/js/libs/tabulator.min.js\"></script><script src=\"/estatico/js/libs/moment.min.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script><script src=\"/estatico/js/base/navbar.js\"></script><script src=\"/estatico/js/pessoal/conselheiro.js\"></script>");
+  out.w("</select><label for=\"tipoOcorrencia\">Selecione o tipo de ocorrência:</label></div></div><div class=\"row\"><br></div><div class=\"row\"><div class=\"input-field col s12\"><i class=\"material-icons prefix\">mode_edit</i><textarea name=\"ocorDet\" id=\"ocorDet\" class=\"materialize-textarea\" placeholder=\"Este campo aceita &lt;ENTER>. Descreva aqui o nº da Portaria, Detalhes da notificação (arts do RICARF), nº do processo, nº SEI etc.\"></textarea><label for=\"ocorDet\">Detalhes da Ocorrência:</label></div></div><div class=\"row\"><br></div><div class=\"row\"><div class=\"input field col s3\"><i class=\"material-icons prefix\">insert_invitation</i><input id=\"dtOcorrencia\" name=\"dtOcorrencia\" value=\"\" type=\"text\" class=\"datepicker\"><label for=\"dtOcorrencia\">Data da Ocorrência</label></div><div class=\"col s2\"><div class=\"form-group\"><p><label>Altera a data de início de mandato?</label></p><p><label><input class=\"with-gap\" value=\"Sim\" name=\"alteraDtInicio\" type=\"radio\" checked><span>Sim</span></label></p><p><label><input class=\"with-gap\" value=\"Não\" name=\"alteraDtInicio\" type=\"radio\"><span>Não</span></label></p></div></div></div></form></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"modal-close btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
+
+  app_footer_tag({}, out, __component, "142");
+
+  app_scripts_js_tag({}, out, __component, "143");
+
+  out.w("<script src=\"/estatico/js/pessoal/conselheiro.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "157");
+  await_reorderer_tag({}, out, __component, "145");
 
   out.w("</body></html>");
 }
@@ -137,7 +166,12 @@ marko_template.Component = marko_defineComponent({}, marko_template._);
 marko_template.meta = {
     id: "/sgq$1.0.0/src/app/views/pessoal/conselheiros/detalhacons.marko",
     tags: [
+      "../../components/app-scripts-css.marko",
       "marko/src/core-tags/components/component-globals-tag",
+      "../../components/app-header.marko",
+      "../../components/app-navbar.marko",
+      "../../components/app-footer.marko",
+      "../../components/app-scripts-js.marko",
       "marko/src/core-tags/components/init-components-tag",
       "marko/src/core-tags/core/await/reorderer-renderer"
     ]

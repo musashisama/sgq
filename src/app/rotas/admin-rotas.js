@@ -10,7 +10,7 @@ module.exports = (app) => {
    
     app.use(rotasUser.autenticadas, function (req, resp, next) {
         req.session.baseUrl = req.baseUrl;
-        if (req.isAuthenticated()) {
+        if (req.isAuthenticated()) {           
             next();
         } else {
             resp.redirect(rotasBase.login);

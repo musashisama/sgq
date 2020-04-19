@@ -20,13 +20,13 @@ module.exports = (app) => {
             userDao.buscaUser({cpf:cpf})
                 .then(cpf => {
                     if (Object.keys(cpf).length==0) {    
-                        console.log("No user");                    
+                        //console.log("No user");                    
                         return done(null, false, {
                             mensagem: "Usuário ou senha incorretos!"
                         });
                     }                    
                     if (Object.keys(cpf).length>0 && !bcrypt.compareSync(senha, cpf[0].senha)) {                        
-                        console.log("Senha errada");
+                        //console.log("Senha errada");
                         return done(null, false, {
                             mensagem: "Usuário ou senha incorretos!"
                         });
@@ -52,7 +52,7 @@ module.exports = (app) => {
 
     app.use(sessao({
         secret: '044e0263-58b7-4c7f-a032-056cd81069e3',
-        name:'cksgi',
+        name:'cksgi',        
         genid: function (req) {
             return uuid();
         },

@@ -24,16 +24,16 @@ class NCDao {
 
     atualiza(req) {
 
-        return new Promise((resolve, reject) => {                        
+        return new Promise((resolve, reject) => {
             let id = new ObjectID(req._id);
             delete req._id;
             this._db.nc
-            .updateOne({_id:id}, { $set: req}, function(erro, res){
-                if(erro){
-                    return reject(erro);
-                }
-                return resolve(res);
-            });
+                .updateOne({ _id: id }, { $set: req }, function (erro, res) {
+                    if (erro) {
+                        return reject(erro);
+                    }
+                    return resolve(res);
+                });
 
         });
 
@@ -93,7 +93,7 @@ class NCDao {
         });
     }
 
-    
+
 
     getRegistrosNC(filtro, ordena) {
         return new Promise((resolve, reject) => {
@@ -139,20 +139,31 @@ class NCDao {
         return Promise.all([
             this.listaMacro({}, { macroprocesso: 1 }),
             this.listaNC({ nconformidade: 1 }, {}),
-            this.listaUnidades({ _id: 0, Sigla: 1, Nome: 1 }, { Sigla: 1 })
+            this.listaUnidades({ _id: 0, sigla: 1, Nome: 1 }, { sigla: 1 })
         ]);
     }
     getListaTipos() {
         return Promise.all([
             this.listaMacro({}, { macroprocesso: 1 }),
-            this.listaNC({ nconformidade: 1 }, {})            
+            this.listaNC({ nconformidade: 1 }, {})
         ]);
     }
     getFormEdicao(id) {
         return Promise.all([
             this.listaMacro({}, { macroprocesso: 1 }),
-            this.buscaNCPorId(id)            
+            this.buscaNCPorId(id)
         ]);
+    }
+
+    deletaTipoNC(id) {
+        return new Promise((resolve, reject) => {
+            this._db.nc.deleteOne({_id: new ObjectID(id)}, function (erro, res) {
+                if (erro) {
+                    return reject('Não foi possível excluir o registro.');
+                }
+                return resolve(res);
+            })
+        });
     }
 
 }

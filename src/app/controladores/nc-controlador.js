@@ -17,7 +17,7 @@ class NCControlador {
             listaRNC: '/gestao/listaregistronc',            
             cadastraNC: '/gestao/cadastranc',
             edicao: '/gestao/cadastranc/:id',
-            delecao: '/gestao/:id'
+            deletaNC: '/gestao/excluinc/:id',
         };
     }
 
@@ -44,16 +44,15 @@ class NCControlador {
                 .catch(erro => console.log(erro));
         };
     }
-    //Lista os eventos possíves de não conformidades. Aberto.
+    //Lista os eventos possíves de não conformidades. Auth.
     lista() {
         return function (req, resp) {
             const ncDao = new NCDao(conn);
-            ncDao.getListaTipos()
+            ncDao.listaNC()
                 .then(nc => resp.marko(
                     templates.nc.lista,
-                    {
-                        mp: nc[0],
-                        nc: nc[1]
+                    {                        
+                        nc: JSON.stringify(nc)
                     }
                 ))
                 .catch(erro => console.log(erro));
@@ -116,9 +115,7 @@ class NCControlador {
             if (req.isAuthenticated()) {
                 registro['usuarioLogado'] = req.user.cpf;
             }
-            const clientIp = requestIp.getClientIp(req);
-            req.body.EncCorNC = NCControlador.ajustaData(req.body.EncCorNC);
-            req.body.dataNC = NCControlador.ajustaData(req.body.dataNC);
+            const clientIp = requestIp.getClientIp(req);            
             registro['horaCriacao'] = new Date().toISOString();
             registro['clientIP'] = clientIp;
             console.log(clientIp);
@@ -196,16 +193,23 @@ class NCControlador {
         };
     }
 
-    remove() {
-
-        // return function(req, resp) {
-        //     const id = req.params.id;
-
-        //     const livroDao = new LivroDao(db);
-        //     livroDao.remove(id)
-        //             .then(() => resp.status(200).end())
-        //             .catch(erro => console.log(erro));
-        // };
+    removeNC() {
+        return function (req, resp) {
+            const id = new ObjectID(req.params.id);
+            const ncDao = new NCDao(conn);            
+            ncDao.deletaTipoNC(id)
+                .then(nc => {                    
+                    resp.marko(
+                        templates.nc.lista,
+                        {                        
+                            nc: JSON.stringify(nc),
+                            msg:'Tipo de Não Conformidade excluída com sucesso.'
+                        }
+                    )
+                }
+                )
+                .catch(erro => console.log(erro));
+        };
     }
 
 }

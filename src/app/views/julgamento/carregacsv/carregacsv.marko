@@ -1,17 +1,10 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8"/>
-    <link rel="stylesheet" href="/estatico/css/libs/normalize.css"/>
-    <link rel="stylesheet" href="/estatico/css/libs/materialize.css"/>
-    <link rel="stylesheet" href="/estatico/css/libs/google-fonts.css"/>
-    <link rel="stylesheet" href="/estatico/css/main.css"/>
-    <title>Carga de Relatório do e-Processo</title>
-  </head>
+  <app-scripts-css/>
   <body>
-    <header class="container-header cabecalho"/>
+    <app-header/>
     <main class="conteudoPrincipal">
-    <ul id="slide-out" class="sidenav"/>
+      <app-navbar id="slide-out" class="sidenav"/>
       <div class="container">
         <h3 class="center-align jurema">Carga de Relatório CSV</h3>
         <br/>
@@ -21,7 +14,7 @@
             <div class="file-field ctoastsucesso input-field form-group col s6">
               <div class="btn">
                 <span>Arquivo</span>
-                <input type="file" name="filetoupload" accept=".csv" onchange='triggerValidation(this)' required/>
+                <input type="file" name="filetoupload" accept=".csv" onchange="triggerValidation(this)" required/>
               </div>
               <div class="file-path-wrapper">
                 <input class="file-path validate" type="text"/>
@@ -73,7 +66,7 @@
                 </p>
                 <p>
                   <label>
-                    <input class="with-gap" value="Verde" name="semana" type="radio" />
+                    <input class="with-gap" value="Verde" name="semana" type="radio"/>
                     <span>Verde</span>
                   </label>
                 </p>
@@ -85,7 +78,7 @@
                 </p>
               </div>
             </div>
-           <div class="input-field dataExt col s3">
+            <div class="input-field dataExt col s3">
               <input type="text" id="dataExt" name="dataExt" class="datepicker" required/>
               <label for="dataExt" class="lbdataNC">
                 Quando o relatório foi <strong>extraído</strong>?
@@ -100,7 +93,6 @@
         </form>
       </div>
     </main>
-    <footer class="page-footer rodape"/>
     <!--Modal Structure-->
     <div id="modal1" class="modal">
       <div class="modal-content">
@@ -114,10 +106,8 @@
         </button>
       </div>
     </div>
-    <script src="/estatico/js/libs/jquery-3.4.1.js"/>
-    <script src="/estatico/js/libs/materialize.js"/>
-    <script src="/estatico/js/loadtemplate.js"/>
-    <script src="/estatico/js/base/navbar.js"/>
-    <script src="/estatico/js/carregaCSV.js"/>
+    <app-footer/>
+    <app-scripts-js/>
+    <script src="/estatico/js/julgamento/carregaCSV.js"/>
   </body>
 </html>

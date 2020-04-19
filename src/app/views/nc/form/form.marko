@@ -1,17 +1,10 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8"/>
-    <link rel="stylesheet" href="/estatico/css/libs/normalize.css"/>
-    <link rel="stylesheet" href="/estatico/css/libs/materialize.css"/>
-    <link rel="stylesheet" href="/estatico/css/libs/google-fonts.css"/>
-    <link rel="stylesheet" href="/estatico/css/main.css"/>
-    <title>Cadastrar Não Conformidade</title>
-  </head>
+  <app-scripts-css/>
   <body>
-    <header class="container-header cabecalho"/>    
+    <app-header/>
     <main class="conteudoPrincipal">
-    <ul id="slide-out" class="sidenav"/>
+      <app-navbar id="slide-out" class="sidenav"/>
       <div class="container">
         <h3 class="center-align">Cadastrar Não Conformidade</h3>
         <br/>
@@ -30,7 +23,7 @@
             </div>
             <div class="form-group input-field  col s4">
               <label for="docRef">Documento de referência:</label>
-              <input type="text" id="docRef" name="docRef" value=data.registroNC.ssdocRef placeholder="(ex.: n° do Processo). Após digitar, clique em \"+\" para adicionar o processo." class="form-control docref chips chips-placeholder"/>
+              <input type="text" id="docRef" name="docRef" value=data.registroNC.ssdocRef placeholder='(ex.: n° do Processo). Após digitar, clique em "+" para adicionar o processo.' class="form-control docref chips chips-placeholder"/>
             </div>
             <div class="form-group input-field col s1">
               <a class="btn-floating btn-small waves-effect waves-light blue hoverable" href="">
@@ -64,7 +57,7 @@
               <select name="equipeNC">
                 <option class="form-group" value="" disabled selected>Clique para selecionar</option>
                 <for|und| of=data.und>
-                  <option class="form-group" value=data.und.Sigla>${und.Sigla}</option>
+                  <option class="form-group" value=data.und.sigla>${und.sigla}</option>
                 </for>
               </select>
               <label for="equipeNC">
@@ -79,7 +72,7 @@
                 <for|nconf| of=data.nconf>
                   <option class="form-group" value=data.nconf.nconformidade>${nconf.nconformidade}</option>
                 </for>
-              </select>              
+              </select>
               <label for="descNC">
                 Descrição da <strong>não conformidade</strong>:
               </label>
@@ -121,7 +114,7 @@
               <label for="EncCorNC" class="lbEncCorNC">
                 Quando a <strong>não conformidade</strong> foi encaminhada/Corrigida?
               </label>
-            </div>            
+            </div>
             <div class="col s5 offset-s11">
               <a id="aModal" class="btn-floating btn-large waves-effect waves-light green hoverable btn-insere" href="#modal1">
                 <i class="material-icons">note_add</i>
@@ -131,12 +124,13 @@
         </form>
       </div>
     </main>
-    <footer class="page-footer rodape"/>
+    <app-footer/>
+    <app-scripts-js/>
     <!--Modal Structure-->
     <div id="modal1" class="modal">
       <div class="modal-content">
         <h4 class="hModal">Modal Header</h4>
-        <p class="pModal"></p>
+        <p class="pModal"/>
       </div>
       <div class="modal-footer">
         <a href="#!" class="modal-close waves-effect waves-red btn-flat cancela">Cancela</a>
@@ -148,13 +142,7 @@
     <div id="naoconfs" class="controle">
       <for|nconf| of=data.nconf>"${nconf.nconformidade}":null,</for>
     </div>
-    <script src="/estatico/js/libs/jquery-3.4.1.js"/>
-    <script src="/estatico/js/libs/materialize.js"/>
-    <script src="/estatico/js/loadtemplate.js"/>
-    <script src="/estatico/js/base/navbar.js"/>
-    <script src="/estatico/js/services/HttpService.js"/>
-    <script src="/estatico/js/valida.js"/>    
-    <script src="/estatico/js/formcontrol.js"/>
-    
+    <script src="/estatico/js/nc/valida.js"/>
+    <script src="/estatico/js/nc/formcontrol.js"/>
   </body>
 </html>

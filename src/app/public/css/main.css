@@ -51,11 +51,11 @@ h3 {
     color: #c62828;
 }
 
-.addListaNC {
+/* .addListaNC {
     position: fixed;
     bottom: 50%;
     right: 10%;
-}
+} */
 
 .mp {
     text-align: center;
@@ -162,7 +162,7 @@ h3 {
     transition: background-color .15s;
 }
 
-.login_error i {
+.login_ok i {
     margin: 5px 5px;
     font-size: 1.5em;
     vertical-align: middle;

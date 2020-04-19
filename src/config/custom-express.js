@@ -10,7 +10,7 @@ const sessaoAutenticacao = require('./auth');
 const rotas = require('../app/rotas/rotas');
 
 app.use('/estatico', express.static('src/app/public'));
-app.use(favicon(path.join('../','sgq/src/app/public/html/favicon.ico')));
+app.use(favicon(path.join('../','sgq/src/app/public/imagens/favicon.ico')));
 
 app.use(bodyParser.urlencoded({
     extended: true
