@@ -6,7 +6,6 @@ const { ObjectID } = require('mongodb');
 const Mailer = require('../infra/helpers/Mailer');
 const requestIp = require('request-ip');
 const bcrypt = require('bcryptjs');
-const { cloneDeep } = require('lodash');
 const url = require('url');
 
 
@@ -81,7 +80,7 @@ class BaseControlador {
 http://${URL.host}/altera-senha/${registro.controle}
 
 <p><strong>Caso não tenha sido você, ignore esta mensagem.</strong></p>
-<p><em>Este e-mail foi enviado de forma autmática. Favor não respondê-lo.</em></p>`
+<p><em>Este e-mail foi enviado de forma automática. Favor não respondê-lo.</em></p>`
                     console.log(registro);
                     Mailer.enviaMail(registro.email, '[SGI-CARF] Solicitação de Alteração de Senha', corpo)
                     userDao.insereTrocasenha(registro).then(() => {

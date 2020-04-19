@@ -9,6 +9,7 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_helpers = require("marko/src/runtime/html/helpers"),
     marko_loadTag = marko_helpers.t,
     component_globals_tag = marko_loadTag(require("marko/src/core-tags/components/component-globals-tag")),
+    marko_escapeXml = marko_helpers.x,
     init_components_tag = marko_loadTag(require("marko/src/core-tags/components/init-components-tag")),
     await_reorderer_tag = marko_loadTag(require("marko/src/core-tags/core/await/reorderer-renderer"));
 
@@ -19,11 +20,19 @@ function render(input, out, __component, component, state) {
 
   component_globals_tag({}, out);
 
-  out.w("<header class=\"container-header cabecalho\"></header><main class=\"conteudoPrincipal\"><ul id=\"slide-out\" class=\"sidenav\"></ul><div class=\"container  valign-wrapper\"><div class=\"row center-align\"><div id=\"divImage\" class=\"\"><img src=\"/estatico/imagens/CARF_logo.png\"></div></div></div></main><footer class=\"page-footer rodape\"></footer><script src=\"/estatico/js/libs/jquery-3.4.1.js\"></script><script src=\"/estatico/js/libs/materialize.js\"></script><script src=\"/estatico/js/scprincipal.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script><script src=\"/estatico/js/base/navbar.js\"></script>");
+  out.w("<header class=\"container-header cabecalho\"></header><main class=\"conteudoPrincipal\"><ul id=\"slide-out\" class=\"sidenav\"></ul><div class=\"container  valign-wrapper\"><div class=\"row center-align\">");
+
+  if (data.msg) {
+    out.w("<div id=\"toastsucesso\" class=\"ctoastsucesso\"></div><div id=\"msg\" class=\"controle\">" +
+      marko_escapeXml(data.msg) +
+      "</div>");
+  }
+
+  out.w("<div id=\"divImage\" class=\"\"><img src=\"/estatico/imagens/CARF_logo.png\"></div></div> </div></main><footer class=\"page-footer rodape\"></footer><script src=\"/estatico/js/libs/jquery-3.4.1.js\"></script><script src=\"/estatico/js/libs/materialize.js\"></script><script src=\"/estatico/js/scprincipal.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script><script src=\"/estatico/js/base/navbar.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "22");
+  await_reorderer_tag({}, out, __component, "24");
 
   out.w("</body></html>");
 }
