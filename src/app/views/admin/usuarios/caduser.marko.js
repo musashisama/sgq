@@ -36,7 +36,7 @@ function render(input, out, __component, component, state) {
     marko_attr("value", data.registroUser.nomeUser) +
     " placeholder=\"Nome completo\" class=\"form-control\"></div></div><div class=\"row\"><div class=\"form-group input-field  col s4\"><label for=\"mailUser\">Endereço e-mail do Usuário:</label><input type=\"text\" id=\"mailUser\" name=\"mail\"" +
     marko_attr("value", data.registroUser.mailUser) +
-    " placeholder=\"Endereço de e-mail no formato XXX.XXX@carf.economia.gov.br\" class=\"form-control docref\"></div><div class=\"form-group input-field equipeNC col s4\"><select name=\"unidadeLotacao\"><option class=\"form-group\" value=\"\" disabled selected>Clique para selecionar</option>");
+    " class=\"form-control docref\"></div><div class=\"form-group input-field equipeNC col s4\"><select name=\"unidadeLotacao\"><option class=\"form-group\" value=\"\" disabled selected>Clique para selecionar</option>");
 
   var $for$0 = 0;
 
