@@ -76,7 +76,6 @@ class PessoalDao {
     }
     getTipoOcorrencias(filtro) {
         return new Promise((resolve, reject) => {
-
             this._db.tipoOcorrencias
                 .find(filtro)
                 .project()
@@ -134,9 +133,7 @@ class PessoalDao {
     }
 
     editaOcorrencia(id, registro) {
-        return new Promise((resolve, reject) => {
-            console.log('veioaqui');
-            console.log(registro);
+        return new Promise((resolve, reject) => {            
             delete registro._id
             this._db.ocorrencias.updateOne({_id: new ObjectID(id) }, {$set :registro}, function (erro, res) {
                 if (erro) {
@@ -148,8 +145,7 @@ class PessoalDao {
         });
     }
 
-    excluiOcorrencia(id){
-        console.log(id);
+    excluiOcorrencia(id){        
         return new Promise((resolve, reject) => {
             this._db.ocorrencias.deleteOne({_id: new ObjectID(id)}, function (erro, res) {
                 if (erro) {

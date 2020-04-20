@@ -7,7 +7,13 @@ function inicializaComponentes() {
 }
 let formatterParams = {
     outputFormat: "DD/MM/YYYY",
-    invalidPlaceholder: "(invalid date)",
+    
+}
+
+let sorterParams = {
+    format:"DD/MM/YYYY",
+    alignEmptyValues:"bottom",
+    invalidPlaceholder: "Data Inválida",
 }
 let table = null;
 let tabledata = null;
@@ -52,8 +58,8 @@ function dataTable() {
             { title: "Macroprocesso Origem", width: 200, field: "mProcOrigem", sorter: "string", hozAlign: "left", headerFilter: "input", formatter: "textarea", editor: false, responsive: 0, headerMenu: headerMenu, },
             { title: "Não Conformidade", width: 300,field: "descNC", sorter: "string", hozAlign: "left", headerFilter: "input", formatter: "textarea", editor: false, responsive: 0, headerMenu: headerMenu },
             { title: "Ação Imediata", width: 140,field: "acaoImediata", sorter: "string", hozAlign: "left", headerFilter: "input", formatter: "textarea", editor: false, responsive: 0 },
-            { title: "Data Encaminhamento", field: "EncCorNC", sorter: "date", hozAlign: "left", headerFilter: "input", formatter: "datetime", formatterParams: formatterParams, editor: false, responsive: 0 },
-            { title: "Data NC", field: "dataNC", sorter: "date", hozAlign: "left", headerFilter: "input", formatter: "datetime", formatterParams: formatterParams, editor: false, responsive: 0 },
+            { title: "Data Encaminhamento", field: "EncCorNC", sorter: "date", sorterParams:sorterParams, hozAlign: "left", headerFilter: "input", formatter: "datetime",  editor: false, responsive: 0 },
+            { title: "Data NC", field: "dataNC", sorter: "date", sorterParams:sorterParams,hozAlign: "left", headerFilter: "input", formatter: "datetime", editor: false, responsive: 0 },
             { title: "Equipe", field: "equipeNC", sorter: "string", hozAlign: "left", headerFilter: "input", formatter: "textarea", editor: false, responsive: 2, headerMenu: headerMenu },
             { title: "Macroprocesso Usuário", field: "mpProcUser", sorter: "string", hozAlign: "left", headerFilter: "input", bottomCalc: "count", formatter: "textarea", editor: false, },
             { title: "Documento de Ref.", width: 180, field: "docRef", sorter: "string", hozAlign: "left", headerFilter: "input", formatter: "textarea", editor: false, responsive: 2 },
@@ -97,3 +103,4 @@ function dataTable() {
         },
     });
 }
+

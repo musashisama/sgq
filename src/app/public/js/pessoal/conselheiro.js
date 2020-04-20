@@ -1,18 +1,73 @@
+
+let table = "";
+let autoColumns = false;
+let locale = true;
+let pagination = "local";
+let height = '1000px';
+let minHeight = '300px';
+let maxHeight = '1000px';
+let layout = "fitColumns";
+let initialSort = [{ column: "dtOcorrencia", dir: "desc" }];
+let langs = {
+
+    "pt-br": {
+        "columns": {
+            "name": "Nome", //replace the title of column name with the value "Name"
+        },
+        "ajax": {
+            "loading": "Carregando", //ajax loader text
+            "error": "Erro", //ajax error text
+        },
+        "groups": { //copy for the auto generated item count in group header
+            "item": "item", //the singular  for item
+            "items": "itens", //the plural for items
+        },
+        "pagination": {
+            "page_size": "Quantidade de registros", //label for the page size select element
+            "first": "Primeira", //text for the first page button
+            "first_title": "Primeira Página", //tooltip text for the first page button
+            "last": "Última",
+            "last_title": "Última Página",
+            "prev": "Anterior",
+            "prev_title": "Página Anterior",
+            "next": "Próxima",
+            "next_title": "Próxima Página",
+        },
+        "headerFilters": {
+            "default": "Filtrar por esta coluna", //default header filter placeholder text
+            "columns": {
+                "nome": "Filtrar por nome", //replace default header filter text for column name
+            }
+        }
+    }
+
+};
 inicializaComponentes();
-var table = "";
 function inicializaComponentes() {
     $(document).ready(function () {
         initDatePicker();
-        initBotoes();
+        initBotoes();        
         btnEdita();
         btnSalva();
         btnOcorrencia();
         initSelect();
         initModal();
         btnModal();
-        dataTable();     
-        $('.btn-cons-salva').toggle();   
+        btnModal2();
+        btnVolta();
+        dataTable(); 
+        initTabs();    
+        $('.btn-cons-salva').toggle();
     });
+}
+function initTabs(){   
+        $('.tabs').tabs();     
+}
+
+function btnVolta(){
+    $('.btnVolta').click(function (event) {        
+        
+    });    
 }
 
 function initSelect() {
@@ -30,6 +85,15 @@ function btnModal() {
         $('#aModal').addClass('modal-trigger');
     });
 }
+
+function btnModal2() {
+    $('.btn-cons-adiciona2').click(function (event) {
+        event.preventDefault();
+        $('#aModal2').addClass('modal-trigger');
+    });
+}
+
+
 function btnEdita() {
     $('.btn-cons-edita').click(function (event) {
         event.preventDefault();        
@@ -112,50 +176,6 @@ function initBotoes() {
         hoverEnabled: false
     });
 }
-var table = "";
-var autoColumns = false;
-var locale = true;
-pagination = "local";
-height = '1000px';
-minHeight = '300px';
-maxHeight = '1000px';
-layout = "fitColumns";
-initialSort = [{ column: "dtOcorrencia", dir: "desc" }];
-
-var langs = {
-
-    "pt-br": {
-        "columns": {
-            "name": "Nome", //replace the title of column name with the value "Name"
-        },
-        "ajax": {
-            "loading": "Carregando", //ajax loader text
-            "error": "Erro", //ajax error text
-        },
-        "groups": { //copy for the auto generated item count in group header
-            "item": "item", //the singular  for item
-            "items": "itens", //the plural for items
-        },
-        "pagination": {
-            "page_size": "Quantidade de registros", //label for the page size select element
-            "first": "Primeira", //text for the first page button
-            "first_title": "Primeira Página", //tooltip text for the first page button
-            "last": "Última",
-            "last_title": "Última Página",
-            "prev": "Anterior",
-            "prev_title": "Página Anterior",
-            "next": "Próxima",
-            "next_title": "Próxima Página",
-        },
-        "headerFilters": {
-            "default": "Filtrar por esta coluna", //default header filter placeholder text
-            "columns": {
-                "nome": "Filtrar por nome", //replace default header filter text for column name
-            }
-        }
-    }
-
-};
 
 function dataTable() {
 
@@ -180,7 +200,7 @@ function dataTable() {
             { title: "Data da Ocorrência", field: "dtOcorrencia", sorter: "date", hozAlign: "center", editor: false, headerFilter: "input", responsive: 0 },
             { title: "Alteração de Mandato", field: "alteraDtInicio", sorter: "string", hozAlign: "center", editor: false, headerFilter: "input", responsive: 0 },
             { formatter: formatEdita, cellClick: edita, width: 40, hozAlign: "center" },
-            { formatter: formatDeleta, cellClick: deleta, width: 40, hozAlign: "center" },
+            { formatter: formatDeleta, cellClick: clicaDeleta, width: 40, hozAlign: "center" },
         ],
 
     });
@@ -204,8 +224,30 @@ function edita(e, cell){
 
 let formatDeleta = function formatNome(cell) {
     
-    return `<a class='deletaOcorrencia' title='Excluir' href='#'><i class='material-icons red-text'>cancel</i></a>`
+    return `<a class='deletaOcorrencia' title='Excluir' href='#modal2'><i class='material-icons red-text'>cancel</i></a>`
 }
+function clicaDeleta(e, cell) {    
+    $('.deletaOcorrencia').addClass('modal-trigger');
+    montaModalDeleta(e,cell);
+}
+
+function montaModalDeleta(e,cell){
+    $('.hModal2').text("Confirmação de Exclusão de Ocorrência");    
+    $('.pModal2').append(
+        `<p class="pModal2">
+            <br/>
+            Tem certeza que quer excluir o registro?
+            </p>`
+    );
+    $('.concorda').click(function () {     
+        deleta(e, cell)
+    });
+    $('.cancela').click(function () {
+        $('.hModal2').text('');   
+        $('.pModal2').text('');        
+    })
+}
+
 
 function deleta(e, cell) {    
     $.ajax({

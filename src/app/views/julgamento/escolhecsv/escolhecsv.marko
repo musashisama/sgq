@@ -19,12 +19,12 @@
               </div>
               <div class="card-content">
                 <span class="card-title activator grey-text text-darken-4">
-                  Relatório Extraído em ${dado.dtExtracao}<i class="material-icons right">more_vert</i>
+                  Relatório Extraído em ${dado.dtExtracao}<i class="material-icons right" title="Clique para informações do relatório">more_vert</i>
                 </span>
                 <p>${dado.total} processos distribuídos. ${dado.totalHoras} horas.</p>
                 <p>
                   <br/>
-                  <a class="btn-floating btn-insere halfway-fab waves-effect waves-light red" href=`/julgamento/restrito/diagnostico-carga/${dado.caminho}`>
+                  <a class="btn-floating btn-insere halfway-fab waves-effect waves-light red" title="Clique para acessar relatório" href=`/julgamento/restrito/diagnostico-carga/${dado.caminho}`>
                     <i class="material-icons">send</i>
                   </a>
                   <div class="controle">${dado.caminho}</div>
