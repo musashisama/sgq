@@ -56,7 +56,7 @@ function render(input, out, __component, component, state) {
       marko_attr("id", "" + dado.semana) +
       "><img class=\"activator scaleImg\" alt=\"Clique para informações do relatório\" title=\"Clique para informações do relatório\" src=\"/estatico/imagens/CSV.png\"></div><div class=\"card-content\"><span class=\"card-title activator grey-text text-darken-4 \">Relatório Extraído em " +
       marko_escapeXml(dado.dtExtracao) +
-      "<i class=\"material-icons right\">more_vert</i></span><p>" +
+      "<i class=\"material-icons right\" title=\"Clique para informações do relatório\">more_vert</i></span><p>" +
       marko_escapeXml(dado.total) +
       " processos distribuídos. " +
       marko_escapeXml(dado.totalHoras) +
@@ -68,7 +68,7 @@ function render(input, out, __component, component, state) {
         ".</p>");
     }
 
-    out.w("<p><br><a class=\"btn-floating btn-insere halfway-fab waves-effect waves-light red\"" +
+    out.w("<p><br><a class=\"btn-floating btn-insere halfway-fab waves-effect waves-light red\" title=\"Clique para acessar relatório\"" +
       marko_attr("href", "/julgamento/restrito/regapCojul/" + dado.caminho) +
       "><i class=\"material-icons\">send</i></a><div class=\"controle\">" +
       marko_escapeXml(dado.caminho) +

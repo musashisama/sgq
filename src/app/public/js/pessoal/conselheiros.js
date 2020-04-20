@@ -1,16 +1,20 @@
 inicializaComponentes();
-var table = "";
-var autoColumns = false;
-var locale = true;
-pagination = "local";
-height = '1000px';
-minHeight = '300px';
-maxHeight = '1000px';
-layout = "fitDataFill";
-responsiveLayout = true;
-initialSort = [{ column: "nome", dir: "asc" }];
+let table = "";
+let autoColumns = false;
+let locale = true;
+let pagination = "local";
+let height = '1000px';
+let minHeight = '300px';
+let maxHeight = '1000px';
+let layout = "fitDataFill";
+let responsiveLayout = true;
+let initialSort = [{ column: "nome", dir: "asc" }];
+let agrupado = false;
 
-var langs = {
+
+
+
+let langs = {
 
     "pt-br": {
         "columns": {
@@ -47,8 +51,7 @@ var langs = {
 function inicializaComponentes() {
     $(document).ready(function () {
         initSelect();
-        dataTable();
-        initTabs();
+        dataTable();        
     });
 }
 
@@ -59,9 +62,9 @@ function initSelect() {
 
 function dataTable() {
 
-    let tabledataCons = JSON.parse($('form').attr('data-conselheiros'));
+    tabledataCons = JSON.parse($('form').attr('data-conselheiros'));
     //define table
-    tableCons = new Tabulator("#tabelaCons", {
+    table = new Tabulator("#tabelaCons", {
         data: tabledataCons,
         autoColumns: autoColumns,
         locale: locale,
@@ -75,8 +78,7 @@ function dataTable() {
         columns: [
             {formatter:formatNome, width:40, hozAlign:"center"},
             { title: "Nome", field: "nome", sorter: "string", hozAlign: "left", editor: false, headerFilter: "input", bottomCalc: "count", responsive: 0 },            
-            { title: "CPF", field: "cpf", sorter: "string", hozAlign: "center", width: 150, editor: false, headerFilter: "input", responsive: 3, },
-            { title: "Siape", field: "siape", sorter: "string", hozAlign: "center", editor: false, headerFilter: "input", responsive: 4 },
+            { title: "CPF", field: "cpf", sorter: "string", hozAlign: "center", width: 150, editor: false, headerFilter: "input", responsive: 3, },            
             { title: "Turma", field: "turma", sorter: "string", hozAlign: "center", editor: false, headerFilter: "input", responsive: 2 },
             { title: "Câmara", field: "camara", sorter: "string", hozAlign: "center", width: 150, editor: false, headerFilter: "input", responsive: 2 },
             { title: "Seção", field: "setor", sorter: "string", hozAlign: "left", headerFilter: "input", editor: false, responsive: 2 },
@@ -87,7 +89,20 @@ function dataTable() {
 
     });
 }
+
+document.getElementById("mostraColunas").addEventListener("click", function () {
+    if (agrupado == false) {
+        table.setGroupBy(["setor", "camara", "turma"]);
+        agrupado = true;
+    }
+    else {
+        table.setGroupBy();
+        agrupado = false;
+    };
+
+});
+
 let formatNome = function formatNome(cell){
-    return `<a href='/pessoal/restrito/conselheiros/${cell.getRow().getData().cpf}'><i class='material-icons'>face</i></a>`    
+    return `<a class='black-text' href='/pessoal/restrito/conselheiros/${cell.getRow().getData().cpf}' title='Detalhar cadastro do Conselheiro'><i class='material-icons'>folder_shared</i></a>`    
 }
 
