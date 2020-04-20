@@ -8,6 +8,7 @@ module.exports = (app) => {
 
     const rotasPessoal = PessoalControlador.rotas();
     const rotasBase = BaseControlador.rotas();
+
     app.use('/*', function (req, resp, next) {
         if (req.isAuthenticated()) {
             resp.set('autenticado', true);
@@ -51,6 +52,10 @@ module.exports = (app) => {
     app.route(rotasPessoal.detalhacons)
         .get(pessoalControlador.carregaPaginaDetCons())
         .post(pessoalControlador.editaCons());
+
+
+    app.put(rotasPessoal.editaOcorrencia,pessoalControlador.editaOcorrencia());
+    app.delete(rotasPessoal.excluiOcorrencia,pessoalControlador.excluiOcorrencia());
     // app.route(rotasPessoal.carregacsv)
     //     .get(pessoalControlador.carregaPaginaInsereCSV())
     //     .post(pessoalControlador.carregaCSV());

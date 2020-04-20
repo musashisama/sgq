@@ -17,6 +17,8 @@ class PessoalControlador {
             editacons: '/pessoal/restrito/conselheiros/edita',
             insOcorrencia: '/pessoal/restrito/conselheiros/:id/ocorrencia',
             cadastraCons: '/pessoal/restrito/conselheiros/cadastra',
+            editaOcorrencia:'/pessoal/restrito/conselheiros/ocorrencia/:id',
+            excluiOcorrencia: '/pessoal/restrito/conselheiros/excluiocorrencia/:id'
         };
     }
 
@@ -117,6 +119,25 @@ class PessoalControlador {
 
         };
     }
+
+    editaOcorrencia(){
+        return function (req, resp) {
+            const role = 'pessoal';
+            const perfil = req.user.perfis;
+            const id = req.params.id;
+            if (perfil.indexOf(role) > -1) {
+                const pessoalDao = new PessoalDao(conn);
+                pessoalDao.editaOcorrencia(id,req.body)
+                    .then(conselheiro => {
+                        resp.marko(templates.pessoal.detalhacons, {
+                            conselheiro: req.body,
+                        })
+                    })
+                    .catch(erro => console.log(erro));
+            } else resp.marko(templates.base.principal, { msg: "Usuário não autorizado a executar esta operação." });
+
+        };
+    }
     editaCons() {
         return function (req, resp) {
             const role = 'pessoal';
@@ -124,6 +145,24 @@ class PessoalControlador {
             if (perfil.indexOf(role) > -1) {
                 const pessoalDao = new PessoalDao(conn);
                 pessoalDao.editaCons(req.body)
+                    .then(conselheiro => {
+                        resp.marko(templates.pessoal.detalhacons, {
+                            conselheiro: req.body,
+                        })
+                    })
+                    .catch(erro => console.log(erro));
+            } else resp.marko(templates.base.principal, { msg: "Usuário não autorizado a executar esta operação." });
+
+        };
+    }
+
+    excluiOcorrencia(){
+        return function (req, resp) {
+            const role = 'pessoal';            
+            const perfil = req.user.perfis;
+            if (perfil.indexOf(role) > -1) {
+                const pessoalDao = new PessoalDao(conn);
+                pessoalDao.excluiOcorrencia(req.params.id)
                     .then(conselheiro => {
                         resp.marko(templates.pessoal.detalhacons, {
                             conselheiro: req.body,

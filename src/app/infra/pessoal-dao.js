@@ -1,4 +1,5 @@
 const { promises } = require("fs-extra");
+const { ObjectID } = require("mongodb");
 
 class PessoalDao {
 
@@ -132,6 +133,32 @@ class PessoalDao {
 
     }
 
+    editaOcorrencia(id, registro) {
+        return new Promise((resolve, reject) => {
+            console.log('veioaqui');
+            console.log(registro);
+            delete registro._id
+            this._db.ocorrencias.updateOne({_id: new ObjectID(id) }, {$set :registro}, function (erro, res) {
+                if (erro) {
+                    
+                    return reject('Erro na base de dados. Tente novamente mais tarde.');
+                }                    
+                return resolve(res);
+            });
+        });
+    }
+
+    excluiOcorrencia(id){
+        console.log(id);
+        return new Promise((resolve, reject) => {
+            this._db.ocorrencias.deleteOne({_id: new ObjectID(id)}, function (erro, res) {
+                if (erro) {
+                    return reject('Não foi possível excluir o registro.');
+                }
+                return resolve(res);
+            })
+        });
+    }
     cadastraUser(registro) {
 
         return new Promise((resolve, reject) => {

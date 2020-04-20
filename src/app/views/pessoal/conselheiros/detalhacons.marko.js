@@ -55,19 +55,19 @@ function render(input, out, __component, component, state) {
     marko_attr("action", ("/pessoal/restrito/conselheiros/" + data.conselheiro.cpf) + "/") +
     " method=\"post\"><h4>Dados Pessoais</h4><div class=\"row\"><div class=\"input-field col s5\"><i class=\"material-icons prefix\">account_circle</i><input disabled id=\"nome\" name=\"nome\"" +
     marko_attr("value", "" + data.conselheiro.nome) +
-    " type=\"text\" class=\"validate\"><label class=\"active\" for=\"nome\">Nome:</label></div><div class=\"input-field col s5\"><i class=\"material-icons prefix\">contact_mail</i><input disabled id=\"email\" name=\"email\"" +
+    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"nome\">Nome:</label></div><div class=\"input-field col s5\"><i class=\"material-icons prefix\">contact_mail</i><input disabled id=\"email\" name=\"email\"" +
     marko_attr("value", "" + data.conselheiro.email) +
-    " type=\"email\" class=\"validate\"><label class=\"active\" for=\"email\">e-mail:</label></div></div><div class=\"row\"><div class=\"input-field col s2\"><i class=\"material-icons prefix\">info</i><input disabled id=\"cpf\" name=\"cpf\"" +
+    " type=\"email\" class=\"validate selectCons\"><label class=\"active\" for=\"email\">e-mail:</label></div></div><div class=\"row\"><div class=\"input-field col s2\"><i class=\"material-icons prefix\">info</i><input disabled id=\"cpf\" name=\"cpf\"" +
     marko_attr("value", "" + data.conselheiro.cpf) +
-    " type=\"text\" class=\"validate\"><label class=\"active\" for=\"cpf\">CPF:</label></div><div class=\"input-field col s2\"><i class=\"material-icons prefix\">info_outline</i><input disabled id=\"siape\" name=\"siape\"" +
+    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"cpf\">CPF:</label></div><div class=\"input-field col s2\"><i class=\"material-icons prefix\">info_outline</i><input disabled id=\"siape\" name=\"siape\"" +
     marko_attr("value", "" + data.conselheiro.siape) +
-    " type=\"text\" class=\"validate\"><label class=\"active\" for=\"siape\">Siape:</label></div><div class=\"input field col s3\"><input disabled id=\"dtNasc\" name=\"dtNasc\"" +
+    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"siape\">Siape:</label></div><div class=\"input field col s3\"><input disabled id=\"dtNasc\" name=\"dtNasc\"" +
     marko_attr("value", "" + data.conselheiro.dtNasc) +
-    " type=\"text\" class=\"datepicker\"><label for=\"dtNasc\">Data de Nascimento</label></div><div class=\"input-field col s2\"><i class=\"material-icons prefix\">contact_phone</i><input disabled id=\"telefone\" name=\"telefone\"" +
+    " type=\"text\" class=\"datepicker selectCons\"><label for=\"dtNasc\">Data de Nascimento</label></div><div class=\"input-field col s2\"><i class=\"material-icons prefix\">contact_phone</i><input disabled id=\"telefone\" name=\"telefone\"" +
     marko_attr("value", "" + data.conselheiro.telefone) +
-    " type=\"text\" class=\"validate\"><label class=\"active\" for=\"telefone\">Telefone:</label></div><div class=\"input-field col s2\"><i class=\"material-icons prefix\">phone_iphone</i><input disabled id=\"celular\" name=\"celular\"" +
+    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"telefone\">Telefone:</label></div><div class=\"input-field col s2\"><i class=\"material-icons prefix\">phone_iphone</i><input disabled id=\"celular\" name=\"celular\"" +
     marko_attr("value", "" + data.conselheiro.celular) +
-    " type=\"text\" class=\"validate\"><label class=\"active\" for=\"celular\">Celular:</label></div></div><h4>Dados do Mandato</h4><div class=\"row\"><div class=\"form-group input-field turmaCons col s4\"><i class=\"material-icons prefix\">event_seat</i><select disabled name=\"turmaCons\"><option class=\"form-group\"" +
+    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"celular\">Celular:</label></div></div><h4>Dados do Mandato</h4><div class=\"row\"><div class=\"form-group input-field turmaCons col s4\"><i class=\"material-icons prefix\">event_seat</i><select disabled name=\"turmaCons\" class=\"selectCons\"><option class=\"form-group\"" +
     marko_attr("value", "" + data.conselheiro.turmaCons) +
     ">" +
     marko_escapeXml(data.conselheiro.turmaCons) +
@@ -87,15 +87,15 @@ function render(input, out, __component, component, state) {
 
   out.w("</select><label for=\"turmaCons\">Turma/Câmara/Seção:</label></div><div class=\"input-field col s2\"><i class=\"material-icons prefix\">event_seat</i><input disabled id=\"turma\" name=\"turma\"" +
     marko_attr("value", "" + data.conselheiro.turma) +
-    " type=\"text\" class=\"validate\"><label class=\"active\" for=\"turma\">Turma:</label></div><div class=\"input-field col s2\"><i class=\"material-icons prefix\">event_seat</i><input disabled id=\"camara\" name=\"camara\"" +
+    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"turma\">Turma:</label></div><div class=\"input-field col s2\"><i class=\"material-icons prefix\">event_seat</i><input disabled id=\"camara\" name=\"camara\"" +
     marko_attr("value", "" + data.conselheiro.camara) +
-    " type=\"text\" class=\"validate\"><label class=\"active\" for=\"camara\">Câmara:</label></div><div class=\"input-field col s2\"><i class=\"material-icons prefix\">event_seat</i><input disabled id=\"setor\" name=\"setor\"" +
+    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"camara\">Câmara:</label></div><div class=\"input-field col s2\"><i class=\"material-icons prefix\">event_seat</i><input disabled id=\"setor\" name=\"setor\"" +
     marko_attr("value", "" + data.conselheiro.setor) +
-    " type=\"text\" class=\"validate\"><label class=\"active\" for=\"setor\">Seção:</label></div><div class=\"input-field col s3\"><i class=\"material-icons prefix\">gps_fixed</i><input disabled id=\"origem\" name=\"origem\"" +
+    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"setor\">Seção:</label></div><div class=\"input-field col s3\"><i class=\"material-icons prefix\">gps_fixed</i><input disabled id=\"origem\" name=\"origem\"" +
     marko_attr("value", "" + data.conselheiro.origem) +
-    " type=\"text\" class=\"validate\"><label class=\"active\" for=\"origem\">Representação:</label></div></div><div class=\"row\"><div class=\"input-field col s3\"><i class=\"material-icons prefix\">details</i><select disabled id=\"tipo\" name=\"tipo\"><option value=\"Titular\">Titular</option><option value=\"Suplente\">Suplente</option></select><label>Titular/Suplente</label></div><div class=\"input field col s3\"><input disabled id=\"dtFimMandato\" name=\"dtFimMandato\"" +
+    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"origem\">Representação:</label></div></div><div class=\"row\"><div class=\"input-field col s3\"><i class=\"material-icons prefix\">details</i><select disabled id=\"tipo\" name=\"tipo\" class=\"selectCons\"><option value=\"Titular\">Titular</option><option value=\"Suplente\">Suplente</option></select><label>Titular/Suplente</label></div><div class=\"input field col s3\"><input disabled id=\"dtFimMandato\" name=\"dtFimMandato\"" +
     marko_attr("value", "" + data.conselheiro.dtFimMandato) +
-    " type=\"text\" class=\"datepicker\"><label for=\"dtFimMandato\">Final do Mandato:</label></div><div class=\"form-group input-field funcao col s4\"><i class=\"material-icons prefix\">domain</i><select disabled name=\"funcao\"><option selected class=\"form-group\"" +
+    " type=\"text\" class=\"datepicker selectCons\"><label for=\"dtFimMandato\">Final do Mandato:</label></div><div class=\"form-group input-field funcao col s4\"><i class=\"material-icons prefix\">domain</i><select disabled name=\"funcao\" class=\"selectCons\"><option selected class=\"form-group\"" +
     marko_attr("value", "" + data.conselheiro.funcao) +
     ">" +
     marko_escapeXml(data.conselheiro.funcao) +
@@ -113,7 +113,7 @@ function render(input, out, __component, component, state) {
       "</option>");
   });
 
-  out.w("</select><label for=\"funcao\">Função:</label></div><div class=\"input-field col s3\"><i class=\"material-icons prefix\">event_note</i><select disabled id=\"mandatoAt\" name=\"mandatoAt\"><option value>Sim</option><option>Não</option></select><label>Mandato Ativo?</label></div></div><div class=\"card-action right-align\"><a class=\"btn-cons-edita btn-floating red waves-effect waves-light hoverable z-depth-3\" title=\"Editar Dados\"><i class=\"material-icons\">edit</i></a><a disabled class=\"btn-cons-salva btn-floating blue waves-effect waves-light hoverable z-depth-3\" type=\"submit\" title=\"Salvar\"><i class=\"material-icons\">save</i></a><a id=\"aModal\" class=\"btn-cons-adiciona btn-floating green waves-effect waves-light hoverable z-depth-3\" title=\"Adicionar ocorrência\" href=\"#modal1\"><i class=\"material-icons\">add</i></a></div></form></div></div>");
+  out.w("</select><label for=\"funcao\">Função:</label></div><div class=\"input-field col s3\"><i class=\"material-icons prefix\">event_note</i><select disabled id=\"mandatoAt\" name=\"mandatoAt\" class=\"selectCons\"><option value>Sim</option><option>Não</option></select><label>Mandato Ativo?</label></div></div><div class=\"card-action right-align\"><a class=\"btn-cons-edita btn-floating red waves-effect waves-light hoverable z-depth-3\" title=\"Editar Dados\"><i class=\"material-icons\">edit</i></a><a disabled class=\"btn-cons-salva btn-floating blue waves-effect waves-light hoverable z-depth-3\" type=\"submit\" title=\"Salvar\"><i class=\"material-icons\">save</i></a><a id=\"aModal\" class=\"btn-cons-adiciona btn-floating green waves-effect waves-light hoverable z-depth-3\" title=\"Adicionar ocorrência\" href=\"#modal1\"><i class=\"material-icons\">add</i></a></div></form></div></div>");
 
   if (data.ocorrencias) {
     out.w("<h3 class=\"center-align\">Ocorrências do Conselheiro</h3><div id=\"tabelaOcorrencias\"" +
@@ -125,7 +125,7 @@ function render(input, out, __component, component, state) {
     marko_attr("data-tipoOcorrencias", "" + data.tipoOcorrencias) +
     " name=\"formOcorrencia\"" +
     marko_attr("action", ("/pessoal/restrito/conselheiros/" + data.conselheiro.cpf) + "/ocorrencia") +
-    " method=\"post\"><div class=\"row\"><br></div><input hidden id=\"cpfOcorrencia\" name=\"cpf\"" +
+    " method=\"post\"><div id=\"editaDiv\"></div><div class=\"row\"><br></div> <input hidden id=\"cpfOcorrencia\" name=\"cpf\"" +
     marko_attr("value", "" + data.conselheiro.cpf) +
     " type=\"text\"><div class=\"row\"><div class=\" input-field col s4\"><i class=\"material-icons prefix\">border_color</i><select name=\"tipoOcorrencia\">");
 
@@ -143,15 +143,15 @@ function render(input, out, __component, component, state) {
 
   out.w("</select><label for=\"tipoOcorrencia\">Selecione o tipo de ocorrência:</label></div></div><div class=\"row\"><br></div><div class=\"row\"><div class=\"input-field col s12\"><i class=\"material-icons prefix\">mode_edit</i><textarea name=\"ocorDet\" id=\"ocorDet\" class=\"materialize-textarea\" placeholder=\"Este campo aceita &lt;ENTER>. Descreva aqui o nº da Portaria, Detalhes da notificação (arts do RICARF), nº do processo, nº SEI etc.\"></textarea><label for=\"ocorDet\">Detalhes da Ocorrência:</label></div></div><div class=\"row\"><br></div><div class=\"row\"><div class=\"input field col s3\"><i class=\"material-icons prefix\">insert_invitation</i><input id=\"dtOcorrencia\" name=\"dtOcorrencia\" value=\"\" type=\"text\" class=\"datepicker\"><label for=\"dtOcorrencia\">Data da Ocorrência</label></div><div class=\"col s2\"><div class=\"form-group\"><p><label>Altera a data de início de mandato?</label></p><p><label><input class=\"with-gap\" value=\"Sim\" name=\"alteradtFimMandato\" type=\"radio\" checked><span>Sim</span></label></p><p><label><input class=\"with-gap\" value=\"Não\" name=\"alteradtFimMandato\" type=\"radio\"><span>Não</span></label></p></div></div></div></form></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"modal-close btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
 
-  app_footer_tag({}, out, __component, "142");
+  app_footer_tag({}, out, __component, "143");
 
-  app_scripts_js_tag({}, out, __component, "143");
+  app_scripts_js_tag({}, out, __component, "144");
 
   out.w("<script src=\"/estatico/js/pessoal/conselheiro.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "145");
+  await_reorderer_tag({}, out, __component, "146");
 
   out.w("</body></html>");
 }

@@ -1,5 +1,5 @@
 inicializaComponentes();
-
+var table = "";
 function inicializaComponentes() {
     $(document).ready(function () {
         initDatePicker();
@@ -10,7 +10,8 @@ function inicializaComponentes() {
         initSelect();
         initModal();
         btnModal();
-        dataTable();
+        dataTable();     
+        $('.btn-cons-salva').toggle();   
     });
 }
 
@@ -26,23 +27,23 @@ function initModal() {
 function btnModal() {
     $('.btn-cons-adiciona').click(function (event) {
         event.preventDefault();
-        $('#aModal').addClass('modal-trigger');        
+        $('#aModal').addClass('modal-trigger');
     });
 }
 function btnEdita() {
     $('.btn-cons-edita').click(function (event) {
-        event.preventDefault();
-        console.log('cliquei');
+        event.preventDefault();        
         $('input').removeAttr("disabled");
         $('select').removeAttr("disabled");
         $('.btn-cons-salva').removeAttr("disabled");
+        $('.btn-cons-salva').toggle();
         initSelect();
     });
 }
 
 function btnOcorrencia() {
     $('.concorda').click(function (event) {
-        event.preventDefault();        
+        event.preventDefault();
         url = $('#formOcorrencia').attr("action");
         valores = $("#formOcorrencia").serializeArray();
         $.post(url, valores)
@@ -51,11 +52,11 @@ function btnOcorrencia() {
                 M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
                 $('#dtOcorrencia').val('');
                 $('#ocorDet').val('');
-                location.reload(true);           
-            }).fail(function(err) {
-                var toastHTML = `<span>Ocorreu um erro.}</span>`;
+                location.reload(true);
+            }).fail(function (err) {
+                var toastHTML = `<span>Ocorreu um erro.</span>`;
                 M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
-              })
+            })
         console.log(valores);
     });
 }
@@ -65,15 +66,15 @@ function btnSalva() {
     $('.btn-cons-salva').click(function (event) {
         event.preventDefault();
         url = $('#formCons').attr("action");
-        valores = $("#formCons").serializeArray();       
+        valores = $("#formCons").serializeArray();
+        console.log($("#formCons").serializeArray());
         $.post(url, valores)
             .done((dados) => {
                 var toastHTML = '<span>Registro atualizado com sucesso!</span>';
-                M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });               
-                $('.btn-cons-salva').prop("disabled", true);
-                $('input').prop("disabled", true);
-                $('select').prop("disabled", true);
-                
+                M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });                               
+                $('.selectCons').prop("disabled", true);
+                $(this).toggle(); 
+
             }).always()
         console.log(valores);
     });
@@ -118,8 +119,7 @@ pagination = "local";
 height = '1000px';
 minHeight = '300px';
 maxHeight = '1000px';
-layout = "fitDataFill";
-responsiveLayout = true;
+layout = "fitColumns";
 initialSort = [{ column: "dtOcorrencia", dir: "desc" }];
 
 var langs = {
@@ -159,26 +159,63 @@ var langs = {
 
 function dataTable() {
 
-    let tabledataCons = JSON.parse($('#tabelaOcorrencias').attr('data-ocorrencias'));
+    let tabledata = JSON.parse($('#tabelaOcorrencias').attr('data-ocorrencias'));
     //define table
-    tableCons = new Tabulator("#tabelaOcorrencias", {
-        data: tabledataCons,
+    table = new Tabulator("#tabelaOcorrencias", {
+        data: tabledata,
         autoColumns: autoColumns,
         locale: locale,
         langs: langs,
         pagination: pagination,
         height: height,
-        minHeight: minHeight,        
+        minHeight: minHeight,
         layout: layout,
         initialSort: initialSort,
-        responsiveLayout: responsiveLayout,
-        columns: [           
-            { title: "Ocorrência", field: "tipoOcorrencia", sorter: "string", hozAlign: "left", editor: false, headerFilter: "input", bottomCalc: "count", responsive: 0 },            
-            { title: "Detalhes da Ocorrência", field: "ocorDet", sorter: "string", hozAlign: "center", editor: false, headerFilter: "input", responsive: 1, },
-            { title: "Data da Ocorrência", field: "dtOcorrencia", sorter: "date", hozAlign: "center", editor: false, headerFilter: "input", responsive: 0 },  
-            { title: "Alteração de Mandato", field: "alteraDtInicio", sorter: "string", hozAlign: "center", editor: false, headerFilter: "input", responsive: 0 },         
-
+        resizableRows: true,
+    responsiveLayout: 'collapse',
+    responsiveLayoutCollapseStartOpen: false,
+        columns: [
+            { title: "Ocorrência", field: "tipoOcorrencia", sorter: "string", hozAlign: "left", editor: false, headerFilter: "input", bottomCalc: "count", responsive: 0 },
+            { title: "Detalhes da Ocorrência", field: "ocorDet", sorter: "string", hozAlign: "left", editor: false, headerFilter: "input", responsive: 0, },
+            { title: "Data da Ocorrência", field: "dtOcorrencia", sorter: "date", hozAlign: "center", editor: false, headerFilter: "input", responsive: 0 },
+            { title: "Alteração de Mandato", field: "alteraDtInicio", sorter: "string", hozAlign: "center", editor: false, headerFilter: "input", responsive: 0 },
+            { formatter: formatEdita, cellClick: edita, width: 40, hozAlign: "center" },
+            { formatter: formatDeleta, cellClick: deleta, width: 40, hozAlign: "center" },
         ],
 
     });
+}
+
+let formatEdita = function formatNome(cell) {
+    
+    return `<a class='btn-oco-edita' title='Editar' href='#modal1'><i class='material-icons orange-text'>edit</i></a>`
+}
+
+function edita(e, cell){
+    e.preventDefault();      
+    $('.btn-oco-edita').addClass('modal-trigger');
+    $('#formOcorrencia').attr('action',`/pessoal/restrito/conselheiros/ocorrencia/${cell.getRow().getData()._id}`)
+    $('#editaDiv').append('<input type="hidden" name="_method" value="PUT"/>')
+    $('#tipoOcorrencia').val(cell.getRow().getData().tipoOcorrencia);
+    $('#ocorDet').val(cell.getRow().getData().ocorDet);
+    $('#dtOcorrencia').val(cell.getRow().getData().dtOcorrencia);   
+}
+
+
+let formatDeleta = function formatNome(cell) {
+    
+    return `<a class='deletaOcorrencia' title='Excluir' href='#'><i class='material-icons red-text'>cancel</i></a>`
+}
+
+function deleta(e, cell) {    
+    $.ajax({
+        url: `/pessoal/restrito/conselheiros/excluiocorrencia/${cell.getRow().getData()._id}`,
+        type: 'DELETE',
+        success: function (result) {
+            var toastHTML = `<span>Ocorrência removida com sucesso!</span>`;
+            M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+            table.deleteRow(cell.getRow());
+        },
+        error: function(result){console.log(`Erro: ${result}`);}
+    })
 }
