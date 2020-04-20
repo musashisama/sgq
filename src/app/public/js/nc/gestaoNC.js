@@ -107,7 +107,7 @@ function deleta(e, cell){
     url: `/gestao/excluinc/${cell.getRow().getData()._id}`,
     type: 'DELETE',
     success: function (result) {
-      var toastHTML = `<span>Registro atualizado com sucesso!</span>`;
+      var toastHTML = `<span>Registro removido com sucesso!</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
       table.deleteRow(cell.getRow());
     }

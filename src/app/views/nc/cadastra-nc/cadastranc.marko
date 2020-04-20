@@ -30,7 +30,7 @@
           <div class="row">
             <div class="form-group input-field cpfUser col s12">
               <label for="nconformidade">Tipologia (descrição) da Não Conformidade:</label>
-              <input required type="text" id="nconformidade" name="nconformidade" value=`${data.cadastraNC[0].nconformidade}` class="form-control nconformidade"/>
+              <textarea required type="text" id="nconformidade" name="nconformidade" value=`${data.cadastraNC[0].nconformidade}` class="form-control materialize-textarea nconformidade alturaTextArea"/>
             </div>
           </div>
           <div class="row">
@@ -38,7 +38,7 @@
               <label for="descDet">
                 Descrição detalhada da <strong>não conformidade:</strong>
               </label>
-              <input required type="text" id="descDet" name="descDet" value=`${data.cadastraNC[0].descDet}` class="form-control descDet"/>
+              <textarea required type="text" id="descDet" name="descDet" value=`${data.cadastraNC[0].descDet}` class="form-control materialize-textarea descDet alturaTextArea"/>
             </div>
             <div class="col s6 offset-s6">
               <a id="aModal" class="btn-floating btn-large waves-effect waves-light green hoverable btn-insere" href="#modal1">

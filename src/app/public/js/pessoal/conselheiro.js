@@ -49,6 +49,9 @@ function btnOcorrencia() {
             .done((dados) => {
                 var toastHTML = '<span>Ocorrência cadastrada com sucesso!</span>';
                 M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+                $('#dtOcorrencia').val('');
+                $('#ocorDet').val('');
+                location.reload(true);           
             }).fail(function(err) {
                 var toastHTML = `<span>Ocorreu um erro.}</span>`;
                 M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
@@ -66,12 +69,12 @@ function btnSalva() {
         $.post(url, valores)
             .done((dados) => {
                 var toastHTML = '<span>Registro atualizado com sucesso!</span>';
-                M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+                M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });               
                 $('.btn-cons-salva').prop("disabled", true);
                 $('input').prop("disabled", true);
                 $('select').prop("disabled", true);
-
-            })
+                
+            }).always()
         console.log(valores);
     });
 }
@@ -117,7 +120,7 @@ minHeight = '300px';
 maxHeight = '1000px';
 layout = "fitDataFill";
 responsiveLayout = true;
-initialSort = [{ column: "dtOcorrencia", dir: "asc" }];
+initialSort = [{ column: "dtOcorrencia", dir: "desc" }];
 
 var langs = {
 
