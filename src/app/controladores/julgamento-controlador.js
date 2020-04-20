@@ -177,6 +177,7 @@ class JulgamentoControlador {
                 resp.marko(templates.base.principal, { msg: "Usuário não autorizado a executar esta operação." });
             } else {
                 let caminho = req.params.id;
+                req.session.caminho = caminho;               
                 dados = CSVHandler.pegaRegap(`${path}${caminho}`, 'COJUL')
                     .then(dados => {
                         const pessoalDao = new PessoalDao(conn);
@@ -208,7 +209,7 @@ class JulgamentoControlador {
             } else {
                 let cpf = req.params.id;
                 let caminho = (req.headers.referrer || req.headers.referer).split('/');
-                caminho = caminho[caminho.length - 1];
+                caminho = req.session.caminho;
                 console.log(caminho);
                 console.log(cpf);
                 dados = CSVHandler.pegaRegap(`${path}${caminho}`, 'CONS', cpf)

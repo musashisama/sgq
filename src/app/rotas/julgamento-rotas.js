@@ -29,19 +29,29 @@ module.exports = (app) => {
     });
 
     app.use(rotasJulgamento.autenticadas, function (req, resp, next) {
+        if (ACL.checaACL(req.user.perfis, 'julgamento') ||ACL.checaACL(req.user.perfis, 'conselheiro')) {
+            next();
+        } else { resp.render(403) };
+
+    });
+    app.get(rotasJulgamento.regap, julgControlador.carregaPaginaRegap());
+    app.get(rotasJulgamento.detalharegap, julgControlador.carregaPaginaRegap());
+    
+
+    app.use(rotasJulgamento.autenticadas, function (req, resp, next) {
         if (ACL.checaACL(req.user.perfis, 'julgamento')) {
             next();
         } else { resp.render(403) };
 
     });
-
-    app.get(rotasJulgamento.regap, julgControlador.carregaPaginaRegap());
+   
     app.get(rotasJulgamento.regapCojul, julgControlador.carregaPaginaRegapCojul());
-    app.get(rotasJulgamento.escolhecsvregap, julgControlador.escolheCSVRegap());
-    app.get(rotasJulgamento.detalharegap, julgControlador.carregaPaginaRegap());
+    app.get(rotasJulgamento.escolhecsvregap, julgControlador.escolheCSVRegap());    
     app.get(rotasJulgamento.escolhecsv, julgControlador.escolheCSV());
     app.get(rotasJulgamento.detalha, julgControlador.carregaPaginaDiag())
     app.route(rotasJulgamento.carregacsv)
         .get(julgControlador.carregaPaginaInsereCSV())
         .post(julgControlador.carregaCSV());
+
+        
 }
