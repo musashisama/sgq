@@ -43,21 +43,21 @@ function render(input, out, __component, component, state) {
       class: "sidenav"
     }, out, __component, "5");
 
-  out.w("<div class=\"container\"><h2 class=\"center-align\">Lista de Não Conformidades</h2><form" +
+  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Lista de Não Conformidades</h3><form" +
     marko_attr("data-nc", "" + data.nc) +
     "></form><div" +
     marko_attr("data-msg", "" + data.msg) +
-    "></div><a class=\"btn waves-effect waves-light green addListaNC right\" href=\"/gestao/cadastranc\">Adicionar Tipo de Não Conformidade</a><div id=\"tabelaNC\"></div></div></main><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat\">Cancela</a><a href=\"#!\" class=\"modal-close waves-effect waves-green btn-flat concorda\">Confirma</a></div></div>");
+    "></div><a class=\"btn-floating waves-effect waves-light green addListaNC right\" title=\"Adicionar Tipo de Não Conformidade\" href=\"/qualidade/restrito/cadastra-nc\"><i class=\"material-icons\">add</i></a><div id=\"tabelaNC\"></div></div></main><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat\">Cancela</a><a href=\"#!\" class=\"modal-close waves-effect waves-green btn-flat concorda\">Confirma</a></div></div>");
 
-  app_footer_tag({}, out, __component, "19");
+  app_footer_tag({}, out, __component, "20");
 
-  app_scripts_js_tag({}, out, __component, "20");
+  app_scripts_js_tag({}, out, __component, "21");
 
   out.w("<script src=\"/estatico/js/nc/gestaoNC.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "22");
+  await_reorderer_tag({}, out, __component, "23");
 
   out.w("</body></html>");
 }

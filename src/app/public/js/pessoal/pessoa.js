@@ -104,7 +104,7 @@ function btnEdita() {
 }
 
 function btnOcorrencia() {
-    $('.concordaOco').click(function (event) {
+    $('.concorda2').click(function (event) {
         event.preventDefault();
         url = $('#formOcorrencia').attr("action");
         valores = $("#formOcorrencia").serializeArray();
@@ -127,9 +127,9 @@ function btnOcorrencia() {
 function btnSalva() {
     $('.btn-cons-salva').click(function (event) {
         event.preventDefault();
-        url = $('#formCons').attr("action");
-        valores = $("#formCons").serializeArray();
-        console.log($("#formCons").serializeArray());
+        url = $('#formPessoa').attr("action");
+        valores = $("#formPessoa").serializeArray();
+        console.log($("#formPessoa").serializeArray());
         $.post(url, valores)
             .done((dados) => {
                 var toastHTML = '<span>Registro atualizado com sucesso!</span>';
@@ -195,8 +195,7 @@ function dataTable() {
         columns: [
             { title: "Ocorrência", field: "tipoOcorrencia", sorter: "string", hozAlign: "left", editor: false, headerFilter: "input", bottomCalc: "count", responsive: 0 },
             { title: "Detalhes da Ocorrência", field: "ocorDet", sorter: "string", hozAlign: "left", editor: false, headerFilter: "input", responsive: 0, },
-            { title: "Data da Ocorrência", field: "dtOcorrencia", sorter: "date", hozAlign: "center", editor: false, headerFilter: "input", responsive: 0 },
-            { title: "Alteração de Mandato", field: "alteraDtInicio", sorter: "string", hozAlign: "center", editor: false, headerFilter: "input", responsive: 0 },
+            { title: "Data da Ocorrência", field: "dtOcorrencia", sorter: "date", hozAlign: "center", editor: false, headerFilter: "input", responsive: 0 },            
             { formatter: formatEdita, cellClick: edita, width: 40, hozAlign: "center" },
             { formatter: formatDeleta, cellClick: clicaDeleta, width: 40, hozAlign: "center" },
         ],
@@ -212,7 +211,7 @@ let formatEdita = function formatNome(cell) {
 function edita(e, cell){
     e.preventDefault();      
     $('.btn-oco-edita').addClass('modal-trigger');
-    $('#formOcorrencia').attr('action',`/pessoal/restrito/conselheiros/ocorrencia/${cell.getRow().getData()._id}`)
+    $('#formOcorrencia').attr('action',`/pessoal/restrito/pessoas/ocorrencia/${cell.getRow().getData()._id}`)
     $('#editaDiv').append('<input type="hidden" name="_method" value="PUT"/>')
     $('#tipoOcorrencia').val(cell.getRow().getData().tipoOcorrencia);
     $('#ocorDet').val(cell.getRow().getData().ocorDet);
@@ -249,14 +248,14 @@ function montaModalDeleta(e,cell){
 
 function deleta(e, cell) {    
     $.ajax({
-        url: `/pessoal/restrito/conselheiros/exclui-ocorrencia/${cell.getRow().getData()._id}`,
+        url: `/pessoal/restrito/pessoas/exclui-ocorrencia/${cell.getRow().getData()._id}`,
         type: 'DELETE',
         success: function (result) {
             var toastHTML = `<span>Ocorrência removida com sucesso!</span>`;
             M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
             table.deleteRow(cell.getRow());
-            location.reload(true);
+            location.reload(true)
         },
-        error: function(result){console.log(`Erro: ${result}`);}
+        error: function(result){console.log(result);}
     })
 }

@@ -1,6 +1,6 @@
 inicializaComponentes();
 layout = "fitDataFill";
-var table = null;
+let table = null;
 let tabledata = "";
 let agrupado = false;
 initialSort = [{ column: "nome", dir: "asc" }];
@@ -102,5 +102,5 @@ function dataTable(msg) {
 }
 
 let formatNome = function formatNome(cell){
-    return `<a href='/julgamento/restrito/regapCojul/detalha/${cell.getValue()}'>${cell.getValue()}</a>`    
+    return `<a href='/julgamento/restrito/regap-cojul/detalha/${cell.getValue()}'>${cell.getValue()}</a>`    
 }

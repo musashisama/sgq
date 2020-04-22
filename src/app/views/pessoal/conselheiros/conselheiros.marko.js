@@ -43,19 +43,19 @@ function render(input, out, __component, component, state) {
       class: "sidenav"
     }, out, __component, "5");
 
-  out.w("<div class=\"container\"><h3 class=\"center-align\">Cadastro de Conselheiros do CARF</h3><br><form id=\"formCons\"" +
+  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Cadastro de Conselheiros do CARF</h3><br><form id=\"formCons\"" +
     marko_attr("data-conselheiros", "" + data.conselheiros) +
-    " name=\"formCons\" action=\"/pessoal/restrito/conselheiros/detalha/\" method=\"post\"><div class=\"row\"><div class=\"col s3 right\"><a href=\"#!\" id=\"mostraColunas\" class=\"waves-effect waves-green btn-flat blue \">Agrupar/Desagrupar</a></div><div class=\"col s3 right\"><a href=\"/pessoal/restrito/conselheiros/cadastra\" id=\"cadastraCons\" class=\"waves-effect waves-yellow btn-flat green\">Cadastrar novo Conselheiro</a></div><div id=\"tabelaCons\"></div></div></form></div></main><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
+    " name=\"formCons\" action=\"/pessoal/restrito/conselheiros/detalha/\" method=\"post\"><div class=\"row\"><div class=\"col s12 right-align\"><a href=\"#!\" id=\"mostraColunas\" title=\"Agrupar/Desagrupar por Turma\" class=\"waves-effect waves-yellow hoverable z-depth-3 btn-floating blue\"><i class=\"material-icons\">unfold_less</i></a> <a href=\"/pessoal/restrito/conselheiros/cadastra\" title=\"Cadastrar Conselheiro\" id=\"cadastraCons\" class=\"hoverable z-depth-3 waves-effect waves-yellow btn-floating green\"><i class=\"material-icons\">add</i></a></div> </div><div id=\"tabelaCons\"></div></form></div></main><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
 
-  app_footer_tag({}, out, __component, "24");
+  app_footer_tag({}, out, __component, "25");
 
-  app_scripts_js_tag({}, out, __component, "25");
+  app_scripts_js_tag({}, out, __component, "26");
 
   out.w("<script src=\"/estatico/js/pessoal/conselheiros.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "27");
+  await_reorderer_tag({}, out, __component, "28");
 
   out.w("</body></html>");
 }

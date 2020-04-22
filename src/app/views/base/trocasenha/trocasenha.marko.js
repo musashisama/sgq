@@ -43,7 +43,7 @@ function render(input, out, __component, component, state) {
       class: "sidenav"
     }, out, __component, "5");
 
-  out.w("<div class=\"container\"><div class=\"row\"><div class=\"col s6 offset-s3 center-align\"><div class=\"card\"><br><h4 class=\"center-align\">Alteração de Senha</h4><div class=\"card-content\"><form" +
+  out.w("<div class=\"container\"><div class=\"row\"><div class=\"col s6 offset-s3 center-align\"><div class=\"card\"><br><h4 class=\"center-align titulo\">Alteração de Senha</h4><div class=\"card-content\"><form" +
     marko_attr("action", "/form-altera-senha") +
     " method=\"post\"><div class=\"form-group input-field pwd\">");
 

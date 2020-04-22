@@ -6,18 +6,18 @@
     <main class="conteudoPrincipal">
       <app-navbar id="slide-out" class="sidenav"/>
       <div class="container">
-        <h3 class="center-align titulo">Diagnóstico da Carga de Processos dos Conselheiros</h3>
-        <br/>
-        <br/>
-        <form id="formGerencial" name="formGerencial" action="/julgamento/restrito/diagnostico-carga" method="post">
+        <h3 class="center-align titulo">Perfis de Usuários do Sistema de Gestão Integrada do CARF</h3>
+        <form id="formPerfis" data-users=`${data.users}` data-perfis=`${data.perfis}` name="formPerfis" action="/julgamento/restrito/regap-cojul/detalha/" method="post">
           <div class="row">
-            <p id="resultado"/>
-            <div class="tabelaCarga">
-              <div id="tabelaCarga"/>
+            <div class="col s12 right-align">
+              <a href="#!" id="mostraColunas" title="Agrupar/Desagrupar por Atividade" class="waves-effect waves-yellow hoverable z-depth-3 btn-floating blue">
+                <i class="material-icons">unfold_less</i>
+              </a>
             </div>
-            <div id="dadosCarga" class="controle">${data.relatorio}</div>
+            <div id="tabelaUsuarios"/>
           </div>
         </form>
+        <br/>
       </div>
     </main>
     <!--Modal Structure-->
@@ -28,13 +28,13 @@
       </div>
       <div class="modal-footer">
         <a href="#!" class="modal-close waves-effect waves-red btn-flat cancela">Cancela</a>
-        <button class="btn waves-effect waves-light concorda" type="submit" name="action">
+        <button class="btn waves-effect waves-light concorda modal-close" type="submit" name="action">
           Confirma <i class="material-icons right">send</i>
         </button>
       </div>
     </div>
     <app-footer/>
     <app-scripts-js/>
-    <script src="/estatico/js/julgamento/cargacons.js"/>
+    <script src="/estatico/js/base/perfis.js"/>
   </body>
 </html>

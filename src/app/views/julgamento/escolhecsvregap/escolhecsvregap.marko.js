@@ -45,7 +45,7 @@ function render(input, out, __component, component, state) {
       class: "sidenav"
     }, out, __component, "5");
 
-  out.w("<div class=\"container\"><h3 class=\"center-align\">Selecione o relatório que deseja visualizar:</h3><br><br><br><br><div class=\"row conteudoPrincipal\">");
+  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Selecione o relatório que deseja visualizar:</h3><br><br><br><br><div class=\"row conteudoPrincipal\">");
 
   var $for$0 = 0;
 
@@ -69,7 +69,7 @@ function render(input, out, __component, component, state) {
     }
 
     out.w("<p><br><a class=\"btn-floating btn-insere halfway-fab waves-effect waves-light red\" title=\"Clique para acessar relatório\"" +
-      marko_attr("href", "/julgamento/restrito/regapCojul/" + dado.caminho) +
+      marko_attr("href", "/julgamento/restrito/regap-cojul/" + dado.caminho) +
       "><i class=\"material-icons\">send</i></a><div class=\"controle\">" +
       marko_escapeXml(dado.caminho) +
       "</div></p></div><div class=\"card-reveal\"><span class=\"card-title grey-text text-darken-4\">Informações do relatório:<i class=\"material-icons right\">close</i></span>");

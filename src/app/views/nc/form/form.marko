@@ -6,10 +6,10 @@
     <main class="conteudoPrincipal">
       <app-navbar id="slide-out" class="sidenav"/>
       <div class="container">
-        <h3 class="center-align">Cadastrar Não Conformidade</h3>
+        <h3 class="center-align titulo">Cadastrar Não Conformidade</h3>
         <br/>
         <br/>
-        <form id="formNC" name="formNC" action="/form" method="post">
+        <form id="formNC" name="formNC" action="/qualidade/adiciona-nc" method="post">
           <if(data.registroNC._id)>
             <div>
               <input type="hidden" name="_method" value="PUT"/>

@@ -33,30 +33,39 @@ module.exports = (app) => {
         } else { resp.render(403) };
 
     });
+
+    app.get(rotasPessoal.agenda, pessoalControlador.carregaAgenda());
+
+    app.get(rotasPessoal.cadastraCons, pessoalControlador.carregaPaginaCadCons());
+    app.post(rotasPessoal.cadastraCons, pessoalControlador.cadastraCons())
+    app.get(rotasPessoal.cadastraPess, pessoalControlador.carregaPaginaCadPess());
+    app.post(rotasPessoal.cadastraPess, pessoalControlador.cadastraPess());
+
     app.route(rotasPessoal.pessoas)
         .get(pessoalControlador.carregaPaginaPessoal())
         .post(pessoalControlador.carregaPaginaPessoal());
-    //.put(julgControlador.carregaRel());
-    app.route(rotasPessoal.cadastra)
-        .get(pessoalControlador.carregaPaginaCadastro())
-        .post(pessoalControlador.carregaPaginaCadastro())
-
+    
     app.route(rotasPessoal.conselheiros)
-        .get(pessoalControlador.carregaPaginaCons())
-        .post(pessoalControlador.carregaPaginaCons())
-
-    app.get(rotasPessoal.cadastraCons, pessoalControlador.carregaPaginaCadCons())
-
-    app.post(rotasPessoal.insOcorrencia, pessoalControlador.insereOcorrencia());
+    .get(pessoalControlador.carregaPaginaCons())
+    .post(pessoalControlador.carregaPaginaCons());
+  
+    
+    app.route(rotasPessoal.detalhaPess)
+    .get(pessoalControlador.carregaPaginaDetalhaPessoal())
+    .post(pessoalControlador.editaPessoa());
 
     app.route(rotasPessoal.detalhacons)
-        .get(pessoalControlador.carregaPaginaDetCons())
-        .post(pessoalControlador.editaCons());
+    .get(pessoalControlador.carregaPaginaDetCons())
+    .post(pessoalControlador.editaCons());        
+   
 
+    
 
-    app.put(rotasPessoal.editaOcorrencia,pessoalControlador.editaOcorrencia());
-    app.delete(rotasPessoal.excluiOcorrencia,pessoalControlador.excluiOcorrencia());
-    // app.route(rotasPessoal.carregacsv)
-    //     .get(pessoalControlador.carregaPaginaInsereCSV())
-    //     .post(pessoalControlador.carregaCSV());
+    app.post(rotasPessoal.insOcorrenciaPess, pessoalControlador.insereOcorrenciaPess());
+    app.put(rotasPessoal.editaOcorrenciaPess,pessoalControlador.editaOcorrenciaPess());
+    app.delete(rotasPessoal.excluiOcorrenciaPess,pessoalControlador.excluiOcorrenciaPess());
+
+    app.post(rotasPessoal.insOcorrencia, pessoalControlador.insereOcorrencia());
+    app.put(rotasPessoal.editaOcorrencia,pessoalControlador.editaOcorrencia());    
+    app.delete(rotasPessoal.excluiOcorrencia,pessoalControlador.excluiOcorrencia());   
 }

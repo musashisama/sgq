@@ -1,61 +1,28 @@
 <!DOCTYPE html>
 <html>
-<app-scripts-css/>
+  <app-scripts-css/>
   <body>
-    <app-header />
+    <app-header/>
     <main class="conteudoPrincipal">
       <app-navbar id="slide-out" class="sidenav"/>
       <div class="container">
-        <h3 class="center-align">Relação de Pessoal do CARF</h3>
+        <h3 class="center-align titulo">Relação de Pessoal do CARF</h3>
         <br/>
-        <div class="row">
-          <div class="col s12">
-            <ul class="tabs">              
-              <li class="tab col s3">
-                <a href="#tabColab">Colaboradores</a>
-              </li>
-              <li class="tab col s3">
-                <a href="#tabServ">Servidores</a>
-              </li>
-              <li class="tab col s3">
-                <a href="#tabTerc">Terceirizados</a>
-              </li>
-            </ul>
-          </div>          
-          <div id="tabColab" class="col s12">
-            <div class="row">
-              <div class="row">
-                <div class="tabelaCol">
-                  <div id="tabelaCol"/>
-                </div>
-              </div>
-            </div>
+      <form id="formPessoas" data-conselheiros=`${data.pessoas}` name="formCons" action="/pessoal/restrito/pessoas/detalha/" method="post">
+          <div class="row">
+            <div class="col s12 right-align">
+              <a href="#!" id="mostraColunas" title="Agrupar/Desagrupar por Turma" class="waves-effect waves-yellow hoverable z-depth-3 btn-floating blue">
+                <i class="material-icons">unfold_less</i>
+              </a>           
+              <a href="/pessoal/restrito/pessoas/cadastra" title="Cadastrar Conselheiro" id="cadastraCons" class="hoverable z-depth-3 waves-effect waves-yellow btn-floating green">
+                <i class="material-icons">add</i>
+              </a>
+            </div>            
           </div>
-          <div id="tabServ" class="col s12">
-            <div class="row">
-              <div class="row">
-                <div class="tabelaServ">
-                  <div id="tabelaServ"/>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div id="tabTerc" class="col s12">
-            <div class="row">
-              <div class="row">
-                <div class="tabelaTerc">
-                  <div id="tabelaTerc"/>
-                </div>
-              </div>
-            </div>
-          </div>
+          <div id="tabelaPessoas"/>
+        </form>
         </div>
-      </div>      
-      <div id="dadosCol" class="controle">${data.col}</div>
-      <div id="dadosServ" class="controle">${data.serv}</div>
-      <div id="dadosTerc" class="controle">${data.terc}</div>
     </main>
-
     <!--Modal Structure-->
     <div id="modal1" class="modal">
       <div class="modal-content">
@@ -69,7 +36,7 @@
         </button>
       </div>
     </div>
-<app-footer/>
+    <app-footer/>
     <app-scripts-js/>
     <script src="/estatico/js/pessoal/pessoas.js"/>
   </body>

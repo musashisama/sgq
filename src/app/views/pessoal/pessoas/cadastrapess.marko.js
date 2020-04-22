@@ -2,7 +2,7 @@
 "use strict";
 
 var marko_template = module.exports = require("marko/src/html").t(__filename),
-    marko_componentType = "/sgq$1.0.0/src/app/views/pessoal/conselheiros/cadastracons.marko",
+    marko_componentType = "/sgq$1.0.0/src/app/views/pessoal/pessoas/cadastrapess.marko",
     components_helpers = require("marko/src/runtime/components/helpers"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
@@ -45,11 +45,9 @@ function render(input, out, __component, component, state) {
       class: "sidenav"
     }, out, __component, "5");
 
-  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Cadastrar Novo Conselheiro</h3><br><div class=\"card-panel hoverable blue lighten-5 z-depth-4 col s9\"><div class=\"row\"><form id=\"formCadCons\" name=\"formCons\"" +
-    marko_attr("action", "/pessoal/restrito/conselheiros/cadastra/") +
-    " method=\"post\"><h4>Dados Pessoais</h4><div class=\"row\"><input hidden id=\"cargo\" name=\"cargo\"" +
-    marko_attr("value", "Conselheiro") +
-    " type=\"text\"><div class=\"input-field col s5\"><i class=\"material-icons prefix\">account_circle</i><input id=\"nome\" name=\"nome\"" +
+  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Cadastrar Usuário</h3><br><div class=\"card-panel hoverable blue lighten-5 z-depth-4 col s9\"><div class=\"row\"><form id=\"formCadPess\" name=\"formCons\"" +
+    marko_attr("action", "/pessoal/restrito/pessoas/cadastra/") +
+    " method=\"post\"><h4>Dados Pessoais</h4><div class=\"row\"><div class=\"input-field col s5\"><i class=\"material-icons prefix\">account_circle</i><input id=\"nome\" name=\"nome\"" +
     marko_attr("value", "") +
     " type=\"text\" class=\"validate\"><label class=\"active\" for=\"nome\">Nome:</label></div><div class=\"input-field col s5\"><i class=\"material-icons prefix\">contact_mail</i><input id=\"email\" name=\"email\"" +
     marko_attr("value", "") +
@@ -63,7 +61,7 @@ function render(input, out, __component, component, state) {
     marko_attr("value", "") +
     " type=\"text\" class=\"validate\"><label class=\"active\" for=\"telefone\">Telefone:</label></div><div class=\"input-field col s2\"><i class=\"material-icons prefix\">phone_iphone</i><input id=\"celular\" name=\"celular\"" +
     marko_attr("value", "") +
-    " type=\"text\" class=\"validate\"><label class=\"active\" for=\"celular\">Celular:</label></div></div><h4>Dados do Mandato</h4><div class=\"row\"><div class=\"form-group input-field turmaCons col s4\"><i class=\"material-icons prefix\">event_seat</i><select name=\"turmaCons\">");
+    " type=\"text\" class=\"validate\"><label class=\"active\" for=\"celular\">Celular:</label></div></div><h4>Dados Funcionais</h4><div class=\"row\"><div class=\"form-group input-field setor col s4\"><i class=\"material-icons prefix\">event_seat</i><select name=\"setor\">");
 
   var $for$0 = 0;
 
@@ -77,17 +75,13 @@ function render(input, out, __component, component, state) {
       "</option>");
   });
 
-  out.w("</select><label for=\"turmaCons\">Turma/Câmara/Seção:</label></div><div class=\"input-field col s2\"><i class=\"material-icons prefix\">event_seat</i><input id=\"turma\" name=\"turma\"" +
+  out.w("</select><label for=\"setor\">Unidade/Setor:</label></div> <div class=\"input-field col s3\"><i class=\"material-icons prefix\">gps_fixed</i><input id=\"origem\" name=\"origem\"" +
     marko_attr("value", "") +
-    " type=\"text\" class=\"validate\"><label class=\"active\" for=\"turma\">Turma:</label></div><div class=\"input-field col s2\"><i class=\"material-icons prefix\">event_seat</i><input id=\"camara\" name=\"camara\"" +
+    " type=\"text\" class=\"validate\"><label class=\"active\" for=\"origem\">Origem:</label></div></div><div class=\"row\"> <div class=\"input field col s3\"><input id=\"dtInicio\" name=\"dtInicio\"" +
     marko_attr("value", "") +
-    " type=\"text\" class=\"validate\"><label class=\"active\" for=\"camara\">Câmara:</label></div><div class=\"input-field col s2\"><i class=\"material-icons prefix\">event_seat</i><input id=\"setor\" name=\"setor\"" +
+    " type=\"text\" class=\"datepicker\"><label for=\"dtInicio\">Início do exercício no CARF:</label></div><div class=\"input-field col s2\"><i class=\"material-icons prefix\">info</i><input id=\"cargo\" name=\"cargo\"" +
     marko_attr("value", "") +
-    " type=\"text\" class=\"validate\"><label class=\"active\" for=\"setor\">Seção:</label></div><div class=\"input-field col s3\"><i class=\"material-icons prefix\">gps_fixed</i><input id=\"origem\" name=\"origem\"" +
-    marko_attr("value", "") +
-    " type=\"text\" class=\"validate\"><label class=\"active\" for=\"origem\">Representação:</label></div></div><div class=\"row\"><div class=\"input-field col s3\"><i class=\"material-icons prefix\">details</i><select id=\"tipo\" name=\"tipo\"><option value=\"Titular\">Titular</option><option value=\"Suplente\">Suplente</option></select><label>Titular/Suplente</label></div><div class=\"input field col s3\"><input id=\"dtInicio\" name=\"dtInicio\"" +
-    marko_attr("value", "") +
-    " type=\"text\" class=\"datepicker\"><label for=\"dtInicio\">Início do Último Mandato:</label></div><div class=\"form-group input-field funcao col s4\"><i class=\"material-icons prefix\">domain</i><select name=\"funcao\">");
+    " type=\"text\" class=\"validate\"><label class=\"active\" for=\"cargo\">Cargo:</label></div><div class=\"form-group input-field funcao col s4\"><i class=\"material-icons prefix\">domain</i><select name=\"funcao\">");
 
   var $for$1 = 0;
 
@@ -101,17 +95,17 @@ function render(input, out, __component, component, state) {
       "</option>");
   });
 
-  out.w("</select><label for=\"funcao\">Função:</label></div><div class=\"input-field col s3\"><i class=\"material-icons prefix\">event_note</i><select id=\"mandatoAt\" name=\"mandatoAt\"><option value>Sim</option><option>Não</option></select><label>Mandato Ativo?</label></div></div><div class=\"card-action right-align\"> <a class=\"btn-cons-salva btn-floating blue waves-effect waves-light hoverable z-depth-3\" type=\"submit\" title=\"Salvar\"><i class=\"material-icons\">save</i></a></div></form></div></div><div></div></div></main>");
+  out.w("</select><label for=\"funcao\">Função:</label></div><div class=\"input-field col s3\"><i class=\"material-icons prefix\">event_note</i><select id=\"exercicioCARF\" name=\"exercicioCARF\"><option value>Sim</option><option>Não</option></select><label>Pessoa em exercício no CARF?</label></div></div><div class=\"card-action right-align\"> <a class=\"btn-cons-salva btn-floating blue waves-effect waves-light hoverable z-depth-3\" type=\"submit\" title=\"Salvar\"><i class=\"material-icons\">save</i></a></div></form></div></div><div></div></div></main>");
 
-  app_footer_tag({}, out, __component, "91");
+  app_footer_tag({}, out, __component, "76");
 
-  app_scripts_js_tag({}, out, __component, "92");
+  app_scripts_js_tag({}, out, __component, "77");
 
-  out.w("<script src=\"/estatico/js/pessoal/cadcons.js\"></script>");
+  out.w("<script src=\"/estatico/js/pessoal/cadpess.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "94");
+  await_reorderer_tag({}, out, __component, "79");
 
   out.w("</body></html>");
 }
@@ -124,7 +118,7 @@ marko_template._ = marko_renderer(render, {
 marko_template.Component = marko_defineComponent({}, marko_template._);
 
 marko_template.meta = {
-    id: "/sgq$1.0.0/src/app/views/pessoal/conselheiros/cadastracons.marko",
+    id: "/sgq$1.0.0/src/app/views/pessoal/pessoas/cadastrapess.marko",
     tags: [
       "../../components/app-scripts-css.marko",
       "marko/src/core-tags/components/component-globals-tag",

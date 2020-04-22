@@ -57,7 +57,7 @@ function render(input, out, __component, component, state) {
       "</h6></div>");
   }
 
-  out.w("<br><br><br><br><div class=\"col s6 offset-s3 center-align\"><div class=\"card\"><br><h4 class=\"center-align\">Login</h4><div class=\"card-content\"><form action=\"/login\" method=\"post\"><div class=\"form-group input-field cpf\"><i class=\"material-icons prefix\">account_circle</i><label for=\"cpf\">CPF:</label><input type=\"text\" required autocomplete=\"username\" id=\"cpf\" name=\"cpf\"" +
+  out.w("<br><br><br><br><div class=\"col s6 offset-s3 center-align\"><div class=\"card\"><br><h4 class=\"center-align titulo\">Login</h4><div class=\"card-content\"><form action=\"/login\" method=\"post\"><div class=\"form-group input-field cpf\"><i class=\"material-icons prefix\">account_circle</i><label for=\"cpf\">CPF:</label><input type=\"text\" required autocomplete=\"username\" id=\"cpf\" name=\"cpf\"" +
     marko_attr("value", data.id) +
     " placeholder=\"Digite seu CPF.\" class=\"form-control tooltipped\" data-position=\"bottom\" data-tooltip=\"Somente números.\"></div><div class=\"form-group input-field pwd\"><i class=\"material-icons prefix\">lock</i><input type=\"password\" required autocomplete=\"current-password\" id=\"pwd\" name=\"pwd\"" +
     marko_attr("value", data.pwd) +

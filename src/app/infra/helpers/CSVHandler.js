@@ -177,8 +177,7 @@ class CSVHandler {
         return new Promise((resolve, reject) => {
             let flat = [];
             let hoje = new Date().getTime();
-            let dias = 1000 * 60 * 60 * 24;
-            console.log(CPF);
+            let dias = 1000 * 60 * 60 * 24;            
             let regap = this.readCSV(arq)
                 .then(regap => {
                     let porCPF = d3.nest()

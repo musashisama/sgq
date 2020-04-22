@@ -24,6 +24,12 @@ module.exports = (app) => {
 
     });
 
+    app.route(rotasUser.perfis)
+        .get(userControlador.formPerfis())
+        .post(userControlador.formPerfis());
+
+    app.put(rotasUser.edita,userControlador.editaPerfis());
+
     app.route(rotasUser.cadastro)
         .get(userControlador.formCadastra())
         .post(userControlador.cadastra())

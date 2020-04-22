@@ -6,11 +6,11 @@
     <main class="conteudoPrincipal">
       <app-navbar id="slide-out" class="sidenav"/>
       <div class="container">
-        <h2 class="center-align">Lista de Não Conformidades</h2>
+        <h3 class="center-align titulo">Lista de Não Conformidades</h3>
         <form data-nc=`${data.nc}`/>
         <div data-msg=`${data.msg}`/>
-        <a class="btn waves-effect waves-light green addListaNC right" href="/gestao/cadastranc">
-          Adicionar Tipo de Não Conformidade</a>
+        <a class="btn-floating waves-effect waves-light green addListaNC right" title='Adicionar Tipo de Não Conformidade' href="/qualidade/restrito/cadastra-nc">
+          <i class="material-icons">add</i></a>
         <div id="tabelaNC"/>
       </div>
     </main>

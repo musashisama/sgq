@@ -23,12 +23,12 @@ class JulgamentoControlador {
         return {
             autenticadas: '/julgamento/restrito*',
             cargacons: '/julgamento/restrito/diagnostico-carga',
-            carregacsv: '/julgamento/restrito/carregacsv',
-            escolhecsv: '/julgamento/restrito/escolhecsv',
-            escolhecsvregap: '/julgamento/restrito/escolhecsvregap',
+            carregacsv: '/julgamento/restrito/carrega-csv',
+            escolhecsv: '/julgamento/restrito/escolhe-csv',
+            escolhecsvregap: '/julgamento/restrito/escolhe-csv-regap',
             detalha: '/julgamento/restrito/diagnostico-carga/:id',
-            regapCojul: '/julgamento/restrito/regapCojul/:id',
-            detalharegap: '/julgamento/restrito/regapCojul/detalha/:id',
+            regapCojul: '/julgamento/restrito/regap-cojul/:id',
+            detalharegap: '/julgamento/restrito/regap-cojul/detalha/:id',
             regap: '/julgamento/restrito/regap/:id'
         };
     }
@@ -76,7 +76,7 @@ class JulgamentoControlador {
         return function (req, resp) {
             // const roles = ['julgamento','admin','blabl','qualidade'];
             // const perfil = req.user.perfis;
-            if (1==1) {               //ACL.checaACL(perfil,roles)
+            if (1 == 1) {               //ACL.checaACL(perfil,roles)
                 const julgamentoDao = new JulgamentoDao(conn);
                 let options = { day: '2-digit', month: '2-digit', year: 'numeric', weekday: 'long' };
                 const formato = { minimumFractionDigits: 2, style: 'currency', currency: 'BRL' }
@@ -177,7 +177,7 @@ class JulgamentoControlador {
                 resp.marko(templates.base.principal, { msg: "Usuário não autorizado a executar esta operação." });
             } else {
                 let caminho = req.params.id;
-                req.session.caminho = caminho;               
+                req.session.caminho = caminho;
                 dados = CSVHandler.pegaRegap(`${path}${caminho}`, 'COJUL')
                     .then(dados => {
                         const pessoalDao = new PessoalDao(conn);
@@ -210,8 +210,6 @@ class JulgamentoControlador {
                 let cpf = req.params.id;
                 let caminho = (req.headers.referrer || req.headers.referer).split('/');
                 caminho = req.session.caminho;
-                console.log(caminho);
-                console.log(cpf);
                 dados = CSVHandler.pegaRegap(`${path}${caminho}`, 'CONS', cpf)
                     .then(dados => {
                         const pessoalDao = new PessoalDao(conn);
@@ -228,8 +226,25 @@ class JulgamentoControlador {
                                             dado._id = new ObjectID(user._id);
                                         }
                                     })
+                                    
+                                });
+                                let options = { day: '2-digit', month: '2-digit', year: 'numeric', weekday: 'long' };
+                                const julgamentoDao = new JulgamentoDao(conn);                                
+                                julgamentoDao.getRelatorios({caminho:`${path}${caminho}`})
+                                .then(dataEnvio => {
+                                    resp.marko(templates.julgamento.regap, {
+                                        relatorio: JSON.stringify(dados),
+                                        user: dados[0].nome,
+                                        cpf: dados[0].CPF,
+                                        turma: dados[0].turma,
+                                        camara: dados[0].camara,
+                                        setor: dados[0].setor,
+                                        caminho: caminho,
+                                        dataEnvio: dataEnvio[0].dtExtracao
+                                    });
+                                    
                                 })
-                                resp.marko(templates.julgamento.regapCojul, { relatorio: JSON.stringify(dados) });
+
                             })
                     })
             }

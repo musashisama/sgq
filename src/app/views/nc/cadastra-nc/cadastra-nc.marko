@@ -6,20 +6,25 @@
     <main class="conteudoPrincipal">
     <app-navbar id="slide-out" class="sidenav"/>
       <div class="container">
-        <h3 class="center-align">Registrar Nova Não Conformidade</h3>
+        <h3 class="center-align titulo">Registrar Nova Não Conformidade</h3>
         <br/>
         <br/>
-        <form id="formCadNC" name="formCadNC" action="/gestao/cadastranc" method="post">
+        <form id="formCadNC" name="formCadNC" action="/qualidade/restrito/cadastra-nc" method="post">
           <div class="row">
-            <if (data.cadastraNC[0]._id)>
+            <if (data.cadastraNC._id)>
               <div>
                 <input type="hidden" name="_method" value="PUT"/>
-                <input type="hidden" name="_id" value=`${data.cadastraNC[0]._id}`/>
+                <input type="hidden" name="_id" value=`${data.cadastraNC._id}`/>
               </div>
             </if>
             <div class="form-group input-field Macroprocesso col s6">
               <select required name="Macroprocesso">
-                <option class="form-group" value="" disabled selected>Clique para selecionar</option>
+              <if (data.cadastraNC.Macroprocesso)>
+                <option class="form-group" value=`${data.cadastraNC.Macroprocesso}` disabled selected>${data.cadastraNC.Macroprocesso}</option>
+              </if>
+              <else>
+              <option class="form-group" value=`` disabled selected>Clique para selecionar</option>
+              </else>
                 <for|mp| of=data.mp>
                   <option class="form-group" value=`${mp.macroprocesso}`>${mp.macroprocesso}</option>
                 </for>
@@ -30,7 +35,7 @@
           <div class="row">
             <div class="form-group input-field cpfUser col s12">
               <label for="nconformidade">Tipologia (descrição) da Não Conformidade:</label>
-              <textarea required type="text" id="nconformidade" name="nconformidade" value=`${data.cadastraNC[0].nconformidade}` class="form-control materialize-textarea nconformidade alturaTextArea"/>
+              <textarea required type="text" id="nconformidade" name="nconformidade" value=`${data.cadastraNC.nconformidade}` class="form-control materialize-textarea nconformidade alturaTextArea">${data.cadastraNC.nconformidade}</textarea>
             </div>
           </div>
           <div class="row">
@@ -38,11 +43,11 @@
               <label for="descDet">
                 Descrição detalhada da <strong>não conformidade:</strong>
               </label>
-              <textarea required type="text" id="descDet" name="descDet" value=`${data.cadastraNC[0].descDet}` class="form-control materialize-textarea descDet alturaTextArea"/>
+              <textarea required type="text" id="descDet" name="descDet" value=`${data.cadastraNC.descDet}` class="form-control materialize-textarea descDet alturaTextArea">${data.cadastraNC.descDet}</textarea>
             </div>
-            <div class="col s6 offset-s6">
+            <div class="col s12 right-align">
               <a id="aModal" class="btn-floating btn-large waves-effect waves-light green hoverable btn-insere" href="#modal1">
-                <i class="material-icons">note_add</i>
+                <i class="material-icons">add</i>
               </a>
             </div>
           </div>

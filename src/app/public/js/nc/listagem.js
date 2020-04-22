@@ -21,7 +21,7 @@ function dataTable() {
         layout: layout,
        // responsiveLayout: responsiveLayout,
         
-        initialSort: [{ column: "Macroprocesso", dir: "asc" }],
+        initialSort: [{ column: "Macroprocesso", dir: "asc" },{ column: "nconformidade", dir: "asc" }],
         columns: [           
             { title: "Macroprocesso", width:180, field: "Macroprocesso", sorter: "string", hozAlign: "left", headerFilter: "input", formatter:"textarea", editor: false, },
             { title: "Não Conformidade", field: "nconformidade", sorter: "string", hozAlign: "left", headerFilter: "input",bottomCalc: "count", formatter:"textarea", editor: false,},

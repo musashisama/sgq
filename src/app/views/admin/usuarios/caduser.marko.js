@@ -45,7 +45,7 @@ function render(input, out, __component, component, state) {
       class: "sidenav"
     }, out, __component, "5");
 
-  out.w("<div class=\"container\"><h3 class=\"center-align\">Adicionar Usuário</h3><br><br><form id=\"formUser\" name=\"formUser\" action=\"/admin/usuario\" method=\"post\">");
+  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Adicionar Usuário</h3><br><br><form id=\"formUser\" name=\"formUser\" action=\"/admin/usuario\" method=\"post\">");
 
   if (data.registroUser._id) {
     out.w("<div><input type=\"hidden\" name=\"_method\" value=\"PUT\"><input type=\"hidden\" name=\"id\"" +

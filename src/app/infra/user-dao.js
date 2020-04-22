@@ -97,5 +97,30 @@ class UserDao {
             })
         });
     }
+
+    atualizaPerfis(cpf,perfis){
+        return new Promise((resolve, reject) => {
+            let comando = {$set: {perfil:perfis}}
+            this._db.usuarios.updateOne({cpf:cpf},{$set: {perfil:perfis}}, function (erro, res) {
+                if (erro) {
+                    return reject('Não foi possível inserir o registro.');
+                }                
+                return resolve(res);
+            })
+        });
+    }
+    
+
+    atualizaTodos(){
+        return new Promise((resolve, reject) => {
+            this._db.usuarios.updateMany({perfil:null}, {$set: {perfil:['carf']}}, function (erro, res) {
+                if (erro) {
+                    return reject('Não foi possível inserir o registro.');
+                }                
+                return resolve(res);
+            })
+        });
+        
+    }
 }
 module.exports = UserDao;

@@ -1,7 +1,9 @@
 inicializaComponentes();
 layout = "fitDataFill";
 responsiveLayout = true;
-initialSort = [{ column: "nome", dir: "asc" }];
+let table = null;
+let tabledata = "";
+let agrupado = false;
 function inicializaComponentes() {
     $(document).ready(function () {
         initSelect();
@@ -13,9 +15,9 @@ function initSelect() {
     $('select').formSelect();
 }
 
+
 function dataTable(msg) {
-    let tabledata = JSON.parse($('#dadosRegap').text());
-    var table = null;
+    let tabledata = JSON.parse($('#formGerencial').attr('data-regap'));   
     table = new Tabulator("#tabelaRegap", {
         data: tabledata,
         pagination: "local",
@@ -23,16 +25,24 @@ function dataTable(msg) {
         minHeight: '300px',
         maxHeight: '1000px',
         layout: layout,
-        //responsiveLayout: responsiveLayout,
-        initialSort: [{ column: "HE_CARF", dir: "desc" }],
-        columns: [
-            { title: "CPF", field: "CPF", sorter: "string", hozAlign: "left", headerFilter: "input", editor: false, },
-            { title: "Nome", field: "nome", sorter: "string", hozAlign: "left", headerFilter: "input", editor: false, },
-            { title: "Turma", field: "turma", sorter: "string", hozAlign: "center", headerFilter: "input", editor: false, },
-            { title: "Câmara", field: "camara", sorter: "string", hozAlign: "center", headerFilter: "input", editor: false, },
-            { title: "Seção", field: "setor", sorter: "string", hozAlign: "center", headerFilter: "input", editor: false, },
-            { title: "Processo", field: "Processo", sorter: "number", hozAlign: "center", editor: false, },
-            { title: "Carga em horas", field: "HE_CARF", sorter: "number", hozAlign: "center", editor: false, },
+        responsiveLayout: 'collapse', 
+        responsiveLayoutCollapseStartOpen: false,       
+        initialSort: [{ column: "Atividade", dir: "desc"}, {column: "HE_CARF", dir: "desc"} ],
+        columns: [ 
+            { formatter: "responsiveCollapse", width: 30, minWidth: 30, hozAlign: "left", resizable: false, headerSort: false },  
+            { title: "Processo", field: "Processo", sorter: "number", hozAlign: "center", headerFilter: "input", editor: false, responsive: 0 },       
+            { title: "Contribuinte", field: "Contribuinte", sorter: "string", hozAlign: "center", editor: false, responsive: 2 },           
+            { title: "Ind. Apenso", field: "Ind_Apenso", sorter: "string", hozAlign: "center", editor: false, responsive: 2 },
+            { title: "Atividade", field: "Atividade", sorter: "string", hozAlign: "center", headerFilter: "input", editor: false, responsive: 0 },
+            { title: "Situação de Julgamento", field: "Situacao", sorter: "string", headerFilter: "input", bottomCalc: "count", hozAlign: "center", editor: false, responsive: 0 },
+            { title: "Entrada na Atividade", field: "Entrada_na_Atividade", sorter: "date", hozAlign: "center", editor: false, responsive: 2 },
+            { title: "Horas CARF", field: "HE_CARF", sorter: "number", hozAlign: "center", headerFilter: "input", editor: false, responsive: 0 },
+            { title: "Dias na Atividade", field: "Dias_na_Atividade", sorter: "number", hozAlign: "center", editor: false, responsive: 0 },
+            { title: "Dias da Sessão de Julgamento", field: "Dias_da_SJ", sorter: "number", hozAlign: "center", editor: false, responsive: 2 },
+            { title: "Data da Sessão de Julgamento", field: "Data_da_Sessao_Julgamento", sorter: "number", hozAlign: "center", editor: false, responsive: 2 },
+            { title: "Dias da Última Distribuição", field: "Dias_da_Dist", sorter: "number", hozAlign: "center", editor: false, responsive: 2 },
+            { title: "Retorno Sepoj?", field: "Retorno_Sepoj", sorter: "string", hozAlign: "center", editor: false, responsive: 0 },
+            { title: "Última Equipe", field: "Equipe_Ultima", sorter: "string", hozAlign: "center", editor: false, responsive: 2 },
             ],
         autoColumns: false,
         locale: true,
@@ -71,6 +81,18 @@ function dataTable(msg) {
         },
     });
 }
+
+document.getElementById("mostraColunas").addEventListener("click", function () {
+    if (agrupado == false) {
+        table.setGroupBy(["Atividade", "Situacao"]);
+        agrupado = true;
+    }
+    else {
+        table.setGroupBy();
+        agrupado = false;
+    };
+
+});
 
 // {
 //     title: "", field: "HE_CARF", sorter: "number", hozAlign: "left", width: 250, formatter: "progress", formatterParams: {
