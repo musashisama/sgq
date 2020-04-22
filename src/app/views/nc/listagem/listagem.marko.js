@@ -43,7 +43,7 @@ function render(input, out, __component, component, state) {
       class: "sidenav"
     }, out, __component, "5");
 
-  out.w("<div class=\"container\"><div class=\"row\"><h3 class=\"center-align\">Lista de Não Conformidades</h3><form" +
+  out.w("<div class=\"container\"><div class=\"row\"><h3 class=\"center-align titulo\">Lista de Não Conformidades</h3><form" +
     marko_attr("data-nc", "" + data.nc) +
     "></form><div id=\"tabelaNC\"></div> </div></div></main><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\">A bunch of text</p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat\">Cancela</a><a href=\"#!\" class=\"modal-close waves-effect waves-green btn-flat concorda\">Confirma</a></div></div>");
 

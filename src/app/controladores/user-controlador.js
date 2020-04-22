@@ -14,7 +14,10 @@ class UserControlador {
             autenticadas: '/admin*',
             cadastro: '/admin/usuario',
             edicao: '/admin/usuario/:id',
-            delecao: '/admin/usuario/delete/:id'
+            delecao: '/admin/usuario/delete/:id',
+            perfis: '/admin/usuario/perfis',
+            edita: '/admin/usuario/perfis/:id',
+
         };
 
     }
@@ -47,6 +50,29 @@ class UserControlador {
         };
     }
 
+    formPerfis() {
+        return function (req, resp) {
+            const userDao = new UserDao(conn);
+            const ncDao = new NCDao(conn);
+            const baseDao = new BaseDao(conn);
+            let form = [{}];
+
+            // userDao.atualizaTodos().then(res => {                
+            //     console.log(res.result.nModified + " document(s) updated");
+            // }).catch(erro => console.log(erro));
+
+            baseDao.listaPerfis()
+                .then(perfis => {
+                    userDao.getUsers()
+                        .then(users => {
+                            resp.marko(templates.admin.perfis, { perfis: perfis, users: JSON.stringify(users) })
+                        })
+                })
+                .catch(erro => console.log(erro));
+        };
+    }
+
+
     cadastra() {
         return function (req, resp) {
             const registro = req.body;
@@ -57,6 +83,17 @@ class UserControlador {
             const userDao = new UserDao(conn);
             userDao.cadastraUser(registro)
                 .then(resp.marko(templates.base.principal, { msg: "Usuário cadastrado com sucesso!" }))
+                .catch(erro => console.log(erro));
+        };
+    }
+
+    editaPerfis() {
+        return function (req, resp) {
+            const userDao = new UserDao(conn);
+            userDao.atualizaPerfis(req.body.cpf, req.body.perfil) 
+                .then(res => {                   
+                    resp.marko(templates.admin.perfis)
+                })
                 .catch(erro => console.log(erro));
         };
     }

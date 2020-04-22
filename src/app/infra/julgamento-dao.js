@@ -17,7 +17,8 @@ class JulgamentoDao {
         });
     }
 
-    getRelatorios(filtro={}){
+    getRelatorios(filtro){
+        
         return new Promise((resolve, reject) => {            
             this._db.relatorios
             .find(filtro)

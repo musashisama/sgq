@@ -9,15 +9,15 @@ class NCControlador {
 
     static rotas() {
         return {
-            autenticadas: '/gestao*',
-            lista: '/gestao/lista',
-            listaNC: '/listaNC',
-            form: '/form',
-            listagem: '/listagem',
-            listaRNC: '/gestao/listaregistronc',            
-            cadastraNC: '/gestao/cadastranc',
-            edicao: '/gestao/cadastranc/:id',
-            deletaNC: '/gestao/excluinc/:id',
+            autenticadas: '/qualidade/restrito*',
+            lista: '/qualidade/restrito/lista-tipos',
+            listaNC: '/qualidade/listaNC',
+            form: '/qualidade/adiciona-nc',
+            listagem: '/qualidade/listagem',
+            listaRNC: '/qualidade/restrito/lista-registros-nc',            
+            cadastraNC: '/qualidade/restrito/cadastra-nc',
+            edicao: '/qualidade/restrito/cadastra-nc/:id',
+            deletaNC: '/qualidade/restrito/exclui-nc/:id',
         };
     }
 
@@ -165,15 +165,15 @@ class NCControlador {
     }
 
     formEdicao() {
-        return function (req, resp) {
+        return function (req, resp) {            
             const id = new ObjectID(req.params.id);
             const ncDao = new NCDao(conn);            
             ncDao.getFormEdicao(id)
-                .then(nc => {                    
+                .then(nc => {
                     resp.marko(
                         templates.nc.cadastranc, {
                         mp: nc[0],
-                        cadastraNC: nc[1]              
+                        cadastraNC: (nc[1])[0]              
                     }
                     )
                 }
@@ -211,7 +211,5 @@ class NCControlador {
                 .catch(erro => console.log(erro));
         };
     }
-
 }
-
 module.exports = NCControlador;

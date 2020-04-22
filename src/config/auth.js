@@ -5,6 +5,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
 
 const UserDao = require('../app/infra/user-dao');
+const { ObjectID } = require('mongodb');
 const db = require('./mongodb').dados;
 
 module.exports = (app) => {
@@ -51,8 +52,8 @@ module.exports = (app) => {
     });
 
     app.use(sessao({
-        secret: '044e0263-58b7-4c7f-a032-056cd81069e3',
-        name:'cksgi',        
+        secret: ['X5f6oH8gaAwxrvM0OgI1FCbotQtshMiM','Kd22KDvHFkAaFU86ufl0iLyipj8wiyM2','POpdELY5mhuHcsaYcoioB9l2wK4ctyAb','DELugjXEO4Un5IsrJJKVq7G2bLftpB5S'],
+        name:'Sistema de Gestao Integrada',        
         genid: function (req) {
             return uuid();
         },

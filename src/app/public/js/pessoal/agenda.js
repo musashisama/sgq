@@ -63,8 +63,8 @@ function initSelect() {
 
 function dataTable() { 
     
-    let tabledata = JSON.parse($('#formPessoas').attr('data-conselheiros'));
-    table = new Tabulator("#tabelaPessoas", {
+    let tabledata = JSON.parse($('#formAgenda').attr('data-agenda'));
+    table = new Tabulator("#tabelaAgenda", {
         data: tabledata,
         autoColumns: autoColumns,
         locale: locale,
@@ -78,12 +78,10 @@ function dataTable() {
         responsiveLayout:responsiveLayout,
         responsiveLayoutCollapseStartOpen: false,     
         columns: [
-            { formatter: "responsiveCollapse", width: 30, minWidth: 30, hozAlign: "left", resizable: false, headerSort: false }, 
-            {formatter:formatNome, width:40, hozAlign:"center"},
+            { formatter: "responsiveCollapse", width: 30, minWidth: 30, hozAlign: "left", resizable: false, headerSort: false },            
             { title: "Nome", field: "nome", sorter: "string", hozAlign: "left", editor: false, headerFilter:"input",bottomCalc: "count", responsive:0 },
-            { title: "CPF", field: "cpf", sorter: "string", hozAlign: "center", width: 150, editor: false,headerFilter:"input", responsive:0 },
-            { title: "Setor", field: "setor", sorter: "string", hozAlign: "left", editor: false, responsive:2 },
-            { title: "SIAPE", field: "siape", sorter: "string", hozAlign: "left", editor: false, responsive:2 },
+            { title: "Telefone/Ramal", field: "telefone", sorter: "string", hozAlign: "left", editor: false, responsive:2 },   
+            { title: "Setor", field: "setor", sorter: "string", hozAlign: "left", editor: false, responsive:2 },           
             { title: "Cargo", field: "cargo", sorter: "string", hozAlign: "left", editor: false, responsive:2 },
             { title: "Função", field: "funcao", sorter: "string", hozAlign: "left", editor: false, responsive:2 },
             { title: "e-mail", field: "email", sorter: "string", hozAlign: "left", editor: false, responsive:1 },
@@ -105,6 +103,3 @@ document.getElementById("mostraColunas").addEventListener("click", function () {
 
 });
 
-let formatNome = function formatNome(cell){
-    return `<a class='black-text' href='/pessoal/restrito/pessoas/${cell.getRow().getData().cpf}' title='Detalhar Cadastro'><i class='material-icons'>folder_shared</i></a>`    
-}

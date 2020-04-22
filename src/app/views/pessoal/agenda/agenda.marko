@@ -6,19 +6,19 @@
     <main class="conteudoPrincipal">
       <app-navbar id="slide-out" class="sidenav"/>
       <div class="container">
-        <h3 class="center-align titulo">Diagnóstico da Carga de Processos dos Conselheiros</h3>
+        <h3 class="center-align titulo">Agenda Telefônica do CARF</h3>
         <br/>
-        <br/>
-        <form id="formGerencial" name="formGerencial" action="/julgamento/restrito/diagnostico-carga" method="post">
+      <form id="formAgenda" data-agenda=`${data.agenda}` name="formCons" action="/pessoal/agenda/" method="post">
           <div class="row">
-            <p id="resultado"/>
-            <div class="tabelaCarga">
-              <div id="tabelaCarga"/>
-            </div>
-            <div id="dadosCarga" class="controle">${data.relatorio}</div>
+            <div class="col s12 right-align">
+              <a href="#!" id="mostraColunas" title="Agrupar/Desagrupar Unidade/Setor" class="waves-effect waves-yellow hoverable z-depth-3 btn-floating blue">
+                <i class="material-icons">unfold_less</i>
+              </a>     
+            </div>            
           </div>
+          <div id="tabelaAgenda"/>
         </form>
-      </div>
+        </div>
     </main>
     <!--Modal Structure-->
     <div id="modal1" class="modal">
@@ -35,6 +35,6 @@
     </div>
     <app-footer/>
     <app-scripts-js/>
-    <script src="/estatico/js/julgamento/cargacons.js"/>
+    <script src="/estatico/js/pessoal/agenda.js"/>
   </body>
 </html>

@@ -51,7 +51,7 @@ function dataTable() {
       { title: "Não Conformidade", field: "nconformidade", sorter: "string", hozAlign: "left", headerFilter: "input", formatter: "textarea", editor: false, responsive: 0, },
       { title: "Ação Imediata", field: "descDet", sorter: "string", hozAlign: "left", headerFilter: "input", formatter: "textarea", editor: false, responsive: 0 },
       { formatter: formatEdita,  width: 40, hozAlign: "center" },
-      { formatter: formatDeleta, cellClick:deleta, width: 40, hozAlign: "center" },
+      { formatter: formatDeleta, cellClick:clicaDeleta, width: 40, hozAlign: "center" },
 
 
     ],
@@ -94,17 +94,39 @@ function dataTable() {
 }
 
 let formatEdita = function formatNome(cell) {
-  return `<a title='Editar' href='/gestao/cadastranc/${cell.getRow().getData()._id}'><i class='material-icons orange-text'>edit</i></a>`
+  return `<a title='Editar' href='/qualidade/restrito/cadastra-nc/${cell.getRow().getData()._id}'><i class='material-icons orange-text'>edit</i></a>`
 }
 
 let formatDeleta = function formatNome(cell) {
   
-  return `<a class='deletaNC' title='Excluir' href='#'><i class='material-icons red-text'>cancel</i></a>`
+  return `<a class='deletaNC deletaTipoNC' title='Excluir' href='#modal1'><i class='material-icons red-text'>cancel</i></a>`
+}
+
+function clicaDeleta(e, cell) {    
+  $('.deletaTipoNC').addClass('modal-trigger');
+  montaModalDeleta(e,cell);
+}
+
+function montaModalDeleta(e,cell){
+  $('.hModal').text("Confirmação de Exclusão de Tipo de Não Conformidade");    
+  $('.pModal').append(
+      `<p class="pModal">
+          <br/>
+          Tem certeza que quer excluir o registro?
+          </p>`
+  );
+  $('.concorda').click(function () {     
+      deleta(e, cell)
+  });
+  $('.cancela').click(function () {
+      $('.hModal2').text('');   
+      $('.pModal2').text('');        
+  })
 }
 
 function deleta(e, cell){  
   $.ajax({
-    url: `/gestao/excluinc/${cell.getRow().getData()._id}`,
+    url: `/qualidade/restrito/exclui-nc/${cell.getRow().getData()._id}`,
     type: 'DELETE',
     success: function (result) {
       var toastHTML = `<span>Registro removido com sucesso!</span>`;

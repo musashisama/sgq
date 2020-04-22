@@ -15,7 +15,7 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     app_header_tag = marko_loadTag(app_header_template),
     app_navbar_template = require("../../components/app-navbar.marko"),
     app_navbar_tag = marko_loadTag(app_navbar_template),
-    marko_escapeXml = marko_helpers.x,
+    marko_attr = marko_helpers.a,
     app_footer_template = require("../../components/app-footer.marko"),
     app_footer_tag = marko_loadTag(app_footer_template),
     app_scripts_js_template = require("../../components/app-scripts-js.marko"),
@@ -43,23 +43,19 @@ function render(input, out, __component, component, state) {
       class: "sidenav"
     }, out, __component, "5");
 
-  out.w("<div class=\"container\"><h3 class=\"center-align\">Relação de Pessoal do CARF</h3><br><div class=\"row\"><div class=\"col s12\"><ul class=\"tabs\"> <li class=\"tab col s3\"><a href=\"#tabColab\">Colaboradores</a></li><li class=\"tab col s3\"><a href=\"#tabServ\">Servidores</a></li><li class=\"tab col s3\"><a href=\"#tabTerc\">Terceirizados</a></li></ul></div> <div id=\"tabColab\" class=\"col s12\"><div class=\"row\"><div class=\"row\"><div class=\"tabelaCol\"><div id=\"tabelaCol\"></div></div></div></div></div><div id=\"tabServ\" class=\"col s12\"><div class=\"row\"><div class=\"row\"><div class=\"tabelaServ\"><div id=\"tabelaServ\"></div></div></div></div></div><div id=\"tabTerc\" class=\"col s12\"><div class=\"row\"><div class=\"row\"><div class=\"tabelaTerc\"><div id=\"tabelaTerc\"></div></div></div></div></div></div></div> <div id=\"dadosCol\" class=\"controle\">" +
-    marko_escapeXml(data.col) +
-    "</div><div id=\"dadosServ\" class=\"controle\">" +
-    marko_escapeXml(data.serv) +
-    "</div><div id=\"dadosTerc\" class=\"controle\">" +
-    marko_escapeXml(data.terc) +
-    "</div></main><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
+  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Relação de Pessoal do CARF</h3><br><form id=\"formPessoas\"" +
+    marko_attr("data-conselheiros", "" + data.pessoas) +
+    " name=\"formCons\" action=\"/pessoal/restrito/pessoas/detalha/\" method=\"post\"><div class=\"row\"><div class=\"col s12 right-align\"><a href=\"#!\" id=\"mostraColunas\" title=\"Agrupar/Desagrupar por Turma\" class=\"waves-effect waves-yellow hoverable z-depth-3 btn-floating blue\"><i class=\"material-icons\">unfold_less</i></a> <a href=\"/pessoal/restrito/pessoas/cadastra\" title=\"Cadastrar Conselheiro\" id=\"cadastraCons\" class=\"hoverable z-depth-3 waves-effect waves-yellow btn-floating green\"><i class=\"material-icons\">add</i></a></div> </div><div id=\"tabelaPessoas\"></div></form></div></main><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
 
-  app_footer_tag({}, out, __component, "44");
+  app_footer_tag({}, out, __component, "25");
 
-  app_scripts_js_tag({}, out, __component, "45");
+  app_scripts_js_tag({}, out, __component, "26");
 
   out.w("<script src=\"/estatico/js/pessoal/pessoas.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "47");
+  await_reorderer_tag({}, out, __component, "28");
 
   out.w("</body></html>");
 }

@@ -2,7 +2,7 @@
 "use strict";
 
 var marko_template = module.exports = require("marko/src/html").t(__filename),
-    marko_componentType = "/sgq$1.0.0/src/app/views/julgamento/cargacons/cargacons.marko",
+    marko_componentType = "/sgq$1.0.0/src/app/views/admin/perfis/perfis.marko",
     components_helpers = require("marko/src/runtime/components/helpers"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
@@ -15,7 +15,7 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     app_header_tag = marko_loadTag(app_header_template),
     app_navbar_template = require("../../components/app-navbar.marko"),
     app_navbar_tag = marko_loadTag(app_navbar_template),
-    marko_escapeXml = marko_helpers.x,
+    marko_attr = marko_helpers.a,
     app_footer_template = require("../../components/app-footer.marko"),
     app_footer_tag = marko_loadTag(app_footer_template),
     app_scripts_js_template = require("../../components/app-scripts-js.marko"),
@@ -43,19 +43,20 @@ function render(input, out, __component, component, state) {
       class: "sidenav"
     }, out, __component, "5");
 
-  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Diagnóstico da Carga de Processos dos Conselheiros</h3><br><br><form id=\"formGerencial\" name=\"formGerencial\" action=\"/julgamento/restrito/diagnostico-carga\" method=\"post\"><div class=\"row\"><p id=\"resultado\"></p><div class=\"tabelaCarga\"><div id=\"tabelaCarga\"></div></div><div id=\"dadosCarga\" class=\"controle\">" +
-    marko_escapeXml(data.relatorio) +
-    "</div></div></form></div></main><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
+  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Perfis de Usuários do Sistema de Gestão Integrada do CARF</h3><form id=\"formPerfis\"" +
+    marko_attr("data-users", "" + data.users) +
+    marko_attr("data-perfis", "" + data.perfis) +
+    " name=\"formPerfis\" action=\"/julgamento/restrito/regap-cojul/detalha/\" method=\"post\"><div class=\"row\"><div class=\"col s12 right-align\"><a href=\"#!\" id=\"mostraColunas\" title=\"Agrupar/Desagrupar por Atividade\" class=\"waves-effect waves-yellow hoverable z-depth-3 btn-floating blue\"><i class=\"material-icons\">unfold_less</i></a></div><div id=\"tabelaUsuarios\"></div></div></form><br></div></main><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda modal-close\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
 
-  app_footer_tag({}, out, __component, "24");
+  app_footer_tag({}, out, __component, "23");
 
-  app_scripts_js_tag({}, out, __component, "25");
+  app_scripts_js_tag({}, out, __component, "24");
 
-  out.w("<script src=\"/estatico/js/julgamento/cargacons.js\"></script>");
+  out.w("<script src=\"/estatico/js/base/perfis.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "27");
+  await_reorderer_tag({}, out, __component, "26");
 
   out.w("</body></html>");
 }
@@ -68,7 +69,7 @@ marko_template._ = marko_renderer(render, {
 marko_template.Component = marko_defineComponent({}, marko_template._);
 
 marko_template.meta = {
-    id: "/sgq$1.0.0/src/app/views/julgamento/cargacons/cargacons.marko",
+    id: "/sgq$1.0.0/src/app/views/admin/perfis/perfis.marko",
     tags: [
       "../../components/app-scripts-css.marko",
       "marko/src/core-tags/components/component-globals-tag",

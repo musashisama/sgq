@@ -9,20 +9,21 @@ function inicializaComponentes() {
 
 let regex = new RegExp("(.*?)\.(csv)$");
 function triggerValidation(el) {
-  if (!(regex.test(el.value.toLowerCase()))) {
-    el.value = '';
-    initToolToast()
-    //alert('Favor escolher um arquivo CSV');
-  }
+    if (el.value != '')
+        if (!(regex.test(el.value.toLowerCase()))) {
+            el.value = '';
+            initToolToast()
+            //alert('Favor escolher um arquivo CSV');
+        }
 }
 
-function initToolToast(){
-    var toastHTML = `<span>Favor escolher um arquivo CSV</span><button class="btn-flat toast-action">Ok</button>`;     
-        $('.tooltipped').tooltip();       
-            M.toast({html: toastHTML});  
-        $('.toast-action').click(function(){
-            M.Toast.dismissAll();
-        })
+function initToolToast() {
+    var toastHTML = `<span>Favor escolher um arquivo CSV</span><button class="btn-flat toast-action">Ok</button>`;
+    $('.tooltipped').tooltip();
+    M.toast({ html: toastHTML });
+    $('.toast-action').click(function () {
+        M.Toast.dismissAll();
+    })
 }
 
 function toggleRegapRadio() {

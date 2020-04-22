@@ -20,17 +20,7 @@ class PessoalDao {
                 });
 
         });
-    }
-
-    getUsersCargo() {
-        return Promise.all([
-            //this.getUsers({cargo:"Conselheiro"}),
-            this.getUsers({ funcao: "Colaborador" }),
-            this.getUsers({ $and: [{ funcao: { $ne: "Terceirizado" } }, { funcao: { $ne: "Colaborador" } }, { cargo: { $ne: "Conselheiro" } }] }),
-            this.getUsers({ funcao: "Terceirizado" })
-        ]
-        )
-    }
+    }    
 
     insereOcorrencia(registro){
         return new Promise((resolve, reject) => {
@@ -43,12 +33,12 @@ class PessoalDao {
         });
     }
 
-    getUsers(filtro) {
+    getUsers(filtro, projecao) {
         return new Promise((resolve, reject) => {
 
             this._db.usuarios
                 .find(filtro)
-                .project()
+                .project(projecao)
                 .toArray(function (erro, res) {
                     if (erro) {
                         return reject('Erro na base de dados. Tente novamente mais tarde.');
@@ -132,6 +122,19 @@ class PessoalDao {
 
     }
 
+    editaPessoa(registro) {
+        return new Promise((resolve, reject) => {
+            console.log(registro.cpf);
+            this._db.usuarios.updateOne({cpf:registro.cpf}, {$set :registro}, function (erro, res) {
+                if (erro) {
+                    return reject('Erro na base de dados. Tente novamente mais tarde.');
+                }                    
+                return resolve(res);
+            });
+        });
+
+    }
+
     editaOcorrencia(id, registro) {
         return new Promise((resolve, reject) => {            
             delete registro._id
@@ -158,7 +161,6 @@ class PessoalDao {
     cadastraUser(registro) {
 
         return new Promise((resolve, reject) => {
-
             this._db.usuarios.insertOne(registro, function (erro, res) {
                 if (erro) {
                     return reject('Não foi possível inserir o registro.');

@@ -6,9 +6,35 @@
     padding-top: 2rem;
 }
 
+nav{
+    min-height:80px;
+    vertical-align: middle;
+    align-items: center; 
+}
+
+.baixoNav{    
+    height: 10px;
+    background-color: orange;
+    align-items: center;
+    text-align: center;          
+}
+
+.tituloNav{    
+    vertical-align: middle;
+    align-items: center;    
+}
+
 .cabecalho, .rodape {
     background-color: #1659bf;
-    width: 100%;
+    width: 100%;    
+}
+
+.titulo-sistema {
+    font-size: 2.5em;
+    color: white;
+    padding-left: 2.5%;  
+    padding-top: 10px;
+    vertical-align: middle;  
 }
 
 body {
@@ -27,6 +53,14 @@ body {
 
 h3 {
     color: #3867b7;
+}
+
+h4 {
+    color: #3867b7a6;
+}
+
+h5 {
+    color: #3867b777;
 }
 
 .icones {
@@ -201,12 +235,7 @@ h3 {
     background-color: #F2F5F7;
 }
 
-.titulo-sistema {
-    font-size: 2.5em;
-    color: white;
-    padding-left: 2.5%;
-    ;
-}
+
 
 #toast-container {
     top: auto !important;
@@ -288,4 +317,28 @@ summary::-webkit-details-marker {
 
 .alturaTextArea{
     height: 200px;
+}
+
+.breads{    
+    border-radius: 10px;
+    max-height: 30px;
+    color: #3867b7;
+    align-items: center;
+    /* text-align: center;     */
+    margin-top: 10px;
+}
+
+.breadcrumb{
+    color: #3867b7;
+    vertical-align: middle;
+    
+   
+}
+.breadcrumb:before {
+    color: orange;
+    vertical-align: middle;
+}
+.breadcrumb:last-child {
+   color: #3867b788;
+   vertical-align: middle;
 }

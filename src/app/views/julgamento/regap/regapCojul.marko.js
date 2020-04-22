@@ -43,19 +43,19 @@ function render(input, out, __component, component, state) {
       class: "sidenav"
     }, out, __component, "5");
 
-  out.w("<div class=\"container\"><h3 class=\"center-align\">Relatório Gerencial de Acompanhamento de Prazos</h3><br><br><form id=\"formGerencial\"" +
+  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Relatório Gerencial de Acompanhamento de Prazos</h3><br><br><form id=\"formGerencial\"" +
     marko_attr("data-regapCojul", "" + data.relatorio) +
-    " name=\"formGerencial\" action=\"/julgamento/restrito/regapCojul/detalha/\" method=\"post\"><div class=\"row\"><div class=\"col s3 offset-s9\"><a href=\"#!\" id=\"mostraColunas\" class=\"waves-effect waves-green btn-flat blue \">Agrupar/Desagrupar</a></div><div id=\"tabelaRegap\"></div> </div></form></div></main><footer class=\"page-footer rodape\"></footer><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
+    " name=\"formGerencial\" action=\"/julgamento/restrito/regap-cojul/detalha/\" method=\"post\"><div class=\"row\"><div class=\"col s12 right-align\"><a href=\"#!\" id=\"mostraColunas\" class=\"waves-effect waves-yellow hoverable z-depth-3 btn-floating blue\"><i class=\"material-icons\">unfold_less</i></a></div><div id=\"tabelaRegap\"></div> </div></form></div></main><footer class=\"page-footer rodape\"></footer><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
 
-  app_footer_tag({}, out, __component, "24");
+  app_footer_tag({}, out, __component, "25");
 
-  app_scripts_js_tag({}, out, __component, "25");
+  app_scripts_js_tag({}, out, __component, "26");
 
   out.w("<script src=\"/estatico/js/julgamento/regapCojul.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "27");
+  await_reorderer_tag({}, out, __component, "28");
 
   out.w("</body></html>");
 }
