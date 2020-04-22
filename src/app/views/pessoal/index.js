@@ -5,5 +5,5 @@ module.exports = {
     cadpess: require('./pessoas/cadastrapess.marko'),
     conselheiros: require('./conselheiros/conselheiros.marko'),
     detalhacons: require('./conselheiros/detalhacons.marko'),
-    cadcons: require('./conselheiros/cadastracons.marko')
+    cadcons: require('./conselheiros/cadastra_cons.marko')
 }
