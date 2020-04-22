@@ -1,3 +1,5 @@
+const { ObjectID } = require("mongodb");
+
 class UserDao {
 
     constructor(db) {
@@ -86,6 +88,7 @@ class UserDao {
 
         });
     }
+
     insereTrocasenha(registro){
         return new Promise((resolve, reject) => {
 
@@ -110,6 +113,58 @@ class UserDao {
         });
     }
     
+    getOcorrencias(filtro){
+        return new Promise((resolve, reject) => {
+            this._db.tipoOcorrencias
+                .find(filtro)
+                .toArray(function (erro, res) {
+                    if (erro) {
+                        return reject('Erro na base de dados. Tente novamente mais tarde.');
+                    }                    
+                    return resolve(res);
+                });
+
+        });
+    }
+
+    editaOco(registro){
+        return new Promise((resolve, reject) => {
+            let id = new ObjectID(registro._id);
+            delete registro._id;
+            this._db.tipoOcorrencias
+                .updateOne({ _id: id }, { $set: registro }, function (erro, res) {
+                    if (erro) {
+                        return reject(erro);
+                    }
+                    return resolve(res);
+                });
+
+        });
+    }
+
+    deletaTpOCo(id) {
+        return new Promise((resolve, reject) => {
+            this._db.tipoOcorrencias.deleteOne({_id: new ObjectID(id)}, function (erro, res) {
+                if (erro) {
+                    return reject('Não foi possível excluir o registro.');
+                }
+                return resolve(res);
+            })
+        });
+    }
+
+    insereTpOcorrencia(registro){
+        return new Promise((resolve, reject) => {
+            this._db.tipoOcorrencias.insertOne(registro, function (erro, res) {
+                if (erro) {
+                    return reject('Não foi possível inserir o registro.');
+                }
+                return resolve(res);
+            })
+        });
+    }
+    
+
 
     atualizaTodos(){
         return new Promise((resolve, reject) => {

@@ -104,7 +104,7 @@ function btnEdita() {
 }
 
 function btnOcorrencia() {
-    $('.concorda2').click(function (event) {
+    $('.concordaOco').click(function (event) {
         event.preventDefault();
         url = $('#formOcorrencia').attr("action");
         valores = $("#formOcorrencia").serializeArray();
