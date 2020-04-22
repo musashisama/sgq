@@ -17,7 +17,10 @@ class UserControlador {
             delecao: '/admin/usuario/delete/:id',
             perfis: '/admin/usuario/perfis',
             edita: '/admin/usuario/perfis/:id',
-
+            ocorrencias: '/admin/ocorrencias',
+            cadastraOco: '/admin/ocorrencias/cadastra',
+            edicaoOco: '/admin/ocorrencias/cadastra/:id',
+            deletaOco: '/admin/ocorrencias/exclui-ocorrencia/:id',
         };
 
     }
@@ -47,6 +50,107 @@ class UserControlador {
                             })
                         })
                         .catch(erro => console.log(erro)));
+        };
+    }
+
+    listaOcorrencias() {
+        return function (req, resp) {
+            const userDao = new UserDao(conn);
+            userDao.getOcorrencias()
+                .then(ocorrencias => resp.marko(
+                    templates.admin.lista_ocorrencias,
+                    {
+                        ocorrencias: JSON.stringify(ocorrencias)
+                    }
+                ))
+                .catch(erro => console.log(erro));
+        };
+    }
+
+    formOcorrencia() {
+        return function (req, resp) {
+            const role = 'admin';            
+            if (req.isAuthenticated()) {
+                const perfil = req.user.perfis;
+                if (perfil.indexOf(role) > -1) {
+                    let id = new ObjectID(req.params.id);                    
+                    const userDao = new UserDao(conn);                    
+                    userDao.getOcorrencias()
+                        .then(ocorrencias => {
+                            console.log(ocorrencias);
+                            resp.marko(templates.admin.ocorrencias, {
+                                ocorrencia: ''
+                            })
+                        })
+                        .catch(erro => console.log(erro));
+                } else resp.marko(templates.base.principal, { msg: "Usuário não autorizado a executar esta operação." });
+            }
+        };
+
+    }
+    formEditaOcorrencia() {
+        return function (req, resp) {
+            const role = 'admin';            
+            if (req.isAuthenticated()) {
+                const perfil = req.user.perfis;
+                if (perfil.indexOf(role) > -1) {
+                    let id = new ObjectID(req.params.id);                    
+                    const userDao = new UserDao(conn);                    
+                    userDao.getOcorrencias({_id:id})
+                        .then(ocorrencias => {                            
+                            resp.marko(templates.admin.ocorrencias, {
+                                ocorrencia: ocorrencias[0]
+                            })
+                        })
+                        .catch(erro => console.log(erro));
+                } else resp.marko(templates.base.principal, { msg: "Usuário não autorizado a executar esta operação." });
+            }
+        };
+
+    }
+    //Chamado pelo POST do formulário. Cadastra nova possível não conformidade.
+    cadastraTpOcorrencia() {
+        return function (req, resp) {
+            const registro = req.body;
+            const clientIp = requestIp.getClientIp(req);
+            registro['horaCriacao'] = new Date().toISOString();
+            registro['clientIP'] = clientIp;
+            registro['cpfUsuario'] = req.user.cpf;
+            const userDao = new UserDao(conn);
+            userDao.insereTpOcorrencia(registro)
+                .then(resp.redirect(UserControlador.rotas().ocorrencias))
+                .catch(erro => console.log(erro));
+        };
+    }
+
+    editaOco() {
+
+        return function (req, resp) {   
+            let registro = req.body; 
+            console.log(registro);      
+            const userDao = new UserDao(conn);
+            userDao.editaOco(registro)
+                .then(resp.redirect(UserControlador.rotas().ocorrencias))
+                .catch(erro => console.log(erro));
+        };
+    }
+
+    removeTpOco() {
+        return function (req, resp) {
+            const id = new ObjectID(req.params.id);
+            const userDao = new UserDao(conn);
+            userDao.deletaTpOCo(id)
+                .then(oco => {                    
+                    resp.marko(
+                        templates.nc.lista,
+                        {                        
+                           ocorrencias: JSON.stringify(oco),
+                            msg:'Tipo de Não Conformidade excluída com sucesso.'
+                        }
+                    )
+                }
+                )
+                .catch(erro => console.log(erro));
         };
     }
 
@@ -90,8 +194,8 @@ class UserControlador {
     editaPerfis() {
         return function (req, resp) {
             const userDao = new UserDao(conn);
-            userDao.atualizaPerfis(req.body.cpf, req.body.perfil) 
-                .then(res => {                   
+            userDao.atualizaPerfis(req.body.cpf, req.body.perfil)
+                .then(res => {
                     resp.marko(templates.admin.perfis)
                 })
                 .catch(erro => console.log(erro));

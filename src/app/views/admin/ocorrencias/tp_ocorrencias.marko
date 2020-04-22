@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <app-scripts-css/>
+  <body>
+    <app-header/>
+    <main class="conteudoPrincipal">
+      <app-navbar id="slide-out" class="sidenav"/>
+      <div class="container">
+        <h3 class="center-align titulo">Cadastrar novo tipo de Ocorrência</h3>
+        <br/>
+        <br/>
+        <form id="formOco" name="formOco" action="/admin/ocorrencias/cadastra" method="post">
+          <div class="row">
+            <if(data.ocorrencia._id)>
+              <div>
+                <input type="hidden" name="_method" value="PUT"/>
+                <input type="hidden" name="_id" value=`${data.ocorrencia._id}`/>
+              </div>
+            </if>
+            <div class="row">
+              <div class="form-group input-field cpfUser col s12">
+                <label for="tipoOcorrencia">Qual é o tipo de ocorrência que deseja cadastrar?</label>
+                <textarea required type="text" id="tipoOcorrencia" name="tipoOcorrencia" value=`${data.ocorrencia.tipoOcorrencia}` class="form-control materialize-textarea tipoOcorrencia alturaTextArea">${data.ocorrencia.tipoOcorrencia}</textarea>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group input-field descDet col s12">
+                <label for="descDet">Descrição detalhada do tipo de ocorrência:</label>
+                <textarea required type="text" id="descDet" name="descDet" value=`${data.ocorrencia.descDet}` class="form-control materialize-textarea descDet alturaTextArea">${data.ocorrencia.descDet}</textarea>
+              </div>
+              <div class="col s12 right-align">
+                <a id="aModal" class="btn-floating btn-large waves-effect waves-light green hoverable btn-insere" href="#modal1">
+                  <i class="material-icons">add</i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </main>
+    <!--Modal Structure-->
+    <div id="modal1" class="modal">
+      <div class="modal-content">
+        <h4 class="hModal">Modal Header</h4>
+        <p class="pModal"/>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-red btn-flat cancela">Cancela</a>
+        <button class="btn waves-effect waves-light concorda" type="submit" name="action">
+          Confirma <i class="material-icons right">send</i>
+        </button>
+      </div>
+    </div>
+    <app-footer/>
+    <app-scripts-js/>
+    <script src="/estatico/js/base/tp_ocorrencias.js"/>
+  </body>
+</html>

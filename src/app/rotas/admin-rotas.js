@@ -7,10 +7,10 @@ module.exports = (app) => {
 
     const rotasUser = UserControlador.rotas();
     const rotasBase = BaseControlador.rotas();
-   
+
     app.use(rotasUser.autenticadas, function (req, resp, next) {
         req.session.baseUrl = req.baseUrl;
-        if (req.isAuthenticated()) {           
+        if (req.isAuthenticated()) {
             next();
         } else {
             resp.redirect(rotasBase.login);
@@ -22,18 +22,32 @@ module.exports = (app) => {
             next();
         } else { resp.render(403) };
 
-    });
+    });   
+
+app.get(rotasUser.ocorrencias,userControlador.listaOcorrencias());
+
+app.route(rotasUser.cadastraOco)
+        .get(userControlador.formOcorrencia())
+        .post(userControlador.cadastraTpOcorrencia())
+        .put(userControlador.editaOco());
+
+        app.get(rotasUser.edicaoOco,userControlador.formEditaOcorrencia())
+
+    app.delete(rotasUser.deletaOco, userControlador.removeTpOco());
+
 
     app.route(rotasUser.perfis)
         .get(userControlador.formPerfis())
         .post(userControlador.formPerfis());
 
-    app.put(rotasUser.edita,userControlador.editaPerfis());
+    app.put(rotasUser.edita, userControlador.editaPerfis());
 
     app.route(rotasUser.cadastro)
         .get(userControlador.formCadastra())
         .post(userControlador.cadastra())
         .put(userControlador.edita());
+
+
 }
 
 
