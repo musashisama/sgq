@@ -10,7 +10,7 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.w("<script src=\"/estatico/js/libs/jquery-3.4.1.js\"></script><script src=\"/estatico/js/libs/materialize.js\"></script><script src=\"/estatico/js/libs/materialize.js\"></script><script src=\"/estatico/js/libs/tabulator.min.js\"></script><script src=\"/estatico/js/libs/moment.min.js\"></script><script src=\"/estatico/js/base/dropDown.js\"></script>");
+  out.w("<script src=\"/estatico/js/libs/jquery-3.4.1.js\"></script><script src=\"/estatico/js/libs/materialize.js\"></script><script src=\"/estatico/js/libs/materialize.js\"></script><script src=\"/estatico/js/libs/tabulator.min.js\"></script><script src=\"/estatico/js/libs/moment.min.js\"></script><script src=\"/estatico/js/libs/jspdf.min.js\"></script><script src=\"/estatico/js/libs/jspdf.min.js\"></script><script src=\"/estatico/js/libs/jspdf.plugin.autotable.js\"></script><script src=\"/estatico/js/libs/xlsx.full.min.js\"></script><script src=\"/estatico/js/base/dropDown.js\"></script>");
 }
 
 marko_template._ = marko_renderer(render, {

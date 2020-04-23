@@ -5,11 +5,27 @@ function inicializaComponentes() {
     getHeader();
     initToolToast();
     geraBreadcrumb();
+    download();
     volta();
   });
 }
 
-
+function download(){
+  $('.dropdownDownload').dropdown({ coverTrigger: false, hover: false, constrainWidth: false });  
+  $('.pdfDown').click(() =>{
+      table.download("pdf", `${$('.titulo').text()}.pdf`, {
+          orientation:"portrait",
+          title: `${$('.titulo').text()}`,
+          format: 'a4',
+      });
+  });
+  $('.csvDown').click(() =>{
+      table.download("csv", `${$('.titulo').text()}.csv`);
+  });
+  $('.xlsxDown').click(() =>{
+      table.download("xlsx", `${$('.titulo').text()}.xlsx`, {sheetName:"Relatório"});
+  })
+}
 
 function initDropDown() {
   $(".dropdown-trigger").dropdown({ coverTrigger: false, hover: false, constrainWidth: false });

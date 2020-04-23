@@ -15,6 +15,8 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     app_header_tag = marko_loadTag(app_header_template),
     app_navbar_template = require("../../components/app-navbar.marko"),
     app_navbar_tag = marko_loadTag(app_navbar_template),
+    app_drop_download_template = require("../../components/app-drop-download.marko"),
+    app_drop_download_tag = marko_loadTag(app_drop_download_template),
     marko_attr = marko_helpers.a,
     app_footer_template = require("../../components/app-footer.marko"),
     app_footer_tag = marko_loadTag(app_footer_template),
@@ -45,17 +47,21 @@ function render(input, out, __component, component, state) {
 
   out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Cadastro de Conselheiros do CARF</h3><br><form id=\"formCons\"" +
     marko_attr("data-conselheiros", "" + data.conselheiros) +
-    " name=\"formCons\" action=\"/pessoal/restrito/conselheiros/detalha/\" method=\"post\"><div class=\"row\"><div class=\"col s12 right-align\"><a href=\"#!\" id=\"mostraColunas\" title=\"Agrupar/Desagrupar por Turma\" class=\"waves-effect waves-yellow hoverable z-depth-3 btn-floating blue\"><i class=\"material-icons\">unfold_less</i></a> <a href=\"/pessoal/restrito/conselheiros/cadastra\" title=\"Cadastrar Conselheiro\" id=\"cadastraCons\" class=\"hoverable z-depth-3 waves-effect waves-yellow btn-floating green\"><i class=\"material-icons\">add</i></a></div> </div><div id=\"tabelaCons\"></div></form></div></main><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
+    " name=\"formCons\" action=\"/pessoal/restrito/conselheiros/detalha/\" method=\"post\"><div class=\"row\"><div class=\"col s12 right-align\">");
 
-  app_footer_tag({}, out, __component, "25");
+  app_drop_download_tag({}, out, __component, "12");
 
-  app_scripts_js_tag({}, out, __component, "26");
+  out.w("<a href=\"#!\" id=\"mostraColunas\" title=\"Agrupar/Desagrupar por Turma\" class=\"waves-effect waves-yellow hoverable z-depth-3 btn-floating blue\"><i class=\"material-icons\">unfold_less</i></a> <a href=\"/pessoal/restrito/conselheiros/cadastra\" title=\"Cadastrar Conselheiro\" id=\"cadastraCons\" class=\"hoverable z-depth-3 waves-effect waves-yellow btn-floating green\"><i class=\"material-icons\">add</i></a></div> </div><div id=\"tabelaCons\"></div></form></div></main><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
+
+  app_footer_tag({}, out, __component, "26");
+
+  app_scripts_js_tag({}, out, __component, "27");
 
   out.w("<script src=\"/estatico/js/pessoal/conselheiros.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "28");
+  await_reorderer_tag({}, out, __component, "29");
 
   out.w("</body></html>");
 }
@@ -74,6 +80,7 @@ marko_template.meta = {
       "marko/src/core-tags/components/component-globals-tag",
       "../../components/app-header.marko",
       "../../components/app-navbar.marko",
+      "../../components/app-drop-download.marko",
       "../../components/app-footer.marko",
       "../../components/app-scripts-js.marko",
       "marko/src/core-tags/components/init-components-tag",

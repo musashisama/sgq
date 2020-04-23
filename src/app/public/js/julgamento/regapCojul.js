@@ -3,15 +3,16 @@ layout = "fitDataFill";
 let table = null;
 let tabledata = "";
 let agrupado = false;
+let agrupadoT = false;
 initialSort = [{ column: "nome", dir: "asc" }];
 function inicializaComponentes() {
-    $(document).ready(function () {
+    $(document).ready(function () {        
         initSelect();
-        dataTable();
+        dataTable();              
     });
 }
 
-document.getElementById("mostraColunas").addEventListener("click", function () {
+document.getElementById("mostraColunasAtividade").addEventListener("click", function () {
     if (agrupado == false) {
         table.setGroupBy(["nome", "Atividade", "Situacao"]);
         agrupado = true;
@@ -20,12 +21,25 @@ document.getElementById("mostraColunas").addEventListener("click", function () {
         table.setGroupBy();
         agrupado = false;
     };
+});
+
+document.getElementById("mostraColunasTurma").addEventListener("click", function () {
+    if (agrupadoT == false) {
+        table.setGroupBy(["setor", "camara", "turma"]);
+        agrupadoT = true;
+    }
+    else {
+        table.setGroupBy();
+        agrupadoT = false;
+    };
 
 });
 
 function initSelect() {
     $('select').formSelect();
 }
+
+
 
 function dataTable(msg) {
     let tabledata = JSON.parse($('form').attr('data-regapCojul'));

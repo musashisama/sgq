@@ -4,10 +4,11 @@ responsiveLayout = true;
 let table = null;
 let tabledata = "";
 let agrupado = false;
+let agrupadoT = false;
 function inicializaComponentes() {
     $(document).ready(function () {
         initSelect();
-        dataTable();
+        dataTable();                             
     });
 }
 
@@ -16,8 +17,9 @@ function initSelect() {
 }
 
 
+
 function dataTable(msg) {
-    let tabledata = JSON.parse($('#formGerencial').attr('data-regap'));   
+    let tabledata = JSON.parse($('#formGerencial').attr('data-regap'));
     table = new Tabulator("#tabelaRegap", {
         data: tabledata,
         pagination: "local",
@@ -26,12 +28,16 @@ function dataTable(msg) {
         maxHeight: '1000px',
         layout: layout,
         responsiveLayout: 'collapse', 
+        groupStartOpen: false,
         responsiveLayoutCollapseStartOpen: false,       
         initialSort: [{ column: "Atividade", dir: "desc"}, {column: "HE_CARF", dir: "desc"} ],
         columns: [ 
             { formatter: "responsiveCollapse", width: 30, minWidth: 30, hozAlign: "left", resizable: false, headerSort: false },  
             { title: "Processo", field: "Processo", sorter: "number", hozAlign: "center", headerFilter: "input", editor: false, responsive: 0 },       
-            { title: "Contribuinte", field: "Contribuinte", sorter: "string", hozAlign: "center", editor: false, responsive: 2 },           
+            { title: "Contribuinte", field: "Contribuinte", sorter: "string", hozAlign: "center", editor: false, responsive: 2 },
+            { title: "Turma", field: "turma", sorter: "string", hozAlign: "center", headerFilter: "input", editor: false, responsive: 2 },
+            { title: "Câmara", field: "camara", sorter: "string", hozAlign: "center", headerFilter: "input", editor: false, responsive: 2 },
+            { title: "Seção", field: "setor", sorter: "string", hozAlign: "center", headerFilter: "input", editor: false, responsive: 2 },           
             { title: "Ind. Apenso", field: "Ind_Apenso", sorter: "string", hozAlign: "center", editor: false, responsive: 2 },
             { title: "Atividade", field: "Atividade", sorter: "string", hozAlign: "center", headerFilter: "input", editor: false, responsive: 0 },
             { title: "Situação de Julgamento", field: "Situacao", sorter: "string", headerFilter: "input", bottomCalc: "count", hozAlign: "center", editor: false, responsive: 0 },
@@ -82,7 +88,7 @@ function dataTable(msg) {
     });
 }
 
-document.getElementById("mostraColunas").addEventListener("click", function () {
+document.getElementById("mostraColunasAtividade").addEventListener("click", function () {
     if (agrupado == false) {
         table.setGroupBy(["Atividade", "Situacao"]);
         agrupado = true;
@@ -91,17 +97,4 @@ document.getElementById("mostraColunas").addEventListener("click", function () {
         table.setGroupBy();
         agrupado = false;
     };
-
 });
-
-// {
-//     title: "", field: "HE_CARF", sorter: "number", hozAlign: "left", width: 250, formatter: "progress", formatterParams: {
-//         min: 0,
-//         max: 1000,
-//         color: function (value) {
-//             if (value <= 126) return "red";
-//             if (value > 126 && value <= 252) return "orange";
-//             if (value > 252) return "green";
-//         },
-//     }
-// }

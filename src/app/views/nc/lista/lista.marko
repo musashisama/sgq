@@ -9,8 +9,13 @@
         <h3 class="center-align titulo">Lista de Não Conformidades</h3>
         <form data-nc=`${data.nc}`/>
         <div data-msg=`${data.msg}`/>
+        <div class="row">
+            <div class="col s12 right-align">
         <a class="btn-floating waves-effect waves-light green addListaNC right" title='Adicionar Tipo de Não Conformidade' href="/qualidade/restrito/cadastra-nc">
           <i class="material-icons">add</i></a>
+          <app-drop-download/>
+          </div>
+          </div>
         <div id="tabelaNC"/>
       </div>
     </main>
