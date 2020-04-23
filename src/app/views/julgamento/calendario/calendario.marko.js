@@ -2,7 +2,7 @@
 "use strict";
 
 var marko_template = module.exports = require("marko/src/html").t(__filename),
-    marko_componentType = "/sgq$1.0.0/src/app/views/julgamento/cargacons/cargacons.marko",
+    marko_componentType = "/sgq$1.0.0/src/app/views/julgamento/calendario/calendario.marko",
     components_helpers = require("marko/src/runtime/components/helpers"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
@@ -38,24 +38,27 @@ function render(input, out, __component, component, state) {
 
   out.w("<main class=\"conteudoPrincipal\">");
 
-  app_navbar_tag({
-      id: "slide-out",
-      class: "sidenav"
-    }, out, __component, "5");
+  app_navbar_tag({}, out, __component, "5");
 
-  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Diagnóstico da Carga de Processos dos Conselheiros</h3><br><br><form id=\"formGerencial\" name=\"formGerencial\" action=\"/julgamento/restrito/diagnostico-carga\" method=\"post\"><div class=\"row\"><div class=\"col s12 right-align\"><a href=\"#!\" id=\"mostraColunas\" title=\"Agrupar/Desagrupar por Turma\" class=\"waves-effect waves-yellow hoverable z-depth-3 btn-floating blue\"><i class=\"material-icons\">unfold_less</i></a></div><p id=\"resultado\"></p><div class=\"tabelaCarga\"><div id=\"tabelaCarga\"></div></div><div id=\"dadosCarga\" class=\"controle\">" +
-    marko_escapeXml(data.relatorio) +
-    "</div></div></form></div></main><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
+  out.w(" <div class=\"container\"><div class=\"row center-align\">");
 
-  app_footer_tag({}, out, __component, "27");
+  if (data.msg) {
+    out.w("<div id=\"toastsucesso\" class=\"ctoastsucesso\"></div><div id=\"msg\" class=\"controle\">" +
+      marko_escapeXml(data.msg) +
+      "</div>");
+  }
 
-  app_scripts_js_tag({}, out, __component, "28");
+  out.w(" </div><div id=\"calendario\"></div></div></main>");
 
-  out.w("<script src=\"/estatico/js/julgamento/cargacons.js\"></script>");
+  app_footer_tag({}, out, __component, "11");
+
+  app_scripts_js_tag({}, out, __component, "12");
+
+  out.w("<script src=\"/estatico/js/base/calendario.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "30");
+  await_reorderer_tag({}, out, __component, "14");
 
   out.w("</body></html>");
 }
@@ -68,7 +71,7 @@ marko_template._ = marko_renderer(render, {
 marko_template.Component = marko_defineComponent({}, marko_template._);
 
 marko_template.meta = {
-    id: "/sgq$1.0.0/src/app/views/julgamento/cargacons/cargacons.marko",
+    id: "/sgq$1.0.0/src/app/views/julgamento/calendario/calendario.marko",
     tags: [
       "../../components/app-scripts-css.marko",
       "marko/src/core-tags/components/component-globals-tag",

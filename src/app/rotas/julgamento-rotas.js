@@ -28,6 +28,8 @@ module.exports = (app) => {
         }
     });
 
+    app.get(rotasJulgamento.calendario,julgControlador.carregaPaginaCalendario());
+
     app.use(rotasJulgamento.autenticadas, function (req, resp, next) {
         if (ACL.checaACL(req.user.perfis, 'julgamento') ||ACL.checaACL(req.user.perfis, 'conselheiro')) {
             next();

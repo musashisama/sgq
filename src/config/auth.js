@@ -59,7 +59,7 @@ module.exports = (app) => {
         },
         resave: false,
         saveUninitialized: false,
-        cookie : { httpOnly: true, maxAge: 2419200000 }
+        cookie : { httpOnly: true, maxAge: 86400000 }
     }));
 
     app.use(passport.initialize());

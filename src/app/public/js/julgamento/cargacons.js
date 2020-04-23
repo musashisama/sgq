@@ -2,6 +2,9 @@ inicializaComponentes();
 layout = "fitDataFill";
 responsiveLayout = true;
 initialSort = [{ column: "nome", dir: "asc" }];
+let table = null;
+let tabledata = "";
+let agrupado = false;
 function inicializaComponentes() {
     $(document).ready(function () {
         initSelect();
@@ -14,8 +17,7 @@ function initSelect() {
 }
 
 function dataTable(msg) {
-    let tabledata = JSON.parse($('#dadosCarga').text());
-    var table = null;
+    tabledata = JSON.parse($('#dadosCarga').text());  
     table = new Tabulator("#tabelaCarga", {
         data: tabledata,
         pagination: "local",
@@ -81,3 +83,15 @@ function dataTable(msg) {
         },
     });
 }
+
+document.getElementById("mostraColunas").addEventListener("click", function () {
+    if (agrupado == false) {
+        table.setGroupBy(["setor", "camara", "turma"]);
+        agrupado = true;
+    }
+    else {
+        table.setGroupBy();
+        agrupado = false;
+    };
+
+});

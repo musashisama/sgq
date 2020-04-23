@@ -4,6 +4,7 @@ module.exports = {
     escolhecsv: require('./escolhecsv/escolhecsv.marko'),
     escolhecsvregap: require('./escolhecsvregap/escolhecsvregap.marko'),
     regapCojul: require('./regap/regapCojul.marko'), 
-    regap: require('./regap/regap.marko')
+    regap: require('./regap/regap.marko'),
+    calendario: require('./calendario/calendario.marko')
 }
     

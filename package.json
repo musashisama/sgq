@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js --ignore *.marko.js"
+    "start": "nodemon server.js --ignore *.marko.js",
+    "dev": "nodemon --inspect server.js --ignore *.marko.js"
   },
   "author": "",
   "license": "ISC",
@@ -36,6 +37,7 @@
     "request-ip": "^2.1.3",
     "saslprep": "^1.0.3",
     "serve-favicon": "^2.5.0",
+    "tui-calendar": "^1.12.12",
     "uuid": "3.3.2"
   }
 }
