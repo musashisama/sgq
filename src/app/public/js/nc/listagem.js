@@ -1,5 +1,7 @@
 inicializaComponentes();
 layout = "fitColumns";
+var table = null;
+let tabledata ='';
 //responsiveLayout = "collapse";
 function inicializaComponentes() {
     $(document).ready(function () {        
@@ -10,8 +12,8 @@ function inicializaComponentes() {
 
 
 function dataTable() {
-    let tabledata = JSON.parse($('form').attr('data-nc'));
-    var table = null;
+    tabledata = JSON.parse($('form').attr('data-nc'));
+    
     table = new Tabulator("#tabelaNC", {
         data: tabledata,
         pagination: "local",

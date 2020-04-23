@@ -217,6 +217,9 @@ class JulgamentoControlador {
                 let cpf = req.params.id;
                 let caminho = (req.headers.referrer || req.headers.referer).split('/');
                 caminho = req.session.caminho;
+                if(!caminho){
+                    resp.render(404);
+                }
                 dados = CSVHandler.pegaRegap(`${path}${caminho}`, 'CONS', cpf)
                     .then(dados => {
                         const pessoalDao = new PessoalDao(conn);

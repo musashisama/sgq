@@ -348,3 +348,7 @@ summary::-webkit-details-marker {
     color: #3867b788;
     vertical-align: middle;
 }
+
+.btn, .btn-floating{
+    margin-right: 15px;
+}
