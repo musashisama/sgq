@@ -22,6 +22,7 @@ class JulgamentoControlador {
     static rotas() {
         return {
             autenticadas: '/julgamento/restrito*',
+            calendario: '/julgamento/calendario',
             cargacons: '/julgamento/restrito/diagnostico-carga',
             carregacsv: '/julgamento/restrito/carrega-csv',
             escolhecsv: '/julgamento/restrito/escolhe-csv',
@@ -70,6 +71,12 @@ class JulgamentoControlador {
                 });
             } else resp.marko(templates.base.principal, { msg: "Usuário não autorizado a executar esta operação." });
 
+        }
+    }
+
+    carregaPaginaCalendario() {
+        return function (req, resp) {
+            resp.marko(templates.julgamento.calendario)
         }
     }
     escolheCSVRegap() {
@@ -226,24 +233,24 @@ class JulgamentoControlador {
                                             dado._id = new ObjectID(user._id);
                                         }
                                     })
-                                    
+
                                 });
                                 let options = { day: '2-digit', month: '2-digit', year: 'numeric', weekday: 'long' };
-                                const julgamentoDao = new JulgamentoDao(conn);                                
-                                julgamentoDao.getRelatorios({caminho:`${path}${caminho}`})
-                                .then(dataEnvio => {
-                                    resp.marko(templates.julgamento.regap, {
-                                        relatorio: JSON.stringify(dados),
-                                        user: dados[0].nome,
-                                        cpf: dados[0].CPF,
-                                        turma: dados[0].turma,
-                                        camara: dados[0].camara,
-                                        setor: dados[0].setor,
-                                        caminho: caminho,
-                                        dataEnvio: dataEnvio[0].dtExtracao
-                                    });
-                                    
-                                })
+                                const julgamentoDao = new JulgamentoDao(conn);
+                                julgamentoDao.getRelatorios({ caminho: `${path}${caminho}` })
+                                    .then(dataEnvio => {
+                                        resp.marko(templates.julgamento.regap, {
+                                            relatorio: JSON.stringify(dados),
+                                            user: dados[0].nome,
+                                            cpf: dados[0].CPF,
+                                            turma: dados[0].turma,
+                                            camara: dados[0].camara,
+                                            setor: dados[0].setor,
+                                            caminho: caminho,
+                                            dataEnvio: dataEnvio[0].dtExtracao
+                                        });
+
+                                    })
 
                             })
                     })

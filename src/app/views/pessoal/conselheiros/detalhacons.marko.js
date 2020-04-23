@@ -85,9 +85,9 @@ function render(input, out, __component, component, state) {
 
   out.w("</select><label for=\"turmaCons\">Turma/Câmara/Seção:</label></div><div class=\"input-field col s2\"><i class=\"material-icons prefix\">event_seat</i><input disabled id=\"turma\" name=\"turma\"" +
     marko_attr("value", "" + data.conselheiro.turma) +
-    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"turma\">Turma:</label></div><div class=\"input-field col s2\"><i class=\"material-icons prefix\">event_seat</i><input disabled id=\"camara\" name=\"camara\"" +
+    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"turma\">Turma (Somente Turmas Ordinárias):</label></div><div class=\"input-field col s2\"><i class=\"material-icons prefix\">event_seat</i><input disabled id=\"camara\" name=\"camara\"" +
     marko_attr("value", "" + data.conselheiro.camara) +
-    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"camara\">Câmara:</label></div><div class=\"input-field col s2\"><i class=\"material-icons prefix\">event_seat</i><input disabled id=\"setor\" name=\"setor\"" +
+    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"camara\">Turma CSRF/Câmara/Turma Extraordinária:</label></div><div class=\"input-field col s2\"><i class=\"material-icons prefix\">event_seat</i><input disabled id=\"setor\" name=\"setor\"" +
     marko_attr("value", "" + data.conselheiro.setor) +
     " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"setor\">Seção:</label></div><div class=\"input-field col s3\"><i class=\"material-icons prefix\">gps_fixed</i><input disabled id=\"origem\" name=\"origem\"" +
     marko_attr("value", "" + data.conselheiro.origem) +
