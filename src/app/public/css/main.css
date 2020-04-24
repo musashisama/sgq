@@ -165,6 +165,10 @@ h5 {
     background-color: #90caf9;
 }
 
+#Todas{
+    background-color: rgba(39, 35, 35, 0.562);
+}
+
 .controle {
     display: none;
 }
@@ -352,3 +356,19 @@ summary::-webkit-details-marker {
 .btn, .btn-floating{
     margin-right: 15px;
 }
+
+/* Cor das células nas tabelas REGAP */
+.cellVermelha{
+    color: #D8000C;
+    font-weight: bolder;
+}
+.cellAmarela{
+    color: rgb(245, 131, 0);
+    font-weight: bolder;
+}
+
+.cellVerde{
+    color: rgb(63, 138, 2);
+    font-weight: bolder;
+}
+

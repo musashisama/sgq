@@ -87,7 +87,7 @@ class JulgamentoControlador {
                 const julgamentoDao = new JulgamentoDao(conn);
                 let options = { day: '2-digit', month: '2-digit', year: 'numeric', weekday: 'long' };
                 const formato = { minimumFractionDigits: 2, style: 'currency', currency: 'BRL' }
-                julgamentoDao.getRelatorios({ tipoRel: 'REGAP' })
+                julgamentoDao.getRelatorios({ $or: [{tipoRel: 'REGAP'},{tipoRel: 'Estoque'}] })
                     .then(dados => {
                         dados.forEach(dado => {
                             dado.semana = dado.semana;
