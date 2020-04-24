@@ -372,3 +372,7 @@ summary::-webkit-details-marker {
     font-weight: bolder;
 }
 
+.cardBorda{
+    border-radius: 10px;
+}
+

@@ -87,7 +87,7 @@ class JulgamentoControlador {
                 const julgamentoDao = new JulgamentoDao(conn);
                 let options = { day: '2-digit', month: '2-digit', year: 'numeric', weekday: 'long' };
                 const formato = { minimumFractionDigits: 2, style: 'currency', currency: 'BRL' }
-                julgamentoDao.getRelatorios({ $or: [{tipoRel: 'REGAP'},{tipoRel: 'Estoque'}] })
+                julgamentoDao.getRelatorios({ $or: [{ tipoRel: 'REGAP' }, { tipoRel: 'Estoque' }] })
                     .then(dados => {
                         dados.forEach(dado => {
                             dado.semana = dado.semana;
@@ -198,6 +198,7 @@ class JulgamentoControlador {
                                             dado.camara = user.camara;
                                             dado.turma = user.turma;
                                             dado._id = new ObjectID(user._id);
+                                            dado.dtFimMandato = user.dtFimMandato;
                                         }
                                     })
                                 })
@@ -217,7 +218,7 @@ class JulgamentoControlador {
                 let cpf = req.params.id;
                 let caminho = (req.headers.referrer || req.headers.referer).split('/');
                 caminho = req.session.caminho;
-                if(!caminho){
+                if (!caminho) {
                     resp.render(404);
                 }
                 dados = CSVHandler.pegaRegap(`${path}${caminho}`, 'CONS', cpf)
@@ -234,9 +235,10 @@ class JulgamentoControlador {
                                             dado.turma = user.turma;
                                             dado.diasAtividade = new Date() - dado.Entrada_na_Atividade
                                             dado._id = new ObjectID(user._id);
+                                            dado.dtFimMandato = user.dtFimMandato;
+                                            dado.tipo = user.tipo;
                                         }
                                     })
-
                                 });
                                 let options = { day: '2-digit', month: '2-digit', year: 'numeric', weekday: 'long' };
                                 const julgamentoDao = new JulgamentoDao(conn);
@@ -250,11 +252,11 @@ class JulgamentoControlador {
                                             camara: dados[0].camara,
                                             setor: dados[0].setor,
                                             caminho: caminho,
-                                            dataEnvio: dataEnvio[0].dtExtracao
+                                            dataEnvio: dataEnvio[0].dtExtracao,
+                                            dtFimMandato: dados[0].dtFimMandato,
+                                            tipo: dados[0].tipo
                                         });
-
                                     })
-
                             })
                     })
             }
