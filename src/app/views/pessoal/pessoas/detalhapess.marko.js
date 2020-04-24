@@ -65,7 +65,9 @@ function render(input, out, __component, component, state) {
     marko_attr("value", "" + data.pessoa.telefone) +
     " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"telefone\">Telefone:</label></div><div class=\"input-field col s2\"><i class=\"material-icons prefix\">phone_iphone</i><input disabled id=\"celular\" name=\"celular\"" +
     marko_attr("value", "" + data.pessoa.celular) +
-    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"celular\">Celular:</label></div></div><h4>Dados Funcionais</h4><div class=\"row\"><div class=\"form-group input-field unidade col s6\"><i class=\"material-icons prefix\">event_seat</i><select disabled name=\"unidade\" class=\"selectCons\"><option class=\"form-group\"" +
+    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"celular\">Celular:</label></div></div><h4>Dados Funcionais</h4><div class=\"row\"><div class=\"form-group input-field unidade col s6\"><i class=\"material-icons prefix\">event_seat</i><input hidden id=\"setor\" name=\"setor\"" +
+    marko_attr("value", "") +
+    " type=\"text\"><select disabled name=\"unidade\" class=\"selectCons\"><option class=\"form-group\"" +
     marko_attr("value", "" + data.pessoa.unidade) +
     ">" +
     marko_escapeXml(data.pessoa.unidade) +
@@ -85,7 +87,7 @@ function render(input, out, __component, component, state) {
 
   out.w("</select><label for=\"unidade\">Unidade:</label></div> <div class=\"input-field col s3\"><i class=\"material-icons prefix\">gps_fixed</i><input disabled id=\"origem\" name=\"origem\"" +
     marko_attr("value", "" + data.pessoa.origem) +
-    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"origem\">Origem:</label></div></div><div class=\"row\"><div class=\"form-group input-field funcao col s4\"><i class=\"material-icons prefix\">domain</i><select disabled name=\"funcao\" class=\"selectCons\"><option selected class=\"form-group\"" +
+    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"origem\">Origem:</label></div></div><div class=\"row\"><div class=\"form-group input-field funcao col s4\"><i class=\"material-icons prefix\">domain</i><select disabled name=\"funcao\" class=\"selectFunc\"><option selected class=\"form-group\"" +
     marko_attr("value", "" + data.pessoa.funcao) +
     ">" +
     marko_escapeXml(data.pessoa.funcao) +
@@ -133,15 +135,15 @@ function render(input, out, __component, component, state) {
 
   out.w("</select><label for=\"tipoOcorrencia\">Selecione o tipo de ocorrência:</label></div></div><div class=\"row\"><br></div><div class=\"row\"><div class=\"input-field col s12\"><i class=\"material-icons prefix\">mode_edit</i><textarea name=\"ocorDet\" id=\"ocorDet\" class=\"materialize-textarea\" placeholder=\"Este campo aceita &lt;ENTER>. Descreva aqui o nº da Portaria, Detalhes da notificação (arts do RICARF), nº do processo, nº SEI etc.\"></textarea><label for=\"ocorDet\">Detalhes da Ocorrência:</label></div></div><div class=\"row\"><br></div><div class=\"row\"><div class=\"input field col s3\"><i class=\"material-icons prefix\">insert_invitation</i><input id=\"dtOcorrencia\" name=\"dtOcorrencia\" value=\"\" type=\"text\" class=\"datepicker\"><label for=\"dtOcorrencia\">Data da Ocorrência</label></div> </div></form></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"modal-close btn waves-effect waves-light concordaOco\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div><div id=\"modal2\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal2\">Modal Header</h4><p class=\"pModal2\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
 
-  app_footer_tag({}, out, __component, "123");
+  app_footer_tag({}, out, __component, "124");
 
-  app_scripts_js_tag({}, out, __component, "124");
+  app_scripts_js_tag({}, out, __component, "125");
 
   out.w("<script src=\"/estatico/js/pessoal/pessoa.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "126");
+  await_reorderer_tag({}, out, __component, "127");
 
   out.w("</body></html>");
 }

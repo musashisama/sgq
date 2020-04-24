@@ -128,6 +128,7 @@ function btnSalva() {
     $('.btn-cons-salva').click(function (event) {
         event.preventDefault();
         url = $('#formPessoa').attr("action");
+        $('#setor').val($( ".selectCons option:selected" ).text())
         valores = $("#formPessoa").serializeArray();
         console.log($("#formPessoa").serializeArray());
         $.post(url, valores)

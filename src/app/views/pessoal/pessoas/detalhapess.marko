@@ -67,6 +67,7 @@
                   <div class="row">
                     <div class="form-group input-field unidade col s6">
                       <i class="material-icons prefix">event_seat</i>
+                      <input hidden id="setor" name="setor" value=`` type="text"/>
                       <select disabled name="unidade" class="selectCons">
                         <option class="form-group" value=`${data.pessoa.unidade}`>${data.pessoa.unidade}</option>
                         <for|unidade| of=data.unidades>
@@ -84,7 +85,7 @@
                   <div class="row">
                     <div class="form-group input-field funcao col s4">
                       <i class="material-icons prefix">domain</i>
-                      <select disabled name="funcao" class="selectCons">
+                      <select disabled name="funcao" class="selectFunc">
                         <option selected class="form-group" value=`${data.pessoa.funcao}`>${data.pessoa.funcao}</option>
                         <for|funcao| of=data.funcoes>
                           <option class="form-group" value=`${funcao.funcao}`>${funcao.funcao}</option>
