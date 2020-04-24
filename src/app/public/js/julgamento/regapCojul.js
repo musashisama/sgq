@@ -2,6 +2,7 @@ inicializaComponentes();
 layout = "fitDataFill";
 let table = null;
 let tabledata = "";
+responsiveLayout = true;
 let agrupado = false;
 let agrupadoT = false;
 initialSort = [{ column: "nome", dir: "asc" }];
@@ -48,16 +49,14 @@ function dataTable(msg) {
         pagination: "local",
         height: "1000px",
         minHeight: '300px',
-        //maxHeight: '1000px',
+        maxHeight: '1000px',
         layout: layout,
         responsiveLayout: 'collapse',
-        responsiveLayoutCollapseStartOpen: false,
-        // groupBy:["nome", "Atividade", "Situacao"], 
         groupStartOpen: false,
-        groupToggleElement: "header",
+        responsiveLayoutCollapseStartOpen: false,
         initialSort: [{ column: "Dias_na_Atividade", dir: "desc" }],
         columns: [
-            { formatter: "responsiveCollapse", width: 30, minWidth: 30, hozAlign: "left", resizable: false, headerSort: false },
+            { formatter: "responsiveCollapse", width: 30, minWidth: 30, hozAlign: "left", resizable: false, headerSort: false,responsive: 0,  download: true, },
             { title: "CPF", field: "CPF", sorter: "string", hozAlign: "left", headerFilter: "input", editor: false, responsive: 0, topCalc: countCalc, formatter: formatNome, download: true, },
             { title: "Responsável Atual", field: "nome", sorter: "string", hozAlign: "left", headerFilter: "input", editor: false, responsive: 0, download: true, },
             { title: "Turma", field: "turma", sorter: "string", hozAlign: "center", headerFilter: "input", editor: false, responsive: 2, download: true, },
