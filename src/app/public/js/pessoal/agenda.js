@@ -81,7 +81,7 @@ function dataTable() {
             { formatter: "responsiveCollapse", width: 30, minWidth: 30, hozAlign: "left", resizable: false, headerSort: false },            
             { title: "Nome", field: "nome", sorter: "string", hozAlign: "left", editor: false, headerFilter:"input",bottomCalc: "count", responsive:0 },
             { title: "Telefone/Ramal", field: "telefone", sorter: "string", hozAlign: "left", editor: false, responsive:2 },   
-            { title: "Setor", field: "setor", sorter: "string", hozAlign: "left", editor: false, responsive:2 },           
+            { title: "Setor", field: "unidade", sorter: "string", hozAlign: "left", editor: false, responsive:2 },           
             { title: "Cargo", field: "cargo", sorter: "string", hozAlign: "left", editor: false, responsive:2 },
             { title: "Função", field: "funcao", sorter: "string", hozAlign: "left", editor: false, responsive:2 },
             { title: "e-mail", field: "email", sorter: "string", hozAlign: "left", editor: false, responsive:1 },
@@ -93,7 +93,7 @@ function dataTable() {
 
 document.getElementById("mostraColunas").addEventListener("click", function () {
     if (agrupado == false) {
-        table.setGroupBy(["setor"]);
+        table.setGroupBy(["unidade"]);
         agrupado = true;
     }
     else {

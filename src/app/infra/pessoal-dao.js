@@ -54,6 +54,7 @@ class PessoalDao {
 
             this._db.unidadesCARF
                 .find(filtro)
+                .sort({sigla:1})
                 .project()
                 .toArray(function (erro, res) {
                     if (erro) {

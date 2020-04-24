@@ -65,10 +65,10 @@ function render(input, out, __component, component, state) {
     marko_attr("value", "" + data.pessoa.telefone) +
     " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"telefone\">Telefone:</label></div><div class=\"input-field col s2\"><i class=\"material-icons prefix\">phone_iphone</i><input disabled id=\"celular\" name=\"celular\"" +
     marko_attr("value", "" + data.pessoa.celular) +
-    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"celular\">Celular:</label></div></div><h4>Dados Funcionais</h4><div class=\"row\"><div class=\"form-group input-field unidade col s4\"><i class=\"material-icons prefix\">event_seat</i><select disabled name=\"unidade\" class=\"selectCons\"><option class=\"form-group\"" +
-    marko_attr("value", "" + data.pessoa.setor) +
+    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"celular\">Celular:</label></div></div><h4>Dados Funcionais</h4><div class=\"row\"><div class=\"form-group input-field unidade col s6\"><i class=\"material-icons prefix\">event_seat</i><select disabled name=\"unidade\" class=\"selectCons\"><option class=\"form-group\"" +
+    marko_attr("value", "" + data.pessoa.unidade) +
     ">" +
-    marko_escapeXml(data.pessoa.setor) +
+    marko_escapeXml(data.pessoa.unidade) +
     "</option>");
 
   var $for$0 = 0;
@@ -77,13 +77,13 @@ function render(input, out, __component, component, state) {
     var $keyScope$0 = "[" + (($for$0++) + "]");
 
     out.w("<option class=\"form-group\"" +
-      marko_attr("value", "" + unidade.unidade) +
+      marko_attr("value", "" + unidade.sigla) +
       ">" +
-      marko_escapeXml(unidade.unidade) +
+      marko_escapeXml(unidade.sigla) +
       "</option>");
   });
 
-  out.w("</select><label for=\"unidade\">Unidade:</label></div><div class=\"input-field col s3\"><i class=\"material-icons prefix\">gps_fixed</i><input disabled id=\"origem\" name=\"origem\"" +
+  out.w("</select><label for=\"unidade\">Unidade:</label></div> <div class=\"input-field col s3\"><i class=\"material-icons prefix\">gps_fixed</i><input disabled id=\"origem\" name=\"origem\"" +
     marko_attr("value", "" + data.pessoa.origem) +
     " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"origem\">Origem:</label></div></div><div class=\"row\"><div class=\"form-group input-field funcao col s4\"><i class=\"material-icons prefix\">domain</i><select disabled name=\"funcao\" class=\"selectCons\"><option selected class=\"form-group\"" +
     marko_attr("value", "" + data.pessoa.funcao) +
