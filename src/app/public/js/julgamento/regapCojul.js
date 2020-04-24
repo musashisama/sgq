@@ -25,7 +25,7 @@ document.getElementById("mostraColunasAtividade").addEventListener("click", func
 
 document.getElementById("mostraColunasTurma").addEventListener("click", function () {
     if (agrupadoT == false) {
-        table.setGroupBy(["setor", "camara", "turma"]);
+        table.setGroupBy(["Equipe_Atual"]);
         agrupadoT = true;
     }
     else {
@@ -63,6 +63,7 @@ function dataTable(msg) {
             { title: "Turma", field: "turma", sorter: "string", hozAlign: "center", headerFilter: "input", editor: false, responsive: 2, download: true, },
             { title: "Câmara", field: "camara", sorter: "string", hozAlign: "center", headerFilter: "input", editor: false, responsive: 2, download: true, },
             { title: "Seção", field: "setor", sorter: "string", hozAlign: "center", headerFilter: "input", editor: false, responsive: 2, download: true, },
+            { title: "Equipe Atual", field: "Equipe_Atual", sorter: "string", hozAlign: "center", headerFilter: "input", editor: false, responsive: 0, download: true, },
             { title: "Contribuinte", field: "Contribuinte", sorter: "string", hozAlign: "center", editor: false, responsive: 2, download: true, },
             { title: "Processo", field: "Processo", sorter: "number", hozAlign: "center", headerFilter: "input", editor: false, responsive: 2, download: true, },
             { title: "Ind. Apenso", field: "Ind_Apenso", sorter: "string", hozAlign: "center", editor: false, responsive: 2, download: true, },
@@ -74,7 +75,7 @@ function dataTable(msg) {
             { title: "Dias da Sessão de Julgamento", field: "Dias_da_SJ", sorter: "number", hozAlign: "center", editor: false, responsive: 2, download: true, },
             { title: "Data da Sessão de Julgamento", field: "Data_da_Sessao_Julgamento", sorter: "number", hozAlign: "center", editor: false, responsive: 2, download: true, },
             { title: "Dias da Última Distribuição", field: "Dias_da_Dist", sorter: "number", hozAlign: "center", editor: false, responsive: 2, download: true, },
-            { title: "Retorno Sepoj?", field: "Retorno_Sepoj", sorter: "string", hozAlign: "center", editor: false, responsive: 0, download: true, },
+            { title: "Retorno Sepoj?", field: "Retorno_Sepoj", sorter: "string", hozAlign: "center", editor: false, responsive: 2, download: true, },
             { title: "Última Equipe", field: "Equipe_Ultima", sorter: "string", hozAlign: "center", editor: false, responsive: 2, download: true, },
             { title: "Observações", field: "Observacoes", sorter: "string", hozAlign: "center", editor: false, responsive: 1, download: true, },
         ],
