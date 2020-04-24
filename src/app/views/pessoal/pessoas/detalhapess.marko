@@ -65,16 +65,16 @@
                   </div>
                   <h4>Dados Funcionais</h4>
                   <div class="row">
-                    <div class="form-group input-field unidade col s4">
+                    <div class="form-group input-field unidade col s6">
                       <i class="material-icons prefix">event_seat</i>
                       <select disabled name="unidade" class="selectCons">
-                        <option class="form-group" value=`${data.pessoa.setor}`>${data.pessoa.setor}</option>
+                        <option class="form-group" value=`${data.pessoa.unidade}`>${data.pessoa.unidade}</option>
                         <for|unidade| of=data.unidades>
-                          <option class="form-group" value=`${unidade.unidade}`>${unidade.unidade}</option>
+                          <option class="form-group" value=`${unidade.sigla}`>${unidade.sigla}</option>
                         </for>
                       </select>
                       <label for="unidade">Unidade:</label>
-                    </div>
+                    </div>                    
                     <div class="input-field col s3">
                       <i class="material-icons prefix">gps_fixed</i>
                       <input disabled id="origem" name="origem" value=`${data.pessoa.origem}` type="text" class="validate selectCons"/>

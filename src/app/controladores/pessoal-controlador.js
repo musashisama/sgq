@@ -30,7 +30,7 @@ class PessoalControlador {
     carregaAgenda(){
         return function (req, resp) {
             const pessoalDao = new PessoalDao(conn);
-            pessoalDao.getUsers({},{nome:1,email:1,telefone:1, setor:1, cargo:1, funcao:1})
+            pessoalDao.getUsers({},{nome:1,email:1,telefone:1, unidade:1, setor:1, cargo:1, funcao:1})
                 .then(agenda => {
                     resp.marko(templates.pessoal.agenda, {agenda:JSON.stringify(agenda)})
                 })
