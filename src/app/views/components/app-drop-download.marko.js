@@ -10,7 +10,7 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.w("<a class=\"dropdownDownload waves-effect waves-yellow hoverable z-depth-3 btn-floating red\" href=\"#\" data-target=\"dropdown2\"><i class=\"material-icons\">file_download</i></a><ul id=\"dropdown2\" class=\"dropdown-content\"><li><a class=\"pdfDown\" href=\"#!\"><i class=\"pdfDown material-icons\">file_download</i>PDF</a></li><li class=\"divider\" tabindex=\"-1\"></li><li><a class=\"csvDown\" href=\"#!\"><i class=\"csvDown material-icons\">file_download</i>CSV</a></li><li class=\"divider\" tabindex=\"-1\"></li><li><a class=\"xlsxDown\" href=\"#!\"><i class=\"xlsxDown material-icons\">file_download</i>XLSX</a></li><li class=\"divider\" tabindex=\"-1\"></li></ul>");
+  out.w("<a class=\"dropdownDownload waves-effect waves-yellow hoverable z-depth-3 btn-floating red\" href=\"#\" data-target=\"dropdown2\"><i class=\"material-icons\">file_download</i></a><ul id=\"dropdown2\" class=\"dropdown-content\"><li class=\"divider\" tabindex=\"-1\"></li><li><a class=\"xlsxDown\" href=\"#!\"><i class=\"xlsxDown material-icons\">file_download</i>XLSX</a></li><li class=\"divider\" tabindex=\"-1\"></li><li><a class=\"csvDown\" href=\"#!\"><i class=\"csvDown material-icons\">file_download</i>CSV</a></li> <li class=\"divider\" tabindex=\"-1\"></li></ul>");
 }
 
 marko_template._ = marko_renderer(render, {

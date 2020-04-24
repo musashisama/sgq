@@ -32,7 +32,7 @@ function dataTable(msg) {
         responsiveLayoutCollapseStartOpen: false,
         initialSort: [{ column: "Atividade", dir: "desc" }, { column: "Dias_na_Atividade", dir: "desc" }, { column: "HE_CARF", dir: "desc" }],
         columns: [
-            { formatter: "responsiveCollapse", width: 30, minWidth: 30, hozAlign: "left", resizable: false, headerSort: false, download: true, },
+            { formatter: "responsiveCollapse", width: 30, minWidth: 30, hozAlign: "left", resizable: false, headerSort: false,responsive: 0, download: true, },
             { title: "Processo", field: "Processo", sorter: "number", hozAlign: "center", headerFilter: "input", topCalc: countCalc, editor: false, responsive: 0, download: true, },
             { title: "Contribuinte", field: "Contribuinte", sorter: "string", hozAlign: "center", editor: false, responsive: 2, download: true, },
             { title: "Turma", field: "turma", sorter: "string", hozAlign: "center", headerFilter: "input", editor: false, responsive: 1, download: true, },
@@ -45,11 +45,11 @@ function dataTable(msg) {
             { title: "Entrada na Atividade", field: "Entrada_na_Atividade", sorter: "date", hozAlign: "center", editor: false, responsive: 2, download: true, },
             { title: "Horas CARF", field: "HE_CARF", sorter: "number", hozAlign: "center", headerFilter: "input", topCalc: somaCalc, editor: false, responsive: 0, download: true, },
             { title: "Dias na Atividade", field: "Dias_na_Atividade", sorter: "number", hozAlign: "center", topCalc: mediaCalc, editor: false, formatter: coloreDias, responsive: 0, download: true },
-            { title: "Dias da Sessão de Julgamento", field: "Dias_da_SJ", sorter: "number", hozAlign: "center", editor: false, responsive: 2, download: true, },
+            { title: "Dias da Sessão de Julgamento", field: "Dias_da_SJ", sorter: "number", hozAlign: "center", editor: false, responsive: 0, download: true, },
             { title: "Data da Sessão de Julgamento", field: "Data_da_Sessao_Julgamento", sorter: "number", hozAlign: "center", editor: false, responsive: 2, download: true, },
             { title: "Dias da Última Distribuição", field: "Dias_da_Dist", sorter: "number", hozAlign: "center", editor: false, responsive: 2, download: true, },
             { title: "Retorno Sepoj?", field: "Retorno_Sepoj", sorter: "string", hozAlign: "center", editor: false, responsive: 2, download: true, },
-            { title: "Última Equipe", field: "Equipe_Ultima", sorter: "string", hozAlign: "center", editor: false, responsive: 2, download: true, },
+            { title: "Última Equipe", field: "Equipe_Ultima", sorter: "string", hozAlign: "center", editor: false, responsive: 0, download: true, },
             { title: "Observações", field: "Observacoes", sorter: "string", hozAlign: "center", editor: false, responsive: 1, download: true, },
 
         ],
