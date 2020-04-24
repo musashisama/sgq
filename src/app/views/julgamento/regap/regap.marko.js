@@ -46,35 +46,39 @@ function render(input, out, __component, component, state) {
       class: "sidenav"
     }, out, __component, "5");
 
-  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Relatório Gerencial de Acompanhamento de Prazos</h3><div class=\"row\"><div class=\"col s12\"><div class=\"card hoverable blue lighten-5 z-depth-4\"><div class=\"card-content\"><span class=\"card-title\">Conselheiro(a): " +
+  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Relatório Gerencial de Acompanhamento de Prazos</h3><div class=\"row\"><div class=\"col s12\"><div class=\"card hoverable blue lighten-5 z-depth-4 cardBorda\"><div class=\"card-content\"><span class=\"card-title\">Conselheiro(a): " +
     marko_escapeXml(data.user) +
+    " - " +
+    marko_escapeXml(data.tipo) +
     "</span><p><h6>CPF: " +
     marko_escapeXml(data.cpf) +
-    "</h6></p><p><h6>" +
+    "</h6></p><p><h6>Turma: " +
     marko_escapeXml(data.turma) +
-    " da " +
+    " " +
     marko_escapeXml(data.camara) +
-    "ª Câmara da " +
+    " " +
     marko_escapeXml(data.setor) +
+    "</h6></p><p><h6>Final do Mandato: " +
+    marko_escapeXml(data.dtFimMandato) +
     "</h6></p><p><h6>Relatorio de extraído do e-Processo em " +
     marko_escapeXml(data.dataEnvio) +
     "</h6></p></div></div></div></div><br><br><form id=\"formGerencial\"" +
     marko_attr("data-regap", "" + data.relatorio) +
-    " name=\"formGerencial\" action=\"/julgamento/restrito/regap-cojul/detalha/\" method=\"post\"><div class=\"row\"><div class=\"col s12 right-align\">");
+    " name=\"formGerencial\" action=\"/julgamento/restrito/regap-cojul/detalha/\" method=\"post\"><div class=\"row\"><div class=\"form-group input-field  col s3\"><select class=\"Atividade\" name=\"atividadeSelect\"><option class=\"form-group\" value=\"todas\" selected>Todas</option><option class=\"form-group\" value=\"pr\">Para Relatar</option><option class=\"form-group\" value=\"fd\">Formalizar Decisão</option><option class=\"form-group\" value=\"fvv\">Formalizar Voto Vencedor</option><option class=\"form-group\" value=\"cd\">Corrigir Decisão</option><option class=\"form-group\" value=\"aa\">Apreciar e Assinar Documento</option></select><label>Selecione a atividade para filtrar:</label></div><div class=\"col s3 right-align\"></div><div class=\"col s12 right-align\">");
 
-  app_drop_download_tag({}, out, __component, "24");
+  app_drop_download_tag({}, out, __component, "36");
 
   out.w("<a href=\"#!\" id=\"mostraColunasAtividade\" title=\"Agrupar/Desagrupar por Atividade\" class=\"waves-effect waves-yellow hoverable z-depth-3 btn-floating blue\"><i class=\"material-icons\">unfold_less</i></a></div></div><div id=\"tabelaRegap\"></div></form></div></main><footer class=\"page-footer rodape\"></footer><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
 
-  app_footer_tag({}, out, __component, "37");
+  app_footer_tag({}, out, __component, "49");
 
-  app_scripts_js_tag({}, out, __component, "38");
+  app_scripts_js_tag({}, out, __component, "50");
 
   out.w("<script src=\"/estatico/js/julgamento/regap.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "40");
+  await_reorderer_tag({}, out, __component, "52");
 
   out.w("</body></html>");
 }
