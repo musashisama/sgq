@@ -65,10 +65,10 @@ function render(input, out, __component, component, state) {
     marko_attr("value", "" + data.conselheiro.telefone) +
     " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"telefone\">Telefone:</label></div><div class=\"form-group celular input-field col s2\"><i class=\"material-icons prefix\">phone_iphone</i><input disabled id=\"celular\" name=\"celular\"" +
     marko_attr("value", "" + data.conselheiro.celular) +
-    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"celular\">Celular:</label></div></div><h4>Dados do Mandato</h4><div class=\"row\"><div class=\"form-group input-field turmaCons col s6\"><i class=\"material-icons prefix\">event_seat</i><select disabled name=\"turmaCons\" class=\"selectCons\"><option class=\"form-group\"" +
-    marko_attr("value", "" + data.conselheiro.turmaCons) +
+    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"celular\">Celular:</label></div></div><h4>Dados do Mandato</h4><div class=\"row\"><div class=\"form-group input-field unidade col s6\"><i class=\"material-icons prefix\">event_seat</i><select disabled name=\"unidade\" class=\"selectCons\"><option class=\"form-group\"" +
+    marko_attr("value", "" + data.conselheiro.unidade) +
     ">" +
-    marko_escapeXml(data.conselheiro.turmaCons) +
+    marko_escapeXml(data.conselheiro.unidade) +
     "</option>");
 
   var $for$0 = 0;
@@ -83,7 +83,7 @@ function render(input, out, __component, component, state) {
       "</option>");
   });
 
-  out.w("</select><label for=\"turmaCons\">Turma/Câmara/Seção (formato e-Processo):</label></div></div><div class=\"row\"><div class=\"form-group input-field turma col s4\"><i class=\"material-icons prefix\">event_seat</i><input disabled id=\"turma\" name=\"turma\"" +
+  out.w("</select><label for=\"unidade\">Turma/Câmara/Seção (formato e-Processo):</label></div></div><div class=\"row\"><div class=\"form-group input-field turma col s4\"><i class=\"material-icons prefix\">event_seat</i><input disabled id=\"turma\" name=\"turma\"" +
     marko_attr("value", "" + data.conselheiro.turma) +
     " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"turma\">Turma (Somente Turmas Ordinárias):</label></div><div class=\"form-group input-field camara col s4\"><i class=\"material-icons prefix\">event_seat</i><input disabled id=\"camara\" name=\"camara\"" +
     marko_attr("value", "" + data.conselheiro.camara) +
