@@ -48,17 +48,17 @@ function render(input, out, __component, component, state) {
       "</div>");
   }
 
-  out.w(" </div><div id=\"calendario\"></div></div></main>");
+  out.w(" </div><div id=\"chart\"></div></div></main>");
 
   app_footer_tag({}, out, __component, "11");
 
   app_scripts_js_tag({}, out, __component, "12");
 
-  out.w("<script src=\"/estatico/js/base/calendario.js\"></script>");
+  out.w("<script src=\"/estatico/js/libs/tui-chart-all.min.js\"></script><script src=\"/estatico/js/base/calendario.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "14");
+  await_reorderer_tag({}, out, __component, "15");
 
   out.w("</body></html>");
 }

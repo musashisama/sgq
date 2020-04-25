@@ -65,15 +65,15 @@
                   </div>
                   <h4>Dados do Mandato</h4>
                   <div class="row">
-                    <div class="form-group input-field turmaCons col s6">
+                    <div class="form-group input-field unidade col s6">
                       <i class="material-icons prefix">event_seat</i>
-                      <select disabled name="turmaCons" class="selectCons">
-                        <option class="form-group" value=`${data.conselheiro.turmaCons}`>${data.conselheiro.turmaCons}</option>
+                      <select disabled name="unidade" class="selectCons">
+                        <option class="form-group" value=`${data.conselheiro.unidade}`>${data.conselheiro.unidade}</option>
                         <for|unidade| of=data.unidades>
                           <option class="form-group" value=`${unidade.unidade}`>${unidade.unidade}</option>
                         </for>
                       </select>
-                      <label for="turmaCons">Turma/Câmara/Seção (formato e-Processo):</label>
+                      <label for="unidade">Turma/Câmara/Seção (formato e-Processo):</label>
                     </div>
                   </div>
                   <div class="row">

@@ -17,7 +17,7 @@ function initSelect() {
 }
 
 function dataTable(msg) {
-    tabledata = JSON.parse($('#dadosCarga').text());  
+    tabledata = JSON.parse($('#dadosCarga').text());
     table = new Tabulator("#tabelaCarga", {
         data: tabledata,
         pagination: "local",

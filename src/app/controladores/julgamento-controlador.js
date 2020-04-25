@@ -146,6 +146,8 @@ class JulgamentoControlador {
             } resp.marko(templates.julgamento.carregacsv, { dados: '' })
         }
     }
+    
+    //ESTOQUE
     carregaPaginaDiag() {
         return function (req, resp) {
             const role = 'julgamento';
@@ -167,6 +169,7 @@ class JulgamentoControlador {
                                             dado.camara = user.camara;
                                             dado.turma = user.turma;
                                             dado._id = new ObjectID(user._id);
+                                            dado.unidade = user.unidade;
                                         }
                                     })
                                 })
