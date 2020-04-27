@@ -12,8 +12,8 @@ class Mailer {
             port: 465,
             secure: true,
             auth: {
-                user: 'paulo.junior@carf.economia.gov.br',
-                pass: 'qyi3thn3N@'
+                user: 'dipaj@carf.economia.gov.br',
+                pass: 'Dipaj2019@'
             }
         })
         return remetente;
@@ -21,7 +21,7 @@ class Mailer {
 
     static _mensagem(para,assunto,corpo){
         let mensagem = {
-            from: 'paulo.junior@carf.economia.gov.br',
+            from: "'Sistema de Gestão Integrada do CARF' <dipaj@carf.economia.gov.br>",
             to: para,
             subject: assunto,
             html: corpo,

@@ -1,7 +1,6 @@
 const conn = require('../../config/mongodb').dados;
 const NCDao = require('../infra/nc-dao');
 const requestIp = require('request-ip');
-
 const templates = require('../views/templates');
 const { ObjectID } = require('mongodb');
 
