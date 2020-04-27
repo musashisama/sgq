@@ -44,7 +44,7 @@ function dataTable() {
     columns: [
       { formatter: "responsiveCollapse", width: 30, minWidth: 30, hozAlign: "left", resizable: false, headerSort: false },     
       { title: "Tipo de Ocorrência", field: "tipoOcorrencia", sorter: "string", hozAlign: "left", headerFilter: "input", formatter: "textarea", editor: false, responsive: 0, },
-      { title: "Ação Imediata", field: "descDet", sorter: "string", hozAlign: "left", headerFilter: "input", formatter: "textarea", editor: false, responsive: 0 },
+      { title: "Descrição Detalhada", field: "descDet", sorter: "string", hozAlign: "left", headerFilter: "input", formatter: "textarea", editor: false, responsive: 0 },
       { formatter: formatEdita,  width: 40, hozAlign: "center" },
       { formatter: formatDeleta, cellClick:clicaDeleta, width: 40, hozAlign: "center" },
 

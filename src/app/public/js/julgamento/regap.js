@@ -9,11 +9,16 @@ function inicializaComponentes() {
     $(document).ready(function () {
         initSelect();
         dataTable();
+        initTabs()
     });
 }
 
 function initSelect() {
     $('select').formSelect();
+}
+
+function initTabs() {
+    $('.tabs').tabs();
 }
 
 

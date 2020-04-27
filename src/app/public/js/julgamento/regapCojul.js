@@ -10,7 +10,12 @@ function inicializaComponentes() {
     $(document).ready(function () {
         initSelect();
         dataTable();
+        initTabs();
     });
+}
+
+function initTabs() {
+    $('.tabs').tabs();
 }
 
 document.getElementById("mostraColunasAtividade").addEventListener("click", function () {
@@ -23,7 +28,6 @@ document.getElementById("mostraColunasAtividade").addEventListener("click", func
         agrupado = false;
     };
 });
-
 document.getElementById("mostraColunasTurma").addEventListener("click", function () {
     if (agrupadoT == false) {
         table.setGroupBy(["Equipe_Atual"]);
@@ -35,13 +39,9 @@ document.getElementById("mostraColunasTurma").addEventListener("click", function
     };
 
 });
-
 function initSelect() {
     $('select').formSelect();
 }
-
-
-
 function dataTable(msg) {
     let tabledata = JSON.parse($('form').attr('data-regapCojul'));
     table = new Tabulator("#tabelaRegap", {
@@ -187,3 +187,151 @@ $('.Atividade').change(() =>{
         table.removeFilter("Atividade", "=", $( "select option:selected" ).text())
     }else {table.setFilter("Atividade", "=", $( "select option:selected" ).text())}
 })
+
+
+dados = JSON.parse($('form').attr('data-regapCojul'))
+console.log(dados);
+var layoutAtividade = {
+    title: 'Processos por atividade',
+    //showlegend: true,
+    shapes: [
+        {
+            type: 'line',
+            // x-reference is assigned to the x-values
+            xref: 'x',
+            // y-reference is assigned to the plot paper [0,1]
+            yref: 'paper',
+            x0: '126',
+            y0: 0,
+            x1: '126',
+            y1: 1,
+            fillcolor: '#d11515',
+            opacity: 0.8,
+            line: {
+                color: '#d11515',
+                width: 1,
+                dash: 'dot'
+            }
+        },
+        {
+            type: 'line',
+            // x-reference is assigned to the x-values
+            xref: 'x',
+            // y-reference is assigned to the plot paper [0,1]
+            yref: 'paper',
+            x0: '252',
+            y0: 0,
+            x1: '252',
+            y1: 1,
+            fillcolor: '#b05d21',
+            opacity: 0.6,
+            line: {
+                color: '#b05d21',
+                width: 1,
+                dash: 'dot'
+            }
+        },
+        {
+            type: 'line',
+            // x-reference is assigned to the x-values
+            xref: 'x',
+            // y-reference is assigned to the plot paper [0,1]
+            yref: 'paper',
+            x0: '378',
+            y0: 0,
+            x1: '378',
+            y1: 1,
+            fillcolor: '#ebd831',
+            opacity: 0.6,
+            line: {
+                color: '#ebd831',
+                width: 1,
+                dash: 'dot'
+            }
+        },
+        {
+            type: 'line',
+            // x-reference is assigned to the x-values
+            xref: 'x',
+            // y-reference is assigned to the plot paper [0,1]
+            yref: 'paper',
+            x0: '504',
+            y0: 0,
+            x1: '504',
+            y1: 1,
+            fillcolor: '#b9eb31',
+            opacity: 0.6,
+            line: {
+                color: '#b9eb31',
+                width: 1,
+                dash: 'dot'
+            }
+        },
+        {
+            type: 'line',
+            // x-reference is assigned to the x-values
+            xref: 'x',
+            // y-reference is assigned to the plot paper [0,1]
+            yref: 'paper',
+            x0: '630',
+            y0: 0,
+            x1: '630',
+            y1: 1,
+            fillcolor: '#59b823',
+            opacity: 0.6,
+            line: {
+                width: 1,
+                color: '#59b823',
+                dash: 'dot'
+            }
+        },
+        {
+            type: 'line',
+            // x-reference is assigned to the x-values
+            xref: 'x',
+            // y-reference is assigned to the plot paper [0,1]
+            yref: 'paper',
+            x0: '756',
+            y0: 0,
+            x1: '756',
+            y1: 1,
+            fillcolor: '#0b7540',
+            opacity: 0.6,
+            line: {
+                width: 1,
+                color: '#0b7540',
+                dash: 'dot'
+            }
+        },                  
+    ],
+    yaxis: {
+        showticklabels: true,
+        tickangle: 0,
+        tickfont: {
+            family: 'Arial',
+            size: 10,
+            color: 'black'
+        },
+    },
+    margin: {
+        l: 200,
+        r: 30,
+        b: 50,
+        t: 100
+    },
+
+};
+
+function ordena(a, b) {
+    return b.x - a.x;
+}
+
+let arrayDados = [];
+let x = 0;
+dados.forEach(dado =>{
+    arrayDados.push({atividade:dado.Atividade})
+})
+
+console.log(arrayDados);
+let config = {responsive: true,displaylogo: false}
+//Plotly.newPlot(document.getElementById('barrasAtividade'), dados, layoutAtividade,config);

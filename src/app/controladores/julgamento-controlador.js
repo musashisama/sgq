@@ -81,9 +81,9 @@ class JulgamentoControlador {
     }
     escolheCSVRegap() {
         return function (req, resp) {
-            // const roles = ['julgamento','admin','blabl','qualidade'];
-            // const perfil = req.user.perfis;
-            if (1 == 1) {               //ACL.checaACL(perfil,roles)
+            const role = 'julgamento';
+            const perfil = req.user.perfis;
+            if (perfil.indexOf(role) > -1) {
                 const julgamentoDao = new JulgamentoDao(conn);
                 let options = { day: '2-digit', month: '2-digit', year: 'numeric', weekday: 'long' };
                 const formato = { minimumFractionDigits: 2, style: 'currency', currency: 'BRL' }
@@ -146,7 +146,7 @@ class JulgamentoControlador {
             } resp.marko(templates.julgamento.carregacsv, { dados: '' })
         }
     }
-    
+
     //ESTOQUE
     carregaPaginaDiag() {
         return function (req, resp) {

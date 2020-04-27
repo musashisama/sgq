@@ -4,7 +4,6 @@ const AdmZip = require('adm-zip');
 const exec = require('child_process').exec;
 const cmd = `mongoimport -d sgq -c processos --type csv --file src/app/arquivos/csv/Gerencial-${new Date().getFullYear()}-${new Date().getMonth().valueOf() + 1}-${new Date().getDate()}.csv --headerline`;
 const path = `src/app/arquivos/csv/`;
-//let gerado = `Gerencial-${new Date().getFullYear()}-${new Date().getMonth().valueOf() + 1}-${new Date().getDate()}.csv`;
 let gerado = `Gerencial-`;
 let semanaAzul = ["2ª TURMA-CSRF-CARF-MF-DF",
     "1ª TE-2ªSEÇÃO-2001-CARF-MF-DF",
