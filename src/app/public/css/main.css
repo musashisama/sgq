@@ -376,3 +376,8 @@ summary::-webkit-details-marker {
     border-radius: 10px;
 }
 
+.scspy{
+    position: fixed;
+    top: 25%;
+    right: 2.5%
+}
