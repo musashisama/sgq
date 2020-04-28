@@ -69,8 +69,7 @@ class UserControlador {
 
     formOcorrencia() {
         return function (req, resp) {
-            const role = 'admin';            
-            if (req.isAuthenticated()) {
+           
                 const perfil = req.user.perfis;
                 if (perfil.indexOf(role) > -1) {
                     let id = new ObjectID(req.params.id);                    
@@ -83,15 +82,14 @@ class UserControlador {
                             })
                         })
                         .catch(erro => console.log(erro));
-                } else resp.marko(templates.base.principal, { msg: "Usuário não autorizado a executar esta operação." });
+               
             }
         };
 
     }
     formEditaOcorrencia() {
         return function (req, resp) {
-            const role = 'admin';            
-            if (req.isAuthenticated()) {
+          
                 const perfil = req.user.perfis;
                 if (perfil.indexOf(role) > -1) {
                     let id = new ObjectID(req.params.id);                    
@@ -103,7 +101,7 @@ class UserControlador {
                             })
                         })
                         .catch(erro => console.log(erro));
-                } else resp.marko(templates.base.principal, { msg: "Usuário não autorizado a executar esta operação." });
+               
             }
         };
 

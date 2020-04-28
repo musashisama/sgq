@@ -29,8 +29,7 @@ module.exports = (app) => {
         }
     });
 
-    app.use(rotasNC.autenticadas, function (req, resp, next) {
-        console.log(req.user.perfis);
+    app.use(rotasNC.autenticadas, function (req, resp, next) {        
         if (ACL.checaACL(req.user.perfis, 'qualidade')) {
             next();
         } else { resp.render(403) };

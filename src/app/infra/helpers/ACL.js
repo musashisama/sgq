@@ -10,7 +10,7 @@ class ACL {
         let acl = false;
         perfilUser.forEach(perfilU => {
             perfilTransacao.forEach(perfilT => {
-                if (perfilT === perfilU) {                    
+                if (perfilT == perfilU) {                    
                     acl = true;                                        
                 } 
             });
@@ -25,7 +25,8 @@ class ACL {
             qualidade:['admin','qualidade'],
             conselheiro:['admin','conselheiro'],
             carf:['admin','carf'],
-            gestor:['admin','gestor']
+            gestor:['admin','gestor'],
+            serpro:['admin','serpro']
         } 
         return acl[ACL];
     }

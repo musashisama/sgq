@@ -56,7 +56,7 @@ function dataTable(msg) {
         responsiveLayoutCollapseStartOpen: false,
         initialSort: [{ column: "Dias_na_Atividade", dir: "desc" }],
         columns: [
-            { formatter: "responsiveCollapse", width: 30, minWidth: 30, hozAlign: "left", resizable: false, headerSort: false,responsive: 0,  download: true, },
+            { formatter: "responsiveCollapse", width: 30, minWidth: 30, hozAlign: "left", resizable: false, headerSort: false, responsive: 0, download: true, },
             { title: "CPF", field: "CPF", sorter: "string", hozAlign: "left", headerFilter: "input", editor: false, responsive: 0, topCalc: countCalc, formatter: formatNome, download: true, },
             { title: "Responsável Atual", field: "nome", sorter: "string", hozAlign: "left", headerFilter: "input", editor: false, responsive: 0, download: true, },
             { title: "Turma", field: "turma", sorter: "string", hozAlign: "center", headerFilter: "input", editor: false, responsive: 2, download: true, },
@@ -180,129 +180,128 @@ function countCalc(values, data, calcParams) {
     return `|𝜲|: ${(calc)}`;
 }
 
-$('.Atividade').change(() =>{
-    console.log($( "select option:selected" ).text());
-    table.setFilter("Atividade", "=", $( "select option:selected" ).text())
-    if($( "select option:selected" ).text()=='Todas'){
-        table.removeFilter("Atividade", "=", $( "select option:selected" ).text())
-    }else {table.setFilter("Atividade", "=", $( "select option:selected" ).text())}
+$('.Atividade').change(() => {
+    console.log($("select option:selected").text());
+    table.setFilter("Atividade", "=", $("select option:selected").text())
+    if ($("select option:selected").text() == 'Todas') {
+        table.removeFilter("Atividade", "=", $("select option:selected").text())
+    } else { table.setFilter("Atividade", "=", $("select option:selected").text()) }
 })
 
 
-dados = JSON.parse($('form').attr('data-regapCojul'))
-console.log(dados);
+dados = JSON.parse($('form').attr('data-regapCojul'));
 var layoutAtividade = {
     title: 'Processos por atividade',
     //showlegend: true,
     shapes: [
-        {
-            type: 'line',
-            // x-reference is assigned to the x-values
-            xref: 'x',
-            // y-reference is assigned to the plot paper [0,1]
-            yref: 'paper',
-            x0: '126',
-            y0: 0,
-            x1: '126',
-            y1: 1,
-            fillcolor: '#d11515',
-            opacity: 0.8,
-            line: {
-                color: '#d11515',
-                width: 1,
-                dash: 'dot'
-            }
-        },
-        {
-            type: 'line',
-            // x-reference is assigned to the x-values
-            xref: 'x',
-            // y-reference is assigned to the plot paper [0,1]
-            yref: 'paper',
-            x0: '252',
-            y0: 0,
-            x1: '252',
-            y1: 1,
-            fillcolor: '#b05d21',
-            opacity: 0.6,
-            line: {
-                color: '#b05d21',
-                width: 1,
-                dash: 'dot'
-            }
-        },
-        {
-            type: 'line',
-            // x-reference is assigned to the x-values
-            xref: 'x',
-            // y-reference is assigned to the plot paper [0,1]
-            yref: 'paper',
-            x0: '378',
-            y0: 0,
-            x1: '378',
-            y1: 1,
-            fillcolor: '#ebd831',
-            opacity: 0.6,
-            line: {
-                color: '#ebd831',
-                width: 1,
-                dash: 'dot'
-            }
-        },
-        {
-            type: 'line',
-            // x-reference is assigned to the x-values
-            xref: 'x',
-            // y-reference is assigned to the plot paper [0,1]
-            yref: 'paper',
-            x0: '504',
-            y0: 0,
-            x1: '504',
-            y1: 1,
-            fillcolor: '#b9eb31',
-            opacity: 0.6,
-            line: {
-                color: '#b9eb31',
-                width: 1,
-                dash: 'dot'
-            }
-        },
-        {
-            type: 'line',
-            // x-reference is assigned to the x-values
-            xref: 'x',
-            // y-reference is assigned to the plot paper [0,1]
-            yref: 'paper',
-            x0: '630',
-            y0: 0,
-            x1: '630',
-            y1: 1,
-            fillcolor: '#59b823',
-            opacity: 0.6,
-            line: {
-                width: 1,
-                color: '#59b823',
-                dash: 'dot'
-            }
-        },
-        {
-            type: 'line',
-            // x-reference is assigned to the x-values
-            xref: 'x',
-            // y-reference is assigned to the plot paper [0,1]
-            yref: 'paper',
-            x0: '756',
-            y0: 0,
-            x1: '756',
-            y1: 1,
-            fillcolor: '#0b7540',
-            opacity: 0.6,
-            line: {
-                width: 1,
-                color: '#0b7540',
-                dash: 'dot'
-            }
-        },                  
+        // {
+        //     type: 'line',
+        //     // x-reference is assigned to the x-values
+        //     xref: 'x',
+        //     // y-reference is assigned to the plot paper [0,1]
+        //     yref: 'paper',
+        //     x0: '126',
+        //     y0: 0,
+        //     x1: '126',
+        //     y1: 1,
+        //     fillcolor: '#d11515',
+        //     opacity: 0.8,
+        //     line: {
+        //         color: '#d11515',
+        //         width: 1,
+        //         dash: 'dot'
+        //     }
+        // },
+        // {
+        //     type: 'line',
+        //     // x-reference is assigned to the x-values
+        //     xref: 'x',
+        //     // y-reference is assigned to the plot paper [0,1]
+        //     yref: 'paper',
+        //     x0: '252',
+        //     y0: 0,
+        //     x1: '252',
+        //     y1: 1,
+        //     fillcolor: '#b05d21',
+        //     opacity: 0.6,
+        //     line: {
+        //         color: '#b05d21',
+        //         width: 1,
+        //         dash: 'dot'
+        //     }
+        // },
+        // {
+        //     type: 'line',
+        //     // x-reference is assigned to the x-values
+        //     xref: 'x',
+        //     // y-reference is assigned to the plot paper [0,1]
+        //     yref: 'paper',
+        //     x0: '378',
+        //     y0: 0,
+        //     x1: '378',
+        //     y1: 1,
+        //     fillcolor: '#ebd831',
+        //     opacity: 0.6,
+        //     line: {
+        //         color: '#ebd831',
+        //         width: 1,
+        //         dash: 'dot'
+        //     }
+        // },
+        // {
+        //     type: 'line',
+        //     // x-reference is assigned to the x-values
+        //     xref: 'x',
+        //     // y-reference is assigned to the plot paper [0,1]
+        //     yref: 'paper',
+        //     x0: '504',
+        //     y0: 0,
+        //     x1: '504',
+        //     y1: 1,
+        //     fillcolor: '#b9eb31',
+        //     opacity: 0.6,
+        //     line: {
+        //         color: '#b9eb31',
+        //         width: 1,
+        //         dash: 'dot'
+        //     }
+        // },
+        // {
+        //     type: 'line',
+        //     // x-reference is assigned to the x-values
+        //     xref: 'x',
+        //     // y-reference is assigned to the plot paper [0,1]
+        //     yref: 'paper',
+        //     x0: '630',
+        //     y0: 0,
+        //     x1: '630',
+        //     y1: 1,
+        //     fillcolor: '#59b823',
+        //     opacity: 0.6,
+        //     line: {
+        //         width: 1,
+        //         color: '#59b823',
+        //         dash: 'dot'
+        //     }
+        // },
+        // {
+        //     type: 'line',
+        //     // x-reference is assigned to the x-values
+        //     xref: 'x',
+        //     // y-reference is assigned to the plot paper [0,1]
+        //     yref: 'paper',
+        //     x0: '756',
+        //     y0: 0,
+        //     x1: '756',
+        //     y1: 1,
+        //     fillcolor: '#0b7540',
+        //     opacity: 0.6,
+        //     line: {
+        //         width: 1,
+        //         color: '#0b7540',
+        //         dash: 'dot'
+        //     }
+        // },
     ],
     yaxis: {
         showticklabels: true,
@@ -322,16 +321,56 @@ var layoutAtividade = {
 
 };
 
-function ordena(a, b) {
-    return b.x - a.x;
-}
+let config = { responsive: true, displaylogo: false }
+let d3 = Plotly.d3;
+let somatorio = d3.nest().rollup(v => {
+    return [
+        { y: 'Para Relatar - Aguardando Pauta', x: d3.sum(v, d => { if (d.Atividade == 'Para Relatar' && d.Situacao == 'AGUARDANDO PAUTA') { return 1 } }), },
+        { y: 'Para Relatar - Cancelado', x: d3.sum(v, d => { if (d.Atividade == 'Para Relatar' && d.Situacao == 'CANCELADO') { return 1 } }) },
+        { y: 'Para Relatar - Retirado de Pauta', x: d3.sum(v, d => { if (d.Atividade == 'Para Relatar' && d.Situacao == 'RETIRADO DE PAUTA') { return 1 } }) },
+        { y: 'Para Relatar - Pedido de Vista', x: d3.sum(v, d => { if (d.Atividade == 'Para Relatar' && d.Situacao == 'PEDIDO DE VISTA') { return 1 } }) },
+        { y: 'Para Relatar - Indicado para Pauta', x: d3.sum(v, d => { if (d.Atividade == 'Para Relatar' && d.Situacao == 'INDICADO PARA PAUTA') { return 1 } }) },
+        { y: 'Para Relatar - Em Sessão', x: d3.sum(v, d => { if (d.Atividade == 'Para Relatar' && d.Situacao == 'EM SESSÃO') { return 1 } }) },
+        { y: 'Para Relatar - Em Pauta', x: d3.sum(v, d => { if (d.Atividade == 'Para Relatar' && d.Situacao == 'EM PAUTA') { return 1 } }) },
+        { y: 'Formalizar Voto Vencedor', x: d3.sum(v, d => { if (d.Atividade == 'Formalizar Voto Vencedor') { return 1 } }) },
+        { y: 'Apreciar e Assinar Documento', x: d3.sum(v, d => { if (d.Atividade == 'Apreciar e Assinar Documento') { return 1 } }) },
+        { y: 'Formalizar Decisão', x: d3.sum(v, d => { if (d.Atividade == 'Formalizar Decisao') { return 1 } }) },
+        { y: 'Corrigir Decisão', x: d3.sum(v, d => { if (d.Atividade == 'Corrigir Decisao' || d.Atividade == 'Corrigir Decisão') { return 1 } }) }
+    ]
+}).entries(dados)
 
 let arrayDados = [];
-let x = 0;
-dados.forEach(dado =>{
-    arrayDados.push({atividade:dado.Atividade})
+arrayDados.y = [];
+arrayDados.x = [];
+arrayDados.text = [];
+arrayDados.color = [];
+
+let cores = ['rgb(204, 204, 204)', 'rgb(254, 181, 204)', 'rgb(104,204, 204)',
+    'rgb(124, 181, 204)', 'rgb(164, 204, 204)', 'rgb(184, 181, 204)', 'rgb(84, 105, 119)', 'rgb(144, 181, 204)'
+    , 'rgb(119, 110, 84)', 'rgb(134, 224, 234)', 'rgb(134, 131, 224)'];
+somatorio = somatorio.sort((a, b) => { return a.x - b.x })
+somatorio.forEach((row, index) => {
+    arrayDados.y.push(row.y)
+    arrayDados.x.push(row.x)
+    arrayDados.color.push(cores[index]);
+    arrayDados.text.push(row.y)
+    
 })
+arrayDados.type = 'bar'
+arrayDados.orientation = 'h';
+arrayDados.type = 'bar';
+arrayDados.fillcolor = 'cls';
+arrayDados.hovertemplate = `<i>Quantidade</i>: %{x:.d} processos<br>                         
+                        <b>%{text}</b>`;
+arrayDados.marker = {
+    color: arrayDados.color,
+    width: 4,
+    'colorscale': 'Viridis',
+    line: {
+    }
+}
+
+
 
 console.log(arrayDados);
-let config = {responsive: true,displaylogo: false}
-//Plotly.newPlot(document.getElementById('barrasAtividade'), dados, layoutAtividade,config);
+Plotly.newPlot(document.getElementById('barrasAtividade'), [arrayDados], layoutAtividade, config);

@@ -19,12 +19,14 @@ cliente.connect(url, opcoes, function (err, cliente) {
   dados.macroprocessos = dbo.collection('macroprocessos');
   dados.unidadesCARF = dbo.collection('unidadesCARF');
   dados.usuarios = dbo.collection('usuarios');
+  dados.registroLogs = dbo.collection('logs');
   dados.tipoOcorrencias = dbo.collection('tipoOcorrencias');
   dados.ocorrencias = dbo.collection('ocorrencias');
   dados.funcoesCarf = dbo.collection('funcoesCARF');
   dados.perfis = dbo.collection('perfis');
   dados.trocasenha = dbo.collection('trocasenha');
   dados.relatorios = dbo.collection('relatorios');
+  dados.config = dbo.collection('config');
   dados.fschunks = dbo.collection('uploads.chunks');
   dados.fsfiles = dbo.collection('uploads.files');
 });

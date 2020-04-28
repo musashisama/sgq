@@ -4,6 +4,7 @@ const BaseControlador = require('../controladores/base-controlador')
 const ACL = require('../infra/helpers/ACL');
 
 
+
 module.exports = (app) => {
 
     const rotasPessoal = PessoalControlador.rotas();
@@ -18,6 +19,8 @@ module.exports = (app) => {
             next();
         }
     })
+
+
     app.use(rotasPessoal.autenticadas, function (req, resp, next) {
         req.session.baseUrl = req.baseUrl;
         if (req.isAuthenticated()) {
@@ -28,44 +31,37 @@ module.exports = (app) => {
     });
 
     app.use(rotasPessoal.autenticadas, function (req, resp, next) {
-        if (ACL.checaACL(req.user.perfis, 'pessoal')) {
+        if (ACL.checaACL(req.user.perfis, 'pessoal')||ACL.checaACL(req.user.perfis, 'serpro')) {
             next();
         } else { resp.render(403) };
 
     });
 
     app.get(rotasPessoal.agenda, pessoalControlador.carregaAgenda());
-
     app.get(rotasPessoal.cadastraCons, pessoalControlador.carregaPaginaCadCons());
-    app.post(rotasPessoal.cadastraCons, pessoalControlador.cadastraCons())
     app.get(rotasPessoal.cadastraPess, pessoalControlador.carregaPaginaCadPess());
+    app.get(rotasPessoal.pessoas, pessoalControlador.carregaPaginaPessoal());
+    app.get(rotasPessoal.conselheiros, pessoalControlador.carregaPaginaCons());
+    app.get(rotasPessoal.detalhaPess, pessoalControlador.carregaPaginaDetalhaPessoal());
+    app.get(rotasPessoal.detalhacons, pessoalControlador.carregaPaginaDetCons());
+
+    app.use(rotasPessoal.autenticadas, function (req, resp, next) {
+        if (ACL.checaACL(req.user.perfis, 'pessoal')) {
+            next();
+        } else { resp.render(403) };
+
+    });
+
     app.post(rotasPessoal.cadastraPess, pessoalControlador.cadastraPess());
-
-    app.route(rotasPessoal.pessoas)
-        .get(pessoalControlador.carregaPaginaPessoal())
-        .post(pessoalControlador.carregaPaginaPessoal());
-    
-    app.route(rotasPessoal.conselheiros)
-    .get(pessoalControlador.carregaPaginaCons())
-    .post(pessoalControlador.carregaPaginaCons());
-  
-    
-    app.route(rotasPessoal.detalhaPess)
-    .get(pessoalControlador.carregaPaginaDetalhaPessoal())
-    .post(pessoalControlador.editaPessoa());
-
-    app.route(rotasPessoal.detalhacons)
-    .get(pessoalControlador.carregaPaginaDetCons())
-    .post(pessoalControlador.editaCons());        
-   
-
-    
-
+    app.post(rotasPessoal.cadastraCons, pessoalControlador.cadastraCons())
+    app.post(rotasPessoal.detalhaPess, pessoalControlador.editaPessoa());
+    app.post(rotasPessoal.detalhacons, pessoalControlador.editaCons());
+    app.post(rotasPessoal.pessoas, pessoalControlador.carregaPaginaPessoal());
+    app.post(rotasPessoal.conselheiros, pessoalControlador.carregaPaginaCons());
     app.post(rotasPessoal.insOcorrenciaPess, pessoalControlador.insereOcorrenciaPess());
-    app.put(rotasPessoal.editaOcorrenciaPess,pessoalControlador.editaOcorrenciaPess());
-    app.delete(rotasPessoal.excluiOcorrenciaPess,pessoalControlador.excluiOcorrenciaPess());
-
+    app.put(rotasPessoal.editaOcorrenciaPess, pessoalControlador.editaOcorrenciaPess());
+    app.delete(rotasPessoal.excluiOcorrenciaPess, pessoalControlador.excluiOcorrenciaPess());
     app.post(rotasPessoal.insOcorrencia, pessoalControlador.insereOcorrencia());
-    app.put(rotasPessoal.editaOcorrencia,pessoalControlador.editaOcorrencia());    
-    app.delete(rotasPessoal.excluiOcorrencia,pessoalControlador.excluiOcorrencia());   
+    app.put(rotasPessoal.editaOcorrencia, pessoalControlador.editaOcorrencia());
+    app.delete(rotasPessoal.excluiOcorrencia, pessoalControlador.excluiOcorrencia());
 }
