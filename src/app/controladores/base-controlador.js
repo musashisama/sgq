@@ -22,7 +22,7 @@ class BaseControlador {
             enviamail: '/enviamail'
         };
 
-    }
+    }    
 
     principal() {
         return function (req, resp) {
@@ -68,8 +68,7 @@ class BaseControlador {
         }
     }
     enviaMail() {
-        return function (req, resp, next) {
-            console.log();
+        return function (req, resp, next) {            
             let email = req.body.email.toLowerCase();
             let userDao = new UserDao(conn);
             userDao.getUsers({ email: email }).then(user => {
@@ -90,8 +89,7 @@ class BaseControlador {
 http://${URL.host}/altera-senha/${registro.controle}
 
 <p><strong>Caso não tenha sido você, ignore esta mensagem.</strong></p>
-<p><em>Este e-mail foi enviado de forma automática. Favor não respondê-lo.</em></p>`
-                    console.log(registro);
+<p><em>Este e-mail foi enviado de forma automática. Favor não respondê-lo.</em></p>`                    
                     Mailer.enviaMail(registro.email, '[SGI-CARF] Solicitação de Alteração de Senha', corpo)
                     userDao.insereTrocasenha(registro).then(() => {
                         return resp.marko(templates.base.login, { msg: { cor: 'login_ok', alert: 'done_all', text: 'Cheque sua caixa de email para alteração da senha.' } });
@@ -147,5 +145,6 @@ http://${URL.host}/altera-senha/${registro.controle}
             })
         }
     }
+    
 }
 module.exports = BaseControlador;

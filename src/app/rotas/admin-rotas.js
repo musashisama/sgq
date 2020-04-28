@@ -22,16 +22,17 @@ module.exports = (app) => {
             next();
         } else { resp.render(403) };
 
-    });   
+    });
+     
 
-app.get(rotasUser.ocorrencias,userControlador.listaOcorrencias());
+    app.get(rotasUser.ocorrencias, userControlador.listaOcorrencias());
 
-app.route(rotasUser.cadastraOco)
+    app.route(rotasUser.cadastraOco)
         .get(userControlador.formOcorrencia())
         .post(userControlador.cadastraTpOcorrencia())
         .put(userControlador.editaOco());
 
-        app.get(rotasUser.edicaoOco,userControlador.formEditaOcorrencia())
+    app.get(rotasUser.edicaoOco, userControlador.formEditaOcorrencia())
 
     app.delete(rotasUser.deletaOco, userControlador.removeTpOco());
 

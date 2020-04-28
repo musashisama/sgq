@@ -138,6 +138,9 @@ function btnSalva() {
                 $('.selectCons').prop("disabled", true);
                 $(this).toggle(); 
 
+            }).fail(function (err) {
+                var toastHTML = `<span>Ocorreu um erro.</span>`;
+                M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
             }).always()
         console.log(valores);
     });
@@ -257,6 +260,10 @@ function deleta(e, cell) {
             table.deleteRow(cell.getRow());
             location.reload(true)
         },
-        error: function(result){console.log(result);}
+        error: function(result){
+            var toastHTML = `<span>Ocorreu um erro.</span>`;
+            M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+            console.log(result);
+        }
     })
 }

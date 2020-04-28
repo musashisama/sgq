@@ -150,6 +150,12 @@ function montaModal(e, cell) {
               <span>Conselheiro</span>
             </label>
           </p>
+          <p>
+          <label>
+            <input type="checkbox" id='serpro' value='serpro' name="perfis"/>
+            <span>Serpro</span>
+          </label>
+        </p>
     
 </form></p>`
     );

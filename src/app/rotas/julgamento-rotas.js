@@ -31,7 +31,7 @@ module.exports = (app) => {
     app.get(rotasJulgamento.calendario,julgControlador.carregaPaginaCalendario());
 
     app.use(rotasJulgamento.autenticadas, function (req, resp, next) {
-        if (ACL.checaACL(req.user.perfis, 'julgamento') ||ACL.checaACL(req.user.perfis, 'conselheiro')) {
+        if (ACL.checaACL(req.user.perfis, 'julgamento') || ACL.checaACL(req.user.perfis, 'conselheiro') || ACL.checaACL(req.user.perfis, 'serpro')) {
             next();
         } else { resp.render(403) };
 
@@ -41,7 +41,7 @@ module.exports = (app) => {
     
 
     app.use(rotasJulgamento.autenticadas, function (req, resp, next) {
-        if (ACL.checaACL(req.user.perfis, 'julgamento')) {
+        if (ACL.checaACL(req.user.perfis, 'julgamento')|| ACL.checaACL(req.user.perfis, 'serpro')) {
             next();
         } else { resp.render(403) };
 
@@ -51,9 +51,16 @@ module.exports = (app) => {
     app.get(rotasJulgamento.escolhecsvregap, julgControlador.escolheCSVRegap());    
     app.get(rotasJulgamento.escolhecsv, julgControlador.escolheCSV());
     app.get(rotasJulgamento.detalha, julgControlador.carregaPaginaDiag())
-    app.route(rotasJulgamento.carregacsv)
-        .get(julgControlador.carregaPaginaInsereCSV())
-        .post(julgControlador.carregaCSV());
+    app.get(rotasJulgamento.carregacsv,julgControlador.carregaPaginaInsereCSV())
+        
+    app.use(rotasJulgamento.autenticadas, function (req, resp, next) {
+        if (ACL.checaACL(req.user.perfis, 'julgamento')) {
+            next();
+        } else { resp.render(403) };
+
+    });    
+
+    app.post(rotasJulgamento.carregacsv,julgControlador.carregaCSV())
 
         
 }

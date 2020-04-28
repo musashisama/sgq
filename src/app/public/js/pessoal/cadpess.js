@@ -40,6 +40,9 @@ function btnSalva() {
                 var toastHTML = '<span>Registro atualizado com sucesso!</span>';
                 M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
                 setTimeout(location.reload(true), 5000)
+            }).fail(function (err) {
+                var toastHTML = `<span>Ocorreu um erro.</span>`;
+                M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
             }).always()
         console.log(valores);
     });

@@ -95,7 +95,7 @@ function render(input, out, __component, component, state) {
 
   app_scripts_js_tag({}, out, __component, "43");
 
-  out.w("<div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div> <script src=\"/estatico/js/validaUser.js\"></script><script src=\"/estatico/js/formcontrolUser.js\"></script>");
+  out.w("<div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div> <script src=\"/estatico/js/base/validaUser.js\"></script><script src=\"/estatico/js/base/formcontrolUser.js\"></script>");
 
   init_components_tag({}, out);
 

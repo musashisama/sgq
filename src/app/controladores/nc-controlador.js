@@ -89,10 +89,7 @@ class NCControlador {
     }
     //Lista os registros de não conformidade. Auth.
     listaRNC() {
-        return function (req, resp) {
-            const role = 'admin';
-            const perfil = req.user.perfis;
-            if (perfil.indexOf(role) > -1) {
+        return function (req, resp) {          
                 const ncDao = new NCDao(conn);
                 ncDao.getRegistrosNC({}, {})
                     .then(registroNC => {
@@ -102,8 +99,6 @@ class NCControlador {
                         })
                     })
                     .catch(erro => console.log(erro));
-            } else resp.marko(templates.base.principal, { msg: "Usuário não autorizado a executar esta operação." });
-
         };
     }
     //Chamado pelo formulário. Cadastra uma ou várias não conformidades. Loga o CPF do usuário autenticado, caso exista.
@@ -128,11 +123,7 @@ class NCControlador {
     //Carrega o formulário de registro de nova possível não conformidade. Auth.
     formCadastraNC() {
 
-        return function (req, resp) {
-            const role = 'qualidade';
-            if (req.isAuthenticated()) {
-                const perfil = req.user.perfis;
-                if (perfil.indexOf(role) > -1) {
+        return function (req, resp) {          
                     const ncDao = new NCDao(conn);
                     ncDao.getDadosForm()
                         .then(dadosForm => {
@@ -142,8 +133,6 @@ class NCControlador {
                             })
                         })
                         .catch(erro => console.log(erro));
-                } else resp.marko(templates.base.principal, { msg: "Usuário não autorizado a executar esta operação." });
-            }
         };
 
     }

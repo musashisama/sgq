@@ -59,5 +59,33 @@ class BaseDao {
 
         });
     }
+
+    logger(registro){
+        return new Promise((resolve, reject) => {
+            this._db.registroLogs
+            .insertOne(registro, function (erro, res) {
+                if (erro) {
+                    return reject('Não foi possível inserir o registro.');
+                }
+                return resolve(res);
+                });
+        });
+    }
+
+    getConfig(config) {
+        return new Promise((resolve, reject) => {
+            this._db.config
+                .find({config:config})
+                .sort()
+                .project()
+                .toArray(function (erro, res) {
+                    if (erro) {
+                        return reject('Não foi possível listar os macroprocessos.');
+                    }                    
+                    return resolve(res);
+                });
+
+        });
+    }
 }
 module.exports = BaseDao;

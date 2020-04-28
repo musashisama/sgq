@@ -14,6 +14,7 @@ module.exports = (app) => {
         }
     })
 
+   
     const rotasBase = BaseControlador.rotas();
     app.get(rotasBase.logout,baseControlador.logout());
     app.get(rotasBase.principal, baseControlador.principal());
