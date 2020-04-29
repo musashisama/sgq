@@ -80,7 +80,7 @@ class BaseDao {
                 .project()
                 .toArray(function (erro, res) {
                     if (erro) {
-                        return reject('Não foi possível listar os macroprocessos.');
+                        return reject('Não foi possível buscar as configurações.');
                     }                    
                     return resolve(res);
                 });
