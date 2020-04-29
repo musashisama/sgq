@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <app-scripts-css/>
+  <body>
+    <app-header/>
+    <main class="conteudoPrincipal">
+      <app-navbar/>      
+      <div class="container">
+        <div class="row center-align">
+          <if(data.msg)>
+            <div id="toastsucesso" class="ctoastsucesso"/>
+            <div id="msg" class="controle">${data.msg}</div>
+          </if>          
+        </div>
+       <div id="chart"></div>
+      </div>
+    </main>
+    <app-footer/>
+    <app-scripts-js/>
+    <script src="/estatico/js/libs/tui-chart-all.min.js"/>
+    <script src="/estatico/js/base/calendario.js"/>
+  </body>
+</html>

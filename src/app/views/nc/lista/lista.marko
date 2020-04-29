@@ -1,65 +1,37 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8"/>
-    <link rel="stylesheet" href="/estatico/css/libs/normalize.css"/>
-    <link rel="stylesheet" href="/estatico/css/libs/materialize.css"/>
-    <link rel="stylesheet" href="/estatico/css/libs/google-fonts.css"/>
-    <link rel="stylesheet" href="/estatico/css/main.css"/>
-  </head>
+  <app-scripts-css/>
   <body>
-    <header class="container-header cabecalho"/>
+    <app-header/>
     <main class="conteudoPrincipal">
+      <app-navbar id="slide-out" class="sidenav"/>
       <div class="container">
-        <h2 class="center-align">Lista de Não Conformidades</h2>
-        <table id="naoconformidades" class="striped highlight z-depth-3 responsive-table">
-          <thead class="white-text grey darken-4 colunas">
-            <tr>
-              <th>Macroprocesso</th>
-              <th>Não conformidade</th>
-              <th>Editar</th>
-              <th>Remover</th>
-            </tr>
-          </thead>
-          <tbody>
-            <for|nc| of=data.nc>
-              <tr id=`${nc._id}`>
-                <td class="mp">${nc.Macroprocesso}</td>
-                <td class="desc">${nc.nconformidade}</td>
-                <td class="td-edit">
-                  <a href=`/lista/${nc._id}`>
-                    <i class="small material-icons icones center-align">edit</i>
-                  </a>
-                </td>
-                <td class="td-remove">
-                  <a class="modal-trigger" href="#modal1">
-                    <i class="aRemove small material-icons icones iconeRemove" data-ref=`${nc._id}` data-type="remocao">remove_circle</i>
-                  </a>
-                </td>
-              </tr>
-            </for>
-          </tbody>
-        </table>
-        <a class="btn-floating btn-large waves-effect waves-light green addListaNC">
-          <i class="material-icons">add</i>
-        </a>
+        <h3 class="center-align titulo">Lista de Não Conformidades</h3>
+        <form data-nc=`${data.nc}`/>
+        <div data-msg=`${data.msg}`/>
+        <div class="row">
+            <div class="col s12 right-align">
+        <a class="btn-floating waves-effect waves-light green addListaNC right" title='Adicionar Tipo de Não Conformidade' href="/qualidade/restrito/cadastra-nc">
+          <i class="material-icons">add</i></a>
+          <app-drop-download/>
+          </div>
+          </div>
+        <div id="tabelaNC"/>
       </div>
     </main>
-    <footer class="rodape"/>
     <!-- Modal Structure -->
     <div id="modal1" class="modal">
       <div class="modal-content">
         <h4 class="hModal">Modal Header</h4>
-        <p class="pModal">A bunch of text</p>
+        <p class="pModal"/>
       </div>
       <div class="modal-footer">
         <a href="#!" class="modal-close waves-effect waves-red btn-flat">Cancela</a>
         <a href="#!" class="modal-close waves-effect waves-green btn-flat concorda">Confirma</a>
       </div>
     </div>
-    <script src="/estatico/js/jquery-3.4.1.js"/>
-    <script src="/estatico/js/materialize.js"/>
-    <script src="/estatico/js/loadtemplate.js"/>
-    <script src="/estatico/js/remove-nc.js"/>
+    <app-footer/>
+    <app-scripts-js/>
+    <script src="/estatico/js/nc/gestaoNC.js"/>
   </body>
 </html>

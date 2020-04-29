@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<app-scripts-css/>
+  <body>
+    <app-header />
+    <main class="conteudoPrincipal">
+      <app-navbar id="slide-out" class="sidenav"/>
+      <div class="container">
+        <h3 class="center-align titulo">Cadastrar Novo Conselheiro</h3>
+        <br/>
+        <div class="card-panel hoverable blue lighten-5 z-depth-4 col s9">
+          <div class="row">
+            <form id="formCadCons" name="formCons" action=`/pessoal/restrito/conselheiros/cadastra/` method="post">
+              <h4>Dados Pessoais</h4>
+              <div class="row">
+              <input hidden id="cargo" name="cargo" value=`Conselheiro` type="text"/>
+                <div class="input-field col s5">
+                  <i class="material-icons prefix">account_circle</i>
+                  <input  id="nome" name="nome" value=`` type="text" class="validate"/>
+                  <label class="active" for="nome">Nome:</label>
+                </div>
+                <div class="input-field col s5">
+                  <i class="material-icons prefix">contact_mail</i>
+                  <input  id="email" name="email" value=`` type="email" class="validate"/>
+                  <label class="active" for="email">e-mail:</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s2">
+                  <i class="material-icons prefix">info</i>
+                  <input  id="cpf" name="cpf" value=`` type="text" class="validate"/>
+                  <label class="active" for="cpf">CPF:</label>
+                </div>
+                <div class="input-field col s2">
+                  <i class="material-icons prefix">info_outline</i>
+                  <input  id="siape" name="siape" value=`` type="text" class="validate"/>
+                  <label class="active" for="siape">Siape:</label>
+                </div>
+                <div class="input field col s3">
+                  <input  id="dtNasc" name="dtNasc" value=`` type="text" class="datepicker"/>
+                  <!-- <i class="material-icons prefix">date_range</i> -->
+                  <label for="dtNasc">Data de Nascimento</label>
+                </div>
+                <div class="input-field col s2">
+                  <i class="material-icons prefix">contact_phone</i>
+                  <input  id="telefone" name="telefone" value=`` type="text" class="validate"/>
+                  <label class="active" for="telefone">Telefone:</label>
+                </div>
+                <div class="input-field col s2">
+                  <i class="material-icons prefix">phone_iphone</i>
+                  <input  id="celular" name="celular" value=`` type="text" class="validate"/>
+                  <label class="active" for="celular">Celular:</label>
+                </div>
+              </div>
+              <h4>Dados do Mandato</h4>
+              <div class="row">
+                <div class="form-group input-field turmaCons col s4">
+                  <i class="material-icons prefix">event_seat</i>
+                  <select  name="turmaCons">
+                    <for|unidade| of=data.unidades>
+                      <option class="form-group" value=`${unidade.unidade}`>${unidade.unidade}</option>
+                    </for>
+                  </select>
+                  <label for="turmaCons">Turma/Câmara/Seção:</label>
+                </div>
+                <div class="input-field col s2">
+                  <i class="material-icons prefix">event_seat</i>
+                  <input  id="turma" name="turma" value=`` type="text" class="validate"/>
+                  <label class="active" for="turma">Turma:</label>
+                </div>
+                <div class="input-field col s2">
+                  <i class="material-icons prefix">event_seat</i>
+                  <input  id="camara" name="camara" value=`` type="text" class="validate"/>
+                  <label class="active" for="camara">Câmara:</label>
+                </div>
+                <div class="input-field col s2">
+                  <i class="material-icons prefix">event_seat</i>
+                  <input  id="setor" name="setor" value=`` type="text" class="validate"/>
+                  <label class="active" for="setor">Seção:</label>
+                </div>
+                <div class="input-field col s3">
+                  <i class="material-icons prefix">gps_fixed</i>
+                  <input  id="origem" name="origem" value=`` type="text" class="validate"/>
+                  <label class="active" for="origem">Representação:</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s3">
+                  <i class="material-icons prefix">details</i>
+                  <select  id="tipo" name="tipo">
+                    <option value="Titular">Titular</option>
+                    <option value="Suplente">Suplente</option>
+                  </select>
+                  <label>Titular/Suplente</label>
+                </div>
+                <div class="input field col s3">
+                  <!-- <i class="material-icons prefix">insert_invitation</i> -->
+                  <input  id="dtInicio" name="dtInicio" value=`` type="text" class="datepicker"/>
+                  <label for="dtInicio">Início do Último Mandato:</label>
+                </div>
+                <div class="form-group input-field funcao col s4">
+                  <i class="material-icons prefix">domain</i>
+                  <select  name="funcao">
+                    <for|funcao| of=data.funcoes>
+                      <option class="form-group" value=`${funcao.funcao}`>${funcao.funcao}</option>
+                    </for>
+                  </select>
+                  <label for="funcao">Função:</label>
+                </div>
+                <div class="input-field col s3">
+                  <i class="material-icons prefix">event_note</i>
+                  <select  id="mandatoAt" name="mandatoAt">
+                    <option value=true>Sim</option>
+                    <option value=false>Não</option>
+                  </select>
+                  <label>Mandato Ativo?</label>
+                </div>
+              </div>
+              <div class="card-action right-align">                
+                <a  class="btn-cons-salva btn-floating blue waves-effect waves-light hoverable z-depth-3" type="submit" title="Salvar">
+                  <i class="material-icons">save</i>
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div/>
+      </div>
+    </main>
+    <app-footer/>
+    <app-scripts-js/>
+    <script src="/estatico/js/pessoal/cadcons.js"/>
+  </body>
+</html>

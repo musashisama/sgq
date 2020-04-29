@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <app-scripts-css/>
+  <body>
+    <app-header/>
+    <main class="conteudoPrincipal">
+      <app-navbar/>
+      <div class="container  valign-wrapper">
+        <div class="row center-align">
+          <if(data.msg)>
+            <div id="toastsucesso" class="ctoastsucesso"/>
+            <div id="msg" class="controle">${data.msg}</div>
+          </if>
+          <div id="divImage" class="">
+            <img src="/estatico/imagens/CARF_logo.png"/>
+          </div>
+        </div>
+      </div>
+    </main>
+    <app-footer/>
+    <app-scripts-js/>
+    <script src="/estatico/js/base/scprincipal.js"/>
+  </body>
+</html>

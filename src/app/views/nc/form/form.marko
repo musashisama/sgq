@@ -1,21 +1,15 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8"/>
-    <link rel="stylesheet" href="/estatico/css/libs/normalize.css"/>
-    <link rel="stylesheet" href="/estatico/css/libs/materialize.css"/>
-    <link rel="stylesheet" href="/estatico/css/libs/google-fonts.css"/>
-    <link rel="stylesheet" href="/estatico/css/main.css"/>
-    <title>Registro de Não Conformidades</title>
-  </head>
+  <app-scripts-css/>
   <body>
-    <header class="container-header cabecalho"/>
+    <app-header/>
     <main class="conteudoPrincipal">
+      <app-navbar id="slide-out" class="sidenav"/>
       <div class="container">
-        <h3 class="center-align">Registro de Não Conformidades</h3>
+        <h3 class="center-align titulo">Cadastrar Não Conformidade</h3>
         <br/>
         <br/>
-        <form id="formNC" name="formNC" action="/form" method="post">
+        <form id="formNC" name="formNC" action="/qualidade/adiciona-nc" method="post">
           <if(data.registroNC._id)>
             <div>
               <input type="hidden" name="_method" value="PUT"/>
@@ -28,8 +22,8 @@
               <input required type="text" id="titulo" name="cpfUser" value=data.registroNC.cpfUser placeholder="Digite seu CPF" class="form-control cpfuser tooltipped" data-position="bottom" data-tooltip="Não se preocupe, seu CPF não irá constar nos dashboards!"/>
             </div>
             <div class="form-group input-field  col s4">
-              <label for="titulo">Documento de referência:</label>
-              <input type="text" id="titulo" name="docRef" value=data.registroNC.ssdocRef placeholder="(ex.: n° do Processo). Após digitar, clique em \"+\" para adicionar o processo." class="form-control docref chips chips-placeholder"/>
+              <label for="docRef">Documento de referência:</label>
+              <input type="text" id="docRef" name="docRef" value=data.registroNC.ssdocRef placeholder='(ex.: n° do Processo). Após digitar, clique em "+" para adicionar o processo.' class="form-control docref chips chips-placeholder"/>
             </div>
             <div class="form-group input-field col s1">
               <a class="btn-floating btn-small waves-effect waves-light blue hoverable" href="">
@@ -63,7 +57,7 @@
               <select name="equipeNC">
                 <option class="form-group" value="" disabled selected>Clique para selecionar</option>
                 <for|und| of=data.und>
-                  <option class="form-group" value=data.und.Sigla>${und.Sigla}</option>
+                  <option class="form-group" value=data.und.sigla>${und.sigla}</option>
                 </for>
               </select>
               <label for="equipeNC">
@@ -121,11 +115,6 @@
                 Quando a <strong>não conformidade</strong> foi encaminhada/Corrigida?
               </label>
             </div>
-            <!-- <div class="col s5 offset-s11">
-              <button class="btn-floating btn-large waves-effect waves-light green hoverable " type="submit">
-                <i class="material-icons right-align">add</i>
-              </button>
-            </div> -->
             <div class="col s5 offset-s11">
               <a id="aModal" class="btn-floating btn-large waves-effect waves-light green hoverable btn-insere" href="#modal1">
                 <i class="material-icons">note_add</i>
@@ -135,12 +124,13 @@
         </form>
       </div>
     </main>
-    <footer class="page-footer rodape"/>
+    <app-footer/>
+    <app-scripts-js/>
     <!--Modal Structure-->
     <div id="modal1" class="modal">
       <div class="modal-content">
         <h4 class="hModal">Modal Header</h4>
-        <p class="pModal"></p>
+        <p class="pModal"/>
       </div>
       <div class="modal-footer">
         <a href="#!" class="modal-close waves-effect waves-red btn-flat cancela">Cancela</a>
@@ -152,11 +142,7 @@
     <div id="naoconfs" class="controle">
       <for|nconf| of=data.nconf>"${nconf.nconformidade}":null,</for>
     </div>
-    <script src="/estatico/js/jquery-3.4.1.js"/>
-    <script src="/estatico/js/materialize.js"/>
-    <script src="/estatico/js/loadtemplate.js"/>
-    <script src="/estatico/js/services/HttpService.js"/>
-    <script src="/estatico/js/valida.js"/>
-    <script src="/estatico/js/formcontrol.js"/>
+    <script src="/estatico/js/nc/valida.js"/>
+    <script src="/estatico/js/nc/formcontrol.js"/>
   </body>
 </html>

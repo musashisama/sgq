@@ -6,47 +6,64 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     components_helpers = require("marko/src/runtime/components/helpers"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
+    app_scripts_css_template = require("../../components/app-scripts-css.marko"),
     marko_helpers = require("marko/src/runtime/html/helpers"),
     marko_loadTag = marko_helpers.t,
+    app_scripts_css_tag = marko_loadTag(app_scripts_css_template),
     component_globals_tag = marko_loadTag(require("marko/src/core-tags/components/component-globals-tag")),
-    marko_forEach = marko_helpers.f,
-    marko_escapeXml = marko_helpers.x,
+    app_header_template = require("../../components/app-header.marko"),
+    app_header_tag = marko_loadTag(app_header_template),
+    app_navbar_template = require("../../components/app-navbar.marko"),
+    app_navbar_tag = marko_loadTag(app_navbar_template),
     marko_attr = marko_helpers.a,
+    app_drop_download_template = require("../../components/app-drop-download.marko"),
+    app_drop_download_tag = marko_loadTag(app_drop_download_template),
+    app_footer_template = require("../../components/app-footer.marko"),
+    app_footer_tag = marko_loadTag(app_footer_template),
+    app_scripts_js_template = require("../../components/app-scripts-js.marko"),
+    app_scripts_js_tag = marko_loadTag(app_scripts_js_template),
     init_components_tag = marko_loadTag(require("marko/src/core-tags/components/init-components-tag")),
     await_reorderer_tag = marko_loadTag(require("marko/src/core-tags/core/await/reorderer-renderer"));
 
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.w("<!DOCTYPE html><html><head><meta charset=\"utf-8\"><link rel=\"stylesheet\" href=\"/estatico/css/libs/normalize.css\"><link rel=\"stylesheet\" href=\"/estatico/css/libs/materialize.css\"><link rel=\"stylesheet\" href=\"/estatico/css/libs/google-fonts.css\"><link rel=\"stylesheet\" href=\"/estatico/css/main.css\"></head><body>");
+  out.w("<!DOCTYPE html><html>");
+
+  app_scripts_css_tag({}, out, __component, "1");
+
+  out.w("<body>");
 
   component_globals_tag({}, out);
 
-  out.w("<header class=\"container-header cabecalho\"></header><main class=\"conteudoPrincipal\"><div class=\"container\"><h2 class=\"center-align\">Lista de Não Conformidades</h2><table id=\"naoconformidades\" class=\"striped highlight z-depth-3 responsive-table\"><thead class=\"white-text grey darken-4 colunas\"><tr><th>Macroprocesso</th><th>Não conformidade</th><th>Editar</th><th>Remover</th></tr></thead><tbody>");
+  app_header_tag({}, out, __component, "3");
 
-  var $for$0 = 0;
+  out.w("<main class=\"conteudoPrincipal\">");
 
-  marko_forEach(data.nc, function(nc) {
-    var $keyScope$0 = "[" + (($for$0++) + "]");
+  app_navbar_tag({
+      id: "slide-out",
+      class: "sidenav"
+    }, out, __component, "5");
 
-    out.w("<tr" +
-      marko_attr("id", "" + nc._id) +
-      "><td class=\"mp\">" +
-      marko_escapeXml(nc.Macroprocesso) +
-      "</td><td class=\"desc\">" +
-      marko_escapeXml(nc.nconformidade) +
-      "</td><td class=\"td-edit\"><a" +
-      marko_attr("href", "/lista/" + nc._id) +
-      "><i class=\"small material-icons icones center-align\">edit</i></a></td><td class=\"td-remove\"><a class=\"modal-trigger\" href=\"#modal1\"><i class=\"aRemove small material-icons icones iconeRemove\"" +
-      marko_attr("data-ref", "" + nc._id) +
-      " data-type=\"remocao\">remove_circle</i></a></td></tr>");
-  });
+  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Lista de Não Conformidades</h3><form" +
+    marko_attr("data-nc", "" + data.nc) +
+    "></form><div" +
+    marko_attr("data-msg", "" + data.msg) +
+    "></div><div class=\"row\"><div class=\"col s12 right-align\"><a class=\"btn-floating waves-effect waves-light green addListaNC right\" title=\"Adicionar Tipo de Não Conformidade\" href=\"/qualidade/restrito/cadastra-nc\"><i class=\"material-icons\">add</i></a>");
 
-  out.w("</tbody></table><a class=\"btn-floating btn-large waves-effect waves-light green addListaNC\"><i class=\"material-icons\">add</i></a></div></main><footer class=\"rodape\"></footer><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\">A bunch of text</p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat\">Cancela</a><a href=\"#!\" class=\"modal-close waves-effect waves-green btn-flat concorda\">Confirma</a></div></div><script src=\"/estatico/js/jquery-3.4.1.js\"></script><script src=\"/estatico/js/materialize.js\"></script><script src=\"/estatico/js/loadtemplate.js\"></script><script src=\"/estatico/js/remove-nc.js\"></script>");
+  app_drop_download_tag({}, out, __component, "14");
+
+  out.w("</div></div><div id=\"tabelaNC\"></div></div></main><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat\">Cancela</a><a href=\"#!\" class=\"modal-close waves-effect waves-green btn-flat concorda\">Confirma</a></div></div>");
+
+  app_footer_tag({}, out, __component, "23");
+
+  app_scripts_js_tag({}, out, __component, "24");
+
+  out.w("<script src=\"/estatico/js/nc/gestaoNC.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "43");
+  await_reorderer_tag({}, out, __component, "26");
 
   out.w("</body></html>");
 }
@@ -61,7 +78,13 @@ marko_template.Component = marko_defineComponent({}, marko_template._);
 marko_template.meta = {
     id: "/sgq$1.0.0/src/app/views/nc/lista/lista.marko",
     tags: [
+      "../../components/app-scripts-css.marko",
       "marko/src/core-tags/components/component-globals-tag",
+      "../../components/app-header.marko",
+      "../../components/app-navbar.marko",
+      "../../components/app-drop-download.marko",
+      "../../components/app-footer.marko",
+      "../../components/app-scripts-js.marko",
       "marko/src/core-tags/components/init-components-tag",
       "marko/src/core-tags/core/await/reorderer-renderer"
     ]

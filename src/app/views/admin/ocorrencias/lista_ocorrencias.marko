@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <app-scripts-css/>
+  <body>
+    <app-header/>
+    <main class="conteudoPrincipal">
+      <app-navbar id="slide-out" class="sidenav"/>
+      <div class="container">
+        <h3 class="center-align titulo">Lista de Tipos de Ocorrências</h3>
+        <form data-ocorrencias=`${data.ocorrencias}`/>
+        
+        <a class="btn-floating waves-effect waves-light green addListaOco right" title='Adicionar Tipo de Ocorrência' href="/admin/ocorrencias/cadastra">
+          <i class="material-icons">add</i></a>
+        <div id="tabelaOcorrencias"/>
+      </div>
+    </main>
+    <!-- Modal Structure -->
+    <div id="modal1" class="modal">
+      <div class="modal-content">
+        <h4 class="hModal">Modal Header</h4>
+        <p class="pModal"/>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-red btn-flat">Cancela</a>
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat concorda">Confirma</a>
+      </div>
+    </div>
+    <app-footer/>
+    <app-scripts-js/>
+    <script src="/estatico/js/base/gestaoOco.js"/>
+  </body>
+</html>
