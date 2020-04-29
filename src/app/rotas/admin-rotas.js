@@ -26,23 +26,16 @@ module.exports = (app) => {
      
 
     app.get(rotasUser.ocorrencias, userControlador.listaOcorrencias());
-
     app.route(rotasUser.cadastraOco)
         .get(userControlador.formOcorrencia())
         .post(userControlador.cadastraTpOcorrencia())
         .put(userControlador.editaOco());
-
     app.get(rotasUser.edicaoOco, userControlador.formEditaOcorrencia())
-
     app.delete(rotasUser.deletaOco, userControlador.removeTpOco());
-
-
     app.route(rotasUser.perfis)
         .get(userControlador.formPerfis())
         .post(userControlador.formPerfis());
-
     app.put(rotasUser.edita, userControlador.editaPerfis());
-
     app.route(rotasUser.cadastro)
         .get(userControlador.formCadastra())
         .post(userControlador.cadastra())

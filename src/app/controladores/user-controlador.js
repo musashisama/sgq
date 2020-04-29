@@ -69,21 +69,15 @@ class UserControlador {
 
     formOcorrencia() {
         return function (req, resp) {
-           
-                const perfil = req.user.perfis;
-                if (perfil.indexOf(role) > -1) {
                     let id = new ObjectID(req.params.id);                    
                     const userDao = new UserDao(conn);                    
                     userDao.getOcorrencias()
-                        .then(ocorrencias => {
-                            console.log(ocorrencias);
+                        .then(ocorrencias => {                           
                             resp.marko(templates.admin.ocorrencias, {
                                 ocorrencia: ''
                             })
                         })
                         .catch(erro => console.log(erro));
-               
-            }
         };
 
     }
@@ -106,7 +100,7 @@ class UserControlador {
         };
 
     }
-    //Chamado pelo POST do formulário. Cadastra nova possível não conformidade.
+    //Chamado pelo POST do formulário. Cadastra nova possível ocorrência.
     cadastraTpOcorrencia() {
         return function (req, resp) {
             const registro = req.body;
