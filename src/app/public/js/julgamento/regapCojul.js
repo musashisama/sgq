@@ -181,11 +181,11 @@ function countCalc(values, data, calcParams) {
 }
 
 $('.Atividade').change(() => {
-    console.log($("select option:selected").text());
-    table.setFilter("Atividade", "=", $("select option:selected").text())
-    if ($("select option:selected").text() == 'Todas') {
-        table.removeFilter("Atividade", "=", $("select option:selected").text())
-    } else { table.setFilter("Atividade", "=", $("select option:selected").text()) }
+    //console.log($("select option:selected").val());
+    table.setFilter("Atividade", "=", $("select option:selected").val())
+    if ($("select option:selected").val() == 'Todas') {
+        table.removeFilter("Atividade", "=", $("select option:selected").val())
+    } else { table.setFilter("Atividade", "=", $("select option:selected").val()) }
 })
 
 
