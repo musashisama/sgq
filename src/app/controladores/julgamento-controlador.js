@@ -39,8 +39,7 @@ class JulgamentoControlador {
             form.parse(req, function (err, fields, files) {
                 if (err) {
                     console.log(err);
-                }                
-                console.log(files.file.name);
+                }
                 registro['nome'] = files.file.name;
                 let oldpath = files.file.path;
                 if (fields.tipoRel == 'Estoque' || fields.tipoRel == 'REINP' || fields.tipoRel == 'REJUL') {

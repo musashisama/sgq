@@ -79,11 +79,11 @@ class CSVHandler {
                                     if (semana == 'Azul' && semanaAzul.includes(dado['Equipe_Atual'])) {
                                         parcial.push(dado);
                                     }
-                                    if (semana == 'Todas') {
+                                    if (semana == 'Todas'&& (semanaAzul.includes(dado['Equipe_Atual'])||semanaVerde.includes(dado['Equipe_Atual'])||semanaAmarela.includes(dado['Equipe_Atual']))) {
                                         parcial.push(dado)
                                     }
                                 })
-                                console.log(dados.length + "   " + parcial.length);
+                                //console.log(dados.length + "   " + parcial.length);
                                 CSVHandler._escreveZip(path + gerado, parcial)
                                     .then(() => {
                                         let csvmongo = CSVHandler._montaObjRelatorio(parcial);
