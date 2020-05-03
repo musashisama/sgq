@@ -45,11 +45,11 @@ function render(input, out, __component, component, state) {
       class: "sidenav"
     }, out, __component, "5");
 
-  out.w("<div class=\"container\"><div class=\"row\"><h3 class=\"center-align titulo\">Registro de Não Conformidades</h3><div class=\"col s3 offset-s9\"><a href=\"#!\" id=\"mostraColunas\" class=\"waves-effect waves-green btn-flat blue \">Mostrar colunas ocultas</a>");
+  out.w("<div class=\"container\"><div class=\"row\"><h3 class=\"center-align titulo\">Registro de Não Conformidades</h3><div class=\"col s12 right-align\">");
 
-  app_drop_download_tag({}, out, __component, "11");
+  app_drop_download_tag({}, out, __component, "10");
 
-  out.w("</div><form" +
+  out.w("</div></div><div class=\"row\"><form" +
     marko_attr("data-nc", "" + data.registroNC) +
     "></form><div id=\"tabelaNC\"></div></div></div></main><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\">A bunch of text</p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat\">Cancela</a><a href=\"#!\" class=\"modal-close waves-effect waves-green btn-flat concorda\">Confirma</a></div></div>");
 

@@ -20,25 +20,7 @@ let tabledata = null;
 layout = "fitDataFill";
 let colunas = [];
 //responsiveLayout = "collapse";
-var headerMenu = [
-    {
-        label: "<i class='fas fa-eye-slash'></i> Ocultar Coluna",
-        action: function (e, column) {
-            if (colunas.length == 0) {
-                $('#mostraColunas').toggle();
-            }
-            colunas.push(column);
-            column.hide();
 
-        }
-    }
-]
-
-document.getElementById("mostraColunas").addEventListener("click", function () {
-    colunas.forEach(coluna => {
-        coluna.show();
-    })
-});
 
 function dataTable() {
     tabledata = JSON.parse($('form').attr('data-nc'));
@@ -55,13 +37,13 @@ function dataTable() {
         initialSort: [{ column: "mProcOrigem", dir: "asc" }],
         columns: [
             { formatter: "responsiveCollapse", width: 30, minWidth: 30, hozAlign: "left", resizable: false, headerSort: false },
-            { title: "Macroprocesso Origem", width: 200, field: "mProcOrigem", sorter: "string", hozAlign: "left", headerFilter: "input", formatter: "textarea", editor: false, responsive: 0, headerMenu: headerMenu, },
-            { title: "Não Conformidade", width: 300,field: "descNC", sorter: "string", hozAlign: "left", headerFilter: "input", formatter: "textarea", editor: false, responsive: 0, headerMenu: headerMenu },
+            { title: "Macroprocesso Origem", width: 200, field: "mProcOrigem", sorter: "string", hozAlign: "left", headerFilter: "input", formatter: "textarea", editor: false, responsive: 0,  },
+            { title: "Não Conformidade", width: 300,field: "descNC", sorter: "string", hozAlign: "left", headerFilter: "input", topCalc: "count",formatter: "textarea", editor: false, responsive: 0, },
             { title: "Ação Imediata", width: 140,field: "acaoImediata", sorter: "string", hozAlign: "left", headerFilter: "input", formatter: "textarea", editor: false, responsive: 0 },
             { title: "Data Encaminhamento", field: "EncCorNC", sorter: "date", sorterParams:sorterParams, hozAlign: "left", headerFilter: "input", formatter: "datetime",  editor: false, responsive: 0 },
             { title: "Data NC", field: "dataNC", sorter: "date", sorterParams:sorterParams,hozAlign: "left", headerFilter: "input", formatter: "datetime", editor: false, responsive: 0 },
-            { title: "Equipe", field: "equipeNC", sorter: "string", hozAlign: "left", headerFilter: "input", formatter: "textarea", editor: false, responsive: 2, headerMenu: headerMenu },
-            { title: "Macroprocesso Usuário", field: "mpProcUser", sorter: "string", hozAlign: "left", headerFilter: "input", bottomCalc: "count", formatter: "textarea", editor: false, },
+            { title: "Equipe", field: "equipeNC", sorter: "string", hozAlign: "left", headerFilter: "input", formatter: "textarea", editor: false, responsive: 2,  },
+            { title: "Macroprocesso Usuário", field: "mpProcUser", sorter: "string", hozAlign: "left", headerFilter: "input", topCalc: "count", formatter: "textarea", editor: false, },
             { title: "Documento de Ref.", width: 180, field: "docRef", sorter: "string", hozAlign: "left", headerFilter: "input", formatter: "textarea", editor: false, responsive: 2 },
             { title: "Observações", field: "obsParticipante", sorter: "string", hozAlign: "left", headerFilter: "input", formatter: "textarea", editor: false, responsive: 2 },
 

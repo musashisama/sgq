@@ -46,7 +46,7 @@ function render(input, out, __component, component, state) {
       class: "sidenav"
     }, out, __component, "5");
 
-  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Relatório Gerencial de Acompanhamento de Prazos</h3><div class=\"row\"><div class=\"col s12\"><div class=\"card hoverable blue lighten-5 z-depth-4 cardBorda\"><div class=\"card-content\"><span class=\"card-title\">Conselheiro(a): " +
+  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Relatório Gerencial de Acompanhamento de Prazos</h3><div class=\"row\"><div class=\"col s12\"><div class=\"card hoverable z-depth-4 cardBorda\"><div class=\"card-content\"><span class=\"card-title\">Conselheiro(a): " +
     marko_escapeXml(data.user) +
     " - " +
     marko_escapeXml(data.tipo) +

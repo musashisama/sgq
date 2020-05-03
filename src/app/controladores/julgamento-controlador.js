@@ -39,13 +39,14 @@ class JulgamentoControlador {
             form.parse(req, function (err, fields, files) {
                 if (err) {
                     console.log(err);
-                }
-                registro['nome'] = files.filetoupload.name;
-                let oldpath = files.filetoupload.path;
+                }                
+                console.log(files.file.name);
+                registro['nome'] = files.file.name;
+                let oldpath = files.file.path;
                 if (fields.tipoRel == 'Estoque' || fields.tipoRel == 'REINP' || fields.tipoRel == 'REJUL') {
                     fields.semana = 'Todas';
                 }
-                newpath = path + fields.semana + '-' + files.filetoupload.name;
+                newpath = path + fields.semana + '-' + files.file.name;
                 fse.move(oldpath, newpath, { overwrite: true })
                     .then(() => {
                         registro = CSVHandler.wrangleCSV(newpath, fields.semana)
