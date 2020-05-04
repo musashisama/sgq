@@ -56,6 +56,20 @@ class CSVHandler {
     constructor() {
         throw new Error('CSVHandler não pode ser instanciada. Utilize os métodos estáticos.');
     }
+
+    static semanaCores(turma){
+               
+        if (semanaAmarela.includes(turma)) {
+            return 'Amarela';
+        }
+        if (semanaVerde.includes(turma)) {
+            return 'Verde';
+        }
+        if (semanaAzul.includes(turma)) {
+            return 'Azul';
+        }        
+    }
+
     static wrangleCSV(arq, semana, tipo) {
         return new Promise((resolve, reject) => {
             fs.readFile(arq, 'latin1', function (err, data) {

@@ -4,6 +4,8 @@ const baseRotas = require('./base-rotas');
 const adminRotas = require('./admin-rotas');
 const julgamentoRotas = require('./julgamento-rotas')
 const pessoalRotas = require('./pessoal-rotas');
+const conselheiroRotas = require('./conselheiro-rotas');
+
 
 
 module.exports = (app) => {
@@ -12,5 +14,6 @@ module.exports = (app) => {
     baseRotas(app);
     adminRotas(app);
     julgamentoRotas(app);
-    pessoalRotas(app);
+    pessoalRotas(app); 
+    conselheiroRotas(app);
 };
