@@ -23,7 +23,7 @@ class ACL {
             julgamento:['admin','julgamento'],
             pessoal:['admin','pessoal'],
             qualidade:['admin','qualidade'],
-            conselheiro:['admin','conselheiro'],
+            conselheiro:['admin','conselheiro','julgamento'],
             carf:['admin','carf'],
             gestor:['admin','gestor'],
             serpro:['admin','serpro']

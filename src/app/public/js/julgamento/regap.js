@@ -40,9 +40,9 @@ function dataTable(msg) {
             { formatter: "responsiveCollapse", width: 30, minWidth: 30, hozAlign: "left", resizable: false, headerSort: false,responsive: 0, download: true, },
             { title: "Processo", field: "Processo", sorter: "number", hozAlign: "center", headerFilter: "input", topCalc: countCalc, editor: false, responsive: 0, download: true, },
             { title: "Contribuinte", field: "Contribuinte", sorter: "string", hozAlign: "center", editor: false, responsive: 2, download: true, },
-            { title: "Turma", field: "turma", sorter: "string", hozAlign: "center", headerFilter: "input", editor: false, responsive: 1, download: true, },
-            { title: "Câmara", field: "camara", sorter: "string", hozAlign: "center", headerFilter: "input", editor: false, responsive: 1, download: true, },
-            { title: "Seção", field: "setor", sorter: "string", hozAlign: "center", headerFilter: "input", editor: false, responsive: 1, download: true, },
+            { title: "Turma", field: "turma", sorter: "string", hozAlign: "center", headerFilter: "input", editor: false, responsive: 2, download: true, },
+            { title: "Câmara", field: "camara", sorter: "string", hozAlign: "center", headerFilter: "input", editor: false, responsive: 2, download: true, },
+            { title: "Seção", field: "setor", sorter: "string", hozAlign: "center", headerFilter: "input", editor: false, responsive: 2, download: true, },
             { title: "Equipe Atual", field: "Equipe_Atual", sorter: "string", hozAlign: "center", headerFilter: "input", editor: false, responsive: 2, download: true, },
             { title: "Ind. Apenso", field: "Ind_Apenso", sorter: "string", hozAlign: "center", editor: false, responsive: 2, download: true, },
             { title: "Atividade", field: "Atividade", sorter: "string", hozAlign: "center",  topCalc: countCalc, editor: false, responsive: 0, download: true, },
@@ -54,8 +54,9 @@ function dataTable(msg) {
             { title: "Data da Sessão de Julgamento", field: "Data_da_Sessao_Julgamento", sorter: "number", hozAlign: "center", editor: false, responsive: 2, download: true, },
             { title: "Dias da Última Distribuição", field: "Dias_da_Dist", sorter: "number", hozAlign: "center", editor: false, responsive: 2, download: true, },
             { title: "Retorno Sepoj?", field: "Retorno_Sepoj", sorter: "string", hozAlign: "center", editor: false, responsive: 2, download: true, },
-            { title: "Última Equipe", field: "Equipe_Ultima", sorter: "string", hozAlign: "center", editor: false, responsive: 0, download: true, },
+            { title: "Última Equipe", field: "Equipe_Ultima", sorter: "string", hozAlign: "center", editor: false, responsive: 1, download: true, },
             { title: "Observações", field: "Observacoes", sorter: "string", hozAlign: "center", editor: false, responsive: 1, download: true, },
+            { title: "Valor Originário", field: "Valor_Originario", sorter: "number", hozAlign: "center", editor: false, formatter: formatValor, responsive: 0, download: true, },
 
         ],
         autoColumns: false,
@@ -106,6 +107,14 @@ document.getElementById("mostraColunasAtividade").addEventListener("click", func
         agrupado = false;
     };
 });
+
+let formatValor = function formatValor(cell){
+    const formato = { style: 'currency', currency: 'BRL',useGrouping:true,localeMatcher:"best fit" }
+    const valor = +cell.getValue();
+    if (valor >= 1000000) { cell.getElement().style.color = 'rgb(245, 131, 0)'; cell.getElement().style.fontWeight = 'bolder' }
+        if (valor < 1000000 ) { cell.getElement().style.color = 'rgb(63, 138, 2)'; cell.getElement().style.fontWeight = 'bolder'; }
+    return `${valor.toLocaleString('pt-BR', formato)}`
+}
 
 function coloreDias(cell, formatterParams) {
     let value = cell.getValue();

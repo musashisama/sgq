@@ -42,7 +42,8 @@ module.exports = (app) => {
         const usuarioSessao = {
             nome: cpf[0].nome,
             cpf: cpf[0].cpf,
-            perfis: cpf[0].perfil
+            perfis: cpf[0].perfil,
+            unidade: cpf[0].unidade
         };        
         done(null, usuarioSessao);
     });

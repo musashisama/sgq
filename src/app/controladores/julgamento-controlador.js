@@ -23,16 +23,74 @@ class JulgamentoControlador {
         return {
             autenticadas: '/julgamento/restrito*',
             calendario: '/julgamento/calendario',
+            conselheiros: '/julgamento/conselheiros',
+            regapcons: '/julgamento/conselheiros/:id',
             cargacons: '/julgamento/restrito/diagnostico-carga',
             carregacsv: '/julgamento/restrito/carrega-csv',
             escolhecsv: '/julgamento/restrito/escolhe-csv',
             escolhecsvregap: '/julgamento/restrito/escolhe-csv-regap',
+            escolhecsvcons: '/julgamento/restrito/escolhe-csv-cons',
             detalha: '/julgamento/restrito/diagnostico-carga/:id',
             regapCojul: '/julgamento/restrito/regap-cojul/:id',
             detalharegap: '/julgamento/restrito/regap-cojul/detalha/:id',
             regap: '/julgamento/restrito/regap/:id'
         };
     }
+
+    carregaPaginaConselheiros() {
+        return function (req, resp) {
+            let cpf = req.user.cpf;
+            let unidade = req.user.unidade;
+            let semana = CSVHandler.semanaCores(unidade);           
+            const pessoalDao = new PessoalDao(conn);
+            pessoalDao.getUsers({ cpf: cpf })
+                .then(user => {
+                    const julgamentoDao = new JulgamentoDao(conn);
+                    julgamentoDao.getRelatorios({ $or: [
+                        { $and: [{tipoRel: 'REGAP' },{ semana: semana }]}, 
+                        {tipoRel: 'Estoque' }] })
+                        .then(dados => {                            
+                            dados.forEach(dado => {
+                                dado.id = dado._id;
+                                dado.semana = dado.semana;
+                                dado.dataEnvio = dado.dataEnvio;
+                                dado.dtExtracao = dado.dtExtracao;
+                            })
+                            const pessoalDao = new PessoalDao(conn);
+                            pessoalDao.getOcorrencias({cpf:cpf})
+                            .then(ocorrencias => {
+                                resp.marko(templates.julgamento.regapcons, { user: user[0], dados: dados, ocorrencias: JSON.stringify(ocorrencias) })
+                            })
+                        })
+
+                })
+        }
+    }
+
+    carregaTabelaConselheiros() {
+        return function (req, resp) {
+            let CPF = req.user.cpf;
+            let id = new ObjectID(req.params.id);            
+            const julgamentoDao = new JulgamentoDao(conn);
+            let respJSON = [];
+            julgamentoDao.getRelatorios({_id:id})
+            .then(rel => {
+                let caminho = rel[0].caminho;
+                dados = CSVHandler.pegaRegap(`${caminho}`, 'CONS', CPF)
+                .then(dados => {
+                    dados.forEach(dado => {
+                        if(dado.CPF == CPF){
+                            respJSON.push(dado);
+                        }
+                    })                                     
+                    resp.send(respJSON);
+                })
+            })
+
+        }
+    }
+
+
     carregaCSV() {
         return function (req, resp) {
             let form = formidable.IncomingForm({ keepExtensions: true });
@@ -40,12 +98,12 @@ class JulgamentoControlador {
                 if (err) {
                     console.log(err);
                 }
-                registro['nome'] = files.filetoupload.name;
-                let oldpath = files.filetoupload.path;
+                registro['nome'] = files.file.name;
+                let oldpath = files.file.path;
                 if (fields.tipoRel == 'Estoque' || fields.tipoRel == 'REINP' || fields.tipoRel == 'REJUL') {
                     fields.semana = 'Todas';
                 }
-                newpath = path + fields.semana + '-' + files.filetoupload.name;
+                newpath = path + fields.semana + '-' + files.file.name;
                 fse.move(oldpath, newpath, { overwrite: true })
                     .then(() => {
                         registro = CSVHandler.wrangleCSV(newpath, fields.semana)

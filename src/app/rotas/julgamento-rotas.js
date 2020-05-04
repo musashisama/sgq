@@ -29,9 +29,10 @@ module.exports = (app) => {
     });
 
     app.get(rotasJulgamento.calendario,julgControlador.carregaPaginaCalendario());
+   
 
     app.use(rotasJulgamento.autenticadas, function (req, resp, next) {
-        if (ACL.checaACL(req.user.perfis, 'julgamento') || ACL.checaACL(req.user.perfis, 'conselheiro') || ACL.checaACL(req.user.perfis, 'serpro')) {
+        if (ACL.checaACL(req.user.perfis, 'julgamento') || ACL.checaACL(req.user.perfis, 'serpro')) {
             next();
         } else { resp.render(403) };
 
@@ -46,12 +47,13 @@ module.exports = (app) => {
         } else { resp.render(403) };
 
     });
+    
    
     app.get(rotasJulgamento.regapCojul, julgControlador.carregaPaginaRegapCojul());
     app.get(rotasJulgamento.escolhecsvregap, julgControlador.escolheCSVRegap());    
     app.get(rotasJulgamento.escolhecsv, julgControlador.escolheCSV());
-    app.get(rotasJulgamento.detalha, julgControlador.carregaPaginaDiag())
-    app.get(rotasJulgamento.carregacsv,julgControlador.carregaPaginaInsereCSV())
+    app.get(rotasJulgamento.detalha, julgControlador.carregaPaginaDiag());
+    app.get(rotasJulgamento.carregacsv,julgControlador.carregaPaginaInsereCSV());
         
     app.use(rotasJulgamento.autenticadas, function (req, resp, next) {
         if (ACL.checaACL(req.user.perfis, 'julgamento')) {
@@ -61,6 +63,4 @@ module.exports = (app) => {
     });    
 
     app.post(rotasJulgamento.carregacsv,julgControlador.carregaCSV())
-
-        
 }

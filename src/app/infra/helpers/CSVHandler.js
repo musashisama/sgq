@@ -56,6 +56,20 @@ class CSVHandler {
     constructor() {
         throw new Error('CSVHandler não pode ser instanciada. Utilize os métodos estáticos.');
     }
+
+    static semanaCores(turma){
+               
+        if (semanaAmarela.includes(turma)) {
+            return 'Amarela';
+        }
+        if (semanaVerde.includes(turma)) {
+            return 'Verde';
+        }
+        if (semanaAzul.includes(turma)) {
+            return 'Azul';
+        }        
+    }
+
     static wrangleCSV(arq, semana, tipo) {
         return new Promise((resolve, reject) => {
             fs.readFile(arq, 'latin1', function (err, data) {
@@ -79,11 +93,11 @@ class CSVHandler {
                                     if (semana == 'Azul' && semanaAzul.includes(dado['Equipe_Atual'])) {
                                         parcial.push(dado);
                                     }
-                                    if (semana == 'Todas') {
+                                    if (semana == 'Todas'&& (semanaAzul.includes(dado['Equipe_Atual'])||semanaVerde.includes(dado['Equipe_Atual'])||semanaAmarela.includes(dado['Equipe_Atual']))) {
                                         parcial.push(dado)
                                     }
                                 })
-                                console.log(dados.length + "   " + parcial.length);
+                                //console.log(dados.length + "   " + parcial.length);
                                 CSVHandler._escreveZip(path + gerado, parcial)
                                     .then(() => {
                                         let csvmongo = CSVHandler._montaObjRelatorio(parcial);
@@ -205,6 +219,7 @@ class CSVHandler {
                                     Questionamento_CARF: valor.Questionamento_CARF,
                                     Resolucao: valor.Resolucao,
                                     Acordao: valor.Acordao,
+                                    Valor_Originario: valor.Valor_Originario,
                                     AtividadeUltima: valor.AtividadeUltima,
                                     Dias_na_Atividade: Math.floor(((hoje - CSVHandler._ajustaData(valor.Entrada_na_Atividade)) / dias)),
                                     Dias_da_SJ: Math.floor(((hoje - CSVHandler._ajustaData(valor.Data_da_Sessao_Julgamento)) / dias)),
@@ -273,6 +288,7 @@ class CSVHandler {
                         CorrigirCSRF: d3.sum(v, d => { if (d.Equipe_Atual.includes("CSRF") && d.Atividade == 'Corrigir Decisao' || d.Atividade == 'Corrigir Decisão') { return 1 } }),
                         totalHorasCSRF: +d3.sum(v, function (d) { if (d.Equipe_Atual.includes("CSRF")) { return d.HE_CARF; } }).toFixed(2),
                         totalValorCSRF: +d3.sum(v, function (d) { if (d.Equipe_Atual.includes("CSRF")) { return d.Valor; } }).toFixed(2),
+                        totalValorOriCSRF: +d3.sum(v, function (d) { if (d.Equipe_Atual.includes("CSRF")) { return d.Valor_Originario; } }).toFixed(2),
                         AguardPautaTOTE: d3.sum(v, d => { if (!d.Equipe_Atual.includes("CSRF") && d.Atividade == 'Para Relatar' && d.Situacao == 'AGUARDANDO PAUTA') { return 1 } }),
                         ParaRelatarTOTE: d3.sum(v, d => { if (!d.Equipe_Atual.includes("CSRF") && d.Atividade == 'Para Relatar') { return 1 } }),
                         FormalizarTOTE: d3.sum(v, d => { if (!d.Equipe_Atual.includes("CSRF") && d.Atividade == 'Formalizar Voto Vencedor') { return 1 } }),
@@ -281,6 +297,7 @@ class CSVHandler {
                         CorrigirTOTE: d3.sum(v, d => { if (!d.Equipe_Atual.includes("CSRF") && d.Atividade == 'Corrigir Decisao' || d.Atividade == 'Corrigir Decisão') { return 1 } }),
                         totalHorasTOTE: +d3.sum(v, function (d) { if (!d.Equipe_Atual.includes("CSRF")) { return d.HE_CARF; } }).toFixed(2),
                         totalValorTOTE: +d3.sum(v, function (d) { if (!d.Equipe_Atual.includes("CSRF")) { return d.Valor; } }).toFixed(2),
+                        totalValorOriTOTE: +d3.sum(v, function (d) { if (!d.Equipe_Atual.includes("CSRF")) { return d.Valor_Originario; } }).toFixed(2),
                     }
                 })
                 .entries(dados);
@@ -407,6 +424,7 @@ class CSVHandler {
                 Alegações_no_Recurso_para__28: 'Alegacoes_CARF',
                 Data_Sessão_CARF_16: 'Data_da_Sessao_Julgamento',
                 Data_Distribuição_Última_12: 'Data_ultima_distribuicao',
+                'Valor_Originário_Lançado/P_30':'Valor_Originario'
             }
             //Renomeia as colunas e exclui as não utilizadas
             dados.forEach(d => {

@@ -37,7 +37,7 @@ function getHeader() {
   req.send(null);
   if (req.getResponseHeader('autenticado') == 'true') {
     $('.loginout').attr('href', '/logout')
-    $('.loginout').html(`Logout<i class="material-icons left">radio_button_checked</i>`)
+    $('.loginout').html(`Sair<i class="material-icons left">radio_button_checked</i>`)
 
   }
 }
