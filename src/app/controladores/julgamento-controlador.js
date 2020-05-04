@@ -70,8 +70,7 @@ class JulgamentoControlador {
     carregaTabelaConselheiros() {
         return function (req, resp) {
             let CPF = req.user.cpf;
-            let id = new ObjectID(req.params.id);
-            console.log(CPF);
+            let id = new ObjectID(req.params.id);            
             const julgamentoDao = new JulgamentoDao(conn);
             let respJSON = [];
             julgamentoDao.getRelatorios({_id:id})
@@ -83,8 +82,7 @@ class JulgamentoControlador {
                         if(dado.CPF == CPF){
                             respJSON.push(dado);
                         }
-                    }) 
-                    console.log(respJSON);                   
+                    })                                     
                     resp.send(respJSON);
                 })
             })
