@@ -80,7 +80,7 @@
 .tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-title {
     box-sizing: border-box;
     width: 100%;
-    white-space: nowrap;
+    white-space: normal;
     overflow: hidden;
     text-overflow: ellipsis;
     vertical-align: bottom
@@ -455,7 +455,7 @@
 }
 
 .tabulator-row.tabulator-selectable:hover {
-    background-color: rgba(179, 174, 174, 0.5);
+    background-color: rgba(179, 174, 174, 0.116);
     cursor: pointer
 }
 

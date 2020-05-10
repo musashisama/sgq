@@ -165,7 +165,7 @@ h5 {
     background-color: #90caf9;
 }
 
-#Todas{
+#Todas {
     background-color: rgba(39, 35, 35, 0.562);
 }
 
@@ -353,32 +353,37 @@ summary::-webkit-details-marker {
     vertical-align: middle;
 }
 
-.btn, .btn-floating{
+.btn, .btn-floating {
     margin-right: 15px;
 }
 
 /* Cor das células nas tabelas REGAP */
-.cellVermelha{
+
+.cellVermelha {
     color: #D8000C;
     font-weight: bolder;
 }
-.cellAmarela{
+
+.cellAmarela {
     color: rgb(245, 131, 0);
     font-weight: bolder;
 }
 
-.cellVerde{
+.cellVerde {
     color: rgb(63, 138, 2);
     font-weight: bolder;
 }
 
-.cardBorda{
-    border-radius: 10px;    
-
+.cardBorda {
+    border-radius: 10px;
 }
 
-.scspy{
+.scspy {
     position: fixed;
     top: 25%;
     right: 2.5%
+}
+
+.perfiladmin, .perfilacervo, .perfilriscos, .perfilqualidade, .perfiljulgamento, .perfilpessoal, .perfilconselheiro {
+    display: none;
 }

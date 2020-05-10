@@ -7,16 +7,18 @@ module.exports = (app) => {
 
     const rotasUser = UserControlador.rotas();
     const rotasBase = BaseControlador.rotas();
+    
+    app.get(rotasUser.userProfile, userControlador.getUserPerfis())
 
     app.use(rotasUser.autenticadas, function (req, resp, next) {
         req.session.baseUrl = req.baseUrl;
-        if (req.isAuthenticated()) {
+        if (req.isAuthenticated()) {            
             next();
         } else {
             resp.redirect(rotasBase.login);
         }
-    });
-
+    });       
+   
     app.use(rotasUser.autenticadas, function (req, resp, next) {
         if (ACL.checaACL(req.user.perfis, 'admin')) {
             next();
