@@ -155,14 +155,14 @@ function dataTable(msg) {
         responsiveLayoutCollapseStartOpen: false,
         initialSort: [{ column: "HE_CARF", dir: "desc" }],
         columns: [
-            { formatter: "responsiveCollapse", width: 30, minWidth: 30, hozAlign: "left", resizable: false, headerSort: false,responsive: 0,  download: true, },
-            { title: "CPF", field: "CPF", sorter: "string", hozAlign: "left", headerFilter: "input", editor: false, responsive:0},
-            { title: "Nome", field: "nome", sorter: "string", hozAlign: "left", headerFilter: "input", editor: false, responsive:2 },
-            { title: "Turma", field: "turma", sorter: "string", hozAlign: "center", headerFilter: "input", editor: false, responsive:2},
-            { title: "Câmara", field: "camara", sorter: "string", hozAlign: "center", headerFilter: "input", editor: false, responsive:2},
-            { title: "Seção", field: "setor", sorter: "string", hozAlign: "center", headerFilter: "input", editor: false, responsive:2},
-            { title: "Quantidade", field: "qtdeProc", sorter: "number", hozAlign: "center", editor: false, responsive:0},
-            { title: "Carga em horas", field: "HE_CARF", sorter: "number", hozAlign: "center", editor: false, responsive:0},
+            { formatter: "responsiveCollapse", width: 30, minWidth: 30, hozAlign: "left", resizable: false, headerSort: false, responsive: 0, download: true, },
+            { title: "CPF", field: "CPF", sorter: "string", hozAlign: "left", headerFilter: "input", editor: false, responsive: 0, download: true, },
+            { title: "Nome", field: "nome", sorter: "string", hozAlign: "left", headerFilter: "input", editor: false, responsive: 2, download: true, },
+            { title: "Turma", field: "turma", sorter: "string", hozAlign: "center", headerFilter: "input", editor: false, responsive: 2, download: true, },
+            { title: "Câmara", field: "camara", sorter: "string", hozAlign: "center", headerFilter: "input", editor: false, responsive: 2, download: true, },
+            { title: "Seção", field: "setor", sorter: "string", hozAlign: "center", headerFilter: "input", editor: false, responsive: 2, download: true, },
+            { title: "Quantidade", field: "qtdeProc", sorter: "number", hozAlign: "center", editor: false, responsive: 0, download: true, },
+            { title: "Carga em horas", field: "HE_CARF", sorter: "number", hozAlign: "center", editor: false, responsive: 0, download: true, },
             {
                 title: "", field: "HE_CARF", sorter: "number", hozAlign: "left", width: 250, formatter: "progress", formatterParams: {
                     min: 0,
@@ -173,7 +173,7 @@ function dataTable(msg) {
                         if (value > 252) return "green";
                     },
                 }
-            }],
+                , download: false,}],
         autoColumns: false,
         locale: true,
         langs: {
@@ -227,7 +227,7 @@ document.getElementById("mostraColunas").addEventListener("click", function () {
 //Graficos
 let estoqueGeral = JSON.parse($('#dadosCarga').text())
 estoqueGeral = estoqueGeral.sort((a, b) => { return a.HE_CARF - b.HE_CARF })
-var config = {responsive: true,displaylogo: false}
+var config = { responsive: true, displaylogo: false }
 
 //BoxPlot por Seção de Julgamento e Turmas da CSRF
 function separaSJ(secao) {
@@ -798,7 +798,7 @@ function separaSJCons(secao, cor) {
                 };
             };
         });
-    });    
+    });
     return parcial;
 }
 
@@ -914,7 +914,7 @@ var layoutCSRF = {
                 color: '#0b7540',
                 dash: 'dot'
             }
-        },                  
+        },
     ],
     yaxis: {
         showticklabels: true,
@@ -1044,7 +1044,7 @@ var layoutSJ1 = {
                 color: '#0b7540',
                 dash: 'dot'
             }
-        },                  
+        },
     ],
     yaxis: {
         showticklabels: true,
@@ -1175,7 +1175,7 @@ var layoutSJ2 = {
                 color: '#0b7540',
                 dash: 'dot'
             }
-        },                  
+        },
     ],
     yaxis: {
         showticklabels: true,
@@ -1306,7 +1306,7 @@ var layoutSJ3 = {
                 color: '#0b7540',
                 dash: 'dot'
             }
-        },                  
+        },
     ],
     yaxis: {
         showticklabels: true,
@@ -1330,7 +1330,7 @@ function ordena(a, b) {
     return b.x - a.x;
 }
 
-Plotly.newPlot(document.getElementById('barrasCSRF'), [separaSJCons(csrf, corCSRF)], layoutCSRF,config);
-Plotly.newPlot(document.getElementById('barrasSJ1'), [separaSJCons(sj1, corsj1)], layoutSJ1,config);
-Plotly.newPlot(document.getElementById('barrasSJ2'), [separaSJCons(sj2, corsj2)], layoutSJ2,config);
-Plotly.newPlot(document.getElementById('barrasSJ3'), [separaSJCons(sj3, corsj3)], layoutSJ3,config);
+Plotly.newPlot(document.getElementById('barrasCSRF'), [separaSJCons(csrf, corCSRF)], layoutCSRF, config);
+Plotly.newPlot(document.getElementById('barrasSJ1'), [separaSJCons(sj1, corsj1)], layoutSJ1, config);
+Plotly.newPlot(document.getElementById('barrasSJ2'), [separaSJCons(sj2, corsj2)], layoutSJ2, config);
+Plotly.newPlot(document.getElementById('barrasSJ3'), [separaSJCons(sj3, corsj3)], layoutSJ3, config);

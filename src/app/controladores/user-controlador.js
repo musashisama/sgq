@@ -12,6 +12,7 @@ class UserControlador {
     static rotas() {
         return {
             autenticadas: '/admin*',
+            userProfile: '/admin/userprofile',
             cadastro: '/admin/usuario',
             edicao: '/admin/usuario/:id',
             delecao: '/admin/usuario/delete/:id',
@@ -69,33 +70,33 @@ class UserControlador {
 
     formOcorrencia() {
         return function (req, resp) {
-                    let id = new ObjectID(req.params.id);                    
-                    const userDao = new UserDao(conn);                    
-                    userDao.getOcorrencias()
-                        .then(ocorrencias => {                           
-                            resp.marko(templates.admin.ocorrencias, {
-                                ocorrencia: ''
-                            })
-                        })
-                        .catch(erro => console.log(erro));
+            let id = new ObjectID(req.params.id);
+            const userDao = new UserDao(conn);
+            userDao.getOcorrencias()
+                .then(ocorrencias => {
+                    resp.marko(templates.admin.ocorrencias, {
+                        ocorrencia: ''
+                    })
+                })
+                .catch(erro => console.log(erro));
         };
 
     }
     formEditaOcorrencia() {
         return function (req, resp) {
-          
-                const perfil = req.user.perfis;
-                if (perfil.indexOf(role) > -1) {
-                    let id = new ObjectID(req.params.id);                    
-                    const userDao = new UserDao(conn);                    
-                    userDao.getOcorrencias({_id:id})
-                        .then(ocorrencias => {                            
-                            resp.marko(templates.admin.ocorrencias, {
-                                ocorrencia: ocorrencias[0]
-                            })
+
+            const perfil = req.user.perfis;
+            if (perfil.indexOf(role) > -1) {
+                let id = new ObjectID(req.params.id);
+                const userDao = new UserDao(conn);
+                userDao.getOcorrencias({ _id: id })
+                    .then(ocorrencias => {
+                        resp.marko(templates.admin.ocorrencias, {
+                            ocorrencia: ocorrencias[0]
                         })
-                        .catch(erro => console.log(erro));
-               
+                    })
+                    .catch(erro => console.log(erro));
+
             }
         };
 
@@ -117,9 +118,9 @@ class UserControlador {
 
     editaOco() {
 
-        return function (req, resp) {   
-            let registro = req.body; 
-            console.log(registro);      
+        return function (req, resp) {
+            let registro = req.body;
+            console.log(registro);
             const userDao = new UserDao(conn);
             userDao.editaOco(registro)
                 .then(resp.redirect(UserControlador.rotas().ocorrencias))
@@ -132,12 +133,12 @@ class UserControlador {
             const id = new ObjectID(req.params.id);
             const userDao = new UserDao(conn);
             userDao.deletaTpOCo(id)
-                .then(oco => {                    
+                .then(oco => {
                     resp.marko(
                         templates.nc.lista,
-                        {                        
-                           ocorrencias: JSON.stringify(oco),
-                            msg:'Tipo de Não Conformidade excluída com sucesso.'
+                        {
+                            ocorrencias: JSON.stringify(oco),
+                            msg: 'Tipo de Não Conformidade excluída com sucesso.'
                         }
                     )
                 }
@@ -168,6 +169,15 @@ class UserControlador {
         };
     }
 
+    getUserPerfis() {
+        return function (req, resp) {            
+            let perfis = [];
+            if (req.isAuthenticated()) {
+                perfis = req.user.perfis;
+            }
+            resp.send(perfis);
+        }
+    }
 
     cadastra() {
         return function (req, resp) {

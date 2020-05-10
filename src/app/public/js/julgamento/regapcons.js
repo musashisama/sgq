@@ -44,6 +44,7 @@ function inicializaComponentes() {
         initSelect();
         tabelaOcorrencias();
         initTabs();
+        $(".progress").toggle();        
     });
 }
 
@@ -61,13 +62,14 @@ $('.dataRel').change(() => {
         url: `/julgamento/conselheiros/${$("select option:selected").val()}`,
         type: 'POST',
         data: {},
-        beforeSend: function () {
-            $("#resultado").html("ENVIANDO...");
+        beforeSend: function () {            
+           $(".progress").toggle(); 
         }
     })
         .done(function (msg) {
             dataTable(msg);
             grafico(msg);
+            $(".progress").toggle();
         })
         .fail(function (jqXHR, textStatus, msg) {
             var toastHTML = `<span>Ocorreu um erro.</span>`;
@@ -114,7 +116,7 @@ function dataTable(dados) {
         height: "1000px",
         minHeight: '300px',
         maxHeight: '1000px',
-        layout: layout,
+        layout: 'fitDataFill',
         responsiveLayout: 'collapse',
         groupStartOpen: false,
         responsiveLayoutCollapseStartOpen: false,
@@ -133,7 +135,7 @@ function dataTable(dados) {
             { title: "Entrada na Atividade", field: "Entrada_na_Atividade", sorter: "date", hozAlign: "center", editor: false, responsive: 2, download: true, },
             { title: "Horas CARF", field: "HE_CARF", sorter: "number", hozAlign: "center", headerFilter: "input", topCalc: somaCalc, editor: false, responsive: 0, download: true, },
             { title: "Dias na Atividade", field: "Dias_na_Atividade", sorter: "number", hozAlign: "center", topCalc: mediaCalc, editor: false, formatter: coloreDias, responsive: 0, download: true },
-            { title: "Dias da Sessão de Julgamento", field: "Dias_da_SJ", sorter: "number", hozAlign: "center", editor: false, responsive: 0, download: true, },
+            { title: "Dias da Sessão de Julgamento", field: "Dias_da_SJ", sorter: "number", width: 150, hozAlign: "center", editor: false, responsive: 0, download: true, },
             { title: "Data da Sessão de Julgamento", field: "Data_da_Sessao_Julgamento", sorter: "number", hozAlign: "center", editor: false, responsive: 2, download: true, },
             { title: "Dias da Última Distribuição", field: "Dias_da_Dist", sorter: "number", hozAlign: "center", editor: false, responsive: 2, download: true, },
             { title: "Retorno Sepoj?", field: "Retorno_Sepoj", sorter: "string", hozAlign: "center", editor: false, responsive: 2, download: true, },

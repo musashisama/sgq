@@ -7,8 +7,10 @@ function inicializaComponentes() {
     geraBreadcrumb();
     download();
     volta();
+    getProfile();
   });
 }
+
 
 function download(){
   $('.dropdownDownload').dropdown({ coverTrigger: false, hover: false, constrainWidth: false });  
@@ -29,6 +31,19 @@ function download(){
 
 function initDropDown() {
   $(".dropdown-trigger").dropdown({ coverTrigger: false, hover: false, constrainWidth: false });
+}
+
+function getProfile(){
+  $.ajax({
+    url: `/admin/userprofile`,
+    type: 'GET',
+    success: function (perfil) {      
+      perfil.forEach(p => {
+        $(`<style type='text/css'>.perfil${p} {display:block} </style>`).appendTo("head");  
+      });
+      
+    }
+  })
 }
 
 function getHeader() {
