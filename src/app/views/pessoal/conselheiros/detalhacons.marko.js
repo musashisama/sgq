@@ -91,7 +91,7 @@ function render(input, out, __component, component, state) {
     marko_attr("value", "" + data.conselheiro.setor) +
     " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"setor\">Seção:</label></div></div><div class=\"row\"><div class=\"form-group input-field origem col s3\"><i class=\"material-icons prefix\">gps_fixed</i><input disabled id=\"origem\" name=\"origem\"" +
     marko_attr("value", "" + data.conselheiro.origem) +
-    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"origem\">Representação:</label></div><div class=\"form-group tipo input-field col s3\"><i class=\"material-icons prefix\">details</i><select disabled id=\"tipo\" name=\"tipo\" class=\"selectCons\"><option" +
+    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"origem\">Representação:</label></div><div class=\"form-group tipo input-field col s3\"><i class=\"material-icons prefix\">details</i><select disabled id=\"tipo\" name=\"tipo\" class=\"selectCons\"><option selected class=\"form-group\"" +
     marko_attr("value", "" + data.conselheiro.origem) +
     ">" +
     marko_escapeXml(data.conselheiro.tipo) +
@@ -115,7 +115,11 @@ function render(input, out, __component, component, state) {
 
   out.w("</select><label for=\"funcao\">Função:</label></div></div><div class=\"row\"><div class=\"form-group input field dtFimMandato col s3\"><input disabled id=\"dtFimMandato\" name=\"dtFimMandato\"" +
     marko_attr("value", "" + data.conselheiro.dtFimMandato) +
-    " type=\"text\" class=\"datepicker selectCons\"><label for=\"dtFimMandato\">Data do Final do Mandato</label></div><div class=\"form-group input-field col s3\"><i class=\"material-icons prefix\">event_note</i><select disabled id=\"mandatoAt\" name=\"mandatoAt\" class=\"selectCons\"><option value>Sim</option><option>Não</option></select><label>Mandato Ativo?</label></div></div><div class=\"card-action right-align\"><a class=\"btn-cons-edita btn-floating red waves-effect waves-light hoverable z-depth-3\" title=\"Editar Dados\"><i class=\"material-icons\">edit</i></a><a disabled class=\"btn-cons-salva btn-floating blue waves-effect waves-light hoverable z-depth-3\" type=\"submit\" title=\"Salvar\"><i class=\"material-icons\">save</i></a><a id=\"aModal\" class=\"btn-cons-adiciona btn-floating green waves-effect waves-light hoverable z-depth-3\" title=\"Adicionar ocorrência\" href=\"#modal1\"><i class=\"material-icons\">add</i></a></div></form></div></div></div><div id=\"tabOcorrencias\" class=\"col s12\"><a id=\"aModal2\" class=\"btn-cons-adiciona2 btn-floating green waves-effect waves-light hoverable z-depth-3 right\" title=\"Adicionar ocorrência\" href=\"#modal1\"><i class=\"material-icons\">add</i></a><h3 class=\"center-align\">Ocorrências do Conselheiro</h3>");
+    " type=\"text\" class=\"datepicker selectCons\"><label for=\"dtFimMandato\">Data do Final do Mandato</label></div><div class=\"form-group input-field col s3\"><i class=\"material-icons prefix\">event_note</i><select disabled id=\"mandatoAt\" name=\"mandatoAt\" class=\"selectCons\"><option selected" +
+    marko_attr("value", "" + data.conselheiro.mandatoAt) +
+    ">" +
+    marko_escapeXml(data.conselheiro.mandatoAt) +
+    "</option><option value>Sim</option><option>Não</option></select><label>Mandato Ativo?</label></div></div><div class=\"card-action right-align\"><a class=\"btn-cons-edita btn-floating red waves-effect waves-light hoverable z-depth-3\" title=\"Editar Dados\"><i class=\"material-icons\">edit</i></a><a disabled class=\"btn-cons-salva btn-floating blue waves-effect waves-light hoverable z-depth-3\" type=\"submit\" title=\"Salvar\"><i class=\"material-icons\">save</i></a><a id=\"aModal\" class=\"btn-cons-adiciona btn-floating green waves-effect waves-light hoverable z-depth-3\" title=\"Adicionar ocorrência\" href=\"#modal1\"><i class=\"material-icons\">add</i></a></div></form></div></div></div><div id=\"tabOcorrencias\" class=\"col s12\"><a id=\"aModal2\" class=\"btn-cons-adiciona2 btn-floating green waves-effect waves-light hoverable z-depth-3 right\" title=\"Adicionar ocorrência\" href=\"#modal1\"><i class=\"material-icons\">add</i></a><h3 class=\"center-align\">Ocorrências do Conselheiro</h3>");
 
   if (data.ocorrencias) {
     out.w("<div id=\"tabelaOcorrencias\"" +
@@ -145,15 +149,15 @@ function render(input, out, __component, component, state) {
 
   out.w("</select><label for=\"tipoOcorrencia\">Selecione o tipo de ocorrência:</label></div></div><div class=\"row\"><br></div><div class=\"row\"><div class=\"input-field col s12\"><i class=\"material-icons prefix\">mode_edit</i><textarea name=\"ocorDet\" id=\"ocorDet\" class=\"materialize-textarea\" placeholder=\"Este campo aceita &lt;ENTER>. Descreva aqui o nº da Portaria, Detalhes da notificação (arts do RICARF), nº do processo, nº SEI etc.\"></textarea><label for=\"ocorDet\">Detalhes da Ocorrência:</label></div></div><div class=\"row\"><br></div><div class=\"row\"><div class=\"input field col s3\"><i class=\"material-icons prefix\">insert_invitation</i><input id=\"dtOcorrencia\" name=\"dtOcorrencia\" value=\"\" type=\"text\" class=\"datepicker\"><label for=\"dtOcorrencia\">Data da Ocorrência</label></div><div class=\"col s2\"><div class=\"form-group\"><p><label>Altera a data de início de mandato?</label></p><p><label><input class=\"with-gap\" value=\"Sim\" name=\"alteradtFimMandato\" type=\"radio\" checked><span>Sim</span></label></p><p><label><input class=\"with-gap\" value=\"Não\" name=\"alteradtFimMandato\" type=\"radio\"><span>Não</span></label></p></div></div></div></form></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"modal-close btn waves-effect waves-light concordaOco\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div><div id=\"modal2\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal2\">Modal Header</h4><p class=\"pModal2\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn modal-close waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
 
-  app_footer_tag({}, out, __component, "165");
+  app_footer_tag({}, out, __component, "166");
 
-  app_scripts_js_tag({}, out, __component, "166");
+  app_scripts_js_tag({}, out, __component, "167");
 
   out.w("<script src=\"/estatico/js/pessoal/conselheiro.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "168");
+  await_reorderer_tag({}, out, __component, "169");
 
   out.w("</body></html>");
 }
