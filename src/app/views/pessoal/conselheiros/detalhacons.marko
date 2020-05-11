@@ -102,7 +102,7 @@
                     <div class="form-group tipo input-field col s3">
                       <i class="material-icons prefix">details</i>
                       <select disabled id="tipo" name="tipo" class="selectCons">
-                      <option value="${data.conselheiro.origem}">${data.conselheiro.tipo}</option>
+                        <option selected class="form-group" value=`${data.conselheiro.origem}`>${data.conselheiro.tipo}</option>
                         <option value="Titular">Titular</option>
                         <option value="Suplente">Suplente</option>
                       </select>
@@ -127,6 +127,7 @@
                     <div class="form-group input-field col s3">
                       <i class="material-icons prefix">event_note</i>
                       <select disabled id="mandatoAt" name="mandatoAt" class="selectCons">
+                        <option selected value=`${data.conselheiro.mandatoAt}`>${data.conselheiro.mandatoAt}</option>
                         <option value=true>Sim</option>
                         <option value=false>Não</option>
                       </select>
