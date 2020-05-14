@@ -1,5 +1,6 @@
 const fs = require('fs');
 const d3 = require('d3');
+const moment = require('moment');
 const AdmZip = require('adm-zip');
 const exec = require('child_process').exec;
 const cmd = `mongoimport -d sgq -c processos --type csv --file src/app/arquivos/csv/Gerencial-${new Date().getFullYear()}-${new Date().getMonth().valueOf() + 1}-${new Date().getDate()}.csv --headerline`;
@@ -57,8 +58,8 @@ class CSVHandler {
         throw new Error('CSVHandler não pode ser instanciada. Utilize os métodos estáticos.');
     }
 
-    static semanaCores(turma){
-               
+    static semanaCores(turma) {
+
         if (semanaAmarela.includes(turma)) {
             return 'Amarela';
         }
@@ -67,49 +68,87 @@ class CSVHandler {
         }
         if (semanaAzul.includes(turma)) {
             return 'Azul';
-        }        
+        }
     }
 
     static wrangleCSV(arq, semana, tipo) {
         return new Promise((resolve, reject) => {
-            fs.readFile(arq, 'latin1', function (err, data) {
-                let dados = d3.csvParse(data);
-                gerado = gerado + arq.split("/")[arq.split("/").length - 1]
-                dados = CSVHandler._HorasCARF(dados)
-                    .then(dados => {
-                        CSVHandler._renomeiaColunas(dados)
-                            .then(dados => {
-                                return dados;
-                            })
-                            .then(dados => {
-                                let parcial = [];
-                                dados.forEach(dado => {
-                                    if (semana == 'Amarela' && semanaAmarela.includes(dado['Equipe_Atual'])) {
-                                        parcial.push(dado);
-                                    }
-                                    if (semana == 'Verde' && semanaVerde.includes(dado['Equipe_Atual'])) {
-                                        parcial.push(dado);
-                                    }
-                                    if (semana == 'Azul' && semanaAzul.includes(dado['Equipe_Atual'])) {
-                                        parcial.push(dado);
-                                    }
-                                    if (semana == 'Todas'&& (semanaAzul.includes(dado['Equipe_Atual'])||semanaVerde.includes(dado['Equipe_Atual'])||semanaAmarela.includes(dado['Equipe_Atual']))) {
-                                        parcial.push(dado)
-                                    }
+            if (tipo == 'Estoque' || tipo == 'REGAP') {
+                fs.readFile(arq, 'latin1', function (err, data) {
+                    let dados = d3.csvParse(data);
+                    gerado = gerado + arq.split("/")[arq.split("/").length - 1]
+                    dados = CSVHandler._HorasCARF(dados)
+                        .then(dados => {
+                            CSVHandler._renomeiaColunas(dados)
+                                .then(dados => {
+                                    return dados;
                                 })
-                                //console.log(dados.length + "   " + parcial.length);
-                                CSVHandler._escreveZip(path + gerado, parcial)
-                                    .then(() => {
-                                        let csvmongo = CSVHandler._montaObjRelatorio(parcial);
-                                        CSVHandler._excluiCSV(arq);
-                                        CSVHandler._excluiCSV(`${path}${gerado}`);
-                                        gerado = 'Gerencial-';
-                                        return resolve(csvmongo);
+                                .then(dados => {
+                                    let parcial = [];
+                                    dados.forEach(dado => {
+                                        if (semana == 'Amarela' && semanaAmarela.includes(dado['Equipe_Atual'])) {
+                                            parcial.push(dado);
+                                        }
+                                        if (semana == 'Verde' && semanaVerde.includes(dado['Equipe_Atual'])) {
+                                            parcial.push(dado);
+                                        }
+                                        if (semana == 'Azul' && semanaAzul.includes(dado['Equipe_Atual'])) {
+                                            parcial.push(dado);
+                                        }
+                                        if (semana == 'Todas' && (semanaAzul.includes(dado['Equipe_Atual']) || semanaVerde.includes(dado['Equipe_Atual']) || semanaAmarela.includes(dado['Equipe_Atual']))) {
+                                            parcial.push(dado)
+                                        }
                                     })
-                            });
+                                    //console.log(dados.length + "   " + parcial.length);
+                                    CSVHandler._escreveZip(path + gerado, parcial)
+                                        .then(() => {
+                                            let csvmongo = CSVHandler._montaObjRelatorio(parcial, tipo);
+                                            CSVHandler._excluiCSV(arq);
+                                            CSVHandler._excluiCSV(`${path}${gerado}`);
+                                            gerado = 'Gerencial-';
+                                            return resolve(csvmongo);
+                                        })
+                                });
+                        });
+
+
+                });
+            } else {
+                if (tipo == 'REINP') {
+                    fs.readFile(arq, 'utf8', function (err, data) {
+                        console.time('c1')
+                        let dados = d3.csvParse(data);
+                        gerado = gerado + arq.split("/")[arq.split("/").length - 1]
+                        let rex = /-CARF-MF-DF/gi;
+                        let rex2 = /( )([0-9])/gi;
+                        let rex3 = /ª T/gi
+                        CSVHandler._renomeiaReinp(dados)
+                            .then(dados => {
+                                CSVHandler._horas_Reinp(dados)
+                                    .then(dados => {
+                                        dados.forEach(dado => {
+                                            dado.Equipe = dado.Equipe.replace(rex, '');
+                                            dado.Equipe = dado.Equipe.replace(rex2, '$2');
+                                            dado.Equipe = dado.Equipe.replace(rex3, 'ªT');
+                                            dado.Data = moment(CSVHandler._ajustaData(dado.Data_Situacao, true)).format('DD/MM/YYYY');
+                                            delete dado.Data_Situacao;
+                                        })
+                                        console.timeEnd('c1');
+                                        console.log(dados)
+                                        CSVHandler._escreveZip(path + gerado, dados)
+                                            .then(() => {
+                                                let csvmongo = CSVHandler._montaObjRelatorio(dados, tipo);
+                                                CSVHandler._excluiCSV(arq);
+                                                CSVHandler._excluiCSV(`${path}${gerado}`);
+                                                gerado = 'Gerencial-';
+                                                return resolve(csvmongo);
+                                            })
+                                    })
+                            })
                     });
-            });
-        })
+                }
+            }
+        });
     };
     //Descompacta e lê o CSV.
     static readCSV(arq) {
@@ -176,59 +215,49 @@ class CSVHandler {
                 })
         })
     }
-    static _ajustaData(data) {
-
-        const arrayData = data.split("/");
-        // console.log(arrayData[2] + ' ' + arrayData[1] + ' ' + arrayData[0]);
-        //const dataAjustada = new Date(arrayData[2], arrayData[1] - 1, arrayData[0], new Date().getHours()).toUTCString();
-        const dataAjustada = new Date(arrayData[2], arrayData[1] - 1, arrayData[0]);
-        //console.log('Data Ajustada: ', dataAjustada);
-        return dataAjustada;
-    }
 
     static pegaRegap(arq, tipo, CPF) {
         return new Promise((resolve, reject) => {
             let flat = [];
             let hoje = new Date().getTime();
-            let dias = 1000 * 60 * 60 * 24;            
+            let dias = 1000 * 60 * 60 * 24;
             let regap = this.readCSV(arq)
                 .then(regap => {
                     let porCPF = d3.nest()
                         .key(d => { return d.CPF }).sortKeys(d3.ascending)
                         .entries(regap);
-                    //console.log(porCPF[10]);
                     porCPF.forEach(cpf => {
-                        cpf.values.forEach(valor => {                             
-                                flat.push({
-                                    Observacoes: valor.Observacoes,
-                                    CPF: cpf.key,
-                                    Processo: valor.Processo,
-                                    Contribuinte: valor.Contribuinte,
-                                    Ind_Apenso: valor.Ind_Apenso,
-                                    Equipe_Atual: valor.Equipe_Atual,
-                                    Situacao: valor.Situacao,
-                                    Entrada_na_Atividade: valor.Entrada_na_Atividade,
-                                    Atividade: valor.Atividade,
-                                    Data_ultima_distribuicao: valor.Data_ultima_distribuicao,
-                                    HE_CARF: +valor.HE_CARF,
-                                    redator: valor.Redator1 + valor.Redator2 + valor.Redator3,
-                                    Data_da_Sessao_Julgamento: valor.Data_da_Sessao_Julgamento,
-                                    Equipe_Ultima: valor.Equipe_Ultima,
-                                    Relator: valor.Relator,
-                                    Alegacoes_CARF: valor.Alegacoes_CARF,
-                                    Questionamento_CARF: valor.Questionamento_CARF,
-                                    Resolucao: valor.Resolucao,
-                                    Acordao: valor.Acordao,
-                                    Valor_Originario: valor.Valor_Originario,
-                                    AtividadeUltima: valor.AtividadeUltima,
-                                    Dias_na_Atividade: Math.floor(((hoje - CSVHandler._ajustaData(valor.Entrada_na_Atividade)) / dias)),
-                                    Dias_da_SJ: Math.floor(((hoje - CSVHandler._ajustaData(valor.Data_da_Sessao_Julgamento)) / dias)),
-                                    Dias_da_Dist: Math.floor(((hoje - CSVHandler._ajustaData(valor.Data_ultima_distribuicao)) / dias)),
-                                    Retorno_Sepoj: (valor.Equipe_Ultima.includes("SEPOJ-COSUP-CARF-MF-DF") ? "Sim" : "Não")
-                                })  
+                        cpf.values.forEach(valor => {
+                            flat.push({
+                                Observacoes: valor.Observacoes,
+                                CPF: cpf.key,
+                                Processo: valor.Processo,
+                                Contribuinte: valor.Contribuinte,
+                                Ind_Apenso: valor.Ind_Apenso,
+                                Equipe_Atual: valor.Equipe_Atual,
+                                Situacao: valor.Situacao,
+                                Entrada_na_Atividade: valor.Entrada_na_Atividade,
+                                Atividade: valor.Atividade,
+                                Data_ultima_distribuicao: valor.Data_ultima_distribuicao,
+                                HE_CARF: +valor.HE_CARF,
+                                redator: valor.Redator1 + valor.Redator2 + valor.Redator3,
+                                Data_da_Sessao_Julgamento: valor.Data_da_Sessao_Julgamento,
+                                Equipe_Ultima: valor.Equipe_Ultima,
+                                Relator: valor.Relator,
+                                Alegacoes_CARF: valor.Alegacoes_CARF,
+                                Questionamento_CARF: valor.Questionamento_CARF,
+                                Resolucao: valor.Resolucao,
+                                Acordao: valor.Acordao,
+                                Valor_Originario: valor.Valor_Originario,
+                                AtividadeUltima: valor.AtividadeUltima,
+                                Dias_na_Atividade: Math.floor(((hoje - CSVHandler._ajustaData(valor.Entrada_na_Atividade)) / dias)),
+                                Dias_da_SJ: Math.floor(((hoje - CSVHandler._ajustaData(valor.Data_da_Sessao_Julgamento)) / dias)),
+                                Dias_da_Dist: Math.floor(((hoje - CSVHandler._ajustaData(valor.Data_ultima_distribuicao)) / dias)),
+                                Retorno_Sepoj: (valor.Equipe_Ultima.includes("SEPOJ-COSUP-CARF-MF-DF") ? "Sim" : "Não")
+                            })
                         })
                     })
-                    if(tipo=='COJUL'){
+                    if (tipo == 'COJUL') {
                         let filtro = [];
                         flat.forEach(valor => {
                             if (
@@ -237,16 +266,16 @@ class CSVHandler {
                                 || ((valor.Ind_Apenso == 'N' || (valor.Questionamento_CARF != '' && valor.Ind_Apenso != 'S')) && (valor.Atividade == 'Formalizar Voto Vencedor' && Math.floor(((hoje - CSVHandler._ajustaData(valor.Entrada_na_Atividade)) / dias)) >= 0))
                                 || ((valor.Ind_Apenso == 'N' || (valor.Questionamento_CARF != '' && valor.Ind_Apenso != 'S')) && (valor.Atividade == 'Apreciar e Assinar Documento' && Math.floor(((hoje - CSVHandler._ajustaData(valor.Entrada_na_Atividade)) / dias)) >= 0))
                                 || ((valor.Ind_Apenso == 'N' || (valor.Questionamento_CARF != '' && valor.Ind_Apenso != 'S')) && (valor.Atividade == 'Corrigir Decisão' && Math.floor(((hoje - CSVHandler._ajustaData(valor.Entrada_na_Atividade)) / dias)) >= 0))
-                            ){filtro.push(valor)}
+                            ) { filtro.push(valor) }
                             return resolve(filtro)
                         })
-                        
+
 
                     }
-                    if(CPF){
+                    if (CPF) {
                         let filtro = []
                         flat.forEach(resp => {
-                            if(resp.CPF == CPF){
+                            if (resp.CPF == CPF) {
                                 filtro.push(resp);
                             }
                             return resolve(filtro)
@@ -257,6 +286,31 @@ class CSVHandler {
             return reject;
         });
     }
+
+    static pegaReinp(arq, CPF){
+        return new Promise((resolve, reject) => {
+            let flat = [];
+            let hoje = new Date().getTime();
+            let dias = 1000 * 60 * 60 * 24;
+            this.readCSV(arq)
+                .then(reinp => {
+                    
+                })
+        });
+    }
+
+    static _ajustaData(data, dw = false) {
+        if (dw == true) {
+            const arrayMes = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+            const arrayData = data.split("/");
+            const dataAjustada = moment(new Date(arrayData[2], arrayMes.indexOf(arrayData[1]), arrayData[0]), 'DD/MM/YYYY');
+            return dataAjustada;
+        }
+        const arrayData = data.split("/");
+        const dataAjustada = new Date(arrayData[2], arrayData[1] - 1, arrayData[0]);
+        return dataAjustada;
+    }
+
     static _escreveZip(arq, dados) {
         return new Promise((resolve, reject) => {
             fs.writeFile(arq, d3.csvFormat(dados), function (err) {
@@ -272,35 +326,47 @@ class CSVHandler {
             })
         })
     }
-    static _montaObjRelatorio(dados) {
+    static _montaObjRelatorio(dados, tipo) {
         return new Promise((resolve, reject) => {
             //Calcula estatisticas do relatorio e insere na base para posterior consulta
             let csvmongo = {};
+            if (tipo == 'Estoque' || tipo == 'REGAP') {
+                csvmongo = d3.nest()
+                    .rollup(v => {
+                        return {
+                            AguardPautaCSRF: d3.sum(v, d => { if (d.Equipe_Atual.includes("CSRF") && d.Atividade == 'Para Relatar' && d.Situacao == 'AGUARDANDO PAUTA') { return 1 } }),
+                            ParaRelatarCSRF: d3.sum(v, d => { if (d.Equipe_Atual.includes("CSRF") && d.Atividade == 'Para Relatar') { return 1 } }),
+                            FormalizarCSRF: d3.sum(v, d => { if (d.Equipe_Atual.includes("CSRF") && d.Atividade == 'Formalizar Voto Vencedor') { return 1 } }),
+                            ApreciarCSRF: d3.sum(v, d => { if (d.Equipe_Atual.includes("CSRF") && d.Atividade == 'Apreciar e Assinar Documento') { return 1 } }),
+                            FormDecCSRF: d3.sum(v, d => { if (d.Equipe_Atual.includes("CSRF") && d.Atividade == 'Formalizar Decisao') { return 1 } }),
+                            CorrigirCSRF: d3.sum(v, d => { if (d.Equipe_Atual.includes("CSRF") && d.Atividade == 'Corrigir Decisao' || d.Atividade == 'Corrigir Decisão') { return 1 } }),
+                            totalHorasCSRF: +d3.sum(v, function (d) { if (d.Equipe_Atual.includes("CSRF")) { return d.HE_CARF; } }).toFixed(2),
+                            totalValorCSRF: +d3.sum(v, function (d) { if (d.Equipe_Atual.includes("CSRF")) { return d.Valor; } }).toFixed(2),
+                            totalValorOriCSRF: +d3.sum(v, function (d) { if (d.Equipe_Atual.includes("CSRF")) { return d.Valor_Originario; } }).toFixed(2),
+                            AguardPautaTOTE: d3.sum(v, d => { if (!d.Equipe_Atual.includes("CSRF") && d.Atividade == 'Para Relatar' && d.Situacao == 'AGUARDANDO PAUTA') { return 1 } }),
+                            ParaRelatarTOTE: d3.sum(v, d => { if (!d.Equipe_Atual.includes("CSRF") && d.Atividade == 'Para Relatar') { return 1 } }),
+                            FormalizarTOTE: d3.sum(v, d => { if (!d.Equipe_Atual.includes("CSRF") && d.Atividade == 'Formalizar Voto Vencedor') { return 1 } }),
+                            ApreciarTOTE: d3.sum(v, d => { if (!d.Equipe_Atual.includes("CSRF") && d.Atividade == 'Apreciar e Assinar Documento') { return 1 } }),
+                            FormDecTOTE: d3.sum(v, d => { if (!d.Equipe_Atual.includes("CSRF") && d.Atividade == 'Formalizar Decisao') { return 1 } }),
+                            CorrigirTOTE: d3.sum(v, d => { if (!d.Equipe_Atual.includes("CSRF") && d.Atividade == 'Corrigir Decisao' || d.Atividade == 'Corrigir Decisão') { return 1 } }),
+                            totalHorasTOTE: +d3.sum(v, function (d) { if (!d.Equipe_Atual.includes("CSRF")) { return d.HE_CARF; } }).toFixed(2),
+                            totalValorTOTE: +d3.sum(v, function (d) { if (!d.Equipe_Atual.includes("CSRF")) { return d.Valor; } }).toFixed(2),
+                            totalValorOriTOTE: +d3.sum(v, function (d) { if (!d.Equipe_Atual.includes("CSRF")) { return d.Valor_Originario; } }).toFixed(2),
+                        }
+                    })
+                    .entries(dados);
+            }
+            if (tipo == 'REINP') {
+                csvmongo = d3.nest()
+                    .rollup(v => {
+                        return {
+                            TotalProcessos: d3.sum(v, d => { { return 1 } }),
+                            TotalHoras: d3.sum(v, d => { { return d.HE_CARF } }),
+                        }
+                    })
+                    .entries(dados);
+            }
 
-            csvmongo = d3.nest()
-                .rollup(v => {
-                    return {
-                        AguardPautaCSRF: d3.sum(v, d => { if (d.Equipe_Atual.includes("CSRF") && d.Atividade == 'Para Relatar' && d.Situacao == 'AGUARDANDO PAUTA') { return 1 } }),
-                        ParaRelatarCSRF: d3.sum(v, d => { if (d.Equipe_Atual.includes("CSRF") && d.Atividade == 'Para Relatar') { return 1 } }),
-                        FormalizarCSRF: d3.sum(v, d => { if (d.Equipe_Atual.includes("CSRF") && d.Atividade == 'Formalizar Voto Vencedor') { return 1 } }),
-                        ApreciarCSRF: d3.sum(v, d => { if (d.Equipe_Atual.includes("CSRF") && d.Atividade == 'Apreciar e Assinar Documento') { return 1 } }),
-                        FormDecCSRF: d3.sum(v, d => { if (d.Equipe_Atual.includes("CSRF") && d.Atividade == 'Formalizar Decisao') { return 1 } }),
-                        CorrigirCSRF: d3.sum(v, d => { if (d.Equipe_Atual.includes("CSRF") && d.Atividade == 'Corrigir Decisao' || d.Atividade == 'Corrigir Decisão') { return 1 } }),
-                        totalHorasCSRF: +d3.sum(v, function (d) { if (d.Equipe_Atual.includes("CSRF")) { return d.HE_CARF; } }).toFixed(2),
-                        totalValorCSRF: +d3.sum(v, function (d) { if (d.Equipe_Atual.includes("CSRF")) { return d.Valor; } }).toFixed(2),
-                        totalValorOriCSRF: +d3.sum(v, function (d) { if (d.Equipe_Atual.includes("CSRF")) { return d.Valor_Originario; } }).toFixed(2),
-                        AguardPautaTOTE: d3.sum(v, d => { if (!d.Equipe_Atual.includes("CSRF") && d.Atividade == 'Para Relatar' && d.Situacao == 'AGUARDANDO PAUTA') { return 1 } }),
-                        ParaRelatarTOTE: d3.sum(v, d => { if (!d.Equipe_Atual.includes("CSRF") && d.Atividade == 'Para Relatar') { return 1 } }),
-                        FormalizarTOTE: d3.sum(v, d => { if (!d.Equipe_Atual.includes("CSRF") && d.Atividade == 'Formalizar Voto Vencedor') { return 1 } }),
-                        ApreciarTOTE: d3.sum(v, d => { if (!d.Equipe_Atual.includes("CSRF") && d.Atividade == 'Apreciar e Assinar Documento') { return 1 } }),
-                        FormDecTOTE: d3.sum(v, d => { if (!d.Equipe_Atual.includes("CSRF") && d.Atividade == 'Formalizar Decisao') { return 1 } }),
-                        CorrigirTOTE: d3.sum(v, d => { if (!d.Equipe_Atual.includes("CSRF") && d.Atividade == 'Corrigir Decisao' || d.Atividade == 'Corrigir Decisão') { return 1 } }),
-                        totalHorasTOTE: +d3.sum(v, function (d) { if (!d.Equipe_Atual.includes("CSRF")) { return d.HE_CARF; } }).toFixed(2),
-                        totalValorTOTE: +d3.sum(v, function (d) { if (!d.Equipe_Atual.includes("CSRF")) { return d.Valor; } }).toFixed(2),
-                        totalValorOriTOTE: +d3.sum(v, function (d) { if (!d.Equipe_Atual.includes("CSRF")) { return d.Valor_Originario; } }).toFixed(2),
-                    }
-                })
-                .entries(dados);
             csvmongo.dataEnvio = new Date().toISOString();
             csvmongo.caminho = gerado;
             csvmongo.dataEnvio = new Date().toISOString();
@@ -335,6 +401,18 @@ class CSVHandler {
                 return resolve(parcial);
             }
         });
+    }
+
+    static _horas_Reinp(dados) {
+        return new Promise((resolve, reject) => {
+            let transformado = [];
+            dados.forEach(function (d) {
+                d['HE_CARF'] = d['HE_CARF'].replace(",", ".");
+                d['HE_CARF'] == 0 ? d['HE_CARF'] = 12 : d['HE_CARF'] = +d['HE_CARF'];
+                d['Repetitivo'] == 'NÃO INFORMADO' || d['Repetitivo'] == '' ? transformado.push(d) : null
+            });
+            return resolve(transformado);
+        })
     }
 
     static _HorasCARF(dados) {
@@ -386,6 +464,7 @@ class CSVHandler {
             return resolve(transformado);
         })
     }
+
     static _excluiCSV(arq) {
         return new Promise((resolve, reject) => {
             fs.unlink(arq, function (error) {
@@ -397,6 +476,27 @@ class CSVHandler {
             });
         })
     }
+
+    static _renomeiaReinp(dados) {
+        return new Promise((resolve, reject) => {
+            let keysMap = {
+                '05. Dia Início Situação Julgamento': 'Data_Situacao',
+                '03. Equipe Nível 5 Hist.': 'Equipe',
+                'CPF Relator e-Processo Hist.': 'CPF',
+                'PF Relator - Nome Hist.': 'Relator',
+                'Nome Lote Hist.': 'Repetitivo',
+                'Número Processo/Dossiê Hist.': 'Processo',
+                'Hora Estimada Situação Julgamento': 'HE_CARF'
+            }
+            dados.forEach(d => {
+                Object.entries(keysMap).forEach(entry => {
+                    delete Object.assign(d, { [entry[1]]: d[entry[0]] })[entry[0]];
+                });
+            });
+            return resolve(dados)
+        })
+    }
+
     static _renomeiaColunas(dados) {
         return new Promise((resolve, reject) => {
             let keysMap = {
@@ -424,7 +524,7 @@ class CSVHandler {
                 Alegações_no_Recurso_para__28: 'Alegacoes_CARF',
                 Data_Sessão_CARF_16: 'Data_da_Sessao_Julgamento',
                 Data_Distribuição_Última_12: 'Data_ultima_distribuicao',
-                'Valor_Originário_Lançado/P_30':'Valor_Originario'
+                'Valor_Originário_Lançado/P_30': 'Valor_Originario'
             }
             //Renomeia as colunas e exclui as não utilizadas
             dados.forEach(d => {

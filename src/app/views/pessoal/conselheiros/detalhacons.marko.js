@@ -133,7 +133,9 @@ function render(input, out, __component, component, state) {
     marko_attr("action", ("/pessoal/restrito/conselheiros/" + data.conselheiro.cpf) + "/ocorrencia") +
     " method=\"post\"><div id=\"editaDiv\"></div><div class=\"row\"><br></div><input hidden id=\"cpfOcorrencia\" name=\"cpf\"" +
     marko_attr("value", "" + data.conselheiro.cpf) +
-    " type=\"text\"><div class=\"row\"><div class=\" input-field col s4\"><i class=\"material-icons prefix\">border_color</i><select name=\"tipoOcorrencia\">");
+    " type=\"text\"><div class=\"row\"><div class=\" input-field col s4\"><i class=\"material-icons prefix\">border_color</i><select name=\"tipoOcorrencia\"> <option id=\"tipoOcorrencia\" class=\"form-group\"" +
+    marko_attr("value", "") +
+    "></option> ");
 
   var $for$2 = 0;
 
@@ -147,17 +149,19 @@ function render(input, out, __component, component, state) {
       "</option>");
   });
 
-  out.w("</select><label for=\"tipoOcorrencia\">Selecione o tipo de ocorrência:</label></div></div><div class=\"row\"><br></div><div class=\"row\"><div class=\"input-field col s12\"><i class=\"material-icons prefix\">mode_edit</i><textarea name=\"ocorDet\" id=\"ocorDet\" class=\"materialize-textarea\" placeholder=\"Este campo aceita &lt;ENTER>. Descreva aqui o nº da Portaria, Detalhes da notificação (arts do RICARF), nº do processo, nº SEI etc.\"></textarea><label for=\"ocorDet\">Detalhes da Ocorrência:</label></div></div><div class=\"row\"><br></div><div class=\"row\"><div class=\"input field col s3\"><i class=\"material-icons prefix\">insert_invitation</i><input id=\"dtOcorrencia\" name=\"dtOcorrencia\" value=\"\" type=\"text\" class=\"datepicker\"><label for=\"dtOcorrencia\">Data da Ocorrência</label></div><div class=\"col s2\"><div class=\"form-group\"><p><label>Altera a data de início de mandato?</label></p><p><label><input class=\"with-gap\" value=\"Sim\" name=\"alteradtFimMandato\" type=\"radio\" checked><span>Sim</span></label></p><p><label><input class=\"with-gap\" value=\"Não\" name=\"alteradtFimMandato\" type=\"radio\"><span>Não</span></label></p></div></div></div></form></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"modal-close btn waves-effect waves-light concordaOco\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div><div id=\"modal2\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal2\">Modal Header</h4><p class=\"pModal2\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn modal-close waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
+  out.w("</select><label for=\"tipoOcorrencia\">Selecione o tipo de ocorrência:</label></div></div><div class=\"row\"><br></div><div class=\"row\"><div class=\"input-field col s12\"><i class=\"material-icons prefix\">mode_edit</i><textarea name=\"ocorDet\" id=\"ocorDet\" class=\"materialize-textarea\" placeholder=\"Este campo aceita &lt;ENTER>. Descreva aqui o nº da Portaria, Detalhes da notificação (arts do RICARF), nº do processo, nº SEI etc.\"></textarea><label for=\"ocorDet\">Detalhes da Ocorrência:</label></div></div><div class=\"row\"><br></div><div class=\"row\"><div class=\"input field col s3\"><i class=\"material-icons prefix\">insert_invitation</i><input id=\"dtOcorrencia\" name=\"dtOcorrencia\"" +
+    marko_attr("value", "" + data.ocorrencias.dtOcorrencia) +
+    " type=\"text\" class=\"datepicker\"><label for=\"dtOcorrencia\">Data da Ocorrência</label></div><div class=\"col s2\"><div class=\"form-group\"><p><label>Altera a data de início de mandato?</label></p><p><label><input class=\"with-gap\" value=\"Sim\" name=\"alteradtFimMandato\" type=\"radio\" checked><span>Sim</span></label></p><p><label><input class=\"with-gap\" value=\"Não\" name=\"alteradtFimMandato\" type=\"radio\"><span>Não</span></label></p></div></div></div></form></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"modal-close btn waves-effect waves-light concordaOco\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div><div id=\"modal2\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal2\">Modal Header</h4><p class=\"pModal2\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn modal-close waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
 
-  app_footer_tag({}, out, __component, "166");
+  app_footer_tag({}, out, __component, "167");
 
-  app_scripts_js_tag({}, out, __component, "167");
+  app_scripts_js_tag({}, out, __component, "168");
 
   out.w("<script src=\"/estatico/js/pessoal/conselheiro.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "169");
+  await_reorderer_tag({}, out, __component, "170");
 
   out.w("</body></html>");
 }

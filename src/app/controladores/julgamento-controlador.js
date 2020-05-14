@@ -23,9 +23,11 @@ class JulgamentoControlador {
         return {
             autenticadas: '/julgamento/restrito*',
             calendario: '/julgamento/calendario',
+            faqdipaj: '/julgamento/faqdipaj',
             conselheiros: '/julgamento/conselheiros',
             regapcons: '/julgamento/conselheiros/:id',
             cargacons: '/julgamento/restrito/diagnostico-carga',
+            cadastrafaqdipaj: '/julgamento/restrito/cadastrafaqdipaj',
             carregacsv: '/julgamento/restrito/carrega-csv',
             escolhecsv: '/julgamento/restrito/escolhe-csv',
             escolhecsvregap: '/julgamento/restrito/escolhe-csv-regap',
@@ -35,6 +37,13 @@ class JulgamentoControlador {
             detalharegap: '/julgamento/restrito/regap-cojul/detalha/:id',
             regap: '/julgamento/restrito/regap/:id'
         };
+    }
+
+    carregaPaginaFAQDipaj(){
+        return function (req, resp) {
+            resp.marko(templates.julgamento.cadastrafaqdipaj)
+        }
+        
     }
 
     carregaPaginaConselheiros() {
@@ -106,7 +115,7 @@ class JulgamentoControlador {
                 newpath = path + fields.semana + '-' + files.file.name;
                 fse.move(oldpath, newpath, { overwrite: true })
                     .then(() => {
-                        registro = CSVHandler.wrangleCSV(newpath, fields.semana)
+                        registro = CSVHandler.wrangleCSV(newpath, fields.semana,fields.tipoRel)
                             .then((registro) => {
                                 if (req.isAuthenticated()) {
                                     registro['usuarioLogado'] = req.user.cpf;
@@ -160,7 +169,7 @@ class JulgamentoControlador {
         return function (req, resp) {
             const julgamentoDao = new JulgamentoDao(conn);
             let options = { day: '2-digit', month: '2-digit', year: 'numeric', weekday: 'long' };
-            julgamentoDao.getRelatorios({ tipoRel: { $not: /REGAP/ } })
+            julgamentoDao.getRelatorios({ tipoRel: 'Estoque' })
                 .then(dados => {
                     dados.forEach(dado => {
                         dado.dataEnvio = new Date(dado.dataEnvio).toLocaleString();
