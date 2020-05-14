@@ -61,6 +61,6 @@ module.exports = (app) => {
         } else { resp.render(403) };
 
     });    
-
+    app.get(rotasJulgamento.cadastrafaqdipaj, julgControlador.carregaPaginaFAQDipaj());
     app.post(rotasJulgamento.carregacsv,julgControlador.carregaCSV())
 }

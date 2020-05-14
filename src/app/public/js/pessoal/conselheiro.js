@@ -197,11 +197,11 @@ function dataTable() {
     responsiveLayoutCollapseStartOpen: false,
         columns: [
             { title: "Ocorrência", field: "tipoOcorrencia", sorter: "string", hozAlign: "left", editor: false, headerFilter: "input", bottomCalc: "count", responsive: 0 },
-            { title: "Detalhes da Ocorrência", field: "ocorDet", sorter: "string", hozAlign: "left", editor: false, headerFilter: "input", responsive: 0, },
+            { title: "Detalhes da Ocorrência", field: "ocorDet", sorter: "string", widthGrow:3,hozAlign: "left", editor: false, headerFilter: "input", responsive: 0, },
             { title: "Data da Ocorrência", field: "dtOcorrencia", sorter: "date", hozAlign: "center", editor: false, headerFilter: "input", responsive: 0 },
             { title: "Alteração de Mandato", field: "alteraDtInicio", sorter: "string", hozAlign: "center", editor: false, headerFilter: "input", responsive: 0 },
             { formatter: formatEdita, cellClick: edita, width: 40, hozAlign: "center" },
-            { formatter: formatDeleta, cellClick: clicaDeleta, width: 40, hozAlign: "center" },
+            { formatter: formatDeleta, cellClick: clicaDeleta, width: 40, hozAlign: "center" }
         ],
 
     });

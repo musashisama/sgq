@@ -6,6 +6,8 @@ module.exports = {
     escolhecsvregap: require('./escolhecsvregap/escolhecsvregap.marko'),
     regapCojul: require('./regap/regapCojul.marko'), 
     regap: require('./regap/regap.marko'),
+    faqdipaj: require('./faqdipaj/faqdipaj.marko'),
+    cadastrafaqdipaj: require('./faqdipaj/cadastrafaqdipaj.marko'),
     calendario: require('./calendario/calendario.marko')
 }
     
