@@ -64,7 +64,7 @@ class JulgamentoDao {
                 return resolve(res);
             })
         });
-    }v
+    }
 
     insereCal(registro) {
         return new Promise((resolve, reject) => {
