@@ -111,15 +111,15 @@ function btnOcorrencia() {
         $.post(url, valores)
             .done((dados) => {
                 var toastHTML = '<span>Ocorrência cadastrada com sucesso!</span>';
-                M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+                M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });               
                 $('#dtOcorrencia').val('');
                 $('#ocorDet').val('');
                 location.reload(true);
             }).fail(function (err) {
-                var toastHTML = `<span>Ocorreu um erro.</span>`;
+                var toastHTML = `<span>Ocorreu um erro.</span>`;               
                 M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
             })
-        console.log(valores);
+        
     });
 }
 
@@ -128,20 +128,17 @@ function btnSalva() {
     $('.btn-cons-salva').click(function (event) {
         event.preventDefault();
         url = $('#formCons').attr("action");
-        valores = $("#formCons").serializeArray();
-        console.log($("#formCons").serializeArray());
+        valores = $("#formCons").serializeArray();      
         $.post(url, valores)
             .done((dados) => {
-                var toastHTML = '<span>Registro atualizado com sucesso!</span>';
+                var toastHTML = '<span>Registro atualizado com sucesso!</span>';                
                 M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });                               
                 $('.selectCons').prop("disabled", true);
                 $(this).toggle(); 
-
-            }).fail(function (err) {
+            }).fail(function (err) {               
                 var toastHTML = `<span>Ocorreu um erro.</span>`;
                 M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
-            }).always()
-        console.log(valores);
+            }).always()        
     });
 }
 
@@ -217,9 +214,9 @@ function edita(e, cell){
     $('.btn-oco-edita').addClass('modal-trigger');
     $('#formOcorrencia').attr('action',`/pessoal/restrito/conselheiros/ocorrencia/${cell.getRow().getData()._id}`)
     $('#editaDiv').append('<input type="hidden" name="_method" value="PUT"/>')
-    $('#tipoOcorrencia').val(cell.getRow().getData().tipoOcorrencia);
+    $('#tipoOcorrencia').val(cell.getRow().getData().tipoOcorrencia);     
     $('#ocorDet').val(cell.getRow().getData().ocorDet);
-    $('#dtOcorrencia').val(cell.getRow().getData().dtOcorrencia);   
+    $('#dtOcorrencia').val(cell.getRow().getData().dtOcorrencia);
 }
 
 

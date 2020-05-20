@@ -33,6 +33,7 @@ function initDropDown() {
   $(".dropdown-trigger").dropdown({ coverTrigger: false, hover: false, constrainWidth: false });
 }
 
+//Aqui são ajustadas as visões no app-header e app-navbar
 function getProfile(){
   $.ajax({
     url: `/admin/userprofile`,

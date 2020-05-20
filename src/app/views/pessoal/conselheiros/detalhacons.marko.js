@@ -48,24 +48,25 @@ function render(input, out, __component, component, state) {
   out.w("<div class=\"container\"><h3 class=\"center-align titulo\">" +
     marko_escapeXml(data.conselheiro.nome) +
     "</h3><br><div class=\"row\"><div class=\"col s12\"><ul class=\"tabs\"><li class=\"tab col s3\"><a href=\"#tabDados\">Dados do Conselheiro</a></li><li class=\"tab col s3\"><a href=\"#tabOcorrencias\">Ocorrências do Conselheiro</a></li></ul></div><div id=\"tabDados\" class=\"col s12\"><div class=\"card-panel hoverable blue lighten-5 z-depth-4\"><div class=\"row\"><form id=\"formCons\" class=\"form-group nome\"" +
+    marko_attr("data-ddcons", "" + data.ddcons) +
     marko_attr("data-conselheiros", "" + data.conselheiro) +
     " name=\"formCons\"" +
     marko_attr("action", ("/pessoal/restrito/conselheiros/" + data.conselheiro.cpf) + "/") +
-    " method=\"post\"><h4>Dados Pessoais</h4><div class=\"row\"><div class=\"form-group nome input-field col s5\"><i class=\"material-icons prefix\">account_circle</i><input disabled id=\"nome\" name=\"nome\"" +
+    " method=\"post\"><h4>Dados Pessoais</h4><div class=\"row\"><div class=\"form-group nome input-field col s5 conteudoPrincipal\"><i class=\"material-icons prefix\">account_circle</i><input disabled id=\"nome\" name=\"nome\"" +
     marko_attr("value", "" + data.conselheiro.nome) +
-    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"nome\">Nome:</label></div><div class=\"form-group email input-field col s5\"><i class=\"material-icons prefix\">contact_mail</i><input disabled id=\"email\" name=\"email\"" +
+    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"nome\">Nome:</label></div><div class=\"form-group email input-field col s5 conteudoPrincipal\"><i class=\"material-icons prefix\">contact_mail</i><input disabled id=\"email\" name=\"email\"" +
     marko_attr("value", "" + data.conselheiro.email) +
-    " type=\"email\" class=\"validate selectCons\"><label class=\"active\" for=\"email\">e-mail:</label></div></div><div class=\"row\"><div class=\"form-group cpf input-field col s2\"><i class=\"material-icons prefix\">info</i><input disabled id=\"cpf\" name=\"cpf\"" +
+    " type=\"email\" class=\"validate selectCons\"><label class=\"active\" for=\"email\">e-mail:</label></div></div><div class=\"row\"><div class=\"form-group cpf input-field col s2 conteudoPrincipal\"><i class=\"material-icons prefix\">info</i><input disabled id=\"cpf\" name=\"cpf\"" +
     marko_attr("value", "" + data.conselheiro.cpf) +
-    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"cpf\">CPF:</label></div><div class=\"form-group siape input-field col s2\"><i class=\"material-icons prefix\">info_outline</i><input disabled id=\"siape\" name=\"siape\"" +
+    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"cpf\">CPF:</label></div><div class=\"form-group siape input-field col s2 conteudoPrincipal\"><i class=\"material-icons prefix\">info_outline</i><input disabled id=\"siape\" name=\"siape\"" +
     marko_attr("value", "" + data.conselheiro.siape) +
-    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"siape\">Siape:</label></div><div class=\"form-group dtNasc input field col s3\"><input disabled id=\"dtNasc\" name=\"dtNasc\"" +
+    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"siape\">Siape:</label></div></div><div class=\"row\"><div class=\"form-group dtNasc input field col s3 conteudoPrincipal\"><input disabled id=\"dtNasc\" name=\"dtNasc\"" +
     marko_attr("value", "" + data.conselheiro.dtNasc) +
-    " type=\"text\" class=\"datepicker selectCons\"><label for=\"dtNasc\">Data de Nascimento</label></div><div class=\"form-group telefone input-field col s2\"><i class=\"material-icons prefix\">contact_phone</i><input disabled id=\"telefone\" name=\"telefone\"" +
+    " type=\"text\" class=\"datepicker selectCons\"><label for=\"dtNasc\">Data de Nascimento</label></div><div class=\"form-group telefone input-field col s2 conteudoPrincipal\"><i class=\"material-icons prefix\">contact_phone</i><input disabled id=\"telefone\" name=\"telefone\"" +
     marko_attr("value", "" + data.conselheiro.telefone) +
-    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"telefone\">Telefone:</label></div><div class=\"form-group celular input-field col s2\"><i class=\"material-icons prefix\">phone_iphone</i><input disabled id=\"celular\" name=\"celular\"" +
+    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"telefone\">Telefone:</label></div><div class=\"form-group celular input-field col s2 conteudoPrincipal\"><i class=\"material-icons prefix\">phone_iphone</i><input disabled id=\"celular\" name=\"celular\"" +
     marko_attr("value", "" + data.conselheiro.celular) +
-    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"celular\">Celular:</label></div></div><h4>Dados do Mandato</h4><div class=\"row\"><div class=\"form-group input-field unidade col s6\"><i class=\"material-icons prefix\">event_seat</i><select disabled name=\"unidade\" class=\"selectCons\"><option class=\"form-group\"" +
+    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"celular\">Celular:</label></div></div><h4>Dados do Mandato</h4><div class=\"row\"><div class=\"form-group input-field unidade col s6 conteudoPrincipal\"><i class=\"material-icons prefix\">event_seat</i><select disabled name=\"unidade\" class=\"selectCons\"><option class=\"form-group\"" +
     marko_attr("value", "" + data.conselheiro.unidade) +
     ">" +
     marko_escapeXml(data.conselheiro.unidade) +
@@ -83,19 +84,13 @@ function render(input, out, __component, component, state) {
       "</option>");
   });
 
-  out.w("</select><label for=\"unidade\">Turma/Câmara/Seção (formato e-Processo):</label></div></div><div class=\"row\"><div class=\"form-group input-field turma col s4\"><i class=\"material-icons prefix\">event_seat</i><input disabled id=\"turma\" name=\"turma\"" +
-    marko_attr("value", "" + data.conselheiro.turma) +
-    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"turma\">Turma (Somente Turmas Ordinárias):</label></div><div class=\"form-group input-field camara col s4\"><i class=\"material-icons prefix\">event_seat</i><input disabled id=\"camara\" name=\"camara\"" +
-    marko_attr("value", "" + data.conselheiro.camara) +
-    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"camara\">Turma CSRF/Câmara/Turma Extraordinária:</label></div><div class=\"form-group input-field setor col s4\"><i class=\"material-icons prefix\">event_seat</i><input disabled id=\"setor\" name=\"setor\"" +
-    marko_attr("value", "" + data.conselheiro.setor) +
-    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"setor\">Seção:</label></div></div><div class=\"row\"><div class=\"form-group input-field origem col s3\"><i class=\"material-icons prefix\">gps_fixed</i><input disabled id=\"origem\" name=\"origem\"" +
+  out.w("</select><label for=\"unidade\">Turma/Câmara/Seção (formato e-Processo):</label></div></div><div class=\"row\"><div class=\"form-group input-field origem col s3 conteudoPrincipal\"><i class=\"material-icons prefix\">gps_fixed</i><input disabled id=\"origem\" name=\"origem\"" +
     marko_attr("value", "" + data.conselheiro.origem) +
-    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"origem\">Representação:</label></div><div class=\"form-group tipo input-field col s3\"><i class=\"material-icons prefix\">details</i><select disabled id=\"tipo\" name=\"tipo\" class=\"selectCons\"><option selected class=\"form-group\"" +
+    " type=\"text\" class=\"validate selectCons\"><label class=\"active\" for=\"origem\">Representação:</label></div><div class=\"form-group tipo input-field col s3 conteudoPrincipal\"><i class=\"material-icons prefix\">details</i><select disabled id=\"tipo\" name=\"tipo\" class=\"selectCons\"><option selected class=\"form-group\"" +
     marko_attr("value", "" + data.conselheiro.origem) +
     ">" +
     marko_escapeXml(data.conselheiro.tipo) +
-    "</option><option value=\"Titular\">Titular</option><option value=\"Suplente\">Suplente</option></select><label>Titular/Suplente</label></div><div class=\"form-group input-field funcao col s4\"><i class=\"material-icons prefix\">domain</i><select disabled name=\"funcao\" class=\"selectCons\"><option selected class=\"form-group\"" +
+    "</option><option value=\"Titular\">Titular</option><option value=\"Suplente\">Suplente</option></select><label>Titular/Suplente</label></div><div class=\"form-group input-field funcao col s4 conteudoPrincipal\"><i class=\"material-icons prefix\">domain</i><select disabled name=\"funcao\" class=\"selectCons\"><option selected class=\"form-group\"" +
     marko_attr("value", "" + data.conselheiro.funcao) +
     ">" +
     marko_escapeXml(data.conselheiro.funcao) +
@@ -113,13 +108,13 @@ function render(input, out, __component, component, state) {
       "</option>");
   });
 
-  out.w("</select><label for=\"funcao\">Função:</label></div></div><div class=\"row\"><div class=\"form-group input field dtFimMandato col s3\"><input disabled id=\"dtFimMandato\" name=\"dtFimMandato\"" +
+  out.w("</select><label for=\"funcao\">Função:</label></div></div><div class=\"row\"><div class=\"form-group input field dtFimMandato col s3 conteudoPrincipal\"><input disabled id=\"dtFimMandato\" name=\"dtFimMandato\"" +
     marko_attr("value", "" + data.conselheiro.dtFimMandato) +
-    " type=\"text\" class=\"datepicker selectCons\"><label for=\"dtFimMandato\">Data do Final do Mandato</label></div><div class=\"form-group input-field col s3\"><i class=\"material-icons prefix\">event_note</i><select disabled id=\"mandatoAt\" name=\"mandatoAt\" class=\"selectCons\"><option selected" +
+    " type=\"text\" class=\"datepicker selectCons\"><label for=\"dtFimMandato\">Data do Final do Mandato</label></div><div class=\"form-group input-field col s3 conteudoPrincipal\"><i class=\"material-icons prefix\">event_note</i><select disabled id=\"mandatoAt\" name=\"mandatoAt\" class=\"selectCons\"><option selected" +
     marko_attr("value", "" + data.conselheiro.mandatoAt) +
     ">" +
     marko_escapeXml(data.conselheiro.mandatoAt) +
-    "</option><option value>Sim</option><option>Não</option></select><label>Mandato Ativo?</label></div></div><div class=\"card-action right-align\"><a class=\"btn-cons-edita btn-floating red waves-effect waves-light hoverable z-depth-3\" title=\"Editar Dados\"><i class=\"material-icons\">edit</i></a><a disabled class=\"btn-cons-salva btn-floating blue waves-effect waves-light hoverable z-depth-3\" type=\"submit\" title=\"Salvar\"><i class=\"material-icons\">save</i></a><a id=\"aModal\" class=\"btn-cons-adiciona btn-floating green waves-effect waves-light hoverable z-depth-3\" title=\"Adicionar ocorrência\" href=\"#modal1\"><i class=\"material-icons\">add</i></a></div></form></div></div></div><div id=\"tabOcorrencias\" class=\"col s12\"><a id=\"aModal2\" class=\"btn-cons-adiciona2 btn-floating green waves-effect waves-light hoverable z-depth-3 right\" title=\"Adicionar ocorrência\" href=\"#modal1\"><i class=\"material-icons\">add</i></a><h3 class=\"center-align\">Ocorrências do Conselheiro</h3>");
+    "</option><option value=\"Sim\">Sim</option><option value=\"Não\">Não</option></select><label>Mandato Ativo?</label></div></div><div class=\"card-action right-align\"><a class=\"btn-cons-edita btn-floating red waves-effect waves-light hoverable z-depth-3\" title=\"Editar Dados\"><i class=\"material-icons\">edit</i></a><a disabled class=\"btn-cons-salva btn-floating blue waves-effect waves-light hoverable z-depth-3\" type=\"submit\" title=\"Salvar\"><i class=\"material-icons\">save</i></a><a id=\"aModal\" class=\"btn-cons-adiciona btn-floating green waves-effect waves-light hoverable z-depth-3\" title=\"Adicionar ocorrência\" href=\"#modal1\"><i class=\"material-icons\">add</i></a></div></form></div></div></div><div id=\"tabOcorrencias\" class=\"col s12\"><a id=\"aModal2\" class=\"btn-cons-adiciona2 btn-floating green waves-effect waves-light hoverable z-depth-3 right\" title=\"Adicionar ocorrência\" href=\"#modal1\"><i class=\"material-icons\">add</i></a><h3 class=\"center-align\">Ocorrências do Conselheiro</h3>");
 
   if (data.ocorrencias) {
     out.w("<div id=\"tabelaOcorrencias\"" +
@@ -133,7 +128,7 @@ function render(input, out, __component, component, state) {
     marko_attr("action", ("/pessoal/restrito/conselheiros/" + data.conselheiro.cpf) + "/ocorrencia") +
     " method=\"post\"><div id=\"editaDiv\"></div><div class=\"row\"><br></div><input hidden id=\"cpfOcorrencia\" name=\"cpf\"" +
     marko_attr("value", "" + data.conselheiro.cpf) +
-    " type=\"text\"><div class=\"row\"><div class=\" input-field col s4\"><i class=\"material-icons prefix\">border_color</i><select required name=\"tipoOcorrencia\" id=\"tipoOcorrencia\"> ");
+    " type=\"text\"><div class=\"row\"><div class=\"selectTipo input-field col s4\"><i class=\"material-icons prefix\">border_color</i><select required name=\"tipoOcorrencia\" id=\"tipoOcorrencia\">");
 
   var $for$2 = 0;
 
@@ -151,15 +146,15 @@ function render(input, out, __component, component, state) {
     marko_attr("value", "" + data.ocorrencias.dtOcorrencia) +
     " type=\"text\" class=\"datepicker\"><label for=\"dtOcorrencia\">Data da Ocorrência</label></div><div class=\"col s2\"><div class=\"form-group\"><p><label>Altera a data de início de mandato?</label></p><p><label><input class=\"with-gap\" value=\"Sim\" name=\"alteradtFimMandato\" type=\"radio\" checked><span>Sim</span></label></p><p><label><input class=\"with-gap\" value=\"Não\" name=\"alteradtFimMandato\" type=\"radio\"><span>Não</span></label></p></div></div></div></form></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"modal-close btn waves-effect waves-light concordaOco\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div><div id=\"modal2\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal2\">Modal Header</h4><p class=\"pModal2\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn modal-close waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
 
-  app_footer_tag({}, out, __component, "166");
+  app_footer_tag({}, out, __component, "154");
 
-  app_scripts_js_tag({}, out, __component, "167");
+  app_scripts_js_tag({}, out, __component, "155");
 
   out.w("<script src=\"/estatico/js/pessoal/conselheiro.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "169");
+  await_reorderer_tag({}, out, __component, "157");
 
   out.w("</body></html>");
 }

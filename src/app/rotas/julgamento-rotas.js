@@ -28,7 +28,9 @@ module.exports = (app) => {
         }
     });
 
-    app.get(rotasJulgamento.calendario,julgControlador.carregaPaginaCalendario());
+    app.get(rotasJulgamento.faqdipaj,julgControlador.carregaFAQDipaj());
+    
+    
    
 
     app.use(rotasJulgamento.autenticadas, function (req, resp, next) {
@@ -37,22 +39,16 @@ module.exports = (app) => {
         } else { resp.render(403) };
 
     });
+
     app.get(rotasJulgamento.regap, julgControlador.carregaPaginaRegap());
     app.get(rotasJulgamento.detalharegap, julgControlador.carregaPaginaRegap());
-    
-
-    app.use(rotasJulgamento.autenticadas, function (req, resp, next) {
-        if (ACL.checaACL(req.user.perfis, 'julgamento')|| ACL.checaACL(req.user.perfis, 'serpro')) {
-            next();
-        } else { resp.render(403) };
-
-    });
-    
-   
     app.get(rotasJulgamento.regapCojul, julgControlador.carregaPaginaRegapCojul());
-    app.get(rotasJulgamento.escolhecsvregap, julgControlador.escolheCSVRegap());    
+    app.get(rotasJulgamento.reinp, julgControlador.carregaPaginaReinp());
+    app.get(rotasJulgamento.detalhareinp, julgControlador.carregaPaginaDetalhaReinp());
+    app.get(rotasJulgamento.escolhecsvregap, julgControlador.escolheCSVRegap()); 
+    app.get(rotasJulgamento.escolhecsvreinp, julgControlador.escolheCSVReinp());   
     app.get(rotasJulgamento.escolhecsv, julgControlador.escolheCSV());
-    app.get(rotasJulgamento.detalha, julgControlador.carregaPaginaDiag());
+    app.get(rotasJulgamento.detalhaestoque, julgControlador.carregaPaginaDiag());
     app.get(rotasJulgamento.carregacsv,julgControlador.carregaPaginaInsereCSV());
         
     app.use(rotasJulgamento.autenticadas, function (req, resp, next) {
@@ -61,6 +57,15 @@ module.exports = (app) => {
         } else { resp.render(403) };
 
     });    
-    app.get(rotasJulgamento.cadastrafaqdipaj, julgControlador.carregaPaginaFAQDipaj());
+    app.route(rotasJulgamento.cadastrafaqdipaj)
+    .get(julgControlador.handleFAQDipaj())
+    .post(julgControlador.handleFAQDipaj())
+    .put(julgControlador.handleFAQDipaj())
+    .delete(julgControlador.handleFAQDipaj())
     app.post(rotasJulgamento.carregacsv,julgControlador.carregaCSV())
+    app.route(rotasJulgamento.calendario)
+    .get(julgControlador.handleCalendario())
+    .post(julgControlador.handleCalendario())
+    .put(julgControlador.handleCalendario())
+    .delete(julgControlador.handleCalendario())
 }

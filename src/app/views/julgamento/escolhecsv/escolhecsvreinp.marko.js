@@ -2,7 +2,7 @@
 "use strict";
 
 var marko_template = module.exports = require("marko/src/html").t(__filename),
-    marko_componentType = "/sgq$1.0.0/src/app/views/julgamento/escolhecsvregap/escolhecsvregap.marko",
+    marko_componentType = "/sgq$1.0.0/src/app/views/julgamento/escolhecsv/escolhecsvreinp.marko",
     components_helpers = require("marko/src/runtime/components/helpers"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
@@ -16,8 +16,8 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     app_navbar_template = require("../../components/app-navbar.marko"),
     app_navbar_tag = marko_loadTag(app_navbar_template),
     marko_forEach = marko_helpers.f,
-    marko_attr = marko_helpers.a,
     marko_escapeXml = marko_helpers.x,
+    marko_attr = marko_helpers.a,
     app_footer_template = require("../../components/app-footer.marko"),
     app_footer_tag = marko_loadTag(app_footer_template),
     app_scripts_js_template = require("../../components/app-scripts-js.marko"),
@@ -45,79 +45,43 @@ function render(input, out, __component, component, state) {
       class: "sidenav"
     }, out, __component, "5");
 
-  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Selecione o relatório que deseja visualizar:</h3><br><br><br><br><div class=\"row conteudoPrincipal\">");
+  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Selecione o relatório que deseja visualizar:</h3><br><br><br><br><div class=\"row conteudoPrincipal\"> ");
 
   var $for$0 = 0;
 
   marko_forEach(data.dados, function(dado) {
     var $keyScope$0 = "[" + (($for$0++) + "]");
 
-    out.w("<div class=\"card conteudoPrincipalCard \"><div class=\"card-image activator waves-effect waves-block waves-light\"" +
-      marko_attr("id", "" + dado.semana) +
-      "><img class=\"activator scaleImg\" alt=\"Clique para informações do relatório\" title=\"Clique para informações do relatório\" src=\"/estatico/imagens/CSV.png\"></div><div class=\"card-content\"><span class=\"card-title activator grey-text text-darken-4 \">Relatório Extraído em " +
+    out.w("<div class=\"card conteudoPrincipalCard\"><div class=\"card-image waves-effect waves-block waves-light\"><img class=\"activator scaleImg\" alt=\"Clique para informações do relatório\" title=\"Clique para informações do relatório\" src=\"/estatico/imagens/CSV.png\"></div><div class=\"card-content\"><span class=\"card-title activator grey-text text-darken-4\"><p>Relatório Extraído " +
+      marko_escapeXml(dado.dias) +
+      " (" +
       marko_escapeXml(dado.dtExtracao) +
-      "<i class=\"material-icons right\" title=\"Clique para informações do relatório\">more_vert</i></span><p>" +
-      marko_escapeXml(dado.total) +
-      " processos distribuídos. " +
-      marko_escapeXml(dado.totalHoras) +
-      " horas.</p>");
-
-    if (dado.semana) {
-      out.w("<p>Semana: " +
-        marko_escapeXml(dado.semana) +
-        ".</p>");
-    }
-
-    out.w("<p><br><a class=\"btn-floating btn-insere halfway-fab waves-effect waves-light red\" title=\"Clique para acessar relatório\"" +
-      marko_attr("href", "/julgamento/restrito/regap-cojul/" + dado.caminho) +
+      ").</p><i class=\"material-icons right\" title=\"Clique para informações do relatório\">more_vert</i></span><p>Relatório Extraído " +
+      marko_escapeXml(dado.dias) +
+      " (" +
+      marko_escapeXml(dado.dtExtracao) +
+      ").</p><p><br><a class=\"btn-floating btn-insere halfway-fab waves-effect waves-light red\" title=\"Clique para acessar relatório\"" +
+      marko_attr("href", "/julgamento/restrito/reinp/" + dado.caminho) +
       "><i class=\"material-icons\">send</i></a><div class=\"controle\">" +
       marko_escapeXml(dado.caminho) +
-      "</div></p></div><div class=\"card-reveal\"><span class=\"card-title grey-text text-darken-4\">Informações do relatório:<i class=\"material-icons right\">close</i></span>");
-
-    if (dado.semana) {
-      out.w("<p>Semana: " +
-        marko_escapeXml(dado.semana) +
-        ".</p>");
-    }
-
-    out.w("<p>Este relatório foi extraído em " +
+      "</div></p></div><div class=\"card-reveal\"><span class=\"card-title grey-text text-darken-4\">Informações do relatório:<i class=\"material-icons right\">close</i></span><p>Este relatório foi extraído " +
+      marko_escapeXml(dado.dias) +
+      " (" +
       marko_escapeXml(dado.dtExtracao) +
-      ".</p><p>Há " +
-      marko_escapeXml(dado.total) +
-      " processos distribuídos. Destes, " +
-      marko_escapeXml(dado.totalCSRF) +
-      " estão na Câmara Superior e " +
-      marko_escapeXml(dado.totalTOTE) +
-      " nas Turmas.</p><p>Na Câmara Superior há " +
-      marko_escapeXml(dado.ParaRelatarCSRF) +
-      " processos para relatoria e " +
-      marko_escapeXml(dado.FormalizarCSRF) +
-      " processos para formalização, perfazendo um total de " +
-      marko_escapeXml(dado.totalHorasCSRF) +
-      " horas e " +
-      marko_escapeXml(dado.totalValorCSRF) +
-      ".</p><p>Nas Turmas há " +
-      marko_escapeXml(dado.ParaRelatarTOTE) +
-      " processos para relatoria e " +
-      marko_escapeXml(dado.FormalizarTOTE) +
-      " para formalização, perfazendo um total de " +
-      marko_escapeXml(dado.totalHorasTOTE) +
-      " horas e " +
-      marko_escapeXml(dado.totalValorTOTE) +
-      ".</p></div></div>");
+      ").</p></div></div>");
   });
 
   out.w("</div></div></main>");
 
-  app_footer_tag({}, out, __component, "34");
+  app_footer_tag({}, out, __component, "30");
 
-  app_scripts_js_tag({}, out, __component, "35");
+  app_scripts_js_tag({}, out, __component, "31");
 
   out.w("<script src=\"/estatico/js/julgamento/escolhe.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "37");
+  await_reorderer_tag({}, out, __component, "33");
 
   out.w("</body></html>");
 }
@@ -130,7 +94,7 @@ marko_template._ = marko_renderer(render, {
 marko_template.Component = marko_defineComponent({}, marko_template._);
 
 marko_template.meta = {
-    id: "/sgq$1.0.0/src/app/views/julgamento/escolhecsvregap/escolhecsvregap.marko",
+    id: "/sgq$1.0.0/src/app/views/julgamento/escolhecsv/escolhecsvreinp.marko",
     tags: [
       "../../components/app-scripts-css.marko",
       "marko/src/core-tags/components/component-globals-tag",

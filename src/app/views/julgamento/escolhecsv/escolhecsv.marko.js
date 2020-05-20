@@ -52,9 +52,11 @@ function render(input, out, __component, component, state) {
   marko_forEach(data.dados, function(dado) {
     var $keyScope$0 = "[" + (($for$0++) + "]");
 
-    out.w("<div class=\"card conteudoPrincipalCard\"><div class=\"card-image waves-effect waves-block waves-light\"><img class=\"activator scaleImg\" alt=\"Clique para informações do relatório\" title=\"Clique para informações do relatório\" src=\"/estatico/imagens/CSV.png\"></div><div class=\"card-content\"><span class=\"card-title activator grey-text text-darken-4\">Relatório Extraído em " +
+    out.w("<div class=\"card conteudoPrincipalCard\"><div class=\"card-image waves-effect waves-block waves-light\"><img class=\"activator scaleImg\" alt=\"Clique para informações do relatório\" title=\"Clique para informações do relatório\" src=\"/estatico/imagens/CSV.png\"></div><div class=\"card-content\"><span class=\"card-title activator grey-text text-darken-4\">Relatório Extraído " +
+      marko_escapeXml(dado.dias) +
+      ". (" +
       marko_escapeXml(dado.dtExtracao) +
-      "<i class=\"material-icons right\" title=\"Clique para informações do relatório\">more_vert</i></span><p>" +
+      ")<i class=\"material-icons right\" title=\"Clique para informações do relatório\">more_vert</i></span><p>" +
       marko_escapeXml(dado.total) +
       " processos distribuídos. " +
       marko_escapeXml(dado.totalHoras) +
@@ -62,9 +64,11 @@ function render(input, out, __component, component, state) {
       marko_attr("href", "/julgamento/restrito/diagnostico-carga/" + dado.caminho) +
       "><i class=\"material-icons\">send</i></a><div class=\"controle\">" +
       marko_escapeXml(dado.caminho) +
-      "</div></p></div><div class=\"card-reveal\"><span class=\"card-title grey-text text-darken-4\">Informações do relatório:<i class=\"material-icons right\">close</i></span><p>Este relatório foi extraído em " +
+      "</div></p></div><div class=\"card-reveal\"><span class=\"card-title grey-text text-darken-4\">Informações do relatório:<i class=\"material-icons right\">close</i></span><p>Este relatório foi extraído " +
+      marko_escapeXml(dado.dias) +
+      ". (" +
       marko_escapeXml(dado.dtExtracao) +
-      ".</p><p>Há " +
+      ").</p><p>Há " +
       marko_escapeXml(dado.total) +
       " processos distribuídos. Destes, " +
       marko_escapeXml(dado.totalCSRF) +

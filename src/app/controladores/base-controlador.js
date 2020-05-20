@@ -1,6 +1,5 @@
 const conn = require('../../config/mongodb').dados;
 const templates = require('../views/templates');
-const DateHelper = require('../infra/helpers/DateHelper')
 const UserDao = require('../infra/user-dao');
 const { ObjectID } = require('mongodb');
 const Mailer = require('../infra/helpers/Mailer');
@@ -76,7 +75,7 @@ class BaseControlador {
                     let registro = {};
                     registro.email = email;
                     registro.controle = new ObjectID();
-                    registro.timestamp = DateHelper.dataAtual();
+                    registro.timestamp = new Date().toISOString();
                     registro.expirado = false;
                     const clientIp = requestIp.getClientIp(req);
                     registro['requestIP'] = clientIp;
