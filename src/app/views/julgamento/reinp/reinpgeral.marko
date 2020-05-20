@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <app-scripts-css/>
+  <body>
+    <app-header/>
+    <main class="conteudoPrincipal">
+      <app-navbar id="slide-out" class="sidenav"/>
+      <div class="container">
+        <h3 class="center-align titulo">Relatório de Indicação para Pauta - REINP</h3>
+        <br/>
+        <form id="formReinp" data-users=`${data.users}` data-reinp=`${data.relatorio}` name="formGerencial" action="/julgamento/restrito/regap-cojul/detalha/" method="post">
+          <div class="col s12">
+            <ul class="tabs">
+              <li class="tab col s3">
+                <a href="#processos">Processos</a>
+              </li>
+              <li class="tab col s3">
+                <a href="#stats">Estatísticas</a>
+              </li>
+            </ul>
+          </div>
+          <div id="processos" class="col s12">
+            <br/>
+            <div class="row">
+              <div class="col s11 right-align">
+                <app-drop-download/>
+                <a href="#!" id="mostraColunasTurma" title="Agrupar/Desagrupar por Turma/Câmara/Seção" class="waves-effect waves-red hoverable z-depth-3 btn-floating orange">
+                  <i class="material-icons">unfold_more</i>
+                </a>
+              </div>
+            </div>
+            <div id="tabelaReinp"/>
+          </div>
+          <div id="stats" class="col s12">
+            <div class="col s7">
+              <div id="barrasReinpMensal"/>
+            </div>
+            <div class="col s5">
+              <div id="barrasReinpTrimestral"/>
+            </div>
+          </div>
+        </form>
+      </div>
+    </main>
+    <footer class="page-footer rodape"/>
+    <!--Modal Structure-->
+    <div id="modal1" class="modal">
+      <div class="modal-content">
+        <h4 class="hModal">Modal Header</h4>
+        <p class="pModal"/>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-red btn-flat cancela">Cancela</a>
+        <button class="btn waves-effect waves-light concorda" type="submit" name="action">
+          Confirma <i class="material-icons right">send</i>
+        </button>
+      </div>
+    </div>
+    <app-footer/>
+    <app-scripts-js/>
+    <script src="/estatico/js/libs/plotly-latest.min.js"/>
+    <script src="/estatico/js/libs/plotly-locale-pt-br.js"/>
+    <script>Plotly.setPlotConfig({locale: 'pt-BR'})</script>
+    <script src="/estatico/js/julgamento/reinp_geral.js"/>
+  </body>
+</html>

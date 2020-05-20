@@ -57,7 +57,7 @@ function render(input, out, __component, component, state) {
     marko_escapeXml(data.user.unidade) +
     "</h6></p><p><h6>Final do Mandato: " +
     marko_escapeXml(data.user.dtFimMandato) +
-    "</h6></p></div></div></div></div><br><br><div class=\"row\"><div class=\"col s12\"><ul class=\"tabs\"><li class=\"tab col s3\"><a href=\"#processos\">Processos</a></li><li class=\"tab col s3\"><a href=\"#stats\">Estatísticas</a></li><li class=\"tab col s3\"><a href=\"#ocorrencias\">Ocorrências</a></li></ul></div><div id=\"processos\" class=\"col s12\"><br><div class=\"row\"><div class=\"form-group input-field  col s3\"><select class=\"dataRel\" name=\"dataRel\" id=\"dataRel\"><option class=\"form-group\"" +
+    "</h6></p></div></div></div></div><br><br><div class=\"row\"><div class=\"col s12\"><ul class=\"tabs\"><li class=\"tab col s3\"><a href=\"#processos\">Processos</a></li><li class=\"tab col s3\"><a href=\"#produtividade\">Produtividade</a></li><li class=\"tab col s3\"><a href=\"#stats\">Estatísticas</a></li><li class=\"tab col s3\"><a href=\"#ocorrencias\">Ocorrências</a></li></ul></div><div id=\"processos\" class=\"col s12\"><br><div class=\"row\"><div class=\"form-group input-field  col s3\"><select class=\"dataRelRegap\" name=\"dataRelRegap\" id=\"dataRelRegap\"><option class=\"form-group\"" +
     marko_attr("value", "") +
     " disabled selected>Clique para selecionar</option>");
 
@@ -73,23 +73,43 @@ function render(input, out, __component, component, state) {
       "</option>");
   });
 
-  out.w("</select><label>Selecione a data do relatório:</label></div> <div class=\"form-group input-field  col s3\"><select class=\"Atividade\" name=\"atividadeSelect\" id=\"atividadeSelect\"><option class=\"form-group\" value=\"Todas\" selected>Todas</option><option class=\"form-group\" value=\"Para Relatar\">Para Relatar</option><option class=\"form-group\" value=\"Formalizar Decisao\">Formalizar Decisão</option><option class=\"form-group\" value=\"Formalizar Voto Vencedor\">Formalizar Voto Vencedor</option><option class=\"form-group\" value=\"Corrigir Decisão\">Corrigir Decisão</option><option class=\"form-group\" value=\"Apreciar e Assinar Documento\">Apreciar e Assinar Documento</option></select><label>Selecione a atividade para filtrar:</label></div><div class=\"progress col s3\"><div class=\"indeterminate\"></div></div><div class=\"col s3 right-align\"></div><div class=\"col s12 right-align\">");
+  out.w("</select><label>Selecione a data do relatório:</label></div><div class=\"form-group input-field  col s3\"><select class=\"Atividade\" name=\"atividadeSelect\" id=\"atividadeSelect\"><option class=\"form-group\" value=\"Todas\" selected>Todas</option><option class=\"form-group\" value=\"Para Relatar\">Para Relatar</option><option class=\"form-group\" value=\"Formalizar Decisao\">Formalizar Decisão</option><option class=\"form-group\" value=\"Formalizar Voto Vencedor\">Formalizar Voto Vencedor</option><option class=\"form-group\" value=\"Corrigir Decisão\">Corrigir Decisão</option><option class=\"form-group\" value=\"Apreciar e Assinar Documento\">Apreciar e Assinar Documento</option></select><label>Selecione a atividade para filtrar:</label></div><div class=\"progressRegap col s3\"><div class=\"preloader-wrapper small active\"><div class=\"spinner-layer spinner-green-only\"><div class=\"circle-clipper left\"><div class=\"circle\"></div></div><div class=\"gap-patch\"><div class=\"circle\"></div></div><div class=\"circle-clipper right\"><div class=\"circle\"></div></div></div></div></div><div class=\"col s3 right-align\"></div><div class=\"col s12 right-align\">");
 
-  app_drop_download_tag({}, out, __component, "51");
+  app_drop_download_tag({}, out, __component, "60");
 
-  out.w("<a href=\"#!\" id=\"mostraColunasAtividade\" title=\"Agrupar/Desagrupar por Atividade\" class=\"waves-effect waves-yellow hoverable z-depth-3 btn-floating blue\"><i class=\"material-icons\">unfold_less</i></a></div></div><div id=\"tabelaRegap\"></div></div><div id=\"stats\" class=\"col s12\"><h4>Quantidade de processos por atividade:</h4><p><div style=\"width:780px;auto;\" id=\"barrasAtividade\"></div></p></div><div id=\"ocorrencias\" class=\"col s12\"><br><div class=\"row\"><div id=\"tabelaOcorrencias\"" +
+  out.w("<a href=\"#!\" id=\"mostraColunasAtividade\" title=\"Agrupar/Desagrupar por Atividade\" class=\"waves-effect waves-yellow hoverable z-depth-3 btn-floating blue\"><i class=\"material-icons\">unfold_less</i></a></div></div><div id=\"tabelaRegap\"></div></div><div id=\"produtividade\" class=\"col s12\"><br><div class=\"row\"><div class=\"form-group input-field  col s3\"><select class=\"dataRelReinp\" name=\"dataRelReinp\" id=\"dataRelReinp\"><option class=\"form-group\"" +
+    marko_attr("value", "") +
+    " disabled selected>Clique para selecionar</option>");
+
+  var $for$1 = 0;
+
+  marko_forEach(data.reinp, function(dado) {
+    var $keyScope$1 = "[" + (($for$1++) + "]");
+
+    out.w("<option class=\"form-group\"" +
+      marko_attr("value", "" + dado.id) +
+      ">" +
+      marko_escapeXml(dado.dtExtracao) +
+      "</option>");
+  });
+
+  out.w("</select><label>Selecione a data do relatório:</label></div><div class=\"progressReinp col s3\"><div class=\"preloader-wrapper small active\"><div class=\"spinner-layer spinner-green-only\"><div class=\"circle-clipper left\"><div class=\"circle\"></div></div><div class=\"gap-patch\"><div class=\"circle\"></div></div><div class=\"circle-clipper right\"><div class=\"circle\"></div></div></div></div></div><div class=\"col s3 right-align\"></div><div class=\"col s12 right-align\"><div class=\"row\"></div><div id=\"tabelaReinp\"></div><p><h4>Processos</h4></p>");
+
+  app_drop_download_tag({}, out, __component, "87");
+
+  out.w("<a href=\"#!\" id=\"agrupaMes\" title=\"Agrupar/Desagrupar por Mês\" class=\"waves-effect waves-yellow hoverable z-depth-3 btn-floating blue\"><i class=\"material-icons\">unfold_less</i></a></div></div><div id=\"tabelaReinpDet\"></div></div><div id=\"stats\" class=\"col s12\"><div class=\"row\"><h4>Quantidade de processos por atividade:</h4><p><div style=\"width:780px;auto;\" id=\"barrasAtividade\"></div></p></div><div class=\"row\"><h4>Produtividade Mensal e Trimestral:</h4><div class=\"row\"><div class=\"col s7\"><div id=\"barrasReinpMensal\"></div></div><div class=\"col s5\"><div id=\"barrasReinpTrimestral\"></div></div></div></div></div><div id=\"ocorrencias\" class=\"col s12\"><br><div class=\"row\"><div id=\"tabelaOcorrencias\"" +
     marko_attr("data-ocorrencias", "" + data.ocorrencias) +
     "></div></div></div></div></div></main><footer class=\"page-footer rodape\"></footer><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
 
-  app_footer_tag({}, out, __component, "72");
+  app_footer_tag({}, out, __component, "116");
 
-  app_scripts_js_tag({}, out, __component, "73");
+  app_scripts_js_tag({}, out, __component, "117");
 
   out.w("<script src=\"/estatico/js/libs/plotly-latest.min.js\"></script><script src=\"/estatico/js/libs/plotly-locale-pt-br.js\"></script><script>Plotly.setPlotConfig({locale: 'pt-BR'})</script><script src=\"/estatico/js/julgamento/regapcons.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "78");
+  await_reorderer_tag({}, out, __component, "122");
 
   out.w("</body></html>");
 }

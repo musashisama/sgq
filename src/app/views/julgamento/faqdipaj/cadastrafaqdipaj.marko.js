@@ -43,19 +43,23 @@ function render(input, out, __component, component, state) {
       class: "sidenav"
     }, out, __component, "6");
 
-  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Cadastro de Perguntas & Respostas - DIPAJ/COJUL</h3><br><div class=\"row\"><h5 class=\"\">Pergunta</h5><br><div id=\"editorPergunta\" class=\"col s12\"><p id=\"perguntaFAQ\"></p><br></div></div><div class=\"row\"><h5 class=\"\">Resposta</h5><br><div id=\"editorResposta\" class=\"col s12\"><p id=\"respostaFAQ\"></p><br></div></div><div class=\"row\"><div class=\"col s1 offset-s12\"><a class=\"btn-floating btn-insere waves-effect waves-light red\" title=\"Clique para enviar\"" +
-    marko_attr("href", "#") +
-    "><i class=\"material-icons\">send</i></a></div></div></div></main>");
+  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Cadastro de Perguntas & Respostas - DIPAJ/COJUL</h3><br><div class=\"row\"><h5 class=\"\">Pergunta</h5><br><div id=\"editorPergunta\" class=\"col s12\"><p id=\"perguntaFAQ\"></p><br></div></div><div class=\"row\"><h5 class=\"\">Resposta</h5><br><div id=\"editorResposta\" class=\"col s12\"><p id=\"respostaFAQ\"></p><br></div></div><div class=\"row\"><div class=\"input-field col s4\"><select required name=\"secaoFAQ\" id=\"secaoFAQ\"><option value=\"\" disabled selected>Escolha uma opção:</option><option value=\"prod\">Meta de Produtividade</option><option value=\"regap\">REGAP</option><option value=\"reinp\">REINP</option><option value=\"rejul\">REJUL</option></select><label>Qual a seção do FAQ?</label></div></div><div class=\"row\"><div class=\"col s1 offset-s11\"><a id=\"aModal\" class=\"btn-floating btn-insere waves-effect waves-light red\" title=\"Clique para enviar\"" +
+    marko_attr("href", "#modal1") +
+    "><i class=\"material-icons\">send</i></a></div></div><div" +
+    marko_attr("data-faq", "" + data.faq) +
+    "></div></div></main>");
 
-  app_footer_tag({}, out, __component, "26");
+  app_footer_tag({}, out, __component, "36");
 
-  app_scripts_js_tag({}, out, __component, "27");
+  out.w("<div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
+
+  app_scripts_js_tag({}, out, __component, "45");
 
   out.w("<script src=\"/estatico/js/libs/quill.min.js\"></script><script src=\"/estatico/js/julgamento/cadastrafaq.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "30");
+  await_reorderer_tag({}, out, __component, "48");
 
   out.w("</body></html>");
 }

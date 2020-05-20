@@ -115,6 +115,7 @@ class PessoalControlador {
                                                 .then(funcoes => {
                                                     resp.marko(templates.pessoal.detalhacons, {
                                                         conselheiro: conselheiro[0],
+                                                        ddcons: JSON.stringify(conselheiro[0]),
                                                         unidades: tipo,
                                                         tipoOcorrencias: tpOcorrencias,
                                                         ocorrencias: JSON.stringify(ocorrencias),
@@ -164,9 +165,7 @@ class PessoalControlador {
             const pessoalDao = new PessoalDao(conn);
             pessoalDao.editaOcorrencia(id, req.body)
                 .then(conselheiro => {
-                    resp.marko(templates.pessoal.detalhacons, {
-                        conselheiro: req.body,
-                    })
+                    resp.send(conselheiro)
                 })
                 .catch(erro => console.log(erro));
         };
@@ -174,15 +173,11 @@ class PessoalControlador {
 
     editaOcorrenciaPess() {
         return function (req, resp) {
-
             const id = req.params.id;
-
             const pessoalDao = new PessoalDao(conn);
             pessoalDao.editaOcorrencia(id, req.body)
                 .then(pessoa => {
-                    resp.marko(templates.pessoal.detalhapess, {
-                        pessoa: req.body,
-                    })
+                   resp.send(pessoa)
                 })
                 .catch(erro => console.log(erro));
         };
@@ -193,9 +188,7 @@ class PessoalControlador {
             const pessoalDao = new PessoalDao(conn);
             pessoalDao.editaCons(req.body)
                 .then(conselheiro => {
-                    resp.marko(templates.pessoal.detalhacons, {
-                        conselheiro: req.body,
-                    })
+                    resp.send(conselheiro)
                 })
                 .catch(erro => console.log(erro));
         };
@@ -207,9 +200,7 @@ class PessoalControlador {
             console.log(req.body);
             pessoalDao.editaPessoa(req.body)
                 .then(pessoa => {
-                    resp.marko(templates.pessoal.detalhapess, {
-                        pessoa: req.body,
-                    })
+                    resp.send(pessoa)
                 })
                 .catch(erro => console.log(erro));
         };
@@ -220,9 +211,7 @@ class PessoalControlador {
             const pessoalDao = new PessoalDao(conn);
             pessoalDao.excluiOcorrencia(req.params.id)
                 .then(conselheiro => {
-                    resp.marko(templates.pessoal.detalhacons, {
-                        conselheiro: req.body,
-                    })
+                    resp.send(conselheiro)
                 })
                 .catch(erro => console.log(erro));
         };
@@ -233,9 +222,7 @@ class PessoalControlador {
             const pessoalDao = new PessoalDao(conn);
             pessoalDao.excluiOcorrencia(req.params.id)
                 .then(pessoa => {
-                    resp.marko(templates.pessoal.detalhapess, {
-                        pessoa: req.body,
-                    })
+                    resp.send(pessoa)
                 })
                 .catch(erro => console.log(erro));
         };
@@ -246,9 +233,7 @@ class PessoalControlador {
             const pessoalDao = new PessoalDao(conn);
             pessoalDao.insereOcorrencia(req.body)
                 .then(conselheiro => {
-                    resp.marko(templates.pessoal.detalhacons, {
-                        conselheiro: req.body,
-                    })
+                    resp.send(conselheiro)
                 })
                 .catch(erro => console.log(erro));
         };
@@ -259,9 +244,7 @@ class PessoalControlador {
             const pessoalDao = new PessoalDao(conn);
             pessoalDao.insereOcorrencia(req.body)
                 .then(pessoa => {
-                    resp.marko(templates.pessoal.detalhapess, {
-                        pessoa: req.body,
-                    })
+                    resp.send(pessoa)
                 })
                 .catch(erro => console.log(erro));
         };

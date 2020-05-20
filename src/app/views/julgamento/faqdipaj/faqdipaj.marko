@@ -6,13 +6,61 @@
     <main class="conteudoPrincipal">
       <app-navbar id="slide-out" class="sidenav"/>
       <div class="container">
-        <h3 class="center-align titulo">Perguntas & Respostas - DIPAJ/COJUL</h3>        
+        <h3 id="inicio" class="center-align titulo">Perguntas & Respostas - DIPAJ/COJUL</h3>
         <br/>
-        <div class="row conteudoPrincipal"/>
+        <div class="row">
+          <div class="col s12">
+            <div class="row">
+              <div class="input-field col s12">
+                <i class="material-icons prefix">textsms</i>
+                <input type="text" id="autocomplete-input" class="autocomplete"/>
+                <label for="autocomplete-input">Digite aqui sua pergunta</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div id="faq" data-faq=`${data.faq}`/>
+          <div class="col s6">
+            <h5 id="mprod" class="center scrollspy">Meta de Produtividade</h5>
+            <ul class="collapsible popout prod"/>
+          </div>
+          <div class="col s6">
+            <h5 id="idregap" class="center scrollspy">REGAP</h5>
+            <ul class="collapsible popout regap"/>
+          </div>
+          <div class="col s6">
+            <h5 id="idreinp" class="center scrollspy">REINP</h5>
+            <ul class="collapsible popout reinp"/>
+          </div>
+          <div class="col s6">
+            <h5 id="idrejul" class="center scrollspy">REJUL</h5>
+            <ul class="collapsible popout rejul"/>
+          </div>
+        </div>
+      </div>
+      <div class="scspy2 col hide-on-small-only m3 l2 right">
+        <ul class="section table-of-contents">
+        <li>
+            <a href="#inicio">Início</a>
+          </li>
+          <li>
+            <a href="#mprod">Meta de Produtividade</a>
+          </li>
+          <li>
+            <a href="#idregap">REGAP</a>
+          </li>
+          <li>
+            <a href="#idreinp">REINP</a>
+          </li>
+          <li>
+            <a href="#idrejul">REJUL</a>
+          </li>
+        </ul>
       </div>
     </main>
     <app-footer/>
     <app-scripts-js/>
-    <script src="/estatico/js/julgamento/escolhe.js"/>
+    <script src="/estatico/js/julgamento/faq_dipaj.js"/>    
   </body>
 </html>

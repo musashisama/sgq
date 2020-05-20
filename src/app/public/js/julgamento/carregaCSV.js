@@ -2,7 +2,9 @@ inicializaComponentes()
 function inicializaComponentes() {
     $(document).ready(function () {
         toggleRegapRadio();
+        toggleReinpRadio();
         $('.soregap').hide();
+        $('.soreinp').hide();
         $('.progress').hide();
         initDatePicker();
         initBtnSubmit()
@@ -21,7 +23,7 @@ function initBtnSubmit() {
     var formularioCSV = $('#formCSV');
     formularioCSV.on('submit', function(event){    
         event.preventDefault();        
-        var fd = new FormData(formCSV);
+        var fd = new FormData(formCSV);        
         var files = $('#file')[0].files[0];
         $('.concorda').toggle();
         $(".progress").show();
@@ -49,7 +51,7 @@ function initBtnSubmit() {
                 $("#overlay").remove();
                 M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
                 $('.concorda').toggle();   
-                setTimeout(function(){ location.href = '/' }, 3000); 
+                setTimeout(function(){ location.href = '/' }, 1500); 
             },
             fail: function (err) {
                 var toastHTML = `<span>Ocorreu um erro.</span>`;
@@ -59,7 +61,6 @@ function initBtnSubmit() {
               
     })
 }
-
 
 function initToolToast() {
     var toastHTML = `<span>Favor escolher um arquivo CSV</span><button class="btn-flat toast-action">Ok</button>`;
@@ -76,6 +77,15 @@ function toggleRegapRadio() {
             $('.soregap').toggle('slow');
         } else {
             $('.soregap').hide('slow');
+        }
+    });
+}
+function toggleReinpRadio() {
+    $("input[name='tipoRel']").change(function () {
+        if (this.value == 'REINP') {
+            //$('.soreinp').toggle('slow');            
+        } else {
+           // $('.soreinp').hide('slow');           
         }
     });
 }

@@ -105,4 +105,3 @@ document.getElementById("mostraColunas").addEventListener("click", function () {
 let formatNome = function formatNome(cell){
     return `<a class='black-text' href='/pessoal/restrito/conselheiros/${cell.getRow().getData().cpf}' title='Detalhar cadastro do Conselheiro'><i class='material-icons'>folder_shared</i></a>`    
 }
-

@@ -19,7 +19,7 @@
               </div>
               <div class="card-content">
                 <span class="card-title activator grey-text text-darken-4">
-                  Relatório Extraído em ${dado.dtExtracao}<i class="material-icons right" title="Clique para informações do relatório">more_vert</i>
+                  Relatório Extraído ${dado.dias}. (${dado.dtExtracao})<i class="material-icons right" title="Clique para informações do relatório">more_vert</i>
                 </span>
                 <p>${dado.total} processos distribuídos. ${dado.totalHoras} horas.</p>
                 <p>
@@ -34,7 +34,7 @@
                 <span class="card-title grey-text text-darken-4">
                   Informações do relatório:<i class="material-icons right">close</i>
                 </span>
-                <p>Este relatório foi extraído em ${dado.dtExtracao}.</p>
+                <p>Este relatório foi extraído ${dado.dias}. (${dado.dtExtracao}).</p>
                 <p>Há ${dado.total} processos distribuídos. Destes, ${dado.totalCSRF} estão na Câmara Superior e ${dado.totalTOTE} nas Turmas.</p>
                 <p>Na Câmara Superior há ${dado.ParaRelatarCSRF} processos para relatoria e ${dado.FormalizarCSRF} processos para formalização, perfazendo um total de ${dado.totalHorasCSRF} horas e ${dado.totalValorCSRF}.</p>
                 <p>Nas Turmas há ${dado.ParaRelatarTOTE} processos para relatoria e ${dado.FormalizarTOTE} para formalização, perfazendo um total de ${dado.totalHorasTOTE} horas e ${dado.totalValorTOTE}.</p>

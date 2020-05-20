@@ -1,23 +1,42 @@
 <!DOCTYPE html>
 <html>
   <app-scripts-css/>
+  <app-calendario-css/>
   <body>
     <app-header/>
     <main class="conteudoPrincipal">
-      <app-navbar/>      
+      <app-navbar/>
       <div class="container">
-        <div class="row center-align">
-          <if(data.msg)>
-            <div id="toastsucesso" class="ctoastsucesso"/>
-            <div id="msg" class="controle">${data.msg}</div>
-          </if>          
+        <div class="row">
+          <h3 class="center-align titulo">Calendário de Sessões do CARF</h3>
         </div>
-       <div id="chart"></div>
+        <div class="row">
+          <div id="external-events" class="left col s2">
+            <p>
+              <strong>Arraste a semana para o calendário:</strong>
+            </p>
+            <ul>
+              <li class="fc-event evCal Verde">&nbsp</li>
+              <li class="fc-event evCal Amarela">&nbsp</li>
+              <li class="fc-event evCal Azul">&nbsp</li> 
+              <li class="fc-event evCal Vermelha">&nbsp</li> 
+              <li class="fc-event evCal Roxa">&nbsp</li> 
+              <li class="fc-event evCal Laranja">&nbsp</li>                
+              <li class="fc-event evCal Cinza">&nbsp</li>               
+              <li class="fc-event evCal VerdeClara">&nbsp</li>    
+              <li class="fc-event evCal Rosa">&nbsp</li>  
+              <li class="fc-event evCal Preta">&nbsp</li>    
+              <li class="fc-event evCal AzulClara">&nbsp</li>
+              <li class="fc-event evCal Musgo">&nbsp</li>                  
+            </ul>          
+          </div>     
+          <form id="formCal" name="formCal" data-cal=`${data.cal}` action="/julgamento/calendario/" method="post"/>  
+          <div class="offset-s3 right" id="calendar"/>
+        </div>
       </div>
     </main>
     <app-footer/>
     <app-scripts-js/>
-    <script src="/estatico/js/libs/tui-chart-all.min.js"/>
-    <script src="/estatico/js/base/calendario.js"/>
+    <app-calendario-js/>
   </body>
 </html>

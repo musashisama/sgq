@@ -10,7 +10,7 @@ let semanaAzul = ["2ª TURMA-CSRF-CARF-MF-DF",
     "1ª TE-2ªSEÇÃO-2001-CARF-MF-DF",
     "2ª TE-2ªSEÇÃO-2002-CARF-MF-DF",
     "3ª TE-2ªSEÇÃO-2003-CARF-MF-DF",
-    "3ª SEÇÃO - CARF - MF - DF",
+    "3ª SEÇÃO-CARF-MF-DF",
     "1ª TO-2ªCÂMARA-3ªSEÇÃO-CARF-MF-DF",
     "2ª TO-2ªCÂMARA-3ªSEÇÃO-CARF-MF-DF",
     "1ª TO-3ªCÂMARA-3ªSEÇÃO-CARF-MF-DF",
@@ -27,6 +27,8 @@ let semanaVerde = ["1ª TURMA-CSRF-CARF-MF-DF",
     "3ª TE-1ªSEÇÃO-1003-CARF-MF-DF",
     "2ª SEÇÃO-CARF-MF-DF",
     "1ª TO-2ªCÂMARA-2ªSEÇÃO-CARF-MF-DF",
+    "1ª TO-2ªCÂMARA-2ªSEÇÃO-CARF-MF-DF",
+    "2ª TO-2ªCÂMARA-2ªSEÇÃO-CARF-MF-DF",
     "2ª TO-2ªCAMARA-2ªSEÇÃO-CARF-MF-DF",
     "1ª TO-3ªCÂMARA-2ªSEÇÃO-CARF-MF-DF",
     "2ª TO-3ªCÂMARA-2ªSEÇÃO-CARF-MF-DF",
@@ -51,7 +53,36 @@ let semanaAmarela = ["3ª TURMA-CSRF-CARF-MF-DF",
     "2ª CÂMARA-1ªSEÇÃO-CARF-MF-DF",
     "3ª CÂMARA-1ªSEÇÃO-CARF-MF-DF",
     "4ª CÂMARA-1ªSEÇÃO-CARF-MF-DF"]
-
+let perVerde = {
+    inicioT1: moment('06/12/2019', 'DD/MM/YYYY'),
+    fimT1: moment('05/03/2020', 'DD/MM/YYYY'),
+    inicioT2: moment('06/03/2020', 'DD/MM/YYYY'),
+    fimT2: moment('04/06/2020', 'DD/MM/YYYY'),
+    inicioT3: moment('05/06/2020', 'DD/MM/YYYY'),
+    fimT3: moment('03/09/2020', 'DD/MM/YYYY'),
+    inicioT4: moment('04/09/2020', 'DD/MM/YYYY'),
+    fimT4: moment('03/12/2020', 'DD/MM/YYYY')
+}
+let perAmarela = {
+    inicioT1: moment('13/12/2019', 'DD/MM/YYYY'),
+    fimT1: moment('12/03/2020', 'DD/MM/YYYY'),
+    inicioT2: moment('13/03/2020', 'DD/MM/YYYY'),
+    fimT2: moment('18/06/2020', 'DD/MM/YYYY'),
+    inicioT3: moment('19/06/2020', 'DD/MM/YYYY'),
+    fimT3: moment('18/09/2020', 'DD/MM/YYYY'),
+    inicioT4: moment('19/09/2020', 'DD/MM/YYYY'),
+    fimT4: moment('10/12/2020', 'DD/MM/YYYY')
+}
+let perAzul = {
+    inicioT1: moment('19/12/2019', 'DD/MM/YYYY'),
+    fimT1: moment('19/03/2020', 'DD/MM/YYYY'),
+    inicioT2: moment('20/03/2020', 'DD/MM/YYYY'),
+    fimT2: moment('25/06/2020', 'DD/MM/YYYY'),
+    inicioT3: moment('26/06/2020', 'DD/MM/YYYY'),
+    fimT3: moment('24/09/2020', 'DD/MM/YYYY'),
+    inicioT4: moment('25/09/2020', 'DD/MM/YYYY'),
+    fimT4: moment('16/12/2020', 'DD/MM/YYYY')
+}
 //let gerado = '';
 class CSVHandler {
     constructor() {
@@ -116,25 +147,22 @@ class CSVHandler {
             } else {
                 if (tipo == 'REINP') {
                     fs.readFile(arq, 'utf8', function (err, data) {
-                        console.time('c1')
+                        data = data.replace(/;"Métrica";/gi, ';');
+                        data = data.replace(/;;/gi, ';');
                         let dados = d3.csvParse(data);
                         gerado = gerado + arq.split("/")[arq.split("/").length - 1]
-                        let rex = /-CARF-MF-DF/gi;
-                        let rex2 = /( )([0-9])/gi;
-                        let rex3 = /ª T/gi
+                        let rex2 = /([0-9])([0-9]ª)/gi;
+                        let rex3 = /( )([0-9])/gi
                         CSVHandler._renomeiaReinp(dados)
                             .then(dados => {
                                 CSVHandler._horas_Reinp(dados)
                                     .then(dados => {
                                         dados.forEach(dado => {
-                                            dado.Equipe = dado.Equipe.replace(rex, '');
+                                            dado.Equipe = dado.Equipe.replace(rex3, '$2');
                                             dado.Equipe = dado.Equipe.replace(rex2, '$2');
-                                            dado.Equipe = dado.Equipe.replace(rex3, 'ªT');
                                             dado.Data = moment(CSVHandler._ajustaData(dado.Data_Situacao, true)).format('DD/MM/YYYY');
                                             delete dado.Data_Situacao;
                                         })
-                                        console.timeEnd('c1');
-                                        console.log(dados)
                                         CSVHandler._escreveZip(path + gerado, dados)
                                             .then(() => {
                                                 let csvmongo = CSVHandler._montaObjRelatorio(dados, tipo);
@@ -278,8 +306,9 @@ class CSVHandler {
                             if (resp.CPF == CPF) {
                                 filtro.push(resp);
                             }
-                            return resolve(filtro)
-                        })
+                            
+                        });
+                        return resolve(filtro)
                     }
                     else return resolve(flat);
                 })
@@ -287,14 +316,86 @@ class CSVHandler {
         });
     }
 
-    static pegaReinp(arq, CPF){
+    static pegaReinp(arq, CPF) {
         return new Promise((resolve, reject) => {
-            let flat = [];
-            let hoje = new Date().getTime();
-            let dias = 1000 * 60 * 60 * 24;
+            let flatVerde = [];
+            let flatAmarela = [];
+            let flatAzul = [];
             this.readCSV(arq)
                 .then(reinp => {
-                    
+                    reinp.forEach(valores => {
+                        valores.mes = moment(valores.Data, 'DD/MM/YYYY').month() + 1 + '/' + moment(valores.Data, 'DD/MM/YYYY').year();
+                        if (semanaVerde.includes(valores.Equipe)) {
+                            valores.semana = 'Verde';
+                            if (moment(valores.Data, 'DD/MM/YYYY').isBetween(perVerde.inicioT1, perVerde.fimT1, undefined, '[]')) {
+                                valores.trimestre = 'T1';
+                                flatVerde.push(valores)
+                            }
+                            if (moment(valores.Data, 'DD/MM/YYYY').isBetween(perVerde.inicioT2, perVerde.fimT2, undefined, '[]')) {
+                                valores.trimestre = 'T2';
+                                flatVerde.push(valores)
+                            }
+                            if (moment(valores.Data, 'DD/MM/YYYY').isBetween(perVerde.inicioT3, perVerde.fimT3, undefined, '[]')) {
+                                valores.trimestre = 'T3';
+                                flatVerde.push(valores)
+                            }
+                            if (moment(valores.Data, 'DD/MM/YYYY').isBetween(perVerde.inicioT4, perVerde.fimT4, undefined, '[]')) {
+                                valores.trimestre = 'T4';
+                                flatVerde.push(valores)
+                            }
+                        }
+                        if (semanaAmarela.includes(valores.Equipe)) {
+                            valores.semana = 'Amarela';
+                            if (moment(valores.Data, 'DD/MM/YYYY').isBetween(perAmarela.inicioT1, perAmarela.fimT1, undefined, '[]')) {
+                                valores.trimestre = 'T1';
+                                flatAmarela.push(valores)
+                            }
+                            if (moment(valores.Data, 'DD/MM/YYYY').isBetween(perAmarela.inicioT2, perAmarela.fimT2, undefined, '[]')) {
+                                valores.trimestre = 'T2';
+                                flatAmarela.push(valores)
+                            }
+                            if (moment(valores.Data, 'DD/MM/YYYY').isBetween(perAmarela.inicioT3, perAmarela.fimT3, undefined, '[]')) {
+                                valores.trimestre = 'T3';
+                                flatAmarela.push(valores)
+                            }
+                            if (moment(valores.Data, 'DD/MM/YYYY').isBetween(perAmarela.inicioT4, perAmarela.fimT4, undefined, '[]')) {
+                                valores.trimestre = 'T4';
+                                flatAmarela.push(valores)
+                            }
+                        }
+                        if (semanaAzul.includes(valores.Equipe)) {
+                            valores.semana = 'Azul';
+                            if (moment(valores.Data, 'DD/MM/YYYY').isBetween(perAzul.inicioT1, perAzul.fimT1, undefined, '[]')) {
+                                valores.trimestre = 'T1';
+                                flatAzul.push(valores)
+                            }
+                            if (moment(valores.Data, 'DD/MM/YYYY').isBetween(perAzul.inicioT2, perAzul.fimT2, undefined, '[]')) {
+                                valores.trimestre = 'T2';
+                                flatAzul.push(valores)
+                            }
+                            if (moment(valores.Data, 'DD/MM/YYYY').isBetween(perAzul.inicioT3, perAzul.fimT3, undefined, '[]')) {
+                                valores.trimestre = 'T3';
+                                flatAzul.push(valores)
+                            }
+                            if (moment(valores.Data, 'DD/MM/YYYY').isBetween(perAzul.inicioT4, perAzul.fimT4, undefined, '[]')) {
+                                valores.trimestre = 'T4';
+                                flatAzul.push(valores)
+                            }
+                        }
+                    })
+                    if (CPF) {
+                        let filtro = []
+                        reinp.forEach(resp => {                            
+                            if (resp.CPF == CPF) {
+                                filtro.push(resp);
+                            }
+                           
+                        });                        
+                        return resolve(filtro)
+                    }
+                    else return resolve([Array.from(new Set(flatVerde)), Array.from(new Set(flatAmarela)), Array.from(new Set(flatAzul))]);
+                }).catch(erro => {
+                    return reject(erro);
                 })
         });
     }
@@ -367,8 +468,7 @@ class CSVHandler {
                     .entries(dados);
             }
 
-            csvmongo.dataEnvio = new Date().toISOString();
-            csvmongo.caminho = gerado;
+
             csvmongo.dataEnvio = new Date().toISOString();
             csvmongo.caminho = `${path}${gerado}.zip`;
             return resolve(csvmongo);
@@ -406,11 +506,17 @@ class CSVHandler {
     static _horas_Reinp(dados) {
         return new Promise((resolve, reject) => {
             let transformado = [];
+            let regex = /Paradigma|PARADIGMA|paradigma/gi;
             dados.forEach(function (d) {
                 d['HE_CARF'] = d['HE_CARF'].replace(",", ".");
-                d['HE_CARF'] == 0 ? d['HE_CARF'] = 12 : d['HE_CARF'] = +d['HE_CARF'];
-                d['Repetitivo'] == 'NÃO INFORMADO' || d['Repetitivo'] == '' ? transformado.push(d) : null
+                d['HE_CARF'] == 0 ? d['HE_CARF'] = 12 : d['HE_CARF'] = (+d['HE_CARF']).toFixed(2);
+                d['Repetitivo'] == 'NÃO INFORMADO' ||
+                    d['Repetitivo'] == '' ||
+                    regex.test(d['Paradigma']) ? transformado.push(d) : null
+                delete d['Repetitivo'];
+                delete d['Paradigma'];
             });
+
             return resolve(transformado);
         })
     }
@@ -479,6 +585,7 @@ class CSVHandler {
 
     static _renomeiaReinp(dados) {
         return new Promise((resolve, reject) => {
+
             let keysMap = {
                 '05. Dia Início Situação Julgamento': 'Data_Situacao',
                 '03. Equipe Nível 5 Hist.': 'Equipe',
@@ -486,9 +593,11 @@ class CSVHandler {
                 'PF Relator - Nome Hist.': 'Relator',
                 'Nome Lote Hist.': 'Repetitivo',
                 'Número Processo/Dossiê Hist.': 'Processo',
-                'Hora Estimada Situação Julgamento': 'HE_CARF'
+                'Hora Estimada Situação Julgamento': 'HE_CARF',
+                'Assuntos/Objetos Hist.': 'Paradigma',
             }
             dados.forEach(d => {
+
                 Object.entries(keysMap).forEach(entry => {
                     delete Object.assign(d, { [entry[1]]: d[entry[0]] })[entry[0]];
                 });

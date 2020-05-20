@@ -15,6 +15,7 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     app_header_tag = marko_loadTag(app_header_template),
     app_navbar_template = require("../../components/app-navbar.marko"),
     app_navbar_tag = marko_loadTag(app_navbar_template),
+    marko_attr = marko_helpers.a,
     app_footer_template = require("../../components/app-footer.marko"),
     app_footer_tag = marko_loadTag(app_footer_template),
     app_scripts_js_template = require("../../components/app-scripts-js.marko"),
@@ -42,17 +43,19 @@ function render(input, out, __component, component, state) {
       class: "sidenav"
     }, out, __component, "5");
 
-  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Perguntas & Respostas - DIPAJ/COJUL</h3> <br><div class=\"row conteudoPrincipal\"></div></div></main>");
+  out.w("<div class=\"container\"><h3 id=\"inicio\" class=\"center-align titulo\">Perguntas & Respostas - DIPAJ/COJUL</h3><br><div class=\"row\"><div class=\"col s12\"><div class=\"row\"><div class=\"input-field col s12\"><i class=\"material-icons prefix\">textsms</i><input type=\"text\" id=\"autocomplete-input\" class=\"autocomplete\"><label for=\"autocomplete-input\">Digite aqui sua pergunta</label></div></div></div></div><div class=\"row\"><div id=\"faq\"" +
+    marko_attr("data-faq", "" + data.faq) +
+    "></div><div class=\"col s6\"><h5 id=\"mprod\" class=\"center scrollspy\">Meta de Produtividade</h5><ul class=\"collapsible popout prod\"></ul></div><div class=\"col s6\"><h5 id=\"idregap\" class=\"center scrollspy\">REGAP</h5><ul class=\"collapsible popout regap\"></ul></div><div class=\"col s6\"><h5 id=\"idreinp\" class=\"center scrollspy\">REINP</h5><ul class=\"collapsible popout reinp\"></ul></div><div class=\"col s6\"><h5 id=\"idrejul\" class=\"center scrollspy\">REJUL</h5><ul class=\"collapsible popout rejul\"></ul></div></div></div><div class=\"scspy2 col hide-on-small-only m3 l2 right\"><ul class=\"section table-of-contents\"><li><a href=\"#inicio\">Início</a></li><li><a href=\"#mprod\">Meta de Produtividade</a></li><li><a href=\"#idregap\">REGAP</a></li><li><a href=\"#idreinp\">REINP</a></li><li><a href=\"#idrejul\">REJUL</a></li></ul></div></main>");
 
-  app_footer_tag({}, out, __component, "10");
+  app_footer_tag({}, out, __component, "42");
 
-  app_scripts_js_tag({}, out, __component, "11");
+  app_scripts_js_tag({}, out, __component, "43");
 
-  out.w("<script src=\"/estatico/js/julgamento/escolhe.js\"></script>");
+  out.w("<script src=\"/estatico/js/julgamento/faq_dipaj.js\"></script> ");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "13");
+  await_reorderer_tag({}, out, __component, "45");
 
   out.w("</body></html>");
 }

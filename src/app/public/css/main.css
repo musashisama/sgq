@@ -384,6 +384,69 @@ summary::-webkit-details-marker {
     right: 2.5%
 }
 
-.perfiladmin, .perfilacervo, .perfilriscos, .perfilqualidade, .perfiljulgamento, .perfilpessoal, .perfilconselheiro {
+.scspy2 {
+    position: fixed;
+    top: 25%;
+    right: 7.5%
+}
+
+.perfiladmin, .perfilacervo, .perfilriscos, .perfilqualidade, .perfiljulgamento, .perfilpessoal, .perfilconselheiro, .soregap, .soreinp {
     display: none;
+}
+
+#calendar{
+    width: 80%;
+    height: 'auto';
+}
+
+.evCal{
+    margin: 2px;    
+}
+
+.Verde {
+    background-color: #2cb637!important;
+}
+
+.Amarela {
+    background-color: #fff59d!important;
+}
+
+.Azul {
+    background-color: #3358fd!important;
+}
+
+.Vermelha {
+    background-color: #fc4141!important;
+}
+
+.Roxa {
+    background-color: #8f2280!important;
+}
+
+.Preta {
+    background-color: #000000!important;
+}
+
+.Cinza {
+    background-color: #6e7072!important;
+}
+
+.Laranja {
+    background-color: #c77e2b!important;
+}
+
+.VerdeClara {
+    background-color: #9bda92!important;
+}
+
+.Rosa {
+    background-color: #e29be2!important;
+}
+
+.AzulClara {
+    background-color: #90caf9!important;
+}
+
+.Musgo {
+    background-color: #4e5701!important;
 }
