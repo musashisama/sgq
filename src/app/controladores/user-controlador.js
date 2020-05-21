@@ -17,11 +17,8 @@ class UserControlador {
             edicao: '/admin/usuario/:id',
             delecao: '/admin/usuario/delete/:id',
             perfis: '/admin/usuario/perfis',
-            edita: '/admin/usuario/perfis/:id',
-            ocorrencias: '/admin/ocorrencias',
-            cadastraOco: '/admin/ocorrencias/cadastra',
-            edicaoOco: '/admin/ocorrencias/cadastra/:id',
-            deletaOco: '/admin/ocorrencias/exclui-ocorrencia/:id',
+            edita: '/admin/usuario/perfis/:id',            
+            ocorrencias: '/admin/ocorrencias/:id',           
         };
 
     }
@@ -54,18 +51,44 @@ class UserControlador {
         };
     }
 
-    listaOcorrencias() {
+    handleOcorrencias() {
         return function (req, resp) {
-            const userDao = new UserDao(conn);
-            userDao.getOcorrencias()
-                .then(ocorrencias => resp.marko(
-                    templates.admin.lista_ocorrencias,
-                    {
-                        ocorrencias: JSON.stringify(ocorrencias)
-                    }
-                ))
-                .catch(erro => console.log(erro));
-        };
+            if (req.method == 'GET') {
+                const userDao = new UserDao(conn);
+                userDao.getOcorrencias()
+                    .then(ocorrencias => resp.marko(
+                        templates.admin.lista_ocorrencias,
+                        {
+                            ocorrencias: JSON.stringify(ocorrencias)
+                        }
+                    ))
+                    .catch(erro => console.log(erro));
+
+            } else {
+                const userDao = new UserDao(conn);
+                if (req.method == 'POST' || req.method == 'PUT') { 
+                            if (req.params.id == '1') {                                
+                                userDao.insereTpOcorrencia(req.body)
+                                    .then(msg => {
+                                        resp.json(msg)
+                                    })
+                            } else {
+                                userDao.editaOco(req.body)
+                                    .then(msg => {
+                                        resp.json(msg)
+                                    })
+                            }
+                } else if (req.method == 'DELETE') {                    
+                    const id = new ObjectID(req.params.id);
+                    const userDao = new UserDao(conn);
+                    userDao.deletaTpOCo(id)
+                        .then(msg => {
+                            resp.json(msg)
+                        })
+                }
+            }
+
+        }
     }
 
     formOcorrencia() {
@@ -101,6 +124,7 @@ class UserControlador {
         };
 
     }
+
     //Chamado pelo POST do formulário. Cadastra nova possível ocorrência.
     cadastraTpOcorrencia() {
         return function (req, resp) {
@@ -153,11 +177,6 @@ class UserControlador {
             const ncDao = new NCDao(conn);
             const baseDao = new BaseDao(conn);
             let form = [{}];
-
-            // userDao.atualizaTodos().then(res => {                
-            //     console.log(res.result.nModified + " document(s) updated");
-            // }).catch(erro => console.log(erro));
-
             baseDao.listaPerfis()
                 .then(perfis => {
                     userDao.getUsers()
@@ -170,7 +189,7 @@ class UserControlador {
     }
 
     getUserPerfis() {
-        return function (req, resp) {            
+        return function (req, resp) {
             let perfis = [];
             if (req.isAuthenticated()) {
                 perfis = req.user.perfis;

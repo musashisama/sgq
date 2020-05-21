@@ -31,10 +31,10 @@
           <div class="col s12">
             <ul class="tabs">
               <li class="tab col s3">
-                <a href="#processos">Processos</a>
+                <a href="#processos">Processos - REGAP</a>
               </li>
               <li class="tab col s3">
-                <a href="#produtividade">Produtividade</a>
+                <a href="#produtividade">Produtividade - REINP</a>
               </li>
               <li class="tab col s3">
                 <a href="#stats">Estatísticas</a>
@@ -124,12 +124,14 @@
                 <div class="row"/>
                 <div id="tabelaReinp"/>
                 <p>
-                  <h4>Processos</h4>
+                  <h4 class="left">Processos</h4>
                 </p>
-                <app-drop-download/>
-                <a href="#!" id="agrupaMes" title="Agrupar/Desagrupar por Mês" class="waves-effect waves-yellow hoverable z-depth-3 btn-floating blue">
-                  <i class="material-icons">unfold_less</i>
-                </a>
+                <div class="row">
+                  <app-drop-download/>
+                  <a href="#!" id="agrupaMes" title="Agrupar/Desagrupar por Mês" class="waves-effect waves-yellow hoverable z-depth-3 btn-floating blue">
+                    <i class="material-icons">unfold_less</i>
+                  </a>
+                </div>
               </div>
             </div>
             <div id="tabelaReinpDet"/>

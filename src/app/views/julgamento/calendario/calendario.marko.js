@@ -46,19 +46,21 @@ function render(input, out, __component, component, state) {
 
   app_navbar_tag({}, out, __component, "6");
 
-  out.w("<div class=\"container\"><div class=\"row\"><h3 class=\"center-align titulo\">Calendário de Sessões do CARF</h3></div><div class=\"row\"><div id=\"external-events\" class=\"left col s2\"><p><strong>Arraste a semana para o calendário:</strong></p><ul><li class=\"fc-event evCal Verde\">&nbsp</li><li class=\"fc-event evCal Amarela\">&nbsp</li><li class=\"fc-event evCal Azul\">&nbsp</li> <li class=\"fc-event evCal Vermelha\">&nbsp</li> <li class=\"fc-event evCal Roxa\">&nbsp</li> <li class=\"fc-event evCal Laranja\">&nbsp</li> <li class=\"fc-event evCal Cinza\">&nbsp</li> <li class=\"fc-event evCal VerdeClara\">&nbsp</li> <li class=\"fc-event evCal Rosa\">&nbsp</li> <li class=\"fc-event evCal Preta\">&nbsp</li> <li class=\"fc-event evCal AzulClara\">&nbsp</li><li class=\"fc-event evCal Musgo\">&nbsp</li> </ul> </div> <form id=\"formCal\" name=\"formCal\"" +
+  out.w("<div class=\"container\"><div class=\"row\"><h3 class=\"center-align titulo\">Calendário de Sessões do CARF</h3></div><div class=\"row\"> <a id=\"aModal\" href=\"#modal1\" class=\"btn-legenda waves-effect waves-light btn-small\"><i class=\"material-icons left\">subtitles</i>Legenda</a></div><div class=\"row\"><div id=\"external-events\" class=\"left col s2\"><p><strong>Arraste a semana para o calendário:</strong></p><ul><li class=\"fc-event evCal Verde\">&nbsp</li><li class=\"fc-event evCal Amarela\">&nbsp</li><li class=\"fc-event evCal Azul\">&nbsp</li> <li class=\"fc-event evCal Vermelha\">&nbsp</li> <li class=\"fc-event evCal Roxa\">&nbsp</li> <li class=\"fc-event evCal Laranja\">&nbsp</li> <li class=\"fc-event evCal Cinza\">&nbsp</li> <li class=\"fc-event evCal VerdeClara\">&nbsp</li> <li class=\"fc-event evCal Rosa\">&nbsp</li> <li class=\"fc-event evCal Preta\">&nbsp</li> <li class=\"fc-event evCal AzulClara\">&nbsp</li><li class=\"fc-event evCal Musgo\">&nbsp</li> </ul> </div> <form id=\"formCal\" name=\"formCal\"" +
     marko_attr("data-cal", "" + data.cal) +
     " action=\"/julgamento/calendario/\" method=\"post\"></form> <div class=\"offset-s3 right\" id=\"calendar\"></div></div></div></main>");
 
-  app_footer_tag({}, out, __component, "29");
+  app_footer_tag({}, out, __component, "32");
 
-  app_scripts_js_tag({}, out, __component, "30");
+  out.w("<div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Fechar</a> </div></div>");
 
-  app_calendario_js_tag({}, out, __component, "31");
+  app_scripts_js_tag({}, out, __component, "39");
+
+  app_calendario_js_tag({}, out, __component, "40");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "32");
+  await_reorderer_tag({}, out, __component, "41");
 
   out.w("</body></html>");
 }

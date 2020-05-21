@@ -80,6 +80,36 @@ class PessoalDao {
         });
     }
 
+    editaTipoOcorrencias(filtro) {
+        return new Promise((resolve, reject) => {
+            this._db.tipoOcorrencias
+                .find(filtro)
+                .project()
+                .toArray(function (erro, res) {
+                    if (erro) {
+                        return reject('Erro na base de dados. Tente novamente mais tarde.');
+                    }
+                    return resolve(res);
+                });
+
+        });
+    }
+
+    excluiTipoOcorrencias(filtro) {
+        return new Promise((resolve, reject) => {
+            this._db.tipoOcorrencias
+                .find(filtro)
+                .project()
+                .toArray(function (erro, res) {
+                    if (erro) {
+                        return reject('Erro na base de dados. Tente novamente mais tarde.');
+                    }
+                    return resolve(res);
+                });
+
+        });
+    }
+
     getfuncoesCarf(filtro) {
         return new Promise((resolve, reject) => {
             this._db.funcoesCarf

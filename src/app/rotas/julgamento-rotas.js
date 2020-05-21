@@ -29,8 +29,7 @@ module.exports = (app) => {
     });
 
     app.get(rotasJulgamento.faqdipaj,julgControlador.carregaFAQDipaj());
-    
-    
+    app.get(rotasJulgamento.calendarioView,julgControlador.calendarioView());   
    
 
     app.use(rotasJulgamento.autenticadas, function (req, resp, next) {

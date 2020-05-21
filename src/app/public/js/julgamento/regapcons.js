@@ -35,10 +35,12 @@ let langs = {
 };
 layout = "fitDataFill";
 responsiveLayout = true;
-let table = null;
+let tableRegap,tableOcorrencias, tableReinp, tableReinpDet;
 let tabledata = "";
 let d3 = Plotly.d3;
 let agrupado = false;
+let agrupadoRegap = false;
+let agrupadoReinp = false;
 let agrupadoT = false;
 function inicializaComponentes() {
     $(document).ready(function () {
@@ -150,7 +152,7 @@ function formataDados(msg) {
 
 function dataTableReinp(msg) {
     let tabledata = msg;
-    table = new Tabulator("#tabelaReinp", {
+    tableReinp = new Tabulator("#tabelaReinp", {
         data: tabledata,
         // pagination: "local",
         height: "200px",
@@ -192,19 +194,19 @@ let formatTrimestre = function formatNome(cell) {
 
 
 document.getElementById("agrupaMes").addEventListener("click", function () {
-    if (agrupado == false) {
-        table.setGroupBy(["trimestre", "mes"]);
-        agrupado = true;
+    if (agrupadoReinp == false) {
+        tableReinpDet.setGroupBy(["trimestre", "mes"]);
+        agrupadoReinp = true;
     }
     else {
-        table.setGroupBy();
-        agrupado = false;
+        tableReinpDet.setGroupBy();
+        agrupadoReinp = false;
     };
 });
 
 function dataTableReinpDet(msg) {
     let tabledata = msg.flat();
-    table = new Tabulator("#tabelaReinpDet", {
+    tableReinpDet = new Tabulator("#tabelaReinpDet", {
         data: tabledata,
         pagination: "local",
         height: "600px",
@@ -233,7 +235,7 @@ function tabelaOcorrencias() {
 
     let tabledata = JSON.parse($('#tabelaOcorrencias').attr('data-ocorrencias'));
     //define table
-    let table = new Tabulator("#tabelaOcorrencias", { 
+    tableOcorrencias = new Tabulator("#tabelaOcorrencias", { 
         data: tabledata,
         autoColumns: false,
         locale: true,
@@ -256,10 +258,10 @@ function tabelaOcorrencias() {
 
     });
 }
-
+// INSERIR DIAS NA ATIVIDADE PARA A PROXIMA SESSÃO DE JULGAMENTO (DIAS NA ATIVIDADE + (PROXIMA SESSÃO - HOJE))
 function dataTable(dados) {
     let tabledata = dados;
-    table = new Tabulator("#tabelaRegap", {
+    tableRegap = new Tabulator("#tabelaRegap", {
         data: tabledata,
         pagination: "local",
         height: "1000px",
@@ -300,13 +302,13 @@ function dataTable(dados) {
 }
 
 document.getElementById("mostraColunasAtividade").addEventListener("click", function () {
-    if (agrupado == false) {
-        table.setGroupBy(["Atividade", "Situacao"]);
-        agrupado = true;
+    if (agrupadoRegap == false) {
+        tableRegap.setGroupBy(["Atividade", "Situacao"]);
+        agrupadoRegap = true;
     }
     else {
-        table.setGroupBy();
-        agrupado = false;
+        tableRegap.setGroupBy();
+        agrupadoRegap = false;
     };
 });
 
