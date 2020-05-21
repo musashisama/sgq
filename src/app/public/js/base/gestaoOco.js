@@ -10,18 +10,53 @@ layout = "fitColumns";
 responsiveLayout = true;
 
 function inicializaComponentes() {
-  $(document).ready(function () {    
+  $(document).ready(function () {
     btnInsere();
     initModal();
     dataTable()
   });
 }
 
-
 function btnInsere() {
   $('.addListaOco').click(function (event) {
-
+    $('.addListaOco').addClass('modal-trigger');
+    montaModalInsere()
   });
+}
+
+function montaModalInsere() {
+  $('.hModal').text('');
+  $('.pModal').text('');
+  $('.hModal').text("Adicionar Tipo de Ocorrência");
+  $('.pModal').append(
+    `<form id="formOco" name="formOco" action="/admin/ocorrencias/cadastra" method="post">
+    <div class="row">      
+      <div class="row">
+        <div class="input-field tipoOcorrencia col s12">
+          <label for="tipoOcorrencia">Qual é o tipo de ocorrência que deseja cadastrar?</label>
+          <textarea required type="text" id="tipoOcorrencia" name="tipoOcorrencia" class="form-control materialize-textarea tipoOcorrencia alturaTextArea"></textarea>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field descDet col s12">
+          <label for="descDet">Descrição detalhada do tipo de ocorrência:</label>
+          <textarea required type="text" id="descDet" name="descDet" class="form-control materialize-textarea descDet alturaTextArea"></textarea>
+        </div>       
+      </div>
+    </div>
+  </form>
+          </p>`
+  );
+  $('.concorda').click(function () {
+    dados = { tipoOcorrencia: $('#tipoOcorrencia').val(), descDet: $('#descDet').val() }
+    $('.hModal').text('');
+    $('.pModal').text('');
+    handleOcorrencias(dados, 'POST');
+  });
+  $('.cancela').click(function () {
+    $('.hModal').text('');
+    $('.pModal').text('');
+  })
 }
 
 function initModal() {
@@ -42,11 +77,11 @@ function dataTable() {
     responsiveLayoutCollapseStartOpen: false,
     initialSort: [{ column: "tipoOcorrencia", dir: "asc" }],
     columns: [
-      { formatter: "responsiveCollapse", width: 30, minWidth: 30, hozAlign: "left", resizable: false, headerSort: false },     
+      { formatter: "responsiveCollapse", width: 30, minWidth: 30, hozAlign: "left", resizable: false, headerSort: false },
       { title: "Tipo de Ocorrência", field: "tipoOcorrencia", sorter: "string", hozAlign: "left", headerFilter: "input", formatter: "textarea", editor: false, responsive: 0, },
       { title: "Descrição Detalhada", field: "descDet", sorter: "string", hozAlign: "left", headerFilter: "input", formatter: "textarea", editor: false, responsive: 0 },
-      { formatter: formatEdita,  width: 40, hozAlign: "center" },
-      { formatter: formatDeleta, cellClick:clicaDeleta, width: 40, hozAlign: "center" },
+      { formatter: formatEdita, cellClick: clicaEdita, width: 40, hozAlign: "center" },
+      { formatter: formatDeleta, cellClick: clicaDeleta, width: 40, hozAlign: "center" },
 
 
     ],
@@ -79,7 +114,7 @@ function dataTable() {
         "headerFilters": {
           "default": "filtrar coluna...", //default header filter placeholder text
           "columns": {
-            "tipoOcorrencia": "Filtrar por Tipo",           
+            "tipoOcorrencia": "Filtrar por Tipo",
           }
         }
       }
@@ -88,44 +123,92 @@ function dataTable() {
 }
 
 let formatEdita = function formatNome(cell) {
-  return `<a title='Editar' href='/admin/ocorrencias/cadastra/${cell.getRow().getData()._id}'><i class='material-icons orange-text'>edit</i></a>`
+  return `<a class='editaTipoOco' title='Editar' href='#modal1'><i class='material-icons orange-text'>edit</i></a>`
 }
-
 let formatDeleta = function formatNome(cell) {
-  
-  return `<a class='deletaNC deletaTipoOco' title='Excluir' href='#modal1'><i class='material-icons red-text'>cancel</i></a>`
+  return `<a class='deletaTipoOco' title='Excluir' href='#modal1'><i class='material-icons red-text'>cancel</i></a>`
 }
-
-function clicaDeleta(e, cell) {    
-  $('.deletaTipoOco').addClass('modal-trigger');
-  montaModalDeleta(e,cell);
+function clicaEdita(e, cell) {
+  $('.editaTipoOco').addClass('modal-trigger');
+  montaModalEdita(e, cell);
 }
-
-function montaModalDeleta(e,cell){
-  $('.hModal').text("Confirmação de Exclusão de Tipo de Ocorrência");    
+function montaModalEdita(e, cell) {
+  $('.hModal').text('');
+  $('.pModal').text('');
+  $('.hModal').text("Edição de Tipo de Ocorrência");
   $('.pModal').append(
-      `<p class="pModal">
+    `<form id="formOco" name="formOco" action="/admin/ocorrencias/cadastra" method="post">
+    <div class="row">      
+      <div class="row">
+        <div class="input-field tipoOcorrencia col s12">
+          <label for="tipoOcorrencia">Qual é o tipo de ocorrência que deseja cadastrar?</label>
+          <textarea required type="text" id="tipoOcorrencia" name="tipoOcorrencia" class="form-control materialize-textarea tipoOcorrencia alturaTextArea">${cell.getRow().getData().tipoOcorrencia}</textarea>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field descDet col s12">
+          <label for="descDet">Descrição detalhada do tipo de ocorrência:</label>
+          <textarea required type="text" id="descDet" name="descDet" class="form-control materialize-textarea descDet alturaTextArea">${cell.getRow().getData().descDet}</textarea>
+        </div>       
+      </div>
+    </div>
+  </form>
+          </p>`
+  );
+  $('.concorda').click(function () {
+    dados = { id: cell.getRow().getData()._id, tipoOcorrencia: $('#tipoOcorrencia').val(), descDet: $('#descDet').val() }
+    $('.hModal').text('');
+    $('.pModal').text('');
+    handleOcorrencias(dados, 'POST');
+  });
+  $('.cancela').click(function () {
+    $('.hModal').text('');
+    $('.pModal').text('');
+  })
+}
+
+function clicaDeleta(e, cell) {
+  $('.deletaTipoOco').addClass('modal-trigger');
+  montaModalDeleta(e, cell);
+}
+
+function montaModalDeleta(e, cell) {
+  $('.hModal').text('');
+  $('.pModal').text('');
+  $('.hModal').text("Confirmação de Exclusão de Tipo de Ocorrência");
+  $('.pModal').append(
+    `<p class="pModal">
           <br/>
           Tem certeza que quer excluir o registro?
           </p>`
   );
-  $('.concorda').click(function () {     
-      deleta(e, cell)
+  $('.concorda').click(function () {
+    handleOcorrencias({ id: cell.getRow().getData()._id }, 'DELETE');
+    $('.hModal').text('');
+    $('.pModal').text('');
+    table.deleteRow(cell.getRow());
   });
   $('.cancela').click(function () {
-      $('.hModal2').text('');   
-      $('.pModal2').text('');        
+    $('.hModal').text('');
+    $('.pModal').text('');
   })
 }
 
-function deleta(e, cell){  
+
+function handleOcorrencias(dados, metodo) {
   $.ajax({
-    url: `/admin/ocorrencias/exclui-ocorrencia/${cell.getRow().getData()._id}`,
-    type: 'DELETE',
+    url: `/admin/ocorrencias/${dados.id ? dados.id : 1}`,
+    data: dados,
+    type: metodo,
     success: function (result) {
-      var toastHTML = `<span>Registro removido com sucesso!</span>`;
+      var toastHTML = `<span>Dados atualizados com sucesso!</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
-      table.deleteRow(cell.getRow());
+      location.reload();
+    },
+    error: function (result) {
+      var toastHTML = `<span>Ocorreu um erro.</span>`;
+      M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+
     }
   })
 }

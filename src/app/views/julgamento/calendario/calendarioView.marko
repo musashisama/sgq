@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <app-scripts-css/>
+  <app-calendario-css/>
+  <body>
+    <app-header/>
+    <main class="conteudoPrincipal">
+      <app-navbar/>
+      <div class="container">
+        <div class="row">
+          <h3 class="center-align titulo">Calendário de Sessões do CARF</h3>
+        </div>
+        <div class="row">          
+         <a id='aModal' href='#modal1' class="btn-legenda waves-effect waves-light btn-small"><i class="material-icons left">subtitles</i>Legenda</a>
+        </div>
+         <div class="row">          
+          <div id="divCal" data-cal=`${data.cal}`/>
+          <div class="center-align" id="calendar"/>
+        </div>
+      </div>
+    </main>
+    <app-footer/>
+    <div id="modal1" class="modal">
+      <div class="modal-content">
+        <h4 class="hModal">Modal Header</h4>
+        <p class="pModal"/>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-red btn-flat cancela">Fechar</a>        
+      </div>
+    </div>
+    <app-scripts-js/>
+    <app-calendario-view-js/>
+  </body>
+</html>

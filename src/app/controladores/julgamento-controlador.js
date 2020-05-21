@@ -46,6 +46,7 @@ class JulgamentoControlador {
         return {
             autenticadas: '/julgamento/restrito*',
             calendario: '/julgamento/restrito/calendario/:id',
+            calendarioView:'/julgamento/calendario',
             faqdipaj: '/julgamento/faqdipaj',
             conselheiros: '/julgamento/conselheiros',
             regapcons: '/julgamento/conselheiros/:id',
@@ -222,6 +223,16 @@ class JulgamentoControlador {
                     })
                     .catch(err => console.error(err));
             });
+        }
+    }
+    
+    calendarioView(){
+        return function(req,resp,next){            
+                const julgamentoDao = new JulgamentoDao(conn);
+                julgamentoDao.getCal()
+                    .then(msg => {
+                        resp.marko(templates.julgamento.calendarioView, { cal: JSON.stringify(msg) })
+                    })
         }
     }
 

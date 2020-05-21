@@ -25,15 +25,13 @@ module.exports = (app) => {
         } else { resp.render(403) };
 
     });
-     
 
-    app.get(rotasUser.ocorrencias, userControlador.listaOcorrencias());
-    app.route(rotasUser.cadastraOco)
-        .get(userControlador.formOcorrencia())
-        .post(userControlador.cadastraTpOcorrencia())
-        .put(userControlador.editaOco());
-    app.get(rotasUser.edicaoOco, userControlador.formEditaOcorrencia())
-    app.delete(rotasUser.deletaOco, userControlador.removeTpOco());
+    app.route(rotasUser.ocorrencias)
+        .get(userControlador.handleOcorrencias())
+        .post(userControlador.handleOcorrencias())
+        .put(userControlador.handleOcorrencias())
+        .delete(userControlador.handleOcorrencias());
+   
     app.route(rotasUser.perfis)
         .get(userControlador.formPerfis())
         .post(userControlador.formPerfis());

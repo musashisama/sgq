@@ -129,8 +129,8 @@ class UserDao {
 
     editaOco(registro){
         return new Promise((resolve, reject) => {
-            let id = new ObjectID(registro._id);
-            delete registro._id;
+            let id = new ObjectID(registro.id);           
+            delete registro.id;
             this._db.tipoOcorrencias
                 .updateOne({ _id: id }, { $set: registro }, function (erro, res) {
                     if (erro) {
@@ -162,10 +162,8 @@ class UserDao {
                 return resolve(res);
             })
         });
-    }
+    }   
     
-
-
     atualizaTodos(){
         return new Promise((resolve, reject) => {
             this._db.usuarios.updateMany({perfil:null}, {$set: {perfil:['carf']}}, function (erro, res) {

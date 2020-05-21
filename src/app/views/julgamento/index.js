@@ -11,6 +11,7 @@ module.exports = {
     regap: require('./regap/regap.marko'),
     faqdipaj: require('./faqdipaj/faqdipaj.marko'),
     cadastrafaqdipaj: require('./faqdipaj/cadastrafaqdipaj.marko'),
-    calendario: require('./calendario/calendario.marko')
+    calendario: require('./calendario/calendario.marko'),
+    calendarioView: require('./calendario/calendarioView.marko'),
 }
     

@@ -6,7 +6,7 @@ let height = '1000px';
 let minHeight = '300px';
 let maxHeight = '1000px';
 let layout = "fitColumns";
-let initialSort = [{ column: "dtOcorrencia", dir: "desc" }];
+let initialSort = [{ column: "dtOcorrencia", dir: "desc" },{ column: "ocorDet", dir: "desc" }];
 let langs = {
 
     "pt-br": {
