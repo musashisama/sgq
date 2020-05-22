@@ -7,35 +7,41 @@
     <main class="conteudoPrincipal">
       <app-navbar id="slide-out" class="sidenav"/>
       <div class="container">
-        <h3 class="center-align titulo">Cadastro de Perguntas & Respostas - DIPAJ/COJUL</h3>
+        <h3 class="center-align titulo">Cadastro de Itens da Gestão do Conhecimento - DIPAJ/COJUL</h3>
         <br/>
         <div class="row">
-          <h5 class="">Pergunta</h5>
+          <h5 class="">Título</h5>
           <br/>
-          <div id="editorPergunta" class="col s12">
-            <p id="perguntaFAQ"/>
+          <div id="editorTitulo" class="col s12">
+            <p id="tituloGC"/>
             <br/>
           </div>
         </div>
         <div class="row">
-          <h5 class="">Resposta</h5>
+          <h5 class="">Descrição</h5>
           <br/>
-          <div id="editorResposta" class="col s12">
-            <p id="respostaFAQ"/>
+          <div id="editorDesc" class="col s12">
+            <p id="descGC"/>
+            <br/>
+          </div>
+        </div>
+        <div class="row">
+          <h5 class="">Link</h5>
+          <br/>
+          <div id="editorLink" class="col s12">
+            <p id="linkGC"/>
             <br/>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s4">
-            <select required name="secaoFAQ" id="secaoFAQ">
+            <select required name="secaoGC" id="secaoGC">
               <option value="" disabled selected>Escolha uma opção:</option>
-              <option value="prod">Meta de Produtividade</option>
-              <option value="regap">REGAP</option>
-              <option value="reinp">REINP</option>
-              <option value="rejul">REJUL</option>
-              <option value="sessaovirtual">Sessões Virtuais</option>
+              <option value="manuais">Manuais</option>
+              <option value="legis">Legislação</option>
+              <option value="recursos">Recursos</option>             
             </select>
-            <label>Qual a seção do FAQ?</label>
+            <label>Qual o tipo?</label>
           </div>
         </div>
         <div class="row">
@@ -45,7 +51,7 @@
             </a>
           </div>
         </div>
-        <div data-faq=`${data.faq}`/>
+        <div data-gc=`${data.gc}`/>
       </div>
     </main>
     <app-footer/>
@@ -63,6 +69,6 @@
     </div>
     <app-scripts-js/>
     <script src="/estatico/js/libs/quill.min.js"/>
-    <script src="/estatico/js/julgamento/cadastrafaq.js"/>
+    <script src="/estatico/js/julgamento/gestaoGC.js"/>
   </body>
 </html>

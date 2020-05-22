@@ -2,7 +2,7 @@
 "use strict";
 
 var marko_template = module.exports = require("marko/src/html").t(__filename),
-    marko_componentType = "/sgq$1.0.0/src/app/views/julgamento/faqdipaj/faqdipaj.marko",
+    marko_componentType = "/sgq$1.0.0/src/app/views/julgamento/gestaoconhecimento/gestaoGC.marko",
     components_helpers = require("marko/src/runtime/components/helpers"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
@@ -36,26 +36,30 @@ function render(input, out, __component, component, state) {
 
   app_header_tag({}, out, __component, "3");
 
-  out.w("<main class=\"conteudoPrincipal\">");
+  out.w("<link rel=\"stylesheet\" href=\"/estatico/css/libs/quill.snow.css\"><main class=\"conteudoPrincipal\">");
 
   app_navbar_tag({
       id: "slide-out",
       class: "sidenav"
-    }, out, __component, "5");
+    }, out, __component, "6");
 
-  out.w("<div class=\"container\"><h3 id=\"inicio\" class=\"center-align titulo\">Perguntas & Respostas - DIPAJ/COJUL</h3><br><div class=\"row\"><div class=\"col s12\"><div class=\"row\"><div class=\"input-field col s12\"><i class=\"material-icons prefix\">textsms</i><input type=\"text\" id=\"autocomplete-input\" class=\"autocomplete\"><label for=\"autocomplete-input\">Digite aqui sua pergunta</label></div></div></div></div><div class=\"row\"><div id=\"faq\"" +
-    marko_attr("data-faq", "" + data.faq) +
-    "></div><div class=\"col s4 conteudoPrincipal\"><h5 id=\"mprod\" class=\"center scrollspy\">Meta de Produtividade</h5><ul class=\"collapsible popout prod\"></ul></div><div class=\"col s4 conteudoPrincipal\"><h5 id=\"idregap\" class=\"center scrollspy\">REGAP</h5><ul class=\"collapsible popout regap\"></ul></div><div class=\"col s4 conteudoPrincipal\"><h5 id=\"idreinp\" class=\"center scrollspy\">REINP</h5><ul class=\"collapsible popout reinp\"></ul></div><div class=\"col s4 conteudoPrincipal\"><h5 id=\"idrejul\" class=\"center scrollspy\">REJUL</h5><ul class=\"collapsible popout rejul\"></ul></div><div class=\"col s4 conteudoPrincipal\"><h5 id=\"idsessaovirtual\" class=\"center scrollspy\">Sessões Virtuais</h5><ul class=\"collapsible popout sessaovirtual\"></ul></div></div></div><div class=\"scspy2 col hide-on-small-only m3 l2 right\"><ul class=\"section table-of-contents\"><li><a href=\"#inicio\">Início</a></li><li><a href=\"#mprod\">Meta de Produtividade</a></li><li><a href=\"#idregap\">REGAP</a></li><li><a href=\"#idreinp\">REINP</a></li><li><a href=\"#idrejul\">REJUL</a></li><li><a href=\"#idsessaovirtual\">Sessões Virtuais</a></li></ul></div></main>");
+  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Cadastro de Itens da Gestão do Conhecimento - DIPAJ/COJUL</h3><br><div class=\"row\"><h5 class=\"\">Título</h5><br><div id=\"editorTitulo\" class=\"col s12\"><p id=\"tituloGC\"></p><br></div></div><div class=\"row\"><h5 class=\"\">Descrição</h5><br><div id=\"editorDesc\" class=\"col s12\"><p id=\"descGC\"></p><br></div></div><div class=\"row\"><h5 class=\"\">Link</h5><br><div id=\"editorLink\" class=\"col s12\"><p id=\"linkGC\"></p><br></div></div><div class=\"row\"><div class=\"input-field col s4\"><select required name=\"secaoGC\" id=\"secaoGC\"><option value=\"\" disabled selected>Escolha uma opção:</option><option value=\"manuais\">Manuais</option><option value=\"legis\">Legislação</option><option value=\"recursos\">Recursos</option> </select><label>Qual o tipo?</label></div></div><div class=\"row\"><div class=\"col s1 offset-s11\"><a id=\"aModal\" class=\"btn-floating btn-insere waves-effect waves-light red\" title=\"Clique para enviar\"" +
+    marko_attr("href", "#modal1") +
+    "><i class=\"material-icons\">send</i></a></div></div><div" +
+    marko_attr("data-gc", "" + data.gc) +
+    "></div></div></main>");
 
-  app_footer_tag({}, out, __component, "47");
+  app_footer_tag({}, out, __component, "41");
 
-  app_scripts_js_tag({}, out, __component, "48");
+  out.w("<div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
 
-  out.w("<script src=\"/estatico/js/julgamento/faq_dipaj.js\"></script> ");
+  app_scripts_js_tag({}, out, __component, "50");
+
+  out.w("<script src=\"/estatico/js/libs/quill.min.js\"></script><script src=\"/estatico/js/julgamento/gestaoGC.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "50");
+  await_reorderer_tag({}, out, __component, "53");
 
   out.w("</body></html>");
 }
@@ -68,7 +72,7 @@ marko_template._ = marko_renderer(render, {
 marko_template.Component = marko_defineComponent({}, marko_template._);
 
 marko_template.meta = {
-    id: "/sgq$1.0.0/src/app/views/julgamento/faqdipaj/faqdipaj.marko",
+    id: "/sgq$1.0.0/src/app/views/julgamento/gestaoconhecimento/gestaoGC.marko",
     tags: [
       "../../components/app-scripts-css.marko",
       "marko/src/core-tags/components/component-globals-tag",

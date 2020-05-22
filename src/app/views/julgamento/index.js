@@ -13,5 +13,7 @@ module.exports = {
     cadastrafaqdipaj: require('./faqdipaj/cadastrafaqdipaj.marko'),
     calendario: require('./calendario/calendario.marko'),
     calendarioView: require('./calendario/calendarioView.marko'),
+    gestaoconhecimento: require('./gestaoconhecimento/gestaoconhecimento.marko'),
+    gestaoGC: require('./gestaoconhecimento/gestaoGC.marko')
 }
     

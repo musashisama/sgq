@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <app-scripts-css/>  
+  <body>
+    <app-header/>
+    <main class="conteudoPrincipal">
+      <app-navbar/>
+      <div class="container">
+        <h3 class="center-align titulo">Gestão do Conhecimento - COJUL</h3>
+        <div class="row">
+          <div class="input-field col s12">
+            <i class="material-icons prefix">textsms</i>
+            <input type="text" id="autocomplete-input" class="autocomplete"/>
+            <label for="autocomplete-input">Do que você precisa?</label>
+          </div>
+        </div>
+         <div id="gc" data-gc=`${data.gc}`/>
+        <div class="row">
+          <div class="row conteudoPrincipal">
+            <div class="col s4 m4 divManuais">
+              <div class="card-panel  green lighten-1">
+                <span class="white-text">
+                  <h4 class="center white-text">Manuais</h4>
+                </span>
+              </div>
+            </div>
+            <div class="row">              
+            </div>
+            <div class="col s4 m4 divLegis">
+              <div class="card-panel orange darken-1">
+                <span class="white-text">
+                  <h4 class="center white-text">Legislação</h4>
+                </span>
+              </div>
+            </div>
+            <div class="row">              
+            </div>
+            <div class="col s4 m4 divRecursos">
+              <div class="card-panel light-blue darken-3">
+                <span class="white-text">
+                  <h4 class="center white-text">Recursos</h4>
+                </span>
+              </div>
+            </div>
+            <div class="row">             
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s4">
+              <ul class="collapsible manuais"/>   
+            </div>
+            <div class="col s4">
+              <ul class="collapsible legis"/>               
+            </div>
+            <div class="col s4">
+              <ul class="collapsible recursos"/>                
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <app-footer/>
+    <div id="modal1" class="modal">
+      <div class="modal-content">
+        <h4 class="hModal">Modal Header</h4>
+        <p class="pModal"/>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-red btn-flat cancela">Fechar</a>
+      </div>
+    </div>
+    <app-scripts-js/>   
+    <script src="/estatico/js/julgamento/gestaoconhecimento.js"/>    
+  </body>
+</html>
