@@ -46,8 +46,9 @@ class JulgamentoControlador {
         return {
             autenticadas: '/julgamento/restrito*',
             calendario: '/julgamento/restrito/calendario/:id',
-            calendarioView:'/julgamento/calendario',
+            calendarioView: '/julgamento/calendario',
             faqdipaj: '/julgamento/faqdipaj',
+            gestaoconhecimento: '/julgamento/gestaoconhecimento',
             conselheiros: '/julgamento/conselheiros',
             regapcons: '/julgamento/conselheiros/:id',
             estoque: '/julgamento/restrito/diagnostico-carga',
@@ -62,12 +63,13 @@ class JulgamentoControlador {
             detalhaestoque: '/julgamento/restrito/diagnostico-carga/:id',
             regapCojul: '/julgamento/restrito/regap-cojul/:id',
             detalharegap: '/julgamento/restrito/regap-cojul/detalha/:id',
-            regap: '/julgamento/restrito/regap/:id'
+            regap: '/julgamento/restrito/regap/:id',            
+            gestaoGC: '/julgamento/restrito/gestaoGC/:id'
         };
     }
 
     handleFAQDipaj() {
-        return function (req, resp) {           
+        return function (req, resp) {
             if (req.method == 'GET') {
                 const julgamentoDao = new JulgamentoDao(conn);
                 julgamentoDao.getFAQ()
@@ -106,13 +108,61 @@ class JulgamentoControlador {
 
     carregaFAQDipaj() {
         return function (req, resp) {
-           
+
             const julgamentoDao = new JulgamentoDao(conn);
             julgamentoDao.getFAQ()
-            .then(faq => {
-                resp.marko(templates.julgamento.faqdipaj,{faq:JSON.stringify(faq)})
-            })
-            
+                .then(faq => {
+                    resp.marko(templates.julgamento.faqdipaj, { faq: JSON.stringify(faq) })
+                })
+
+        }
+    }
+
+    handleGC() {
+        return function (req, resp) {
+            if (req.method == 'GET') {
+                const julgamentoDao = new JulgamentoDao(conn);
+                julgamentoDao.getGC()
+                    .then(msg => {
+                        resp.marko(templates.julgamento.gestaoGC, { gc: JSON.stringify(msg) })
+                    })
+            } else {
+                const julgamentoDao = new JulgamentoDao(conn);
+                if (req.method == 'POST' || req.method == 'PUT') {
+                    julgamentoDao.getGC({ uniqueId: req.body.uniqueId })
+                        .then(msg => {
+                            if (!msg[0]) {
+                                julgamentoDao.insereGC(req.body)
+                                    .then(msg => {
+                                        resp.json(msg)
+                                    })
+                            } else {
+
+                                julgamentoDao.atualizaGC({ uniqueId: req.body.uniqueId }, req.body)
+                                    .then(msg => {
+                                        resp.json(msg)
+                                    })
+                            }
+                        })
+                } else if (req.method == 'DELETE') {
+                    console.log('delete');
+                    console.log(req.body);
+                    julgamentoDao.excluiGC({ uniqueId: req.body.uniqueId })
+                        .then(msg => {
+                            resp.json(msg)
+                        })
+                }
+            }
+        }
+    }
+
+    carregaGestaoConhecimento() {
+        return function (req, resp) {
+            const julgamentoDao = new JulgamentoDao(conn);
+            julgamentoDao.getGC()
+                .then(msg => {
+                    resp.marko(templates.julgamento.gestaoconhecimento, { gc: JSON.stringify(msg) })
+                })
         }
     }
 
@@ -225,14 +275,14 @@ class JulgamentoControlador {
             });
         }
     }
-    
-    calendarioView(){
-        return function(req,resp,next){            
-                const julgamentoDao = new JulgamentoDao(conn);
-                julgamentoDao.getCal()
-                    .then(msg => {
-                        resp.marko(templates.julgamento.calendarioView, { cal: JSON.stringify(msg) })
-                    })
+
+    calendarioView() {
+        return function (req, resp, next) {
+            const julgamentoDao = new JulgamentoDao(conn);
+            julgamentoDao.getCal()
+                .then(msg => {
+                    resp.marko(templates.julgamento.calendarioView, { cal: JSON.stringify(msg) })
+                })
         }
     }
 

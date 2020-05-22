@@ -2,6 +2,7 @@ const JulgamentoControlador = require('../controladores/julgamento-controlador')
 const julgControlador = new JulgamentoControlador();
 const BaseControlador = require('../controladores/base-controlador')
 const ACL = require('../infra/helpers/ACL');
+const { gestaoconhecimento } = require('../views/julgamento');
 
 module.exports = (app) => {
 
@@ -30,7 +31,7 @@ module.exports = (app) => {
 
     app.get(rotasJulgamento.faqdipaj,julgControlador.carregaFAQDipaj());
     app.get(rotasJulgamento.calendarioView,julgControlador.calendarioView());   
-   
+    app.get(rotasJulgamento.gestaoconhecimento,julgControlador.carregaGestaoConhecimento());
 
     app.use(rotasJulgamento.autenticadas, function (req, resp, next) {
         if (ACL.checaACL(req.user.perfis, 'julgamento') || ACL.checaACL(req.user.perfis, 'serpro')) {
@@ -56,11 +57,20 @@ module.exports = (app) => {
         } else { resp.render(403) };
 
     });    
+
     app.route(rotasJulgamento.cadastrafaqdipaj)
     .get(julgControlador.handleFAQDipaj())
     .post(julgControlador.handleFAQDipaj())
     .put(julgControlador.handleFAQDipaj())
     .delete(julgControlador.handleFAQDipaj())
+
+    app.route(rotasJulgamento.gestaoGC)
+    .get(julgControlador.handleGC())
+    .post(julgControlador.handleGC())
+    .put(julgControlador.handleGC())
+    .delete(julgControlador.handleGC())
+
+
     app.post(rotasJulgamento.carregacsv,julgControlador.carregaCSV())
     app.route(rotasJulgamento.calendario)
     .get(julgControlador.handleCalendario())

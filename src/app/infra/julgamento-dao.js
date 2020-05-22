@@ -112,9 +112,7 @@ class JulgamentoDao {
                 return resolve(res);
             })
         });
-    }
-
-  
+    }  
 
     getRelatorios(filtro) {
 
@@ -129,6 +127,55 @@ class JulgamentoDao {
                     }
                     return resolve(res);
                 });
+        });
+    }
+
+    getGC(filtro) {
+
+        return new Promise((resolve, reject) => {
+            this._db.gc
+                .find(filtro)
+                .sort({ _id:1 })
+                .project()
+                .toArray(function (erro, res) {
+                    if (erro) {
+                        return reject(`Não foi possível listar o gc. Erro: ${erro}`);
+                    }
+                    return resolve(res);
+                });
+        });
+    }
+
+    insereGC(registro) {
+        return new Promise((resolve, reject) => {
+            this._db.gc.insertOne(registro, function (erro, res) {
+                if (erro) {
+                    return reject('Não foi possível inserir o registro.');
+                }
+                return resolve(res);
+            })
+        });
+    }
+
+    atualizaGC(filtro, registro) {
+        return new Promise((resolve, reject) => {
+            this._db.gc.updateOne(filtro, { $set: registro }, function (erro, res) {
+                if (erro) {
+                    return reject('Não foi possível atualizar o registro de eventos.');
+                }
+                return resolve(res);
+            })
+        });
+    }
+
+    excluiGC(registro) {
+        return new Promise((resolve, reject) => {
+            this._db.gc.deleteOne(registro, function (erro, res) {
+                if (erro) {
+                    return reject('Não foi possível removver o registro de eventos.');
+                }
+                return resolve(res);
+            })
         });
     }
 }
