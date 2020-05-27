@@ -76,12 +76,12 @@ function dataTable() {
         initialSort: initialSort,
         responsiveLayout: responsiveLayout,
         columns: [
-            {formatter:formatNome, width:40, hozAlign:"center"},
+            {formatter:formatNome, width:40, hozAlign:"center",responsive: 0},
             { title: "Nome", field: "nome", sorter: "string", hozAlign: "left", editor: false, headerFilter: "input", topCalc: "count", responsive: 0 },            
             { title: "CPF", field: "cpf", sorter: "string", hozAlign: "center", editor: false, headerFilter: "input", responsive: 2 },            
             { title: "Turma", field: "unidade", sorter: "string", hozAlign: "left", editor: false, headerFilter: "input", responsive: 0 },           
             { title: "Fim Mandato", field: "dtFimMandato", sorter: "date", hozAlign: "left", editor: false, responsive: 0 },
-            { title: "Mandato Ativo?", field: "mandatoAt", sorter: "date", hozAlign: "left", editor: false, responsive: 0 },
+            { title: "Mandato Ativo?", field: "mandatoAt", width:90, sorter: "date", hozAlign: "left", editor: false, responsive: 0 },
             { title: "Função", field: "funcao", sorter: "string", hozAlign: "left", headerFilter: "input", editor: false, responsive: 0 },
             { title: "Representação", field: "origem", sorter: "string", hozAlign: "left", headerFilter: "input", editor: false, responsive: 0 },
 
