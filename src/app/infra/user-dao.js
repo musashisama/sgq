@@ -6,9 +6,8 @@ class UserDao {
         this._db = db;
     }    
 
-    buscaUser(filtro) {
+    auth(filtro) {
         return new Promise((resolve, reject) => {
-
             this._db.usuarios
                 .find(filtro)
                 .toArray(function (erro, res) {
@@ -17,7 +16,6 @@ class UserDao {
                     }
                     return resolve(res);
                 });
-
         });
     }
 
@@ -74,6 +72,7 @@ class UserDao {
             })
         });
     }
+    
     buscaTrocaSenha(filtro){
         return new Promise((resolve, reject) => {
 
@@ -85,7 +84,6 @@ class UserDao {
                     }
                     return resolve(res);
                 });
-
         });
     }
 
@@ -112,58 +110,7 @@ class UserDao {
             })
         });
     }
-    
-    getOcorrencias(filtro){
-        return new Promise((resolve, reject) => {
-            this._db.tipoOcorrencias
-                .find(filtro)
-                .toArray(function (erro, res) {
-                    if (erro) {
-                        return reject('Erro na base de dados. Tente novamente mais tarde.');
-                    }                    
-                    return resolve(res);
-                });
 
-        });
-    }
-
-    editaOco(registro){
-        return new Promise((resolve, reject) => {
-            let id = new ObjectID(registro.id);           
-            delete registro.id;
-            this._db.tipoOcorrencias
-                .updateOne({ _id: id }, { $set: registro }, function (erro, res) {
-                    if (erro) {
-                        return reject(erro);
-                    }
-                    return resolve(res);
-                });
-
-        });
-    }
-
-    deletaTpOCo(id) {
-        return new Promise((resolve, reject) => {
-            this._db.tipoOcorrencias.deleteOne({_id: new ObjectID(id)}, function (erro, res) {
-                if (erro) {
-                    return reject('Não foi possível excluir o registro.');
-                }
-                return resolve(res);
-            })
-        });
-    }
-
-    insereTpOcorrencia(registro){
-        return new Promise((resolve, reject) => {
-            this._db.tipoOcorrencias.insertOne(registro, function (erro, res) {
-                if (erro) {
-                    return reject('Não foi possível inserir o registro.');
-                }
-                return resolve(res);
-            })
-        });
-    }   
-    
     atualizaTodos(){
         return new Promise((resolve, reject) => {
             this._db.usuarios.updateMany({perfil:null}, {$set: {perfil:['carf']}}, function (erro, res) {
@@ -172,8 +119,7 @@ class UserDao {
                 }                
                 return resolve(res);
             })
-        });
-        
+        });        
     }
 }
 module.exports = UserDao;

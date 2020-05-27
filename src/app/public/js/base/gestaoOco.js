@@ -13,7 +13,7 @@ function inicializaComponentes() {
   $(document).ready(function () {
     btnInsere();
     initModal();
-    dataTable()
+    dataTable();
   });
 }
 
@@ -131,6 +131,8 @@ let formatDeleta = function formatNome(cell) {
 function clicaEdita(e, cell) {
   $('.editaTipoOco').addClass('modal-trigger');
   montaModalEdita(e, cell);
+  M.textareaAutoResize($('#tipoOcorrencia'))
+  M.textareaAutoResize($('#descDet'))
 }
 function montaModalEdita(e, cell) {
   $('.hModal').text('');
@@ -142,19 +144,24 @@ function montaModalEdita(e, cell) {
       <div class="row">
         <div class="input-field tipoOcorrencia col s12">
           <label for="tipoOcorrencia">Qual é o tipo de ocorrência que deseja cadastrar?</label>
-          <textarea required type="text" id="tipoOcorrencia" name="tipoOcorrencia" class="form-control materialize-textarea tipoOcorrencia alturaTextArea">${cell.getRow().getData().tipoOcorrencia}</textarea>
+          <textarea required type="text" id="tipoOcorrencia" name="tipoOcorrencia" class="form-control materialize-textarea tipoOcorrencia alturaTextArea"></textarea>
         </div>
       </div>
       <div class="row">
         <div class="input-field descDet col s12">
           <label for="descDet">Descrição detalhada do tipo de ocorrência:</label>
-          <textarea required type="text" id="descDet" name="descDet" class="form-control materialize-textarea descDet alturaTextArea">${cell.getRow().getData().descDet}</textarea>
+          <textarea required type="text" id="descDet" name="descDet" class="form-control materialize-textarea descDet alturaTextArea"></textarea>
         </div>       
       </div>
     </div>
   </form>
           </p>`
   );
+  $('#tipoOcorrencia').val(cell.getRow().getData().tipoOcorrencia)
+  M.textareaAutoResize($('#tipoOcorrencia'))
+  $('#descDet').val(cell.getRow().getData().descDet)
+  M.textareaAutoResize($('#descDet'))
+  M.updateTextFields()
   $('.concorda').click(function () {
     dados = { id: cell.getRow().getData()._id, tipoOcorrencia: $('#tipoOcorrencia').val(), descDet: $('#descDet').val() }
     $('.hModal').text('');

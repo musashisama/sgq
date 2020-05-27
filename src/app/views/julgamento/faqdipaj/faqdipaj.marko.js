@@ -45,17 +45,17 @@ function render(input, out, __component, component, state) {
 
   out.w("<div class=\"container\"><h3 id=\"inicio\" class=\"center-align titulo\">Perguntas & Respostas - DIPAJ/COJUL</h3><br><div class=\"row\"><div class=\"col s12\"><div class=\"row\"><div class=\"input-field col s12\"><i class=\"material-icons prefix\">textsms</i><input type=\"text\" id=\"autocomplete-input\" class=\"autocomplete\"><label for=\"autocomplete-input\">Digite aqui sua pergunta</label></div></div></div></div><div class=\"row\"><div id=\"faq\"" +
     marko_attr("data-faq", "" + data.faq) +
-    "></div><div class=\"col s4 conteudoPrincipal\"><h5 id=\"mprod\" class=\"center scrollspy\">Meta de Produtividade</h5><ul class=\"collapsible popout prod\"></ul></div><div class=\"col s4 conteudoPrincipal\"><h5 id=\"idregap\" class=\"center scrollspy\">REGAP</h5><ul class=\"collapsible popout regap\"></ul></div><div class=\"col s4 conteudoPrincipal\"><h5 id=\"idreinp\" class=\"center scrollspy\">REINP</h5><ul class=\"collapsible popout reinp\"></ul></div><div class=\"col s4 conteudoPrincipal\"><h5 id=\"idrejul\" class=\"center scrollspy\">REJUL</h5><ul class=\"collapsible popout rejul\"></ul></div><div class=\"col s4 conteudoPrincipal\"><h5 id=\"idsessaovirtual\" class=\"center scrollspy\">Sessões Virtuais</h5><ul class=\"collapsible popout sessaovirtual\"></ul></div></div></div><div class=\"scspy2 col hide-on-small-only m3 l2 right\"><ul class=\"section table-of-contents\"><li><a href=\"#inicio\">Início</a></li><li><a href=\"#mprod\">Meta de Produtividade</a></li><li><a href=\"#idregap\">REGAP</a></li><li><a href=\"#idreinp\">REINP</a></li><li><a href=\"#idrejul\">REJUL</a></li><li><a href=\"#idsessaovirtual\">Sessões Virtuais</a></li></ul></div></main>");
+    "></div><div class=\"col s4 conteudoPrincipal\"><h5 id=\"mprod\" class=\"center scrollspy\">Meta de Produtividade</h5><ul class=\"collapsible popout prod\"></ul></div><div class=\"col s4 conteudoPrincipal\"><h5 id=\"idregap\" class=\"center scrollspy\">REGAP</h5><ul class=\"collapsible popout regap\"></ul></div><div class=\"col s4 conteudoPrincipal\"><h5 id=\"idreinp\" class=\"center scrollspy\">REINP</h5><ul class=\"collapsible popout reinp\"></ul></div><div class=\"col s4 conteudoPrincipal\"><h5 id=\"idrejul\" class=\"center scrollspy\">REJUL</h5><ul class=\"collapsible popout rejul\"></ul></div><div class=\"col s4 conteudoPrincipal\"><h5 id=\"idsessaovirtual\" class=\"center scrollspy\">Sessões Virtuais</h5><ul class=\"collapsible popout sessaovirtual\"></ul></div></div><div class=\"row\"><p class=\"center\">Caso não tenha solucionado sua dúvida, <a href=\"/julgamento/restrito/formFAQ\">clique aqui</a>.</p></div></div><div class=\"scspy2 col hide-on-small-only m3 l2 right\"><ul class=\"section table-of-contents\"><li><a href=\"#inicio\">Início</a></li><li><a href=\"#mprod\">Meta de Produtividade</a></li><li><a href=\"#idregap\">REGAP</a></li><li><a href=\"#idreinp\">REINP</a></li><li><a href=\"#idrejul\">REJUL</a></li><li><a href=\"#idsessaovirtual\">Sessões Virtuais</a></li></ul></div></main>");
 
-  app_footer_tag({}, out, __component, "47");
+  app_footer_tag({}, out, __component, "50");
 
-  app_scripts_js_tag({}, out, __component, "48");
+  app_scripts_js_tag({}, out, __component, "51");
 
-  out.w("<script src=\"/estatico/js/julgamento/faq_dipaj.js\"></script> ");
+  out.w("<script src=\"/estatico/js/julgamento/faq_dipaj.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "50");
+  await_reorderer_tag({}, out, __component, "53");
 
   out.w("</body></html>");
 }

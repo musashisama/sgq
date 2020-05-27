@@ -44,6 +44,7 @@ module.exports = (app) => {
     app.get(rotasPessoal.conselheiros, pessoalControlador.carregaPaginaCons());
     app.get(rotasPessoal.detalhaPess, pessoalControlador.carregaPaginaDetalhaPessoal());
     app.get(rotasPessoal.detalhacons, pessoalControlador.carregaPaginaDetCons());
+    app.post(rotasPessoal.getcadastro, pessoalControlador.getCadastro());
 
     app.use(rotasPessoal.autenticadas, function (req, resp, next) {
         if (ACL.checaACL(req.user.perfis, 'pessoal')) {

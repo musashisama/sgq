@@ -2,7 +2,7 @@
 "use strict";
 
 var marko_template = module.exports = require("marko/src/html").t(__filename),
-    marko_componentType = "/sgq$1.0.0/src/app/views/julgamento/regap/regapcons.marko",
+    marko_componentType = "/sgq$1.0.0/src/app/views/julgamento/conselheiros/paginadoconselheiro.marko",
     components_helpers = require("marko/src/runtime/components/helpers"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
@@ -57,7 +57,9 @@ function render(input, out, __component, component, state) {
     marko_escapeXml(data.user.unidade) +
     "</h6></p><p><h6>Final do Mandato: " +
     marko_escapeXml(data.user.dtFimMandato) +
-    "</h6></p></div></div></div></div><br><br><div class=\"row\"><div class=\"col s12\"><ul class=\"tabs\"><li class=\"tab col s3\"><a href=\"#processos\">Processos - REGAP</a></li><li class=\"tab col s3\"><a href=\"#produtividade\">Produtividade - REINP</a></li><li class=\"tab col s3\"><a href=\"#stats\">Estatísticas</a></li><li class=\"tab col s3\"><a href=\"#ocorrencias\">Ocorrências</a></li></ul></div><div id=\"processos\" class=\"col s12\"><br><div class=\"row\"><div class=\"form-group input-field  col s3\"><select class=\"dataRelRegap\" name=\"dataRelRegap\" id=\"dataRelRegap\"><option class=\"form-group\"" +
+    "</h6></p><p><h6>Falta(m) <span id=\"daps\"></span> dia(s) até a próxima sessão, que será realizada em <span id=\"ps\"></span></h6></p></div></div></div></div><br><br><div class=\"row\"><div class=\"col s12\"><ul class=\"tabs\"><li class=\"tab col s3\"><a href=\"#processos\">Processos - REGAP</a></li><li class=\"tab col s3\"><a href=\"#produtividade\">Produtividade - REINP</a></li><li class=\"tab col s2\"><a href=\"#stats\">Estatísticas</a></li><li class=\"tab col s2\"><a href=\"#ocorrencias\">Ocorrências</a></li><li class=\"tab col s2\"><a href=\"#solicitacoes\">Solicitações</a></li></ul></div><div id=\"processos\" class=\"col s12\"><br><div class=\"row\"><div id=\"dataCAL\"" +
+    marko_attr("data-cal", "" + data.cal) +
+    "></div><div class=\"form-group input-field  col s3\"><select class=\"dataRelRegap\" name=\"dataRelRegap\" id=\"dataRelRegap\"><option class=\"form-group\"" +
     marko_attr("value", "") +
     " disabled selected>Clique para selecionar</option>");
 
@@ -75,7 +77,7 @@ function render(input, out, __component, component, state) {
 
   out.w("</select><label>Selecione a data do relatório:</label></div><div class=\"form-group input-field  col s3\"><select class=\"Atividade\" name=\"atividadeSelect\" id=\"atividadeSelect\"><option class=\"form-group\" value=\"Todas\" selected>Todas</option><option class=\"form-group\" value=\"Para Relatar\">Para Relatar</option><option class=\"form-group\" value=\"Formalizar Decisao\">Formalizar Decisão</option><option class=\"form-group\" value=\"Formalizar Voto Vencedor\">Formalizar Voto Vencedor</option><option class=\"form-group\" value=\"Corrigir Decisão\">Corrigir Decisão</option><option class=\"form-group\" value=\"Apreciar e Assinar Documento\">Apreciar e Assinar Documento</option></select><label>Selecione a atividade para filtrar:</label></div><div class=\"progressRegap col s3\"><div class=\"preloader-wrapper small active\"><div class=\"spinner-layer spinner-green-only\"><div class=\"circle-clipper left\"><div class=\"circle\"></div></div><div class=\"gap-patch\"><div class=\"circle\"></div></div><div class=\"circle-clipper right\"><div class=\"circle\"></div></div></div></div></div><div class=\"col s3 right-align\"></div><div class=\"col s12 right-align\">");
 
-  app_drop_download_tag({}, out, __component, "60");
+  app_drop_download_tag({}, out, __component, "67");
 
   out.w("<a href=\"#!\" id=\"mostraColunasAtividade\" title=\"Agrupar/Desagrupar por Atividade\" class=\"waves-effect waves-yellow hoverable z-depth-3 btn-floating blue\"><i class=\"material-icons\">unfold_less</i></a></div></div><div id=\"tabelaRegap\"></div></div><div id=\"produtividade\" class=\"col s12\"><br><div class=\"row\"><div class=\"form-group input-field  col s3\"><select class=\"dataRelReinp\" name=\"dataRelReinp\" id=\"dataRelReinp\"><option class=\"form-group\"" +
     marko_attr("value", "") +
@@ -95,21 +97,40 @@ function render(input, out, __component, component, state) {
 
   out.w("</select><label>Selecione a data do relatório:</label></div><div class=\"progressReinp col s3\"><div class=\"preloader-wrapper small active\"><div class=\"spinner-layer spinner-green-only\"><div class=\"circle-clipper left\"><div class=\"circle\"></div></div><div class=\"gap-patch\"><div class=\"circle\"></div></div><div class=\"circle-clipper right\"><div class=\"circle\"></div></div></div></div></div><div class=\"col s3 right-align\"></div><div class=\"col s12 right-align\"><div class=\"row\"></div><div id=\"tabelaReinp\"></div><p><h4 class=\"left\">Processos</h4></p><div class=\"row\">");
 
-  app_drop_download_tag({}, out, __component, "88");
+  app_drop_download_tag({}, out, __component, "95");
 
-  out.w("<a href=\"#!\" id=\"agrupaMes\" title=\"Agrupar/Desagrupar por Mês\" class=\"waves-effect waves-yellow hoverable z-depth-3 btn-floating blue\"><i class=\"material-icons\">unfold_less</i></a></div></div></div><div id=\"tabelaReinpDet\"></div></div><div id=\"stats\" class=\"col s12\"><div class=\"row\"><h4>Quantidade de processos por atividade:</h4><p><div style=\"width:780px;auto;\" id=\"barrasAtividade\"></div></p></div><div class=\"row\"><h4>Produtividade Mensal e Trimestral:</h4><div class=\"row\"><div class=\"col s7\"><div id=\"barrasReinpMensal\"></div></div><div class=\"col s5\"><div id=\"barrasReinpTrimestral\"></div></div></div></div></div><div id=\"ocorrencias\" class=\"col s12\"><br><div class=\"row\"><div id=\"tabelaOcorrencias\"" +
+  out.w("<a href=\"#!\" id=\"agrupaMes\" title=\"Agrupar/Desagrupar por Mês\" class=\"waves-effect waves-yellow hoverable z-depth-3 btn-floating blue\"><i class=\"material-icons\">unfold_less</i></a></div></div></div><div id=\"tabelaReinpDet\"></div></div><div id=\"stats\" class=\"col s12\"><div class=\"row\"><h4>Quantidade de processos por atividade:</h4><p><div style=\"width:780px;auto;\" id=\"barrasAtividade\"></div></p></div><div class=\"row\"><h4>Produtividade Mensal e Trimestral:</h4></div><div class=\"row\"><div class=\"col s6\"><div id=\"barrasReinpMensal\"></div></div><div class=\"col s6\"><div id=\"barrasReinpTrimestral\"></div></div></div></div><div id=\"ocorrencias\" class=\"col s12\"><br><div class=\"row\"><div id=\"tabelaOcorrencias\"" +
     marko_attr("data-ocorrencias", "" + data.ocorrencias) +
-    "></div></div></div></div></div></main><footer class=\"page-footer rodape\"></footer><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
+    "></div></div></div><div id=\"solicitacoes\" class=\"col s12\"><br><div class=\"row\"><div class=\"col s1 offset-s11\"><a id=\"btnSolModal\" class=\"btn-floating green waves-effect waves-light hoverable z-depth-3 right\" title=\"Fazer nova solicitação\" href=\"#solModal\"><i class=\"material-icons\">add</i></a></div></div><br><div class=\"row\"><div id=\"tabelaSolicitacoes\"" +
+    marko_attr("data-tpSol", "" + data.tpSol) +
+    marko_attr("data-solicitacoes", "" + data.solicitacoes) +
+    "></div></div><div id=\"solModal\" class=\"modal modal-fixed-footer\"><div class=\"modal-content\"><h4 class=\"hSModal\">Inclusão de Solicitação</h4><div class=\"pSModal\"><div class=\"row\"><div class=\"col s6\"><h5>Tipo de Solicitação</h5><label for=\"tipoSolicitacao\">Selecione o tipo de solicitação:</label><select required name=\"tipoSolicitacao\" id=\"tipoSolicitacao\"><option class=\"form-group\"" +
+    marko_attr("value", "") +
+    " disabled selected>Clique para selecionar</option>");
 
-  app_footer_tag({}, out, __component, "117");
+  var $for$2 = 0;
 
-  app_scripts_js_tag({}, out, __component, "118");
+  marko_forEach(data.tpSol, function(sol) {
+    var $keyScope$2 = "[" + (($for$2++) + "]");
 
-  out.w("<script src=\"/estatico/js/libs/plotly-latest.min.js\"></script><script src=\"/estatico/js/libs/plotly-locale-pt-br.js\"></script><script>Plotly.setPlotConfig({locale: 'pt-BR'})</script><script src=\"/estatico/js/julgamento/regapcons.js\"></script>");
+    out.w("<option class=\"form-group\"" +
+      marko_attr("value", "" + sol.tipoSolicitacao) +
+      ">" +
+      marko_escapeXml(sol.tipoSolicitacao) +
+      "</option>");
+  });
+
+  out.w("</select><label for=\"tipoSolicitacao\">Selecione o tipo de solicitação:</label></div></div><div class=\"row\"><div class=\"col s12\"><span id=\"divTipo\"></span></div></div></div></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\">Confirma <i class=\"material-icons right\">send</i></button></div></div></div></div></div></main><footer class=\"page-footer rodape\"></footer><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
+
+  app_footer_tag({}, out, __component, "152");
+
+  app_scripts_js_tag({}, out, __component, "153");
+
+  out.w("<script src=\"/estatico/js/libs/plotly-latest.min.js\"></script><script src=\"/estatico/js/libs/plotly-locale-pt-br.js\"></script><script>Plotly.setPlotConfig({locale: 'pt-BR'})</script><script src=\"/estatico/js/libs/quill.min.js\"></script><script src=\"/estatico/js/julgamento/paginadoconselheiro.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "123");
+  await_reorderer_tag({}, out, __component, "159");
 
   out.w("</body></html>");
 }
@@ -122,7 +143,7 @@ marko_template._ = marko_renderer(render, {
 marko_template.Component = marko_defineComponent({}, marko_template._);
 
 marko_template.meta = {
-    id: "/sgq$1.0.0/src/app/views/julgamento/regap/regapcons.marko",
+    id: "/sgq$1.0.0/src/app/views/julgamento/conselheiros/paginadoconselheiro.marko",
     tags: [
       "../../components/app-scripts-css.marko",
       "marko/src/core-tags/components/component-globals-tag",

@@ -50,6 +50,11 @@ class JulgamentoControlador {
             faqdipaj: '/julgamento/faqdipaj',
             gestaoconhecimento: '/julgamento/gestaoconhecimento',
             conselheiros: '/julgamento/conselheiros',
+            formFAQ: '/julgamento/restrito/formfaq',
+            portalCojul:'/julgamento/restrito/portalcojul',
+            gestaoPortalCojul:'/julgamento/restrito/gestaoportalcojul',
+            solicitacoes: '/julgamento/conselheiros/solicitacoes',
+            gestaosolicitacoes: '/julgamento/restrito/gestaosolicitacoes',
             regapcons: '/julgamento/conselheiros/:id',
             estoque: '/julgamento/restrito/diagnostico-carga',
             cadastrafaqdipaj: '/julgamento/restrito/cadastrafaqdipaj/:id',
@@ -63,9 +68,59 @@ class JulgamentoControlador {
             detalhaestoque: '/julgamento/restrito/diagnostico-carga/:id',
             regapCojul: '/julgamento/restrito/regap-cojul/:id',
             detalharegap: '/julgamento/restrito/regap-cojul/detalha/:id',
-            regap: '/julgamento/restrito/regap/:id',            
+            regap: '/julgamento/restrito/regap/:id',
             gestaoGC: '/julgamento/restrito/gestaoGC/:id'
         };
+    }
+
+    handlePortalCojul() {
+        return function (req, resp) {
+            if (req.method == 'GET') {
+                const julgamentoDao = new JulgamentoDao(conn);
+                julgamentoDao.getPortal()
+                    .then(msg => {
+                        resp.marko(templates.julgamento.gestaoPortal, { portal: JSON.stringify(msg) })
+                    })
+            } else {
+                const julgamentoDao = new JulgamentoDao(conn);
+                if (req.method == 'POST' || req.method == 'PUT') {
+                    julgamentoDao.getPortal({ uniqueId: req.body.uniqueId })
+                        .then(msg => {
+                            if (!msg[0]) {
+                                julgamentoDao.inserePortal(req.body)
+                                    .then(msg => {
+                                        resp.json(msg)
+                                    })
+                            } else {
+
+                                julgamentoDao.atualizaPortal({ uniqueId: req.body.uniqueId }, req.body)
+                                    .then(msg => {
+                                        resp.json(msg)
+                                    })
+                            }
+                        })
+                } else if (req.method == 'DELETE') {
+                    console.log('delete');
+                    console.log(req.body);
+                    julgamentoDao.excluiPortal({ uniqueId: req.body.uniqueId })
+                        .then(msg => {
+                            resp.json(msg)
+                        })
+                }
+            }
+        }
+    }
+
+    carregaPortalCojul() {
+        return function (req, resp) {
+
+            const julgamentoDao = new JulgamentoDao(conn);
+            julgamentoDao.getPortal()
+                .then(portal => {
+                    resp.marko(templates.julgamento.portalCojul, { portal: JSON.stringify(portal) })
+                })
+
+        }
     }
 
     handleFAQDipaj() {
@@ -114,6 +169,29 @@ class JulgamentoControlador {
                 .then(faq => {
                     resp.marko(templates.julgamento.faqdipaj, { faq: JSON.stringify(faq) })
                 })
+
+        }
+    }
+
+    carregaFormFAQDipaj() {
+        return function (req, resp) {
+            if (req.method == 'GET') {
+                const julgamentoDao = new JulgamentoDao(conn);
+                julgamentoDao.getFAQ()
+                    .then(faq => {
+                        resp.marko(templates.julgamento.formFAQ, { faq: JSON.stringify(faq) })
+                    })
+            } else {
+                if (req.method == 'POST') {
+                    let corpo = `Pergunta enviada em ${moment().format('DD/MM/YYYY HH:mm')}  por ${req.user.nome}, CPF: ${req.user.cpf}<br/>
+                    <strong>Pergunta:</strong><br/>
+                    <em>${req.body.pergunta}</em>`;
+                    const Mailer = require('../infra/helpers/Mailer');
+                    Mailer.enviaMail('dipaj@carf.economia.gov.br', '[SGI-CARF] Sugestão de pergunta para o FAQ', corpo)
+                    resp.json('Ok')
+
+                }
+            }
 
         }
     }
@@ -168,11 +246,9 @@ class JulgamentoControlador {
 
     carregaPaginaConselheiros() {
         return function (req, resp) {
-            let cpf = req.user.cpf;
-            let unidade = req.user.unidade;
-            let semana = CSVHandler.semanaCores(unidade);
+            let semana = CSVHandler.semanaCores(req.user.unidade);
             const pessoalDao = new PessoalDao(conn);
-            pessoalDao.getUsers({ cpf: cpf })
+            pessoalDao.getUsers({ cpf: req.user.cpf })
                 .then(user => {
                     const julgamentoDao = new JulgamentoDao(conn);
                     julgamentoDao.getRelatorios({
@@ -195,10 +271,27 @@ class JulgamentoControlador {
                                         dado.dataEnvio = dado.dataEnvio;
                                         dado.dtExtracao = dado.dtExtracao;
                                     })
-                                    const pessoalDao = new PessoalDao(conn);
-                                    pessoalDao.getOcorrencias({ cpf: cpf })
-                                        .then(ocorrencias => {
-                                            resp.marko(templates.julgamento.regapcons, { user: user[0], reinp: reinp, dados: dados, ocorrencias: JSON.stringify(ocorrencias) })
+                                    julgamentoDao.getCal({ classNames: CSVHandler.semanaCores(req.user.unidade) })
+                                        .then(cal => {
+                                            const pessoalDao = new PessoalDao(conn);
+                                            pessoalDao.getSolicitacoes({ cpf: req.user.cpf })
+                                                .then(solicitacoes => {
+                                                    pessoalDao.gettpSolicitacoes()
+                                                        .then(tpSol => {
+                                                            pessoalDao.getOcorrencias({ cpf: req.user.cpf })
+                                                                .then(ocorrencias => {
+                                                                    resp.marko(templates.julgamento.paginadoconselheiro, {
+                                                                        user: user[0],
+                                                                        cal: JSON.stringify(cal),
+                                                                        reinp: reinp,
+                                                                        dados: dados,
+                                                                        ocorrencias: JSON.stringify(ocorrencias),
+                                                                        solicitacoes: JSON.stringify(solicitacoes),
+                                                                        tpSol:tpSol
+                                                                    })
+                                                                })
+                                                        })
+                                                })
                                         })
                                 })
                         })
@@ -235,7 +328,71 @@ class JulgamentoControlador {
                 })
         }
     }
+   
+    handleSolicitacoes() {
+        return function (req, resp) {
+            if (req.method == 'GET') {
+                const pessoalDao = new PessoalDao(conn);
+                let cpf = req.user.cpf;
+                if(req.user.perfis.includes('julgamento')&&req.session.baseUrl=='/julgamento/restrito/gestaosolicitacoes'){
+                    pessoalDao.getSolicitacoes({})
+                    .then(msg => {
+                       resp.marko(templates.julgamento.gestaosolicitacoes, { solicitacoes: JSON.stringify(msg) })
+                    })
+                }
+                if(req.user.perfis.includes('conselheiro')&&req.session.baseUrl=='/julgamento/conselheiros')
+                pessoalDao.getSolicitacoes({cpf:cpf})
+                    .then(msg => {      
+                        resp.json(msg)
+                    })
+            } else {
+                const pessoalDao = new PessoalDao(conn);
+                if (req.method == 'POST' || req.method == 'PUT') {
+                    pessoalDao.getSolicitacoes({ uniqueId: req.body.uniqueId })
+                        .then(msg => {
+                            if (!msg[0]) {
+                                req.body.cpf = req.user.cpf;
+                                req.body.status=='Aprovada'||req.body.status=='Rejeitada'?req.body.cpfDipaj = req.user.cpf:''
+                                pessoalDao.cadastraSolicitacao(req.body)
+                                    .then(msg => {
+                                        Mailer.enviaMail('dipaj@carf.economia.gov.br','[SGI] Novo status de solicitação', JSON.stringify(req.body))
+                                        resp.json(msg)
+                                    })
+                            } else {
+                                console.log(req.body);
+                                req.body.cpf = req.user.cpf;
+                                req.body.status=='Aprovada'||req.body.status=='Rejeitada'?req.body.cpfDipaj = req.user.cpf:''
+                                pessoalDao.editaSolicitacao(req.body)
+                                    .then(msg => {
+                                        resp.json(msg)
+                                    })
+                            }
+                        })
+                } else if (req.method == 'DELETE') {
+                    pessoalDao.getSolicitacoes({ uniqueId: req.body.uniqueId })
+                    .then(msg => {
+                        if(msg[0].status=='Enviado para análise'){
+                            pessoalDao.excluiSolicitacao({ uniqueId: req.body.uniqueId })
+                                .then(msg => {
+                                    resp.json(msg)
+                                })
+                        } else {resp.send('Não foi possível excluir. Já está em análise. Entre em contato com a DIPAJ/COJUL.')}
+                    })             
+                }
+            }
+        }
+    }
 
+    getCadastro() {
+        return function (req, resp) {
+            const pessoalDao = new PessoalDao(conn);
+            pessoalDao.getUsers({cpf:req.body.cpf})
+                .then(pessoas => {
+                    resp.json(pessoas);
+                })
+                .catch(erro => console.log(erro));
+        }
+    }
 
     carregaCSV() {
         return function (req, resp) {
@@ -508,7 +665,11 @@ class JulgamentoControlador {
                                     }
                                 })
                             })
-                            resp.marko(templates.julgamento.regapCojul, { relatorio: JSON.stringify(dados) });
+                            const julgamentoDao = new JulgamentoDao(conn);
+                            julgamentoDao.getCal()
+                                .then(cal => {
+                                    resp.marko(templates.julgamento.regapCojul, { relatorio: JSON.stringify(dados), cal: JSON.stringify(cal) });
+                                })
                         })
                 })
         }
@@ -533,6 +694,7 @@ class JulgamentoControlador {
                                         dado.setor = user.setor;
                                         dado.camara = user.camara;
                                         dado.turma = user.turma;
+                                        dado.unidade = user.unidade;
                                         dado.diasAtividade = new Date() - dado.Entrada_na_Atividade
                                         dado._id = new ObjectID(user._id);
                                         dado.dtFimMandato = user.dtFimMandato;
@@ -541,20 +703,24 @@ class JulgamentoControlador {
                                 })
                             });
                             const julgamentoDao = new JulgamentoDao(conn);
-                            julgamentoDao.getRelatorios({ caminho: `${path}${caminho}` })
-                                .then(dataEnvio => {
-                                    resp.marko(templates.julgamento.regap, {
-                                        relatorio: JSON.stringify(dados),
-                                        user: dados[0].nome,
-                                        cpf: dados[0].CPF,
-                                        turma: dados[0].turma,
-                                        camara: dados[0].camara,
-                                        setor: dados[0].setor,
-                                        caminho: caminho,
-                                        dataEnvio: dataEnvio[0].dtExtracao,
-                                        dtFimMandato: dados[0].dtFimMandato,
-                                        tipo: dados[0].tipo
-                                    });
+                            julgamentoDao.getCal()
+                                .then(cal => {
+                                    julgamentoDao.getRelatorios({ caminho: `${path}${caminho}` })
+                                        .then(dataEnvio => {
+                                            resp.marko(templates.julgamento.regap, {
+                                                relatorio: JSON.stringify(dados),
+                                                cal: JSON.stringify(cal),
+                                                user: dados[0].nome,
+                                                cpf: dados[0].CPF,
+                                                turma: dados[0].turma,
+                                                camara: dados[0].camara,
+                                                setor: dados[0].setor,
+                                                caminho: caminho,
+                                                dataEnvio: dataEnvio[0].dtExtracao,
+                                                dtFimMandato: dados[0].dtFimMandato,
+                                                tipo: dados[0].tipo
+                                            });
+                                        })
                                 })
                         })
                 })

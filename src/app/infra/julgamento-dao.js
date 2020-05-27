@@ -178,5 +178,54 @@ class JulgamentoDao {
             })
         });
     }
+
+    getPortal(filtro) {
+
+        return new Promise((resolve, reject) => {
+            this._db.portal
+                .find(filtro)
+                .sort({ _id:1 })
+                .project()
+                .toArray(function (erro, res) {
+                    if (erro) {
+                        return reject(`Não foi possível listar os registros. Erro: ${erro}`);
+                    }
+                    return resolve(res);
+                });
+        });
+    }
+
+    inserePortal(registro) {
+        return new Promise((resolve, reject) => {
+            this._db.portal.insertOne(registro, function (erro, res) {
+                if (erro) {
+                    return reject('Não foi possível inserir o registro.');
+                }
+                return resolve(res);
+            })
+        });
+    }
+
+    atualizaPortal(filtro, registro) {
+        return new Promise((resolve, reject) => {
+            this._db.portal.updateOne(filtro, { $set: registro }, function (erro, res) {
+                if (erro) {
+                    return reject('Não foi possível atualizar o registro de eventos.');
+                }
+                return resolve(res);
+            })
+        });
+    }
+
+    excluiPortal(registro) {
+        return new Promise((resolve, reject) => {
+            this._db.portal.deleteOne(registro, function (erro, res) {
+                if (erro) {
+                    return reject('Não foi possível removver o registro de eventos.');
+                }
+                return resolve(res);
+            })
+        });
+    }
 }
 module.exports = JulgamentoDao;

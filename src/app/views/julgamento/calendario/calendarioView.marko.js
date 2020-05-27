@@ -46,21 +46,23 @@ function render(input, out, __component, component, state) {
 
   app_navbar_tag({}, out, __component, "6");
 
-  out.w("<div class=\"container\"><div class=\"row\"><h3 class=\"center-align titulo\">Calendário de Sessões do CARF</h3></div><div class=\"row\"> <a id=\"aModal\" href=\"#modal1\" class=\"btn-legenda waves-effect waves-light btn-small\"><i class=\"material-icons left\">subtitles</i>Legenda</a></div><div class=\"row\"> <div id=\"divCal\"" +
+  out.w("<div class=\"container\"><div class=\"row\"><h3 class=\"center-align titulo\">Calendário de Sessões do CARF</h3></div><div class=\"row\"> <a id=\"aModal\" href=\"#modal1\" class=\"btn-legenda waves-effect waves-light btn-small\"><i class=\"material-icons left\">subtitles</i>Legenda</a></div><div class=\"row\"><div id=\"external-events\" class=\"left col s2\"><p><strong>Períodos Aquisitivos:</strong></p><ul><li class=\"fc-event evCal Verde\">Semana Verde</li><li class=\"\"><strong>1º Tri. Inicio:</strong> 06/12/2019 <strong>Fim:</strong> 05/03/2020</li><li class=\"\"><strong>2º Tri. Inicio:</strong> 06/03/2020 <strong>Fim:</strong> 04/06/2020</li><li class=\"\"><strong>3º Tri. Inicio:</strong> 05/06/2020 <strong>Fim:</strong> 03/09/2020</li><li class=\"\"><strong>4º Tri. Inicio:</strong> 04/09/2020 <strong>Fim:</strong> 03/12/2020</li><li class=\"fc-event evCal Amarela black-text\">Semana Amarela</li><li class=\"\"><strong>1º Tri. Inicio:</strong> 13/12/2019 <strong>Fim:</strong> 12/03/2020</li><li class=\"\"><strong>2º Tri. Inicio:</strong> 13/03/2020 <strong>Fim:</strong> 18/06/2020</li><li class=\"\"><strong>3º Tri. Inicio:</strong> 19/06/2020 <strong>Fim:</strong> 18/09/2020</li><li class=\"\"><strong>4º Tri. Inicio:</strong> 19/09/2020 <strong>Fim:</strong> 10/12/2020</li> <li class=\"fc-event evCal Azul\">Semana Azul</li> <li class=\"\"><strong>1º Tri. Inicio:</strong> 19/12/2019 <strong>Fim:</strong> 19/03/2020</li><li class=\"\"><strong>2º Tri. Inicio:</strong> 20/03/2020 <strong>Fim:</strong> 25/06/2020</li><li class=\"\"><strong>3º Tri. Inicio:</strong> 26/06/2020 <strong>Fim:</strong> 24/09/2020</li><li class=\"\"><strong>4º Tri. Inicio:</strong> 25/09/2020 <strong>Fim:</strong> 16/12/2020</li> </ul> </div> <form id=\"formCal\" name=\"formCal\"" +
+    marko_attr("data-cal", "" + data.cal) +
+    " action=\"/julgamento/calendario/\" method=\"post\"></form> <div class=\"offset-s3 right\" id=\"calendar\"></div></div><div class=\"row\"> <div id=\"divCal\"" +
     marko_attr("data-cal", "" + data.cal) +
     "></div><div class=\"center-align\" id=\"calendar\"></div></div></div></main>");
 
-  app_footer_tag({}, out, __component, "16");
+  app_footer_tag({}, out, __component, "62");
 
   out.w("<div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Fechar</a> </div></div>");
 
-  app_scripts_js_tag({}, out, __component, "23");
+  app_scripts_js_tag({}, out, __component, "69");
 
-  app_calendario_view_js_tag({}, out, __component, "24");
+  app_calendario_view_js_tag({}, out, __component, "70");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "25");
+  await_reorderer_tag({}, out, __component, "71");
 
   out.w("</body></html>");
 }

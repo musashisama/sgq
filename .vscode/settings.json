@@ -1,3 +1,4 @@
 {
-    "emmet.showSuggestionsAsSnippets": true
+    "emmet.showSuggestionsAsSnippets": true,
+    "python.pythonPath": "E:\\Anaconda\\envs\\CARF\\python.exe"
 }

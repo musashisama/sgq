@@ -102,6 +102,18 @@ class CSVHandler {
         }
     }
 
+    static periodos(semana){
+        if (semana=='Verde'){
+            return perVerde;
+        }
+        if (semana=='Azul'){
+            return perAzul;
+        }
+        if (semana=='Amarela'){
+            return perAmarela;
+        }
+    }
+
     static wrangleCSV(arq, semana, tipo) {
         return new Promise((resolve, reject) => {
             if (tipo == 'Estoque' || tipo == 'REGAP') {

@@ -80,15 +80,13 @@ class BaseControlador {
                     const clientIp = requestIp.getClientIp(req);
                     registro['requestIP'] = clientIp;
                     let URL = url.parse((req.headers.referrer || req.headers.referer).replace("/login", ""));
-                    let corpo = `<h2>Sistema de Gestão Integrada do CARF</h2>
-                    <p>Olá!</p>
+                    let corpo = `<p>Olá!</p>
                     <p>Uma solicitação de alteração de senha foi feita utilizando o seu email (${registro.email}).</p>
 <p>Caso tenha sido você, <a href="http://${URL.host}/altera-senha/${registro.controle}">clique aqui</a> ou no link abaixo para efetuar a troca de senha:</p>
 
 http://${URL.host}/altera-senha/${registro.controle}
 
-<p><strong>Caso não tenha sido você, ignore esta mensagem.</strong></p>
-<p><em>Este e-mail foi enviado de forma automática. Favor não respondê-lo.</em></p>`                    
+<p><strong>Caso não tenha sido você, ignore esta mensagem.</strong></p>`                    
                     Mailer.enviaMail(registro.email, '[SGI-CARF] Solicitação de Alteração de Senha', corpo)
                     userDao.insereTrocasenha(registro).then(() => {
                         return resp.marko(templates.base.login, { msg: { cor: 'login_ok', alert: 'done_all', text: 'Cheque sua caixa de email para alteração da senha.' } });

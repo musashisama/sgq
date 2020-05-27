@@ -2,7 +2,7 @@
 "use strict";
 
 var marko_template = module.exports = require("marko/src/html").t(__filename),
-    marko_componentType = "/sgq$1.0.0/src/app/views/admin/perfis/perfis.marko",
+    marko_componentType = "/sgq$1.0.0/src/app/views/julgamento/faqdipaj/formFAQ.marko",
     components_helpers = require("marko/src/runtime/components/helpers"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
@@ -43,20 +43,19 @@ function render(input, out, __component, component, state) {
       class: "sidenav"
     }, out, __component, "5");
 
-  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Perfis de Usuários do Sistema de Gestão Integrada do CARF</h3><form id=\"formPerfis\"" +
-    marko_attr("data-users", "" + data.users) +
-    marko_attr("data-perfis", "" + data.perfis) +
-    " name=\"formPerfis\" action=\"/julgamento/restrito/regap-cojul/detalha/\" method=\"post\"><div class=\"row\"><div class=\"col s12 right-align\"><a href=\"#!\" id=\"mostraColunas\" title=\"Agrupar/Desagrupar por Atividade\" class=\"waves-effect waves-yellow hoverable z-depth-3 btn-floating blue\"><i class=\"material-icons\">unfold_less</i></a></div></div><div class=\"row\"><div id=\"tabelaUsuarios\"></div></div></form><br></div></main><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda modal-close\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
+  out.w("<div class=\"container\"><h3 id=\"inicio\" class=\"center-align titulo\">Sugestão de Pergunta e Resposta</h3><br><div class=\"row\"><div class=\"col s12\"><div class=\"row\"><div class=\"input-field col s12\"><i class=\"material-icons prefix\">textsms</i><input type=\"text\" id=\"autocomplete-input\" class=\"autocomplete\"><label for=\"autocomplete-input\">Qual dúvida gostaria que fosse incluída?</label></div></div></div><div class=\"col s12 offset-s11\"><a id=\"btnEnvia\" class=\"btn-floating btn-large waves-effect waves-light green\"><i class=\"material-icons\">send</i></a></div></div><div class=\"row\"><div id=\"faq\"" +
+    marko_attr("data-faq", "" + data.faq) +
+    "></div></div></div></main>");
 
-  app_footer_tag({}, out, __component, "24");
+  app_footer_tag({}, out, __component, "21");
 
-  app_scripts_js_tag({}, out, __component, "25");
+  app_scripts_js_tag({}, out, __component, "22");
 
-  out.w("<script src=\"/estatico/js/base/perfis.js\"></script>");
+  out.w("<script src=\"/estatico/js/julgamento/formFAQ.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "27");
+  await_reorderer_tag({}, out, __component, "24");
 
   out.w("</body></html>");
 }
@@ -69,7 +68,7 @@ marko_template._ = marko_renderer(render, {
 marko_template.Component = marko_defineComponent({}, marko_template._);
 
 marko_template.meta = {
-    id: "/sgq$1.0.0/src/app/views/admin/perfis/perfis.marko",
+    id: "/sgq$1.0.0/src/app/views/julgamento/faqdipaj/formFAQ.marko",
     tags: [
       "../../components/app-scripts-css.marko",
       "marko/src/core-tags/components/component-globals-tag",

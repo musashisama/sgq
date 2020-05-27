@@ -18,7 +18,7 @@ module.exports = (app) => {
         },
         (cpf, senha, done) => {
             const userDao = new UserDao(db);
-            userDao.buscaUser({cpf:cpf})
+            userDao.auth({cpf:cpf})
                 .then(cpf => {
                     if (Object.keys(cpf).length==0) {    
                         //console.log("No user");                    

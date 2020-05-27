@@ -11,6 +11,7 @@ function inicializaComponentes() {
         initSelect();
         dataTable();
         initTabs();
+        elementosTabela();
     });
 }
 
@@ -18,30 +19,43 @@ function initTabs() {
     $('.tabs').tabs();
 }
 
-document.getElementById("mostraColunasAtividade").addEventListener("click", function () {
-    if (agrupado == false) {
-        table.setGroupBy(["nome", "Atividade", "Situacao"]);
-        agrupado = true;
-    }
-    else {
-        table.setGroupBy();
-        agrupado = false;
-    };
-});
-document.getElementById("mostraColunasTurma").addEventListener("click", function () {
-    if (agrupadoT == false) {
-        table.setGroupBy(["Equipe_Atual"]);
-        agrupadoT = true;
-    }
-    else {
-        table.setGroupBy();
-        agrupadoT = false;
-    };
+function elementosTabela() {
 
-});
+    $('.Atividade').change(() => {
+        //console.log($("select option:selected").val());
+        table.setFilter("Atividade", "=", $("select option:selected").val())
+        if ($("select option:selected").val() == 'Todas') {
+            table.removeFilter("Atividade", "=", $("select option:selected").val())
+        } else { table.setFilter("Atividade", "=", $("select option:selected").val()) }
+    })
+
+    document.getElementById("mostraColunasAtividade").addEventListener("click", function () {
+        if (agrupado == false) {
+            table.setGroupBy(["nome", "Atividade", "Situacao"]);
+            agrupado = true;
+        }
+        else {
+            table.setGroupBy();
+            agrupado = false;
+        };
+    });
+    document.getElementById("mostraColunasTurma").addEventListener("click", function () {
+        if (agrupadoT == false) {
+            table.setGroupBy(["Equipe_Atual"]);
+            agrupadoT = true;
+        }
+        else {
+            table.setGroupBy();
+            agrupadoT = false;
+        };
+
+    });
+}
+
 function initSelect() {
     $('select').formSelect();
 }
+
 function dataTable(msg) {
     let tabledata = JSON.parse($('form').attr('data-regapCojul'));
     table = new Tabulator("#tabelaRegap", {
@@ -122,14 +136,13 @@ let formatNome = function formatNome(cell) {
     return `<a href='/julgamento/restrito/regap-cojul/detalha/${cell.getRow().getData().CPF}'>${cell.getValue()}</a>`
 }
 
-let formatValor = function formatValor(cell){
-    const formato = { style: 'currency', currency: 'BRL',useGrouping:true,localeMatcher:"best fit" }
+let formatValor = function formatValor(cell) {
+    const formato = { style: 'currency', currency: 'BRL', useGrouping: true, localeMatcher: "best fit" }
     const valor = +cell.getValue();
     if (valor >= 1000000) { cell.getElement().style.color = 'rgb(245, 131, 0)'; cell.getElement().style.fontWeight = 'bolder' }
-        if (valor < 1000000 ) { cell.getElement().style.color = 'rgb(63, 138, 2)'; cell.getElement().style.fontWeight = 'bolder'; }
+    if (valor < 1000000) { cell.getElement().style.color = 'rgb(63, 138, 2)'; cell.getElement().style.fontWeight = 'bolder'; }
     return `${valor.toLocaleString('pt-BR', formato)}`
 }
-
 
 function coloreDias(cell, formatterParams) {
     let value = cell.getValue();
@@ -189,14 +202,6 @@ function countCalc(values, data, calcParams) {
 
     return `|𝜲|: ${(calc)}`;
 }
-
-$('.Atividade').change(() => {
-    //console.log($("select option:selected").val());
-    table.setFilter("Atividade", "=", $("select option:selected").val())
-    if ($("select option:selected").val() == 'Todas') {
-        table.removeFilter("Atividade", "=", $("select option:selected").val())
-    } else { table.setFilter("Atividade", "=", $("select option:selected").val()) }
-})
 
 
 dados = JSON.parse($('form').attr('data-regapCojul'));
@@ -364,7 +369,7 @@ somatorio.forEach((row, index) => {
     arrayDados.x.push(row.x)
     arrayDados.color.push(cores[index]);
     arrayDados.text.push(row.y)
-    
+
 })
 arrayDados.type = 'bar'
 arrayDados.orientation = 'h';

@@ -77,12 +77,12 @@ function dataTable() {
         responsiveLayout: responsiveLayout,
         columns: [
             {formatter:formatNome, width:40, hozAlign:"center"},
-            { title: "Nome", field: "nome", sorter: "string", hozAlign: "left", editor: false, headerFilter: "input", bottomCalc: "count", responsive: 0 },            
+            { title: "Nome", field: "nome", sorter: "string", hozAlign: "left", editor: false, headerFilter: "input", topCalc: "count", responsive: 0 },            
             { title: "CPF", field: "cpf", sorter: "string", hozAlign: "center", width: 150, editor: false, headerFilter: "input", responsive: 3, },            
-            { title: "Turma", field: "turma", sorter: "string", hozAlign: "center", editor: false, headerFilter: "input", responsive: 2 },
-            { title: "TE/Câmara/TCSRF", field: "camara", sorter: "string", hozAlign: "center", width: 150, editor: false, headerFilter: "input", responsive: 2 },
-            { title: "Seção", field: "setor", sorter: "string", hozAlign: "left", headerFilter: "input", editor: false, responsive: 2 },
-            { title: "Função", field: "funcao", sorter: "string", hozAlign: "left", headerFilter: "input", editor: false, responsive: 4 },
+            { title: "Turma", field: "unidade", sorter: "string", hozAlign: "center", editor: false, headerFilter: "input", responsive: 2 },           
+            { title: "Fim Mandato", field: "dtFimMandato", sorter: "date", hozAlign: "left", editor: false, responsive: 2 },
+            { title: "Mandato Ativo?", field: "mandatoAt", sorter: "date", hozAlign: "left", editor: false, responsive: 2 },
+            { title: "Função", field: "funcao", sorter: "string", hozAlign: "left", headerFilter: "input", editor: false, responsive: 2 },
             { title: "Representação", field: "origem", sorter: "string", hozAlign: "left", headerFilter: "input", editor: false, responsive: 2 },
 
         ],
