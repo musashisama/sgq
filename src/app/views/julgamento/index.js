@@ -16,7 +16,7 @@ module.exports = {
     calendarioView: require('./calendario/calendarioView.marko'),
     gestaoconhecimento: require('./gestaoconhecimento/gestaoconhecimento.marko'),
     gestaoGC: require('./gestaoconhecimento/gestaoGC.marko'),
-    gestaoPortal: require('./portalCojul/gestaoPortal.marko'),
+    gestaoPortal: require('./portalcojul/gestaoPortal.marko'),
     portalCojul: require('./portalcojul/portalCojul.marko'),
     gestaosolicitacoes:require('./gestaosolicitacoes/gestaosolicitacoes.marko')
 }
