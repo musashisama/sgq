@@ -140,6 +140,12 @@ function montaModal(e, cell) {
           </p>
           <p>
             <label>
+              <input type="checkbox" id='riscos' value='riscos' name="perfis"/>
+              <span>Gestão de Riscos</span>
+            </label>
+          </p>
+          <p>
+            <label>
               <input type="checkbox" id='carf' value='carf' name="perfis"/>
               <span>Usuário CARF</span>
             </label>

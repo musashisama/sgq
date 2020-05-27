@@ -24,11 +24,13 @@ class Mailer {
                         pass: conf[0].pass
                     }
                 }
+                let cabecalho = '<h2>Sistema de Gestão Integrada do CARF</h2>';
+                let rodape = '<p><em>Este e-mail foi enviado de forma automática. Favor não respondê-lo.</em></p>'
                 let mensagem = {
                     from: conf[0].from,
                     to: para,
                     subject: assunto,
-                    html: corpo,
+                    html: cabecalho.concat(corpo,rodape),
                 };     
                 let msg = {mail:mail, mensagem:mensagem}           
                 return msg;

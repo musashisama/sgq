@@ -4,7 +4,7 @@ function inicializaComponentes() {
         initCollapsible();
         initScrollSpy();
         initAutoComplete();
-        
+
     });
 }
 
@@ -13,18 +13,18 @@ function initCollapsible() {
 }
 
 
-function initScrollSpy(){   
-        $('.scrollspy').scrollSpy();     
+function initScrollSpy() {
+    $('.scrollspy').scrollSpy();
 }
 
 
 
-function initAutoComplete(){
+function initAutoComplete() {
     let faq = JSON.parse($('#faq').attr('data-faq'));
     let data = {};
-    faq.forEach((f,i) => {
-        let pergunta = f.pergunta.replace(/<[^>]*>?/gm, '')        
-        data[pergunta]=null;
+    faq.forEach((f, i) => {
+        let pergunta = f.pergunta.replace(/<[^>]*>?/gm, '')
+        data[pergunta] = null;
         $(`.${f.secaoFAQ}`).append(`<li>
         <div id='${f.uniqueId}' class="collapsible-header">        
           <i class="material-icons">question_answer</i><p><strong><em>${f.pergunta}</em></strong></p>
@@ -34,24 +34,25 @@ function initAutoComplete(){
         </div>
         </li>
         `)
-    
-    })    
+
+    })
     $('input.autocomplete').autocomplete({
         data: data,
-        minLength:4,
-        onAutocomplete:function(d){   
+        minLength: 4,
+        onAutocomplete: function (d) {
+            $('#autocomplete-input').val('');
             let faq = JSON.parse($('#faq').attr('data-faq'));
-            faq.forEach(f =>{
-                let pergunta = f.pergunta.replace(/<[^>]*>?/gm, '') 
-                if(pergunta.includes(d)){                                           
-                        $(`#${f.uniqueId}`).addClass('VerdeClara')
-                        $('html, body').animate({
-                            scrollTop: parseInt($(`#${f.uniqueId}`).offset().top)
-                        }, 20);
+            faq.forEach(f => {
+                let pergunta = f.pergunta.replace(/<[^>]*>?/gm, '')
+                if (pergunta.includes(d)) {
+                    $(`#${f.uniqueId}`).addClass('VerdeClara')
+                    $('html, body').animate({
+                        scrollTop: parseInt($(`#${f.uniqueId}`).offset().top)
+                    }, 20);
                 }
-            }) 
+            })
         }
-      });
+    });
 }
 
 

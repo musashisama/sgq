@@ -28,12 +28,18 @@ module.exports = (app) => {
         }
     });
     
+    
     app.use(rotasJulgamento.conselheiros, function (req, resp, next) {
         if (ACL.checaACL(req.user.perfis, 'conselheiro')) {
             next();
         } else { resp.render(403) };
 
     }); 
+
+    app.route(rotasJulgamento.solicitacoes)
+    .get(julgControlador.handleSolicitacoes())
+    .post(julgControlador.handleSolicitacoes())
+    .delete(julgControlador.handleSolicitacoes());
 
     app.get(rotasJulgamento.conselheiros,julgControlador.carregaPaginaConselheiros());
     app.post(rotasJulgamento.regapcons,julgControlador.carregaTabelaConselheiros());

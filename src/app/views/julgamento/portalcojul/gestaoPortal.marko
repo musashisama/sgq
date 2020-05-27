@@ -7,7 +7,7 @@
     <main class="conteudoPrincipal">
       <app-navbar id="slide-out" class="sidenav"/>
       <div class="container">
-        <h3 class="center-align titulo">Cadastro de Itens da Gestão do Conhecimento - DIPAJ/COJUL</h3>
+        <h3 class="center-align titulo">Cadastro de Itens do Portal da COJUL</h3>
         <br/>
         <div class="row">
           <h5 class="">Título</h5>
@@ -37,8 +37,8 @@
           <div class="input-field col s4">
             <select required name="secaoGC" id="secaoGC">
               <option value="" disabled selected>Escolha uma opção:</option>
-              <option value="manuais">Manuais</option>
-              <option value="legis">Legislação</option>
+              <option value="relatorios">Relatorios</option>
+              <option value="solicitacoes">Solicitações</option>
               <option value="recursos">Ferramentas</option>             
             </select>
             <label>Qual o tipo?</label>
@@ -51,7 +51,7 @@
             </a>
           </div>
         </div>
-        <div data-gc=`${data.gc}`/>
+        <div data-portal=`${data.portal}`/>
       </div>
     </main>
     <app-footer/>
@@ -69,6 +69,6 @@
     </div>
     <app-scripts-js/>
     <script src="/estatico/js/libs/quill.min.js"/>
-    <script src="/estatico/js/julgamento/gestaoGC.js"/>
+    <script src="/estatico/js/julgamento/gestaoPortalCojul.js"/>
   </body>
 </html>

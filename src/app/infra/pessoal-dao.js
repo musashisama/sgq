@@ -5,22 +5,21 @@ class PessoalDao {
 
     constructor(db) {
         this._db = db;
-    }
+    }    
 
-    buscaUser(cpf) {
+    getUsers(filtro, projecao = {senha:0}) {
         return new Promise((resolve, reject) => {
-
             this._db.usuarios
-                .find({ cpf: cpf })
+                .find(filtro)
+                .project(projecao)
                 .toArray(function (erro, res) {
                     if (erro) {
                         return reject('Erro na base de dados. Tente novamente mais tarde.');
                     }
                     return resolve(res);
                 });
-
         });
-    }    
+    }  
 
     insereOcorrencia(registro){
         return new Promise((resolve, reject) => {
@@ -31,23 +30,7 @@ class PessoalDao {
                 return resolve(res);
             })
         });
-    }
-
-    getUsers(filtro, projecao) {
-        return new Promise((resolve, reject) => {
-
-            this._db.usuarios
-                .find(filtro)
-                .project(projecao)
-                .toArray(function (erro, res) {
-                    if (erro) {
-                        return reject('Erro na base de dados. Tente novamente mais tarde.');
-                    }
-                    return resolve(res);
-                });
-
-        });
-    }
+    }   
 
     getUnidades(filtro) {
         return new Promise((resolve, reject) => {
@@ -65,6 +48,7 @@ class PessoalDao {
 
         });
     }
+
     getTipoOcorrencias(filtro) {
         return new Promise((resolve, reject) => {
             this._db.tipoOcorrencias
@@ -121,7 +105,6 @@ class PessoalDao {
                     }
                     return resolve(res);
                 });
-
         });
     }
 
@@ -189,6 +172,7 @@ class PessoalDao {
             })
         });
     }
+    
     cadastraUser(registro) {
 
         return new Promise((resolve, reject) => {
@@ -198,6 +182,102 @@ class PessoalDao {
                 }
                 return resolve(res);
             })
+        });
+    }
+
+    getSolicitacoes(filtro) {
+        return new Promise((resolve, reject) => {
+            this._db.solicitacoes
+                .find(filtro)
+                .project()
+                .toArray(function (erro, res) {
+                    if (erro) {
+                        return reject('Erro na base de dados. Tente novamente mais tarde.');
+                    }
+                    return resolve(res);
+                });
+        });
+    }
+
+    excluiSolicitacao(id){        
+        return new Promise((resolve, reject) => {
+            this._db.solicitacoes.deleteOne({_id: new ObjectID(id)}, function (erro, res) {
+                if (erro) {
+                    return reject('Não foi possível excluir o registro.');
+                }
+                return resolve(res);
+            })
+        });
+    }
+
+    cadastraSolicitacao(registro) {
+        return new Promise((resolve, reject) => {
+            this._db.solicitacoes.insertOne(registro, function (erro, res) {
+                if (erro) {
+                    return reject('Não foi possível inserir o registro.');
+                }
+                return resolve(res);
+            })
+        });
+    }
+
+    editaSolicitacao(registro) {
+        return new Promise((resolve, reject) => { 
+            delete registro._id;          
+            this._db.solicitacoes.updateOne({uniqueId:registro.uniqueId}, {$set : registro}, function (erro, res) {
+                if (erro) {
+                    return reject('Erro na base de dados. Tente novamente mais tarde.');
+                }                    
+                return resolve(res);
+            });
+        });
+    }
+
+    gettpSolicitacoes(filtro) {
+        return new Promise((resolve, reject) => {
+            this._db.tpSolicitacoes
+                .find(filtro)
+                .project()
+                .toArray(function (erro, res) {
+                    if (erro) {
+                        return reject('Erro na base de dados. Tente novamente mais tarde.');
+                    }
+                    return resolve(res);
+                });
+        });
+    }
+
+    excluitpSolicitacao(id){        
+        return new Promise((resolve, reject) => {
+            this._db.tpSolicitacoes.deleteOne({_id: new ObjectID(id)}, function (erro, res) {
+                if (erro) {
+                    return reject('Não foi possível excluir o registro.');
+                }
+                return resolve(res);
+            })
+        });
+    }
+
+    cadastratpSolicitacao(registro) {
+        return new Promise((resolve, reject) => {
+            this._db.tpSolicitacoes.insertOne(registro, function (erro, res) {
+                if (erro) {
+                    return reject('Não foi possível inserir o registro.');
+                }
+                return resolve(res);
+            })
+        });
+    }
+
+    editatpSolicitacao(registro) {
+        return new Promise((resolve, reject) => { 
+            delete registro._id;          
+            this._db.tpSolicitacoes.updateOne({uniqueID:registro.uniqueId}, {$set : registro}, function (erro, res) {
+                if (erro) {
+                    return reject('Erro na base de dados. Tente novamente mais tarde.');
+                }                    
+                return resolve(res);
+            });
         });
     }
 }

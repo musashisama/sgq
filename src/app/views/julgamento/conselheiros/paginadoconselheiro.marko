@@ -21,6 +21,14 @@
                 <p>
                   <h6>Final do Mandato: ${data.user.dtFimMandato}</h6>
                 </p>
+                <p>
+                  <h6>
+                    Falta(m)
+                    <span id="daps"/>
+                    dia(s) até a próxima sessão, que será realizada em
+                    <span id="ps"/>
+                  </h6>
+                </p>
               </div>
             </div>
           </div>
@@ -36,17 +44,21 @@
               <li class="tab col s3">
                 <a href="#produtividade">Produtividade - REINP</a>
               </li>
-              <li class="tab col s3">
+              <li class="tab col s2">
                 <a href="#stats">Estatísticas</a>
               </li>
-              <li class="tab col s3">
+              <li class="tab col s2">
                 <a href="#ocorrencias">Ocorrências</a>
+              </li>
+              <li class="tab col s2">
+                <a href="#solicitacoes">Solicitações</a>
               </li>
             </ul>
           </div>
           <div id="processos" class="col s12">
             <br/>
             <div class="row">
+              <div id="dataCAL" data-cal=`${data.cal}`/>
               <div class="form-group input-field  col s3">
                 <select class="dataRelRegap" name="dataRelRegap" id="dataRelRegap">
                   <option class="form-group" value=`` disabled selected>Clique para selecionar</option>
@@ -145,13 +157,13 @@
             </div>
             <div class="row">
               <h4>Produtividade Mensal e Trimestral:</h4>
-              <div class="row">
-                <div class="col s7">
-                  <div id="barrasReinpMensal"/>
-                </div>
-                <div class="col s5">
-                  <div id="barrasReinpTrimestral"/>
-                </div>
+            </div>
+            <div class="row">
+              <div class="col s6">
+                <div id="barrasReinpMensal"/>
+              </div>
+              <div class="col s6">
+                <div id="barrasReinpTrimestral"/>
               </div>
             </div>
           </div>
@@ -159,6 +171,52 @@
             <br/>
             <div class="row">
               <div id="tabelaOcorrencias" data-ocorrencias=`${data.ocorrencias}`/>
+            </div>
+          </div>
+          <div id="solicitacoes" class="col s12">
+            <br/>
+            <div class="row">
+              <div class="col s1 offset-s11">
+                <a id="btnSolModal" class="btn-floating green waves-effect waves-light hoverable z-depth-3 right" title="Fazer nova solicitação" href="#solModal">
+                  <i class="material-icons">add</i>
+                </a>
+              </div>
+            </div>
+            <br/>
+            <div class="row">
+              <div id="tabelaSolicitacoes" data-tpSol=`${data.tpSol}` data-solicitacoes=`${data.solicitacoes}`/>
+            </div>
+            <!--Modal Structure-->
+            <div id="solModal" class="modal modal-fixed-footer">
+              <div class="modal-content">
+                <h4 class="hSModal">Inclusão de Solicitação</h4>
+                <div class="pSModal">
+                  <div class="row">
+                    <div class="col s6">
+                      <h5>Tipo de Solicitação</h5>
+                      <label for="tipoSolicitacao">Selecione o tipo de solicitação:</label>
+                      <select required name="tipoSolicitacao" id="tipoSolicitacao">
+                        <option class="form-group" value=`` disabled selected>Clique para selecionar</option>
+                        <for|sol| of=data.tpSol>
+                          <option class="form-group" value=`${sol.tipoSolicitacao}`>${sol.tipoSolicitacao}</option>
+                        </for>
+                      </select>
+                      <label for="tipoSolicitacao">Selecione o tipo de solicitação:</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col s12">
+                      <span id="divTipo"/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-red btn-flat cancela">Cancela</a>
+                <button class="btn waves-effect waves-light concorda">
+                  Confirma <i class="material-icons right">send</i>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -183,6 +241,7 @@
     <script src="/estatico/js/libs/plotly-latest.min.js"/>
     <script src="/estatico/js/libs/plotly-locale-pt-br.js"/>
     <script>Plotly.setPlotConfig({locale: 'pt-BR'})</script>
-    <script src="/estatico/js/julgamento/regapcons.js"/>
+    <script src="/estatico/js/libs/quill.min.js"/>
+    <script src="/estatico/js/julgamento/paginadoconselheiro.js"/>
   </body>
 </html>

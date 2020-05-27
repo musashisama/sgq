@@ -12,6 +12,7 @@ class PessoalControlador {
             agenda: '/pessoal/agenda',
             pessoas: '/pessoal/restrito/pessoas',
             detalhaPess: '/pessoal/restrito/pessoas/:id',
+            getcadastro: '/pessoal/restrito/getcadastro',
             cadastraPess: '/pessoal/restrito/pessoas/cadastra',
             editaPess: '/pessoal/restrito/pessoas/edita',
             conselheiros: '/pessoal/restrito/conselheiros',
@@ -33,6 +34,17 @@ class PessoalControlador {
             pessoalDao.getUsers({}, { nome: 1, email: 1, telefone: 1, unidade: 1, setor: 1, cargo: 1, funcao: 1 })
                 .then(agenda => {
                     resp.marko(templates.pessoal.agenda, { agenda: JSON.stringify(agenda) })
+                })
+                .catch(erro => console.log(erro));
+        }
+    }
+
+    getCadastro() {
+        return function (req, resp) {
+            const pessoalDao = new PessoalDao(conn);
+            pessoalDao.getUsers({cpf:req.body.cpf})
+                .then(pessoas => {
+                    resp.json(pessoas);
                 })
                 .catch(erro => console.log(erro));
         }
@@ -103,7 +115,7 @@ class PessoalControlador {
     carregaPaginaDetCons() {
         return function (req, resp) {
             const pessoalDao = new PessoalDao(conn);
-            pessoalDao.buscaUser(req.params.id)
+            pessoalDao.getUsers({cpf:req.params.id})
                 .then(conselheiro => {
                     pessoalDao.getUnidades({ tipo: 'judicante' })
                         .then(tipo => {
@@ -133,7 +145,7 @@ class PessoalControlador {
     carregaPaginaDetalhaPessoal() {
         return function (req, resp) {
             const pessoalDao = new PessoalDao(conn);
-            pessoalDao.buscaUser(req.params.id)
+            pessoalDao.getUsers({cpf:req.params.id})
                 .then(pessoa => {
                     pessoalDao.getUnidades()
                         .then(tipo => {
