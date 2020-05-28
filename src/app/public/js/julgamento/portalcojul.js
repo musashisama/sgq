@@ -33,7 +33,7 @@ function initAutoComplete(){
         <i class="material-icons ${cor}">${icone}</i><strong><em>${f.titulo}</em></strong>
         </div>
         <div class="collapsible-body">
-          <span>${f.descricao}<a href='${link}' target="_blank" class="secondary-content">
+          <span>${f.descricao}<a href='${link}' class="secondary-content">
           <i class="material-icons ${cor}">send</i></a></span>
         </div>
         </li>

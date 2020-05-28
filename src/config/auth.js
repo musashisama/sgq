@@ -21,13 +21,11 @@ module.exports = (app) => {
             userDao.auth({cpf:cpf})
                 .then(cpf => {
                     if (Object.keys(cpf).length==0) {    
-                        //console.log("No user");                    
                         return done(null, false, {
                             mensagem: "Usuário ou senha incorretos!"
                         });
                     }                    
                     if (Object.keys(cpf).length>0 && !bcrypt.compareSync(senha, cpf[0].senha)) {                        
-                        //console.log("Senha errada");
                         return done(null, false, {
                             mensagem: "Usuário ou senha incorretos!"
                         });
