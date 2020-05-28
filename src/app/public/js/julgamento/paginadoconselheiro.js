@@ -74,9 +74,30 @@ function inicializaComponentes() {
         elementosTabelas();
         elementosModal();
         initModal();
+        downloadCons();
         btnModal();
         initDatePicker();
     });
+}
+
+function downloadCons() {
+    $('.dropdownDownloadCons').dropdown({ coverTrigger: false, hover: false, constrainWidth: false });
+    $('.csvDownRegap').click(() => {
+        tableRegap.download("csv", `REGAP.csv`);
+    });
+    $('.xlsxDownRegap').click(() => {
+        tableRegap.download("xlsx", `REGAP.xlsx`, { sheetName: "Relatório" });
+    })
+    $('.csvDownReinp').click(() => {
+        tableReinpDet.download("csv", `REINP.csv`);
+    });
+    $('.xlsxDownReinp').click(() => {
+        let sheets = {
+            "Reinp": true,
+            "Processos Reinp": tableReinpDet, //third tab with table set to DOM Node
+        };
+        tableReinp.download("xlsx", `REINP.xlsx`, { sheets: sheets });
+    })
 }
 
 function initDatePicker() {
@@ -695,19 +716,19 @@ function tabelaSolicitacoes() {
         height: "1000px",
         minHeight: '300px',
         maxHeight: '1000px',
-        layout:"fitColumns",
+        layout: "fitColumns",
         responsiveLayout: 'collapse',
         groupStartOpen: false,
         responsiveLayoutCollapseStartOpen: false,
         columns: [
             { formatter: "responsiveCollapse", width: 50, minWidth: 30, hozAlign: "left", resizable: false, headerSort: false, responsive: 0, download: true, },
-            { title: "Solicitação", field: "tipoSolicitacao", sorter: "string",  hozAlign: "left", editor: false, headerFilter: "input", topCalc: "count", responsive: 0 },
+            { title: "Solicitação", field: "tipoSolicitacao", sorter: "string", hozAlign: "left", editor: false, headerFilter: "input", topCalc: "count", responsive: 0 },
             { title: "Detalhes da Solicitação", field: "tipoAfastamento", sorter: "string", hozAlign: "left", editor: false, headerFilter: "input", responsive: 0, },
-            { title: "Horas a Deduzir", field: "horasDeducao", sorter: "number", width: 90,hozAlign: "center", editor: false, headerFilter: "input", responsive: 0 },
-            { title: "Data Início", field: "dtInicio", sorter: "date", width: 90,hozAlign: "center", editor: false, headerFilter: "input", responsive: 0 },
-            { title: "Data Fim", field: "dtFim", sorter: "date", width: 90,hozAlign: "center", editor: false, headerFilter: "input", responsive: 0 },
+            { title: "Horas a Deduzir", field: "horasDeducao", sorter: "number", width: 90, hozAlign: "center", editor: false, headerFilter: "input", responsive: 0 },
+            { title: "Data Início", field: "dtInicio", sorter: "date", width: 90, hozAlign: "center", editor: false, headerFilter: "input", responsive: 0 },
+            { title: "Data Fim", field: "dtFim", sorter: "date", width: 90, hozAlign: "center", editor: false, headerFilter: "input", responsive: 0 },
             { title: "Status da Solicitação", field: "status", sorter: "string", hozAlign: "center", editor: false, headerFilter: "input", responsive: 0 },
-            { title: "Observações", field: "observacoes", sorter: "string", hozAlign: "center", editor: false, headerFilter: "input", responsive: 1 },           
+            { title: "Observações", field: "observacoes", sorter: "string", hozAlign: "center", editor: false, headerFilter: "input", responsive: 1 },
         ],
     });
 }
@@ -746,6 +767,8 @@ function dataTable(dados) {
             { title: "Dias da Última Distribuição", field: "Dias_da_Dist", sorter: "number", hozAlign: "center", editor: false, responsive: 2, download: true, },
             { title: "Retorno Sepoj?", field: "Retorno_Sepoj", sorter: "string", hozAlign: "center", editor: false, responsive: 2, download: true, },
             { title: "Última Equipe", field: "Equipe_Ultima", sorter: "string", hozAlign: "center", editor: false, responsive: 1, download: true, },
+            { title: "Alegações", field: "Alegacoes_CARF", sorter: "string", hozAlign: "center", editor: false, responsive: 2, download: true, },
+            { title: "Valor do Processo", field: "Valor", sorter: "number", hozAlign: "center", editor: false, formatter: formatValor, responsive: 2, download: true, },
             { title: "Observações", field: "Observacoes", sorter: "string", hozAlign: "center", editor: false, responsive: 1, download: true, },
 
         ],
@@ -776,7 +799,7 @@ function formatDAPS(cell) {
 }
 
 let formatValor = function formatValor(cell) {
-    const formato = { style: 'currency', currency: 'BRL', useGrouping: true, localeMatcher: "best fit" }
+    const formato = { minimumFractionDigits: 2, style: 'currency', currency: 'BRL', useGrouping: true, localeMatcher: "best fit" }
     const valor = +cell.getValue();
     if (valor >= 1000000) { cell.getElement().style.color = 'rgb(245, 131, 0)'; cell.getElement().style.fontWeight = 'bolder' }
     if (valor < 1000000) { cell.getElement().style.color = 'rgb(63, 138, 2)'; cell.getElement().style.fontWeight = 'bolder'; }

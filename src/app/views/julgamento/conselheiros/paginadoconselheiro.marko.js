@@ -18,8 +18,6 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_escapeXml = marko_helpers.x,
     marko_attr = marko_helpers.a,
     marko_forEach = marko_helpers.f,
-    app_drop_download_template = require("../../components/app-drop-download.marko"),
-    app_drop_download_tag = marko_loadTag(app_drop_download_template),
     app_footer_template = require("../../components/app-footer.marko"),
     app_footer_tag = marko_loadTag(app_footer_template),
     app_scripts_js_template = require("../../components/app-scripts-js.marko"),
@@ -75,11 +73,7 @@ function render(input, out, __component, component, state) {
       "</option>");
   });
 
-  out.w("</select><label>Selecione a data do relatório:</label></div><div class=\"form-group input-field  col s3\"><select class=\"Atividade\" name=\"atividadeSelect\" id=\"atividadeSelect\"><option class=\"form-group\" value=\"Todas\" selected>Todas</option><option class=\"form-group\" value=\"Para Relatar\">Para Relatar</option><option class=\"form-group\" value=\"Formalizar Decisao\">Formalizar Decisão</option><option class=\"form-group\" value=\"Formalizar Voto Vencedor\">Formalizar Voto Vencedor</option><option class=\"form-group\" value=\"Corrigir Decisão\">Corrigir Decisão</option><option class=\"form-group\" value=\"Apreciar e Assinar Documento\">Apreciar e Assinar Documento</option></select><label>Selecione a atividade para filtrar:</label></div><div class=\"progressRegap col s3\"><div class=\"preloader-wrapper small active\"><div class=\"spinner-layer spinner-green-only\"><div class=\"circle-clipper left\"><div class=\"circle\"></div></div><div class=\"gap-patch\"><div class=\"circle\"></div></div><div class=\"circle-clipper right\"><div class=\"circle\"></div></div></div></div></div><div class=\"col s3 right-align\"></div><div class=\"col s12 right-align\">");
-
-  app_drop_download_tag({}, out, __component, "67");
-
-  out.w("<a href=\"#!\" id=\"mostraColunasAtividade\" title=\"Agrupar/Desagrupar por Atividade\" class=\"waves-effect waves-yellow hoverable z-depth-3 btn-floating blue\"><i class=\"material-icons\">unfold_less</i></a></div></div><div id=\"tabelaRegap\"></div></div><div id=\"produtividade\" class=\"col s12\"><br><div class=\"row\"><div class=\"form-group input-field  col s3\"><select class=\"dataRelReinp\" name=\"dataRelReinp\" id=\"dataRelReinp\"><option class=\"form-group\"" +
+  out.w("</select><label>Selecione a data do relatório:</label></div><div class=\"form-group input-field  col s3\"><select class=\"Atividade\" name=\"atividadeSelect\" id=\"atividadeSelect\"><option class=\"form-group\" value=\"Todas\" selected>Todas</option><option class=\"form-group\" value=\"Para Relatar\">Para Relatar</option><option class=\"form-group\" value=\"Formalizar Decisao\">Formalizar Decisão</option><option class=\"form-group\" value=\"Formalizar Voto Vencedor\">Formalizar Voto Vencedor</option><option class=\"form-group\" value=\"Corrigir Decisão\">Corrigir Decisão</option><option class=\"form-group\" value=\"Apreciar e Assinar Documento\">Apreciar e Assinar Documento</option></select><label>Selecione a atividade para filtrar:</label></div><div class=\"progressRegap col s3\"><div class=\"preloader-wrapper small active\"><div class=\"spinner-layer spinner-green-only\"><div class=\"circle-clipper left\"><div class=\"circle\"></div></div><div class=\"gap-patch\"><div class=\"circle\"></div></div><div class=\"circle-clipper right\"><div class=\"circle\"></div></div></div></div></div><div class=\"col s3 right-align\"></div><div class=\"col s12 right-align\"><a class=\"dropdownDownloadCons waves-effect waves-yellow hoverable z-depth-3 btn-floating red\" href=\"#\" data-target=\"dropdownRegap\"><i class=\"material-icons\">file_download</i></a><ul id=\"dropdownRegap\" class=\"dropdown-content\"><li class=\"divider\" tabindex=\"-1\"></li><li><a class=\"xlsxDownRegap\" href=\"#!\"><i class=\"xlsxDownRegap material-icons\">file_download</i>XLSX</a></li><li class=\"divider\" tabindex=\"-1\"></li><li><a class=\"csvDownRegap\" href=\"#!\"><i class=\"csvDownRegap material-icons\">file_download</i>CSV</a></li><li class=\"divider\" tabindex=\"-1\"></li></ul><a href=\"#!\" id=\"mostraColunasAtividade\" title=\"Agrupar/Desagrupar por Atividade\" class=\"waves-effect waves-yellow hoverable z-depth-3 btn-floating blue\"><i class=\"material-icons\">unfold_less</i></a></div></div><div id=\"tabelaRegap\"></div></div><div id=\"produtividade\" class=\"col s12\"><br><div class=\"row\"><div class=\"form-group input-field  col s3\"><select class=\"dataRelReinp\" name=\"dataRelReinp\" id=\"dataRelReinp\"><option class=\"form-group\"" +
     marko_attr("value", "") +
     " disabled selected>Clique para selecionar</option>");
 
@@ -95,11 +89,7 @@ function render(input, out, __component, component, state) {
       "</option>");
   });
 
-  out.w("</select><label>Selecione a data do relatório:</label></div><div class=\"progressReinp col s3\"><div class=\"preloader-wrapper small active\"><div class=\"spinner-layer spinner-green-only\"><div class=\"circle-clipper left\"><div class=\"circle\"></div></div><div class=\"gap-patch\"><div class=\"circle\"></div></div><div class=\"circle-clipper right\"><div class=\"circle\"></div></div></div></div></div><div class=\"col s3 right-align\"></div><div class=\"col s12 right-align\"><div class=\"row\"></div><div id=\"tabelaReinp\"></div><p><h4 class=\"left\">Processos</h4></p><div class=\"row\">");
-
-  app_drop_download_tag({}, out, __component, "95");
-
-  out.w("<a href=\"#!\" id=\"agrupaMes\" title=\"Agrupar/Desagrupar por Mês\" class=\"waves-effect waves-yellow hoverable z-depth-3 btn-floating blue\"><i class=\"material-icons\">unfold_less</i></a></div></div></div><div id=\"tabelaReinpDet\"></div></div><div id=\"stats\" class=\"col s12\"><div class=\"row\"><h4>Quantidade de processos por atividade:</h4><p><div style=\"width:780px;auto;\" id=\"barrasAtividade\"></div></p></div><div class=\"row\"><h4>Produtividade Mensal e Trimestral:</h4></div><div class=\"row\"><div class=\"col s6\"><div id=\"barrasReinpMensal\"></div></div><div class=\"col s6\"><div id=\"barrasReinpTrimestral\"></div></div></div></div><div id=\"ocorrencias\" class=\"col s12\"><br><div class=\"row\"><div id=\"tabelaOcorrencias\"" +
+  out.w("</select><label>Selecione a data do relatório:</label></div><div class=\"progressReinp col s3\"><div class=\"preloader-wrapper small active\"><div class=\"spinner-layer spinner-green-only\"><div class=\"circle-clipper left\"><div class=\"circle\"></div></div><div class=\"gap-patch\"><div class=\"circle\"></div></div><div class=\"circle-clipper right\"><div class=\"circle\"></div></div></div></div></div><div class=\"col s3 right-align\"></div><div class=\"col s12 right-align\"><div class=\"row\"></div><div id=\"tabelaReinp\"></div><p><h4 class=\"left\">Processos</h4></p><div class=\"row\"><a class=\"dropdownDownloadCons waves-effect waves-yellow hoverable z-depth-3 btn-floating red\" href=\"#\" data-target=\"dropdownReinp\"><i class=\"material-icons\">file_download</i></a><ul id=\"dropdownReinp\" class=\"dropdown-content\"><li class=\"divider\" tabindex=\"-1\"></li><li><a class=\"xlsxDownReinp\" href=\"#!\"><i class=\"xlsxDownReinp material-icons\">file_download</i>XLSX</a></li><li class=\"divider\" tabindex=\"-1\"></li><li><a class=\"csvDownReinp\" href=\"#!\"><i class=\"csvDownReinp material-icons\">file_download</i>CSV</a></li><li class=\"divider\" tabindex=\"-1\"></li></ul><a href=\"#!\" id=\"agrupaMes\" title=\"Agrupar/Desagrupar por Mês\" class=\"waves-effect waves-yellow hoverable z-depth-3 btn-floating blue\"><i class=\"material-icons\">unfold_less</i></a></div></div></div><div id=\"tabelaReinpDet\"></div></div><div id=\"stats\" class=\"col s12\"><div class=\"row\"><h4>Quantidade de processos por atividade:</h4><p><div style=\"width:780px;auto;\" id=\"barrasAtividade\"></div></p></div><div class=\"row\"><h4>Produtividade Mensal e Trimestral:</h4></div><div class=\"row\"><div class=\"col s6\"><div id=\"barrasReinpMensal\"></div></div><div class=\"col s6\"><div id=\"barrasReinpTrimestral\"></div></div></div></div><div id=\"ocorrencias\" class=\"col s12\"><br><div class=\"row\"><div id=\"tabelaOcorrencias\"" +
     marko_attr("data-ocorrencias", "" + data.ocorrencias) +
     "></div></div></div><div id=\"solicitacoes\" class=\"col s12\"><br><div class=\"row\"><div class=\"col s1 offset-s11\"><a id=\"btnSolModal\" class=\"btn-floating green waves-effect waves-light hoverable z-depth-3 right\" title=\"Fazer nova solicitação\" href=\"#solModal\"><i class=\"material-icons\">add</i></a></div></div><br><div class=\"row\"><div id=\"tabelaSolicitacoes\"" +
     marko_attr("data-tpSol", "" + data.tpSol) +
@@ -122,15 +112,15 @@ function render(input, out, __component, component, state) {
 
   out.w("</select><label for=\"tipoSolicitacao\">Selecione o tipo de solicitação:</label></div></div><div class=\"row\"><div class=\"col s12\"><span id=\"divTipo\"></span></div></div></div></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\">Confirma <i class=\"material-icons right\">send</i></button></div></div></div></div></div></main><footer class=\"page-footer rodape\"></footer><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
 
-  app_footer_tag({}, out, __component, "152");
+  app_footer_tag({}, out, __component, "174");
 
-  app_scripts_js_tag({}, out, __component, "153");
+  app_scripts_js_tag({}, out, __component, "175");
 
   out.w("<script src=\"/estatico/js/libs/plotly-latest.min.js\"></script><script src=\"/estatico/js/libs/plotly-locale-pt-br.js\"></script><script>Plotly.setPlotConfig({locale: 'pt-BR'})</script><script src=\"/estatico/js/libs/quill.min.js\"></script><script src=\"/estatico/js/julgamento/paginadoconselheiro.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "159");
+  await_reorderer_tag({}, out, __component, "181");
 
   out.w("</body></html>");
 }
@@ -149,7 +139,6 @@ marko_template.meta = {
       "marko/src/core-tags/components/component-globals-tag",
       "../../components/app-header.marko",
       "../../components/app-navbar.marko",
-      "../../components/app-drop-download.marko",
       "../../components/app-footer.marko",
       "../../components/app-scripts-js.marko",
       "marko/src/core-tags/components/init-components-tag",

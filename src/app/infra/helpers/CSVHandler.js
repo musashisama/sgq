@@ -288,6 +288,7 @@ class CSVHandler {
                                 Questionamento_CARF: valor.Questionamento_CARF,
                                 Resolucao: valor.Resolucao,
                                 Acordao: valor.Acordao,
+                                Valor: valor.Valor,
                                 Valor_Originario: valor.Valor_Originario,
                                 AtividadeUltima: valor.AtividadeUltima,
                                 Dias_na_Atividade: Math.floor(((hoje - CSVHandler._ajustaData(valor.Entrada_na_Atividade)) / dias)),
