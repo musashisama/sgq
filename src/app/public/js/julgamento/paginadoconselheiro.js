@@ -223,10 +223,10 @@ function elementosTabelas() {
 
     $('.Atividade').change(() => {
         //console.log($("select option:selected").val());
-        table.setFilter("Atividade", "=", $("#atividadeSelect option:selected").val())
+        tableRegap.setFilter("Atividade", "=", $("#atividadeSelect option:selected").val())
         if ($("#atividadeSelect option:selected").val() == 'Todas') {
-            table.removeFilter("Atividade", "=", $("#atividadeSelect option:selected").val())
-        } else { table.setFilter("Atividade", "=", $("#atividadeSelect option:selected").val()) }
+            tableRegap.removeFilter("Atividade", "=", $("#atividadeSelect option:selected").val())
+        } else { tableRegap.setFilter("Atividade", "=", $("#atividadeSelect option:selected").val()) }
     })
 }
 
@@ -768,7 +768,7 @@ function dataTable(dados) {
             { title: "Retorno Sepoj?", field: "Retorno_Sepoj", sorter: "string", hozAlign: "center", editor: false, responsive: 2, download: true, },
             { title: "Última Equipe", field: "Equipe_Ultima", sorter: "string", hozAlign: "center", editor: false, responsive: 1, download: true, },
             { title: "Alegações", field: "Alegacoes_CARF", sorter: "string", hozAlign: "center", editor: false, responsive: 2, download: true, },
-            { title: "Valor do Processo", field: "Valor", sorter: "number", hozAlign: "center", editor: false, formatter: formatValor, responsive: 2, download: true, },
+            { title: "Valor do Processo", field: "Valor", sorter: "number", hozAlign: "center", editor: false, visible:false, formatter: formatValor, responsive: 2, download: true, },
             { title: "Observações", field: "Observacoes", sorter: "string", hozAlign: "center", editor: false, responsive: 1, download: true, },
 
         ],
