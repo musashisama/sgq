@@ -32,14 +32,16 @@ function btnLegenda(){
 }
 
 function montaModal() {
+    $('.hModal').text('');
+    $('.pModal').text('');
     $('.hModal').text("Legenda do Calendário");
     $('.pModal').append(
         `<p class="pModal ">
             <br/>
             <ul  style='width:50%'>
             <li class="fc-event evCal Verde center"> 1ª Turma da CSRF + Turmas Ordinárias da 2ª Seção + TE 1ª Seção</li>           
-            <li class="fc-event evCal Amarela black-text center">2ª Turma da CSRF + Turmas Ordinárias da 3ª Seção + TE 2ª Seção</li>
-            <li class="fc-event evCal Azul center">3ª Turma da CSRF + Turmas Ordinárias da 1ª Seção + TE 3ª Seção</li> 
+            <li class="fc-event evCal Azul center">2ª Turma da CSRF + Turmas Ordinárias da 3ª Seção + TE 2ª Seção</li> 
+            <li class="fc-event evCal Amarela black-text center">3ª Turma da CSRF + Turmas Ordinárias da 1ª Seção + TE 3ª Seção</li>
             <li class="fc-event evCal Vermelha center">TE 1ª Seção</li> 
             <li class="fc-event evCal Roxa center">TE 3ª Seção</li> 
             <li class="fc-event evCal Laranja center">TE 2ª Seção</li>                

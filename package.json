@@ -41,5 +41,9 @@
     "serve-favicon": "^2.5.0",
     "tui-calendar": "^1.12.12",
     "uuid": "3.3.2"
+  },
+  "devDependencies": {
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2"
   }
 }

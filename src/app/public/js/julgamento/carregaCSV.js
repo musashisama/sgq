@@ -26,8 +26,7 @@ function initBtnSubmit() {
         var fd = new FormData(formCSV);        
         var files = $('#file')[0].files[0];
         $('.concorda').toggle();
-        $(".progress").show();
-        $("body").append('<div id="overlay" style="background-color:#CCFF0000; position:absolute;top:0;left:0;height:100%;width:100%;z-index:999"></div>');
+        $(".progress").show();        
         fd.append('file', files);       
         $.ajax({
             xhr: function () {
