@@ -1017,7 +1017,9 @@ function handleSOL(registro, metodo) {
     success: function (result) {
       var toastHTML = `<span>Dados atualizados com sucesso!</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
-      console.log(result);
+      setTimeout((a) => {
+        location.reload();
+      }, 1100);
     },
     error: function (result) {
       var toastHTML = `<span>Ocorreu um erro.</span>`;
