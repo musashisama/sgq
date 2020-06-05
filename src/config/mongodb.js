@@ -35,6 +35,7 @@ cliente.connect(url, opcoes, function (err, cliente) {
   dados.config = dbo.collection('config');
   dados.fschunks = dbo.collection('uploads.chunks');
   dados.fsfiles = dbo.collection('uploads.files');
+  dados.arquivos = dbo.collection('arquivos');
 });
 
 
