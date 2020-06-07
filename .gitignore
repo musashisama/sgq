@@ -2,3 +2,4 @@ node_modules/
 package-lock.json
 package-lock.json
 src/app/arquivos/csv
+src/config/dbConfig.json

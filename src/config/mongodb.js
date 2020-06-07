@@ -1,14 +1,16 @@
 const mongo = require('mongodb');
 const cliente = require('mongodb').MongoClient;
-//const url = "mongodb://sgi:X19T2eOt!Z6BDaT#yt4w!24nI@localhost:27017";
-const url = "mongodb://localhost:27017/sgq";
+const fs = require('fs');
+let config = JSON.parse(fs.readFileSync('src/config/dbConfig.json'));
+const url = `mongodb://${config.dbUser}:${config.dbPass}@${config.dbHost}:${config.dbPort}/${config.dbName}`;
+
 const opcoes = {
   useNewUrlParser: true,
-  useUnifiedTopology: true
-}
+  useUnifiedTopology: true,
+};
 const dados = {};
 const dbo = '';
-const db = new mongo.Db('sgq', new mongo.Server("127.0.0.1", 27017), opcoes);
+const db = new mongo.Db('sgq', new mongo.Server('127.0.0.1', 27017), opcoes);
 
 cliente.connect(url, opcoes, function (err, cliente) {
   if (err) throw err;
@@ -38,17 +40,17 @@ cliente.connect(url, opcoes, function (err, cliente) {
   dados.arquivos = dbo.collection('arquivos');
 });
 
-
 process.on('SIGINT', () =>
   cliente.close(() => {
     console.log('BD encerrado!');
     process.exit(0);
-  })
+  }),
 );
 
 module.exports = {
-  dados, mongo, url, dbo, db
-}
-
-
-
+  dados,
+  mongo,
+  url,
+  dbo,
+  db,
+};
