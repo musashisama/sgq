@@ -260,10 +260,7 @@ class JulgamentoControlador {
         const julgamentoDao = new JulgamentoDao(conn);
         julgamentoDao
           .getRelatorios({
-            $or: [
-              { $and: [{ tipoRel: 'REGAP' }, { semana: semana }] },
-              { tipoRel: 'Estoque' },
-            ],
+            $and: [{ tipoRel: 'REGAP' }, { semana: semana }],
           })
           .then((dados) => {
             dados.forEach((dado) => {
@@ -382,7 +379,6 @@ class JulgamentoControlador {
                   resp.json(msg);
                 });
               } else {
-                console.log(req.body);
                 req.body.cpf = req.user.cpf;
                 req.body.status == 'Aprovada' || req.body.status == 'Rejeitada'
                   ? (req.body.cpfDipaj = req.user.cpf)

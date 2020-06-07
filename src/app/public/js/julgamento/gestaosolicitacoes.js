@@ -31,6 +31,7 @@ function tabelaSolicitacoes() {
     maxHeight: '1000px',
     layout: 'fitColumns',
     responsiveLayout: 'collapse',
+    initialSort: [{ column: 'dtCriacao', dir: 'desc' }],
     groupStartOpen: false,
     responsiveLayoutCollapseStartOpen: false,
     columns: [
@@ -49,6 +50,16 @@ function tabelaSolicitacoes() {
         headerSort: false,
         responsive: 0,
         download: true,
+      },
+      {
+        title: 'Data da Solicitação',
+        field: 'dtCriacao',
+        sorter: 'date',
+        hozAlign: 'left',
+        editor: false,
+        headerFilter: 'input',
+        responsive: 0,
+        sorterParams: { format: 'DD/MM/YYYY' },
       },
       {
         title: 'CPF',
@@ -165,7 +176,9 @@ async function montaModal(e, cell, user) {
             <strong>Turma:</strong> ${user.unidade}<br/> 
             <strong>Solicitação:</strong> ${
               cell.getRow().getData().tipoSolicitacao
-            }<br/>  
+            } - <strong>Data da Solicitação:</strong> ${
+      cell.getRow().getData().dtCriacao
+    }<br/>  
             <strong>Detalhes da Solicitação/Turma de Participação:</strong> ${
               cell.getRow().getData().tipoAfastamento
             }<br/>  
@@ -282,7 +295,6 @@ function handleSOL(registro, metodo) {
     success: function (result) {
       var toastHTML = `<span>Dados atualizados com sucesso!</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
-
       setInterval(() => {
         location.reload();
       }, 1000);
@@ -290,7 +302,6 @@ function handleSOL(registro, metodo) {
     error: function (result) {
       var toastHTML = `<span>Ocorreu um erro.</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
-      console.log(result);
       setInterval(() => {
         location.reload();
       }, 1000);
