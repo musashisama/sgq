@@ -38,10 +38,10 @@ const CSVHandler = require('../infra/helpers/CSVHandler');
 const { ObjectID } = require('mongodb');
 const path = 'src/app/arquivos/csv/';
 let registro = {};
+const url = require('url');
 let dados = [];
 let nome = '';
 let newpath = '';
-const url = require('url');
 
 class JulgamentoControlador {
   static rotas() {
@@ -56,6 +56,7 @@ class JulgamentoControlador {
       portalCojul: '/julgamento/restrito/portalcojul',
       gestaoPortalCojul: '/julgamento/restrito/gestaoportalcojul',
       solicitacoes: '/julgamento/conselheiros/solicitacoes',
+      arquivos: '/julgamento/conselheiros/arquivos',
       gestaosolicitacoes: '/julgamento/restrito/gestaosolicitacoes',
       regapcons: '/julgamento/conselheiros/:id',
       estoque: '/julgamento/restrito/diagnostico-carga',
@@ -72,7 +73,6 @@ class JulgamentoControlador {
       detalharegap: '/julgamento/restrito/regap-cojul/detalha/:id',
       regap: '/julgamento/restrito/regap/:id',
       gestaoGC: '/julgamento/restrito/gestaoGC/:id',
-      arquivos: '/julgamento/restrito/arquivos',
       arqdown: '/julgamento/restrito/arqdown/:id',
     };
   }
@@ -81,7 +81,7 @@ class JulgamentoControlador {
     return function (req, resp) {
       if (req.method == 'GET') {
         const julgamentoDao = new JulgamentoDao(conn);
-        julgamentoDao.getPortal().then((msg) => {
+        julgamentoDao.getPortal({ portal: 'cojul' }).then((msg) => {
           resp.marko(templates.julgamento.gestaoPortal, {
             portal: JSON.stringify(msg),
           });
@@ -93,6 +93,7 @@ class JulgamentoControlador {
             .getPortal({ uniqueId: req.body.uniqueId })
             .then((msg) => {
               if (!msg[0]) {
+                req.body.portal = 'cojul';
                 julgamentoDao.inserePortal(req.body).then((msg) => {
                   resp.json(msg);
                 });
@@ -120,7 +121,7 @@ class JulgamentoControlador {
   carregaPortalCojul() {
     return function (req, resp) {
       const julgamentoDao = new JulgamentoDao(conn);
-      julgamentoDao.getPortal().then((portal) => {
+      julgamentoDao.getPortal({ portal: 'cojul' }).then((portal) => {
         resp.marko(templates.julgamento.portalCojul, {
           portal: JSON.stringify(portal),
         });
@@ -244,7 +245,7 @@ class JulgamentoControlador {
   carregaGestaoConhecimento() {
     return function (req, resp) {
       const julgamentoDao = new JulgamentoDao(conn);
-      julgamentoDao.getGC().then((msg) => {
+      julgamentoDao.getGC({ portal: 'cojul' }).then((msg) => {
         resp.marko(templates.julgamento.gestaoconhecimento, {
           gc: JSON.stringify(msg),
         });
@@ -283,24 +284,26 @@ class JulgamentoControlador {
                   pessoalDao
                     .getSolicitacoes({ cpf: req.user.cpf })
                     .then((solicitacoes) => {
-                      pessoalDao.gettpSolicitacoes().then((tpSol) => {
-                        pessoalDao
-                          .getOcorrencias({ cpf: req.user.cpf })
-                          .then((ocorrencias) => {
-                            resp.marko(
-                              templates.julgamento.paginadoconselheiro,
-                              {
-                                user: user[0],
-                                cal: JSON.stringify(cal),
-                                reinp: reinp,
-                                dados: dados,
-                                ocorrencias: JSON.stringify(ocorrencias),
-                                solicitacoes: JSON.stringify(solicitacoes),
-                                tpSol: tpSol,
-                              },
-                            );
-                          });
-                      });
+                      pessoalDao
+                        .gettpSolicitacoes({}, {}, { tipoSolicitacao: 1 })
+                        .then((tpSol) => {
+                          pessoalDao
+                            .getOcorrencias({ cpf: req.user.cpf })
+                            .then((ocorrencias) => {
+                              resp.marko(
+                                templates.julgamento.paginadoconselheiro,
+                                {
+                                  user: user[0],
+                                  cal: JSON.stringify(cal),
+                                  reinp: reinp,
+                                  dados: dados,
+                                  ocorrencias: JSON.stringify(ocorrencias),
+                                  solicitacoes: JSON.stringify(solicitacoes),
+                                  tpSol: tpSol,
+                                },
+                              );
+                            });
+                        });
                     });
                 });
             });
@@ -370,11 +373,25 @@ class JulgamentoControlador {
                 req.body.status == 'Aprovada' || req.body.status == 'Rejeitada'
                   ? (req.body.cpfDipaj = req.user.cpf)
                   : '';
+                let URL = url.parse(
+                  (req.headers.referrer || req.headers.referer).replace(
+                    '/login',
+                    '',
+                  ),
+                );
                 pessoalDao.cadastraSolicitacao(req.body).then((msg) => {
                   Mailer.enviaMail(
                     'dipaj@carf.economia.gov.br',
                     '[SGI] Novo status de solicitação',
-                    JSON.stringify(req.body),
+                    `<strong>Solicitação:</strong> ${req.body.tipoSolicitacao}<br/>
+                    <strong>Detalhes:</strong> ${req.body.tipoAfastamento}<br/>
+                    <strong>Status:</strong> ${req.body.status}<br/>
+                    <strong>Observações:</strong> ${req.body.observacoes}<br/>
+                    <strong>Data de Criação:</strong> ${req.body.dtCriacao}<br/>
+                    <strong>CPF do Solicitante:</strong> ${req.body.cpf}<br/>
+
+                    <p><a href="http://${URL.host}/julgamento/restrito/gestaosolicitacoes"><strong>Gerenciar Solicitações</strong></a></p>
+                    `,
                   );
                   resp.json(msg);
                 });

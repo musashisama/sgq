@@ -644,18 +644,39 @@ function elementosModal() {
     '1ª Turma Ordinária/4ª Câmara/ 3ª Seção',
     '2ª Turma Ordinária/4ª Câmara/ 3ª Seção',
   ];
-  let arrayMeta = [
-    'Compromissos profissionais ou acadêmicos (firmados antes da designação para o mandato)',
+  let arrayFalta = [
+    'Compromisso assumido antes da designação para Conselheiro(a)',
     'Licença à gestante',
     'Licença à adotante',
     'Licença à paternidade',
     'Licença para tratamento de saúde (homologado)',
     'Licença em razão de casamento',
     'Licença por motivo de falecimento (cônjuge, companheiro, pais, madastra ou padrasto, filhos, enteados, menor sob guarda ou tutela e irmãos)',
-    'Mudança de colegiado (implique em alteração de calendário da sessão de julgamento)',
-    'Participação em Seminário - CARF',
-    'Período de férias (marcado perante a entidade pública)',
-    'Outros',
+    'Mudança de colegiado (que implique em alteração de calendário da sessão de julgamento)',
+    'Período de férias (marcado perante a RFB antes da designação para Conselheiro(a))',
+  ];
+  let arrayMeta = [
+    'Licença à gestante',
+    'Licença à adotante',
+    'Licença à paternidade',
+    'Licença para tratamento de saúde (homologado)',
+    'Licença em razão de casamento',
+    'Licença por motivo de falecimento (cônjuge, companheiro, pais, madastra ou padrasto, filhos, enteados, menor sob guarda ou tutela e irmãos)',
+    'Mudança de colegiado (que implique em alteração de calendário da sessão de julgamento)',
+    'Participação em Seminário promovido pelo CARF',
+    'Período de férias (marcado perante a RFB)',
+  ];
+  let arrayPrazo = [
+    'Compromisso assumido antes da designação para Conselheiro(a)',
+    'Licença à gestante',
+    'Licença à adotante',
+    'Licença à paternidade',
+    'Licença para tratamento de saúde (homologado)',
+    'Licença em razão de casamento',
+    'Licença por motivo de falecimento (cônjuge, companheiro, pais, madastra ou padrasto, filhos, enteados, menor sob guarda ou tutela e irmãos)',
+    'Mudança de colegiado (que implique em alteração de calendário da sessão de julgamento)',
+    'Participação em Seminário promovido pelo CARF',
+    'Período de férias (marcado perante a RFB)',
   ];
   let html = '';
   $('#tipoSolicitacao').change((e) => {
@@ -664,6 +685,128 @@ function elementosModal() {
     html = '';
     $('#divTipo').text('');
     $('#enviaArq').text('');
+    if (
+      $('#tipoSolicitacao option:selected').val() ==
+      'Justificar Suspensão de Prazos Regimentais'
+    ) {
+      html = '';
+      $('#divTipo').text('');
+      $('#enviaArq').text('');
+      arrayPrazo.forEach((ops, i) => {
+        html += `<option class="form-group" value="${ops}">${ops}</option>`;
+      });
+      $('#divTipo').append(`
+            <div class='row'>
+                    <div class='col s7'>
+                    <label for="tipoAfastamento">Selecione o tipo de afastamento:</label> 
+                    <select required name="tipoAfastamento" id="tipoAfastamento">
+                                 ${html}
+                    </select>                   
+                    </div>
+          </div>
+          <div class='row'>
+            <div class="form-group inicioAfastamento input field col s3 ">
+            <input id="inicioAfastamento" name="inicioAfastamento"  type="text" class="datepicker"/>                      
+            <label for="inicioAfastamento">Início do Afastamento</label>
+            </div>
+            <div class="form-group fimAfastamento input field col s3">
+            <input id="fimAfastamento" name="fimAfastamento" type="text" class="datepicker"/>            
+            <label for="fimAfastamento">Fim do Afastamento</label>
+            </div>
+            <div class ='col s6 diasUteis input-field'>           
+            <input id="diasUteis" name="diasUteis" type="number" class="validate"/>
+            <label for="diasUteis">Quantidade de Dias a Suspender</label>
+            </div>
+          </div>
+          <div class='row'>          
+            <div class="input-field col s12">            
+            <i class="material-icons prefix">mode_edit</i>
+            <textarea id="observacoes" class="materialize-textarea"></textarea>
+            <label for="observacoes">Observações</label>
+            </div>
+          </div>
+            <br />`);
+      $('#enviaArq').append(`${formArq()}`);
+      $('.progress').toggle();
+      initDatePicker();
+      initSelect();
+      btnEnviaArq();
+      $('.concorda').click((e) => {
+        dadosForm = {
+          tipoSolicitacao: $('#tipoSolicitacao option:selected').val(),
+          tipoAfastamento: $('#tipoAfastamento option:selected').val(),
+          dtInicio: $('#inicioAfastamento').val(),
+          dtFim: $('#fimAfastamento').val(),
+          status: 'Enviado para análise',
+          observacoes: `Dias úteis: ${$('#diasUteis').val()}, Observações: ${$(
+            '#observacoes',
+          ).val()}`,
+          arquivos: pegaArquivos(),
+        };
+        handleSOL(dadosForm, 'POST');
+      });
+    }
+    if (
+      $('#tipoSolicitacao option:selected').val() ==
+      'Justificar faltas à Sessões de Julgamento'
+    ) {
+      html = '';
+      $('#divTipo').text('');
+      $('#enviaArq').text('');
+      arrayFalta.forEach((ops, i) => {
+        html += `<option class="form-group" value="${ops}">${ops}</option>`;
+      });
+      $('#divTipo').append(`
+            <div class='row'>
+                    <div class='col s7'>
+                    <label for="tipoAfastamento">Selecione o tipo de afastamento:</label> 
+                    <select required name="tipoAfastamento" id="tipoAfastamento">
+                                 ${html}
+                    </select>                   
+                    </div>
+          </div>
+          <div class='row'>
+            <div class="form-group inicioAfastamento input field col s3 ">
+            <input id="inicioAfastamento" name="inicioAfastamento"  type="text" class="datepicker"/>                      
+            <label for="inicioAfastamento">Início do Afastamento</label>
+            </div>
+            <div class="form-group fimAfastamento input field col s3">
+            <input id="fimAfastamento" name="fimAfastamento" type="text" class="datepicker"/>            
+            <label for="fimAfastamento">Fim do Afastamento</label>
+            </div>
+            <div class ='col s6 diasUteis input-field'>           
+            <input id="diasUteis" name="diasUteis" type="number" class="validate"/>
+            <label for="diasUteis">Quantidade de Dias de Sessão de Julgamento</label>
+            </div>
+          </div>
+          <div class='row'>          
+            <div class="input-field col s12">            
+            <i class="material-icons prefix">mode_edit</i>
+            <textarea id="observacoes" class="materialize-textarea"></textarea>
+            <label for="observacoes">Observações</label>
+            </div>
+          </div>
+            <br />`);
+      $('#enviaArq').append(`${formArq()}`);
+      $('.progress').toggle();
+      initDatePicker();
+      initSelect();
+      btnEnviaArq();
+      $('.concorda').click((e) => {
+        dadosForm = {
+          tipoSolicitacao: $('#tipoSolicitacao option:selected').val(),
+          tipoAfastamento: $('#tipoAfastamento option:selected').val(),
+          dtInicio: $('#inicioAfastamento').val(),
+          dtFim: $('#fimAfastamento').val(),
+          status: 'Enviado para análise',
+          observacoes: `Dias úteis: ${$('#diasUteis').val()}, Observações: ${$(
+            '#observacoes',
+          ).val()}`,
+          arquivos: pegaArquivos(),
+        };
+        handleSOL(dadosForm, 'POST');
+      });
+    }
     if (
       $('#tipoSolicitacao option:selected').val() ==
       'Abatimento de Horas da Meta de Produtividade - Afastamento'
@@ -732,7 +875,7 @@ function elementosModal() {
     }
     if (
       $('#tipoSolicitacao option:selected').val() ==
-      'Abatimento de Horas da Meta de Produtividade - Participação em TO/CSRF'
+      'Abatimento de Horas da Meta de Produtividade - Participação em TO/CSRF (A partir de Abr/2020)'
     ) {
       html = '';
       $('#divTipo').text('');
@@ -799,7 +942,7 @@ function elementosModal() {
     }
     if (
       $('#tipoSolicitacao option:selected').val() ==
-      'Dispensa de Sorteio - Excesso de Horas'
+      'Dispensa de Sorteio - Excesso de Horas em Lotes de Sorteio'
     ) {
       html = '';
       $('#divTipo').text('');
@@ -854,7 +997,7 @@ function elementosModal() {
     }
     if (
       $('#tipoSolicitacao option:selected').val() ==
-      'Dispensa de Sorteio - Participação em TO/CSRF'
+      'Dispensa de Sorteio - Participação em TO/CSRF (Até Mar/2020)'
     ) {
       html = '';
       $('#divTipo').text('');
@@ -1067,7 +1210,7 @@ function handleFile(arquivo, metodo) {
   if (metodo == 'DELETE') {
     fd = arquivo;
     $.ajax({
-      url: '/julgamento/restrito/arquivos',
+      url: '/julgamento/conselheiros/arquivos',
       data: fd,
       type: metodo,
       success: function (result) {
@@ -1106,7 +1249,7 @@ function handleFile(arquivo, metodo) {
         );
         return xhr;
       },
-      url: '/julgamento/restrito/arquivos',
+      url: '/julgamento/conselheiros/arquivos',
       data: fd,
       processData: false,
       contentType: false,
