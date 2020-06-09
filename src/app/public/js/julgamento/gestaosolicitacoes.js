@@ -198,13 +198,25 @@ async function montaModal(e, cell, user) {
            <div class='row'>
            <div class='col s7'>
            <i class="material-icons prefix">live_help</i>
-           <label for="status">Deseja aprovar/rejeitar a solicitação?</label> 
-           <select required name="status" id="status">
+           <label for="statusVal">Validação SEGEP:</label> 
+           <select required name="statusVal" id="statusVal">
+           <option class="form-group" value='' disabled selected>Clique para selecionar</option>
+           <option class="form-group" value="DocVal">Documento(s) Válido(s)</option>          
+           <option class="form-group" value="DocInval">Documento(s) Inválido(s)</option>        
+           </select>                   
+         </div>
+         </div> 
+           <div class='row'>
+           <div class='col s7'>
+           <i class="material-icons prefix">live_help</i>
+           <label for="statusApr">Solicitação aprovada ou rejeitada pela DIPAJ?</label> 
+           <select required name="statusApr" id="statusApr">
            <option class="form-group" value='' disabled selected>Clique para selecionar</option>
            <option class="form-group" value="Aprovada">Aprovar</option>          
-           <option class="form-group" value="Rejeitada">Rejeitar</option>          
+           <option class="form-group" value="Rejeitada">Rejeitar</option>        
            </select>                   
-         </div></div> 
+         </div>
+         </div> 
          <div class='row'>          
          <div class="input-field col s12">
          <i class="material-icons prefix">mode_edit</i>        
@@ -219,7 +231,8 @@ async function montaModal(e, cell, user) {
     let dados = {
       uniqueId: cell.getRow().getData().uniqueId,
       justificativas: $('#justificativas').val(),
-      status: $('#status').val(),
+      statusSegep: $('#statusVal').val(),
+      statusDipaj: $('#statusApr').val(),
     };
     handleSOL(dados, 'POST');
   });
@@ -235,7 +248,11 @@ function btnArq() {
   });
 }
 function pegaLinks(cell) {
-  let a = cell.getRow().getData().arquivos;
+  console.log(cell.getRow().getData().arquivos);
+  let a =
+    typeof cell.getRow().getData().arquivos !== 'undefined'
+      ? cell.getRow().getData().arquivos
+      : [];
   let c = '';
   a.forEach((b, i) => {
     c += `</br><a class='arquivos' href='#' id='${b}'> Anexo ${
