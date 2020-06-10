@@ -92,7 +92,7 @@ function render(input, out, __component, component, state) {
     "></div></div></div><div id=\"solicitacoes\" class=\"col s12\"><br><div class=\"row\"><div class=\"col s1 offset-s11\"><a id=\"btnSolModal\" class=\"btn-floating green waves-effect waves-light hoverable z-depth-3 right\" title=\"Fazer nova solicitação\" href=\"#solModal\"><i class=\"material-icons\">add</i></a></div></div><br><div class=\"row\"><div id=\"tabelaSolicitacoes\"" +
     marko_attr("data-tpSol", "" + data.tpSol) +
     marko_attr("data-solicitacoes", "" + data.solicitacoes) +
-    "></div></div><div id=\"solModal\" class=\"modal modal-fixed-footer\"><div class=\"modal-content\"><h4 class=\"hSModal\">Inclusão de Solicitação</h4><div class=\"pSModal\"><div class=\"row\"><div class=\"col s6\"><h5>Tipo de Solicitação</h5><label for=\"tipoSolicitacao\">Selecione o tipo de solicitação:</label><select required name=\"tipoSolicitacao\" id=\"tipoSolicitacao\"><option class=\"form-group\"" +
+    "></div></div><div id=\"solModal\" class=\"modal modal-fixed-footer\"><div class=\"modal-content\"><h4 class=\"hSModal\">Inclusão de Solicitação</h4><div class=\"pSModal\"><div class=\"row\"><div class=\"col s7\"><h5>Tipo de Solicitação</h5><label for=\"tipoSolicitacao\">Selecione o tipo de solicitação:</label><select required name=\"tipoSolicitacao\" id=\"tipoSolicitacao\"><option class=\"form-group\"" +
     marko_attr("value", "") +
     " disabled selected>Clique para selecionar</option>");
 
