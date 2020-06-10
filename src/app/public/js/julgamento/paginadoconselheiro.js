@@ -1425,36 +1425,36 @@ function dataTable(dados) {
         responsive: 2,
         download: true,
       },
-      {
-        title: 'Turma',
-        field: 'turma',
-        sorter: 'string',
-        hozAlign: 'center',
-        headerFilter: 'input',
-        editor: false,
-        responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Câmara',
-        field: 'camara',
-        sorter: 'string',
-        hozAlign: 'center',
-        headerFilter: 'input',
-        editor: false,
-        responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Seção',
-        field: 'setor',
-        sorter: 'string',
-        hozAlign: 'center',
-        headerFilter: 'input',
-        editor: false,
-        responsive: 2,
-        download: true,
-      },
+      // {
+      //   title: 'Turma',
+      //   field: 'turma',
+      //   sorter: 'string',
+      //   hozAlign: 'center',
+      //   headerFilter: 'input',
+      //   editor: false,
+      //   responsive: 2,
+      //   download: true,
+      // },
+      // {
+      //   title: 'Câmara',
+      //   field: 'camara',
+      //   sorter: 'string',
+      //   hozAlign: 'center',
+      //   headerFilter: 'input',
+      //   editor: false,
+      //   responsive: 2,
+      //   download: true,
+      // },
+      // {
+      //   title: 'Seção',
+      //   field: 'setor',
+      //   sorter: 'string',
+      //   hozAlign: 'center',
+      //   headerFilter: 'input',
+      //   editor: false,
+      //   responsive: 2,
+      //   download: true,
+      // },
       {
         title: 'Equipe Atual',
         field: 'Equipe_Atual',
@@ -1826,7 +1826,7 @@ function countCalc(values, data, calcParams) {
 
 function grafico(dados) {
   var layoutAtividade = {
-    title: 'Processos por atividade',
+    //title: 'Carga de Horas por atividade',
     shapes: [],
     yaxis: {
       showticklabels: true,
@@ -1838,13 +1838,13 @@ function grafico(dados) {
       },
     },
     margin: {
-      l: 150,
-      r: 150,
+      l: 200,
+      r: 50,
       b: 50,
       t: 50,
     },
   };
-  let config = { responsive: false, displaylogo: false };
+  let config = { responsive: true, displaylogo: false };
   let somatorio = d3
     .nest()
     .rollup((v) => {
@@ -1856,7 +1856,7 @@ function grafico(dados) {
               d.Atividade == 'Para Relatar' &&
               d.Situacao == 'AGUARDANDO PAUTA'
             ) {
-              return 1;
+              return d.HE_CARF;
             }
           }),
         },
@@ -1864,7 +1864,7 @@ function grafico(dados) {
           y: 'Para Relatar - Cancelado',
           x: d3.sum(v, (d) => {
             if (d.Atividade == 'Para Relatar' && d.Situacao == 'CANCELADO') {
-              return 1;
+              return d.HE_CARF;
             }
           }),
         },
@@ -1875,7 +1875,7 @@ function grafico(dados) {
               d.Atividade == 'Para Relatar' &&
               d.Situacao == 'RETIRADO DE PAUTA'
             ) {
-              return 1;
+              return d.HE_CARF;
             }
           }),
         },
@@ -1886,7 +1886,7 @@ function grafico(dados) {
               d.Atividade == 'Para Relatar' &&
               d.Situacao == 'PEDIDO DE VISTA'
             ) {
-              return 1;
+              return d.HE_CARF;
             }
           }),
         },
@@ -1897,7 +1897,7 @@ function grafico(dados) {
               d.Atividade == 'Para Relatar' &&
               d.Situacao == 'INDICADO PARA PAUTA'
             ) {
-              return 1;
+              return d.HE_CARF;
             }
           }),
         },
@@ -1905,7 +1905,7 @@ function grafico(dados) {
           y: 'Para Relatar - Em Sessão',
           x: d3.sum(v, (d) => {
             if (d.Atividade == 'Para Relatar' && d.Situacao == 'EM SESSÃO') {
-              return 1;
+              return d.HE_CARF;
             }
           }),
         },
@@ -1913,7 +1913,7 @@ function grafico(dados) {
           y: 'Para Relatar - Em Pauta',
           x: d3.sum(v, (d) => {
             if (d.Atividade == 'Para Relatar' && d.Situacao == 'EM PAUTA') {
-              return 1;
+              return d.HE_CARF;
             }
           }),
         },
@@ -1921,7 +1921,7 @@ function grafico(dados) {
           y: 'Formalizar Voto Vencedor',
           x: d3.sum(v, (d) => {
             if (d.Atividade == 'Formalizar Voto Vencedor') {
-              return 1;
+              return d.HE_CARF;
             }
           }),
         },
@@ -1929,7 +1929,7 @@ function grafico(dados) {
           y: 'Apreciar e Assinar Documento',
           x: d3.sum(v, (d) => {
             if (d.Atividade == 'Apreciar e Assinar Documento') {
-              return 1;
+              return d.HE_CARF;
             }
           }),
         },
@@ -1937,7 +1937,7 @@ function grafico(dados) {
           y: 'Formalizar Decisão',
           x: d3.sum(v, (d) => {
             if (d.Atividade == 'Formalizar Decisao') {
-              return 1;
+              return d.HE_CARF;
             }
           }),
         },
@@ -1948,7 +1948,7 @@ function grafico(dados) {
               d.Atividade == 'Corrigir Decisao' ||
               d.Atividade == 'Corrigir Decisão'
             ) {
-              return 1;
+              return d.HE_CARF;
             }
           }),
         },
@@ -1988,7 +1988,7 @@ function grafico(dados) {
   arrayDados.orientation = 'h';
   arrayDados.type = 'bar';
   arrayDados.fillcolor = 'cls';
-  arrayDados.hovertemplate = `<i>Quantidade</i>: %{x:.d} processos<br>                         
+  arrayDados.hovertemplate = `<i>Carga</i>: %{x:.d} Horas CARF<br>                         
                             <b>%{text}</b>`;
   arrayDados.marker = {
     color: arrayDados.color,
