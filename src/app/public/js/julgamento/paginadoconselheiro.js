@@ -649,34 +649,37 @@ function elementosModal() {
     'Licença à gestante',
     'Licença à adotante',
     'Licença à paternidade',
-    'Licença para tratamento de saúde (homologado)',
+    'Licença para tratamento de saúde',
     'Licença em razão de casamento',
     'Licença por motivo de falecimento (cônjuge, companheiro, pais, madastra ou padrasto, filhos, enteados, menor sob guarda ou tutela e irmãos)',
-    'Mudança de colegiado (que implique em alteração de calendário da sessão de julgamento)',
     'Período de férias (marcado perante a RFB antes da designação para Conselheiro(a))',
   ];
   let arrayMeta = [
     'Licença à gestante',
     'Licença à adotante',
     'Licença à paternidade',
-    'Licença para tratamento de saúde (homologado)',
+    'Licença para tratamento de saúde',
     'Licença em razão de casamento',
     'Licença por motivo de falecimento (cônjuge, companheiro, pais, madastra ou padrasto, filhos, enteados, menor sob guarda ou tutela e irmãos)',
-    'Mudança de colegiado (que implique em alteração de calendário da sessão de julgamento)',
     'Participação em Seminário promovido pelo CARF',
     'Período de férias (marcado perante a RFB)',
   ];
   let arrayPrazo = [
-    'Compromisso assumido antes da designação para Conselheiro(a)',
     'Licença à gestante',
     'Licença à adotante',
     'Licença à paternidade',
-    'Licença para tratamento de saúde (homologado)',
+    'Licença para tratamento de saúde',
     'Licença em razão de casamento',
     'Licença por motivo de falecimento (cônjuge, companheiro, pais, madastra ou padrasto, filhos, enteados, menor sob guarda ou tutela e irmãos)',
-    'Mudança de colegiado (que implique em alteração de calendário da sessão de julgamento)',
     'Participação em Seminário promovido pelo CARF',
     'Período de férias (marcado perante a RFB)',
+  ];
+  let arrayMudanca = [
+    'Turma Extraordinária para Turma Ordinária da mesma Seção',
+    'Turma Extraordinária para Turma Ordinária de Seção Diferente',
+    'Turma Ordinária para Turma Ordinária da Mesma Seção',
+    'Turma Ordinária para Turma Ordinária de Seção Diferente',
+    'Turma Ordinária para Turma da Câmara Superior de Rcursos Fiscais',
   ];
   let html = '';
   $('#tipoSolicitacao').change((e) => {
@@ -685,6 +688,58 @@ function elementosModal() {
     html = '';
     $('#divTipo').text('');
     $('#enviaArq').text('');
+    if (
+      $('#tipoSolicitacao option:selected').val() ==
+      'Mudança de colegiado que implique em alteração de calendário da sessão de julgamento'
+    ) {
+      html = '';
+      $('#divTipo').text('');
+      $('#enviaArq').text('');
+      arrayMudanca.forEach((ops, i) => {
+        html += `<option class="form-group" value="${ops}">${ops}</option>`;
+      });
+      $('#divTipo').append(`
+            <div class='row'>
+                    <div class='col s7'>
+                    <label for="tipoAfastamento">Selecione o tipo de afastamento:</label> 
+                    <select required name="tipoAfastamento" id="tipoAfastamento">
+                                 ${html}
+                    </select>                   
+                    </div>
+          </div>
+          <div class='row'>
+            <div class="form-group inicioAfastamento input field col s3 ">
+            <input id="inicioAfastamento" name="inicioAfastamento"  type="text" class="datepicker"/>                      
+            <label for="inicioAfastamento">Data da Mudança</label>
+            </div> 
+          </div>
+          <div class='row'>          
+            <div class="input-field col s12">            
+            <i class="material-icons prefix">mode_edit</i>
+            <textarea id="observacoes" class="materialize-textarea"></textarea>
+            <label for="observacoes">Observações</label>
+            </div>
+          </div>
+            <br />`);
+      $('#enviaArq').append(`${formArq()}`);
+      $('.progress').toggle();
+      initDatePicker();
+      initSelect();
+      btnEnviaArq();
+      $('.concorda').click((e) => {
+        dadosForm = {
+          tipoSolicitacao: $('#tipoSolicitacao option:selected').val(),
+          tipoAfastamento: $('#tipoSolicitacao option:selected').val(),
+          horasDeducao: '',
+          dtInicio: $('#inicioAfastamento').val(),
+          dtFim: '',
+          status: 'Enviado para análise',
+          observacoes: ``,
+          arquivos: pegaArquivos(),
+        };
+        handleSOL(dadosForm, 'POST');
+      });
+    }
     if (
       $('#tipoSolicitacao option:selected').val() ==
       'Justificar Suspensão de Prazos Regimentais'
@@ -892,28 +947,33 @@ function elementosModal() {
             </select>                   
           </div>           
           <div class ='col s4 horasDeducao input-field'> 
-          <input id="horasDeducao" name="horasDeducao" type="number" class="validate"/>
+          <input id="horasDeducao" name="horasDeducao" value=4 type="number" class="active validate"/>
            <label for="horasDeducao">Total de horas a deduzir da Meta de Produtividade:</label>
            </div>
           </div>
           <div class='row'>
             <div class="form-group inicioAfastamento input field col s3 ">
             <input id="inicioAfastamento" name="inicioAfastamento"  type="text" class="datepicker"/>                      
-            <label for="inicioAfastamento">Início do Afastamento</label>
+            <label for="inicioAfastamento">Data da Sessão de Julgamento</label>
             </div>
-            <div class="form-group fimAfastamento input field col s3">
-            <input id="fimAfastamento" name="fimAfastamento" type="text" class="datepicker"/>            
-            <label for="fimAfastamento">Fim do Afastamento</label>
-            </div>
-            <div class ='col s6 diasUteis input-field'>           
-            <input id="diasUteis" name="diasUteis" type="number" class="validate"/>
-            <label for="diasUteis">Dias úteis do Período <strong>(excluídos os dias das Sessões de Julgamento):</strong></label>
-            </div>
+            <div class='col s7'>
+            <label for="turno">Turno de Participação</label> 
+            <select required name="turno" id="turno">
+            <option class="form-group" value="Manha">Manhã</option>
+            <option class="form-group" value="Tarde">Tarde</option>
+            </select>                   
+          </div>                  
+        </div>
+        <div class='row'> 
+        <blockquote>
+                    <strong>Importante:</strong>
+                    Caso tenha participado de sessão de julgamento em mais de uma turma por turno, selecione <strong>apenas</strong> a primeira turma de participação.
+                    As solicitações deverão ser feitas individualmente para cada turno de participação, onde serão abatidas 4 horas por turno.                    
+                  </blockquote>  
         </div>
         <div class='row'>          
         <div class="input-field col s12">
-        <i class="material-icons prefix">mode_edit</i>
-        
+        <i class="material-icons prefix">mode_edit</i>        
         <textarea id="observacoes" class="materialize-textarea"></textarea>
         <label for="observacoes">Observações</label>
         </div>
@@ -930,11 +990,9 @@ function elementosModal() {
           tipoAfastamento: $('#tipoAfastamento option:selected').val(),
           horasDeducao: $('#horasDeducao').val(),
           dtInicio: $('#inicioAfastamento').val(),
-          dtFim: $('#fimAfastamento').val(),
+          dtFim: '',
           status: 'Enviado para análise',
-          observacoes: `Dias úteis: ${$('#diasUteis').val()}, Observações: ${$(
-            '#observacoes',
-          ).val()}`,
+          observacoes: `Observações: ${$('#observacoes').val()}`,
           arquivos: pegaArquivos(),
         };
         handleSOL(dadosForm, 'POST');
@@ -1419,10 +1477,12 @@ function dataTable(dados) {
       {
         title: 'Contribuinte',
         field: 'Contribuinte',
+        headerFilter: 'input',
         sorter: 'string',
         hozAlign: 'center',
+        width: 150,
         editor: false,
-        responsive: 2,
+        responsive: 0,
         download: true,
       },
       // {
@@ -1520,6 +1580,7 @@ function dataTable(dados) {
         field: 'Dias_na_Atividade',
         sorter: 'number',
         hozAlign: 'center',
+        width: 140,
         topCalc: mediaCalc,
         editor: false,
         formatter: coloreDias,
@@ -1530,7 +1591,7 @@ function dataTable(dados) {
         title: 'Dias na Atividade na Próxima Sessão',
         field: 'Dias_na_Atividade',
         sorter: 'number',
-        width: 150,
+        width: 140,
         hozAlign: 'center',
         editor: false,
         formatter: formatDAPS,
