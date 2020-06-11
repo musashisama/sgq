@@ -318,49 +318,49 @@ function formataDados(msg) {
           }
         }),
         mai: d3.sum(v, (d) => {
-          if (d.mes == '4/2019' && d.trimestre == 'T2') {
+          if (d.mes == '4/2020' && d.trimestre == 'T2') {
             return +d.HE_CARF;
           }
         }),
         jun: d3.sum(v, (d) => {
           if (
-            (d.mes == '5/2019' && d.trimestre == 'T2') ||
-            (d.mes == '6/2019' && d.trimestre == 'T2')
+            (d.mes == '5/2020' && d.trimestre == 'T2') ||
+            (d.mes == '6/2020' && d.trimestre == 'T2')
           ) {
             return +d.HE_CARF;
           }
         }),
         jul: d3.sum(v, (d) => {
-          if (d.mes == '6/2019' && d.trimestre == 'T3') {
+          if (d.mes == '6/2020' && d.trimestre == 'T3') {
             return +d.HE_CARF;
           }
         }),
         ago: d3.sum(v, (d) => {
-          if (d.mes == '7/2019' && d.trimestre == 'T3') {
+          if (d.mes == '7/2020' && d.trimestre == 'T3') {
             return +d.HE_CARF;
           }
         }),
         set: d3.sum(v, (d) => {
           if (
-            (d.mes == '8/2019' && d.trimestre == 'T3') ||
-            (d.mes == '9/2019' && d.trimestre == 'T3')
+            (d.mes == '8/2020' && d.trimestre == 'T3') ||
+            (d.mes == '9/2020' && d.trimestre == 'T3')
           ) {
             return +d.HE_CARF;
           }
         }),
         out: d3.sum(v, (d) => {
-          if (d.mes == '9/2019' && d.trimestre == 'T4') {
+          if (d.mes == '9/2020' && d.trimestre == 'T4') {
             return +d.HE_CARF;
           }
         }),
         nov: d3.sum(v, (d) => {
-          if (d.mes == '10/2019' && d.trimestre == 'T4') {
+          if (d.mes == '10/2020' && d.trimestre == 'T4') {
             return +d.HE_CARF;
           }
         }),
         dez: d3.sum(v, (d) => {
           if (
-            (d.mes == '11/2019' && d.trimestre == 'T4') ||
+            (d.mes == '11/2020' && d.trimestre == 'T4') ||
             (d.mes == '12/2020' && d.trimestre == 'T4')
           ) {
             return +d.HE_CARF;
