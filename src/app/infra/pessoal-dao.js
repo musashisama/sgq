@@ -51,6 +51,7 @@ class PessoalDao {
       this._db.tipoOcorrencias
         .find(filtro)
         .project()
+        .sort({ tipoOcorrencia: 1 })
         .toArray(function (erro, res) {
           if (erro) {
             return reject('Erro na base de dados. Tente novamente mais tarde.');
@@ -60,31 +61,41 @@ class PessoalDao {
     });
   }
 
-  editaTipoOcorrencias(filtro) {
+  insereTpOcorrencia(registro) {
     return new Promise((resolve, reject) => {
-      this._db.tipoOcorrencias
-        .find(filtro)
-        .project()
-        .toArray(function (erro, res) {
-          if (erro) {
-            return reject('Erro na base de dados. Tente novamente mais tarde.');
-          }
-          return resolve(res);
-        });
+      this._db.tipoOcorrencias.insertOne(registro, function (erro, res) {
+        if (erro) {
+          return reject('Não foi possível inserir o registro.');
+        }
+        return resolve(res);
+      });
     });
   }
 
-  excluiTipoOcorrencias(filtro) {
+  editaTipoOcorrencias(id, registro) {
     return new Promise((resolve, reject) => {
-      this._db.tipoOcorrencias
-        .find(filtro)
-        .project()
-        .toArray(function (erro, res) {
+      delete registro.id;
+      this._db.tipoOcorrencias.updateOne(
+        { _id: id },
+        { $set: registro },
+        function (erro, res) {
           if (erro) {
             return reject('Erro na base de dados. Tente novamente mais tarde.');
           }
           return resolve(res);
-        });
+        },
+      );
+    });
+  }
+
+  excluiTipoOcorrencias(id) {
+    return new Promise((resolve, reject) => {
+      this._db.tipoOcorrencias.deleteOne({ _id: id }, function (erro, res) {
+        if (erro) {
+          return reject('Não foi possível excluir o registro.');
+        }
+        return resolve(res);
+      });
     });
   }
 
@@ -107,6 +118,7 @@ class PessoalDao {
       this._db.ocorrencias
         .find(filtro)
         .project()
+        .sort({ _id: 1 })
         .toArray(function (erro, res) {
           if (erro) {
             return reject('Erro na base de dados. Tente novamente mais tarde.');

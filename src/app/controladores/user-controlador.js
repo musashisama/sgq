@@ -57,7 +57,7 @@ class UserControlador {
       if (req.method == 'GET') {
         const pessoalDao = new PessoalDao(conn);
         pessoalDao
-          .getOcorrencias()
+          .getTipoOcorrencias()
           .then((ocorrencias) =>
             resp.marko(templates.admin.lista_ocorrencias, {
               ocorrencias: JSON.stringify(ocorrencias),
@@ -72,14 +72,16 @@ class UserControlador {
               resp.json(msg);
             });
           } else {
-            pessoalDao.editaOco(req.body).then((msg) => {
+            console.log(req.params.id);
+            const id = new ObjectID(req.params.id);
+            pessoalDao.editaTipoOcorrencias(id, req.body).then((msg) => {
               resp.json(msg);
             });
           }
         } else if (req.method == 'DELETE') {
           const id = new ObjectID(req.params.id);
           const pessoalDao = new PessoalDao(conn);
-          pessoalDao.deletaTpOCo(id).then((msg) => {
+          pessoalDao.excluiTipoOcorrencias(id).then((msg) => {
             resp.json(msg);
           });
         }
