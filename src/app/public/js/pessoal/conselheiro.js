@@ -6,10 +6,7 @@ let height = '1000px';
 let minHeight = '300px';
 let maxHeight = '1000px';
 let layout = 'fitColumns';
-let initialSort = [
-  { column: 'dtOcorrencia', dir: 'desc' },
-  { column: 'ocorDet', dir: 'desc' },
-];
+let initialSort = [{ column: 'dtOcorrencia', dir: 'desc' }];
 let langs = {
   'pt-br': {
     columns: {
@@ -218,7 +215,7 @@ function dataTable() {
     height: height,
     minHeight: minHeight,
     layout: layout,
-    //initialSort: initialSort,
+    initialSort: initialSort,
     resizableRows: true,
     responsiveLayout: 'collapse',
     responsiveLayoutCollapseStartOpen: false,
