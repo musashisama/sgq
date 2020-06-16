@@ -250,6 +250,7 @@ function dataTable() {
         title: 'Data da Ocorrência',
         field: 'dtOcorrencia',
         sorter: 'date',
+        sorterParams: { format: 'DD/MM/YYYY' },
         hozAlign: 'center',
         editor: false,
         headerFilter: 'input',
