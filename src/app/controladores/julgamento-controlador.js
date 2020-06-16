@@ -344,7 +344,6 @@ class JulgamentoControlador {
     return function (req, resp) {
       if (req.method == 'GET') {
         const pessoalDao = new PessoalDao(conn);
-        let cpf = req.user.cpf;
         if (
           req.user.perfis.includes('julgamento') &&
           req.session.baseUrl == '/julgamento/restrito/gestaosolicitacoes'
@@ -358,10 +357,12 @@ class JulgamentoControlador {
         if (
           req.user.perfis.includes('conselheiro') &&
           req.session.baseUrl == '/julgamento/conselheiros'
-        )
+        ) {
+          let cpf = req.user.cpf;
           pessoalDao.getSolicitacoes({ cpf: cpf }).then((msg) => {
             resp.json(msg);
           });
+        }
       } else {
         const pessoalDao = new PessoalDao(conn);
         if (req.method == 'POST' || req.method == 'PUT') {
@@ -382,12 +383,13 @@ class JulgamentoControlador {
                 pessoalDao.cadastraSolicitacao(req.body).then((msg) => {
                   Mailer.enviaMail(
                     'dipaj@carf.economia.gov.br',
-                    '[SGI] Novo status de solicitação',
+                    `[SGI] Novo status de solicitação - ${req.body.nome}`,
                     `<strong>Solicitação:</strong> ${req.body.tipoSolicitacao}<br/>
                     <strong>Detalhes:</strong> ${req.body.tipoAfastamento}<br/>
                     <strong>Status:</strong> ${req.body.status}<br/>
                     <strong>Observações:</strong> ${req.body.observacoes}<br/>
                     <strong>Data de Criação:</strong> ${req.body.dtCriacao}<br/>
+                    <strong>Nome do Solicitante:</strong> ${req.body.nome}<br/>
                     <strong>CPF do Solicitante:</strong> ${req.body.cpf}<br/>
 
                     <p><a href="http://${URL.host}/julgamento/restrito/gestaosolicitacoes"><strong>Gerenciar Solicitações</strong></a></p>

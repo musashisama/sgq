@@ -1211,6 +1211,7 @@ function btnEnviaArq() {
 function handleSOL(registro, metodo) {
   registro.uniqueId = moment.now();
   registro.dtCriacao = moment().format('DD/MM/YYYY');
+  registro.nome = $('.nomeSol').text();
   $.ajax({
     url: '/julgamento/conselheiros/solicitacoes',
     data: registro,
