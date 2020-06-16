@@ -45,7 +45,7 @@ function render(input, out, __component, component, state) {
       class: "sidenav"
     }, out, __component, "5");
 
-  out.w("<div class=\"container\"><h3 class=\"center-align titulo\"><strong>Cons. " +
+  out.w("<div class=\"container\"><h3 class=\"center-align titulo nomeSol\"><strong>Cons. " +
     marko_escapeXml(data.user.nome) +
     "</strong> - " +
     marko_escapeXml(data.user.tipo) +
