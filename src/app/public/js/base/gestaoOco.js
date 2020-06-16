@@ -168,7 +168,6 @@ let formatDeleta = function formatNome(cell) {
 function clicaEdita(e, cell) {
   $('.editaTipoOco').addClass('modal-trigger');
   montaModalEdita(e, cell);
-  console.log(cell.getRow().getData()._id);
   M.textareaAutoResize($('#tipoOcorrencia'));
   M.textareaAutoResize($('#descDet'));
 }
@@ -250,7 +249,6 @@ function handleOcorrencias(dados, metodo) {
     type: metodo,
     success: function (result) {
       var toastHTML = `<span>Dados atualizados com sucesso!</span>`;
-      console.log(dados);
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
       location.reload();
     },

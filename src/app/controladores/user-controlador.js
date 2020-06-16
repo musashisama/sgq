@@ -72,7 +72,6 @@ class UserControlador {
               resp.json(msg);
             });
           } else {
-            console.log(req.params.id);
             const id = new ObjectID(req.params.id);
             pessoalDao.editaTipoOcorrencias(id, req.body).then((msg) => {
               resp.json(msg);
