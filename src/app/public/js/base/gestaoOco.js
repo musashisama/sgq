@@ -1,12 +1,12 @@
 inicializaComponentes();
-var table = "";
+var table = '';
 var autoColumns = false;
 var locale = true;
-pagination = "local";
+pagination = 'local';
 height = '1000px';
 minHeight = '300px';
 maxHeight = '1000px';
-layout = "fitColumns";
+layout = 'fitColumns';
 responsiveLayout = true;
 
 function inicializaComponentes() {
@@ -20,14 +20,14 @@ function inicializaComponentes() {
 function btnInsere() {
   $('.addListaOco').click(function (event) {
     $('.addListaOco').addClass('modal-trigger');
-    montaModalInsere()
+    montaModalInsere();
   });
 }
 
 function montaModalInsere() {
   $('.hModal').text('');
   $('.pModal').text('');
-  $('.hModal').text("Adicionar Tipo de Ocorrência");
+  $('.hModal').text('Adicionar Tipo de Ocorrência');
   $('.pModal').append(
     `<form id="formOco" name="formOco" action="/admin/ocorrencias/cadastra" method="post">
     <div class="row">      
@@ -45,10 +45,13 @@ function montaModalInsere() {
       </div>
     </div>
   </form>
-          </p>`
+          </p>`,
   );
   $('.concorda').click(function () {
-    dados = { tipoOcorrencia: $('#tipoOcorrencia').val(), descDet: $('#descDet').val() }
+    dados = {
+      tipoOcorrencia: $('#tipoOcorrencia').val(),
+      descDet: $('#descDet').val(),
+    };
     $('.hModal').text('');
     $('.pModal').text('');
     handleOcorrencias(dados, 'POST');
@@ -56,7 +59,7 @@ function montaModalInsere() {
   $('.cancela').click(function () {
     $('.hModal').text('');
     $('.pModal').text('');
-  })
+  });
 }
 
 function initModal() {
@@ -65,79 +68,113 @@ function initModal() {
 
 function dataTable() {
   tabledata = JSON.parse($('form').attr('data-ocorrencias'));
-  table = new Tabulator("#tabelaOcorrencias", {
+  table = new Tabulator('#tabelaOcorrencias', {
     data: tabledata,
-    pagination: "local",
-    height: "1000px",
+    pagination: 'local',
+    height: '1000px',
     minHeight: '300px',
     maxHeight: '1000px',
     layout: layout,
     resizableRows: true,
     responsiveLayout: 'collapse',
     responsiveLayoutCollapseStartOpen: false,
-    initialSort: [{ column: "tipoOcorrencia", dir: "asc" }],
+    initialSort: [{ column: 'tipoOcorrencia', dir: 'asc' }],
     columns: [
-      { formatter: "responsiveCollapse", width: 30, minWidth: 30, hozAlign: "left", resizable: false, headerSort: false },
-      { title: "Tipo de Ocorrência", field: "tipoOcorrencia", sorter: "string", hozAlign: "left", headerFilter: "input", formatter: "textarea", editor: false, responsive: 0, },
-      { title: "Descrição Detalhada", field: "descDet", sorter: "string", hozAlign: "left", headerFilter: "input", formatter: "textarea", editor: false, responsive: 0 },
-      { formatter: formatEdita, cellClick: clicaEdita, width: 40, hozAlign: "center" },
-      { formatter: formatDeleta, cellClick: clicaDeleta, width: 40, hozAlign: "center" },
-
-
+      {
+        formatter: 'responsiveCollapse',
+        width: 30,
+        minWidth: 30,
+        hozAlign: 'left',
+        resizable: false,
+        headerSort: false,
+      },
+      {
+        title: 'Tipo de Ocorrência',
+        field: 'tipoOcorrencia',
+        sorter: 'string',
+        hozAlign: 'left',
+        headerFilter: 'input',
+        formatter: 'textarea',
+        editor: false,
+        responsive: 0,
+      },
+      {
+        title: 'Descrição Detalhada',
+        field: 'descDet',
+        sorter: 'string',
+        hozAlign: 'left',
+        headerFilter: 'input',
+        formatter: 'textarea',
+        editor: false,
+        responsive: 0,
+      },
+      {
+        formatter: formatEdita,
+        cellClick: clicaEdita,
+        width: 40,
+        hozAlign: 'center',
+      },
+      {
+        formatter: formatDeleta,
+        cellClick: clicaDeleta,
+        width: 40,
+        hozAlign: 'center',
+      },
     ],
     autoColumns: false,
     locale: true,
     langs: {
-      "pt-br": {
-        "columns": {
-          "name": "Nome", //replace the title of column name with the value "Name"
+      'pt-br': {
+        columns: {
+          name: 'Nome', //replace the title of column name with the value "Name"
         },
-        "ajax": {
-          "loading": "Carregando", //ajax loader text
-          "error": "Erro", //ajax error text
+        ajax: {
+          loading: 'Carregando', //ajax loader text
+          error: 'Erro', //ajax error text
         },
-        "groups": { //copy for the auto generated item count in group header
-          "item": "item", //the singular  for item
-          "items": "itens", //the plural for items
+        groups: {
+          //copy for the auto generated item count in group header
+          item: 'item', //the singular  for item
+          items: 'itens', //the plural for items
         },
-        "pagination": {
-          "page_size": "Quantidade de registros", //label for the page size select element
-          "first": "Primeira", //text for the first page button
-          "first_title": "Primeira Página", //tooltip text for the first page button
-          "last": "Última",
-          "last_title": "Última Página",
-          "prev": "Anterior",
-          "prev_title": "Página Anterior",
-          "next": "Próxima",
-          "next_title": "Próxima Página",
+        pagination: {
+          page_size: 'Quantidade de registros', //label for the page size select element
+          first: 'Primeira', //text for the first page button
+          first_title: 'Primeira Página', //tooltip text for the first page button
+          last: 'Última',
+          last_title: 'Última Página',
+          prev: 'Anterior',
+          prev_title: 'Página Anterior',
+          next: 'Próxima',
+          next_title: 'Próxima Página',
         },
-        "headerFilters": {
-          "default": "filtrar coluna...", //default header filter placeholder text
-          "columns": {
-            "tipoOcorrencia": "Filtrar por Tipo",
-          }
-        }
-      }
+        headerFilters: {
+          default: 'filtrar coluna...', //default header filter placeholder text
+          columns: {
+            tipoOcorrencia: 'Filtrar por Tipo',
+          },
+        },
+      },
     },
   });
 }
 
 let formatEdita = function formatNome(cell) {
-  return `<a class='editaTipoOco' title='Editar' href='#modal1'><i class='material-icons orange-text'>edit</i></a>`
-}
+  return `<a class='editaTipoOco' title='Editar' href='#modal1'><i class='material-icons orange-text'>edit</i></a>`;
+};
 let formatDeleta = function formatNome(cell) {
-  return `<a class='deletaTipoOco' title='Excluir' href='#modal1'><i class='material-icons red-text'>cancel</i></a>`
-}
+  return `<a class='deletaTipoOco' title='Excluir' href='#modal1'><i class='material-icons red-text'>cancel</i></a>`;
+};
 function clicaEdita(e, cell) {
   $('.editaTipoOco').addClass('modal-trigger');
   montaModalEdita(e, cell);
-  M.textareaAutoResize($('#tipoOcorrencia'))
-  M.textareaAutoResize($('#descDet'))
+  M.textareaAutoResize($('#tipoOcorrencia'));
+  M.textareaAutoResize($('#descDet'));
 }
 function montaModalEdita(e, cell) {
   $('.hModal').text('');
   $('.pModal').text('');
-  $('.hModal').text("Edição de Tipo de Ocorrência");
+  $('.hModal').text('Edição de Tipo de Ocorrência');
   $('.pModal').append(
     `<form id="formOco" name="formOco" action="/admin/ocorrencias/cadastra" method="post">
     <div class="row">      
@@ -155,15 +192,19 @@ function montaModalEdita(e, cell) {
       </div>
     </div>
   </form>
-          </p>`
+          </p>`,
   );
-  $('#tipoOcorrencia').val(cell.getRow().getData().tipoOcorrencia)
-  M.textareaAutoResize($('#tipoOcorrencia'))
-  $('#descDet').val(cell.getRow().getData().descDet)
-  M.textareaAutoResize($('#descDet'))
-  M.updateTextFields()
+  $('#tipoOcorrencia').val(cell.getRow().getData().tipoOcorrencia);
+  M.textareaAutoResize($('#tipoOcorrencia'));
+  $('#descDet').val(cell.getRow().getData().descDet);
+  M.textareaAutoResize($('#descDet'));
+  M.updateTextFields();
   $('.concorda').click(function () {
-    dados = { id: cell.getRow().getData()._id, tipoOcorrencia: $('#tipoOcorrencia').val(), descDet: $('#descDet').val() }
+    dados = {
+      id: cell.getRow().getData()._id,
+      tipoOcorrencia: $('#tipoOcorrencia').val(),
+      descDet: $('#descDet').val(),
+    };
     $('.hModal').text('');
     $('.pModal').text('');
     handleOcorrencias(dados, 'POST');
@@ -171,7 +212,7 @@ function montaModalEdita(e, cell) {
   $('.cancela').click(function () {
     $('.hModal').text('');
     $('.pModal').text('');
-  })
+  });
 }
 
 function clicaDeleta(e, cell) {
@@ -182,12 +223,12 @@ function clicaDeleta(e, cell) {
 function montaModalDeleta(e, cell) {
   $('.hModal').text('');
   $('.pModal').text('');
-  $('.hModal').text("Confirmação de Exclusão de Tipo de Ocorrência");
+  $('.hModal').text('Confirmação de Exclusão de Tipo de Ocorrência');
   $('.pModal').append(
     `<p class="pModal">
           <br/>
           Tem certeza que quer excluir o registro?
-          </p>`
+          </p>`,
   );
   $('.concorda').click(function () {
     handleOcorrencias({ id: cell.getRow().getData()._id }, 'DELETE');
@@ -198,13 +239,12 @@ function montaModalDeleta(e, cell) {
   $('.cancela').click(function () {
     $('.hModal').text('');
     $('.pModal').text('');
-  })
+  });
 }
-
 
 function handleOcorrencias(dados, metodo) {
   $.ajax({
-    url: `/admin/ocorrencias/${dados.id ? dados.id : 1}`,
+    url: `/admin/ocorrencias/${dados.id ? dados.id : (dados.id = 1)}`,
     data: dados,
     type: metodo,
     success: function (result) {
@@ -215,7 +255,6 @@ function handleOcorrencias(dados, metodo) {
     error: function (result) {
       var toastHTML = `<span>Ocorreu um erro.</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
-
-    }
-  })
+    },
+  });
 }
