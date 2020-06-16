@@ -248,6 +248,7 @@ function dataTable() {
         field: 'dtOcorrencia',
         sorter: 'date',
         hozAlign: 'center',
+        sorterParams: { format: 'DD/MM/YYYY' },
         editor: false,
         headerFilter: 'input',
         responsive: 0,
