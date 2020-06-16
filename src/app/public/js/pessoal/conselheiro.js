@@ -58,6 +58,7 @@ function inicializaComponentes() {
     btnVolta();
     dataTable();
     initTabs();
+    table.setSort('dtOcorrencia', 'desc');
     $('.btn-cons-salva').toggle();
   });
 }
@@ -218,7 +219,10 @@ function dataTable() {
     height: height,
     minHeight: minHeight,
     layout: layout,
-    initialSort: initialSort,
+    initialSort: [
+      { column: 'dtOcorrencia', dir: 'desc' },
+      { column: 'ocorDet', dir: 'desc' },
+    ],
     resizableRows: true,
     responsiveLayout: 'collapse',
     responsiveLayoutCollapseStartOpen: false,
