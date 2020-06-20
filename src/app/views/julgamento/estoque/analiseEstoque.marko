@@ -6,7 +6,9 @@
     <main class="conteudoPrincipal">
       <app-navbar id="slide-out" class="sidenav"/>
       <div class="container">
-        <h3 class="center-align titulo">Relatório Gerencial de Acompanhamento de Prazos</h3>
+        <div id="dataCAL" data-cal=`${data.cal}`/>
+        <div id="dataUnidades" data-unidades=`${data.unidades}`/>
+        <h3 class="center-align titulo">Análise de Estoque Distribuído aos Conselheiros</h3>
         <br/>
         <form id="formGerencial" data-regapCojul=`${data.relatorio}` name="formGerencial" action="/julgamento/restrito/regap-cojul/detalha/" method="post">
           <div class="col s12">
@@ -22,6 +24,33 @@
           <div id="processos" class="col s12">
             <br/>
             <div class="row">
+              <h5>Parâmetros</h5>
+              <div class="col s5">
+                <h6>Valor Originário</h6>
+                <br/>
+                <br/>
+                <div id="sliderValor"/>
+                <br/>
+                <br/>
+                <!-- <div class="input-field">
+                  <input id="inputValor" type="text"/>
+                  <label for="inputValor">Valor</label>
+                </div> -->
+              </div>
+              <!-- <div class="col s5 offset-s1">
+                <h6>Dias na atividade após próxima sessão de julgamento</h6>
+                <br/>
+                <br/>
+                <div id="sliderDias"/>
+                <br/>
+                <br/>
+                 <div class="input-field">
+                  <input id="inputDias" type="text"/>
+                  <label for="inputDias">Número de Dias</label>
+                </div> 
+              </div> -->
+            </div>
+            <div class="row">
               <div class="form-group input-field  col s3">
                 <select class="Atividade" name="atividadeSelect">
                   <option class="form-group" value="Todas" selected>Todas</option>
@@ -36,10 +65,10 @@
               <div class="col s3 right-align"/>
               <div class="col s6 right-align">
                 <app-drop-download/>
-                <a href="#!" id="mostraColunasAtividade" title="Agrupar/Desagrupar por Atividade" class="waves-effect waves-green hoverable z-depth-3 btn-floating blue">
+                <a href="#!" id="mostraColunasAtividade" title="Agrupar/Desagrupar por Atividade" class="waves-effect waves-yellow hoverable z-depth-3 btn-floating blue">
                   <i class="material-icons">unfold_less</i>
                 </a>
-                <a href="#!" id="mostraColunasTurma" title="Agrupar/Desagrupar por Turma/Câmara/Seção" class="waves-effect waves-yellow hoverable z-depth-3 btn-floating orange">
+                <a href="#!" id="mostraColunasTurma" title="Agrupar/Desagrupar por Turma/Câmara/Seção" class="waves-effect waves-red hoverable z-depth-3 btn-floating orange">
                   <i class="material-icons">unfold_more</i>
                 </a>
                 <a href="#modal2" id="mostraLegenda" title="Mostrar Legenda da Tabela" class="waves-effect waves-purple hoverable z-depth-3 btn-floating black">
@@ -75,9 +104,11 @@
     </div>
     <app-footer/>
     <app-scripts-js/>
+    <script src="/estatico/js/libs/wNumb.min.js"/>
+    <script src="/estatico/js/libs/nouislider.min.js"/>
     <script src="/estatico/js/libs/plotly-latest.min.js"/>
     <script src="/estatico/js/libs/plotly-locale-pt-br.js"/>
     <script>Plotly.setPlotConfig({locale: 'pt-BR'})</script>
-    <script src="/estatico/js/julgamento/regapCojul.js"/>
+    <script src="/estatico/js/julgamento/analiseEstoque.js"/>
   </body>
 </html>

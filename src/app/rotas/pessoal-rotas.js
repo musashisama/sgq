@@ -20,11 +20,17 @@ module.exports = (app) => {
   app.use(rotasPessoal.autenticadas, function (req, resp, next) {
     req.session.baseUrl = req.baseUrl;
     if (req.isAuthenticated()) {
+      resp.set('autenticado', true);
       next();
     } else {
       resp.redirect(rotasBase.login);
     }
   });
+
+  app
+    .route(rotasPessoal.unidades)
+    .get(pessoalControlador.handleUnidades())
+    .post(pessoalControlador.handleUnidades());
 
   app.use(rotasPessoal.autenticadas, function (req, resp, next) {
     if (

@@ -9,6 +9,7 @@ class PessoalControlador {
     return {
       autenticadas: '/pessoal/restrito*',
       agenda: '/pessoal/agenda',
+      unidades: '/pessoal/restrito/unidades',
       pessoas: '/pessoal/restrito/pessoas',
       detalhaPess: '/pessoal/restrito/pessoas/:id',
       getcadastro: '/pessoal/restrito/getcadastro',
@@ -235,7 +236,42 @@ class PessoalControlador {
         .catch((erro) => console.log(erro));
     };
   }
-
+  handleUnidades() {
+    return function (req, resp) {
+      if (req.method == 'POST') {
+        const pessoalDao = new PessoalDao(conn);
+        pessoalDao.getUnidades({ tipo: req.body.tipo }).then((msg) => {
+          resp.json(msg);
+        });
+      } else {
+        const pessoalDao = new PessoalDao(conn);
+        if (req.method == 'POST' || req.method == 'PUT') {
+          pessoalDao.getUnidades({ tipo: req.body.tipo }).then((msg) => {
+            if (!msg[0]) {
+              req.body.portal = 'cogec';
+              pessoalDao.inserePortal(req.body).then((msg) => {
+                resp.json(msg);
+              });
+            } else {
+              pessoalDao
+                .atualizaPortal({ uniqueId: req.body.uniqueId }, req.body)
+                .then((msg) => {
+                  resp.json(msg);
+                });
+            }
+          });
+        } else if (req.method == 'DELETE') {
+          console.log('delete');
+          console.log(req.body);
+          pessoalDao
+            .excluiPortal({ uniqueId: req.body.uniqueId })
+            .then((msg) => {
+              resp.json(msg);
+            });
+        }
+      }
+    };
+  }
   editaOcorrencia() {
     return function (req, resp) {
       const id = req.params.id;

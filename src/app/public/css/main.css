@@ -472,6 +472,18 @@ summary::-webkit-details-marker {
     background: linear-gradient(90deg, rgba(249, 255, 143, 1) 0%, rgba(189, 193, 40, 1) 50%, rgba(249, 255, 143, 1) 100%);
 }
 
+.LegEmbargo {
+    background-color: #c2bd73;
+}
+
+.LegRetornoDilg {
+    background-color: #93ceb0;
+}
+
+.LegRepetitivo {
+    background-color: #b98cca;
+}
+
 #solModal .modal {
     width: 100%;
     height: 100%;

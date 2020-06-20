@@ -39,6 +39,7 @@ const { ObjectID } = require('mongodb');
 const path = 'src/app/arquivos/csv/';
 let registro = {};
 const url = require('url');
+const pessoal = require('../views/pessoal');
 let dados = [];
 let nome = '';
 let newpath = '';
@@ -65,11 +66,15 @@ class JulgamentoControlador {
       escolhecsv: '/julgamento/restrito/escolhe-csv',
       escolhecsvregap: '/julgamento/restrito/escolhe-csv-regap',
       escolhecsvreinp: '/julgamento/restrito/escolhe-csv-reinp',
+      escolhecsvanaliseestoque:
+        '/julgamento/restrito/escolhe-csv-analiseEstoque',
       reinp: '/julgamento/restrito/reinp/:id',
       detalhareinp: '/julgamento/restrito/reinp/detalha/:id',
       escolhecsvcons: '/julgamento/restrito/escolhe-csv-cons',
       detalhaestoque: '/julgamento/restrito/diagnostico-carga/:id',
       regapCojul: '/julgamento/restrito/regap-cojul/:id',
+      analiseEstoque: '/julgamento/restrito/analise-estoque/:id',
+      detalhaAnEstoque: '/julgamento/restrito/analise-estoque/detalha/:id',
       detalharegap: '/julgamento/restrito/regap-cojul/detalha/:id',
       regap: '/julgamento/restrito/regap/:id',
       gestaoGC: '/julgamento/restrito/gestaoGC/:id',
@@ -560,6 +565,49 @@ class JulgamentoControlador {
         .catch((erro) => console.log(erro));
     };
   }
+  escolheCSVAnaliseEstoque() {
+    return function (req, resp) {
+      const julgamentoDao = new JulgamentoDao(conn);
+      let options = {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        weekday: 'long',
+      };
+      const formato = {
+        minimumFractionDigits: 2,
+        style: 'currency',
+        currency: 'BRL',
+      };
+      julgamentoDao
+        .getRelatorios({ $or: [{ tipoRel: 'Estoque' }] })
+        .then((dados) => {
+          dados.forEach((dado) => {
+            dado.semana = dado.semana;
+            dado.dataEnvio = moment(dado.dataEnvio).format('DD/MM/YYYY');
+            dado.dias = moment(dado.dtExtracao, 'DD/MM/YYYY').fromNow();
+            dado.caminho = dado.caminho.split('/');
+            dado.caminho = dado.caminho[4];
+            dado.totalCSRF = dado.ParaRelatarCSRF + dado.FormalizarCSRF;
+            dado.totalTOTE = dado.ParaRelatarTOTE + dado.FormalizarTOTE;
+            dado.total = dado.totalCSRF + dado.totalTOTE;
+            dado.totalHoras = dado.totalHorasTOTE + dado.totalHorasCSRF;
+            dado.totalValorCSRF = dado.totalValorCSRF.toLocaleString(
+              'pt-BR',
+              formato,
+            );
+            dado.totalValorTOTE = dado.totalValorTOTE.toLocaleString(
+              'pt-BR',
+              formato,
+            );
+          });
+          resp.marko(templates.julgamento.escolhecsvanaliseestoque, {
+            dados: dados,
+          });
+        })
+        .catch((erro) => console.log(erro));
+    };
+  }
   escolheCSVRegap() {
     return function (req, resp) {
       const julgamentoDao = new JulgamentoDao(conn);
@@ -749,6 +797,38 @@ class JulgamentoControlador {
             });
         });
       });
+    };
+  }
+  carregaPaginaAnaliseEstoque() {
+    return function (req, resp) {
+      let caminho = req.params.id;
+      req.session.caminho = caminho;
+      dados = CSVHandler.pegaRegap(`${path}${caminho}`, 'COJUL').then(
+        (dados) => {
+          const pessoalDao = new PessoalDao(conn);
+          pessoalDao.getUsers().then((users) => {
+            dados.forEach((dado) => {
+              users.forEach((user) => {
+                if (dado.CPF == user.cpf) {
+                  dado.nome = user.nome;
+                  dado.setor = user.setor;
+                  dado.camara = user.camara;
+                  dado.turma = user.turma;
+                  dado._id = new ObjectID(user._id);
+                  dado.dtFimMandato = user.dtFimMandato;
+                }
+              });
+            });
+            const julgamentoDao = new JulgamentoDao(conn);
+            julgamentoDao.getCal().then((cal) => {
+              resp.marko(templates.julgamento.analiseEstoque, {
+                relatorio: JSON.stringify(dados),
+                cal: JSON.stringify(cal),
+              });
+            });
+          });
+        },
+      );
     };
   }
   carregaPaginaRegapCojul() {

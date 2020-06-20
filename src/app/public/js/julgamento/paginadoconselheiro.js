@@ -165,6 +165,13 @@ function initDatePicker() {
 
 function initModal() {
   $('.modal').modal();
+  btnLegenda();
+}
+function btnLegenda() {
+  $('#mostraLegenda').click((e) => {
+    e.preventDefault();
+    $('#mostraLegenda').addClass('modal-trigger');
+  });
 }
 
 function calendario(dias) {
@@ -737,7 +744,7 @@ function elementosModal() {
           observacoes: ``,
           arquivos: pegaArquivos(),
         };
-        handleSOL(dadosForm, 'POST');
+        handleSOL(dadosForm, 'POST', 'dipaj');
       });
     }
     if (
@@ -798,12 +805,12 @@ function elementosModal() {
           ).val()}`,
           arquivos: pegaArquivos(),
         };
-        handleSOL(dadosForm, 'POST');
+        handleSOL(dadosForm, 'POST', 'segep');
       });
     }
     if (
       $('#tipoSolicitacao option:selected').val() ==
-      'Justificar faltas à Sessões de Julgamento'
+      'Justificar Faltas à Sessões de Julgamento'
     ) {
       html = '';
       $('#divTipo').text('');
@@ -859,7 +866,7 @@ function elementosModal() {
           ).val()}`,
           arquivos: pegaArquivos(),
         };
-        handleSOL(dadosForm, 'POST');
+        handleSOL(dadosForm, 'POST', 'segep');
       });
     }
     if (
@@ -925,7 +932,7 @@ function elementosModal() {
           ).val()}`,
           arquivos: pegaArquivos(),
         };
-        handleSOL(dadosForm, 'POST');
+        handleSOL(dadosForm, 'POST', 'segep');
       });
     }
     if (
@@ -995,7 +1002,7 @@ function elementosModal() {
           observacoes: `Observações: ${$('#observacoes').val()}`,
           arquivos: pegaArquivos(),
         };
-        handleSOL(dadosForm, 'POST');
+        handleSOL(dadosForm, 'POST', 'dipaj');
       });
     }
     if (
@@ -1050,7 +1057,7 @@ function elementosModal() {
           ).val()}, Observações: ${$('#observacoes').val()}`,
           arquivos: pegaArquivos(),
         };
-        handleSOL(dadosForm, 'POST');
+        handleSOL(dadosForm, 'POST', 'dipaj');
       });
     }
     if (
@@ -1112,7 +1119,7 @@ function elementosModal() {
           ).val()}`,
           arquivos: pegaArquivos(),
         };
-        handleSOL(dadosForm, 'POST');
+        handleSOL(dadosForm, 'POST', 'dipaj');
       });
     }
     if (
@@ -1181,7 +1188,7 @@ function elementosModal() {
           ).val()}, Observações: ${$('#observacoes').val()}`,
           arquivos: pegaArquivos(),
         };
-        handleSOL(dadosForm, 'POST');
+        handleSOL(dadosForm, 'POST', 'dipaj');
       });
     }
   });
@@ -1208,7 +1215,8 @@ function btnEnviaArq() {
   });
 }
 
-function handleSOL(registro, metodo) {
+function handleSOL(registro, metodo, setor) {
+  registro.setor = setor;
   registro.uniqueId = moment.now();
   registro.dtCriacao = moment().format('DD/MM/YYYY');
   registro.nome = $('.nomeSol').text();
@@ -1449,8 +1457,8 @@ function dataTable(dados) {
     groupStartOpen: false,
     responsiveLayoutCollapseStartOpen: false,
     initialSort: [
-      { column: 'Atividade', dir: 'desc' },
       { column: 'Dias_na_Atividade', dir: 'desc' },
+      { column: 'Atividade', dir: 'desc' },
       { column: 'HE_CARF', dir: 'desc' },
     ],
     columns: [
@@ -1486,36 +1494,6 @@ function dataTable(dados) {
         responsive: 0,
         download: true,
       },
-      // {
-      //   title: 'Turma',
-      //   field: 'turma',
-      //   sorter: 'string',
-      //   hozAlign: 'center',
-      //   headerFilter: 'input',
-      //   editor: false,
-      //   responsive: 2,
-      //   download: true,
-      // },
-      // {
-      //   title: 'Câmara',
-      //   field: 'camara',
-      //   sorter: 'string',
-      //   hozAlign: 'center',
-      //   headerFilter: 'input',
-      //   editor: false,
-      //   responsive: 2,
-      //   download: true,
-      // },
-      // {
-      //   title: 'Seção',
-      //   field: 'setor',
-      //   sorter: 'string',
-      //   hozAlign: 'center',
-      //   headerFilter: 'input',
-      //   editor: false,
-      //   responsive: 2,
-      //   download: true,
-      // },
       {
         title: 'Equipe Atual',
         field: 'Equipe_Atual',
@@ -1843,7 +1821,38 @@ function coloreDias(cell, formatterParams, valor) {
     cell.getElement().style.color = '#D8000C';
     cell.getElement().style.fontWeight = 'bolder';
   }
-
+  if (
+    cell.getRow().getData().Questionamento_CARF == 'EMBARGOS DE DECLARAÇÃO' &&
+    cell.getRow().getData().Equipe_Ultima.includes('DIPRO') &&
+    cell.getRow().getData().AtividadeUltima == 'Distribuir / Sortear'
+  ) {
+    let elem = document.querySelector('.LegEmbargo');
+    let estilo = getComputedStyle(elem);
+    cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+  }
+  if (
+    cell.getRow().getData().Questionamento_CARF != 'EMBARGOS DE DECLARAÇÃO' &&
+    cell.getRow().getData().Equipe_Ultima.includes('DIPRO') &&
+    cell.getRow().getData().AtividadeUltima == 'Tratar Retorno de Processo'
+  ) {
+    let elem = document.querySelector('.LegRetornoDilg');
+    let estilo = getComputedStyle(elem);
+    cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+  }
+  if (
+    cell.getRow().getData().Questionamento_CARF == 'EMBARGOS DE DECLARAÇÃO' &&
+    cell.getRow().getData().Equipe_Ultima.includes('DIPRO') &&
+    cell.getRow().getData().AtividadeUltima == 'Tratar Retorno de Processo'
+  ) {
+    let elem = document.querySelector('.LegEmbargo');
+    let estilo = getComputedStyle(elem);
+    cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+  }
+  if (cell.getRow().getData().Observacoes.includes('.REP.')) {
+    let elem = document.querySelector('.LegRepetitivo');
+    let estilo = getComputedStyle(elem);
+    cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+  }
   return value;
 }
 
