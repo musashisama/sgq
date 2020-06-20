@@ -1,18 +1,27 @@
-inicializaComponentes();
 layout = 'fitDataFill';
 let table = null;
 let tabledata = '';
 responsiveLayout = true;
 let agrupado = false;
+let valValor,
+  valDias = 0;
 let agrupadoT = false;
+let unidades = '';
 initialSort = [{ column: 'nome', dir: 'asc' }];
+inicializaComponentes();
+
 function inicializaComponentes() {
   $(document).ready(function () {
-    initSelect();
-    dataTable();
-    initTabs();
-    initModal();
-    elementosTabela();
+    pegaUnidades().then((result) => {
+      unidades = result;
+      initSelect();
+      dataTable();
+      initTabs();
+      initModal();
+      sliderValor();
+      sliderDias();
+      elementosTabela();
+    });
   });
 }
 
@@ -27,12 +36,78 @@ function btnLegenda() {
   });
 }
 
+function sliderValor() {
+  let sliderValor = document.getElementById('sliderValor');
+  let formato = wNumb({
+    mark: ',',
+    thousand: '.',
+    prefix: 'R$',
+  });
+  noUiSlider.create(sliderValor, {
+    start: 0,
+    connect: 'lower',
+    step: 250000,
+    orientation: 'horizontal',
+    range: {
+      min: 0,
+      '25%': 1000000,
+      max: 15000000,
+    },
+    pips: {
+      mode: 'range',
+      density: 4,
+      format: formato,
+    },
+  });
+
+  sliderValor.noUiSlider.on('update', () => {
+    table.removeFilter('Valor_Originario', '>=', valValor);
+    table.addFilter('Valor_Originario', '>=', +sliderValor.noUiSlider.get());
+    valValor = +sliderValor.noUiSlider.get();
+    console.log(table.getFilters());
+  });
+}
+
+function sliderDias() {
+  let sliderDias = document.getElementById('sliderDias');
+  noUiSlider.create(sliderDias, {
+    start: 0,
+    connect: 'lower',
+    step: 30,
+    orientation: 'horizontal',
+    range: {
+      min: 0,
+      '15%': 30,
+      '30%': 60,
+      '45%': 90,
+      '60%': 180,
+      max: 400,
+    },
+    pips: {
+      mode: 'range',
+      density: 4,
+      format: wNumb({
+        suffix: 'dias',
+      }),
+    },
+  });
+
+  sliderDias.noUiSlider.on('update', () => {
+    console.log(sliderDias.noUiSlider.get());
+    table.removeFilter('Dias_na_Atividade', '>=', valDias);
+    table.addFilter('Dias_na_Atividade', '>=', sliderDias.noUiSlider.get());
+    valDias = sliderDias.noUiSlider.get();
+    console.log(table.getFilters());
+  });
+}
+
 function initTabs() {
   $('.tabs').tabs();
 }
 
 function elementosTabela() {
   $('.Atividade').change(() => {
+    //console.log($("select option:selected").val());
     table.setFilter('Atividade', '=', $('select option:selected').val());
     if ($('select option:selected').val() == 'Todas') {
       table.removeFilter('Atividade', '=', $('select option:selected').val());
@@ -115,36 +190,7 @@ function dataTable(msg) {
         responsive: 0,
         download: true,
       },
-      {
-        title: 'Turma',
-        field: 'turma',
-        sorter: 'string',
-        hozAlign: 'center',
-        headerFilter: 'input',
-        editor: false,
-        responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Câmara',
-        field: 'camara',
-        sorter: 'string',
-        hozAlign: 'center',
-        headerFilter: 'input',
-        editor: false,
-        responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Seção',
-        field: 'setor',
-        sorter: 'string',
-        hozAlign: 'center',
-        headerFilter: 'input',
-        editor: false,
-        responsive: 2,
-        download: true,
-      },
+
       {
         title: 'Equipe Atual',
         field: 'Equipe_Atual',
@@ -230,7 +276,49 @@ function dataTable(msg) {
         sorter: 'number',
         hozAlign: 'center',
         topCalc: mediaCalc,
+        headerFilter: 'input',
+        headerFilterPlaceholder: '>=',
+        headerFilterFunc: '>=',
         editor: false,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Dias na Atividade na Próxima Sessão',
+        field: 'Dias_na_Atividade',
+        sorter: 'number',
+        width: 140,
+        hozAlign: 'center',
+        editor: false,
+        headerFilter: 'input',
+        headerFilterPlaceholder: '>=',
+        headerFilterFunc: '>=',
+        formatter: formatDAPS,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Dias na Atividade em Duas Sessões',
+        field: 'Dias_na_Atividade',
+        sorter: 'number',
+        width: 140,
+        hozAlign: 'center',
+        headerFilter: 'input',
+        headerFilterPlaceholder: '>=',
+        headerFilterFunc: '>=',
+        editor: false,
+        formatter: formatDAPS2,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Dias na Atividade em Três Sessões',
+        field: 'Dias_na_Atividade',
+        sorter: 'number',
+        width: 140,
+        hozAlign: 'center',
+        editor: false,
+        formatter: formatDAPS3,
         responsive: 0,
         download: true,
       },
@@ -338,6 +426,269 @@ function dataTable(msg) {
   });
 }
 
+function pegaUnidades() {
+  return $.ajax({
+    url: '/pessoal/restrito/unidades',
+    data: { tipo: 'judicante' },
+    type: 'POST',
+    success: function (result) {
+      return result;
+    },
+    error: function (result) {
+      console.log(result);
+    },
+  });
+}
+
+function calendario(dias, unidade, sessoes) {
+  let calendario = JSON.parse($('#dataCAL').attr('data-cal'));
+  let cor = '';
+  unidades.forEach((und) => {
+    if (unidade == und.unidade) {
+      cor = und.semana;
+    }
+  });
+  let datas = [];
+  calendario.forEach((c) => {
+    if (
+      moment(c.start, 'DD/MM/YYYY').isSameOrAfter(moment()) &&
+      c.classNames.includes(cor)
+    ) {
+      datas.push(moment(c.start, 'DD/MM/YYYY').diff(moment(), 'days'));
+      c;
+    }
+  });
+  if (sessoes == 2) {
+    for (let i = 0; i < datas.length; i++) {
+      if (datas[i] === Math.min(...datas)) {
+        datas.splice(i, 1);
+      }
+    }
+  }
+  if (sessoes == 3) {
+    for (let i = 0; i < datas.length; i++) {
+      if (datas[i] === Math.min(...datas)) {
+        datas.splice(i, 1);
+      }
+    }
+    for (let i = 0; i < datas.length; i++) {
+      if (datas[i] === Math.min(...datas)) {
+        datas.splice(i, 1);
+      }
+    }
+  }
+  return +dias + Math.min(...datas);
+}
+
+function formatDAPS(cell) {
+  let value = calendario(cell.getValue(), cell.getRow().getData().Equipe_Atual);
+  if (
+    cell.getRow().getData().Atividade == 'Para Relatar' &&
+    cell.getRow().getData().Situacao == 'AGUARDANDO PAUTA'
+  ) {
+    if (value >= 180) {
+      cell.getElement().style.color = '#D8000C';
+      cell.getElement().style.fontWeight = 'bolder';
+    }
+    if (value < 180 && value >= 140) {
+      cell.getElement().style.color = 'rgb(245, 131, 0)';
+      cell.getElement().style.fontWeight = 'bolder';
+    }
+    if (value < 140) {
+      cell.getElement().style.color = 'rgb(63, 138, 2)';
+      cell.getElement().style.fontWeight = 'bolder';
+    }
+  }
+
+  if (
+    cell.getRow().getData().Atividade == 'Formalizar Decisao' &&
+    value >= 30
+  ) {
+    cell.getElement().style.color = '#D8000C';
+    cell.getElement().style.fontWeight = 'bolder';
+  }
+  if (cell.getRow().getData().Atividade == 'Formalizar Decisao' && value < 30) {
+    cell.getElement().style.color = 'rgb(245, 131, 0)';
+    cell.getElement().style.fontWeight = 'bolder';
+  }
+  if (
+    cell.getRow().getData().Atividade == 'Formalizar Voto Vencedor' &&
+    value >= 30
+  ) {
+    cell.getElement().style.color = '#D8000C';
+    cell.getElement().style.fontWeight = 'bolder';
+  }
+  if (
+    cell.getRow().getData().Atividade == 'Formalizar Voto Vencedor' &&
+    value < 30
+  ) {
+    cell.getElement().style.color = 'rgb(245, 131, 0)';
+    cell.getElement().style.fontWeight = 'bolder';
+  }
+
+  if (
+    cell.getRow().getData().Atividade == 'Apreciar e Assinar Documento' &&
+    value >= 15
+  ) {
+    cell.getElement().style.color = '#D8000C';
+    cell.getElement().style.fontWeight = 'bolder';
+  }
+  if (
+    cell.getRow().getData().Atividade == 'Apreciar e Assinar Documento' &&
+    value < 15
+  ) {
+    cell.getElement().style.color = 'rgb(245, 131, 0)';
+    cell.getElement().style.fontWeight = 'bolder';
+  }
+  if (cell.getRow().getData().Atividade == 'Corrigir Decisão' && value >= 1) {
+    cell.getElement().style.color = '#D8000C';
+    cell.getElement().style.fontWeight = 'bolder';
+  }
+  return value;
+}
+
+function formatDAPS2(cell) {
+  let value = calendario(
+    cell.getValue(),
+    cell.getRow().getData().Equipe_Atual,
+    2,
+  );
+  if (
+    cell.getRow().getData().Atividade == 'Para Relatar' &&
+    cell.getRow().getData().Situacao == 'AGUARDANDO PAUTA'
+  ) {
+    if (value >= 180) {
+      cell.getElement().style.color = '#D8000C';
+      cell.getElement().style.fontWeight = 'bolder';
+    }
+    if (value < 180 && value >= 140) {
+      cell.getElement().style.color = 'rgb(245, 131, 0)';
+      cell.getElement().style.fontWeight = 'bolder';
+    }
+    if (value < 140) {
+      cell.getElement().style.color = 'rgb(63, 138, 2)';
+      cell.getElement().style.fontWeight = 'bolder';
+    }
+  }
+
+  if (
+    cell.getRow().getData().Atividade == 'Formalizar Decisao' &&
+    value >= 30
+  ) {
+    cell.getElement().style.color = '#D8000C';
+    cell.getElement().style.fontWeight = 'bolder';
+  }
+  if (cell.getRow().getData().Atividade == 'Formalizar Decisao' && value < 30) {
+    cell.getElement().style.color = 'rgb(245, 131, 0)';
+    cell.getElement().style.fontWeight = 'bolder';
+  }
+  if (
+    cell.getRow().getData().Atividade == 'Formalizar Voto Vencedor' &&
+    value >= 30
+  ) {
+    cell.getElement().style.color = '#D8000C';
+    cell.getElement().style.fontWeight = 'bolder';
+  }
+  if (
+    cell.getRow().getData().Atividade == 'Formalizar Voto Vencedor' &&
+    value < 30
+  ) {
+    cell.getElement().style.color = 'rgb(245, 131, 0)';
+    cell.getElement().style.fontWeight = 'bolder';
+  }
+
+  if (
+    cell.getRow().getData().Atividade == 'Apreciar e Assinar Documento' &&
+    value >= 15
+  ) {
+    cell.getElement().style.color = '#D8000C';
+    cell.getElement().style.fontWeight = 'bolder';
+  }
+  if (
+    cell.getRow().getData().Atividade == 'Apreciar e Assinar Documento' &&
+    value < 15
+  ) {
+    cell.getElement().style.color = 'rgb(245, 131, 0)';
+    cell.getElement().style.fontWeight = 'bolder';
+  }
+  if (cell.getRow().getData().Atividade == 'Corrigir Decisão' && value >= 1) {
+    cell.getElement().style.color = '#D8000C';
+    cell.getElement().style.fontWeight = 'bolder';
+  }
+  return value;
+}
+
+function formatDAPS3(cell) {
+  let value = calendario(
+    cell.getValue(),
+    cell.getRow().getData().Equipe_Atual,
+    3,
+  );
+  if (
+    cell.getRow().getData().Atividade == 'Para Relatar' &&
+    cell.getRow().getData().Situacao == 'AGUARDANDO PAUTA'
+  ) {
+    if (value >= 180) {
+      cell.getElement().style.color = '#D8000C';
+      cell.getElement().style.fontWeight = 'bolder';
+    }
+    if (value < 180 && value >= 140) {
+      cell.getElement().style.color = 'rgb(245, 131, 0)';
+      cell.getElement().style.fontWeight = 'bolder';
+    }
+    if (value < 140) {
+      cell.getElement().style.color = 'rgb(63, 138, 2)';
+      cell.getElement().style.fontWeight = 'bolder';
+    }
+  }
+
+  if (
+    cell.getRow().getData().Atividade == 'Formalizar Decisao' &&
+    value >= 30
+  ) {
+    cell.getElement().style.color = '#D8000C';
+    cell.getElement().style.fontWeight = 'bolder';
+  }
+  if (cell.getRow().getData().Atividade == 'Formalizar Decisao' && value < 30) {
+    cell.getElement().style.color = 'rgb(245, 131, 0)';
+    cell.getElement().style.fontWeight = 'bolder';
+  }
+  if (
+    cell.getRow().getData().Atividade == 'Formalizar Voto Vencedor' &&
+    value >= 30
+  ) {
+    cell.getElement().style.color = '#D8000C';
+    cell.getElement().style.fontWeight = 'bolder';
+  }
+  if (
+    cell.getRow().getData().Atividade == 'Formalizar Voto Vencedor' &&
+    value < 30
+  ) {
+    cell.getElement().style.color = 'rgb(245, 131, 0)';
+    cell.getElement().style.fontWeight = 'bolder';
+  }
+
+  if (
+    cell.getRow().getData().Atividade == 'Apreciar e Assinar Documento' &&
+    value >= 15
+  ) {
+    cell.getElement().style.color = '#D8000C';
+    cell.getElement().style.fontWeight = 'bolder';
+  }
+  if (
+    cell.getRow().getData().Atividade == 'Apreciar e Assinar Documento' &&
+    value < 15
+  ) {
+    cell.getElement().style.color = 'rgb(245, 131, 0)';
+    cell.getElement().style.fontWeight = 'bolder';
+  }
+  if (cell.getRow().getData().Atividade == 'Corrigir Decisão' && value >= 1) {
+    cell.getElement().style.color = '#D8000C';
+    cell.getElement().style.fontWeight = 'bolder';
+  }
+  return value;
+}
+
 let formatNome = function formatNome(cell) {
   return `<a href='/julgamento/restrito/regap-cojul/detalha/${
     cell.getRow().getData().CPF
@@ -427,7 +778,6 @@ function coloreDias(cell, formatterParams) {
     cell.getElement().style.color = '#D8000C';
     cell.getElement().style.fontWeight = 'bolder';
   }
-
   if (
     cell.getRow().getData().Questionamento_CARF == 'EMBARGOS DE DECLARAÇÃO' &&
     cell.getRow().getData().Equipe_Ultima.includes('DIPRO') &&
@@ -505,7 +855,117 @@ function countCalc(values, data, calcParams) {
 dados = JSON.parse($('form').attr('data-regapCojul'));
 var layoutAtividade = {
   title: 'Processos por atividade',
-  shapes: [],
+  //showlegend: true,
+  shapes: [
+    // {
+    //     type: 'line',
+    //     // x-reference is assigned to the x-values
+    //     xref: 'x',
+    //     // y-reference is assigned to the plot paper [0,1]
+    //     yref: 'paper',
+    //     x0: '126',
+    //     y0: 0,
+    //     x1: '126',
+    //     y1: 1,
+    //     fillcolor: '#d11515',
+    //     opacity: 0.8,
+    //     line: {
+    //         color: '#d11515',
+    //         width: 1,
+    //         dash: 'dot'
+    //     }
+    // },
+    // {
+    //     type: 'line',
+    //     // x-reference is assigned to the x-values
+    //     xref: 'x',
+    //     // y-reference is assigned to the plot paper [0,1]
+    //     yref: 'paper',
+    //     x0: '252',
+    //     y0: 0,
+    //     x1: '252',
+    //     y1: 1,
+    //     fillcolor: '#b05d21',
+    //     opacity: 0.6,
+    //     line: {
+    //         color: '#b05d21',
+    //         width: 1,
+    //         dash: 'dot'
+    //     }
+    // },
+    // {
+    //     type: 'line',
+    //     // x-reference is assigned to the x-values
+    //     xref: 'x',
+    //     // y-reference is assigned to the plot paper [0,1]
+    //     yref: 'paper',
+    //     x0: '378',
+    //     y0: 0,
+    //     x1: '378',
+    //     y1: 1,
+    //     fillcolor: '#ebd831',
+    //     opacity: 0.6,
+    //     line: {
+    //         color: '#ebd831',
+    //         width: 1,
+    //         dash: 'dot'
+    //     }
+    // },
+    // {
+    //     type: 'line',
+    //     // x-reference is assigned to the x-values
+    //     xref: 'x',
+    //     // y-reference is assigned to the plot paper [0,1]
+    //     yref: 'paper',
+    //     x0: '504',
+    //     y0: 0,
+    //     x1: '504',
+    //     y1: 1,
+    //     fillcolor: '#b9eb31',
+    //     opacity: 0.6,
+    //     line: {
+    //         color: '#b9eb31',
+    //         width: 1,
+    //         dash: 'dot'
+    //     }
+    // },
+    // {
+    //     type: 'line',
+    //     // x-reference is assigned to the x-values
+    //     xref: 'x',
+    //     // y-reference is assigned to the plot paper [0,1]
+    //     yref: 'paper',
+    //     x0: '630',
+    //     y0: 0,
+    //     x1: '630',
+    //     y1: 1,
+    //     fillcolor: '#59b823',
+    //     opacity: 0.6,
+    //     line: {
+    //         width: 1,
+    //         color: '#59b823',
+    //         dash: 'dot'
+    //     }
+    // },
+    // {
+    //     type: 'line',
+    //     // x-reference is assigned to the x-values
+    //     xref: 'x',
+    //     // y-reference is assigned to the plot paper [0,1]
+    //     yref: 'paper',
+    //     x0: '756',
+    //     y0: 0,
+    //     x1: '756',
+    //     y1: 1,
+    //     fillcolor: '#0b7540',
+    //     opacity: 0.6,
+    //     line: {
+    //         width: 1,
+    //         color: '#0b7540',
+    //         dash: 'dot'
+    //     }
+    // },
+  ],
   yaxis: {
     showticklabels: true,
     tickangle: 0,

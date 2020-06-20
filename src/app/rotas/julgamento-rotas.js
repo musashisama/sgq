@@ -58,6 +58,10 @@ module.exports = (app) => {
     rotasJulgamento.regapCojul,
     julgControlador.carregaPaginaRegapCojul(),
   );
+  app.get(
+    rotasJulgamento.analiseEstoque,
+    julgControlador.carregaPaginaAnaliseEstoque(),
+  );
   app.get(rotasJulgamento.reinp, julgControlador.carregaPaginaReinp());
   app.get(
     rotasJulgamento.detalhareinp,
@@ -66,6 +70,10 @@ module.exports = (app) => {
   app.get(rotasJulgamento.escolhecsvregap, julgControlador.escolheCSVRegap());
   app.get(rotasJulgamento.escolhecsvreinp, julgControlador.escolheCSVReinp());
   app.get(rotasJulgamento.escolhecsv, julgControlador.escolheCSV());
+  app.get(
+    rotasJulgamento.escolhecsvanaliseestoque,
+    julgControlador.escolheCSVAnaliseEstoque(),
+  );
   app.get(rotasJulgamento.detalhaestoque, julgControlador.carregaPaginaDiag());
   app.get(rotasJulgamento.carregacsv, julgControlador.carregaPaginaInsereCSV());
   app.get(rotasJulgamento.portalCojul, julgControlador.carregaPortalCojul());
