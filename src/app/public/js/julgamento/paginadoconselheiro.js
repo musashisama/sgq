@@ -1217,6 +1217,7 @@ function btnEnviaArq() {
 
 function handleSOL(registro, metodo, setor) {
   registro.setor = setor;
+  registro.cpf = $('#cpfCons').text();
   registro.uniqueId = moment.now();
   registro.dtCriacao = moment().format('DD/MM/YYYY');
   registro.nome = $('.nomeSol').text();

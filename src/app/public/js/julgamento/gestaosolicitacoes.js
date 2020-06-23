@@ -200,7 +200,13 @@ async function montaModal(e, cell, user) {
            <i class="material-icons prefix">live_help</i>
            <label for="statusVal">Validação SEGEP:</label> 
            <select required name="statusVal" id="statusVal">
-           <option class="form-group" value='' disabled selected>Clique para selecionar</option>
+           <option class="form-group" value=${
+             cell.getRow().getData().statusSegep
+           } selected>${
+      cell.getRow().getData().statusSegep == 'DocVal'
+        ? 'Documento(s) Válido(s)'
+        : 'Documento(s) Inválido(s)'
+    }</option>
            <option class="form-group" value="DocVal">Documento(s) Válido(s)</option>          
            <option class="form-group" value="DocInval">Documento(s) Inválido(s)</option>        
            </select>                   
@@ -211,7 +217,9 @@ async function montaModal(e, cell, user) {
            <i class="material-icons prefix">live_help</i>
            <label for="statusApr">Solicitação aprovada ou rejeitada pela DIPAJ?</label> 
            <select required name="statusApr" id="statusApr">
-           <option class="form-group" value='' disabled selected>Clique para selecionar</option>
+           <option class="form-group" value=${
+             cell.getRow().getData().statusDipaj
+           } selected>${cell.getRow().getData().statusDipaj}</option>
            <option class="form-group" value="Aprovada">Aprovar</option>          
            <option class="form-group" value="Rejeitada">Rejeitar</option>        
            </select>                   
@@ -229,10 +237,12 @@ async function montaModal(e, cell, user) {
   btnArq();
   $('.concorda').click(function () {
     let dados = {
+      cpf: cell.getRow().getData().cpf,
       uniqueId: cell.getRow().getData().uniqueId,
       justificativas: $('#justificativas').val(),
       statusSegep: $('#statusVal').val(),
       statusDipaj: $('#statusApr').val(),
+      status: solicitacoes($('#statusVal').val(), $('#statusApr').val()),
     };
     handleSOL(dados, 'POST');
   });
@@ -246,6 +256,20 @@ function btnArq() {
     let a = $(e.target).attr('id');
     pegaArquivo(a);
   });
+}
+function solicitacoes(segep, dipaj) {
+  let result;
+  segep == '' || dipaj == ''
+    ? (result = 'Em análise')
+    : segep == 'DocInval' || dipaj == 'Rejeitada'
+    ? (result = 'Rejeitada')
+    : segep == 'DocVal' && dipaj == ''
+    ? (result = 'Aprovada pelo SEGEP')
+    : segep == 'DocVal' && dipaj == 'Aprovada'
+    ? (result = 'Aprovada')
+    : '';
+
+  return result;
 }
 function pegaLinks(cell) {
   console.log(cell.getRow().getData().arquivos);
