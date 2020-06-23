@@ -373,23 +373,35 @@ class PessoalControlador {
   cadastraCons() {
     return function (req, resp) {
       const pessoalDao = new PessoalDao(conn);
-      pessoalDao
-        .cadastraUser(req.body)
-        .then((conselheiro) => {
-          resp.redirect(PessoalControlador.rotas().conselheiros);
-        })
-        .catch((erro) => console.log(erro));
+      pessoalDao.getUsers({ cpf: req.body.cpf }).then((user) => {
+        if (user.length == 0) {
+          pessoalDao
+            .cadastraUser(req.body)
+            .then((conselheiro) => {
+              resp.redirect(PessoalControlador.rotas().conselheiros);
+            })
+            .catch((erro) => console.log(erro));
+        } else {
+          resp.send({ id: 0, msg: 'CPF já cadastrado na base.' });
+        }
+      });
     };
   }
   cadastraPess() {
     return function (req, resp) {
       const pessoalDao = new PessoalDao(conn);
-      pessoalDao
-        .cadastraUser(req.body)
-        .then((pessoa) => {
-          resp.redirect(PessoalControlador.rotas().pessoas);
-        })
-        .catch((erro) => console.log(erro));
+      pessoalDao.getUsers({ cpf: req.body.cpf }).then((user) => {
+        if (user.length == 0) {
+          pessoalDao
+            .cadastraUser(req.body)
+            .then((pessoa) => {
+              resp.redirect(PessoalControlador.rotas().pessoas);
+            })
+            .catch((erro) => console.log(erro));
+        } else {
+          resp.send({ id: 0, msg: 'CPF já cadastrado na base.' });
+        }
+      });
     };
   }
 }

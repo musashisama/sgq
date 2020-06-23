@@ -375,7 +375,7 @@ class JulgamentoControlador {
             .getSolicitacoes({ uniqueId: req.body.uniqueId })
             .then((msg) => {
               if (!msg[0]) {
-                req.body.cpf = req.user.cpf;
+                //req.body.cpf = req.user.cpf;
                 req.body.status == 'Aprovada' || req.body.status == 'Rejeitada'
                   ? (req.body.cpfDipaj = req.user.cpf)
                   : '';
@@ -403,7 +403,7 @@ class JulgamentoControlador {
                   resp.json(msg);
                 });
               } else {
-                req.body.cpf = req.user.cpf;
+                //req.body.cpf = req.user.cpf;
                 req.body.status == 'Aprovada' || req.body.status == 'Rejeitada'
                   ? (req.body.cpfDipaj = req.user.cpf)
                   : '';

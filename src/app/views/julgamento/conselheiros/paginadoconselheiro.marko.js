@@ -51,7 +51,9 @@ function render(input, out, __component, component, state) {
     marko_escapeXml(data.user.nome) +
     "</strong> - " +
     marko_escapeXml(data.user.tipo) +
-    "</h3><div class=\"row\"><div class=\"col s12\"><p><h6><strong>Turma:</strong> " +
+    "</h3><div class=\"row\"><div class=\"col s12\"><p><h6><strong>CPF:</strong><span id=\"cpfCons\">" +
+    marko_escapeXml(data.user.cpf) +
+    "</span></h6></p><p><h6><strong>Turma:</strong> " +
     marko_escapeXml(data.user.unidade) +
     "</h6></p><p><h6><strong>Final do Mandato:</strong> " +
     marko_escapeXml(data.user.dtFimMandato) +
@@ -112,19 +114,19 @@ function render(input, out, __component, component, state) {
 
   out.w("</select><label for=\"tipoSolicitacao\">Selecione o tipo de solicitação:</label></div></div><div class=\"row\"><div class=\"col s12\"><span id=\"divTipo\"></span></div></div><div class=\"row valign-wrapper\"><div id=\"enviaArq\" class=\"col s6 valign-wrapper\"></div><div id=\"mostraArq\" class=\"col s6\"><ul class=\"collection arqsUp\"></ul></div></div><blockquote><strong>Importante:</strong> Os afastamentos são aplicáveis <strong>apenas</strong> para efeitos de cálculo das <strong>Metas de Produtividade</strong>.<br> Dúvidas relativas aos <strong>efeitos financeiros</strong> devem ser tratadas diretamente com a <strong>COGEC</strong>.</blockquote></div></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda modal-close\">Confirma <i class=\"material-icons right\">send</i></button></div></div></div></div></div></main><footer class=\"page-footer rodape\"></footer>");
 
-  app_modal_tabela_legenda_tag({}, out, __component, "178");
+  app_modal_tabela_legenda_tag({}, out, __component, "182");
 
   out.w("<div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda modal-close\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
 
-  app_footer_tag({}, out, __component, "187");
+  app_footer_tag({}, out, __component, "191");
 
-  app_scripts_js_tag({}, out, __component, "188");
+  app_scripts_js_tag({}, out, __component, "192");
 
   out.w("<script src=\"/estatico/js/libs/plotly-latest.min.js\"></script><script src=\"/estatico/js/libs/plotly-locale-pt-br.js\"></script><script>Plotly.setPlotConfig({locale: 'pt-BR'})</script><script src=\"/estatico/js/libs/quill.min.js\"></script><script src=\"/estatico/js/julgamento/paginadoconselheiro.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "194");
+  await_reorderer_tag({}, out, __component, "198");
 
   out.w("</body></html>");
 }
