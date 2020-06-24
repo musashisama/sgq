@@ -14,7 +14,7 @@ nav {
 
 .baixoNav {
     height: 10px;
-    background-color: orange;
+    background-color: #ee813c;
     align-items: center;
     text-align: center;
 }
@@ -24,8 +24,10 @@ nav {
     align-items: center;
 }
 
+/*#1659bf;*/
+
 .cabecalho, .rodape {
-    background-color: #1659bf;
+    background-color: #0062a0;
     width: 100%;
 }
 
@@ -40,7 +42,7 @@ nav {
 blockquote {
     margin: 20px 0;
     padding-left: 1.5rem;
-    border-left: 5px solid #3867b7;
+    border-left: 5px solid #0062a0;
 }
 
 body {
@@ -58,20 +60,20 @@ body {
 }
 
 h3 {
-    color: #3867b7;
+    color: #0062a0;
 }
 
 h4 {
-    color: #3867b7a6;
+    color: #0062a0a6;
 }
 
 h5 {
-    color: #3867b777;
+    color: #0062a077;
 }
 
 .icones {
     vertical-align: middle;
-    color: orange;
+    color: #ee813c;
 }
 
 .erro {
@@ -91,12 +93,6 @@ h5 {
 .iconeRemove {
     color: #c62828;
 }
-
-/* .addListaNC {
-    position: fixed;
-    bottom: 50%;
-    right: 10%;
-} */
 
 .mp {
     text-align: center;
@@ -153,7 +149,7 @@ h5 {
     margin-top: 20px;
     margin-bottom: 10px;
     transition: .3s;
-    color: #1659bf;
+    color: #0062a0;
     vertical-align: middle;
     text-align: center;
     font-size: 30px;
@@ -236,12 +232,12 @@ h5 {
 }
 
 .tabulator-responsive-collapse-toggle-open {
-    color: #1659bf;
+    color: #0062a0;
     background-color: #F2F5F7;
 }
 
 .tabulator-responsive-collapse-toggle-close {
-    color: #1659bf;
+    color: #0062a0;
     background-color: #F2F5F7;
 }
 
@@ -283,17 +279,17 @@ summary::-webkit-details-marker {
 }
 
 .tabs .tab a {
-    color: #3867b7;
+    color: #0062a0;
 }
 
 .tabs .tab a:hover {
     background-color: #eee;
-    color: #3867b7;
+    color: #0062a0;
 }
 
 .tabs .tab a.active {
     background-color: rgba(56, 103, 183, 0.1);
-    color: #3867b7;
+    color: #0062a0;
 }
 
 .tabs .tab a:focus, .tabs .tab a:focus.active {
@@ -302,7 +298,7 @@ summary::-webkit-details-marker {
 }
 
 .tabs .indicator {
-    background-color: #3867b7;
+    background-color: #0062a0;
 }
 
 /* width */
@@ -321,14 +317,14 @@ summary::-webkit-details-marker {
 /* Handle */
 
 ::-webkit-scrollbar-thumb {
-    background: #3867b7;
+    background: #0062a0;
     border-radius: 10px;
 }
 
 /* Handle on hover */
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #3867b788;
+    background: #0062a088;
 }
 
 .alturaTextArea {
@@ -338,24 +334,24 @@ summary::-webkit-details-marker {
 .breads {
     border-radius: 10px;
     max-height: 30px;
-    color: #3867b7;
+    color: #0062a0;
     align-items: center;
     /* text-align: center;     */
     margin-top: 10px;
 }
 
 .breadcrumb {
-    color: #3867b7;
+    color: #0062a0;
     vertical-align: middle;
 }
 
 .breadcrumb:before {
-    color: orange;
+    color: #ee813c;
     vertical-align: middle;
 }
 
 .breadcrumb:last-child {
-    color: #3867b788;
+    color: #0062a088;
     vertical-align: middle;
 }
 
