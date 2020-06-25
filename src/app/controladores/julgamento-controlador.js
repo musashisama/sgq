@@ -387,7 +387,7 @@ class JulgamentoControlador {
                   let endereco =
                     req.body.setor == 'dipaj'
                       ? 'dipaj@carf.economia.gov.br'
-                      : 'paulo.junior@carf.economia.gov.br';
+                      : 'segep@carf.economia.gov.br';
                   let urlMail =
                     req.body.setor == 'dipaj' ? 'julgamento' : 'pessoal';
                   Mailer.enviaMail(
