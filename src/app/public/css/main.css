@@ -1,3 +1,18 @@
+@font-face {
+    font-family: SwissMedium;
+    src: url(swiss-721-medium-bt.ttf)
+}
+
+@font-face {
+    font-family: SwissLight;
+    src: url(swiss-721-light-bt.ttf)
+}
+
+@font-face {
+    font-family: Swiss;
+    src: url(Swiss-721-BT-Font.ttf)
+}
+
 .container-header {
     width: 100%;
 }
@@ -32,6 +47,7 @@ nav {
 }
 
 .titulo-sistema {
+    font-family: SwissMedium;
     font-size: 2.5em;
     color: white;
     padding-left: 2.5%;
@@ -46,6 +62,7 @@ blockquote {
 }
 
 body {
+    font-family: Swiss;
     display: flex;
     min-height: 100vh;
     flex-direction: column;
