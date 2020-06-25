@@ -98,7 +98,6 @@ class JulgamentoControlador {
             .getPortal({ uniqueId: req.body.uniqueId })
             .then((msg) => {
               if (!msg[0]) {
-                req.body.portal = 'cojul';
                 julgamentoDao.inserePortal(req.body).then((msg) => {
                   resp.json(msg);
                 });
@@ -375,7 +374,6 @@ class JulgamentoControlador {
             .getSolicitacoes({ uniqueId: req.body.uniqueId })
             .then((msg) => {
               if (!msg[0]) {
-                //req.body.cpf = req.user.cpf;
                 req.body.status == 'Aprovada' || req.body.status == 'Rejeitada'
                   ? (req.body.cpfDipaj = req.user.cpf)
                   : '';
@@ -386,8 +384,14 @@ class JulgamentoControlador {
                   ),
                 );
                 pessoalDao.cadastraSolicitacao(req.body).then((msg) => {
+                  let endereco =
+                    req.body.setor == 'dipaj'
+                      ? 'dipaj@carf.economia.gov.br'
+                      : 'paulo.junior@carf.economia.gov.br';
+                  let urlMail =
+                    req.body.setor == 'dipaj' ? 'julgamento' : 'pessoal';
                   Mailer.enviaMail(
-                    'dipaj@carf.economia.gov.br',
+                    endereco,
                     `[SGI] Novo status de solicitação - ${req.body.nome}`,
                     `<strong>Solicitação:</strong> ${req.body.tipoSolicitacao}<br/>
                     <strong>Detalhes:</strong> ${req.body.tipoAfastamento}<br/>
@@ -397,13 +401,12 @@ class JulgamentoControlador {
                     <strong>Nome do Solicitante:</strong> ${req.body.nome}<br/>
                     <strong>CPF do Solicitante:</strong> ${req.body.cpf}<br/>
 
-                    <p><a href="http://${URL.host}/julgamento/restrito/gestaosolicitacoes"><strong>Gerenciar Solicitações</strong></a></p>
+                    <p><a href="http://${URL.host}/${urlMail}/restrito/gestaosolicitacoes"><strong>Gerenciar Solicitações</strong></a></p>
                     `,
                   );
                   resp.json(msg);
                 });
               } else {
-                //req.body.cpf = req.user.cpf;
                 req.body.status == 'Aprovada' || req.body.status == 'Rejeitada'
                   ? (req.body.cpfDipaj = req.user.cpf)
                   : '';

@@ -1441,6 +1441,15 @@ function tabelaSolicitacoes() {
         headerFilter: 'input',
         responsive: 1,
       },
+      {
+        title: 'Justificativas para Rejeição',
+        field: 'justificativas',
+        sorter: 'string',
+        hozAlign: 'center',
+        editor: false,
+        headerFilter: 'input',
+        responsive: 1,
+      },
     ],
   });
 }
