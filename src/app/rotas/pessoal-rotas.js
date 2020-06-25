@@ -95,4 +95,10 @@ module.exports = (app) => {
     rotasPessoal.excluiOcorrencia,
     pessoalControlador.excluiOcorrencia(),
   );
+
+  app
+    .route(rotasPessoal.gestaosolicitacoes)
+    .get(pessoalControlador.handleSolicitacoes())
+    .post(pessoalControlador.handleSolicitacoes())
+    .delete(pessoalControlador.handleSolicitacoes());
 };

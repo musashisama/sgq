@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <app-scripts-css/>
+  <body>
+    <app-header/>
+    <main class="conteudoPrincipal">
+      <app-navbar id="slide-out" class="sidenav"/>
+      <div class="container">
+        <h3 class="center-align titulo">Gestão de Solicitações dos Conselheiros do CARF</h3>
+        <div id="solicitacoes" data-solicitacoes=`${data.solicitacoes}`/>
+        <div class="row">
+          <div id="tabelaSolicitacoes"/>
+        </div>
+        <br/>
+      </div>
+    </main>
+    <app-modal/>
+    <app-footer/>
+    <app-scripts-js/>
+    <script src="/estatico/js/pessoal/gestaosolicitacoes.js"/>
+  </body>
+</html>

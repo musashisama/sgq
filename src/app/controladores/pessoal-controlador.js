@@ -11,6 +11,7 @@ class PessoalControlador {
       agenda: '/pessoal/agenda',
       unidades: '/pessoal/restrito/unidades',
       pessoas: '/pessoal/restrito/pessoas',
+      gestaosolicitacoes: '/pessoal/restrito/gestaosolicitacoes',
       detalhaPess: '/pessoal/restrito/pessoas/:id',
       getcadastro: '/pessoal/restrito/getcadastro',
       cadastraPess: '/pessoal/restrito/pessoas/cadastra',
@@ -30,6 +31,91 @@ class PessoalControlador {
     };
   }
 
+  handleSolicitacoes() {
+    return function (req, resp) {
+      if (req.method == 'GET') {
+        const pessoalDao = new PessoalDao(conn);
+        if (
+          req.user.perfis.includes('pessoal') &&
+          req.session.baseUrl == '/pessoal/restrito/gestaosolicitacoes'
+        ) {
+          pessoalDao.getSolicitacoes({}).then((msg) => {
+            resp.marko(templates.pessoal.gestaosolicitacoes, {
+              solicitacoes: JSON.stringify(msg),
+            });
+          });
+        }
+        if (
+          req.user.perfis.includes('conselheiro') &&
+          req.session.baseUrl == '/julgamento/conselheiros'
+        ) {
+          let cpf = req.user.cpf;
+          pessoalDao.getSolicitacoes({ cpf: cpf }).then((msg) => {
+            resp.json(msg);
+          });
+        }
+      } else {
+        const pessoalDao = new PessoalDao(conn);
+        if (req.method == 'POST' || req.method == 'PUT') {
+          pessoalDao
+            .getSolicitacoes({ uniqueId: req.body.uniqueId })
+            .then((msg) => {
+              if (!msg[0]) {
+                req.body.status == 'Aprovada' || req.body.status == 'Rejeitada'
+                  ? (req.body.cpfDipaj = req.user.cpf)
+                  : '';
+                let URL = url.parse(
+                  (req.headers.referrer || req.headers.referer).replace(
+                    '/login',
+                    '',
+                  ),
+                );
+                pessoalDao.cadastraSolicitacao(req.body).then((msg) => {
+                  Mailer.enviaMail(
+                    'dipaj@carf.economia.gov.br',
+                    `[SGI] Novo status de solicitação - ${req.body.nome}`,
+                    `<strong>Solicitação:</strong> ${req.body.tipoSolicitacao}<br/>
+                    <strong>Detalhes:</strong> ${req.body.tipoAfastamento}<br/>
+                    <strong>Status:</strong> ${req.body.status}<br/>
+                    <strong>Observações:</strong> ${req.body.observacoes}<br/>
+                    <strong>Data de Criação:</strong> ${req.body.dtCriacao}<br/>
+                    <strong>Nome do Solicitante:</strong> ${req.body.nome}<br/>
+                    <strong>CPF do Solicitante:</strong> ${req.body.cpf}<br/>
+
+                    <p><a href="http://${URL.host}/julgamento/restrito/gestaosolicitacoes"><strong>Gerenciar Solicitações</strong></a></p>
+                    `,
+                  );
+                  resp.json(msg);
+                });
+              } else {
+                req.body.status == 'DocVal' || req.body.status == 'DocInval'
+                  ? (req.body.cpfSegep = req.user.cpf)
+                  : '';
+                pessoalDao.editaSolicitacao(req.body).then((msg) => {
+                  resp.json(msg);
+                });
+              }
+            });
+        } else if (req.method == 'DELETE') {
+          pessoalDao
+            .getSolicitacoes({ uniqueId: req.body.uniqueId })
+            .then((msg) => {
+              if (msg[0].status == 'Enviado para análise') {
+                pessoalDao
+                  .excluiSolicitacao({ uniqueId: req.body.uniqueId })
+                  .then((msg) => {
+                    resp.json(msg);
+                  });
+              } else {
+                resp.send(
+                  'Não foi possível excluir. Já está em análise. Entre em contato com a DIPAJ/COJUL.',
+                );
+              }
+            });
+        }
+      }
+    };
+  }
   carregaAgenda() {
     return function (req, resp) {
       const pessoalDao = new PessoalDao(conn);
@@ -94,7 +180,6 @@ class PessoalControlador {
             .getPortal({ uniqueId: req.body.uniqueId })
             .then((msg) => {
               if (!msg[0]) {
-                req.body.portal = 'cogec';
                 julgamentoDao.inserePortal(req.body).then((msg) => {
                   resp.json(msg);
                 });

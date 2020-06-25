@@ -8,4 +8,5 @@ module.exports = {
   cadcons: require('./conselheiros/cadastra_cons.marko'),
   gestaoPortal: require('./portalcogec/gestaoPortal.marko'),
   portalCogec: require('./portalcogec/portalcogec.marko'),
+  gestaosolicitacoes: require('./gestaosolicitacoes/gestaosolicitacoes.marko'),
 };

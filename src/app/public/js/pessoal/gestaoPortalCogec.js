@@ -77,6 +77,7 @@ function montaModal() {
       link: quillLink.root.innerHTML,
       secaoGC: $('#secaoGC option:selected').val(),
       uniqueId: moment.now(),
+      portal: 'cogec',
     };
     handleFAQ(data, 'POST');
     $('.pModal').text('');
@@ -87,6 +88,7 @@ function montaModal() {
 }
 
 function handleFAQ(registro, metodo) {
+  console.log(registro);
   $.ajax({
     url: '/julgamento/restrito/gestaoportalcojul',
     data: registro,

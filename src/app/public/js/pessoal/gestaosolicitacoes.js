@@ -167,24 +167,6 @@ async function montaModal(e, cell, user) {
   $('.hModal').text(``);
   $('.pModal').text(``);
   $('.hModal').text(`Solicitação do Conselheiro`);
-  let campoJustificativa = `<div class='row'>          
-  <div class="input-field col s12">
-  <i class="material-icons prefix">mode_edit</i>        
-  <textarea id="justificativas" class="materialize-textarea"></textarea>
-  <label for="justificativas">Justificativas para <strong>rejeição:</strong></label>
-  </div>
-  </div>`;
-  let campoDipaj = `<div class='row'>
-  <div class='col s7'>
-  <i class="material-icons prefix">live_help</i>
-  <label for="statusApr">Solicitação aprovada ou rejeitada pela DIPAJ?</label> 
-  <select required name="statusApr" id="statusApr">
-  <option class="form-group" value='' disabled selected>Escolha uma opção</option>
-  <option class="form-group" value="Aprovada">Aprovar</option>          
-  <option class="form-group" value="Rejeitada">Rejeitar</option>        
-  </select>                   
-</div>
-</div> `;
   $('.pModal').append(
     `<div class='row'>
         <p>
@@ -210,25 +192,28 @@ async function montaModal(e, cell, user) {
             <strong>Observações:</strong> ${
               cell.getRow().getData().observacoes
             }<br/> 
-            <strong>Validação Segep:</strong> ${
-              cell.getRow().getData().statusSegep == 'DocVal'
-                ? 'Documento(s) Válido(s)'
-                : cell.getRow().getData().statusSegep == ''
-                ? ''
-                : 'Documento(s) Inválido(s)'
-            }     <br />
             <strong>Arquivos:</strong> ${pegaLinks(cell)}<br/> 
            </p>
-           </div>           
-           ${cell.getRow().getData().status !== 'Rejeitada' ? campoDipaj : ''}
-         ${
-           cell.getRow().getData().status !== 'Rejeitada'
-             ? campoJustificativa
-             : ''
-         }
-         `,
+           </div>
+           <div class='row'>
+           <div class='col s7'>
+           <i class="material-icons prefix">live_help</i>
+           <label for="statusVal">Validação SEGEP:</label> 
+           <select required name="statusVal" id="statusVal">
+           <option class="form-group" selected disabled value=''>Selecione uma opção</option>
+           <option class="form-group" value="DocVal">Documento(s) Válido(s)</option>          
+           <option class="form-group" value="DocInval">Documento(s) Inválido(s)</option>        
+           </select>                   
+         </div>
+         </div>            
+         <div class='row'>          
+         <div class="input-field col s12">
+         <i class="material-icons prefix">mode_edit</i>        
+         <textarea id="justificativas" class="materialize-textarea"></textarea>
+         <label for="justificativas">Justificativas para <strong>rejeição:</strong></label>
+         </div>
+         </div>`,
   );
-
   initSelect();
   btnArq();
   $('.concorda').click(function () {
@@ -236,12 +221,9 @@ async function montaModal(e, cell, user) {
       cpf: cell.getRow().getData().cpf,
       uniqueId: cell.getRow().getData().uniqueId,
       justificativas: $('#justificativas').val(),
-      statusSegep: cell.getRow().getData().statusSegep,
+      statusSegep: $('#statusVal').val(),
       statusDipaj: $('#statusApr').val(),
-      status: solicitacoes(
-        cell.getRow().getData().statusSegep,
-        $('#statusApr').val(),
-      ),
+      status: solicitacoes($('#statusVal').val(), $('#statusApr').val()),
     };
     handleSOL(dados, 'POST');
   });
@@ -258,7 +240,6 @@ function btnArq() {
 }
 function solicitacoes(segep, dipaj) {
   let result;
-  console.log(segep);
   segep == '' || dipaj == ''
     ? (result = 'Em análise')
     : segep == 'DocInval' || dipaj == 'Rejeitada'
@@ -268,7 +249,7 @@ function solicitacoes(segep, dipaj) {
     : segep == 'DocVal' && dipaj == 'Aprovada'
     ? (result = 'Aprovada')
     : '';
-  console.log(result);
+
   return result;
 }
 function pegaLinks(cell) {
