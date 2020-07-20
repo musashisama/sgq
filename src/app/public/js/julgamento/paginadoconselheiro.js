@@ -79,6 +79,7 @@ function inicializaComponentes() {
     downloadCons();
     btnModal();
     initDatePicker();
+    initCheckboxes();
   });
 }
 
@@ -197,6 +198,41 @@ function initSelect() {
 
 function initTabs() {
   $('.tabs').tabs();
+}
+
+function initCheckboxes() {
+  $(`#repetitivosCheck`).change(() => {
+    if ($(`#repetitivosCheck`).prop('checked')) {
+      tableRegap.addFilter(returnRep);
+    } else {
+      tableRegap.removeFilter(returnRep);
+    }
+  });
+  $(`#aguardandoPauta`).change(() => {
+    if ($(`#aguardandoPauta`).prop('checked')) {
+      tableRegap.addFilter(agPauta);
+    } else {
+      tableRegap.removeFilter(agPauta);
+    }
+  });
+  $(`#abaixoUM`).change(() => {
+    if ($(`#abaixoUM`).prop('checked')) {
+      tableRegap.addFilter('Valor_Originario', '<=', 1000000);
+    } else {
+      tableRegap.removeFilter('Valor_Originario', '<=', 1000000);
+    }
+  });
+}
+
+function agPauta(data) {
+  return (
+    data.Atividade.includes('Para Relatar') &&
+    data.Situacao.includes('AGUARDANDO PAUTA')
+  );
+}
+
+function returnRep(data) {
+  return !data.Observacoes.includes('.REP.');
 }
 
 function elementosTabelas() {
@@ -1471,6 +1507,13 @@ function dataTable(dados) {
       { column: 'Atividade', dir: 'desc' },
       { column: 'HE_CARF', dir: 'desc' },
     ],
+    downloadConfig: {
+      //  columnHeaders:false, //do not include column headers in downloaded table
+      //columnGroups:false, //do not include column groups in column headers for downloaded table
+      //rowGroups:false, //do not include row groups in downloaded table
+      columnCalcs: false, //do not include column calcs in downloaded table
+      //dataTree:false, //do not include data tree in downloaded table
+    },
     columns: [
       {
         formatter: 'responsiveCollapse',
@@ -1594,6 +1637,7 @@ function dataTable(dados) {
         hozAlign: 'center',
         editor: false,
         formatter: formatValor,
+        accessorDownload: downloadValor,
         responsive: 0,
         download: true,
       },
@@ -1605,7 +1649,7 @@ function dataTable(dados) {
         hozAlign: 'center',
         editor: false,
         responsive: 2,
-        download: true,
+        download: false,
       },
       {
         title: 'Data da Sessão de Julgamento',
@@ -1614,7 +1658,7 @@ function dataTable(dados) {
         hozAlign: 'center',
         editor: false,
         responsive: 2,
-        download: true,
+        download: false,
       },
       {
         title: 'Dias da Última Distribuição',
@@ -1623,7 +1667,7 @@ function dataTable(dados) {
         hozAlign: 'center',
         editor: false,
         responsive: 2,
-        download: true,
+        download: false,
       },
       {
         title: 'Retorno Sepoj?',
@@ -1641,7 +1685,7 @@ function dataTable(dados) {
         hozAlign: 'center',
         editor: false,
         responsive: 1,
-        download: true,
+        download: false,
       },
       {
         title: 'Alegações',
@@ -1652,17 +1696,17 @@ function dataTable(dados) {
         responsive: 2,
         download: true,
       },
-      {
-        title: 'Valor do Processo',
-        field: 'Valor',
-        sorter: 'number',
-        hozAlign: 'center',
-        editor: false,
-        visible: false,
-        formatter: formatValor,
-        responsive: 2,
-        download: true,
-      },
+      // {
+      //   title: 'Valor do Processo',
+      //   field: 'Valor',
+      //   sorter: 'number',
+      //   hozAlign: 'center',
+      //   editor: false,
+      //   visible: false,
+      //   formatter: formatValor,
+      //   responsive: 2,
+      //   download: true,
+      // },
       {
         title: 'Observações',
         field: 'Observacoes',
@@ -1745,6 +1789,10 @@ function formatDAPS(cell) {
   }
   return value;
 }
+
+let downloadValor = function (value, data, type, params, column) {
+  return value.replace('.', ',');
+};
 
 let formatValor = function formatValor(cell) {
   const formato = {

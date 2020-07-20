@@ -78,7 +78,7 @@ function dataTable(msg) {
         sorter: 'string',
         hozAlign: 'center',
         editor: false,
-        responsive: 2,
+        responsive: 0,
         download: true,
       },
       {
