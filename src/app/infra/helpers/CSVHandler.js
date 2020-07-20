@@ -845,9 +845,15 @@ class CSVHandler {
       let regex = /Paradigma|PARADIGMA|paradigma/gi;
       dados.forEach(function (d) {
         d['HE_CARF'] = d['HE_CARF'].replace(',', '.');
-        d['HE_CARF'] == 0
-          ? (d['HE_CARF'] = 12)
-          : (d['HE_CARF'] = (+d['HE_CARF']).toFixed(2));
+
+        if (d['Equipe'].includes('CSRF') && d['HE_CARF'] == 0) {
+          d['HE_CARF'] = 6;
+        } else if (!d['Equipe'].includes('CSRF') && d['HE_CARF'] == 0) {
+          d['HE_CARF'] = 8;
+        }
+        // d['HE_CARF'] == 0
+        //   ? (d['HE_CARF'] = 12)
+        //   : (d['HE_CARF'] = (+d['HE_CARF']).toFixed(2));
         d['Repetitivo'] == 'NÃO INFORMADO' ||
         d['Repetitivo'] == '' ||
         regex.test(d['Paradigma'])
