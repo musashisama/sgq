@@ -351,42 +351,61 @@ class CSVHandler {
         if (tipo == 'COJUL') {
           let filtro = [];
           flat.forEach((valor) => {
+            if (valor.Ind_Apenso == 'N') {
+              filtro.push(valor);
+            }
             if (
-              ((valor.Ind_Apenso == 'N' ||
-                (valor.Questionamento_CARF != '' && valor.Ind_Apenso != 'S')) &&
-                valor.Atividade == 'Para Relatar' &&
-                Math.floor(
-                  (hoje - CSVHandler._ajustaData(valor.Entrada_na_Atividade)) /
-                    dias,
-                ) >= 0) ||
-              ((valor.Ind_Apenso == 'N' ||
-                (valor.Questionamento_CARF != '' && valor.Ind_Apenso != 'S')) &&
-                valor.Atividade == 'Formalizar Decisao' &&
-                Math.floor(
-                  (hoje - CSVHandler._ajustaData(valor.Entrada_na_Atividade)) /
-                    dias,
-                ) >= 0) ||
-              ((valor.Ind_Apenso == 'N' ||
-                (valor.Questionamento_CARF != '' && valor.Ind_Apenso != 'S')) &&
-                valor.Atividade == 'Formalizar Voto Vencedor' &&
-                Math.floor(
-                  (hoje - CSVHandler._ajustaData(valor.Entrada_na_Atividade)) /
-                    dias,
-                ) >= 0) ||
-              ((valor.Ind_Apenso == 'N' ||
-                (valor.Questionamento_CARF != '' && valor.Ind_Apenso != 'S')) &&
-                valor.Atividade == 'Apreciar e Assinar Documento' &&
-                Math.floor(
-                  (hoje - CSVHandler._ajustaData(valor.Entrada_na_Atividade)) /
-                    dias,
-                ) >= 0) ||
-              ((valor.Ind_Apenso == 'N' ||
-                (valor.Questionamento_CARF != '' && valor.Ind_Apenso != 'S')) &&
-                valor.Atividade == 'Corrigir Decisão' &&
-                Math.floor(
-                  (hoje - CSVHandler._ajustaData(valor.Entrada_na_Atividade)) /
-                    dias,
-                ) >= 0)
+              !CSVHandler._isEmpty(valor.Questionamento_CARF) &&
+              valor.Ind_Apenso == 'S' &&
+              valor.Atividade == 'Para Relatar' &&
+              Math.floor(
+                (hoje - CSVHandler._ajustaData(valor.Entrada_na_Atividade)) /
+                  dias,
+              ) >= 0
+            ) {
+              filtro.push(valor);
+            }
+            if (
+              !CSVHandler._isEmpty(valor.Questionamento_CARF) &&
+              valor.Ind_Apenso == 'S' &&
+              valor.Atividade == 'Formalizar Decisao' &&
+              Math.floor(
+                (hoje - CSVHandler._ajustaData(valor.Entrada_na_Atividade)) /
+                  dias,
+              ) >= 0
+            ) {
+              filtro.push(valor);
+            }
+            if (
+              !CSVHandler._isEmpty(valor.Questionamento_CARF) &&
+              valor.Ind_Apenso == 'S' &&
+              valor.Atividade == 'Formalizar Voto Vencedor' &&
+              Math.floor(
+                (hoje - CSVHandler._ajustaData(valor.Entrada_na_Atividade)) /
+                  dias,
+              ) >= 0
+            ) {
+              filtro.push(valor);
+            }
+            if (
+              !CSVHandler._isEmpty(valor.Questionamento_CARF) &&
+              valor.Ind_Apenso == 'S' &&
+              valor.Atividade == 'Apreciar e Assinar Documento' &&
+              Math.floor(
+                (hoje - CSVHandler._ajustaData(valor.Entrada_na_Atividade)) /
+                  dias,
+              ) >= 0
+            ) {
+              filtro.push(valor);
+            }
+            if (
+              !CSVHandler._isEmpty(valor.Questionamento_CARF) &&
+              valor.Ind_Apenso == 'S' &&
+              valor.Atividade == 'Corrigir Decisão' &&
+              Math.floor(
+                (hoje - CSVHandler._ajustaData(valor.Entrada_na_Atividade)) /
+                  dias,
+              ) >= 0
             ) {
               filtro.push(valor);
             }
@@ -581,6 +600,10 @@ class CSVHandler {
           return reject(erro);
         });
     });
+  }
+
+  static _isEmpty(str) {
+    return !str || 0 === str.length;
   }
 
   static _ajustaData(data, dw = false) {

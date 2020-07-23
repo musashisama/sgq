@@ -43,6 +43,13 @@ function dataTable(msg) {
     maxHeight: '1000px',
     layout: layout,
     responsiveLayout: 'collapse',
+    downloadConfig: {
+      //  columnHeaders:false, //do not include column headers in downloaded table
+      //columnGroups:false, //do not include column groups in column headers for downloaded table
+      //rowGroups:false, //do not include row groups in downloaded table
+      columnCalcs: false, //do not include column calcs in downloaded table
+      //dataTree:false, //do not include data tree in downloaded table
+    },
     groupStartOpen: false,
     responsiveLayoutCollapseStartOpen: false,
     initialSort: [
