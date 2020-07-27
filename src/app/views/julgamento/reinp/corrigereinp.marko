@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <app-scripts-css/>
+  <body>
+    <app-header/>
+    <main class="conteudoPrincipal">
+      <app-navbar id="slide-out" class="sidenav"/>
+      <div class="container">
+        <h3 class="center-align titulo">Verificação de dados do REINP</h3>
+        <br/>
+        <br/>
+        <div id="reinp" data-reinp=`${data.reinp}`/>
+        <div id="tabelaReinp"/>
+      </div>
+    </main>
+    <!--Modal Structure-->
+    <div id="modal1" class="modal">
+      <div class="modal-content">
+        <h4 class="hModal">Modal Header</h4>
+        <p class="pModal"/>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-red btn-flat cancela">Cancela</a>
+        <button class="btn waves-effect waves-light concorda" type="submit" name="action">
+          Confirma <i class="material-icons right">send</i>
+        </button>
+      </div>
+    </div>
+    <app-footer/>
+    <app-scripts-js/>
+    <script src="/estatico/js/julgamento/corrigereinp.js"/>
+  </body>
+</html>

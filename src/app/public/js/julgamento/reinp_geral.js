@@ -11,7 +11,7 @@ initialSort = [{ column: 'nome', dir: 'asc' }];
 function inicializaComponentes() {
   $(document).ready(function () {
     initSelect();
-    formataDados();
+    montaReinp();
     initTabs();
   });
 }
@@ -19,138 +19,126 @@ function inicializaComponentes() {
 function initTabs() {
   $('.tabs').tabs();
 }
-
-document
-  .getElementById('mostraColunasTurma')
-  .addEventListener('click', function () {
-    if (agrupadoT == false) {
-      table.setGroupBy(['Equipe']);
-      agrupadoT = true;
-    } else {
-      table.setGroupBy();
-      agrupadoT = false;
-    }
-  });
 function initSelect() {
   $('select').formSelect();
 }
 
-function formataDados() {
-  let tabledata = JSON.parse($('#formReinp').attr('data-reinp')).flat();
-  let users = JSON.parse($('#formReinp').attr('data-users')).flat();
-  let flat = [];
-  let b = d3
-    .nest()
-    .key((d) => {
-      return d.CPF;
-    })
-    .rollup((v) => {
-      return {
-        jan: d3.sum(v, (d) => {
-          if (d.mes == '12/2019' && d.trimestre == 'T1') {
-            return +d.HE_CARF;
-          }
-        }),
-        fev: d3.sum(v, (d) => {
-          if (d.mes == '1/2020' && d.trimestre == 'T1') {
-            return +d.HE_CARF;
-          }
-        }),
-        mar: d3.sum(v, (d) => {
-          if (
-            (d.mes == '2/2020' && d.trimestre == 'T1') ||
-            (d.mes == '3/2020' && d.trimestre == 'T1')
-          ) {
-            return +d.HE_CARF;
-          }
-        }),
-        abr: d3.sum(v, (d) => {
-          if (d.mes == '3/2020' && d.trimestre == 'T2') {
-            return +d.HE_CARF;
-          }
-        }),
-        mai: d3.sum(v, (d) => {
-          if (d.mes == '4/2020' && d.trimestre == 'T2') {
-            return +d.HE_CARF;
-          }
-        }),
-        jun: d3.sum(v, (d) => {
-          if (
-            (d.mes == '5/2020' && d.trimestre == 'T2') ||
-            (d.mes == '6/2020' && d.trimestre == 'T2')
-          ) {
-            return +d.HE_CARF;
-          }
-        }),
-        jul: d3.sum(v, (d) => {
-          if (d.mes == '6/2020' && d.trimestre == 'T3') {
-            return +d.HE_CARF;
-          }
-        }),
-        ago: d3.sum(v, (d) => {
-          if (d.mes == '7/2020' && d.trimestre == 'T3') {
-            return +d.HE_CARF;
-          }
-        }),
-        set: d3.sum(v, (d) => {
-          if (
-            (d.mes == '8/2020' && d.trimestre == 'T3') ||
-            (d.mes == '9/2020' && d.trimestre == 'T3')
-          ) {
-            return +d.HE_CARF;
-          }
-        }),
-        out: d3.sum(v, (d) => {
-          if (d.mes == '9/2020' && d.trimestre == 'T4') {
-            return +d.HE_CARF;
-          }
-        }),
-        nov: d3.sum(v, (d) => {
-          if (d.mes == '10/2020' && d.trimestre == 'T4') {
-            return +d.HE_CARF;
-          }
-        }),
-        dez: d3.sum(v, (d) => {
-          if (
-            (d.mes == '11/2020' && d.trimestre == 'T4') ||
-            (d.mes == '12/2020' && d.trimestre == 'T4')
-          ) {
-            return +d.HE_CARF;
-          }
-        }),
-      };
-    })
-    .entries(tabledata);
-  b.forEach((d) => {
-    flat.push({
-      cpf: d.key,
-      jan: d.values.jan.toFixed(2),
-      fev: d.values.fev.toFixed(2),
-      mar: d.values.mar.toFixed(2),
-      t1: (d.values.jan + d.values.fev + d.values.mar).toFixed(2),
-      abr: d.values.abr.toFixed(2),
-      mai: d.values.mai.toFixed(2),
-      jun: d.values.jun.toFixed(2),
-      t2: (d.values.abr + d.values.mai + d.values.jun).toFixed(2),
-      jul: d.values.jul.toFixed(2),
-      ago: d.values.ago.toFixed(2),
-      set: d.values.set.toFixed(2),
-      t3: (d.values.jul + d.values.ago + d.values.set).toFixed(2),
-      out: d.values.out.toFixed(2),
-      nov: d.values.nov.toFixed(2),
-      dez: d.values.dez.toFixed(2),
-      t4: (d.values.out + d.values.nov + d.values.dez).toFixed(2),
-    });
-  });
-  users.forEach((user) => {
-    flat.forEach((f) => {
-      if (user.cpf == f.cpf) {
-        f.Equipe = user.unidade;
-        f.nome = user.nome;
+function montaReinp() {
+  document
+    .getElementById('mostraColunas')
+    .addEventListener('click', function () {
+      if (agrupadoT == false) {
+        table.setGroupBy(['unidade']);
+        agrupadoT = true;
+      } else {
+        table.setGroupBy();
+        agrupadoT = false;
       }
     });
+  let reinp = d3
+    .nest()
+    .key((k) => {
+      return k.conselheiro.nome;
+    })
+    .entries(JSON.parse($('#reinpData').attr('data-reinp')));
+  let dadosTabela = [];
+  reinp.forEach((elem) => {
+    dadosTabela.push({
+      nome: elem.key,
+      cpf: elem.values[0].conselheiro.cpf,
+      unidade: elem.values[0].unidade,
+      mediaHorasT1: elem.values.length >= 1 ? elem.values[0].mediaHoras : 0,
+      mediaHorasT2: elem.values.length >= 2 ? elem.values[1].mediaHoras : 0,
+      mediaHorasT3: elem.values.length >= 3 ? elem.values[2].mediaHoras : 0,
+      mediaHorasT4: elem.values.length >= 4 ? elem.values[3].mediaHoras : 0,
+      T1:
+        elem.values.length >= 1
+          ? somaTrimestre(`T1${new Date().getFullYear()}`, elem.values[0])
+          : 0,
+      T2:
+        elem.values.length >= 2
+          ? somaTrimestre(`T2${new Date().getFullYear()}`, elem.values[1])
+          : 0,
+      T3:
+        elem.values.length >= 3
+          ? somaTrimestre(`T3${new Date().getFullYear()}`, elem.values[2])
+          : 0,
+      T4:
+        elem.values.length >= 4
+          ? somaTrimestre(`T4${new Date().getFullYear()}`, elem.values[3])
+          : 0,
+      Jan:
+        elem.values.length >= 1
+          ? +somaMes(`${new Date().getFullYear()}-01`, elem.values[0])
+          : 0,
+      Fev:
+        elem.values.length >= 1
+          ? +somaMes(`${new Date().getFullYear()}-02`, elem.values[0])
+          : 0,
+      Mar:
+        elem.values.length >= 1
+          ? +somaMes(`${new Date().getFullYear()}-03`, elem.values[0])
+          : 0,
+      Abr:
+        elem.values.length >= 2
+          ? +somaMes(`${new Date().getFullYear()}-04`, elem.values[1])
+          : 0,
+      Mai:
+        elem.values.length >= 2
+          ? +somaMes(`${new Date().getFullYear()}-05`, elem.values[1])
+          : 0,
+      Jun:
+        elem.values.length >= 2
+          ? +somaMes(`${new Date().getFullYear()}-06`, elem.values[1])
+          : 0,
+      Jul:
+        elem.values.length >= 3
+          ? +somaMes(`${new Date().getFullYear()}-07`, elem.values[2])
+          : 0,
+      Ago:
+        elem.values.length >= 3
+          ? +somaMes(`${new Date().getFullYear()}-08`, elem.values[2])
+          : 0,
+      Set:
+        elem.values.length >= 3
+          ? somaMes(`${new Date().getFullYear()}-09`, elem.values[2])
+          : 0,
+      Out:
+        elem.values.length >= 4
+          ? +somaMes(`${new Date().getFullYear()}-10`, elem.values[3])
+          : 0,
+      Nov:
+        elem.values.length >= 4
+          ? +somaMes(`${new Date().getFullYear()}-11`, elem.values[3])
+          : 0,
+      Dez:
+        elem.values.length >= 4
+          ? +somaMes(`${new Date().getFullYear()}-12`, elem.values[3])
+          : 0,
+    });
   });
-  dataTable(flat);
+
+  dataTable(dadosTabela);
+}
+
+function somaMes(mes, processos) {
+  let soma = 0;
+  processos.detalhamento.forEach((p) => {
+    if (p.mes == mes) {
+      soma += p.horasEfetivas;
+    }
+  });
+  return +soma.toFixed(2);
+}
+
+function somaTrimestre(trimestre, processos) {
+  let soma = 0;
+  processos.detalhamento.forEach((p) => {
+    if (processos.trimestre == trimestre) {
+      soma += p.horasEfetivas;
+    }
+  });
+  return +soma.toFixed(2);
 }
 
 function dataTable(msg) {
@@ -165,7 +153,7 @@ function dataTable(msg) {
     responsiveLayout: 'collapse',
     groupStartOpen: false,
     responsiveLayoutCollapseStartOpen: false,
-    initialSort: [{}],
+    initialSort: initialSort,
     columns: [
       {
         formatter: 'responsiveCollapse',
@@ -201,7 +189,7 @@ function dataTable(msg) {
       },
       {
         title: 'Equipe',
-        field: 'Equipe',
+        field: 'unidade',
         sorter: 'string',
         hozAlign: 'center',
         headerFilter: 'input',
@@ -211,7 +199,7 @@ function dataTable(msg) {
       },
       {
         title: '1º Trimestre',
-        field: 't1',
+        field: `T1`,
         sorter: 'number',
         hozAlign: 'center',
         editor: false,
@@ -222,7 +210,7 @@ function dataTable(msg) {
       },
       {
         title: '2º Trimestre',
-        field: 't2',
+        field: `T2`,
         sorter: 'number',
         hozAlign: 'center',
         editor: false,
@@ -233,7 +221,7 @@ function dataTable(msg) {
       },
       {
         title: '3º Trimestre',
-        field: 't3',
+        field: `T3`,
         sorter: 'number',
         hozAlign: 'center',
         editor: false,
@@ -244,7 +232,7 @@ function dataTable(msg) {
       },
       {
         title: '4º Trimestre',
-        field: 't4',
+        field: `T4`,
         sorter: 'number',
         hozAlign: 'center',
         editor: false,
@@ -265,7 +253,7 @@ function dataTable(msg) {
       },
       {
         title: 'Janeiro',
-        field: 'jan',
+        field: 'Jan',
         width: largColuna,
         sorter: 'number',
         hozAlign: 'center',
@@ -276,7 +264,7 @@ function dataTable(msg) {
       },
       {
         title: 'Fevereiro',
-        field: 'fev',
+        field: 'Fev',
         width: largColuna,
         sorter: 'number',
         hozAlign: 'center',
@@ -287,7 +275,7 @@ function dataTable(msg) {
       },
       {
         title: 'Março',
-        field: 'mar',
+        field: 'Mar',
         width: largColuna,
         sorter: 'number',
         hozAlign: 'center',
@@ -298,7 +286,7 @@ function dataTable(msg) {
       },
       {
         title: 'Abril',
-        field: 'abr',
+        field: 'Abr',
         width: largColuna,
         sorter: 'number',
         hozAlign: 'center',
@@ -309,7 +297,7 @@ function dataTable(msg) {
       },
       {
         title: 'Maio',
-        field: 'mai',
+        field: 'Mai',
         width: largColuna,
         sorter: 'number',
         hozAlign: 'center',
@@ -320,7 +308,7 @@ function dataTable(msg) {
       },
       {
         title: 'Junho',
-        field: 'jun',
+        field: 'Jun',
         width: largColuna,
         sorter: 'number',
         hozAlign: 'center',
@@ -331,7 +319,7 @@ function dataTable(msg) {
       },
       {
         title: 'Julho',
-        field: 'jul',
+        field: 'Jul',
         width: largColuna,
         sorter: 'number',
         hozAlign: 'center',
@@ -342,7 +330,7 @@ function dataTable(msg) {
       },
       {
         title: 'Agosto',
-        field: 'ago',
+        field: 'Ago',
         width: largColuna,
         sorter: 'number',
         hozAlign: 'center',
@@ -353,7 +341,7 @@ function dataTable(msg) {
       },
       {
         title: 'Setembro',
-        field: 'set',
+        field: 'Set',
         width: largColuna,
         sorter: 'number',
         hozAlign: 'center',
@@ -364,7 +352,7 @@ function dataTable(msg) {
       },
       {
         title: 'Outubro',
-        field: 'out',
+        field: 'Out',
         width: largColuna,
         sorter: 'number',
         hozAlign: 'center',
@@ -375,7 +363,7 @@ function dataTable(msg) {
       },
       {
         title: 'Novembro',
-        field: 'nov',
+        field: 'Nov',
         width: largColuna,
         sorter: 'number',
         hozAlign: 'center',
@@ -386,7 +374,7 @@ function dataTable(msg) {
       },
       {
         title: 'Dezembro',
-        field: 'dez',
+        field: 'Dez',
         width: largColuna,
         sorter: 'number',
         hozAlign: 'center',
@@ -497,195 +485,122 @@ function countCalc(values, data, calcParams) {
 }
 
 function dadosGrafico(dados) {
-  let flat = [];
-  let b = d3
+  let arrayMes = [];
+  dados.forEach((elem) => {
+    elem.detalhamento.forEach((ele) => {
+      arrayMes.push(ele);
+    });
+  });
+  return d3
     .nest()
     .rollup((v) => {
       return {
-        jan: d3.sum(v, (d) => {
-          if (d.mes == '12/2019' && d.trimestre == 'T1') {
-            return +d.HE_CARF;
+        Jan: d3.sum(v, (d) => {
+          if (d.mes == `${new Date().getFullYear()}-01`) {
+            return d.horasEfetivas;
           }
         }),
-        fev: d3.sum(v, (d) => {
-          if (d.mes == '1/2020' && d.trimestre == 'T1') {
-            return +d.HE_CARF;
+        Fev: d3.sum(v, (d) => {
+          if (d.mes == `${new Date().getFullYear()}-02`) {
+            return d.horasEfetivas;
           }
         }),
-        mar: d3.sum(v, (d) => {
-          if (
-            (d.mes == '2/2020' && d.trimestre == 'T1') ||
-            (d.mes == '3/2020' && d.trimestre == 'T1')
-          ) {
-            return +d.HE_CARF;
+        Mar: d3.sum(v, (d) => {
+          if (d.mes == `${new Date().getFullYear()}-03`) {
+            return d.horasEfetivas;
           }
         }),
-        abr: d3.sum(v, (d) => {
-          if (d.mes == '3/2020' && d.trimestre == 'T2') {
-            return +d.HE_CARF;
+        Abr: d3.sum(v, (d) => {
+          if (d.mes == `${new Date().getFullYear()}-04`) {
+            return d.horasEfetivas;
           }
         }),
-        mai: d3.sum(v, (d) => {
-          if (d.mes == '4/2020' && d.trimestre == 'T2') {
-            return +d.HE_CARF;
+        Mai: d3.sum(v, (d) => {
+          if (d.mes == `${new Date().getFullYear()}-05`) {
+            return d.horasEfetivas;
           }
         }),
-        jun: d3.sum(v, (d) => {
-          if (
-            (d.mes == '5/2020' && d.trimestre == 'T2') ||
-            (d.mes == '6/2020' && d.trimestre == 'T2')
-          ) {
-            return +d.HE_CARF;
+        Jun: d3.sum(v, (d) => {
+          if (d.mes == `${new Date().getFullYear()}-06`) {
+            return d.horasEfetivas;
           }
         }),
-        jul: d3.sum(v, (d) => {
-          if (d.mes == '6/2020' && d.trimestre == 'T3') {
-            return +d.HE_CARF;
+        Jul: d3.sum(v, (d) => {
+          if (d.mes == `${new Date().getFullYear()}-07`) {
+            return d.horasEfetivas;
           }
         }),
-        ago: d3.sum(v, (d) => {
-          if (d.mes == '7/2020' && d.trimestre == 'T3') {
-            return +d.HE_CARF;
+        Ago: d3.sum(v, (d) => {
+          if (d.mes == `${new Date().getFullYear()}-08`) {
+            return d.horasEfetivas;
           }
         }),
-        set: d3.sum(v, (d) => {
-          if (
-            (d.mes == '8/2020' && d.trimestre == 'T3') ||
-            (d.mes == '9/2020' && d.trimestre == 'T3')
-          ) {
-            return +d.HE_CARF;
+        Set: d3.sum(v, (d) => {
+          if (d.mes == `${new Date().getFullYear()}-09`) {
+            return d.horasEfetivas;
           }
         }),
-        out: d3.sum(v, (d) => {
-          if (d.mes == '9/2020' && d.trimestre == 'T4') {
-            return +d.HE_CARF;
+        Out: d3.sum(v, (d) => {
+          if (d.mes == `${new Date().getFullYear()}-10`) {
+            return d.horasEfetivas;
           }
         }),
-        nov: d3.sum(v, (d) => {
-          if (d.mes == '10/2020' && d.trimestre == 'T4') {
-            return +d.HE_CARF;
+        Nov: d3.sum(v, (d) => {
+          if (d.mes == `${new Date().getFullYear()}-11`) {
+            return d.horasEfetivas;
           }
         }),
-        dez: d3.sum(v, (d) => {
-          if (
-            (d.mes == '11/2020' && d.trimestre == 'T4') ||
-            (d.mes == '12/2020' && d.trimestre == 'T4')
-          ) {
-            return +d.HE_CARF;
+        Dez: d3.sum(v, (d) => {
+          if (d.mes == `${new Date().getFullYear()}-12`) {
+            return d.horasEfetivas;
           }
         }),
       };
     })
-    .entries(dados);
-  // b.forEach(d => {
-  //     flat.push(
-  //         {
-  //             jan: d.values.jan.toFixed(2),
-  //             fev: d.values.fev.toFixed(2),
-  //             mar: d.values.mar.toFixed(2),
-  //             abr: d.values.abr.toFixed(2),
-  //             mai: d.values.mai.toFixed(2),
-  //             jun: d.values.jun.toFixed(2),
-  //             jul: d.values.jul.toFixed(2),
-  //             ago: d.values.ago.toFixed(2),
-  //             set: d.values.set.toFixed(2),
-  //             out: d.values.out.toFixed(2),
-  //             nov: d.values.nov.toFixed(2),
-  //             dez: d.values.dez.toFixed(2),
-  //         })
-  // })
-  return b;
+    .entries(arrayMes);
 }
 function dadosGrafico2(dados) {
-  let flat = {};
-  let b = d3
-    .nest()
-    .rollup((v) => {
-      return {
-        jan: d3.sum(v, (d) => {
-          if (d.mes == '12/2019' && d.trimestre == 'T1') {
-            return +d.HE_CARF;
-          }
-        }),
-        fev: d3.sum(v, (d) => {
-          if (d.mes == '1/2020' && d.trimestre == 'T1') {
-            return +d.HE_CARF;
-          }
-        }),
-        mar: d3.sum(v, (d) => {
-          if (
-            (d.mes == '2/2020' && d.trimestre == 'T1') ||
-            (d.mes == '3/2020' && d.trimestre == 'T1')
-          ) {
-            return +d.HE_CARF;
-          }
-        }),
-        abr: d3.sum(v, (d) => {
-          if (d.mes == '3/2020' && d.trimestre == 'T2') {
-            return +d.HE_CARF;
-          }
-        }),
-        mai: d3.sum(v, (d) => {
-          if (d.mes == '4/2020' && d.trimestre == 'T2') {
-            return +d.HE_CARF;
-          }
-        }),
-        jun: d3.sum(v, (d) => {
-          if (
-            (d.mes == '5/2020' && d.trimestre == 'T2') ||
-            (d.mes == '6/2020' && d.trimestre == 'T2')
-          ) {
-            return +d.HE_CARF;
-          }
-        }),
-        jul: d3.sum(v, (d) => {
-          if (d.mes == '6/2020' && d.trimestre == 'T3') {
-            return +d.HE_CARF;
-          }
-        }),
-        ago: d3.sum(v, (d) => {
-          if (d.mes == '7/2020' && d.trimestre == 'T3') {
-            return +d.HE_CARF;
-          }
-        }),
-        set: d3.sum(v, (d) => {
-          if (
-            (d.mes == '8/2020' && d.trimestre == 'T3') ||
-            (d.mes == '9/2020' && d.trimestre == 'T3')
-          ) {
-            return +d.HE_CARF;
-          }
-        }),
-        out: d3.sum(v, (d) => {
-          if (d.mes == '9/2020' && d.trimestre == 'T4') {
-            return +d.HE_CARF;
-          }
-        }),
-        nov: d3.sum(v, (d) => {
-          if (d.mes == '10/2020' && d.trimestre == 'T4') {
-            return +d.HE_CARF;
-          }
-        }),
-        dez: d3.sum(v, (d) => {
-          if (
-            (d.mes == '11/2020' && d.trimestre == 'T4') ||
-            (d.mes == '12/2020' && d.trimestre == 'T4')
-          ) {
-            return +d.HE_CARF;
-          }
-        }),
-      };
-    })
-    .entries(dados);
+  let T1 = 0;
+  let T2 = 0;
+  let T3 = 0;
+  let T4 = 0;
+  dados.forEach((d) => {
+    if (d.trimestre == `T1${new Date().getFullYear()}`) {
+      d.detalhamento.forEach((e) => {
+        T1 += e.horasEfetivas;
+      });
+    }
+  });
+  dados.forEach((d) => {
+    if (d.trimestre == `T2${new Date().getFullYear()}`) {
+      d.detalhamento.forEach((e) => {
+        T2 += e.horasEfetivas;
+      });
+    }
+  });
+  dados.forEach((d) => {
+    if (d.trimestre == `T3${new Date().getFullYear()}`) {
+      d.detalhamento.forEach((e) => {
+        T3 += e.horasEfetivas;
+      });
+    }
+  });
+  dados.forEach((d) => {
+    if (d.trimestre == `T4${new Date().getFullYear()}`) {
+      d.detalhamento.forEach((e) => {
+        T4 += e.horasEfetivas;
+      });
+    }
+  });
 
-  flat.t1 = (b.jan + b.fev + b.mar).toFixed(2);
-  flat.t2 = (b.abr + b.mai + b.jun).toFixed(2);
-  flat.t3 = (b.jul + b.ago + b.set).toFixed(2);
-  flat.t4 = (b.out + b.nov + b.dez).toFixed(2);
-
-  return flat;
+  return {
+    T1: T1.toFixed(2),
+    T2: T2.toFixed(2),
+    T3: T3.toFixed(2),
+    T4: T4.toFixed(2),
+  };
 }
-dados = JSON.parse($('#formReinp').attr('data-reinp')).flat();
+dados = JSON.parse($('#reinpData').attr('data-reinp'));
 let graf = dadosGrafico(dados);
 let graf2 = dadosGrafico2(dados);
 let cores = [

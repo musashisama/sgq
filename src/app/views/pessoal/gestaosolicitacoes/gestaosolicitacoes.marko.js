@@ -16,6 +16,8 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     app_navbar_template = require("../../components/app-navbar.marko"),
     app_navbar_tag = marko_loadTag(app_navbar_template),
     marko_attr = marko_helpers.a,
+    app_drop_download_template = require("../../components/app-drop-download.marko"),
+    app_drop_download_tag = marko_loadTag(app_drop_download_template),
     app_modal_template = require("../../components/app-modal.marko"),
     app_modal_tag = marko_loadTag(app_modal_template),
     app_footer_template = require("../../components/app-footer.marko"),
@@ -47,19 +49,23 @@ function render(input, out, __component, component, state) {
 
   out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Gestão de Solicitações dos Conselheiros do CARF</h3><div id=\"solicitacoes\"" +
     marko_attr("data-solicitacoes", "" + data.solicitacoes) +
-    "></div><div class=\"row\"><div id=\"tabelaSolicitacoes\"></div></div><br></div></main>");
+    "></div><div class=\"row\"><div class=\"col s12 right-align\">");
 
-  app_modal_tag({}, out, __component, "12");
+  app_drop_download_tag({}, out, __component, "11");
 
-  app_footer_tag({}, out, __component, "13");
+  out.w("</div></div><div class=\"row\"><div id=\"tabelaSolicitacoes\"></div></div><br></div></main>");
 
-  app_scripts_js_tag({}, out, __component, "14");
+  app_modal_tag({}, out, __component, "15");
+
+  app_footer_tag({}, out, __component, "16");
+
+  app_scripts_js_tag({}, out, __component, "17");
 
   out.w("<script src=\"/estatico/js/pessoal/gestaosolicitacoes.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "16");
+  await_reorderer_tag({}, out, __component, "19");
 
   out.w("</body></html>");
 }
@@ -78,6 +84,7 @@ marko_template.meta = {
       "marko/src/core-tags/components/component-globals-tag",
       "../../components/app-header.marko",
       "../../components/app-navbar.marko",
+      "../../components/app-drop-download.marko",
       "../../components/app-modal.marko",
       "../../components/app-footer.marko",
       "../../components/app-scripts-js.marko",

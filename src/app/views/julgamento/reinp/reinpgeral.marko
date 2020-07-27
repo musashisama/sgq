@@ -8,7 +8,7 @@
       <div class="container">
         <h3 class="center-align titulo">Relatório de Indicação para Pauta - REINP</h3>
         <br/>
-        <form id="formReinp" data-users=`${data.users}` data-reinp=`${data.relatorio}` name="formGerencial" action="/julgamento/restrito/regap-cojul/detalha/" method="post">
+        <form id="formReinp" data-users=`${data.users}` name="formGerencial" action="" method="post">
           <div class="col s12">
             <ul class="tabs">
               <li class="tab col s3">
@@ -21,29 +21,34 @@
           </div>
           <div id="processos" class="col s12">
             <br/>
-            <div class="row">
-              <div class="col s11 right-align">
+            <div id="idProdutividade" class="row classProdutividade">
+              <div class="col s12 right-align">
                 <app-drop-download/>
-                <a href="#!" id="mostraColunasTurma" title="Agrupar/Desagrupar por Turma/Câmara/Seção" class="waves-effect waves-red hoverable z-depth-3 btn-floating orange">
-                  <i class="material-icons">unfold_more</i>
+                <a href="#!" id="mostraColunas" title="Agrupar/Desagrupar por Mês" class="waves-effect waves-yellow hoverable z-depth-3 btn-floating blue">
+                  <i class="material-icons">unfold_less</i>
                 </a>
               </div>
+              <div id="reinpData" data-reinp=`${data.reinp}`/>
             </div>
-            <div id="tabelaReinp"/>
+            <div class="row">
+              <div id="tabelaReinp"/>
+            </div>
           </div>
           <div id="stats" class="col s12">
-          <div class='row'>
-            <div class="col s7">
-              <div id="barrasReinpMensal"/>
+            <div class="row">
+              <div class="col s7">
+                <div id="barrasReinpMensal"/>
+              </div>
+              <div class="col s5">
+                <div id="barrasReinpTrimestral"/>
+              </div>
             </div>
-            <div class="col s5">
-              <div id="barrasReinpTrimestral"/>
-            </div>
-            </div>
-            <div class='row'>
-            <p><strong>Atenção!</strong> O somatório de horas indicadas acima não leva em consideração as horas dos processos em lotes de repetitivos. 
-            Sendo assim, qualquer divergência encontrada entre estes números e os constantes dos Dados Abertos do CARF é normal e esperada, 
-            visto que lá são considerados todos os processos.</p>
+            <div class="row">
+              <p>
+                <strong>Atenção!</strong> O somatório de horas indicadas acima não leva em consideração as horas dos processos em lotes de repetitivos. 
+                Sendo assim, qualquer divergência encontrada entre estes números e os constantes dos Dados Abertos do CARF é normal e esperada,
+                visto que lá são considerados todos os processos.
+              </p>
             </div>
           </div>
         </form>

@@ -56,26 +56,24 @@ function render(input, out, __component, component, state) {
     marko_escapeXml(data.unidade) +
     "</h6></p><p><h6>Final do Mandato: " +
     marko_escapeXml(data.dtFimMandato) +
-    "</h6></p><p><h6>Relatorio de extraído em " +
-    marko_escapeXml(data.dataEnvio) +
     "</h6></p></div></div></div></div><br><br><form id=\"formReinp\"" +
     marko_attr("data-user", "" + data.user) +
-    marko_attr("data-reinp", "" + data.relatorio) +
+    marko_attr("data-reinp", "" + data.reinp) +
     " name=\"formReinp\" action=\"/julgamento/restrito/reinp/detalha/\" method=\"post\"><div class=\"row\"><div class=\"col s12\"><ul class=\"tabs\"><li class=\"tab col s3\"><a href=\"#processos\">Processos</a></li><li class=\"tab col s3\"><a disabled href=\"#stats\">Estatísticas</a></li></ul></div><div id=\"processos\" class=\"col s12\"><br><div class=\"row\"></div><div id=\"tabelaReinp\"></div><p><h4>Processos</h4></p><div class=\"row\"><div class=\"col s3 right-align\"></div><div class=\"col s12 right-align\">");
 
-  app_drop_download_tag({}, out, __component, "40");
+  app_drop_download_tag({}, out, __component, "38");
 
   out.w("<a href=\"#!\" id=\"agrupaMes\" title=\"Agrupar/Desagrupar por Mês\" class=\"waves-effect waves-yellow hoverable z-depth-3 btn-floating blue\"><i class=\"material-icons\">unfold_less</i></a></div></div><div id=\"tabelaReinpDet\"></div><br></div><div id=\"stats\"><div class=\"col s7\"><div id=\"barrasReinpMensal\"></div></div><div class=\"col s5\"><div id=\"barrasReinpTrimestral\"></div></div></div></div></form></div></main><footer class=\"page-footer rodape\"></footer><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
 
-  app_footer_tag({}, out, __component, "59");
+  app_footer_tag({}, out, __component, "57");
 
-  app_scripts_js_tag({}, out, __component, "60");
+  app_scripts_js_tag({}, out, __component, "58");
 
   out.w("<script src=\"/estatico/js/libs/plotly-latest.min.js\"></script><script src=\"/estatico/js/libs/plotly-locale-pt-br.js\"></script><script>Plotly.setPlotConfig({locale: 'pt-BR'})</script><script src=\"/estatico/js/julgamento/detalha_reinp.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "65");
+  await_reorderer_tag({}, out, __component, "63");
 
   out.w("</body></html>");
 }

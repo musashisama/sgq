@@ -38,6 +38,7 @@ cliente.connect(url, opcoes, function (err, cliente) {
   dados.fschunks = dbo.collection('uploads.chunks');
   dados.fsfiles = dbo.collection('uploads.files');
   dados.arquivos = dbo.collection('arquivos');
+  dados.reinp = dbo.collection('reinp');
 });
 
 process.on('SIGINT', () =>

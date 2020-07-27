@@ -1,14 +1,13 @@
 inicializaComponentes();
+let table = null;
+let tabledata = '';
 layout = 'fitDataFill';
 responsiveLayout = true;
-let table = '';
-let tabledata = '';
 let agrupado = false;
-
 function inicializaComponentes() {
   $(document).ready(function () {
     initSelect();
-    tabelaSolicitacoes();
+    dataTable();
     initModal();
   });
 }
@@ -21,9 +20,9 @@ function initModal() {
   $('.modal').modal();
 }
 
-function tabelaSolicitacoes() {
+function dataTable() {
   tabledata = JSON.parse($('#solicitacoes').attr('data-solicitacoes'));
-  tableOcorrencias = new Tabulator('#tabelaSolicitacoes', {
+  table = new Tabulator('#tabelaSolicitacoes', {
     data: tabledata,
     pagination: 'local',
     height: '1000px',
@@ -60,6 +59,7 @@ function tabelaSolicitacoes() {
         headerFilter: 'input',
         responsive: 0,
         sorterParams: { format: 'DD/MM/YYYY' },
+        download: true,
       },
       {
         title: 'CPF',
@@ -70,6 +70,7 @@ function tabelaSolicitacoes() {
         headerFilter: 'input',
         topCalc: 'count',
         responsive: 0,
+        download: true,
       },
       {
         title: 'Solicitação',
@@ -80,6 +81,7 @@ function tabelaSolicitacoes() {
         headerFilter: 'input',
         topCalc: 'count',
         responsive: 0,
+        download: true,
       },
       {
         title: 'Detalhes da Solicitação',
@@ -89,6 +91,7 @@ function tabelaSolicitacoes() {
         editor: false,
         headerFilter: 'input',
         responsive: 0,
+        download: true,
       },
       {
         title: 'Horas a Deduzir',
@@ -99,6 +102,7 @@ function tabelaSolicitacoes() {
         editor: false,
         headerFilter: 'input',
         responsive: 0,
+        download: true,
       },
       {
         title: 'Data Início',
@@ -109,6 +113,7 @@ function tabelaSolicitacoes() {
         editor: false,
         headerFilter: 'input',
         responsive: 0,
+        download: true,
       },
       {
         title: 'Data Fim',
@@ -119,6 +124,7 @@ function tabelaSolicitacoes() {
         editor: false,
         headerFilter: 'input',
         responsive: 0,
+        download: true,
       },
       {
         title: 'Status da Solicitação',
@@ -128,6 +134,7 @@ function tabelaSolicitacoes() {
         editor: false,
         headerFilter: 'input',
         responsive: 0,
+        download: true,
       },
       {
         title: 'Observações',
@@ -137,6 +144,7 @@ function tabelaSolicitacoes() {
         editor: false,
         headerFilter: 'input',
         responsive: 1,
+        download: true,
       },
       {
         title: 'Arquivos',
@@ -147,6 +155,7 @@ function tabelaSolicitacoes() {
         editor: false,
         headerFilter: 'input',
         responsive: 1,
+        download: true,
       },
     ],
   });

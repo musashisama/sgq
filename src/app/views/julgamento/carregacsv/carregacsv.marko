@@ -14,7 +14,7 @@
             <div class="file-field ctoastsucesso input-field form-group col s6">
               <div class="btn">
                 <span>Arquivo</span>
-                <input type="file" name="filetoupload" id='file' accept=".csv" onchange="triggerValidation(this)" required/>
+                <input type="file" name="filetoupload" id="file" accept=".csv,.json" onchange="triggerValidation(this)" required/>
               </div>
               <div class="file-path-wrapper">
                 <input class="file-path validate" type="text"/>
@@ -23,7 +23,9 @@
                 <div class="determinate"/>
               </div>
             </div>
-            <p><strong>Atenção!</strong> O arquivo extraído do DW deve ser convertido para o formato UTF-8. Sugere-se utilizar o Notepad++ para a conversão.</p>
+            <p>
+              <strong>Atenção!</strong> O arquivo extraído do DW deve ser convertido para o formato UTF-8. Sugere-se utilizar o Notepad++ para a conversão.
+            </p>
           </div>
           <div class="row">
             <div class="col s2">
@@ -89,25 +91,25 @@
                 </p>
                 <p>
                   <label>
-                    <input class="with-gap" value="1T" name="trimestre" type="radio" checked/>
+                    <input class="with-gap" value="T1" name="trimestre" type="radio" checked/>
                     <span>1º Trimestre</span>
                   </label>
                 </p>
                 <p>
                   <label>
-                    <input class="with-gap" value="2T" name="trimestre" type="radio"/>
+                    <input class="with-gap" value="T2" name="trimestre" type="radio"/>
                     <span>2º Trimestre</span>
                   </label>
                 </p>
                 <p>
                   <label>
-                    <input class="with-gap" value="3T" name="trimestre" type="radio"/>
+                    <input class="with-gap" value="T3" name="trimestre" type="radio"/>
                     <span>3º Trimestre</span>
                   </label>
                 </p>
                 <p>
                   <label>
-                    <input class="with-gap" value="4T" name="trimestre" type="radio"/>
+                    <input class="with-gap" value="T4" name="trimestre" type="radio"/>
                     <span>4º Trimestre</span>
                   </label>
                 </p>

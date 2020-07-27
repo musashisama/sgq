@@ -23,7 +23,7 @@ function initModal() {
 
 function tabelaSolicitacoes() {
   tabledata = JSON.parse($('#solicitacoes').attr('data-solicitacoes'));
-  tableOcorrencias = new Tabulator('#tabelaSolicitacoes', {
+  table = new Tabulator('#tabelaSolicitacoes', {
     data: tabledata,
     pagination: 'local',
     height: '1000px',
