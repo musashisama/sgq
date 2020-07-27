@@ -9,6 +9,7 @@ module.exports = {
   escolhecsvreinp: require('./escolhecsv/escolhecsvreinp.marko'),
   reinpgeral: require('./reinp/reinpgeral.marko'),
   detalhareinp: require('./reinp/detalhareinp.marko'),
+  corrigeReinp: require('./reinp/corrigereinp.marko'),
   regapCojul: require('./regap/regapCojul.marko'),
   regap: require('./regap/regap.marko'),
   faqdipaj: require('./faqdipaj/faqdipaj.marko'),

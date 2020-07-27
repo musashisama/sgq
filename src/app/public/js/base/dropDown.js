@@ -5,46 +5,56 @@ function inicializaComponentes() {
     getHeader();
     initToolToast();
     geraBreadcrumb();
-    download();
+    downloadSheet();
     volta();
     getProfile();
   });
 }
 
-
-function download(){
-  $('.dropdownDownload').dropdown({ coverTrigger: false, hover: false, constrainWidth: false });  
-  $('.pdfDown').click(() =>{
-      table.download("pdf", `${$('.titulo').text()}.pdf`, {
-          orientation:"portrait",
-          title: `${$('.titulo').text()}`,
-          format: 'a4',
-      });
+function downloadSheet() {
+  $('.dropdownDownload').dropdown({
+    coverTrigger: false,
+    hover: false,
+    constrainWidth: false,
   });
-  $('.csvDown').click(() =>{
-      table.download("csv", `${$('.titulo').text()}.csv`);
+  $('.pdfDown').click(() => {
+    table.download('pdf', `${$('.titulo').text()}.pdf`, {
+      orientation: 'portrait',
+      title: `${$('.titulo').text()}`,
+      format: 'a4',
+    });
   });
-  $('.xlsxDown').click(() =>{
-      table.download("xlsx", `${$('.titulo').text()}.xlsx`, {sheetName:"Relatório"});
-  })
+  $('.csvDown').click(() => {
+    table.download('csv', `${$('.titulo').text()}.csv`);
+  });
+  $('.xlsxDown').click(() => {
+    table.download('xlsx', `${$('.titulo').text()}.xlsx`, {
+      sheetName: 'Relatório',
+    });
+  });
 }
 
 function initDropDown() {
-  $(".dropdown-trigger").dropdown({ coverTrigger: false, hover: false, constrainWidth: false });
+  $('.dropdown-trigger').dropdown({
+    coverTrigger: false,
+    hover: false,
+    constrainWidth: false,
+  });
 }
 
 //Aqui são ajustadas as visões no app-header e app-navbar
-function getProfile(){
+function getProfile() {
   $.ajax({
     url: `/admin/userprofile`,
     type: 'GET',
-    success: function (perfil) {      
-      perfil.forEach(p => {
-        $(`<style type='text/css'>.perfil${p} {display:block} </style>`).appendTo("head");  
+    success: function (perfil) {
+      perfil.forEach((p) => {
+        $(
+          `<style type='text/css'>.perfil${p} {display:block} </style>`,
+        ).appendTo('head');
       });
-      
-    }
-  })
+    },
+  });
 }
 
 function getHeader() {
@@ -52,14 +62,17 @@ function getHeader() {
   req.open('GET', '/', false);
   req.send(null);
   if (req.getResponseHeader('autenticado') == 'true') {
-    $('.loginout').attr('href', '/logout')
-    $('.loginout').html(`Sair<i class="material-icons left">radio_button_checked</i>`)
-
+    $('.loginout').attr('href', '/logout');
+    $('.loginout').html(
+      `Sair<i class="material-icons left">radio_button_checked</i>`,
+    );
   }
 }
 
 function initToolToast() {
-  let toastHTML = `<span>${$('#msg').text()}</span><button class="btn-flat toast-action">Ok</button>`;
+  let toastHTML = `<span>${$(
+    '#msg',
+  ).text()}</span><button class="btn-flat toast-action">Ok</button>`;
   $('.tooltipped').tooltip();
   if ($('#toastsucesso').hasClass('ctoastsucesso')) {
     M.toast({ html: toastHTML });
@@ -67,15 +80,15 @@ function initToolToast() {
 
   $('.toast-action').click(function () {
     M.Toast.dismissAll();
-  })
+  });
 }
 
 function geraBreadcrumb() {
   let links = [];
-  links.push({ nome: 'Início', link: '/' })
-  links.push({ nome: ($('.titulo').text()), link: location.pathname })
-  links.push({ nome: 'Página anterior', link: '#' })
-  if (location.pathname!='/'&&location.pathname!='') {
+  links.push({ nome: 'Início', link: '/' });
+  links.push({ nome: $('.titulo').text(), link: location.pathname });
+  links.push({ nome: 'Página anterior', link: '#' });
+  if (location.pathname != '/' && location.pathname != '') {
     $('header').after(`
         <div class="nav-wrapper breads">
         <div class='row'>
@@ -85,11 +98,11 @@ function geraBreadcrumb() {
          <a href="${links[1].link}" class="breadcrumb center">${links[1].nome}</a>      
        </div>
      </div>
-      </div>`)
+      </div>`);
   }
 }
 function volta() {
   $('.go-back').click(function () {
     window.history.back();
-  })
+  });
 }

@@ -130,7 +130,6 @@ class PessoalDao {
 
   editaCons(registro) {
     return new Promise((resolve, reject) => {
-      console.log(registro.cpf);
       this._db.usuarios.updateOne(
         { cpf: registro.cpf },
         { $set: registro },
@@ -141,6 +140,20 @@ class PessoalDao {
           return resolve(res);
         },
       );
+    });
+  }
+
+  editaConsReinp(filtro, registro) {
+    return new Promise((resolve, reject) => {
+      this._db.usuarios.updateOne(filtro, { $set: registro }, function (
+        erro,
+        res,
+      ) {
+        if (erro) {
+          return reject('Erro na base de dados. Tente novamente mais tarde.');
+        }
+        return resolve(res);
+      });
     });
   }
 

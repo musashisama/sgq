@@ -7,13 +7,18 @@
       <app-navbar id="slide-out" class="sidenav"/>
       <div class="container">
         <h3 class="center-align titulo">Gestão de Solicitações dos Conselheiros do CARF</h3>
-        <div id="solicitacoes" data-solicitacoes=`${data.solicitacoes}`/>          
-          <div class="row">
-            <div id="tabelaSolicitacoes"/>
-          </div>      
+        <div id="solicitacoes" data-solicitacoes=`${data.solicitacoes}`/>
+        <div class="row">
+          <div class="col s12 right-align">
+            <app-drop-download/>
+          </div>
+        </div>
+        <div class="row">
+          <div id="tabelaSolicitacoes"/>
+        </div>
         <br/>
       </div>
-    </main>    
+    </main>
     <app-modal/>
     <app-footer/>
     <app-scripts-js/>

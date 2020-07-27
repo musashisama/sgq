@@ -177,35 +177,56 @@ class CSVHandler {
           });
         });
       } else {
-        if (tipo == 'REINP') {
-          fs.readFile(arq, 'utf8', function (err, data) {
-            data = data.replace(/;"Métrica";/gi, ';');
-            data = data.replace(/;;/gi, ';');
-            let dados = d3.csvParse(data);
-            gerado = gerado + arq.split('/')[arq.split('/').length - 1];
-            let rex2 = /([0-9])([0-9]ª)/gi;
-            let rex3 = /( )([0-9])/gi;
-            CSVHandler._renomeiaReinp(dados).then((dados) => {
-              CSVHandler._horas_Reinp(dados).then((dados) => {
-                dados.forEach((dado) => {
-                  dado.Equipe = dado.Equipe.replace(rex3, '$2');
-                  dado.Equipe = dado.Equipe.replace(rex2, '$2');
-                  dado.Data = moment(
-                    CSVHandler._ajustaData(dado.Data_Situacao, true),
-                  ).format('DD/MM/YYYY');
-                  delete dado.Data_Situacao;
-                });
-                CSVHandler._escreveZip(path + gerado, dados).then(() => {
-                  let csvmongo = CSVHandler._montaObjRelatorio(dados, tipo);
-                  CSVHandler._excluiCSV(arq);
-                  CSVHandler._excluiCSV(`${path}${gerado}`);
-                  gerado = 'Gerencial-';
-                  return resolve(csvmongo);
-                });
-              });
-            });
-          });
-        }
+        // if (tipo == 'REINP') {
+        //   fs.readFile(arq, 'utf8', function (err, data) {
+        //     data = data.replace(/;"Métrica";/gi, ';');
+        //     data = data.replace(/;;/gi, ';');
+        //     let dados = d3.csvParse(data);
+        //     gerado = gerado + arq.split('/')[arq.split('/').length - 1];
+        //     let rex2 = /([0-9])([0-9]ª)/gi;
+        //     let rex3 = /( )([0-9])/gi;
+        //     CSVHandler._renomeiaReinp(dados).then((dados) => {
+        //       CSVHandler._horas_Reinp(dados).then((dados) => {
+        //         dados.forEach((dado) => {
+        //           dado.Equipe = dado.Equipe.replace(rex3, '$2');
+        //           dado.Equipe = dado.Equipe.replace(rex2, '$2');
+        //           dado.Data = moment(
+        //             CSVHandler._ajustaData(dado.Data_Situacao, true),
+        //           ).format('DD/MM/YYYY');
+        //           delete dado.Data_Situacao;
+        //         });
+        //         CSVHandler._escreveZip(path + gerado, dados).then(() => {
+        //           let csvmongo = CSVHandler._montaObjRelatorio(dados, tipo);
+        //           CSVHandler._excluiCSV(arq);
+        //           CSVHandler._excluiCSV(`${path}${gerado}`);
+        //           gerado = 'Gerencial-';
+        //           return resolve(csvmongo);
+        //         });
+        //       });
+        //     });
+        //   });
+        // }
+        // if (tipo == 'REINP') {
+        //   let jsonT1 = JSON.parse(fs.readFileSync('REINP03.json', 'utf8'));
+        //   let jsonT2 = JSON.parse(fs.readFileSync('REINP06.json', 'utf8'));
+        //   let cons = JSON.parse(fs.readFileSync('cons.json', 'utf8'));
+        //   fs.readFile(arq,'utf8', function(err,data){
+        //     let json = JSON.parse(data)
+        //     console.log(json);
+        //   })
+        //   jsonT1.forEach((element) => {
+        //     cons.forEach((cons) => {
+        //       element.conselheiro.trimestre = 'T1';
+        //       if (
+        //         removerAcentos(element.conselheiro.nome.toLowerCase()) ==
+        //         removerAcentos(cons.nome).toLowerCase()
+        //       ) {
+        //         element.conselheiro.cpf = cons.cpf.toString();
+        //       }
+        //     });
+        //   });
+        //   //fs.writeFileSync('T1.json', JSON.stringify(json));
+        // }
       }
     });
   }
@@ -1043,6 +1064,52 @@ class CSVHandler {
         });
       });
       return resolve(dados);
+    });
+  }
+
+  static _removerAcentos(s) {
+    let mapa = {
+      â: 'a',
+      Â: 'A',
+      à: 'a',
+      À: 'A',
+      á: 'a',
+      Á: 'A',
+      ã: 'a',
+      Ã: 'A',
+      ê: 'e',
+      Ê: 'E',
+      è: 'e',
+      È: 'E',
+      é: 'e',
+      É: 'E',
+      î: 'i',
+      Î: 'I',
+      ì: 'i',
+      Ì: 'I',
+      í: 'i',
+      Í: 'I',
+      õ: 'o',
+      Õ: 'O',
+      ô: 'o',
+      Ô: 'O',
+      ò: 'o',
+      Ò: 'O',
+      ó: 'o',
+      Ó: 'O',
+      ü: 'u',
+      Ü: 'U',
+      û: 'u',
+      Û: 'U',
+      ú: 'u',
+      Ú: 'U',
+      ù: 'u',
+      Ù: 'U',
+      ç: 'c',
+      Ç: 'C',
+    };
+    return s.replace(/[\W\[\] ]/gi, function (a) {
+      return mapa[a] || a;
     });
   }
 }

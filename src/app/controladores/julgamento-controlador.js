@@ -68,7 +68,9 @@ class JulgamentoControlador {
       escolhecsvreinp: '/julgamento/restrito/escolhe-csv-reinp',
       escolhecsvanaliseestoque:
         '/julgamento/restrito/escolhe-csv-analiseEstoque',
-      reinp: '/julgamento/restrito/reinp/:id',
+      reinp: '/julgamento/restrito/reinp/',
+      enviacorrigereinp: '/julgamento/restrito/corrigereinp/envia',
+      corrigereinp: '/julgamento/restrito/corrigereinp/:id',
       detalhareinp: '/julgamento/restrito/reinp/detalha/:id',
       escolhecsvcons: '/julgamento/restrito/escolhe-csv-cons',
       detalhaestoque: '/julgamento/restrito/diagnostico-carga/:id',
@@ -127,6 +129,17 @@ class JulgamentoControlador {
       const julgamentoDao = new JulgamentoDao(conn);
       julgamentoDao.getPortal({ portal: 'cojul' }).then((portal) => {
         resp.marko(templates.julgamento.portalCojul, {
+          portal: JSON.stringify(portal),
+        });
+      });
+    };
+  }
+
+  carregaPortalConselheiro() {
+    return function (req, resp) {
+      const julgamentoDao = new JulgamentoDao(conn);
+      julgamentoDao.getPortal({ portal: 'conselheiro' }).then((portal) => {
+        resp.marko(templates.julgamento.portaldoconselheiro, {
           portal: JSON.stringify(portal),
         });
       });
@@ -274,43 +287,41 @@ class JulgamentoControlador {
               dado.dataEnvio = dado.dataEnvio;
               dado.dtExtracao = dado.dtExtracao;
             });
-            julgamentoDao.getRelatorios({ tipoRel: 'REINP' }).then((reinp) => {
-              reinp.forEach((dado) => {
-                dado.id = dado._id;
-                dado.semana = dado.semana;
-                dado.dataEnvio = dado.dataEnvio;
-                dado.dtExtracao = dado.dtExtracao;
+            julgamentoDao
+              .getReinp({ 'conselheiro.cpf': req.user.cpf })
+              .then((reinp) => {
+                julgamentoDao
+                  .getCal({
+                    classNames: CSVHandler.semanaCores(user[0].unidade),
+                  })
+                  .then((cal) => {
+                    const pessoalDao = new PessoalDao(conn);
+                    pessoalDao
+                      .getSolicitacoes({ cpf: req.user.cpf })
+                      .then((solicitacoes) => {
+                        pessoalDao
+                          .gettpSolicitacoes({}, {}, { tipoSolicitacao: 1 })
+                          .then((tpSol) => {
+                            pessoalDao
+                              .getOcorrencias({ cpf: req.user.cpf })
+                              .then((ocorrencias) => {
+                                resp.marko(
+                                  templates.julgamento.paginadoconselheiro,
+                                  {
+                                    user: user[0],
+                                    cal: JSON.stringify(cal),
+                                    reinp: JSON.stringify(reinp),
+                                    dados: dados,
+                                    ocorrencias: JSON.stringify(ocorrencias),
+                                    solicitacoes: JSON.stringify(solicitacoes),
+                                    tpSol: tpSol,
+                                  },
+                                );
+                              });
+                          });
+                      });
+                  });
               });
-              julgamentoDao
-                .getCal({ classNames: CSVHandler.semanaCores(user[0].unidade) })
-                .then((cal) => {
-                  const pessoalDao = new PessoalDao(conn);
-                  pessoalDao
-                    .getSolicitacoes({ cpf: req.user.cpf })
-                    .then((solicitacoes) => {
-                      pessoalDao
-                        .gettpSolicitacoes({}, {}, { tipoSolicitacao: 1 })
-                        .then((tpSol) => {
-                          pessoalDao
-                            .getOcorrencias({ cpf: req.user.cpf })
-                            .then((ocorrencias) => {
-                              resp.marko(
-                                templates.julgamento.paginadoconselheiro,
-                                {
-                                  user: user[0],
-                                  cal: JSON.stringify(cal),
-                                  reinp: reinp,
-                                  dados: dados,
-                                  ocorrencias: JSON.stringify(ocorrencias),
-                                  solicitacoes: JSON.stringify(solicitacoes),
-                                  tpSol: tpSol,
-                                },
-                              );
-                            });
-                        });
-                    });
-                });
-            });
           });
       });
     };
@@ -457,48 +468,79 @@ class JulgamentoControlador {
         }
         registro['nome'] = files.file.name;
         let oldpath = files.file.path;
-        if (
-          fields.tipoRel == 'Estoque' ||
-          fields.tipoRel == 'REJUL' ||
-          fields.tipoRel == 'REINP'
-        ) {
-          fields.semana = 'Todas';
-        }
-        newpath = path + fields.semana + '-' + files.file.name;
-        fse
-          .move(oldpath, newpath, { overwrite: true })
-          .then(() => {
-            registro = CSVHandler.wrangleCSV(
-              newpath,
-              fields.semana,
-              fields.tipoRel,
-            ).then((registro) => {
-              if (req.isAuthenticated()) {
-                registro['usuarioLogado'] = req.user.cpf;
-              }
-              const clientIp = requestIp.getClientIp(req);
-              registro['clientIP'] = clientIp;
-              registro['tipoRel'] = fields.tipoRel;
-              registro['semana'] = fields.semana;
-              if (fields.tipoRel == 'REINP') {
-                registro['trimestre'] = fields.trimestre;
-              }
-              registro['dtExtracao'] = moment(
-                fields.dataExt,
-                'DD/MM/YYYY',
-              ).format('DD/MM/YYYY');
+        if (fields.tipoRel == 'REINP') {
+          fs.readFile(files.file.path, 'utf8', (err, data) => {
+            let json = JSON.parse(data);
+            const pessoalDao = new PessoalDao(conn);
+            pessoalDao.getUsers({ cargo: 'Conselheiro' }).then((cons) => {
+              json.forEach((elem) => {
+                cons.forEach((con) => {
+                  elem.trimestre = fields.trimestre + new Date().getFullYear();
+                  if (
+                    CSVHandler._removerAcentos(
+                      elem.conselheiro.nome.toLowerCase(),
+                    ) == CSVHandler._removerAcentos(con.nome).toLowerCase() ||
+                    CSVHandler._removerAcentos(
+                      elem.conselheiro.nome.toLowerCase(),
+                    ) ==
+                      (typeof con.nomeReinp !== 'undefined'
+                        ? CSVHandler._removerAcentos(
+                            con.nomeReinp,
+                          ).toLowerCase()
+                        : 'null')
+                  ) {
+                    elem.conselheiro.cpf = con.cpf.toString();
+                  }
+                });
+              });
               const julgamentoDao = new JulgamentoDao(conn);
               julgamentoDao
-                .insereDadosCSV(registro)
-                .then(
-                  resp.marko(templates.base.principal, {
-                    msg: 'Relatório enviado com sucesso!',
-                  }),
-                )
-                .catch((erro) => console.log(erro));
+                .insereReinp(json)
+                .then((res) => {
+                  resp.json(fields.trimestre + new Date().getFullYear());
+                })
+                .catch((erro) => {
+                  resp.json(erro);
+                });
             });
-          })
-          .catch((err) => console.error(err));
+          });
+        } else {
+          if (fields.tipoRel == 'Estoque' || fields.tipoRel == 'REJUL') {
+            fields.semana = 'Todas';
+          }
+          newpath = path + fields.semana + '-' + files.file.name;
+          fse
+            .move(oldpath, newpath, { overwrite: true })
+            .then(() => {
+              registro = CSVHandler.wrangleCSV(
+                newpath,
+                fields.semana,
+                fields.tipoRel,
+              ).then((registro) => {
+                if (req.isAuthenticated()) {
+                  registro['usuarioLogado'] = req.user.cpf;
+                }
+                const clientIp = requestIp.getClientIp(req);
+                registro['clientIP'] = clientIp;
+                registro['tipoRel'] = fields.tipoRel;
+                registro['semana'] = fields.semana;
+                registro['dtExtracao'] = moment(
+                  fields.dataExt,
+                  'DD/MM/YYYY',
+                ).format('DD/MM/YYYY');
+                const julgamentoDao = new JulgamentoDao(conn);
+                julgamentoDao
+                  .insereDadosCSV(registro)
+                  .then(
+                    resp.marko(templates.base.principal, {
+                      msg: 'Relatório enviado com sucesso!',
+                    }),
+                  )
+                  .catch((erro) => console.log(erro));
+              });
+            })
+            .catch((err) => console.error(err));
+        }
       });
     };
   }
@@ -741,27 +783,23 @@ class JulgamentoControlador {
   }
   carregaPaginaReinp() {
     return function (req, resp) {
-      let caminho = req.params.id;
-      req.session.caminho = caminho;
-      dados = CSVHandler.pegaReinp(`${path}${caminho}`).then((dados) => {
+      let julgamentoDao = new JulgamentoDao(conn);
+      julgamentoDao.getReinp().then((reinp) => {
         const pessoalDao = new PessoalDao(conn);
         pessoalDao.getUsers().then((users) => {
-          dados.forEach((semana) => {
-            semana.forEach((dado) => {
-              users.forEach((user) => {
-                if (dado.CPF == user.cpf) {
-                  dado.nome = user.nome;
-                  dado.setor = user.setor;
-                  dado.camara = user.camara;
-                  dado.turma = user.turma;
-                  dado._id = new ObjectID(user._id);
-                  dado.unidade = user.unidade;
-                }
-              });
+          reinp.forEach((elem) => {
+            users.forEach((user) => {
+              if (elem.conselheiro.cpf == user.cpf) {
+                elem.setor = user.setor;
+                elem.camara = user.camara;
+                elem.turma = user.turma;
+                elem._id = new ObjectID(user._id);
+                elem.unidade = user.unidade;
+              }
             });
           });
           resp.marko(templates.julgamento.reinpgeral, {
-            relatorio: JSON.stringify(dados),
+            reinp: JSON.stringify(reinp),
             users: JSON.stringify(users),
           });
         });
@@ -771,33 +809,22 @@ class JulgamentoControlador {
   carregaPaginaDetalhaReinp() {
     return function (req, resp) {
       let cpf = req.params.id;
-      let caminho = (req.headers.referrer || req.headers.referer).split('/');
-      caminho = req.session.caminho;
-      if (!caminho) {
-        resp.render(404);
-      }
-      dados = CSVHandler.pegaReinp(`${path}${caminho}`, cpf).then((dados) => {
+      const julgamentoDao = new JulgamentoDao(conn);
+      julgamentoDao.getReinp({ 'conselheiro.cpf': cpf }).then((dados) => {
         const pessoalDao = new PessoalDao(conn);
         pessoalDao.getUsers({ cpf: cpf }).then((user) => {
-          const julgamentoDao = new JulgamentoDao(conn);
-          julgamentoDao
-            .getRelatorios({ caminho: `${path}${caminho}` })
-            .then((dataEnvio) => {
-              resp.marko(templates.julgamento.detalhareinp, {
-                relatorio: JSON.stringify(dados),
-                user: JSON.stringify(user[0]),
-                nome: user[0].nome,
-                cpf: user[0].cpf,
-                turma: user[0].turma,
-                camara: user[0].camara,
-                setor: user[0].setor,
-                unidade: user[0].unidade,
-                caminho: caminho,
-                dataEnvio: dataEnvio[0].dtExtracao,
-                dtFimMandato: user[0].dtFimMandato,
-                tipo: user[0].tipo,
-              });
-            });
+          resp.marko(templates.julgamento.detalhareinp, {
+            reinp: JSON.stringify(dados),
+            user: JSON.stringify(user[0]),
+            nome: user[0].nome,
+            cpf: user[0].cpf,
+            turma: user[0].turma,
+            camara: user[0].camara,
+            setor: user[0].setor,
+            unidade: user[0].unidade,
+            dtFimMandato: user[0].dtFimMandato,
+            tipo: user[0].tipo,
+          });
         });
       });
     };
@@ -980,6 +1007,46 @@ class JulgamentoControlador {
             }
           }
         });
+      }
+    };
+  }
+
+  handleCorrigeReinp() {
+    return function (req, resp) {
+      if (req.method == 'GET') {
+        const julgamentoDao = new JulgamentoDao(conn);
+        julgamentoDao.getReinp({ trimestre: req.params.id }).then((msg) => {
+          resp.marko(templates.julgamento.corrigeReinp, {
+            reinp: JSON.stringify(msg),
+          });
+        });
+      } else {
+        const julgamentoDao = new JulgamentoDao(conn);
+        if (req.method == 'POST' || req.method == 'PUT') {
+          julgamentoDao
+            .getReinp({ _id: new ObjectID(req.body.id) })
+            .then((msg) => {
+              if (!msg[0]) {
+                julgamentoDao.insereReinp(req.body).then((msg) => {
+                  resp.json(msg);
+                });
+              } else {
+                julgamentoDao
+                  .atualizaReinp({ _id: new ObjectID(req.body.id) }, req.body)
+                  .then((msg) => {
+                    let pessoalDao = new PessoalDao(conn);
+                    pessoalDao
+                      .editaConsReinp(
+                        { cpf: req.body.cpf },
+                        { nomeReinp: req.body.nome },
+                      )
+                      .then((res) => {
+                        resp.json({ reinp: msg, cons: res });
+                      });
+                  });
+              }
+            });
+        }
       }
     };
   }

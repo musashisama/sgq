@@ -21,16 +21,13 @@
                 <p>
                   <h6>Final do Mandato: ${data.dtFimMandato}</h6>
                 </p>
-                <p>
-                  <h6>Relatorio de extraído em ${data.dataEnvio}</h6>
-                </p>
               </div>
             </div>
           </div>
         </div>
         <br/>
         <br/>
-        <form id="formReinp" data-user=`${data.user}` data-reinp=`${data.relatorio}` name="formReinp" action="/julgamento/restrito/reinp/detalha/" method="post">
+        <form id="formReinp" data-user=`${data.user}` data-reinp=`${data.reinp}` name="formReinp" action="/julgamento/restrito/reinp/detalha/" method="post">
           <div class="row">
             <div class="col s12">
               <ul class="tabs">

@@ -113,7 +113,6 @@
               </div>
             </div>
             <div id="" class="row classProcessos">
-              <div class="col s3 right-align"/>
               <div class="col s12 right-align">
                 <a class="dropdownDownloadCons waves-effect waves-yellow hoverable z-depth-3 btn-floating red" href="#" data-target="dropdownRegap">
                   <i class="material-icons">file_download</i>
@@ -143,66 +142,49 @@
             </div>
             <div id="tabelaRegap"/>
           </div>
-          <div id="produtividade" class="col s12">
+          <div id="produtividade">
             <br/>
+            <div id="idProdutividade" data-reinp=`${data.reinp}`/>
+            <br/>
+            <br/>
+            <br/>
+            <p>
+              <h4>Produtividade Trimestral</h4>
+            </p>
             <div class="row">
-              <div class="form-group input-field  col s3">
-                <select class="dataRelReinp" name="dataRelReinp" id="dataRelReinp">
-                  <option class="form-group" value=`` disabled selected>Clique para selecionar</option>
-                  <for|dado| of=data.reinp>
-                    <option class="form-group" value=`${dado.id}`>${dado.dtExtracao}</option>
-                  </for>
-                </select>
-                <label>Selecione a data do relatório:</label>
-              </div>
-              <div class="progressReinp col s3">
-                <div class="preloader-wrapper small active">
-                  <div class="spinner-layer spinner-green-only">
-                    <div class="circle-clipper left">
-                      <div class="circle"/>
-                    </div>
-                    <div class="gap-patch">
-                      <div class="circle"/>
-                    </div>
-                    <div class="circle-clipper right">
-                      <div class="circle"/>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <div id="tabelaReinp"/>
             </div>
-            <div id="idProdutividade" class="row classProdutividade">
-              <div class="col s3 right-align"/>
+            <p>
+              <h4>Processos</h4>
+            </p>
+            <div class="row">
               <div class="col s12 right-align">
-                <div class="row"/>
-                <div id="tabelaReinp"/>
-                <div class="row">
-                  <h4 class="left">Processos</h4>
-                  <a class="dropdownDownloadCons waves-effect waves-yellow hoverable z-depth-3 btn-floating red" href="#" data-target="dropdownReinp">
-                    <i class="material-icons">file_download</i>
-                  </a>
-                  <ul id="dropdownReinp" class="dropdown-content">
-                    <li class="divider" tabindex="-1"/>
-                    <li>
-                      <a class="xlsxDownReinp" href="#!">
-                        <i class="xlsxDownReinp material-icons">file_download</i>XLSX
-                      </a>
-                    </li>
-                    <li class="divider" tabindex="-1"/>
-                    <li>
-                      <a class="csvDownReinp" href="#!">
-                        <i class="csvDownReinp material-icons">file_download</i>CSV
-                      </a>
-                    </li>
-                    <li class="divider" tabindex="-1"/>
-                  </ul>
-                  <a href="#!" id="agrupaMes" title="Agrupar/Desagrupar por Mês" class="waves-effect waves-yellow hoverable z-depth-3 btn-floating blue">
-                    <i class="material-icons">unfold_less</i>
-                  </a>
-                </div>
+                <a class="dropdownDownloadCons waves-effect waves-yellow hoverable z-depth-3 btn-floating red" href="#" data-target="dropdownReinp">
+                  <i class="material-icons">file_download</i>
+                </a>
+                <ul id="dropdownReinp" class="dropdown-content">
+                  <li class="divider" tabindex="-1"/>
+                  <li>
+                    <a class="xlsxDownReinp" href="#!">
+                      <i class="xlsxDownReinp material-icons">file_download</i>XLSX
+                    </a>
+                  </li>
+                  <li class="divider" tabindex="-1"/>
+                  <li>
+                    <a class="csvDownReinp" href="#!">
+                      <i class="csvDownReinp material-icons">file_download</i>CSV
+                    </a>
+                  </li>
+                  <li class="divider" tabindex="-1"/>
+                </ul>
+                <a href="#!" id="agrupaMes" title="Agrupar/Desagrupar por Mês" class="waves-effect waves-yellow hoverable z-depth-3 btn-floating blue">
+                  <i class="material-icons">unfold_less</i>
+                </a>
               </div>
             </div>
-            <div id="tabelaReinpDet"/>
+            <div class="row">
+              <div id="tabelaReinpDet"/>
+            </div>
           </div>
           <div id="stats" class="col s12">
             <div class="row classProcessos">
@@ -211,10 +193,10 @@
                 <div id="barrasAtividade"/>
               </div>
             </div>
-            <div class="row classProdutividade">
+            <div class="row">
               <h4>Produtividade Mensal e Trimestral:</h4>
             </div>
-            <div class="row classProdutividade">
+            <div class="row">
               <div class="col s6">
                 <div id="barrasReinpMensal"/>
               </div>
