@@ -307,6 +307,9 @@ function formataDados() {
   dados.forEach((d) => {
     if (d.trimestre == `T1${new Date().getFullYear()}`) {
       d.detalhamento.forEach((e) => {
+        if (e.horasEfetivas == 7.8) {
+          e.horasEfetivas = 8;
+        }
         T1 += e.horasEfetivas;
       });
     }
@@ -314,6 +317,9 @@ function formataDados() {
   dados.forEach((d) => {
     if (d.trimestre == `T2${new Date().getFullYear()}`) {
       d.detalhamento.forEach((e) => {
+        if (e.horasEfetivas == 7.8) {
+          e.horasEfetivas = 8;
+        }
         T2 += e.horasEfetivas;
       });
     }
@@ -321,6 +327,9 @@ function formataDados() {
   dados.forEach((d) => {
     if (d.trimestre == `T3${new Date().getFullYear()}`) {
       d.detalhamento.forEach((e) => {
+        if (e.horasEfetivas == 7.8) {
+          e.horasEfetivas = 8;
+        }
         T3 += e.horasEfetivas;
       });
     }
@@ -328,6 +337,9 @@ function formataDados() {
   dados.forEach((d) => {
     if (d.trimestre == `T4${new Date().getFullYear()}`) {
       d.detalhamento.forEach((e) => {
+        if (e.horasEfetivas == 7.8) {
+          e.horasEfetivas = 8;
+        }
         T4 += e.horasEfetivas;
       });
     }
