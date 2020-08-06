@@ -502,6 +502,8 @@ function dataTableReinpDet(msg) {
         topCalc: somaCalc,
         sorter: 'number',
         hozAlign: 'center',
+        mutator: formatValorReinp,
+        accessorDownload: downloadValorReinp,
         editor: false,
         responsive: 0,
         download: true,
@@ -530,6 +532,19 @@ function dataTableReinpDet(msg) {
     langs: langs,
   });
 }
+
+let downloadValorReinp = function (value, data, type, params, column) {
+  let valor = value.toLocaleString();
+  return valor.replace('.', ',');
+};
+
+let formatValorReinp = function (valor, data, type, params, column) {
+  if (valor == 7.8) {
+    valor = 8;
+  }
+
+  return valor;
+};
 
 function tabelaOcorrencias() {
   let tabledata = JSON.parse($('#tabelaOcorrencias').attr('data-ocorrencias'));
@@ -1842,6 +1857,15 @@ function coloreDias(cell, formatterParams, valor) {
   }
   if (cell.getRow().getData().Observacoes.includes('.REP.')) {
     let elem = document.querySelector('.LegRepetitivo');
+    let estilo = getComputedStyle(elem);
+    cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+  }
+  if (
+    cell.getRow().getData().Questionamento_CARF == '' &&
+    cell.getRow().getData().Ind_Apenso.includes('S') &&
+    cell.getRow().getData().Situacao == ''
+  ) {
+    let elem = document.querySelector('.LegApenso');
     let estilo = getComputedStyle(elem);
     cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
   }

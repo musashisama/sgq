@@ -1,16 +1,16 @@
 @font-face {
     font-family: SwissMedium;
-    src: url(swiss-721-medium-bt.ttf)
+    src: url(swiss-721-medium-bt.ttf) format('truetype')
 }
 
 @font-face {
     font-family: SwissLight;
-    src: url(swiss-721-light-bt.ttf)
+    src: url(swiss-721-light-bt.ttf) format('truetype')
 }
 
 @font-face {
     font-family: Swiss;
-    src: url(Swiss-721-BT-Font.ttf)
+    src: url(Swiss-721-BT-Font.ttf) format('truetype')
 }
 
 .container-header {
@@ -495,6 +495,10 @@ summary::-webkit-details-marker {
 
 .LegRepetitivo {
     background-color: #b98cca;
+}
+
+.LegApenso {
+    background-color: #2e6b63;
 }
 
 #solModal .modal {
