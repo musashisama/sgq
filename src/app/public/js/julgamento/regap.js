@@ -422,6 +422,15 @@ function coloreDias(cell, formatterParams) {
     let estilo = getComputedStyle(elem);
     cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
   }
+  if (
+    cell.getRow().getData().Questionamento_CARF == '' &&
+    cell.getRow().getData().Ind_Apenso.includes('S') &&
+    cell.getRow().getData().Situacao == ''
+  ) {
+    let elem = document.querySelector('.LegApenso');
+    let estilo = getComputedStyle(elem);
+    cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+  }
   return value;
 }
 
