@@ -125,6 +125,9 @@ function somaMes(mes, processos) {
   let soma = 0;
   processos.detalhamento.forEach((p) => {
     if (p.mes == mes) {
+      if (p.horasEfetivas == 7.8) {
+        p.horasEfetivas = 8;
+      }
       soma += p.horasEfetivas;
     }
   });
@@ -135,6 +138,9 @@ function somaTrimestre(trimestre, processos) {
   let soma = 0;
   processos.detalhamento.forEach((p) => {
     if (processos.trimestre == trimestre) {
+      if (p.horasEfetivas == 7.8) {
+        p.horasEfetivas = 8;
+      }
       soma += p.horasEfetivas;
     }
   });

@@ -309,6 +309,8 @@ function dataTable2(msg) {
         sorter: 'number',
         hozAlign: 'center',
         topCalc: somaCalc,
+        mutator: formatValorReinp,
+        accessorDownload: downloadValorReinp,
         editor: false,
         responsive: 0,
         download: true,
@@ -317,6 +319,8 @@ function dataTable2(msg) {
         title: 'Horas Efetivas',
         field: 'horasEfetivas',
         topCalc: somaCalc,
+        mutator: formatValorReinp,
+        accessorDownload: downloadValorReinp,
         sorter: 'date',
         hozAlign: 'center',
         editor: false,
@@ -347,6 +351,19 @@ function dataTable2(msg) {
     langs: langs,
   });
 }
+
+let downloadValorReinp = function (value, data, type, params, column) {
+  let valor = value.toLocaleString();
+  return valor.replace('.', ',');
+};
+
+let formatValorReinp = function (valor, data, type, params, column) {
+  if (valor == 7.8) {
+    valor = 8;
+  }
+
+  return valor;
+};
 
 function dadosGrafico(dados) {
   let arrayMes = [];

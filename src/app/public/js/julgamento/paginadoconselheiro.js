@@ -492,6 +492,8 @@ function dataTableReinpDet(msg) {
         sorter: 'number',
         hozAlign: 'center',
         topCalc: somaCalc,
+        mutator: formatValorReinp,
+        accessorDownload: downloadValorReinp,
         editor: false,
         responsive: 2,
         download: true,
