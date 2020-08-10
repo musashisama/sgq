@@ -1847,7 +1847,7 @@ function coloreDias(cell, formatterParams, valor) {
     cell.getRow().getData().Equipe_Ultima.includes('DIPRO') &&
     cell.getRow().getData().AtividadeUltima == 'Distribuir / Sortear'
   ) {
-    let elem = document.querySelector('.LegEmbargo');
+    let elem = document.querySelector('.LegEmbargoSort');
     let estilo = getComputedStyle(elem);
     cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
   }
@@ -1866,6 +1866,11 @@ function coloreDias(cell, formatterParams, valor) {
     cell.getRow().getData().AtividadeUltima == 'Tratar Retorno de Processo'
   ) {
     let elem = document.querySelector('.LegEmbargo');
+    let estilo = getComputedStyle(elem);
+    cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+  }
+  if (cell.getRow().getData().Observacoes.includes('PARADIGMA')) {
+    let elem = document.querySelector('.LegParadigma');
     let estilo = getComputedStyle(elem);
     cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
   }

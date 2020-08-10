@@ -493,12 +493,20 @@ summary::-webkit-details-marker {
     background-color: #93ceb0;
 }
 
+.LegParadigma {
+    background-color: #5597fc;
+}
+
 .LegRepetitivo {
     background-color: #b98cca;
 }
 
 .LegApenso {
     background-color: #2e6b63;
+}
+
+.LegEmbargoSort {
+    background-color: #fcd705;
 }
 
 #solModal .modal {
