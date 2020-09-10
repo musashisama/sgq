@@ -253,11 +253,11 @@ function elementosTabelas() {
     })
       .done(function (msg) {
         $('.classProcessos').show();
-        msg.forEach((r) => {
-          r.DAAPS = parseInt($('#daps').text()) + r.Dias_na_Atividade;
-          console.log(r);
-        });
-        console.log(msg);
+        // msg.forEach((r) => {
+        //   r.DAAPS = parseInt($('#daps').text()) + r.Dias_na_Atividade;
+        //   console.log(r);
+        // });
+        //console.log(msg);
         dataTable(msg);
         grafico(msg);
         $('.progressRegap').toggle();
@@ -1556,7 +1556,7 @@ function dataTable(dados) {
         width: 140,
         hozAlign: 'center',
         editor: false,
-        mutator: formatValorDAPS,
+        //mutator: formatValorDAPS,
         formatter: formatDAPS,
         accessor: downloadValorDAPS,
         accessorParams: {},
