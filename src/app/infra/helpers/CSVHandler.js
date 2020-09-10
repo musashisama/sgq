@@ -951,7 +951,21 @@ class CSVHandler {
             d['HORAS_ESTIMADAS_DECIMAL'] = 0.45 * d['HORAS_ESTIMADAS_DECIMAL'];
           }
           if (
+            d['Questionamento_1_CARF_19'] == 'EMBARGO DE DECLARAÇÃO' &&
+            d['Nome_Equipe_Última_23'].includes('DIPRO') &&
+            d['Nome_Atividade_Última_29'] == 'Distribuir / Sortear'
+          ) {
+            d['HORAS_ESTIMADAS_DECIMAL'] = 0.45 * d['HORAS_ESTIMADAS_DECIMAL'];
+          }
+          if (
             d['Questionamento_1_CARF_19'] != 'EMBARGOS DE DECLARAÇÃO' &&
+            d['Nome_Equipe_Última_23'].includes('DIPRO') &&
+            d['Nome_Atividade_Última_29'] == 'Tratar Retorno de Processo'
+          ) {
+            d['HORAS_ESTIMADAS_DECIMAL'] = 0.45 * d['HORAS_ESTIMADAS_DECIMAL'];
+          }
+          if (
+            d['Questionamento_1_CARF_19'] != 'EMBARGO DE DECLARAÇÃO' &&
             d['Nome_Equipe_Última_23'].includes('DIPRO') &&
             d['Nome_Atividade_Última_29'] == 'Tratar Retorno de Processo'
           ) {
@@ -964,6 +978,13 @@ class CSVHandler {
           //ALTERAR HORA HE = 2 PORTARIA CARF
           if (
             d['Questionamento_1_CARF_19'] == 'EMBARGOS DE DECLARAÇÃO' &&
+            d['Nome_Equipe_Última_23'].includes('DIPRO') &&
+            d['Nome_Atividade_Última_29'] == 'Tratar Retorno de Processo'
+          ) {
+            d['HORAS_ESTIMADAS_DECIMAL'] = 2.0;
+          }
+          if (
+            d['Questionamento_1_CARF_19'] == 'EMBARGO DE DECLARAÇÃO' &&
             d['Nome_Equipe_Última_23'].includes('DIPRO') &&
             d['Nome_Atividade_Última_29'] == 'Tratar Retorno de Processo'
           ) {
