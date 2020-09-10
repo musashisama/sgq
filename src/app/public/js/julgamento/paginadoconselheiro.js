@@ -304,7 +304,8 @@ function elementosTabelas() {
 }
 
 function formataDados() {
-  let dados = JSON.parse($('#idProdutividade').attr('data-reinp'));
+  let data = JSON.parse($('#idProdutividade').attr('data-reinp'));
+  let dados = data[0];
   let T1 = dados.trimestre.T1;
   let T2 = dados.trimestre.T2;
   let T3 = dados.trimestre.T3;
