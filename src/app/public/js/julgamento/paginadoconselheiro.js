@@ -253,6 +253,11 @@ function elementosTabelas() {
     })
       .done(function (msg) {
         $('.classProcessos').show();
+        msg.forEach((r) => {
+          r.DAAPS = parseInt($('#daps').text()) + r.Dias_na_Atividade;
+          console.log(r);
+        });
+        console.log(msg);
         dataTable(msg);
         grafico(msg);
         $('.progressRegap').toggle();
@@ -499,18 +504,6 @@ function dataTableReinpDet(msg) {
         download: true,
       },
       {
-        title: 'Horas Estimadas',
-        field: 'horasEstimadas',
-        sorter: 'number',
-        hozAlign: 'center',
-        topCalc: somaCalc,
-        mutator: formatValorReinp,
-        accessorDownload: downloadValorReinp,
-        editor: false,
-        responsive: 2,
-        download: true,
-      },
-      {
         title: 'Horas Efetivas',
         field: 'horasEfetivas',
         topCalc: somaCalc,
@@ -616,6 +609,9 @@ function btnModal() {
     $('#btnSolModal').addClass('modal-trigger');
   });
 }
+//Mudar Abatimento para Redução
+// Dipensa de sorteio - De março 19 até março 20
+// Dispensa de Sorteio - Horas de processos recebidos por decorrência ou reflexo. (Número dos processos no campo de observação e número de horas no campo igual ao do excesso) Campos: Total de horas, Nº dos Processos Recebidos por decorrência e reflexo. Anexar despacho de deferimento.
 
 function elementosModal() {
   $('.arqsUp').hide();
@@ -656,7 +652,7 @@ function elementosModal() {
     'Licença para tratamento de saúde',
     'Licença em razão de casamento',
     'Licença por motivo de falecimento (cônjuge, companheiro, pais, madastra ou padrasto, filhos, enteados, menor sob guarda ou tutela e irmãos)',
-    'Período de férias (marcado perante a RFB antes da designação para Conselheiro(a))',
+    'Período de férias (marcado antes da designação para Conselheiro(a))',
   ];
   let arrayMeta = [
     'Licença à gestante',
@@ -668,6 +664,8 @@ function elementosModal() {
     'Participação em Seminário promovido pelo CARF',
     'Período de férias (marcado perante a RFB)',
   ];
+
+  // REGAP - Justificar Suspensão de Prazo
   let arrayPrazo = [
     'Licença à gestante',
     'Licença à adotante',
@@ -677,6 +675,10 @@ function elementosModal() {
     'Licença por motivo de falecimento (cônjuge, companheiro, pais, madastra ou padrasto, filhos, enteados, menor sob guarda ou tutela e irmãos)',
     'Participação em Seminário promovido pelo CARF',
     'Período de férias (marcado perante a RFB)',
+    'Processo objeto de retificação de ata', //Data do Julgamento e Número do processo.
+    'Prorrogação de Voto Vencedor -  art. 45, §1º, inciso II do RICARF', //Número de dias de prorrogação - Número dos processos
+    'Prorrogação de Prazo de Processo de Imunidade', //Suspensão de 90 dias - Número dos Processos
+    'Prorrogação de Prazo autorizada pela COJUL', // Número de dias de prorrogação e número dos processos
   ];
   let arrayMudanca = [
     'Turma Extraordinária para Turma Ordinária da mesma Seção',
@@ -802,8 +804,9 @@ function elementosModal() {
             '#observacoes',
           ).val()}`,
           arquivos: pegaArquivos(),
+          statusSegep: 'DocVal',
         };
-        handleSOL(dadosForm, 'POST', 'segep');
+        handleSOL(dadosForm, 'POST', 'dipaj');
       });
     }
     if (
@@ -863,8 +866,9 @@ function elementosModal() {
             '#observacoes',
           ).val()}`,
           arquivos: pegaArquivos(),
+          statusSegep: 'DocVal',
         };
-        handleSOL(dadosForm, 'POST', 'segep');
+        handleSOL(dadosForm, 'POST', 'dipaj');
       });
     }
     if (
@@ -929,8 +933,9 @@ function elementosModal() {
             '#observacoes',
           ).val()}`,
           arquivos: pegaArquivos(),
+          statusSegep: 'DocVal',
         };
-        handleSOL(dadosForm, 'POST', 'segep');
+        handleSOL(dadosForm, 'POST', 'dipaj');
       });
     }
     if (
@@ -1351,7 +1356,7 @@ function tabelaSolicitacoes() {
     height: '1000px',
     minHeight: '300px',
     maxHeight: '1000px',
-    layout: 'fitDataFill',
+    layout: 'fitData',
     responsiveLayout: 'collapse',
     groupStartOpen: false,
     initialSort: [{ column: 'dtCriacao', dir: 'desc' }],
@@ -1465,7 +1470,7 @@ function dataTable(dados) {
     height: '1000px',
     minHeight: '300px',
     maxHeight: '1000px',
-    layout: 'fitDataFill',
+    layout: 'fitData',
     responsiveLayout: 'collapse',
     groupStartOpen: false,
     responsiveLayoutCollapseStartOpen: false,
@@ -1589,7 +1594,11 @@ function dataTable(dados) {
         width: 140,
         hozAlign: 'center',
         editor: false,
+        mutator: formatValorDAPS,
         formatter: formatDAPS,
+        accessor: downloadValorDAPS,
+        accessorParams: {},
+        accessorDownload: downloadValorDAPS,
         responsive: 0,
         download: true,
       },
@@ -1659,17 +1668,6 @@ function dataTable(dados) {
         responsive: 2,
         download: true,
       },
-      // {
-      //   title: 'Valor do Processo',
-      //   field: 'Valor',
-      //   sorter: 'number',
-      //   hozAlign: 'center',
-      //   editor: false,
-      //   visible: false,
-      //   formatter: formatValor,
-      //   responsive: 2,
-      //   download: true,
-      // },
       {
         title: 'Observações',
         field: 'Observacoes',
@@ -1685,6 +1683,11 @@ function dataTable(dados) {
     langs: langs,
   });
 }
+
+let formatValorDAPS = function (value, data, type, params, column) {
+  let valor = calendario(value);
+  return valor;
+};
 
 function formatDAPS(cell) {
   let value = calendario(cell.getValue());
@@ -1752,6 +1755,13 @@ function formatDAPS(cell) {
   }
   return value;
 }
+
+let downloadValorDAPS = function (value, data, type, params, column) {
+  console.log(value);
+  let valor = calendario(value);
+  console.log(valor);
+  return valor;
+};
 
 let downloadValor = function (value, data, type, params, column) {
   return value.replace('.', ',');

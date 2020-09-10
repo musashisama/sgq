@@ -475,7 +475,7 @@ class JulgamentoControlador {
             pessoalDao.getUsers({ cargo: 'Conselheiro' }).then((cons) => {
               json.forEach((elem) => {
                 cons.forEach((con) => {
-                  elem.trimestre = fields.trimestre + new Date().getFullYear();
+                  //elem.trimestre = fields.trimestre + new Date().getFullYear();
                   if (
                     CSVHandler._removerAcentos(
                       elem.conselheiro.nome.toLowerCase(),

@@ -35,88 +35,101 @@ function montaReinp() {
         agrupadoT = false;
       }
     });
-  let reinp = d3
-    .nest()
-    .key((k) => {
-      return k.conselheiro.nome;
-    })
-    .entries(JSON.parse($('#reinpData').attr('data-reinp')));
+
+  // let reinp = d3
+  //   .nest()
+  //   .key((k) => {
+  //     return k.conselheiro.nome;
+  //   })
+  //   .entries(JSON.parse($('#reinpData').attr('data-reinp')));
+  let reinp = JSON.parse($('#reinpData').attr('data-reinp'));
   let dadosTabela = [];
-  reinp.forEach((elem) => {
+  reinp.forEach((e) => {
     dadosTabela.push({
-      nome: elem.key,
-      cpf: elem.values[0].conselheiro.cpf,
-      unidade: elem.values[0].unidade,
-      mediaHorasT1: elem.values.length >= 1 ? elem.values[0].mediaHoras : 0,
-      mediaHorasT2: elem.values.length >= 2 ? elem.values[1].mediaHoras : 0,
-      mediaHorasT3: elem.values.length >= 3 ? elem.values[2].mediaHoras : 0,
-      mediaHorasT4: elem.values.length >= 4 ? elem.values[3].mediaHoras : 0,
-      T1:
-        elem.values.length >= 1
-          ? somaTrimestre(`T1${new Date().getFullYear()}`, elem.values[0])
-          : 0,
-      T2:
-        elem.values.length >= 2
-          ? somaTrimestre(`T2${new Date().getFullYear()}`, elem.values[1])
-          : 0,
-      T3:
-        elem.values.length >= 3
-          ? somaTrimestre(`T3${new Date().getFullYear()}`, elem.values[2])
-          : 0,
-      T4:
-        elem.values.length >= 4
-          ? somaTrimestre(`T4${new Date().getFullYear()}`, elem.values[3])
-          : 0,
-      Jan:
-        elem.values.length >= 1
-          ? +somaMes(`${new Date().getFullYear()}-01`, elem.values[0])
-          : 0,
-      Fev:
-        elem.values.length >= 1
-          ? +somaMes(`${new Date().getFullYear()}-02`, elem.values[0])
-          : 0,
-      Mar:
-        elem.values.length >= 1
-          ? +somaMes(`${new Date().getFullYear()}-03`, elem.values[0])
-          : 0,
-      Abr:
-        elem.values.length >= 2
-          ? +somaMes(`${new Date().getFullYear()}-04`, elem.values[1])
-          : 0,
-      Mai:
-        elem.values.length >= 2
-          ? +somaMes(`${new Date().getFullYear()}-05`, elem.values[1])
-          : 0,
-      Jun:
-        elem.values.length >= 2
-          ? +somaMes(`${new Date().getFullYear()}-06`, elem.values[1])
-          : 0,
-      Jul:
-        elem.values.length >= 3
-          ? +somaMes(`${new Date().getFullYear()}-07`, elem.values[2])
-          : 0,
-      Ago:
-        elem.values.length >= 3
-          ? +somaMes(`${new Date().getFullYear()}-08`, elem.values[2])
-          : 0,
-      Set:
-        elem.values.length >= 3
-          ? somaMes(`${new Date().getFullYear()}-09`, elem.values[2])
-          : 0,
-      Out:
-        elem.values.length >= 4
-          ? +somaMes(`${new Date().getFullYear()}-10`, elem.values[3])
-          : 0,
-      Nov:
-        elem.values.length >= 4
-          ? +somaMes(`${new Date().getFullYear()}-11`, elem.values[3])
-          : 0,
-      Dez:
-        elem.values.length >= 4
-          ? +somaMes(`${new Date().getFullYear()}-12`, elem.values[3])
-          : 0,
+      nome: e.conselheiro.nome,
+      cpf: e.conselheiro.cpf,
+      unidade: e.conselheiro.setor,
+      T1: e.trimestre.T1.toFixed(2),
+      T2: e.trimestre.T2.toFixed(2),
+      T3: e.trimestre.T3.toFixed(2),
+      T4: e.trimestre.T4.toFixed(2),
     });
   });
+  // reinp.forEach((elem) => {
+  //   dadosTabela.push({
+  //     nome: elem.key,
+  //     cpf: elem.values[0].conselheiro.cpf,
+  //     unidade: elem.values[0].unidade,
+  //     mediaHorasT1: elem.values.length >= 1 ? elem.values[0].mediaHoras : 0,
+  //     mediaHorasT2: elem.values.length >= 2 ? elem.values[1].mediaHoras : 0,
+  //     mediaHorasT3: elem.values.length >= 3 ? elem.values[2].mediaHoras : 0,
+  //     mediaHorasT4: elem.values.length >= 4 ? elem.values[3].mediaHoras : 0,
+  //     T1:
+  //       elem.values.length >= 1
+  //         ? somaTrimestre(`T1${new Date().getFullYear()}`, elem.values[0])
+  //         : 0,
+  //     T2:
+  //       elem.values.length >= 2
+  //         ? somaTrimestre(`T2${new Date().getFullYear()}`, elem.values[1])
+  //         : 0,
+  //     T3:
+  //       elem.values.length >= 3
+  //         ? somaTrimestre(`T3${new Date().getFullYear()}`, elem.values[2])
+  //         : 0,
+  //     T4:
+  //       elem.values.length >= 4
+  //         ? somaTrimestre(`T4${new Date().getFullYear()}`, elem.values[3])
+  //         : 0,
+  //     Jan:
+  //       elem.values.length >= 1
+  //         ? +somaMes(`${new Date().getFullYear()}-01`, elem.values[0])
+  //         : 0,
+  //     Fev:
+  //       elem.values.length >= 1
+  //         ? +somaMes(`${new Date().getFullYear()}-02`, elem.values[0])
+  //         : 0,
+  //     Mar:
+  //       elem.values.length >= 1
+  //         ? +somaMes(`${new Date().getFullYear()}-03`, elem.values[0])
+  //         : 0,
+  //     Abr:
+  //       elem.values.length >= 2
+  //         ? +somaMes(`${new Date().getFullYear()}-04`, elem.values[1])
+  //         : 0,
+  //     Mai:
+  //       elem.values.length >= 2
+  //         ? +somaMes(`${new Date().getFullYear()}-05`, elem.values[1])
+  //         : 0,
+  //     Jun:
+  //       elem.values.length >= 2
+  //         ? +somaMes(`${new Date().getFullYear()}-06`, elem.values[1])
+  //         : 0,
+  //     Jul:
+  //       elem.values.length >= 3
+  //         ? +somaMes(`${new Date().getFullYear()}-07`, elem.values[2])
+  //         : 0,
+  //     Ago:
+  //       elem.values.length >= 3
+  //         ? +somaMes(`${new Date().getFullYear()}-08`, elem.values[2])
+  //         : 0,
+  //     Set:
+  //       elem.values.length >= 3
+  //         ? somaMes(`${new Date().getFullYear()}-09`, elem.values[2])
+  //         : 0,
+  //     Out:
+  //       elem.values.length >= 4
+  //         ? +somaMes(`${new Date().getFullYear()}-10`, elem.values[3])
+  //         : 0,
+  //     Nov:
+  //       elem.values.length >= 4
+  //         ? +somaMes(`${new Date().getFullYear()}-11`, elem.values[3])
+  //         : 0,
+  //     Dez:
+  //       elem.values.length >= 4
+  //         ? +somaMes(`${new Date().getFullYear()}-12`, elem.values[3])
+  //         : 0,
+  //   });
+  // });
 
   dataTable(dadosTabela);
 }
@@ -247,148 +260,148 @@ function dataTable(msg) {
         responsive: 0,
         download: true,
       },
-      {
-        formatter: 'responsiveCollapse',
-        width: 50,
-        minWidth: 30,
-        hozAlign: 'left',
-        resizable: false,
-        headerSort: false,
-        responsive: 0,
-        download: true,
-      },
-      {
-        title: 'Janeiro',
-        field: 'Jan',
-        width: largColuna,
-        sorter: 'number',
-        hozAlign: 'center',
-        editor: false,
-        formatter: formatMes,
-        responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Fevereiro',
-        field: 'Fev',
-        width: largColuna,
-        sorter: 'number',
-        hozAlign: 'center',
-        editor: false,
-        formatter: formatMes,
-        responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Março',
-        field: 'Mar',
-        width: largColuna,
-        sorter: 'number',
-        hozAlign: 'center',
-        editor: false,
-        formatter: formatMes,
-        responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Abril',
-        field: 'Abr',
-        width: largColuna,
-        sorter: 'number',
-        hozAlign: 'center',
-        editor: false,
-        formatter: formatMes,
-        responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Maio',
-        field: 'Mai',
-        width: largColuna,
-        sorter: 'number',
-        hozAlign: 'center',
-        editor: false,
-        formatter: formatMes,
-        responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Junho',
-        field: 'Jun',
-        width: largColuna,
-        sorter: 'number',
-        hozAlign: 'center',
-        editor: false,
-        formatter: formatMes,
-        responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Julho',
-        field: 'Jul',
-        width: largColuna,
-        sorter: 'number',
-        hozAlign: 'center',
-        editor: false,
-        formatter: formatMes,
-        responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Agosto',
-        field: 'Ago',
-        width: largColuna,
-        sorter: 'number',
-        hozAlign: 'center',
-        editor: false,
-        formatter: formatMes,
-        responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Setembro',
-        field: 'Set',
-        width: largColuna,
-        sorter: 'number',
-        hozAlign: 'center',
-        editor: false,
-        formatter: formatMes,
-        responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Outubro',
-        field: 'Out',
-        width: largColuna,
-        sorter: 'number',
-        hozAlign: 'center',
-        editor: false,
-        formatter: formatMes,
-        responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Novembro',
-        field: 'Nov',
-        width: largColuna,
-        sorter: 'number',
-        hozAlign: 'center',
-        editor: false,
-        formatter: formatMes,
-        responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Dezembro',
-        field: 'Dez',
-        width: largColuna,
-        sorter: 'number',
-        hozAlign: 'center',
-        editor: false,
-        formatter: formatMes,
-        responsive: 2,
-        download: true,
-      },
+      // {
+      //   formatter: 'responsiveCollapse',
+      //   width: 50,
+      //   minWidth: 30,
+      //   hozAlign: 'left',
+      //   resizable: false,
+      //   headerSort: false,
+      //   responsive: 0,
+      //   download: true,
+      // },
+      // {
+      //   title: 'Janeiro',
+      //   field: 'Jan',
+      //   width: largColuna,
+      //   sorter: 'number',
+      //   hozAlign: 'center',
+      //   editor: false,
+      //   formatter: formatMes,
+      //   responsive: 2,
+      //   download: true,
+      // },
+      // {
+      //   title: 'Fevereiro',
+      //   field: 'Fev',
+      //   width: largColuna,
+      //   sorter: 'number',
+      //   hozAlign: 'center',
+      //   editor: false,
+      //   formatter: formatMes,
+      //   responsive: 2,
+      //   download: true,
+      // },
+      // {
+      //   title: 'Março',
+      //   field: 'Mar',
+      //   width: largColuna,
+      //   sorter: 'number',
+      //   hozAlign: 'center',
+      //   editor: false,
+      //   formatter: formatMes,
+      //   responsive: 2,
+      //   download: true,
+      // },
+      // {
+      //   title: 'Abril',
+      //   field: 'Abr',
+      //   width: largColuna,
+      //   sorter: 'number',
+      //   hozAlign: 'center',
+      //   editor: false,
+      //   formatter: formatMes,
+      //   responsive: 2,
+      //   download: true,
+      // },
+      // {
+      //   title: 'Maio',
+      //   field: 'Mai',
+      //   width: largColuna,
+      //   sorter: 'number',
+      //   hozAlign: 'center',
+      //   editor: false,
+      //   formatter: formatMes,
+      //   responsive: 2,
+      //   download: true,
+      // },
+      // {
+      //   title: 'Junho',
+      //   field: 'Jun',
+      //   width: largColuna,
+      //   sorter: 'number',
+      //   hozAlign: 'center',
+      //   editor: false,
+      //   formatter: formatMes,
+      //   responsive: 2,
+      //   download: true,
+      // },
+      // {
+      //   title: 'Julho',
+      //   field: 'Jul',
+      //   width: largColuna,
+      //   sorter: 'number',
+      //   hozAlign: 'center',
+      //   editor: false,
+      //   formatter: formatMes,
+      //   responsive: 2,
+      //   download: true,
+      // },
+      // {
+      //   title: 'Agosto',
+      //   field: 'Ago',
+      //   width: largColuna,
+      //   sorter: 'number',
+      //   hozAlign: 'center',
+      //   editor: false,
+      //   formatter: formatMes,
+      //   responsive: 2,
+      //   download: true,
+      // },
+      // {
+      //   title: 'Setembro',
+      //   field: 'Set',
+      //   width: largColuna,
+      //   sorter: 'number',
+      //   hozAlign: 'center',
+      //   editor: false,
+      //   formatter: formatMes,
+      //   responsive: 2,
+      //   download: true,
+      // },
+      // {
+      //   title: 'Outubro',
+      //   field: 'Out',
+      //   width: largColuna,
+      //   sorter: 'number',
+      //   hozAlign: 'center',
+      //   editor: false,
+      //   formatter: formatMes,
+      //   responsive: 2,
+      //   download: true,
+      // },
+      // {
+      //   title: 'Novembro',
+      //   field: 'Nov',
+      //   width: largColuna,
+      //   sorter: 'number',
+      //   hozAlign: 'center',
+      //   editor: false,
+      //   formatter: formatMes,
+      //   responsive: 2,
+      //   download: true,
+      // },
+      // {
+      //   title: 'Dezembro',
+      //   field: 'Dez',
+      //   width: largColuna,
+      //   sorter: 'number',
+      //   hozAlign: 'center',
+      //   editor: false,
+      //   formatter: formatMes,
+      //   responsive: 2,
+      //   download: true,
+      // },
     ],
     autoColumns: false,
     locale: true,

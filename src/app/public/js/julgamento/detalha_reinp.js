@@ -54,52 +54,13 @@ function initSelect() {
   $('select').formSelect();
 }
 function formataDados() {
-  let dados = JSON.parse($('#formReinp').attr('data-reinp'));
+  let data = JSON.parse($('#formReinp').attr('data-reinp'));
+  let dados = data[0];
   let user = JSON.parse($('#formReinp').attr('data-user'));
-  let T1 = 0;
-  let T2 = 0;
-  let T3 = 0;
-  let T4 = 0;
-  dados.forEach((d) => {
-    if (d.trimestre == `T1${new Date().getFullYear()}`) {
-      d.detalhamento.forEach((e) => {
-        if (e.horasEfetivas == 7.8) {
-          e.horasEfetivas = 8;
-        }
-        T1 += e.horasEfetivas;
-      });
-    }
-  });
-  dados.forEach((d) => {
-    if (d.trimestre == `T2${new Date().getFullYear()}`) {
-      d.detalhamento.forEach((e) => {
-        if (e.horasEfetivas == 7.8) {
-          e.horasEfetivas = 8;
-        }
-        T2 += e.horasEfetivas;
-      });
-    }
-  });
-  dados.forEach((d) => {
-    if (d.trimestre == `T3${new Date().getFullYear()}`) {
-      d.detalhamento.forEach((e) => {
-        if (e.horasEfetivas == 7.8) {
-          e.horasEfetivas = 8;
-        }
-        T3 += e.horasEfetivas;
-      });
-    }
-  });
-  dados.forEach((d) => {
-    if (d.trimestre == `T4${new Date().getFullYear()}`) {
-      d.detalhamento.forEach((e) => {
-        if (e.horasEfetivas == 7.8) {
-          e.horasEfetivas = 8;
-        }
-        T4 += e.horasEfetivas;
-      });
-    }
-  });
+  let T1 = dados.trimestre.T1;
+  let T2 = dados.trimestre.T2;
+  let T3 = dados.trimestre.T3;
+  let T4 = dados.trimestre.T4;
   let dadosTabela = [
     {
       T1: +T1.toFixed(2),
@@ -111,10 +72,10 @@ function formataDados() {
   ];
   dataTable(dadosTabela);
 
-  let arrayMes = [];
-  dados.forEach((d) => {
-    arrayMes.push(d.detalhamento);
-  });
+  let arrayMes = dados.detalhamento;
+  // dados.forEach((d) => {
+  //   arrayMes.push(d.detalhamento);
+  // });
 
   dataTable2(arrayMes.flat());
   return dadosTabela;
@@ -316,18 +277,6 @@ function dataTable2(msg) {
         download: true,
       },
       {
-        title: 'Horas Estimadas',
-        field: 'horasEstimadas',
-        sorter: 'number',
-        hozAlign: 'center',
-        topCalc: somaCalc,
-        mutator: formatValorReinp,
-        accessorDownload: downloadValorReinp,
-        editor: false,
-        responsive: 0,
-        download: true,
-      },
-      {
         title: 'Horas Efetivas',
         field: 'horasEfetivas',
         topCalc: somaCalc,
@@ -453,38 +402,10 @@ function dadosGrafico(dados) {
     .entries(arrayMes);
 }
 function dadosGrafico2(dados) {
-  let T1 = 0;
-  let T2 = 0;
-  let T3 = 0;
-  let T4 = 0;
-  dados.forEach((d) => {
-    if (d.trimestre == `T1${new Date().getFullYear()}`) {
-      d.detalhamento.forEach((e) => {
-        T1 += e.horasEfetivas;
-      });
-    }
-  });
-  dados.forEach((d) => {
-    if (d.trimestre == `T2${new Date().getFullYear()}`) {
-      d.detalhamento.forEach((e) => {
-        T2 += e.horasEfetivas;
-      });
-    }
-  });
-  dados.forEach((d) => {
-    if (d.trimestre == `T3${new Date().getFullYear()}`) {
-      d.detalhamento.forEach((e) => {
-        T3 += e.horasEfetivas;
-      });
-    }
-  });
-  dados.forEach((d) => {
-    if (d.trimestre == `T4${new Date().getFullYear()}`) {
-      d.detalhamento.forEach((e) => {
-        T4 += e.horasEfetivas;
-      });
-    }
-  });
+  let T1 = dados.trimestre.T1;
+  let T2 = dados.trimestre.T2;
+  let T3 = dados.trimestre.T3;
+  let T4 = dados.trimestre.T4;
 
   return {
     T1: T1.toFixed(2),
@@ -495,7 +416,7 @@ function dadosGrafico2(dados) {
 }
 dados = JSON.parse($('#formReinp').attr('data-reinp'));
 let graf = dadosGrafico(dados);
-let graf2 = dadosGrafico2(dados);
+let graf2 = dadosGrafico2(dados[0]);
 let cores = [
   'rgb(204, 204, 204)',
   'rgb(254, 181, 204)',
