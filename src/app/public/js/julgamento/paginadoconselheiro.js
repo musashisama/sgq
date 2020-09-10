@@ -305,50 +305,11 @@ function elementosTabelas() {
 
 function formataDados() {
   let dados = JSON.parse($('#idProdutividade').attr('data-reinp'));
-  let T1 = 0;
-  let T2 = 0;
-  let T3 = 0;
-  let T4 = 0;
-  dados.forEach((d) => {
-    if (d.trimestre == `T1${new Date().getFullYear()}`) {
-      d.detalhamento.forEach((e) => {
-        if (e.horasEfetivas == 7.8) {
-          e.horasEfetivas = 8;
-        }
-        T1 += e.horasEfetivas;
-      });
-    }
-  });
-  dados.forEach((d) => {
-    if (d.trimestre == `T2${new Date().getFullYear()}`) {
-      d.detalhamento.forEach((e) => {
-        if (e.horasEfetivas == 7.8) {
-          e.horasEfetivas = 8;
-        }
-        T2 += e.horasEfetivas;
-      });
-    }
-  });
-  dados.forEach((d) => {
-    if (d.trimestre == `T3${new Date().getFullYear()}`) {
-      d.detalhamento.forEach((e) => {
-        if (e.horasEfetivas == 7.8) {
-          e.horasEfetivas = 8;
-        }
-        T3 += e.horasEfetivas;
-      });
-    }
-  });
-  dados.forEach((d) => {
-    if (d.trimestre == `T4${new Date().getFullYear()}`) {
-      d.detalhamento.forEach((e) => {
-        if (e.horasEfetivas == 7.8) {
-          e.horasEfetivas = 8;
-        }
-        T4 += e.horasEfetivas;
-      });
-    }
-  });
+  let T1 = dados.trimestre.T1;
+  let T2 = dados.trimestre.T2;
+  let T3 = dados.trimestre.T3;
+  let T4 = dados.trimestre.T4;
+
   let dadosTabela = [
     {
       T1: +T1.toFixed(2),
@@ -359,10 +320,10 @@ function formataDados() {
   ];
   dataTableReinp(dadosTabela);
 
-  let arrayMes = [];
-  dados.forEach((d) => {
-    arrayMes.push(d.detalhamento);
-  });
+  let arrayMes = dados.detalhamento;
+  // dados.forEach((d) => {
+  //   arrayMes.push(d.detalhamento);
+  // });
   dataTableReinpDet(arrayMes.flat());
   document.getElementById('agrupaMes').addEventListener('click', function () {
     if (agrupadoReinp == false) {
@@ -1600,7 +1561,7 @@ function dataTable(dados) {
         accessorParams: {},
         accessorDownload: downloadValorDAPS,
         responsive: 0,
-        download: true,
+        download: false,
       },
       {
         title: 'Valor Originário',
