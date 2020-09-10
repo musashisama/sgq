@@ -305,11 +305,11 @@ function elementosTabelas() {
 
 function formataDados() {
   let data = JSON.parse($('#idProdutividade').attr('data-reinp'));
-  let dados = data[0];
-  let T1 = dados.trimestre.T1;
-  let T2 = dados.trimestre.T2;
-  let T3 = dados.trimestre.T3;
-  let T4 = dados.trimestre.T4;
+  let dados = data[0] ? data[0] : { trimestre: { T1: 0, T2: 0, T3: 0, T4: 0 } };
+  let T1 = dados.trimestre.T1 ? dados.trimestre.T1 : 0;
+  let T2 = dados.trimestre.T2 ? dados.trimestre.T2 : 0;
+  let T3 = dados.trimestre.T3 ? dados.trimestre.T3 : 0;
+  let T4 = dados.trimestre.T4 ? dados.trimestre.T4 : 0;
 
   let dadosTabela = [
     {
@@ -321,7 +321,7 @@ function formataDados() {
   ];
   dataTableReinp(dadosTabela);
 
-  let arrayMes = dados.detalhamento;
+  let arrayMes = dados.detalhamento ? dados.detalhamento : [{}];
   // dados.forEach((d) => {
   //   arrayMes.push(d.detalhamento);
   // });
