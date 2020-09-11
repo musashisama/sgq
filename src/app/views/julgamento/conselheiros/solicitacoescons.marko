@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <app-scripts-css/>
+  <body>
+    <app-header/>
+    <main class="conteudoPrincipal">
+      <app-navbar id="slide-out" class="sidenav"/>
+      <div class="container">
+        <h3 class="center-align titulo nomeSol">
+          <strong>Cons. ${data.user.nome}</strong> - ${data.user.tipo}
+        </h3>
+        <div class="row">
+          <div class="col s12">
+            <p>
+              <h6>
+                <strong>CPF:</strong>
+                <span id="cpfCons">${data.user.cpf}</span>
+              </h6>
+            </p>
+            <p>
+              <h6>
+                <strong>Turma:</strong> ${data.user.unidade}
+              </h6>
+            </p>
+            <p>
+              <h6>
+                <strong>Final do Mandato:</strong> ${data.user.dtFimMandato}
+              </h6>
+            </p>
+            <p>
+              <h6>
+                Falta(m) <strong><span id="daps"/></strong> dia(s) para a próxima sessão, que será realizada em <strong><span id="ps"/></strong>.
+              </h6>
+            </p>
+          </div>
+        </div>
+
+        <h4>Inclusão de Solicitação</h4>
+        <div class="row"> 
+             <h5>Tipo de Solicitação</h5>
+                      <label for="tipoSolicitacao">Selecione o tipo de solicitação:</label>
+                      <select required name="tipoSolicitacao" id="tipoSolicitacao">
+                        <option class="form-group" value=`` disabled selected>Clique para selecionar</option>
+                        <for|sol| of=data.tpSol>
+                          <option class="form-group" value=`${sol.tipoSolicitacao}`>${sol.tipoSolicitacao}</option>
+                        </for>
+                      </select>
+                      <label for="tipoSolicitacao">Selecione o tipo de solicitação:</label>
+            
+            <div class="row">
+              <div id="tabelaSolicitacoes" data-tpSol=`${data.tpSol}` data-solicitacoes=`${data.solicitacoes}`/>
+            </div>
+            <!--Modal Structure-->
+            <div id="solModal" class="modal modal-fixed-footer">
+              <div class="modal-content">
+                <h4 class="hSModal">Inclusão de Solicitação</h4>
+                <div class="pSModal">
+                  <div class="row">
+                    <div class="col s7">
+                     
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col s12">
+                      <span id="divTipo"/>
+                    </div>
+                  </div>
+                  <div class="row valign-wrapper">
+                    <div id="enviaArq" class="col s6 valign-wrapper"/>
+                    <div id="mostraArq" class="col s6">
+                      <ul class="collection arqsUp"/>
+                    </div>
+                  </div>
+                  <blockquote>
+                    <strong>Importante:</strong>
+                    Os afastamentos são aplicáveis
+                    <strong>apenas</strong>
+                    para efeitos de cálculo das
+                    <strong>Metas de Produtividade</strong>.<br/>
+                    Dúvidas relativas aos
+                    <strong>efeitos financeiros</strong>
+                    devem ser tratadas diretamente com a
+                    <strong>COGEC</strong>.
+                  </blockquote>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-red btn-flat cancela">Cancela</a>
+                <button class="btn waves-effect waves-light concorda modal-close">
+                  Confirma <i class="material-icons right">send</i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>      
+    </main>
+    <footer class="page-footer rodape"/>
+    <app-modal-tabela-legenda/>
+    <!--Modal Structure-->
+    <div id="modal1" class="modal">
+      <div class="modal-content">
+        <h4 class="hModal">Modal Header</h4>
+        <p class="pModal"/>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-red btn-flat cancela">Cancela</a>
+        <button class="btn waves-effect waves-light concorda modal-close" type="submit" name="action">
+          Confirma <i class="material-icons right">send</i>
+        </button>
+      </div>
+    </div>
+    <app-footer/>
+    <app-scripts-js/>
+    <script src="/estatico/js/libs/plotly-latest.min.js"/>
+    <script src="/estatico/js/libs/plotly-locale-pt-br.js"/>
+    <script>Plotly.setPlotConfig({locale: 'pt-BR'})</script>
+    <script src="/estatico/js/libs/quill.min.js"/>
+    <script src="/estatico/js/julgamento/paginadoconselheiro.js"/>
+  </body>
+</html>
