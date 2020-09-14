@@ -835,7 +835,7 @@ function elementosModal() {
     }
     if (
       $('#tipoSolicitacao option:selected').val() ==
-      'Abatimento de Horas da Meta de Produtividade - Afastamento'
+      'Redução de Horas da Meta de Produtividade - Afastamento'
     ) {
       html = '';
       $('#divTipo').text('');
@@ -902,7 +902,7 @@ function elementosModal() {
     }
     if (
       $('#tipoSolicitacao option:selected').val() ==
-      'Abatimento de Horas da Meta de Produtividade - Participação em TO/CSRF (A partir de Abr/2020)'
+      'Redução de Horas da Meta de Produtividade - Participação em TO/CSRF (A partir de Abr/2020)'
     ) {
       html = '';
       $('#divTipo').text('');
