@@ -1029,7 +1029,7 @@ function elementosModal() {
     }
     if (
       $('#tipoSolicitacao option:selected').val() ==
-      'Dispensa de Sorteio - Participação em TO/CSRF (Até Mar/2020)'
+      'Dispensa de Sorteio - Participação em TO/CSRF (De março de 2019 até março de 2020)'
     ) {
       html = '';
       $('#divTipo').text('');
