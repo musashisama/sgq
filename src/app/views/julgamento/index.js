@@ -2,6 +2,7 @@ module.exports = {
   estoque: require('./estoque/estoque.marko'),
   analiseEstoque: require('./estoque/analiseEstoque.marko'),
   paginadoconselheiro: require('./conselheiros/paginadoconselheiro.marko'),
+  solicitacoescons: require('./conselheiros/solicitacoescons.marko'),
   carregacsv: require('./carregacsv/carregacsv.marko'),
   escolhecsv: require('./escolhecsv/escolhecsv.marko'),
   escolhecsvregap: require('./escolhecsv/escolhecsvregap.marko'),

@@ -57,6 +57,7 @@ class JulgamentoControlador {
       portalCojul: '/julgamento/restrito/portalcojul',
       gestaoPortalCojul: '/julgamento/restrito/gestaoportalcojul',
       solicitacoes: '/julgamento/conselheiros/solicitacoes',
+      regsolicitacoes: '/julgamento/conselheiros/registro-solicitacoes',
       arquivos: '/julgamento/conselheiros/arquivos',
       gestaosolicitacoes: '/julgamento/restrito/gestaosolicitacoes',
       regapcons: '/julgamento/conselheiros/:id',
@@ -444,6 +445,25 @@ class JulgamentoControlador {
             });
         }
       }
+    };
+  }
+
+  handleRegSolicitacoes() {
+    return function (req, resp) {
+      const pessoalDao = new PessoalDao(conn);
+      const julgamentoDao = new JulgamentoDao(conn);
+      pessoalDao.getUsers({ cpf: req.user.cpf }).then((user) => {
+        julgamentoDao
+          .getCal({
+            classNames: CSVHandler.semanaCores(user[0].unidade),
+          })
+          .then((cal) => {
+            resp.marko(templates.julgamento.solicitacoescons, {
+              cal: JSON.stringify(cal),
+              user: user[0],
+            });
+          });
+      });
     };
   }
 

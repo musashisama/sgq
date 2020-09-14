@@ -48,6 +48,12 @@ module.exports = (app) => {
     .post(julgControlador.handleSolicitacoes())
     .delete(julgControlador.handleSolicitacoes());
 
+  app
+    .route(rotasJulgamento.regsolicitacoes)
+    .get(julgControlador.handleRegSolicitacoes())
+    .post(julgControlador.handleRegSolicitacoes())
+    .delete(julgControlador.handleRegSolicitacoes());
+
   app.get(
     rotasJulgamento.conselheiros,
     julgControlador.carregaPaginaConselheiros(),
