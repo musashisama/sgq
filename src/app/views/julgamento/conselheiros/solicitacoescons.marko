@@ -6,37 +6,100 @@
     <main class="conteudoPrincipal">
       <app-navbar id="slide-out" class="sidenav"/>
       <div class="container">
-        <h3 class="center-align titulo nomeSol">
-          <strong>Cons. ${data.user.nome}</strong> - ${data.user.tipo}
-        </h3>
+        <h3 class="center-align titulo">Registro de Solicitação</h3>
         <div id="dataCAL" data-cal=`${data.cal}`/>
         <div class="row">
-          <div class="col s12">
+          <div class="card hoverable blue-grey darken-1 col s12">
+            <div class="card-content white-text">
+              <span class="card-title">
+                <strong>
+  Cons.
+                  <span class="nomeSol">${data.user.nome}</span>
+                </strong> - ${data.user.tipo}
+              </span>
+              <strong>CPF:</strong>
+              <span id="cpfCons">${data.user.cpf}</span>
+              <br/>
+              <strong>Turma:</strong>
+              ${data.user.unidade}<br/>
+              <strong>Final do Mandato:</strong>
+              ${data.user.dtFimMandato}<br/>
+              Falta(m)
+              <strong><span id="daps"/></strong>
+              dia(s) para a próxima sessão, que será realizada em
+              <strong><span id="ps"/></strong>.
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <ul class="collapsible col s6">
+            <li>
+              <div class="collapsible-header">
+                <i class="material-icons">filter_drama</i>REGAP - Justificar Suspensão de Prazos Regimentais
+              </div>
+              <div class="collapsible-body">
+                <span>Afastamentos e licenças</span>
+                <br/>
+                <span>Prorrogação de Voto Vencedor -  art. 45, §1º, inciso II do RICARF</span>
+                <br/>
+                <span>Prorrogação de Prazo de Processo de Imunidade</span>
+                <br/>
+                <span>Prorrogação de Prazo autorizada pela Presidência do CARF - art. 45, §1º, inciso II, item b do RICARF</span>
+                <br/>
+                <span>Justificativa para deixar de praticar de ato processual (Art. 45, IV RICARF)</span>
+              </div>
+            </li>
+            <li>
+              <div class="collapsible-header">
+                <i class="material-icons">place</i>REINP - Redução de Horas da Meta de Produtividade
+              </div>
+              <div class="collapsible-body">
+                <span>Afastamentos e licenças</span>
+                <br/>
+                <span>Mudança de Colegiado que implique em alteração do calendário da sessão de julgamento</span>
+                <br/>
+                <span>Não cumprimento da meta por ausência de carga de processo</span>
+                <br/>
+                <span>1º sorteio com prazo inferior a 21 dias da indicação</span>
+                <br/>
+                <span>Assumir interinamente presidência de turma por no mínimo um mês</span>
+                <!-- data do sorteio e data da indicação-->
+                <br/>
+                <span>Participação em sessão TO/CSRF a partir de abril de 2020</span>
+                <br/>
+                <span>Participação em sessão presencial ou virtual de TEX para sustentação oral</span>
+              </div>
+            </li>
+            <li>
+              <div class="collapsible-header">
+                <i class="material-icons">whatshot</i>Dispensa de Sorteio
+              </div>
+              <div class="collapsible-body">
+                <div class="collection">
+                  <a href="#!" class="collection-item">Excesso de Horas em Lotes de Sorteio</a>
+                  <a href="#!" class="collection-item">Distribuição de processos reflexos ou decorrentes</a>
+                  <a href="#!" class="collection-item ">Formalização de Voto Vencedor</a>
+                  <a href="#!" class="collection-item">Participação em TO/CSRF de março de 2019 até março de 2020</a>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="collapsible-header">
+                <i class="material-icons">whatshot</i>Outras solicitações
+              </div>
+              <div class="collapsible-body">
+                <span>Justificar faltas à sessões de julgamento</span>
+              </div>
+            </li>
+          </ul>
+          <div class="col s6">
+            <h5>Orientações</h5>
             <p>
-              <h6>
-                <strong>CPF:</strong>
-                <span id="cpfCons">${data.user.cpf}</span>
-              </h6>
-            </p>
-            <p>
-              <h6>
-                <strong>Turma:</strong> ${data.user.unidade}
-              </h6>
-            </p>
-            <p>
-              <h6>
-                <strong>Final do Mandato:</strong> ${data.user.dtFimMandato}
-              </h6>
-            </p>
-            <p>
-              <h6>
-                Falta(m) <strong><span id="daps"/></strong> dia(s) para a próxima sessão, que será realizada em <strong><span id="ps"/></strong>.
-              </h6>
+              As solicitações que constem afastamentos para redução de meta e justificativa de suspensão de prazos e faltas à sessões de julgamento deverão ser efetuadas <strong>após</strong> transcorrido o evento. 
+              Caso sejam efetuadas antes do evento, serão <strong>rejeitadas</strong>.
             </p>
           </div>
         </div>
-        <h4>Inclusão de Solicitação</h4>
-        <div class="row"/>
       </div>
     </main>
     <footer class="page-footer rodape"/>
