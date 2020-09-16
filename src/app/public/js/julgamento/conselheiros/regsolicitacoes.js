@@ -3,6 +3,7 @@ function inicializaComponentes() {
   $(document).ready(function () {
     initSelect();
     initTabs();
+    initCollapsible();
     calendario();
   });
 }
@@ -30,4 +31,10 @@ function initSelect() {
 
 function initTabs() {
   $('.tabs').tabs();
+}
+
+function initCollapsible() {
+  $(document).ready(function () {
+    $('.collapsible').collapsible();
+  });
 }

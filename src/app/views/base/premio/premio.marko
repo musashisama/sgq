@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <app-scripts-css/>
+  <body>
+    <app-header/>
+    <main class="conteudoPrincipal">
+      <app-navbar/>
+      <div class="container">
+        <div class="row">
+          <div id="dataCons" data-cons=`${data.cons}`/>
+          <div id="dataServ" data-serv=`${data.serv}`/>
+          <div id="dataTerc" data-terc=`${data.terc}`/>
+          <h3 class="center-align titulo">Prêmio de Mérito Funcional Ministro Leopoldo Bulhões</h3>
+          <br/>
+          <br/>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          <br/>
+          <br/>
+          <div class="row valign-wrapper">
+            <div class="form-group input-field selectCons col s5">
+              <select required name="selectCons">
+                <option class="form-group" value="" disabled selected>Clique para selecionar</option>
+                <for|cons| of=data.cons>
+                  <option class="form-group" value=data.cons>${cons}</option>
+                </for>
+              </select>
+              <label for="selectCons">Conselheiro</label>
+            </div>
+            <div class="col s1">
+              <a class="white btn-floating waves-effect waves-light btnSelCons">
+                <i class="material-icons green-text text-lighten-1">send</i>
+              </a>
+            </div>
+            <div class="card hoverable green lighten-1 col s5">
+              <div class="card-content white-text">
+                <span class="card-title">Conselheiro</span>
+                <h5 class="white-text">
+                  <strong><span id="nomeCons"/></strong>
+                </h5>
+              </div>
+            </div>
+            <div class="col s1">
+              <a class="white btn-floating waves-effect waves-light btnCancelCons">
+                <i class="material-icons red-text">cancel</i>
+              </a>
+            </div>
+          </div>
+          <div class="row valign-wrapper">
+            <div class="form-group input-field selectServ col s5">
+              <select required name="selectServ">
+                <option class="form-group" value="" disabled selected>Clique para selecionar</option>
+                <for|serv| of=data.serv>
+                  <option class="form-group" value=data.serv>${serv}</option>
+                </for>
+              </select>
+              <label for="selectServ">Servidor</label>
+            </div>
+            <div class="col s1">
+              <a class="white btn-floating waves-effect waves-light btnSelServ">
+                <i class="material-icons orange-text text-darken-1">send</i>
+              </a>
+            </div>
+            <div class="card hoverable orange darken-1 col s5">
+              <div class="card-content white-text">
+                <span class="card-title">Servidor</span>
+                <h5 class="white-text">
+                  <strong><span id="nomeServ"/></strong>
+                </h5>
+              </div>
+            </div>
+            <div class="col s1">
+              <a class="white btn-floating waves-effect waves-light btnCancelServ">
+                <i class="material-icons red-text">cancel</i>
+              </a>
+            </div>
+          </div>
+          <div class="row valign-wrapper">
+            <div class="form-group input-field selectTerc col s5">
+              <select required name="selectTerc">
+                <option class="form-group" value="" disabled selected>Clique para selecionar</option>
+                <for|terc| of=data.terc>
+                  <option class="form-group" value=data.terc>${terc}</option>
+                </for>
+              </select>
+              <label for="selectTerc">Terceirizado</label>
+            </div>
+            <div class="col s1">
+              <a class="white btn-floating waves-effect waves-light btnSelTerc">
+                <i class="material-icons light-blue-text text-darken-3">send</i>
+              </a>
+            </div>
+            <div class="card hoverable light-blue darken-3 col s5">
+              <div class="card-content white-text">
+                <span class="card-title">Terceirizado</span>
+                <h5 class="white-text">
+                  <strong><span id="nomeTerc"/></strong>
+                </h5>
+              </div>
+            </div>
+            <div class="col s1">
+              <a class="white btn-floating waves-effect waves-light btnCancelTerc">
+                <i class="material-icons red-text">cancel</i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="row center-align">
+          <a class="waves-effect waves-light green btn-large">
+            <i class="material-icons right">check</i>VOTAR
+          </a>
+        </div>
+      </div>
+    </main>
+    <app-footer/>
+    <app-scripts-js/>
+    <script src="/estatico/js/base/premio.js"/>
+  </body>
+</html>
