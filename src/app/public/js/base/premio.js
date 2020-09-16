@@ -28,7 +28,7 @@ function initBtns() {
   $('.btnCancelServ').click((e) => {
     $('#nomeServ').text('');
   });
-  $('.btnCancelCons').click((e) => {
+  $('.btnCancelTerc').click((e) => {
     $('#nomeTerc').text('');
   });
   //<span id="nomeTerc"/> btnSelCons btnCancelCons
