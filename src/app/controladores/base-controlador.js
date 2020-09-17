@@ -220,7 +220,11 @@ http://${URL.host}/altera-senha/${registro.controle}
         let serv = [];
         let terc = [];
         userDao
-          .getUsers({}, { nome: 1 }, { nome: 1, cargo: 1, funcao: 1 })
+          .getUsers(
+            { premio: false },
+            { nome: 1 },
+            { nome: 1, cargo: 1, funcao: 1, premio: 1 },
+          )
           .then((user) => {
             user.forEach((u) => {
               if (u.cargo == 'Conselheiro') {

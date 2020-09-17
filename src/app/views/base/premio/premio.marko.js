@@ -48,7 +48,7 @@ function render(input, out, __component, component, state) {
     marko_attr("data-serv", "" + data.serv) +
     "></div><div id=\"dataTerc\"" +
     marko_attr("data-terc", "" + data.terc) +
-    "></div><h3 class=\"center-align titulo\">Prêmio de Mérito Funcional Ministro Leopoldo Bulhões</h3><br><br><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><br><br><div class=\"row valign-wrapper\"><div class=\"form-group input-field selectCons col s5\"><select required name=\"selectCons\"><option class=\"form-group\" value=\"\" disabled selected>Clique para selecionar</option>");
+    "></div><h3 class=\"center-align titulo\">Prêmio \"Mérito Funcional Ministro Leopoldo de Bulhões\"</h3><br><br><p>O Prêmio \"Mérito Funcional Ministro Leopoldo de Bulhões\" destina-se a condecorar servidores e conselheiros em exercício no CARF, bem como colaboradores, como forma de reconhecimento pelos relevantes serviços prestados ao órgão. Serão condecorados até três conselheiros, três servidores e dois colaboradores que, no exercício de suas funções, tenham se destacado entre seus pares.</p><p class>Para registrar seu voto, selecione o nome na lista e clique em <i class=\"material-icons blue-text\">send</i> para preencher o quadro colorido à direita. Caso tenha selecionado o candidato errado, clique em <i class=\"material-icons red-text\">cancel</i> à direita do quadro colorido e selecione o seu candidato novamente.<br> Após selecionados seus candidatos, clique em VOTAR <i class=\"material-icons\">check</i> e seu voto será automaticamente computado. <strong>Atenção! Cada pessoa poderá registrar apenas um voto por categoria e, após registrados, os votos não poderão ser excluídos ou corrigidos.</strong></p><p><a href=\"https://intranet.carf/publicacoes-oficiais/copy_of_2016/portaria_carf-62-premio-merito-funcional-ministro-leopoldo-de-bulhoes.pdf\" target=\"_blank\">Clique aqui</a> para acessar o regulamento.</p><br><br><div class=\"row valign-wrapper\"><div class=\"form-group input-field selectCons col s5\"><select required name=\"selectCons\"><option class=\"form-group\" value=\"\" disabled selected>Clique para selecionar</option>");
 
   var $for$0 = 0;
 
@@ -92,15 +92,15 @@ function render(input, out, __component, component, state) {
 
   out.w("</select><label for=\"selectTerc\">Terceirizado</label></div><div class=\"col s1\"><a class=\"white btn-floating waves-effect waves-light btnSelTerc\"><i class=\"material-icons light-blue-text text-darken-3\">send</i></a></div><div class=\"card hoverable light-blue darken-3 col s5\"><div class=\"card-content white-text\"><span class=\"card-title\">Terceirizado</span><h5 class=\"white-text\"><strong><span id=\"nomeTerc\"></span></strong></h5></div></div><div class=\"col s1\"><a class=\"white btn-floating waves-effect waves-light btnCancelTerc\"><i class=\"material-icons red-text\">cancel</i></a></div></div></div><div class=\"row center-align\"><a class=\"waves-effect waves-light green btn-large btnVotar\"><i class=\"material-icons right\">check</i>VOTAR</a></div></div></main>");
 
-  app_footer_tag({}, out, __component, "74");
+  app_footer_tag({}, out, __component, "82");
 
-  app_scripts_js_tag({}, out, __component, "75");
+  app_scripts_js_tag({}, out, __component, "83");
 
   out.w("<script src=\"/estatico/js/base/premio.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "77");
+  await_reorderer_tag({}, out, __component, "85");
 
   out.w("</body></html>");
 }
