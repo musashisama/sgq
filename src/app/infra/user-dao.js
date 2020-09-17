@@ -118,5 +118,16 @@ class UserDao {
       );
     });
   }
+
+  deleteUser(filtro) {
+    return new Promise((resolve, reject) => {
+      this._db.usuarios.deleteOne(filtro, function (erro, res) {
+        if (erro) {
+          return reject('Não foi possível excluir o registro.');
+        }
+        return resolve(res);
+      });
+    });
+  }
 }
 module.exports = UserDao;

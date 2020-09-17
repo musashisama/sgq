@@ -18,6 +18,7 @@ class UserControlador {
       perfis: '/admin/usuario/perfis',
       edita: '/admin/usuario/perfis/:id',
       ocorrencias: '/admin/ocorrencias/:id',
+      excluiUsuario: '/admin/usuario/exclui',
     };
   }
 
@@ -232,6 +233,22 @@ class UserControlador {
         .atualiza(req.body) // <-ARRUMAR
         .then(resp.redirect(NCControlador.rotas().lista))
         .catch((erro) => console.log(erro));
+    };
+  }
+  excluiUser() {
+    return function (req, resp) {
+      const userDao = new UserDao(conn);
+      if (req.method == 'DELETE') {
+        userDao.deleteUser({ cpf: req.body.cpf }).then((msg) => {
+          resp.send(msg.result);
+        });
+      } else {
+        userDao.getUsers({}, { nome: 1 }, {}).then((users) => {
+          resp.marko(templates.admin.excluiuser, {
+            users: JSON.stringify(users),
+          });
+        });
+      }
     };
   }
 }
