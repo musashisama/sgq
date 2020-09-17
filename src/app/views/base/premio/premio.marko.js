@@ -90,7 +90,7 @@ function render(input, out, __component, component, state) {
       "</option>");
   });
 
-  out.w("</select><label for=\"selectTerc\">Terceirizado</label></div><div class=\"col s1\"><a class=\"white btn-floating waves-effect waves-light btnSelTerc\"><i class=\"material-icons light-blue-text text-darken-3\">send</i></a></div><div class=\"card hoverable light-blue darken-3 col s5\"><div class=\"card-content white-text\"><span class=\"card-title\">Terceirizado</span><h5 class=\"white-text\"><strong><span id=\"nomeTerc\"></span></strong></h5></div></div><div class=\"col s1\"><a class=\"white btn-floating waves-effect waves-light btnCancelTerc\"><i class=\"material-icons red-text\">cancel</i></a></div></div></div><div class=\"row center-align\"><a class=\"waves-effect waves-light green btn-large\"><i class=\"material-icons right\">check</i>VOTAR</a></div></div></main>");
+  out.w("</select><label for=\"selectTerc\">Terceirizado</label></div><div class=\"col s1\"><a class=\"white btn-floating waves-effect waves-light btnSelTerc\"><i class=\"material-icons light-blue-text text-darken-3\">send</i></a></div><div class=\"card hoverable light-blue darken-3 col s5\"><div class=\"card-content white-text\"><span class=\"card-title\">Terceirizado</span><h5 class=\"white-text\"><strong><span id=\"nomeTerc\"></span></strong></h5></div></div><div class=\"col s1\"><a class=\"white btn-floating waves-effect waves-light btnCancelTerc\"><i class=\"material-icons red-text\">cancel</i></a></div></div></div><div class=\"row center-align\"><a class=\"waves-effect waves-light green btn-large btnVotar\"><i class=\"material-icons right\">check</i>VOTAR</a></div></div></main>");
 
   app_footer_tag({}, out, __component, "74");
 

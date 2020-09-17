@@ -39,6 +39,7 @@ cliente.connect(url, opcoes, function (err, cliente) {
   dados.fsfiles = dbo.collection('uploads.files');
   dados.arquivos = dbo.collection('arquivos');
   dados.reinp = dbo.collection('reinp');
+  dados.votacaoPremio = dbo.collection('votacaoPremio');
 });
 
 process.on('SIGINT', () =>

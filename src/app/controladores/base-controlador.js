@@ -1,6 +1,7 @@
 const conn = require('../../config/mongodb').dados;
 const templates = require('../views/templates');
 const UserDao = require('../infra/user-dao');
+const BaseDao = require('../infra/base-dao');
 const { ObjectID } = require('mongodb');
 const Mailer = require('../infra/helpers/Mailer');
 const requestIp = require('request-ip');
@@ -205,34 +206,44 @@ http://${URL.host}/altera-senha/${registro.controle}
   }
   carregaPremio() {
     return function (req, resp, next) {
-      let userDao = new UserDao(conn);
-      let cons = [];
-      let serv = [];
-      let terc = [];
-      userDao
-        .getUsers({}, { nome: 1 }, { nome: 1, cargo: 1, funcao: 1 })
-        .then((user) => {
-          user.forEach((u) => {
-            if (u.cargo == 'Conselheiro') {
-              cons.push(u.nome);
-            }
-            if (
-              u.cargo != 'Conselheiro' &&
-              u.funcao != 'Terceirizado' &&
-              u.funcao != 'Estagiario'
-            ) {
-              serv.push(u.nome);
-            }
-            if (u.funcao == 'Terceirizado' || u.funcao == 'Estagiario') {
-              terc.push(u.nome);
-            }
-          });
-          resp.marko(templates.base.premio, {
-            cons: cons,
-            serv: serv,
-            terc: terc,
-          });
+      if (req.method == 'POST') {
+        console.log('post');
+        console.log(req.body);
+        let baseDao = new BaseDao(conn);
+        baseDao.regVote(req.body).then((msg) => {
+          resp.json(msg);
         });
+      }
+      if (req.method == 'GET') {
+        let userDao = new UserDao(conn);
+        let cons = [];
+        let serv = [];
+        let terc = [];
+        userDao
+          .getUsers({}, { nome: 1 }, { nome: 1, cargo: 1, funcao: 1 })
+          .then((user) => {
+            user.forEach((u) => {
+              if (u.cargo == 'Conselheiro') {
+                cons.push(u.nome);
+              }
+              if (
+                u.cargo != 'Conselheiro' &&
+                u.funcao != 'Terceirizado' &&
+                u.funcao != 'Estagiario'
+              ) {
+                serv.push(u.nome);
+              }
+              if (u.funcao == 'Terceirizado' || u.funcao == 'Estagiario') {
+                terc.push(u.nome);
+              }
+            });
+            resp.marko(templates.base.premio, {
+              cons: cons,
+              serv: serv,
+              terc: terc,
+            });
+          });
+      }
     };
   }
 }
