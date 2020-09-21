@@ -51,7 +51,7 @@ function render(input, out, __component, component, state) {
 
   app_scripts_js_tag({}, out, __component, "25");
 
-  out.w("<script src=\"/estatico/js/base/excluiuser.js\"></script>");
+  out.w("<script src=\"/estatico/js/base/excluiUser.js\"></script>");
 
   init_components_tag({}, out);
 
