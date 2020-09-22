@@ -48,6 +48,7 @@ function dataTable(msg) {
         cellClick: clickDeleta,
         width: 40,
         hozAlign: 'center',
+        responsive: 0,
       },
       {
         title: 'Nome',
