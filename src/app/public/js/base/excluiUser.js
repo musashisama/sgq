@@ -43,6 +43,13 @@ function dataTable(msg) {
         headerSort: false,
       },
       {
+        title: 'Excluir Usuário',
+        formatter: formatDeleta,
+        cellClick: clickDeleta,
+        width: 40,
+        hozAlign: 'center',
+      },
+      {
         title: 'Nome',
         field: 'nome',
         sorter: 'string',
@@ -78,13 +85,7 @@ function dataTable(msg) {
         editor: false,
         responsive: 2,
       },
-      {
-        title: 'Excluir Usuário',
-        formatter: formatDeleta,
-        cellClick: clickDeleta,
-        width: 40,
-        hozAlign: 'center',
-      },
+
       {
         title: 'Função',
         field: 'funcao',
