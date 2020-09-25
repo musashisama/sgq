@@ -1065,8 +1065,8 @@ class CSVHandler {
         delete d['Horas_Estimadas_17'];
         delete d['Questionamento_2_CARF_20'];
         delete d['Questionamento_3_CARF_21'];
-        delete d['Motivo_da_Prioridade_22'];
-        delete d['Prioridade_24'];
+        //delete d['Motivo_da_Prioridade_22'];
+        //delete d['Prioridade_24'];
         Object.entries(keysMap).forEach((entry) => {
           delete Object.assign(d, { [entry[1]]: d[entry[0]] })[entry[0]];
         });

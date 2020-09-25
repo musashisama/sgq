@@ -10,7 +10,7 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.w("<footer class=\"page-footer rodape\"><div class=\"footer-copyright center\"><div class=\"container white-text\"><a class=\"white-text text-lighten-4\" href=\"#!\">© 2019 Conselho Administrativo de Recursos Fiscais - CARF</a></div></div></footer>");
+  out.w("<footer class=\"page-footer rodape\"><div class=\"footer-copyright center\"><div class=\"container white-text\"><a class=\"white-text text-lighten-4\" href=\"#!\">© Conselho Administrativo de Recursos Fiscais - CARF</a></div></div></footer>");
 }
 
 marko_template._ = marko_renderer(render, {

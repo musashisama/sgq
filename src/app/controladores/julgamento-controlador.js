@@ -53,6 +53,7 @@ class JulgamentoControlador {
       faqdipaj: '/julgamento/faqdipaj',
       gestaoconhecimento: '/julgamento/gestaoconhecimento',
       conselheiros: '/julgamento/conselheiros',
+      portalconselheiros: '/julgamento/portalconselheiros',
       formFAQ: '/julgamento/restrito/formfaq',
       portalCojul: '/julgamento/restrito/portalcojul',
       gestaoPortalCojul: '/julgamento/restrito/gestaoportalcojul',
@@ -459,6 +460,25 @@ class JulgamentoControlador {
           })
           .then((cal) => {
             resp.marko(templates.julgamento.solicitacoescons, {
+              cal: JSON.stringify(cal),
+              user: user[0],
+            });
+          });
+      });
+    };
+  }
+
+  carregaPortalConselheiros() {
+    return function (req, resp) {
+      const pessoalDao = new PessoalDao(conn);
+      const julgamentoDao = new JulgamentoDao(conn);
+      pessoalDao.getUsers({ cpf: req.user.cpf }).then((user) => {
+        julgamentoDao
+          .getCal({
+            classNames: CSVHandler.semanaCores(user[0].unidade),
+          })
+          .then((cal) => {
+            resp.marko(templates.julgamento.portaldoconselheiro, {
               cal: JSON.stringify(cal),
               user: user[0],
             });
