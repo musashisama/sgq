@@ -70,7 +70,6 @@ function montaModal() {
             </p>`,
   );
   $('.concorda').click(function () {
-    event.preventDefault();
     let data = {
       titulo: quillTitulo.root.innerHTML,
       descricao: quillDesc.root.innerHTML,

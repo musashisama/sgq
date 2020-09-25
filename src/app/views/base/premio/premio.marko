@@ -1,131 +1,206 @@
 <!DOCTYPE html>
 <html>
   <app-scripts-css/>
+  <style>
+body {
+  background-image: url('/estatico/imagens/backgroundpremio.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+}
+</style>
   <body>
     <app-header/>
     <main class="conteudoPrincipal">
       <app-navbar/>
       <div class="container">
-        <div class="row">
-          <div id="dataCons" data-cons=`${data.cons}`/>
-          <div id="dataServ" data-serv=`${data.serv}`/>
-          <div id="dataTerc" data-terc=`${data.terc}`/>
-          <h3 class="center-align titulo">Prêmio "Mérito Funcional Ministro Leopoldo de Bulhões"</h3>
-          <br/>
-          <br/>
-          <p>
-            O Prêmio "Mérito Funcional Ministro Leopoldo de Bulhões" destina-se a condecorar servidores e conselheiros em exercício no CARF, bem como colaboradores, como forma de reconhecimento pelos relevantes serviços prestados ao órgão.
-            Serão condecorados até três conselheiros, três servidores e dois colaboradores que, no exercício de suas funções, tenham se destacado entre seus pares.
-          </p>
-          <p class>
-            Para registrar seu voto, selecione o nome na lista e clique em
-            <i class="material-icons blue-text">send</i>
-            para preencher o quadro colorido à direita. Caso tenha selecionado o candidato errado, clique em
-            <i class="material-icons red-text">cancel</i>
-            à direita do quadro colorido e selecione o seu candidato novamente.<br/>
-            Após selecionados seus candidatos, clique em VOTAR
-            <i class="material-icons">check</i>
-            e seu voto será automaticamente computado.
-            <strong>Atenção! Cada pessoa poderá registrar apenas um voto por categoria e, após registrados, os votos não poderão ser excluídos ou corrigidos.</strong>
-          </p>
-          <p>
-            <a href="https://intranet.carf/publicacoes-oficiais/copy_of_2016/portaria_carf-62-premio-merito-funcional-ministro-leopoldo-de-bulhoes.pdf" target="_blank">Clique aqui</a>
-            para acessar o regulamento.
-          </p>
-          <br/>
-          <br/>
-          <div class="row valign-wrapper">
-            <div class="form-group input-field selectCons col s5">
-              <select required name="selectCons">
-                <option class="form-group" value="" disabled selected>Clique para selecionar</option>
-                <for|cons| of=data.cons>
-                  <option class="form-group" value=data.cons>${cons}</option>
-                </for>
-              </select>
-              <label for="selectCons">Conselheiro</label>
-            </div>
-            <div class="col s1">
-              <a class="white btn-floating waves-effect waves-light btnSelCons">
-                <i class="material-icons green-text text-lighten-1">send</i>
-              </a>
-            </div>
-            <div class="card hoverable green lighten-1 col s5">
-              <div class="card-content white-text">
-                <span class="card-title">Conselheiro</span>
-                <h5 class="white-text">
-                  <strong><span id="nomeCons"/></strong>
-                </h5>
+        <h3 class="center-align titulo">Prêmio "Mérito Funcional Ministro Leopoldo de Bulhões"</h3>
+        <div id="premioPrincipal" style="font-size:1.2em;">
+          <div class="row">
+            <div class="col s12 m6">
+              <div class="card orange darken-1 hoverable">
+                <div class="card-content white-text">
+                  <span class="card-title">Sobre a Premiação</span>
+                  <p>Informações acerca da Premiação.</p>
+                </div>
+                <div class="card-action right-align">
+                  <a id="cardSobre" class="white-text " href="#">
+                    <i class="material-icons hoverable">send</i>
+                  </a>
+                </div>
               </div>
             </div>
-            <div class="col s1">
-              <a class="white btn-floating waves-effect waves-light btnCancelCons">
-                <i class="material-icons red-text">cancel</i>
-              </a>
-            </div>
-          </div>
-          <div class="row valign-wrapper">
-            <div class="form-group input-field selectServ col s5">
-              <select required name="selectServ">
-                <option class="form-group" value="" disabled selected>Clique para selecionar</option>
-                <for|serv| of=data.serv>
-                  <option class="form-group" value=data.serv>${serv}</option>
-                </for>
-              </select>
-              <label for="selectServ">Servidor</label>
-            </div>
-            <div class="col s1">
-              <a class="white btn-floating waves-effect waves-light btnSelServ">
-                <i class="material-icons orange-text text-darken-1">send</i>
-              </a>
-            </div>
-            <div class="card hoverable orange darken-1 col s5">
-              <div class="card-content white-text">
-                <span class="card-title">Servidor</span>
-                <h5 class="white-text">
-                  <strong><span id="nomeServ"/></strong>
-                </h5>
+            <div class="col s12 m6">
+              <div class="card blue darken-1 hoverable">
+                <div class="card-content white-text">
+                  <span class="card-title">Regulamentação</span>
+                  <p>Regulamentação do Prêmio.</p>
+                </div>
+                <div class="card-action right-align">
+                  <a class="white-text right-align" href="https://intranet.carf/publicacoes-oficiais/copy_of_2016/portaria_carf-62-premio-merito-funcional-ministro-leopoldo-de-bulhoes.pdf" target="_blank">
+                    <i class="material-icons hoverable">send</i>
+                  </a>
+                </div>
               </div>
             </div>
-            <div class="col s1">
-              <a class="white btn-floating waves-effect waves-light btnCancelServ">
-                <i class="material-icons red-text">cancel</i>
-              </a>
-            </div>
-          </div>
-          <div class="row valign-wrapper">
-            <div class="form-group input-field selectTerc col s5">
-              <select required name="selectTerc">
-                <option class="form-group" value="" disabled selected>Clique para selecionar</option>
-                <for|terc| of=data.terc>
-                  <option class="form-group" value=data.terc>${terc}</option>
-                </for>
-              </select>
-              <label for="selectTerc">Terceirizado</label>
-            </div>
-            <div class="col s1">
-              <a class="white btn-floating waves-effect waves-light btnSelTerc">
-                <i class="material-icons light-blue-text text-darken-3">send</i>
-              </a>
-            </div>
-            <div class="card hoverable light-blue darken-3 col s5">
-              <div class="card-content white-text">
-                <span class="card-title">Terceirizado</span>
-                <h5 class="white-text">
-                  <strong><span id="nomeTerc"/></strong>
-                </h5>
+            <div class="col s12 m6">
+              <div class="card blue-grey lighten-2 hoverable">
+                <div class="card-content white-text">
+                  <span class="card-title">Agraciados</span>
+                  <p>Relação dos agraciados nos anos anteriores.</p>
+                </div>
+                <div class="card-action right-align">
+                  <a class="white-text right-align" href="https://intranet.carf/gestao-corporativa/pessoas/relacao-de-premiados-pmflb-por-ano.pdf" target="_blank">
+                    <i class="material-icons hoverable">send</i>
+                  </a>
+                </div>
               </div>
             </div>
-            <div class="col s1">
-              <a class="white btn-floating waves-effect waves-light btnCancelTerc">
-                <i class="material-icons red-text">cancel</i>
-              </a>
+            <div class="col s12 m6">
+              <div class="card green darken-1 hoverable">
+                <div class="card-content white-text">
+                  <span class="card-title">Votar</span>
+                  <p>Efetuar o registro do seu voto.</p>
+                </div>
+                <div class="card-action right-align">
+                  <a id="cardVoto" class="white-text right-align" href="#">
+                    <i class="material-icons hoverable">send</i>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="row center-align">
-          <a class="waves-effect waves-light green btn-large btnVotar">
-            <i class="material-icons right">check</i>VOTAR
-          </a>
+        <div id="premioVoto">
+          <div class="row">
+            <div id="dataCons" data-cons=`${data.cons}`/>
+            <div id="dataServ" data-serv=`${data.serv}`/>
+            <div id="dataTerc" data-terc=`${data.terc}`/>
+            <p style="font-size:1.2em;">
+              Para registrar seu voto, selecione o nome na lista e clique em
+              <i class="material-icons blue-text">send</i>
+              para preencher o quadro colorido à direita. Caso tenha selecionado o candidato errado, clique em
+              <i class="material-icons red-text">cancel</i>
+              à direita do quadro colorido e selecione o seu candidato novamente.<br/>
+              Após selecionados seus candidatos, clique em VOTAR
+              <i class="material-icons">check</i>
+              e seu voto será automaticamente computado.
+              <strong>Atenção! Cada pessoa poderá registrar apenas um voto por categoria e, após registrados, os votos não poderão ser excluídos ou corrigidos.</strong>
+            </p>
+            <br/>
+            <br/>
+            <div class="row valign-wrapper">
+              <div class="form-group input-field selectCons col s5">
+                <select required name="selectCons">
+                  <option class="form-group" value="" disabled selected>Clique para selecionar</option>
+                  <for|cons| of=data.cons>
+                    <option class="form-group" value=data.cons>${cons}</option>
+                  </for>
+                </select>
+                <label for="selectCons">Conselheiro</label>
+              </div>
+              <div class="col s1">
+                <a class="white btn-floating waves-effect waves-light btnSelCons">
+                  <i class="material-icons green-text text-lighten-1">send</i>
+                </a>
+              </div>
+              <div class="card hoverable green lighten-1 col s5">
+                <div class="card-content white-text">
+                  <span class="card-title">Conselheiro</span>
+                  <h5 class="white-text">
+                    <strong><span id="nomeCons"/></strong>
+                  </h5>
+                </div>
+              </div>
+              <div class="col s1">
+                <a class="white btn-floating waves-effect waves-light btnCancelCons">
+                  <i class="material-icons red-text">cancel</i>
+                </a>
+              </div>
+            </div>
+            <div class="row valign-wrapper">
+              <div class="form-group input-field selectServ col s5">
+                <select required name="selectServ">
+                  <option class="form-group" value="" disabled selected>Clique para selecionar</option>
+                  <for|serv| of=data.serv>
+                    <option class="form-group" value=data.serv>${serv}</option>
+                  </for>
+                </select>
+                <label for="selectServ">Servidor</label>
+              </div>
+              <div class="col s1">
+                <a class="white btn-floating waves-effect waves-light btnSelServ">
+                  <i class="material-icons orange-text text-darken-1">send</i>
+                </a>
+              </div>
+              <div class="card hoverable orange darken-1 col s5">
+                <div class="card-content white-text">
+                  <span class="card-title">Servidor</span>
+                  <h5 class="white-text">
+                    <strong><span id="nomeServ"/></strong>
+                  </h5>
+                </div>
+              </div>
+              <div class="col s1">
+                <a class="white btn-floating waves-effect waves-light btnCancelServ">
+                  <i class="material-icons red-text">cancel</i>
+                </a>
+              </div>
+            </div>
+            <div class="row valign-wrapper">
+              <div class="form-group input-field selectTerc col s5">
+                <select required name="selectTerc">
+                  <option class="form-group" value="" disabled selected>Clique para selecionar</option>
+                  <for|terc| of=data.terc>
+                    <option class="form-group" value=data.terc>${terc}</option>
+                  </for>
+                </select>
+                <label for="selectTerc">Terceirizado</label>
+              </div>
+              <div class="col s1">
+                <a class="white btn-floating waves-effect waves-light btnSelTerc">
+                  <i class="material-icons light-blue-text text-darken-3">send</i>
+                </a>
+              </div>
+              <div class="card hoverable light-blue darken-3 col s5">
+                <div class="card-content white-text">
+                  <span class="card-title">Terceirizado</span>
+                  <h5 class="white-text">
+                    <strong><span id="nomeTerc"/></strong>
+                  </h5>
+                </div>
+              </div>
+              <div class="col s1">
+                <a class="white btn-floating waves-effect waves-light btnCancelTerc">
+                  <i class="material-icons red-text">cancel</i>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="row center-align">
+            <a class="waves-effect waves-light green btn-large btnVotar">
+              <i class="material-icons right">check</i>VOTAR
+            </a>
+          </div>
+        </div>
+        <div id="premioSobre" style="font-size:1.2em;">
+          <h6>A Premiação</h6>
+          <p>O Prêmio tem o objetivo de promover o reconhecimento meritório dos servidores e conselheiros em exercício no Conselho Administrativo de Recursos Fiscais (CARF), bem como os colaboradores, que, por sua dedicação ao serviço e atributos profissionais e pessoais, se distingam entre seus pares, sejam referência em conduta profissional e contribuam para a harmonia e produtividade em seus ambientes de trabalho.</p>
+          <p>O reconhecimento profissional pelos relevantes serviços prestados aos órgão está diretamente relacionado aos objetivos estratégicos do Ministério da Economia e compõe uma das principais políticas deste Conselho, que é o reconhecimento e valorização do corpo funcional.</p>
+          <p>
+            A premiação, instituída em 2010 por meio de Portaria do Presidente do CARF, é destinada aos Servidores em todos os níveis da carreira, aos Conselheiros e aos Colaboradores, como reconhecimento àqueles que se destacam no desempenho de suas funções.
+            Esse reconhecimento fortalece o vínculo das pessoas ao CARF, criado pela Medida Provisória nº 449, de 2008, convertida na Lei nº 11.941, de 27 de maio de 2009, e instalado pelo Ministro de Estado da Fazenda em 15 de fevereiro de 2009, mediante Portaria MF nº 41, de 2009.
+          </p>
+          <p>A condecoração é denominada “PRÊMIO DE MÉRITO FUNCIONAL MINISTRO LEOPOLDO DE BULHÕES” em homenagem ao primeiro presidente do primeiro tribunal brasileiro, instituído em 14 de setembro de 1925, na cidade do Rio de Janeiro – à época Distrito Federal –, com a finalidade de apreciar em última instância administrativa os processos administrativos fiscais: o Conselho de Contribuinte do Imposto de Renda no Distrito Federal.</p>
+          <p>A solenidade de entrega do prêmio ocorre, anualmente, na semana da comemoração do aniversário do CARF.</p>
+          <h6>O Homenageado</h6>
+          <img src="/estatico/imagens/leopoldo.jpg" alt="Ministro Leopoldo de Bulhões" style="float:right;width:13%"/>
+          <p>O Ministro Jose Leopoldo de Bulhões Jardim nasceu em 28 de setembro de 1856, na cidade de Goiás (GO), e formou-se em advocacia pela Faculdade de Direito, São Paulo, em 1880.</p>
+          <p>O homenageado foi Ministro da Fazenda nos governos dos presidentes Rodrigues Alves (1902-1906) e Nilo Peçanha (1910-1911), além presidir o Conselho de Contribuintes do Imposto de Renda no Distrito Federal, em 1925.</p>
+          <p>Leopoldo de Bulhões exerceu diversos cargos administrativos nas esferas estadual e federal e teve vasta vida parlamentar dedicada ao país. Foi Deputado Geral na Câmara Federal, no Império (1881/85); Constituinte Federal (1891); Constituinte Estadual (1891); Deputado Federal (1891/93); e Senador Federal nos períodos de 1897/90, 1900/03, 1911, 1912/15 e 1915/18.</p>
+          <p>Notável combatente da permanência de Rui Barbosa no Ministério da Fazenda, Leopoldo de Bulhões foi decisivo no plano de estabilização monetária do ex-presidente Washington Luís. Também foi um defensor da criação do imposto de renda. Em 1921, o presidente da Comissão de Finanças da Câmara dos Deputados, impressionado com a defesa do senador Leopoldo de Bulhões para a implantação do imposto de renda, convidou-o para combater os argumentos contra esse imposto. Anos antes, Leopoldo de Bulhões havia mostrado o nível de aperfeiçoamento que o imposto de renda havia alcançado em outros países com arrecadação cada vez mais satisfatória. Entretanto, como logo depois abandonou a política, não apresentou o projeto de lei que defendia.</p>
+          <p>Entre suas publicações destacam-se os discursos “A conversão do papel Moeda”, de 1892, e “Meio Circulante e Abolição dos Escravos”, de 1893.</p>
+          <p>Filho de Inácio Soares de Bulhões e Antônia Emília de Bulhões Jardim e casado com Cecília Félix de Souza (filha do Desembargador Benedito Félix de Souza), Leopoldo de Bulhões faleceu em 15 de dezembro de 1928, na cidade de Petrópolis (RJ).</p>
         </div>
       </div>
     </main>

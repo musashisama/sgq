@@ -27,6 +27,16 @@ module.exports = (app) => {
     }
   });
 
+  app.use(rotasJulgamento.portalconselheiros, function (req, resp, next) {
+    req.session.baseUrl = req.baseUrl;
+    if (req.isAuthenticated()) {
+      resp.set('autenticado', true);
+      next();
+    } else {
+      resp.redirect(rotasBase.login);
+    }
+  });
+
   app
     .route(rotasJulgamento.arquivos)
     .get(julgControlador.handleArquivos())
@@ -57,6 +67,11 @@ module.exports = (app) => {
   app.get(
     rotasJulgamento.conselheiros,
     julgControlador.carregaPaginaConselheiros(),
+  );
+
+  app.get(
+    rotasJulgamento.portalconselheiros,
+    julgControlador.carregaPortalConselheiros(),
   );
 
   app.post(

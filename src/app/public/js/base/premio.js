@@ -3,6 +3,7 @@ inicializaComponentes();
 function inicializaComponentes() {
   $(document).ready(function () {
     initSelect();
+    ocultaSPA();
     initBtns();
     sendVote();
   });
@@ -10,6 +11,19 @@ function inicializaComponentes() {
 
 function initSelect() {
   $('select').formSelect();
+}
+
+function ocultaSPA() {
+  $('#premioVoto').toggle();
+  $('#premioSobre').toggle();
+  $('#cardVoto').click(() => {
+    $('#premioVoto').toggle();
+    $('#premioSobre').hide();
+  });
+  $('#cardSobre').click(() => {
+    $('#premioSobre').toggle();
+    $('#premioVoto').hide();
+  });
 }
 
 function initBtns() {
