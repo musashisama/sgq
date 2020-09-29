@@ -366,6 +366,9 @@ class CSVHandler {
               )
                 ? 'Sim'
                 : 'Não',
+              Prioridade: valor.Prioridade,
+              Motivo_Prioridade: valor.Motivo_Prioridade,
+              Assunto: valor.Assunto,
             });
           });
         });
@@ -1058,6 +1061,9 @@ class CSVHandler {
         Data_Sessão_CARF_16: 'Data_da_Sessao_Julgamento',
         Data_Distribuição_Última_12: 'Data_ultima_distribuicao',
         'Valor_Originário_Lançado/P_30': 'Valor_Originario',
+        'Assuntos/Objetos_31': 'Assunto',
+        Prioridade_24: 'Prioridade',
+        Motivo_da_Prioridade_22: 'Motivo_Prioridade',
       };
       //Renomeia as colunas e exclui as não utilizadas
       dados.forEach((d) => {
@@ -1065,8 +1071,6 @@ class CSVHandler {
         delete d['Horas_Estimadas_17'];
         delete d['Questionamento_2_CARF_20'];
         delete d['Questionamento_3_CARF_21'];
-        //delete d['Motivo_da_Prioridade_22'];
-        //delete d['Prioridade_24'];
         Object.entries(keysMap).forEach((entry) => {
           delete Object.assign(d, { [entry[1]]: d[entry[0]] })[entry[0]];
         });

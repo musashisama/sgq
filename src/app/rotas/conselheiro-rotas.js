@@ -74,6 +74,11 @@ module.exports = (app) => {
     julgControlador.carregaPortalConselheiros(),
   );
 
+  app.get(
+    rotasJulgamento.regapindividual,
+    julgControlador.carregaRegapIndividual(),
+  );
+
   app.post(
     rotasJulgamento.regapcons,
     julgControlador.carregaTabelaConselheiros(),

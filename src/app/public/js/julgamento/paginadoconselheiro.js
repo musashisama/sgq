@@ -76,7 +76,6 @@ function inicializaComponentes() {
     $('.classProcessos').toggle();
     calendario();
     elementosTabelas();
-
     graficoReinp();
     elementosModal();
     initModal();
@@ -221,9 +220,19 @@ function initCheckboxes() {
   });
   $(`#abaixoUM`).change(() => {
     if ($(`#abaixoUM`).prop('checked')) {
-      tableRegap.addFilter('Valor_Originario', '<=', 1000000);
+      tableRegap.addFilter('Valor_Originario', '<=', 8000000);
     } else {
-      tableRegap.removeFilter('Valor_Originario', '<=', 1000000);
+      tableRegap.removeFilter('Valor_Originario', '<=', 8000000);
+    }
+  });
+
+  $(`#expandirCheck`).change(() => {
+    if ($(`#expandirCheck`).prop('checked')) {
+      let element = document.getElementById('caixa');
+      element.classList.remove('container');
+    } else {
+      let element = document.getElementById('caixa');
+      element.classList.add('container');
     }
   });
 }
@@ -253,11 +262,9 @@ function elementosTabelas() {
     })
       .done(function (msg) {
         $('.classProcessos').show();
-        // msg.forEach((r) => {
-        //   r.DAAPS = parseInt($('#daps').text()) + r.Dias_na_Atividade;
-        //   console.log(r);
-        // });
-        //console.log(msg);
+        msg.forEach((r) => {
+          r.DAAPS = parseInt($('#daps').text()) + r.Dias_na_Atividade;
+        });
         dataTable(msg);
         grafico(msg);
         $('.progressRegap').toggle();
@@ -1551,18 +1558,14 @@ function dataTable(dados) {
       },
       {
         title: 'Dias na Atividade na Próxima Sessão',
-        field: 'Dias_na_Atividade',
+        field: 'DAAPS',
         sorter: 'number',
         width: 140,
         hozAlign: 'center',
         editor: false,
-        //mutator: formatValorDAPS,
-        formatter: formatDAPS,
-        accessor: downloadValorDAPS,
-        accessorParams: {},
-        accessorDownload: downloadValorDAPS,
+        formatter: coloreDias,
         responsive: 0,
-        download: false,
+        download: true,
       },
       {
         title: 'Valor Originário',
@@ -1575,6 +1578,53 @@ function dataTable(dados) {
         responsive: 0,
         download: true,
       },
+      {
+        title: 'Observações',
+        field: 'Observacoes',
+        sorter: 'string',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 2,
+        download: true,
+      },
+      {
+        title: 'Prioridade',
+        field: 'Prioridade',
+        sorter: 'string',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 2,
+        download: true,
+      },
+      {
+        title: 'Assunto',
+        field: 'Assunto',
+        sorter: 'string',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 2,
+        download: true,
+      },
+
+      {
+        title: 'Motivo da Prioridade',
+        field: 'Motivo_Prioridade',
+        sorter: 'string',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 2,
+        download: true,
+      },
+      {
+        title: 'Alegações',
+        field: 'Alegacoes_CARF',
+        sorter: 'string',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 2,
+        download: true,
+      },
+
       {
         title: 'Dias da Sessão de Julgamento',
         field: 'Dias_da_SJ',
@@ -1618,26 +1668,8 @@ function dataTable(dados) {
         sorter: 'string',
         hozAlign: 'center',
         editor: false,
-        responsive: 1,
-        download: false,
-      },
-      {
-        title: 'Alegações',
-        field: 'Alegacoes_CARF',
-        sorter: 'string',
-        hozAlign: 'center',
-        editor: false,
         responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Observações',
-        field: 'Observacoes',
-        sorter: 'string',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 1,
-        download: true,
+        download: false,
       },
     ],
     autoColumns: false,
@@ -1738,11 +1770,11 @@ let formatValor = function formatValor(cell) {
     localeMatcher: 'best fit',
   };
   const valor = +cell.getValue();
-  if (valor >= 1000000) {
+  if (valor >= 8000000) {
     cell.getElement().style.color = 'rgb(245, 131, 0)';
     cell.getElement().style.fontWeight = 'bolder';
   }
-  if (valor < 1000000) {
+  if (valor < 8000000) {
     cell.getElement().style.color = 'rgb(63, 138, 2)';
     cell.getElement().style.fontWeight = 'bolder';
   }
@@ -1859,6 +1891,25 @@ function coloreDias(cell, formatterParams, valor) {
     let elem = document.querySelector('.LegApenso');
     let estilo = getComputedStyle(elem);
     cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+  }
+  if (
+    cell.getRow().getData().Assunto.includes('PARADIGMA') ||
+    cell.getRow().getData().Assunto.includes('Paradigma') ||
+    cell.getRow().getData().Assunto.includes('paradigma')
+  ) {
+    let elem = document.querySelector('.LegProcessoParadigma');
+    let estilo = getComputedStyle(elem);
+    cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+    cell.getRow().getElement().style.color = estilo.color;
+  }
+  if (
+    cell.getRow().getData().Prioridade.includes('MAXIMA') ||
+    cell.getRow().getData().Prioridade.includes('ALTA')
+  ) {
+    let elem = document.querySelector('.LegPrioridade');
+    let estilo = getComputedStyle(elem);
+    cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+    cell.getRow().getElement().style.color = estilo.color;
   }
   return value;
 }

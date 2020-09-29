@@ -1,9 +1,7 @@
 module.exports = {
+  //COJUL
   estoque: require('./estoque/estoque.marko'),
   analiseEstoque: require('./estoque/analiseEstoque.marko'),
-  paginadoconselheiro: require('./conselheiros/paginadoconselheiro.marko'),
-  portaldoconselheiro: require('./conselheiros/portaldoconselheiro.marko'),
-  solicitacoescons: require('./conselheiros/solicitacoescons.marko'),
   carregacsv: require('./carregacsv/carregacsv.marko'),
   escolhecsv: require('./escolhecsv/escolhecsv.marko'),
   escolhecsvregap: require('./escolhecsv/escolhecsvregap.marko'),
@@ -24,4 +22,9 @@ module.exports = {
   gestaoPortal: require('./portalcojul/gestaoPortal.marko'),
   portalCojul: require('./portalcojul/portalCojul.marko'),
   gestaosolicitacoes: require('./gestaosolicitacoes/gestaosolicitacoes.marko'),
+  //Conselheiros
+  paginadoconselheiro: require('./conselheiros/paginadoconselheiro.marko'),
+  regap_individual: require('./conselheiros/regap_individual.marko'),
+  portaldoconselheiro: require('./conselheiros/portaldoconselheiro.marko'),
+  solicitacoescons: require('./conselheiros/solicitacoescons.marko'),
 };
