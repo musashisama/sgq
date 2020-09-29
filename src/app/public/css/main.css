@@ -555,7 +555,8 @@ summary::-webkit-details-marker {
 
 /* CARDS */
 
-.cardAzul {
+.cardAzul,
+.solEncaminhada {
   background-color: var(--azul-carf);
   color: var(--cultured);
 }
@@ -565,12 +566,14 @@ summary::-webkit-details-marker {
   color: var(--cultured);
 }
 
-.cardVerde {
+.cardVerde,
+.solAprovada {
   background-color: var(--green-munsell);
   color: var(--cultured);
 }
 
-.cardFuchsia {
+.cardFuchsia,
+.solRejeitada {
   background-color: var(--antique-fuchsia);
   color: var(--cultured);
 }

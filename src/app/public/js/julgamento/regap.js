@@ -324,8 +324,8 @@ let formatValor = function formatValor(cell) {
   return `${valor.toLocaleString('pt-BR', formato)}`;
 };
 
-function coloreDias(cell, formatterParams) {
-  let value = cell.getValue();
+function coloreDias(cell, formatterParams, valor) {
+  let value = cell.getValue() ? cell.getValue() : valor;
 
   if (
     cell.getRow().getData().Atividade == 'Para Relatar' &&
@@ -389,7 +389,6 @@ function coloreDias(cell, formatterParams) {
     cell.getElement().style.color = '#D8000C';
     cell.getElement().style.fontWeight = 'bolder';
   }
-
   if (
     cell.getRow().getData().Questionamento_CARF == 'EMBARGOS DE DECLARAÇÃO' &&
     cell.getRow().getData().Equipe_Ultima.includes('DIPRO') &&
@@ -435,6 +434,25 @@ function coloreDias(cell, formatterParams) {
     let elem = document.querySelector('.LegApenso');
     let estilo = getComputedStyle(elem);
     cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+  }
+  if (
+    cell.getRow().getData().Assunto.includes('PARADIGMA') ||
+    cell.getRow().getData().Assunto.includes('Paradigma') ||
+    cell.getRow().getData().Assunto.includes('paradigma')
+  ) {
+    let elem = document.querySelector('.LegProcessoParadigma');
+    let estilo = getComputedStyle(elem);
+    cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+    cell.getRow().getElement().style.color = estilo.color;
+  }
+  if (
+    cell.getRow().getData().Prioridade.includes('MAXIMA') ||
+    cell.getRow().getData().Prioridade.includes('ALTA')
+  ) {
+    let elem = document.querySelector('.LegPrioridade');
+    let estilo = getComputedStyle(elem);
+    cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+    cell.getRow().getElement().style.color = estilo.color;
   }
   return value;
 }

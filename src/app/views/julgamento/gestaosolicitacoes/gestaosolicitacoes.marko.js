@@ -47,25 +47,25 @@ function render(input, out, __component, component, state) {
       class: "sidenav"
     }, out, __component, "5");
 
-  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Gestão de Solicitações dos Conselheiros do CARF</h3><div id=\"solicitacoes\"" +
+  out.w("<div id=\"caixa\" class=\"container\"><h3 class=\"center-align titulo\">Gestão de Solicitações dos Conselheiros do CARF</h3><div id=\"solicitacoes\"" +
     marko_attr("data-solicitacoes", "" + data.solicitacoes) +
     "></div><div class=\"row\"><div class=\"col s12 right-align\">");
 
   app_drop_download_tag({}, out, __component, "11");
 
-  out.w("</div></div><div class=\"row\"><div id=\"tabelaSolicitacoes\"></div></div><br></div></main>");
+  out.w("<div class=\"form-group input-field  col s3\"><select class=\"status\" name=\"status\" id=\"status\"><option class=\"form-group\" value=\"Todas\" selected>Todas</option><option class=\"form-group\" value=\"Enviado para análise\">Enviado para Análise</option><option class=\"form-group\" value=\"Aprovada\">Aprovada</option><option class=\"form-group\" value=\"Rejeitada\">Rejeitada</option></select><label>Selecione o status para filtrar:</label></div></div></div><div class=\"solAprovada\"></div><div class=\"solEncaminhada \"></div><div class=\"solRejeitada\"></div><div class=\"row\"><div id=\"tabelaSolicitacoes\"></div></div><br></div></main>");
 
-  app_modal_tag({}, out, __component, "15");
+  app_modal_tag({}, out, __component, "25");
 
-  app_footer_tag({}, out, __component, "16");
+  app_footer_tag({}, out, __component, "26");
 
-  app_scripts_js_tag({}, out, __component, "17");
+  app_scripts_js_tag({}, out, __component, "27");
 
   out.w("<script src=\"/estatico/js/julgamento/gestaosolicitacoes.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "19");
+  await_reorderer_tag({}, out, __component, "29");
 
   out.w("</body></html>");
 }
