@@ -5,14 +5,26 @@
     <app-header/>
     <main class="conteudoPrincipal">
       <app-navbar id="slide-out" class="sidenav"/>
-      <div class="container">
+      <div id="caixa" class="container">
         <h3 class="center-align titulo">Gestão de Solicitações dos Conselheiros do CARF</h3>
         <div id="solicitacoes" data-solicitacoes=`${data.solicitacoes}`/>
         <div class="row">
           <div class="col s12 right-align">
             <app-drop-download/>
+            <div class="form-group input-field  col s3">
+              <select class="status" name="status" id="status">
+                <option class="form-group" value="Todas" selected>Todas</option>
+                <option class="form-group" value="Enviado para análise">Enviado para Análise</option>
+                <option class="form-group" value="Aprovada">Aprovada</option>
+                <option class="form-group" value="Rejeitada">Rejeitada</option>
+              </select>
+              <label>Selecione o status para filtrar:</label>
+            </div>
           </div>
         </div>
+        <div class="solAprovada"/>
+        <div class="solEncaminhada "/>
+        <div class="solRejeitada"/>
         <div class="row">
           <div id="tabelaSolicitacoes"/>
         </div>

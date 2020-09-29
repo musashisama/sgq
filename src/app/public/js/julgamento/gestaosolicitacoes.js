@@ -2,7 +2,7 @@ inicializaComponentes();
 layout = 'fitDataFill';
 responsiveLayout = true;
 let table = '';
-let tabledata = '';
+let tabledata = null;
 let agrupado = false;
 
 function inicializaComponentes() {
@@ -10,6 +10,7 @@ function inicializaComponentes() {
     initSelect();
     tabelaSolicitacoes();
     initModal();
+    initOpcoes();
   });
 }
 
@@ -19,6 +20,17 @@ function initSelect() {
 
 function initModal() {
   $('.modal').modal();
+}
+
+function initOpcoes() {
+  $('.status').change(() => {
+    table.setFilter('status', '=', $('#status option:selected').val());
+    if ($('#status option:selected').val() == 'Todas') {
+      table.removeFilter('status', '=', $('#status option:selected').val());
+    } else {
+      table.setFilter('status', '=', $('#status option:selected').val());
+    }
+  });
 }
 
 function tabelaSolicitacoes() {
@@ -60,6 +72,16 @@ function tabelaSolicitacoes() {
         headerFilter: 'input',
         responsive: 0,
         sorterParams: { format: 'DD/MM/YYYY' },
+      },
+      {
+        title: 'Nome',
+        field: 'nome',
+        sorter: 'string',
+        hozAlign: 'left',
+        editor: false,
+        headerFilter: 'input',
+        topCalc: 'count',
+        responsive: 0,
       },
       {
         title: 'CPF',
@@ -124,6 +146,7 @@ function tabelaSolicitacoes() {
         title: 'Status da Solicitação',
         field: 'status',
         sorter: 'string',
+        formatter: colore,
         hozAlign: 'center',
         editor: false,
         headerFilter: 'input',
@@ -150,6 +173,30 @@ function tabelaSolicitacoes() {
       },
     ],
   });
+}
+
+function colore(cell, formatterParams, valor) {
+  let value = cell.getValue() ? cell.getValue() : valor;
+
+  if (cell.getRow().getData().status.includes('Aprovada')) {
+    let elem = document.querySelector('.solAprovada');
+    let estilo = getComputedStyle(elem);
+    cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+    cell.getRow().getElement().style.color = estilo.color;
+  }
+  if (cell.getRow().getData().status.includes('Rejeitada')) {
+    let elem = document.querySelector('.solRejeitada');
+    let estilo = getComputedStyle(elem);
+    cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+    cell.getRow().getElement().style.color = estilo.color;
+  }
+  if (cell.getRow().getData().status.includes('Enviado')) {
+    let elem = document.querySelector('.solEncaminhada');
+    let estilo = getComputedStyle(elem);
+    cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+    cell.getRow().getElement().style.color = estilo.color;
+  }
+  return value;
 }
 
 let formatNome = function formatNome(cell) {
