@@ -48,7 +48,7 @@ function render(input, out, __component, component, state) {
 
   out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Portal do Conselheiro</h3><div id=\"dataCAL\"" +
     marko_attr("data-cal", "" + data.cal) +
-    "></div><div class=\"row\"><div class=\"card hoverable blue-grey darken-1 col s12 m6\"><div class=\"card-content white-text\"><span class=\"card-title\"><strong>Cons.<span class=\"nomeSol\">" +
+    "></div><div class=\"row\"><div class=\"card hoverable cardPreto col s12\"><div class=\"card-content white-text\"><span class=\"card-title\"><strong>Cons. <span class=\"nomeSol\">" +
     marko_escapeXml(data.user.nome) +
     "</span></strong></span><strong>CPF:</strong><span id=\"cpfCons\">" +
     marko_escapeXml(data.user.cpf) +
@@ -58,21 +58,21 @@ function render(input, out, __component, component, state) {
     marko_escapeXml(data.user.tipo) +
     "<br><strong>Final do Mandato:</strong>" +
     marko_escapeXml(data.user.dtFimMandato) +
-    "<br> Falta(m) <strong><span id=\"daps\"></span></strong> dia(s) para a próxima sessão, que será realizada em <strong><span id=\"ps\"></span></strong>.</div></div></div><div class=\"row\"><div class=\"col s12 m6\"><div class=\"card blue darken-1\"><div class=\"card-content white-text\"><span class=\"card-title\">REGAP</span><p>Relatório Gerencial de Acompanhamento de Prazos</p></div><div class=\"card-action\"><a href=\"#\">Acessar</a></div></div></div><div class=\"col s12 m6\"><div class=\"card orange darken-1\"><div class=\"card-content white-text\"><span class=\"card-title\">REINP</span><p>Relatório de Indicação para Pauta<br> Acompanhamento da Produtividade</p></div><div class=\"card-action\"><a href=\"#\">Acessar</a></div></div></div><div class=\"col s12 m6\"><div class=\"card green darken-1\"><div class=\"card-content white-text\"><span class=\"card-title\">Ocorrências</span><p>Verificação de Ocorrências no Mandato do Conselheiro</p></div><div class=\"card-action\"><a href=\"#\">Acessar</a></div></div></div><div class=\"col s12 m6\"><div class=\"card green darken-1\"><div class=\"card-content white-text\"><span class=\"card-title\">Solicitações</span><p>Cadastrar e Acompanhar o andamento de solicitações</p></div><div class=\"card-action\"><a href=\"#\">Acessar</a></div></div></div></div></div></main><footer class=\"page-footer rodape\"></footer>");
+    "<br> Falta(m) <strong><span id=\"daps\"></span></strong> dia(s) para a próxima sessão, que será realizada em <strong><span id=\"ps\"></span></strong>.</div></div></div><div class=\"row\"><div class=\"col s12 m6\"><div class=\"card hoverable cardAzul\"><div class=\"card-content\"><span class=\"card-title\">REGAP</span><p>Relatório Gerencial de Acompanhamento de Prazos</p></div><div class=\"card-action linkCard\"><a href=\"#\"><i class=\"material-icons\">send</i></a></div></div></div><div class=\"col s12 m6\"><div class=\"card hoverable cardLaranja\"><div class=\"card-content \"><span class=\"card-title\">REINP</span><p>Relatório de Indicação para Pauta<br> Acompanhamento da Produtividade</p></div><div class=\"card-action linkCard\"><a href=\"#\"><i class=\"material-icons\">send</i></a></div></div></div><div class=\"col s12 m6\"><div class=\"card hoverable cardVerde\"><div class=\"card-content \"><span class=\"card-title\">Ocorrências</span><p>Verificação de Ocorrências no Mandato do Conselheiro</p></div><div class=\"card-action linkCard\"><a href=\"#\"><i class=\"material-icons\">send</i></a></div></div></div><div class=\"col s12 m6\"><div class=\"card hoverable cardFuchsia\"><div class=\"card-content \"><span class=\"card-title\">Solicitações</span><p>Cadastrar e Acompanhar o andamento de solicitações</p></div><div class=\"card-action linkCard\"><a href=\"#\"><i class=\"material-icons\">send</i></a></div></div></div></div></div></main><footer class=\"page-footer rodape\"></footer>");
 
-  app_modal_tabela_legenda_tag({}, out, __component, "59");
+  app_modal_tabela_legenda_tag({}, out, __component, "63");
 
   out.w("<div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda modal-close\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
 
-  app_footer_tag({}, out, __component, "68");
+  app_footer_tag({}, out, __component, "72");
 
-  app_scripts_js_tag({}, out, __component, "69");
+  app_scripts_js_tag({}, out, __component, "73");
 
   out.w("<script src=\"/estatico/js/libs/plotly-latest.min.js\"></script><script src=\"/estatico/js/libs/plotly-locale-pt-br.js\"></script><script>Plotly.setPlotConfig({locale: 'pt-BR'})</script><script src=\"/estatico/js/libs/quill.min.js\"></script><script src=\"/estatico/js/julgamento/conselheiros/regsolicitacoes.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "75");
+  await_reorderer_tag({}, out, __component, "79");
 
   out.w("</body></html>");
 }

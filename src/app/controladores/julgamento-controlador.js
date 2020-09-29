@@ -52,16 +52,10 @@ class JulgamentoControlador {
       calendarioView: '/julgamento/calendario',
       faqdipaj: '/julgamento/faqdipaj',
       gestaoconhecimento: '/julgamento/gestaoconhecimento',
-      conselheiros: '/julgamento/conselheiros',
-      portalconselheiros: '/julgamento/portalconselheiros',
       formFAQ: '/julgamento/restrito/formfaq',
       portalCojul: '/julgamento/restrito/portalcojul',
       gestaoPortalCojul: '/julgamento/restrito/gestaoportalcojul',
-      solicitacoes: '/julgamento/conselheiros/solicitacoes',
-      regsolicitacoes: '/julgamento/conselheiros/registro-solicitacoes',
-      arquivos: '/julgamento/conselheiros/arquivos',
       gestaosolicitacoes: '/julgamento/restrito/gestaosolicitacoes',
-      regapcons: '/julgamento/conselheiros/:id',
       estoque: '/julgamento/restrito/diagnostico-carga',
       cadastrafaqdipaj: '/julgamento/restrito/cadastrafaqdipaj/:id',
       carregacsv: '/julgamento/restrito/carrega-csv',
@@ -83,6 +77,14 @@ class JulgamentoControlador {
       regap: '/julgamento/restrito/regap/:id',
       gestaoGC: '/julgamento/restrito/gestaoGC/:id',
       arqdown: '/julgamento/restrito/arqdown/:id',
+      //CONSELHEIROS
+      conselheiros: '/julgamento/conselheiros',
+      portalconselheiros: '/julgamento/conselheiros/portalconselheiros',
+      solicitacoes: '/julgamento/conselheiros/solicitacoes',
+      regsolicitacoes: '/julgamento/conselheiros/registro-solicitacoes',
+      arquivos: '/julgamento/conselheiros/arquivos',
+      regapindividual: '/julgamento/conselheiros/regap',
+      regapcons: '/julgamento/conselheiros/:id',
     };
   }
 
@@ -339,12 +341,6 @@ class JulgamentoControlador {
         if (rel[0].tipoRel == 'REGAP' || rel[0].tipoRel == 'Estoque') {
           dados = CSVHandler.pegaRegap(`${caminho}`, 'CONS', CPF).then(
             (dados) => {
-              let respJSON = [];
-              // dados.forEach(dado => {
-              //     if (dado.CPF == CPF) {
-              //         respJSON.push(dado);
-              //     }
-              // })
               resp.send(dados);
             },
           );
@@ -469,6 +465,25 @@ class JulgamentoControlador {
   }
 
   carregaPortalConselheiros() {
+    return function (req, resp) {
+      const pessoalDao = new PessoalDao(conn);
+      const julgamentoDao = new JulgamentoDao(conn);
+      pessoalDao.getUsers({ cpf: req.user.cpf }).then((user) => {
+        julgamentoDao
+          .getCal({
+            classNames: CSVHandler.semanaCores(user[0].unidade),
+          })
+          .then((cal) => {
+            resp.marko(templates.julgamento.portaldoconselheiro, {
+              cal: JSON.stringify(cal),
+              user: user[0],
+            });
+          });
+      });
+    };
+  }
+
+  carregaRegapIndividual() {
     return function (req, resp) {
       const pessoalDao = new PessoalDao(conn);
       const julgamentoDao = new JulgamentoDao(conn);

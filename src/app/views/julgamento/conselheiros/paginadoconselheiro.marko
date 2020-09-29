@@ -5,7 +5,7 @@
     <app-header/>
     <main class="conteudoPrincipal">
       <app-navbar id="slide-out" class="sidenav"/>
-      <div class="container">
+      <div id="caixa" class="container">
         <h3 class="center-align titulo nomeSol">
           <strong>Cons. ${data.user.nome}</strong> - ${data.user.tipo}
         </h3>
@@ -80,6 +80,12 @@
               </div>
               <div class="form-group input-field  col s2">
                 <label>
+                  <input name="expandirCheck" id="expandirCheck" type="checkbox"/>
+                  <span>Expandir Tabela</span>
+                </label>
+              </div>
+              <div class="form-group input-field  col s2">
+                <label>
                   <input name="repetitivosCheck" id="repetitivosCheck" type="checkbox"/>
                   <span>Ocultar Repetitivos</span>
                 </label>
@@ -93,7 +99,7 @@
               <div class="form-group input-field  col s2">
                 <label>
                   <input name="abaixoUM" id="abaixoUM" type="checkbox"/>
-                  <span>Somente Abaixo de R$ 1 milhão??*</span>
+                  <span>Somente Abaixo de R$ 8 milhões??*</span>
                 </label>
               </div>
               <div class="progressRegap col s3">
