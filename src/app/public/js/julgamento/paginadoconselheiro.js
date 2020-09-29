@@ -1052,7 +1052,7 @@ function elementosModal() {
     }
     if (
       $('#tipoSolicitacao option:selected').val() ==
-      'Dispensa de Sorteio - Excesso de Horas em Lotes de Sorteio'
+      'Dispensa de Sorteio - Excesso de Horas em Lotes de Sorteio - A partir de setembro de 2019 (Portaria 2370/19)'
     ) {
       html = '';
       $('#divTipo').text('');
