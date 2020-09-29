@@ -907,6 +907,78 @@ function elementosModal() {
         handleSOL(dadosForm, 'POST', 'dipaj');
       });
     }
+
+    if (
+      $('#tipoSolicitacao option:selected').val() ==
+      'Redução de Horas da Meta de Produtividade - Participação em Sessão Presencial ou por Videoconferência de TEX'
+    ) {
+      html = '';
+      $('#divTipo').text('');
+      $('#enviaArq').text('');
+      arrayTurma.forEach((ops, i) => {
+        html += `<option class="form-group" value="${ops}">${ops}</option>`;
+      });
+      $('#divTipo').append(`
+            <div class='row'>
+            <div class='col s7'>
+            <label for="tipoAfastamento">Selecione a turma de participação:</label> 
+            <select required name="tipoAfastamento" id="tipoAfastamento">
+                                 ${html}
+            </select>                   
+          </div>           
+          <div class ='col s4 horasDeducao input-field'> 
+          <input id="horasDeducao" name="horasDeducao" value=4 type="number" class="active validate"/>
+           <label for="horasDeducao">Total de horas a deduzir da Meta de Produtividade:</label>
+           </div>
+          </div>
+          <div class='row'>
+            <div class="form-group inicioAfastamento input field col s3 ">
+            <input id="inicioAfastamento" name="inicioAfastamento"  type="text" class="datepicker"/>                      
+            <label for="inicioAfastamento">Data da Sessão de Julgamento</label>
+            </div>
+            <div class='col s7'>
+            <label for="turno">Turno de Participação</label> 
+            <select required name="turno" id="turno">
+            <option class="form-group" value="Manha">Manhã</option>
+            <option class="form-group" value="Tarde">Tarde</option>
+            </select>                   
+          </div>                  
+        </div>
+        <div class='row'> 
+        <blockquote>
+                    <strong>Importante:</strong>
+                    Caso tenha participado de sessão de julgamento em mais de uma turma por turno, selecione <strong>apenas</strong> a primeira turma de participação.
+                    As solicitações deverão ser feitas individualmente para cada turno de participação, onde serão abatidas 4 horas por turno.                    
+                  </blockquote>  
+        </div>
+        <div class='row'>          
+        <div class="input-field col s12">
+        <i class="material-icons prefix">mode_edit</i>        
+        <textarea id="observacoes" class="materialize-textarea"></textarea>
+        <label for="observacoes">Observações</label>
+        </div>
+        </div>
+            <br />`);
+      $('#enviaArq').append(`${formArq()}`);
+      $('.progress').toggle();
+      initDatePicker();
+      initSelect();
+      btnEnviaArq();
+      $('.concorda').click((e) => {
+        dadosForm = {
+          tipoSolicitacao: $('#tipoSolicitacao option:selected').val(),
+          tipoAfastamento: $('#tipoAfastamento option:selected').val(),
+          horasDeducao: $('#horasDeducao').val(),
+          dtInicio: $('#inicioAfastamento').val(),
+          dtFim: '',
+          status: 'Enviado para análise',
+          observacoes: `Observações: ${$('#observacoes').val()}`,
+          arquivos: pegaArquivos(),
+          statusSegep: 'DocVal',
+        };
+        handleSOL(dadosForm, 'POST', 'dipaj');
+      });
+    }
     if (
       $('#tipoSolicitacao option:selected').val() ==
       'Redução de Horas da Meta de Produtividade - Participação em TO/CSRF (A partir de Abr/2020)'
