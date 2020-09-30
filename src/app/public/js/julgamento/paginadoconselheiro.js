@@ -1964,24 +1964,28 @@ function coloreDias(cell, formatterParams, valor) {
     let estilo = getComputedStyle(elem);
     cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
   }
-  if (
-    cell.getRow().getData().Assunto.includes('PARADIGMA') ||
-    cell.getRow().getData().Assunto.includes('Paradigma') ||
-    cell.getRow().getData().Assunto.includes('paradigma')
-  ) {
-    let elem = document.querySelector('.LegProcessoParadigma');
-    let estilo = getComputedStyle(elem);
-    cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
-    cell.getRow().getElement().style.color = estilo.color;
+  if (cell.getRow().getData().Assunto) {
+    if (
+      cell.getRow().getData().Assunto.includes('PARADIGMA') ||
+      cell.getRow().getData().Assunto.includes('Paradigma') ||
+      cell.getRow().getData().Assunto.includes('paradigma')
+    ) {
+      let elem = document.querySelector('.LegProcessoParadigma');
+      let estilo = getComputedStyle(elem);
+      cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+      cell.getRow().getElement().style.color = estilo.color;
+    }
   }
-  if (
-    cell.getRow().getData().Prioridade.includes('MAXIMA') ||
-    cell.getRow().getData().Prioridade.includes('ALTA')
-  ) {
-    let elem = document.querySelector('.LegPrioridade');
-    let estilo = getComputedStyle(elem);
-    cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
-    cell.getRow().getElement().style.color = estilo.color;
+  if (cell.getRow().getData().Prioridade) {
+    if (
+      cell.getRow().getData().Prioridade.includes('MAXIMA') ||
+      cell.getRow().getData().Prioridade.includes('ALTA')
+    ) {
+      let elem = document.querySelector('.LegPrioridade');
+      let estilo = getComputedStyle(elem);
+      cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+      cell.getRow().getElement().style.color = estilo.color;
+    }
   }
   return value;
 }
