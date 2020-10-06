@@ -108,11 +108,11 @@ function render(input, out, __component, component, state) {
 
   app_scripts_js_tag({}, out, __component, "215");
 
-  out.w("<script src=\"/estatico/js/libs/plotly-latest.min.js\"></script><script src=\"/estatico/js/libs/plotly-locale-pt-br.js\"></script><script>Plotly.setPlotConfig({locale: 'pt-BR'})</script><script src=\"/estatico/js/libs/quill.min.js\"></script><script src=\"/estatico/js/julgamento/paginadoconselheiro.js\"></script>");
+  out.w("<script src=\"/estatico/js/libs/plotly-latest.min.js\"></script><script src=\"/estatico/js/libs/plotly-locale-pt-br.js\"></script><script>Plotly.setPlotConfig({locale: 'pt-BR'})</script><script src=\"/estatico/js/libs/quill.min.js\"></script><script src=\"/estatico/js/julgamento/helpers/configTabelaRegap.js\"></script><script src=\"/estatico/js/julgamento/paginadoconselheiro.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "221");
+  await_reorderer_tag({}, out, __component, "222");
 
   out.w("</body></html>");
 }

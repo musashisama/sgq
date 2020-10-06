@@ -1,38 +1,13 @@
 inicializaComponentes();
-layout = 'fitDataFill';
-responsiveLayout = true;
-let table = null;
-let tabledata = '';
-let agrupado = false;
-let agrupadoT = false;
 function inicializaComponentes() {
   $(document).ready(function () {
-    initSelect();
     dataTable();
-    initModal();
     initTabs();
   });
 }
-
-function initSelect() {
-  $('select').formSelect();
-}
-
-function initModal() {
-  $('.modal').modal();
-  btnLegenda();
-}
-function btnLegenda() {
-  $('#mostraLegenda').click((e) => {
-    e.preventDefault();
-    $('#mostraLegenda').addClass('modal-trigger');
-  });
-}
-
 function initTabs() {
   $('.tabs').tabs();
 }
-
 function dataTable(msg) {
   let tabledata = JSON.parse($('#formGerencial').attr('data-regap'));
   table = new Tabulator('#tabelaRegap', {
@@ -82,40 +57,12 @@ function dataTable(msg) {
       {
         title: 'Contribuinte',
         field: 'Contribuinte',
+        headerFilter: 'input',
         sorter: 'string',
         hozAlign: 'center',
+        width: 150,
         editor: false,
         responsive: 0,
-        download: true,
-      },
-      {
-        title: 'Turma',
-        field: 'turma',
-        sorter: 'string',
-        hozAlign: 'center',
-        headerFilter: 'input',
-        editor: false,
-        responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Câmara',
-        field: 'camara',
-        sorter: 'string',
-        hozAlign: 'center',
-        headerFilter: 'input',
-        editor: false,
-        responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Seção',
-        field: 'setor',
-        sorter: 'string',
-        hozAlign: 'center',
-        headerFilter: 'input',
-        editor: false,
-        responsive: 2,
         download: true,
       },
       {
@@ -183,6 +130,7 @@ function dataTable(msg) {
         field: 'Dias_na_Atividade',
         sorter: 'number',
         hozAlign: 'center',
+        width: 140,
         topCalc: mediaCalc,
         editor: false,
         formatter: coloreDias,
@@ -190,13 +138,72 @@ function dataTable(msg) {
         download: true,
       },
       {
-        title: 'Dias da Sessão de Julgamento',
-        field: 'Dias_da_SJ',
+        title: 'Valor Originário',
+        field: 'Valor_Originario',
         sorter: 'number',
         hozAlign: 'center',
         editor: false,
+        formatter: formatValor,
+        accessorDownload: downloadValor,
         responsive: 0,
         download: true,
+      },
+      {
+        title: 'Observações',
+        field: 'Observacoes',
+        sorter: 'string',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 2,
+        download: true,
+      },
+      {
+        title: 'Prioridade',
+        field: 'Prioridade',
+        sorter: 'string',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 2,
+        download: true,
+      },
+      {
+        title: 'Assunto',
+        field: 'Assunto',
+        sorter: 'string',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 2,
+        download: true,
+      },
+
+      {
+        title: 'Motivo da Prioridade',
+        field: 'Motivo_Prioridade',
+        sorter: 'string',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 2,
+        download: true,
+      },
+      {
+        title: 'Alegações',
+        field: 'Alegacoes_CARF',
+        sorter: 'string',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 2,
+        download: true,
+      },
+
+      {
+        title: 'Dias da Sessão de Julgamento',
+        field: 'Dias_da_SJ',
+        sorter: 'number',
+        width: 150,
+        hozAlign: 'center',
+        editor: false,
+        responsive: 2,
+        download: false,
       },
       {
         title: 'Data da Sessão de Julgamento',
@@ -205,7 +212,7 @@ function dataTable(msg) {
         hozAlign: 'center',
         editor: false,
         responsive: 2,
-        download: true,
+        download: false,
       },
       {
         title: 'Dias da Última Distribuição',
@@ -214,7 +221,7 @@ function dataTable(msg) {
         hozAlign: 'center',
         editor: false,
         responsive: 2,
-        download: true,
+        download: false,
       },
       {
         title: 'Retorno Sepoj?',
@@ -231,281 +238,12 @@ function dataTable(msg) {
         sorter: 'string',
         hozAlign: 'center',
         editor: false,
-        responsive: 1,
-        download: true,
-      },
-      {
-        title: 'Observações',
-        field: 'Observacoes',
-        sorter: 'string',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 1,
-        download: true,
-      },
-      {
-        title: 'Valor Originário',
-        field: 'Valor_Originario',
-        sorter: 'number',
-        hozAlign: 'center',
-        editor: false,
-        formatter: formatValor,
-        responsive: 0,
-        download: true,
+        responsive: 2,
+        download: false,
       },
     ],
     autoColumns: false,
     locale: true,
-    langs: {
-      'pt-br': {
-        columns: {
-          name: 'Nome', //replace the title of column name with the value "Name"
-        },
-        ajax: {
-          loading: 'Carregando', //ajax loader text
-          error: 'Erro', //ajax error text
-        },
-        groups: {
-          //copy for the auto generated item count in group header
-          item: 'item', //the singular  for item
-          items: 'itens', //the plural for items
-        },
-        pagination: {
-          page_size: 'Quantidade de registros', //label for the page size select element
-          first: 'Primeira', //text for the first page button
-          first_title: 'Primeira Página', //tooltip text for the first page button
-          last: 'Última',
-          last_title: 'Última Página',
-          prev: 'Anterior',
-          prev_title: 'Página Anterior',
-          next: 'Próxima',
-          next_title: 'Próxima Página',
-        },
-        headerFilters: {
-          default: 'filtrar coluna...', //default header filter placeholder text
-          columns: {
-            nome: 'Filtrar por Nome',
-            CPF: 'Filtrar por CPF', //replace default header filter text for column name
-          },
-        },
-      },
-    },
+    langs: langs,
   });
 }
-
-document
-  .getElementById('mostraColunasAtividade')
-  .addEventListener('click', function () {
-    if (agrupado == false) {
-      table.setGroupBy(['Atividade', 'Situacao']);
-      agrupado = true;
-    } else {
-      table.setGroupBy();
-      agrupado = false;
-    }
-  });
-
-let formatValor = function formatValor(cell) {
-  const formato = {
-    style: 'currency',
-    currency: 'BRL',
-    useGrouping: true,
-    localeMatcher: 'best fit',
-  };
-  const valor = +cell.getValue();
-  if (valor >= 1000000) {
-    cell.getElement().style.color = 'rgb(245, 131, 0)';
-    cell.getElement().style.fontWeight = 'bolder';
-  }
-  if (valor < 1000000) {
-    cell.getElement().style.color = 'rgb(63, 138, 2)';
-    cell.getElement().style.fontWeight = 'bolder';
-  }
-  return `${valor.toLocaleString('pt-BR', formato)}`;
-};
-
-function coloreDias(cell, formatterParams, valor) {
-  let value = cell.getValue() ? cell.getValue() : valor;
-
-  if (
-    cell.getRow().getData().Atividade == 'Para Relatar' &&
-    cell.getRow().getData().Situacao == 'AGUARDANDO PAUTA'
-  ) {
-    if (value >= 180) {
-      cell.getElement().style.color = '#D8000C';
-      cell.getElement().style.fontWeight = 'bolder';
-    }
-    if (value < 180 && value >= 140) {
-      cell.getElement().style.color = 'rgb(245, 131, 0)';
-      cell.getElement().style.fontWeight = 'bolder';
-    }
-    if (value < 140) {
-      cell.getElement().style.color = 'rgb(63, 138, 2)';
-      cell.getElement().style.fontWeight = 'bolder';
-    }
-  }
-
-  if (
-    cell.getRow().getData().Atividade == 'Formalizar Decisao' &&
-    value >= 30
-  ) {
-    cell.getElement().style.color = '#D8000C';
-    cell.getElement().style.fontWeight = 'bolder';
-  }
-  if (cell.getRow().getData().Atividade == 'Formalizar Decisao' && value < 30) {
-    cell.getElement().style.color = 'rgb(245, 131, 0)';
-    cell.getElement().style.fontWeight = 'bolder';
-  }
-  if (
-    cell.getRow().getData().Atividade == 'Formalizar Voto Vencedor' &&
-    value >= 30
-  ) {
-    cell.getElement().style.color = '#D8000C';
-    cell.getElement().style.fontWeight = 'bolder';
-  }
-  if (
-    cell.getRow().getData().Atividade == 'Formalizar Voto Vencedor' &&
-    value < 30
-  ) {
-    cell.getElement().style.color = 'rgb(245, 131, 0)';
-    cell.getElement().style.fontWeight = 'bolder';
-  }
-
-  if (
-    cell.getRow().getData().Atividade == 'Apreciar e Assinar Documento' &&
-    value >= 15
-  ) {
-    cell.getElement().style.color = '#D8000C';
-    cell.getElement().style.fontWeight = 'bolder';
-  }
-  if (
-    cell.getRow().getData().Atividade == 'Apreciar e Assinar Documento' &&
-    value < 15
-  ) {
-    cell.getElement().style.color = 'rgb(245, 131, 0)';
-    cell.getElement().style.fontWeight = 'bolder';
-  }
-  if (cell.getRow().getData().Atividade == 'Corrigir Decisão' && value >= 1) {
-    cell.getElement().style.color = '#D8000C';
-    cell.getElement().style.fontWeight = 'bolder';
-  }
-  if (
-    cell.getRow().getData().Questionamento_CARF == 'EMBARGOS DE DECLARAÇÃO' &&
-    cell.getRow().getData().Equipe_Ultima.includes('DIPRO') &&
-    cell.getRow().getData().AtividadeUltima == 'Distribuir / Sortear'
-  ) {
-    let elem = document.querySelector('.LegEmbargoSort');
-    let estilo = getComputedStyle(elem);
-    cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
-  }
-  if (
-    cell.getRow().getData().Questionamento_CARF != 'EMBARGOS DE DECLARAÇÃO' &&
-    cell.getRow().getData().Equipe_Ultima.includes('DIPRO') &&
-    cell.getRow().getData().AtividadeUltima == 'Tratar Retorno de Processo'
-  ) {
-    let elem = document.querySelector('.LegRetornoDilg');
-    let estilo = getComputedStyle(elem);
-    cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
-  }
-  if (
-    cell.getRow().getData().Questionamento_CARF == 'EMBARGOS DE DECLARAÇÃO' &&
-    cell.getRow().getData().Equipe_Ultima.includes('DIPRO') &&
-    cell.getRow().getData().AtividadeUltima == 'Tratar Retorno de Processo'
-  ) {
-    let elem = document.querySelector('.LegEmbargo');
-    let estilo = getComputedStyle(elem);
-    cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
-  }
-  if (cell.getRow().getData().Observacoes.includes('PARADIGMA')) {
-    let elem = document.querySelector('.LegParadigma');
-    let estilo = getComputedStyle(elem);
-    cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
-  }
-  if (cell.getRow().getData().Observacoes.includes('.REP.')) {
-    let elem = document.querySelector('.LegRepetitivo');
-    let estilo = getComputedStyle(elem);
-    cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
-  }
-  if (
-    cell.getRow().getData().Questionamento_CARF == '' &&
-    cell.getRow().getData().Ind_Apenso.includes('S') &&
-    cell.getRow().getData().Situacao == ''
-  ) {
-    let elem = document.querySelector('.LegApenso');
-    let estilo = getComputedStyle(elem);
-    cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
-  }
-  if (cell.getRow().getData().Assunto) {
-    if (
-      cell.getRow().getData().Assunto.includes('PARADIGMA') ||
-      cell.getRow().getData().Assunto.includes('Paradigma') ||
-      cell.getRow().getData().Assunto.includes('paradigma')
-    ) {
-      let elem = document.querySelector('.LegProcessoParadigma');
-      let estilo = getComputedStyle(elem);
-      cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
-      cell.getRow().getElement().style.color = estilo.color;
-    }
-  }
-  if (cell.getRow().getData().Prioridade) {
-    if (
-      cell.getRow().getData().Prioridade.includes('MAXIMA') ||
-      cell.getRow().getData().Prioridade.includes('ALTA')
-    ) {
-      let elem = document.querySelector('.LegPrioridade');
-      let estilo = getComputedStyle(elem);
-      cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
-      cell.getRow().getElement().style.color = estilo.color;
-    }
-  }
-  return value;
-}
-
-function mediaCalc(values, data, calcParams) {
-  var calc = 0;
-  let valor = 0;
-  values.forEach(function (value) {
-    if (value > 0) {
-      valor += value;
-      calc++;
-    }
-  });
-
-  return `𝛍: ${(valor / calc).toFixed(2)}`;
-}
-
-function somaCalc(values, data, calcParams) {
-  var calc = 0;
-  let valor = 0;
-  values.forEach(function (value) {
-    if (value > 0) {
-      valor += value;
-      calc++;
-    }
-  });
-
-  return `𝚺: ${valor.toFixed(2)}`;
-}
-
-function countCalc(values, data, calcParams) {
-  var calc = 0;
-  let valor = 0;
-  values.forEach(function (value) {
-    if (value) {
-      valor += value;
-      calc++;
-    }
-  });
-
-  return `|𝜲|: ${calc}`;
-}
-
-$('.Atividade').change(() => {
-  //console.log($("select option:selected").val());
-  table.setFilter('Atividade', '=', $('select option:selected').val());
-  if ($('select option:selected').val() == 'Todas') {
-    table.removeFilter('Atividade', '=', $('select option:selected').val());
-  } else {
-    table.setFilter('Atividade', '=', $('select option:selected').val());
-  }
-});
