@@ -11,6 +11,19 @@ function inicializaComponentes() {
     tabelaSolicitacoes();
     initModal();
     initOpcoes();
+    initElementos();
+  });
+}
+
+function initElementos() {
+  document.getElementById('agrupaCons').addEventListener('click', function () {
+    if (agrupado == false) {
+      table.setGroupBy(['nome']);
+      agrupado = true;
+    } else {
+      table.setGroupBy();
+      agrupado = false;
+    }
   });
 }
 
@@ -217,7 +230,9 @@ async function montaModal(e, cell, user) {
   let campoJustificativa = `<div class='row'>          
   <div class="input-field col s12">
   <i class="material-icons prefix">mode_edit</i>        
-  <textarea id="justificativas" class="materialize-textarea"></textarea>
+  <textarea id="justificativas" class="materialize-textarea">${
+    cell.getRow().getData().justificativas
+  }</textarea>
   <label for="justificativas">Justificativas para <strong>rejeição:</strong></label>
   </div>
   </div>`;
@@ -267,12 +282,8 @@ async function montaModal(e, cell, user) {
             <strong>Arquivos:</strong> ${pegaLinks(cell)}<br/> 
            </p>
            </div>           
-           ${cell.getRow().getData().status !== 'Rejeitada' ? campoDipaj : ''}
-         ${
-           cell.getRow().getData().status !== 'Rejeitada'
-             ? campoJustificativa
-             : ''
-         }
+           ${campoDipaj}
+           ${campoJustificativa}
          `,
   );
 
