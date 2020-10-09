@@ -37,7 +37,6 @@ function inicializaComponentes() {
     initTabs();
     $('.progressRegap').toggle();
     $('.classProcessos').toggle();
-    calendario();
     elementosTabelas();
     graficoReinp();
     elementosModal();
@@ -126,23 +125,6 @@ function initDatePicker() {
       weekdaysAbbrev: diasAbrev,
     },
   });
-}
-
-function calendario(dias) {
-  let calendario = JSON.parse($('#dataCAL').attr('data-cal'));
-  let datas = [];
-  calendario.forEach((c) => {
-    if (moment(c.start, 'DD/MM/YYYY').isSameOrAfter(moment())) {
-      datas.push(moment(c.start, 'DD/MM/YYYY').diff(moment(), 'days'));
-    }
-  });
-  $('#daps').text(Math.min(...datas));
-  $('#ps').text(
-    moment()
-      .add(Math.min(...datas) + 1, 'days')
-      .format('DD/MM/YYYY'),
-  );
-  return +dias + Math.min(...datas);
 }
 
 function initSelect() {
@@ -1444,6 +1426,7 @@ function dataTable(dados) {
       {
         title: 'Processo',
         field: 'Processo',
+        formatter: coloreProc,
         sorter: 'number',
         hozAlign: 'center',
         headerFilter: 'input',
@@ -1455,6 +1438,7 @@ function dataTable(dados) {
       {
         title: 'Contribuinte',
         field: 'Contribuinte',
+        formatter: coloreProc,
         headerFilter: 'input',
         sorter: 'string',
         hozAlign: 'center',

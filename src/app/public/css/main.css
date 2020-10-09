@@ -7,6 +7,7 @@
   --lemon-yellow: #faf33eff;
   --antique-fuchsia: #995d81ff;
   --cultured: #efefefff;
+  --azul-claro: #82a6dbbd;
 }
 
 .container-header {
@@ -32,6 +33,7 @@ nav {
 .tituloNav {
   vertical-align: middle;
   align-items: center;
+  padding-bottom: 4rem;
 }
 
 /*#1659bf;*/
@@ -43,7 +45,9 @@ nav {
 }
 
 .titulo-sistema {
-  font-size: 2.5em;
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 500;
+  font-size: 2.5rem;
   color: white;
   padding-left: 2.5%;
   padding-top: 10px;
@@ -57,10 +61,15 @@ blockquote {
 }
 
 body {
-  font-size: smaller;
+  font-family: 'Lato', sans-serif;
+  /* font-size: smaller; */
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+}
+
+strong {
+  font-weight: 900;
 }
 
 main {
@@ -69,6 +78,16 @@ main {
 
 body {
   overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 400;
 }
 
 h3 {
@@ -241,6 +260,23 @@ h5 {
   .tabulator-col-content
   .tabulator-col-title {
   white-space: normal;
+}
+
+.tabulator {
+  margin: 0;
+  padding: 0;
+}
+
+.tabulator-row {
+  position: relative;
+  box-sizing: border-box;
+  min-height: 46px;
+  background-color: transparent;
+  border: 1px solid var(--azul-carf);
+}
+
+.tabulator .tabulator-header {
+  background-color: var(--azul-carf);
 }
 
 #slide-out {
@@ -583,7 +619,11 @@ summary::-webkit-details-marker {
   background-color: var(--rich-black-fogra-39);
   color: var(--cultured);
   border-radius: 1em;
-  font-size: 1.4em;
+}
+
+.cardAzulClaro {
+  background-color: var(--azul-claro);
+  border-radius: 1em;
 }
 
 .linkCard,

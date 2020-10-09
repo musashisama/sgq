@@ -46,6 +46,7 @@ function dataTable(msg) {
       {
         title: 'Processo',
         field: 'Processo',
+        formatter: coloreProc,
         sorter: 'number',
         hozAlign: 'center',
         headerFilter: 'input',
@@ -57,6 +58,7 @@ function dataTable(msg) {
       {
         title: 'Contribuinte',
         field: 'Contribuinte',
+        formatter: coloreProc,
         headerFilter: 'input',
         sorter: 'string',
         hozAlign: 'center',

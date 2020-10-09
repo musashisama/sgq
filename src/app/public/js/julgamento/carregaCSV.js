@@ -52,15 +52,14 @@ function initBtnSubmit() {
       processData: false,
       contentType: false,
       success: (dados) => {
-        console.log(dados);
-        console.log(fd.trimestre);
-        var toastHTML =
-          '<p>Relatório enviado com sucesso! Redirecionando, aguarde por favor.</p>';
+        var toastHTML = `<p>Relatório enviado com sucesso! Redirecionando, aguarde por favor.</p>
+          ${JSON.stringify(dados.result)}`;
         $('#overlay').remove();
         M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+        console.log(dados.result);
         $('.concorda').toggle();
         setTimeout(function () {
-          location.href = `/julgamento/restrito/corrigereinp/${dados}`;
+          location.href = `/julgamento/restrito/portalcojul`;
         }, 1500);
       },
       fail: function (err) {

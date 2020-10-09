@@ -9,8 +9,8 @@
         <h3 class="center-align titulo">Portal do Conselheiro</h3>
         <div id="dataCAL" data-cal=`${data.cal}`/>
         <div class="row">
-          <div class="card hoverable cardPreto col s12">
-            <div class="card-content white-text">
+          <div class="card hoverable cardAzulClaro col s12">
+            <div class="card-content">
               <span class="card-title">
                 <strong>
   Cons.
@@ -22,10 +22,8 @@
               <br/>
               <strong>Turma:</strong>
               ${data.user.unidade}<br/>
-              <strong>Representação:</strong>
-              ${data.user.tipo}<br/>
-              <strong>Final do Mandato:</strong>
-              ${data.user.dtFimMandato}<br/>
+              <strong>Representação:</strong>${data.user.tipo}<br/>
+              <strong>Final do Mandato:</strong>${data.user.dtFimMandato}<br/>
               Falta(m)
               <strong><span id="daps"/></strong>
               dia(s) para a próxima sessão, que será realizada em

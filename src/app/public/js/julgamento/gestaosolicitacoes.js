@@ -227,7 +227,8 @@ async function montaModal(e, cell, user) {
   $('.hModal').text(``);
   $('.pModal').text(``);
   $('.hModal').text(`Solicitação do Conselheiro`);
-  let campoJustificativa = `<div class='row'>          
+  let campoJustificativa = ``;
+  campoJustificativa = `<div class='row'>          
   <div class="input-field col s12">
   <i class="material-icons prefix">mode_edit</i>        
   <textarea id="justificativas" class="materialize-textarea">${
@@ -258,6 +259,8 @@ async function montaModal(e, cell, user) {
               cell.getRow().getData().tipoSolicitacao
             } - <strong>Data da Solicitação:</strong> ${
       cell.getRow().getData().dtCriacao
+    }<br/>   <strong>Id da Solicitação:</strong> ${
+      cell.getRow().getData().uniqueId
     }<br/>  
             <strong>Detalhes da Solicitação/Turma de Participação:</strong> ${
               cell.getRow().getData().tipoAfastamento

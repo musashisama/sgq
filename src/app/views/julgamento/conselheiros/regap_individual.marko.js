@@ -15,7 +15,6 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     app_header_tag = marko_loadTag(app_header_template),
     app_navbar_template = require("../../components/app-navbar.marko"),
     app_navbar_tag = marko_loadTag(app_navbar_template),
-    marko_attr = marko_helpers.a,
     app_drop_download_template = require("../../components/app-drop-download.marko"),
     app_drop_download_tag = marko_loadTag(app_drop_download_template),
     app_modal_tabela_legenda_template = require("../../components/app-modal-tabela-legenda.marko"),
@@ -47,23 +46,21 @@ function render(input, out, __component, component, state) {
       class: "sidenav"
     }, out, __component, "5");
 
-  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Relatório Gerencial de Acompanhamento de Prazos</h3><br><div id=\"regap\"" +
-    marko_attr("data-regap", "" + data.relatorio) +
-    "></div><div class=\"col s12\"><ul class=\"tabs\"><li class=\"tab col s3\"><a href=\"#processos\">Processos</a></li><li class=\"tab col s3\"><a href=\"#stats\">Estatísticas</a></li></ul></div><div id=\"processos\" class=\"col s12\"><br><div class=\"row\"><div class=\"form-group input-field  col s3\"><select class=\"Atividade\" name=\"atividadeSelect\"><option class=\"form-group\" value=\"Todas\" selected>Todas</option><option class=\"form-group\" value=\"Para Relatar\">Para Relatar</option><option class=\"form-group\" value=\"Formalizar Decisao\">Formalizar Decisão</option><option class=\"form-group\" value=\"Formalizar Voto Vencedor\">Formalizar Voto Vencedor</option><option class=\"form-group\" value=\"Corrigir Decisão\">Corrigir Decisão</option><option class=\"form-group\" value=\"Apreciar e Assinar Documento\">Apreciar e Assinar Documento</option></select><label>Selecione a atividade para filtrar:</label></div><div class=\"col s3 right-align\"></div><div class=\"col s6 right-align\">");
+  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Relatório Gerencial de Acompanhamento de Prazos</h3><br><div class=\"col s12\"><ul class=\"tabs\"><li class=\"tab col s3\"><a href=\"#processos\">Processos</a></li><li class=\"tab col s3\"><a href=\"#stats\">Estatísticas</a></li></ul></div><div id=\"processos\" class=\"col s12\"><br><div class=\"row\"><div class=\"form-group input-field  col s3\"><select class=\"Atividade\" name=\"atividadeSelect\"><option class=\"form-group\" value=\"Todas\" selected>Todas</option><option class=\"form-group\" value=\"Para Relatar\">Para Relatar</option><option class=\"form-group\" value=\"Formalizar Decisao\">Formalizar Decisão</option><option class=\"form-group\" value=\"Formalizar Voto Vencedor\">Formalizar Voto Vencedor</option><option class=\"form-group\" value=\"Corrigir Decisão\">Corrigir Decisão</option><option class=\"form-group\" value=\"Apreciar e Assinar Documento\">Apreciar e Assinar Documento</option></select><label>Selecione a atividade para filtrar:</label></div><div class=\"col s3 right-align\"></div><div class=\"col s6 right-align\">");
 
-  app_drop_download_tag({}, out, __component, "30");
+  app_drop_download_tag({}, out, __component, "29");
 
   out.w("<a href=\"#!\" id=\"mostraColunasAtividade\" title=\"Agrupar/Desagrupar por Atividade\" class=\"waves-effect waves-green hoverable z-depth-3 btn-floating blue\"><i class=\"material-icons\">unfold_less</i></a><a href=\"#!\" id=\"mostraColunasTurma\" title=\"Agrupar/Desagrupar por Turma/Câmara/Seção\" class=\"waves-effect waves-yellow hoverable z-depth-3 btn-floating orange\"><i class=\"material-icons\">unfold_more</i></a><a href=\"#modal2\" id=\"mostraLegenda\" title=\"Mostrar Legenda da Tabela\" class=\"waves-effect waves-purple hoverable z-depth-3 btn-floating black\"><i class=\"material-icons\">details</i></a></div></div></div><div id=\"tabelaRegap\" class=\"container\"></div><div class=\"container\"></div><div id=\"stats\" class=\"col s12\"><h4>Quantidade de processos por atividade:</h4><p><div style=\"width:100%;auto;\" id=\"barrasAtividade\"></div></p></div></div></main><footer class=\"page-footer rodape\"></footer>");
 
-  app_modal_tabela_legenda_tag({}, out, __component, "44");
+  app_modal_tabela_legenda_tag({}, out, __component, "43");
 
   out.w("<div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
 
-  app_footer_tag({}, out, __component, "53");
+  app_footer_tag({}, out, __component, "52");
 
-  app_scripts_js_tag({}, out, __component, "54");
+  app_scripts_js_tag({}, out, __component, "53");
 
-  out.w("<script src=\"/estatico/js/libs/plotly-latest.min.js\"></script><script src=\"/estatico/js/libs/plotly-locale-pt-br.js\"></script><script>Plotly.setPlotConfig({locale: 'pt-BR'})</script><script src=\"/estatico/js/conselheiros/regap.js\"></script>");
+  out.w("<script src=\"/estatico/js/libs/plotly-latest.min.js\"></script><script src=\"/estatico/js/libs/plotly-locale-pt-br.js\"></script><script>Plotly.setPlotConfig({locale: 'pt-BR'})</script><script src=\"/estatico/js/julgamento/helpers/configTabelaRegap.js\"></script><script src=\"/estatico/js/conselheiros/regap.js\"></script>");
 
   init_components_tag({}, out);
 
