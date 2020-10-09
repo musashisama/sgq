@@ -35,6 +35,7 @@ const fs = require('fs');
 const fse = require('fs-extra');
 const d3 = require('d3');
 const CSVHandler = require('../infra/helpers/CSVHandler');
+const regapHandler = require('../infra/helpers/regapHandler');
 const { ObjectID } = require('mongodb');
 const path = 'src/app/arquivos/csv/';
 let registro = {};
@@ -530,7 +531,6 @@ class JulgamentoControlador {
             pessoalDao.getUsers({ cargo: 'Conselheiro' }).then((cons) => {
               json.forEach((elem) => {
                 cons.forEach((con) => {
-                  //elem.trimestre = fields.trimestre + new Date().getFullYear();
                   if (
                     CSVHandler._removerAcentos(
                       elem.conselheiro.nome.toLowerCase(),
@@ -557,6 +557,20 @@ class JulgamentoControlador {
                 .catch((erro) => {
                   resp.json(erro);
                 });
+            });
+          });
+        }
+        if (fields.tipoRel == 'novoREGAP') {
+          fs.readFile(files.file.path, 'latin1', (err, data) => {
+            const pessoalDao = new PessoalDao(conn);
+            pessoalDao.getUsers({ cargo: 'Conselheiro' }).then((cons) => {
+              let dataRel = moment().unix();
+              regapHandler.montaRegap(data, cons, dataRel).then((regap) => {
+                const julgamentoDao = new JulgamentoDao(conn);
+                julgamentoDao.insereVariosRegap(regap).then((respo) => {
+                  resp.send(respo);
+                });
+              });
             });
           });
         } else {
@@ -586,11 +600,7 @@ class JulgamentoControlador {
                 const julgamentoDao = new JulgamentoDao(conn);
                 julgamentoDao
                   .insereDadosCSV(registro)
-                  .then(
-                    resp.marko(templates.base.principal, {
-                      msg: 'Relatório enviado com sucesso!',
-                    }),
-                  )
+                  .then(resp.send('OK'))
                   .catch((erro) => console.log(erro));
               });
             })
@@ -976,25 +986,29 @@ class JulgamentoControlador {
               });
             });
             const julgamentoDao = new JulgamentoDao(conn);
-            julgamentoDao.getCal().then((cal) => {
-              julgamentoDao
-                .getRelatorios({ caminho: `${path}${caminho}` })
-                .then((dataEnvio) => {
-                  resp.marko(templates.julgamento.regap, {
-                    relatorio: JSON.stringify(dados),
-                    cal: JSON.stringify(cal),
-                    user: dados[0].nome,
-                    cpf: dados[0].CPF,
-                    turma: dados[0].turma,
-                    camara: dados[0].camara,
-                    setor: dados[0].setor,
-                    caminho: caminho,
-                    dataEnvio: dataEnvio[0].dtExtracao,
-                    dtFimMandato: dados[0].dtFimMandato,
-                    tipo: dados[0].tipo,
+            julgamentoDao
+              .getCal({
+                classNames: CSVHandler.semanaCores(dados[0].unidade),
+              })
+              .then((cal) => {
+                julgamentoDao
+                  .getRelatorios({ caminho: `${path}${caminho}` })
+                  .then((dataEnvio) => {
+                    resp.marko(templates.julgamento.regap, {
+                      relatorio: JSON.stringify(dados),
+                      cal: JSON.stringify(cal),
+                      user: dados[0].nome,
+                      cpf: dados[0].CPF,
+                      turma: dados[0].turma,
+                      camara: dados[0].camara,
+                      setor: dados[0].setor,
+                      caminho: caminho,
+                      dataEnvio: dataEnvio[0].dtExtracao,
+                      dtFimMandato: dados[0].dtFimMandato,
+                      tipo: dados[0].tipo,
+                    });
                   });
-                });
-            });
+              });
           });
         },
       );

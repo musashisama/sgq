@@ -234,7 +234,64 @@ class JulgamentoDao {
       });
     });
   }
+  insereVariosRegap(registro) {
+    return new Promise((resolve, reject) => {
+      this._db.regap.insertMany(registro, function (erro, res) {
+        if (erro) {
+          return reject(erro);
+        }
+        return resolve(res);
+      });
+    });
+  }
 
+  insereRegap(registro) {
+    return new Promise((resolve, reject) => {
+      this._db.regap.insert(registro, function (erro, res) {
+        if (erro) {
+          return reject(erro);
+        }
+        return resolve(res);
+      });
+    });
+  }
+
+  getRegap(filtro, projecao) {
+    return new Promise((resolve, reject) => {
+      this._db.regap
+        .find(filtro)
+        .sort()
+        .project(projecao)
+        .toArray(function (erro, res) {
+          if (erro) {
+            return reject(
+              `Não foi possível listar os registros. Erro: ${erro}`,
+            );
+          }
+          return resolve(res);
+        });
+    });
+  }
+  atualizaDataRegap(filtro, registro) {
+    return new Promise((resolve, reject) => {
+      this._db.regap.updateMany(filtro, registro, function (erro, res) {
+        if (erro) {
+          return reject(erro);
+        }
+        return resolve(res);
+      });
+    });
+  }
+  atualizaRegap(filtro, registro) {
+    return new Promise((resolve, reject) => {
+      this._db.regap.updateMany(filtro, registro, function (erro, res) {
+        if (erro) {
+          return reject(erro);
+        }
+        return resolve(res);
+      });
+    });
+  }
   insereReinp(registro) {
     return new Promise((resolve, reject) => {
       this._db.reinp.insertMany(registro, function (erro, res) {

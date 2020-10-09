@@ -44,10 +44,28 @@ function inicializaComponentes() {
     initModal();
     initElementos();
     initCheckboxes();
+    calendario();
   });
 }
 function initSelect() {
   $('select').formSelect();
+}
+
+function calendario(dias) {
+  let calendario = JSON.parse($('#dataCAL').attr('data-cal'));
+  let datas = [];
+  calendario.forEach((c) => {
+    if (moment(c.start, 'DD/MM/YYYY').isSameOrAfter(moment())) {
+      datas.push(moment(c.start, 'DD/MM/YYYY').diff(moment(), 'days'));
+    }
+  });
+  $('#daps').text(Math.min(...datas));
+  $('#ps').text(
+    moment()
+      .add(Math.min(...datas) + 1, 'days')
+      .format('DD/MM/YYYY'),
+  );
+  return +dias + Math.min(...datas);
 }
 
 function initModal() {
@@ -166,6 +184,92 @@ let formatValor = function formatValor(cell) {
 let downloadValor = function (value, data, type, params, column) {
   return value.replace('.', ',');
 };
+
+function coloreProc(cell, formatterParams, valor) {
+  let value = cell.getValue() ? cell.getValue() : valor;
+
+  if (
+    cell.getRow().getData().Questionamento_CARF == 'EMBARGOS DE DECLARAÇÃO' &&
+    cell.getRow().getData().Equipe_Ultima.includes('DIPRO') &&
+    cell.getRow().getData().AtividadeUltima == 'Distribuir / Sortear'
+  ) {
+    let elem = document.querySelector('.LegEmbargoSort');
+    let estilo = getComputedStyle(elem);
+    //cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+    cell.getElement().style.backgroundColor = estilo.backgroundColor;
+  }
+  if (
+    cell.getRow().getData().Questionamento_CARF != 'EMBARGOS DE DECLARAÇÃO' &&
+    cell.getRow().getData().Equipe_Ultima.includes('DIPRO') &&
+    cell.getRow().getData().AtividadeUltima == 'Tratar Retorno de Processo'
+  ) {
+    let elem = document.querySelector('.LegRetornoDilg');
+    let estilo = getComputedStyle(elem);
+    //cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+    cell.getElement().style.backgroundColor = estilo.backgroundColor;
+  }
+  if (
+    cell.getRow().getData().Questionamento_CARF == 'EMBARGOS DE DECLARAÇÃO' &&
+    cell.getRow().getData().Equipe_Ultima.includes('DIPRO') &&
+    cell.getRow().getData().AtividadeUltima == 'Tratar Retorno de Processo'
+  ) {
+    let elem = document.querySelector('.LegEmbargo');
+    let estilo = getComputedStyle(elem);
+    //cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+    cell.getElement().style.backgroundColor = estilo.backgroundColor;
+  }
+  if (cell.getRow().getData().Observacoes.includes('PARADIGMA')) {
+    let elem = document.querySelector('.LegParadigma');
+    let estilo = getComputedStyle(elem);
+    //cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+    cell.getElement().style.backgroundColor = estilo.backgroundColor;
+  }
+  if (cell.getRow().getData().Observacoes.includes('.REP.')) {
+    let elem = document.querySelector('.LegRepetitivo');
+    let estilo = getComputedStyle(elem);
+    //cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+    cell.getElement().style.backgroundColor = estilo.backgroundColor;
+  }
+  if (
+    cell.getRow().getData().Questionamento_CARF == '' &&
+    cell.getRow().getData().Ind_Apenso.includes('S') &&
+    cell.getRow().getData().Situacao == ''
+  ) {
+    let elem = document.querySelector('.LegApenso');
+    let estilo = getComputedStyle(elem);
+    //cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+    cell.getElement().style.backgroundColor = estilo.backgroundColor;
+  }
+  if (cell.getRow().getData().Assunto) {
+    if (
+      cell.getRow().getData().Assunto.includes('PARADIGMA') ||
+      cell.getRow().getData().Assunto.includes('Paradigma') ||
+      cell.getRow().getData().Assunto.includes('paradigma')
+    ) {
+      let elem = document.querySelector('.LegProcessoParadigma');
+      let estilo = getComputedStyle(elem);
+      //cell.getRow().getElement().style.color = estilo.color;
+      //cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+      cell.getElement().style.color = estilo.color;
+      cell.getElement().style.backgroundColor = estilo.backgroundColor;
+    }
+  }
+  if (cell.getRow().getData().Prioridade) {
+    if (
+      cell.getRow().getData().Prioridade.includes('MAXIMA') ||
+      cell.getRow().getData().Prioridade.includes('ALTA')
+    ) {
+      let elem = document.querySelector('.LegPrioridade');
+      let estilo = getComputedStyle(elem);
+      //cell.getRow().getElement().style.color = estilo.color;
+      //cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+      cell.getElement().style.color = estilo.color;
+      cell.getElement().style.backgroundColor = estilo.backgroundColor;
+    }
+  }
+  return value;
+}
+
 function coloreDias(cell, formatterParams, valor) {
   let value = cell.getValue() ? cell.getValue() : valor;
 
@@ -231,75 +335,76 @@ function coloreDias(cell, formatterParams, valor) {
     cell.getElement().style.color = '#D8000C';
     cell.getElement().style.fontWeight = 'bolder';
   }
-  if (
-    cell.getRow().getData().Questionamento_CARF == 'EMBARGOS DE DECLARAÇÃO' &&
-    cell.getRow().getData().Equipe_Ultima.includes('DIPRO') &&
-    cell.getRow().getData().AtividadeUltima == 'Distribuir / Sortear'
-  ) {
-    let elem = document.querySelector('.LegEmbargoSort');
-    let estilo = getComputedStyle(elem);
-    cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
-  }
-  if (
-    cell.getRow().getData().Questionamento_CARF != 'EMBARGOS DE DECLARAÇÃO' &&
-    cell.getRow().getData().Equipe_Ultima.includes('DIPRO') &&
-    cell.getRow().getData().AtividadeUltima == 'Tratar Retorno de Processo'
-  ) {
-    let elem = document.querySelector('.LegRetornoDilg');
-    let estilo = getComputedStyle(elem);
-    cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
-  }
-  if (
-    cell.getRow().getData().Questionamento_CARF == 'EMBARGOS DE DECLARAÇÃO' &&
-    cell.getRow().getData().Equipe_Ultima.includes('DIPRO') &&
-    cell.getRow().getData().AtividadeUltima == 'Tratar Retorno de Processo'
-  ) {
-    let elem = document.querySelector('.LegEmbargo');
-    let estilo = getComputedStyle(elem);
-    cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
-  }
-  if (cell.getRow().getData().Observacoes.includes('PARADIGMA')) {
-    let elem = document.querySelector('.LegParadigma');
-    let estilo = getComputedStyle(elem);
-    cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
-  }
-  if (cell.getRow().getData().Observacoes.includes('.REP.')) {
-    let elem = document.querySelector('.LegRepetitivo');
-    let estilo = getComputedStyle(elem);
-    cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
-  }
-  if (
-    cell.getRow().getData().Questionamento_CARF == '' &&
-    cell.getRow().getData().Ind_Apenso.includes('S') &&
-    cell.getRow().getData().Situacao == ''
-  ) {
-    let elem = document.querySelector('.LegApenso');
-    let estilo = getComputedStyle(elem);
-    cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
-  }
-  if (cell.getRow().getData().Assunto) {
-    if (
-      cell.getRow().getData().Assunto.includes('PARADIGMA') ||
-      cell.getRow().getData().Assunto.includes('Paradigma') ||
-      cell.getRow().getData().Assunto.includes('paradigma')
-    ) {
-      let elem = document.querySelector('.LegProcessoParadigma');
-      let estilo = getComputedStyle(elem);
-      cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
-      cell.getRow().getElement().style.color = estilo.color;
-    }
-  }
-  if (cell.getRow().getData().Prioridade) {
-    if (
-      cell.getRow().getData().Prioridade.includes('MAXIMA') ||
-      cell.getRow().getData().Prioridade.includes('ALTA')
-    ) {
-      let elem = document.querySelector('.LegPrioridade');
-      let estilo = getComputedStyle(elem);
-      cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
-      cell.getRow().getElement().style.color = estilo.color;
-    }
-  }
+  // if (
+  //   cell.getRow().getData().Questionamento_CARF == 'EMBARGOS DE DECLARAÇÃO' &&
+  //   cell.getRow().getData().Equipe_Ultima.includes('DIPRO') &&
+  //   cell.getRow().getData().AtividadeUltima == 'Distribuir / Sortear'
+  // ) {
+  //   let elem = document.querySelector('.LegEmbargoSort');
+  //   let estilo = getComputedStyle(elem);
+  //   cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+  // }
+  // if (
+  //   cell.getRow().getData().Questionamento_CARF != 'EMBARGOS DE DECLARAÇÃO' &&
+  //   cell.getRow().getData().Equipe_Ultima.includes('DIPRO') &&
+  //   cell.getRow().getData().AtividadeUltima == 'Tratar Retorno de Processo'
+  // ) {
+  //   let elem = document.querySelector('.LegRetornoDilg');
+  //   let estilo = getComputedStyle(elem);
+  //   cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+  // }
+  // if (
+  //   cell.getRow().getData().Questionamento_CARF == 'EMBARGOS DE DECLARAÇÃO' &&
+  //   cell.getRow().getData().Equipe_Ultima.includes('DIPRO') &&
+  //   cell.getRow().getData().AtividadeUltima == 'Tratar Retorno de Processo'
+  // ) {
+  //   let elem = document.querySelector('.LegEmbargo');
+  //   let estilo = getComputedStyle(elem);
+  //   cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+  // }
+  // if (cell.getRow().getData().Observacoes.includes('PARADIGMA')) {
+  //   let elem = document.querySelector('.LegParadigma');
+  //   let estilo = getComputedStyle(elem);
+  //   cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+  // }
+  // if (cell.getRow().getData().Observacoes.includes('.REP.')) {
+  //   let elem = document.querySelector('.LegRepetitivo');
+  //   let estilo = getComputedStyle(elem);
+  //   //cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+  //   cell.getElement().style.backgroundColor = estilo.backgroundColor;
+  // }
+  // if (
+  //   cell.getRow().getData().Questionamento_CARF == '' &&
+  //   cell.getRow().getData().Ind_Apenso.includes('S') &&
+  //   cell.getRow().getData().Situacao == ''
+  // ) {
+  //   let elem = document.querySelector('.LegApenso');
+  //   let estilo = getComputedStyle(elem);
+  //   cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+  // }
+  // if (cell.getRow().getData().Assunto) {
+  //   if (
+  //     cell.getRow().getData().Assunto.includes('PARADIGMA') ||
+  //     cell.getRow().getData().Assunto.includes('Paradigma') ||
+  //     cell.getRow().getData().Assunto.includes('paradigma')
+  //   ) {
+  //     let elem = document.querySelector('.LegProcessoParadigma');
+  //     let estilo = getComputedStyle(elem);
+  //     cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+  //     cell.getRow().getElement().style.color = estilo.color;
+  //   }
+  // }
+  // if (cell.getRow().getData().Prioridade) {
+  //   if (
+  //     cell.getRow().getData().Prioridade.includes('MAXIMA') ||
+  //     cell.getRow().getData().Prioridade.includes('ALTA')
+  //   ) {
+  //     let elem = document.querySelector('.LegPrioridade');
+  //     let estilo = getComputedStyle(elem);
+  //     cell.getRow().getElement().style.backgroundColor = estilo.backgroundColor;
+  //     cell.getRow().getElement().style.color = estilo.color;
+  //   }
+  // }
   return value;
 }
 

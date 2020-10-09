@@ -7,22 +7,28 @@
       <app-navbar id="slide-out" class="sidenav"/>
       <div class="container">
         <h3 class="center-align titulo">Relatório Gerencial de Acompanhamento de Prazos</h3>
+        <div id="dataCAL" data-cal=`${data.cal}`/>
         <div class="row">
           <div class="col s12">
-            <div class="card hoverable z-depth-4 cardBorda">
-              <div class="card-content">
+            <div class="card hoverable cardAzul z-depth-4 cardBorda">
+              <div class="card-content white-text">
                 <span class="card-title">Conselheiro(a): ${data.user} - ${data.tipo}</span>
                 <p>
                   <h6>CPF: ${data.cpf}</h6>
                 </p>
                 <p>
-                  <h6>Turma: ${data.turma} ${data.camara} ${data.setor}</h6>
+                  <h6>Colegiado: ${data.turma} ${data.camara} ${data.setor}</h6>
                 </p>
                 <p>
                   <h6>Final do Mandato: ${data.dtFimMandato}</h6>
                 </p>
                 <p>
-                  <h6>Relatorio de extraído do e-Processo em ${data.dataEnvio}</h6>
+                  <h6>Relatorio extraído do e-Processo em ${data.dataEnvio}</h6>
+                </p>
+                <p>
+                  <h6>
+                    Falta(m) <strong><span id="daps"/></strong> dia(s) para a próxima sessão, que será realizada em <strong><span id="ps"/></strong>.
+                  </h6>
                 </p>
               </div>
             </div>

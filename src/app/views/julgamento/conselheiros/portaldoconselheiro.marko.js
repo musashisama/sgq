@@ -48,7 +48,7 @@ function render(input, out, __component, component, state) {
 
   out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Portal do Conselheiro</h3><div id=\"dataCAL\"" +
     marko_attr("data-cal", "" + data.cal) +
-    "></div><div class=\"row\"><div class=\"card hoverable cardPreto col s12\"><div class=\"card-content white-text\"><span class=\"card-title\"><strong>Cons. <span class=\"nomeSol\">" +
+    "></div><div class=\"row\"><div class=\"card hoverable cardAzulClaro col s12\"><div class=\"card-content\"><span class=\"card-title\"><strong>Cons. <span class=\"nomeSol\">" +
     marko_escapeXml(data.user.nome) +
     "</span></strong></span><strong>CPF:</strong><span id=\"cpfCons\">" +
     marko_escapeXml(data.user.cpf) +
