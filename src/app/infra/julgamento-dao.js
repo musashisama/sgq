@@ -134,6 +134,17 @@ class JulgamentoDao {
     });
   }
 
+  excluiRelatorio(registro) {
+    return new Promise((resolve, reject) => {
+      this._db.relatorios.deleteOne(registro, function (erro, res) {
+        if (erro) {
+          return reject('Não foi possível removver o registro de eventos.');
+        }
+        return resolve(res);
+      });
+    });
+  }
+
   getGC(filtro) {
     return new Promise((resolve, reject) => {
       this._db.gc
@@ -256,11 +267,11 @@ class JulgamentoDao {
     });
   }
 
-  getRegap(filtro, projecao) {
+  getRegap(filtro, sort, projecao) {
     return new Promise((resolve, reject) => {
       this._db.regap
         .find(filtro)
-        .sort()
+        .sort(sort)
         .project(projecao)
         .toArray(function (erro, res) {
           if (erro) {

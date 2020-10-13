@@ -86,7 +86,6 @@ class regapHandler {
               }
             });
           });
-
           cpfs.forEach((c) => {
             regap.push({ conselheiro: { cpf: c } });
           });
@@ -132,6 +131,7 @@ class regapHandler {
       });
     });
   }
+
   static semanaCores(turma) {
     if (semanaAmarela.includes(turma)) {
       return 'Amarela';
@@ -263,7 +263,7 @@ class regapHandler {
           ) {
             d['HORAS_ESTIMADAS_DECIMAL'] = 0.0;
           }
-          //30% - Limitados a mínimo 2 e máximo 8 horas
+          //Formalizar voto vencedor - 30% - Limitados a mínimo 2 e máximo 8 horas
           if (d['Nome_Atividade_Atual_11'] == 'Formalizar Voto Vencedor') {
             d['HORAS_ESTIMADAS_DECIMAL'] = d['HORAS_ESTIMADAS_DECIMAL'] * 0.3;
             if (d['HORAS_ESTIMADAS_DECIMAL'] <= 2.0) {

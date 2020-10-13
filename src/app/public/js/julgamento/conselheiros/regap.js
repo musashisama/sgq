@@ -1,214 +1,86 @@
+let dadosPlot;
 inicializaComponentes();
-let langs = {
-  'pt-br': {
-    columns: {
-      nome: 'Nome', //replace the title of column name with the value "Name"
-    },
-    ajax: {
-      loading: 'Carregando', //ajax loader text
-      error: 'Erro', //ajax error text
-    },
-    groups: {
-      //copy for the auto generated item count in group header
-      item: 'item', //the singular  for item
-      items: 'itens', //the plural for items
-    },
-    pagination: {
-      page_size: 'Quantidade de registros', //label for the page size select element
-      first: 'Primeira', //text for the first page button
-      first_title: 'Primeira Página', //tooltip text for the first page button
-      last: 'Última',
-      last_title: 'Última Página',
-      prev: 'Anterior',
-      prev_title: 'Página Anterior',
-      next: 'Próxima',
-      next_title: 'Próxima Página',
-    },
-    headerFilters: {
-      default: 'Filtrar por esta coluna', //default header filter placeholder text
-      columns: {
-        nome: 'Filtrar por nome', //replace default header filter text for column name
-      },
-    },
-  },
-};
-let toolbarOptions = [
-  ['bold', 'italic', 'underline', 'strike'],
-  ['link'],
-  [{ color: [] }, { background: [] }],
-  [{ align: [] }],
-  [{ list: 'ordered' }, { list: 'bullet' }],
-  [{ script: 'sub' }, { script: 'super' }],
-  [{ indent: '-1' }, { indent: '+1' }],
-  ['clean'],
-];
-let options = {
-  modules: {
-    toolbar: toolbarOptions,
-    history: {
-      delay: 2500,
-      userOnly: true,
-    },
-  },
-  theme: 'snow',
-};
-layout = 'fitDataFill';
-let responsiveLayout = true;
-let tableRegap;
-let tabledata = '';
-let d3 = Plotly.d3;
-let agrupado = false;
 function inicializaComponentes() {
   $(document).ready(function () {
-    initSelect();
-    formataDados();
-    $('.progressRegap').toggle();
-    $('.classProcessos').toggle();
-    calendario();
+    getRelatorios({ get: 'listagem' });
     elementosTabelas();
-    initModal();
-    btnModal();
-    initDatePicker();
-    initCheckboxes();
+    initTabs();
+    clickStats();
   });
 }
 
-function initDatePicker() {
-  let formato = 'dd/mm/yyyy';
-  let meses = [
-    'Janeiro',
-    'Fevereiro',
-    'Março',
-    'Abril',
-    'Maio',
-    'Junho',
-    'Julho',
-    'Agosto',
-    'Setembro',
-    'Outubro',
-    'Novembro',
-    'Dezembro',
-  ];
-  let mesesCurtos = [
-    'Jan',
-    'Fev',
-    'Mar',
-    'Abr',
-    'Mai',
-    'Jun',
-    'Jul',
-    'Ago',
-    'Set',
-    'Out',
-    'Nov',
-    'Dez',
-  ];
-  let diasDaSemana = [
-    'Domingo',
-    'Segunda',
-    'Terça',
-    'Quarta',
-    'Quinta',
-    'Sexta',
-    'Sábado',
-  ];
-  let diasCurtos = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
-  let diasAbrev = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
-  $('.datepicker').datepicker({
-    autoClose: true,
-    format: formato,
-    i18n: {
-      cancel: 'Cancelar',
-      clear: 'Limpar',
-      done: 'Ok',
-      months: meses,
-      monthsShort: mesesCurtos,
-      weekdays: diasDaSemana,
-      weekdaysShort: diasCurtos,
-      weekdaysAbbrev: diasAbrev,
+function clickStats() {
+  $('#stata').click(() => {
+    setTimeout(() => {
+      grafico(dadosPlot);
+    }, 1000);
+  });
+}
+
+function initTabs() {
+  $('.tabs').tabs();
+}
+
+function getRelatorios(data) {
+  $.ajax({
+    url: `/julgamento/conselheiros/listaregap`,
+    type: 'POST',
+    data: data,
+    beforeSend: function () {
+      $('.progressRegap').toggle();
     },
-  });
+  })
+    .done(function (msg) {
+      msg.forEach((m) => {
+        $('#dataRelRegap').append(
+          $('<option>', {
+            value: m._id,
+            text: moment.unix(m.dtRel).format('DD/MM/YYYY'),
+          }),
+        );
+        $('#dataRelRegap').formSelect();
+      });
+    })
+    .fail(function (jqXHR, textStatus, msg) {
+      var toastHTML = `<span>Ocorreu um erro.</span>`;
+      M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+    });
 }
-function initModal() {
-  $('.modal').modal();
-  btnLegenda();
-}
-function btnLegenda() {
-  $('#mostraLegenda').click((e) => {
-    e.preventDefault();
-    $('#mostraLegenda').addClass('modal-trigger');
-  });
-}
-function calendario(dias) {
-  let calendario = JSON.parse($('#dataCAL').attr('data-cal'));
-  let datas = [];
-  calendario.forEach((c) => {
-    if (moment(c.start, 'DD/MM/YYYY').isSameOrAfter(moment())) {
-      datas.push(moment(c.start, 'DD/MM/YYYY').diff(moment(), 'days'));
-    }
-  });
-  $('#daps').text(Math.min(...datas));
-  $('#ps').text(
-    moment()
-      .add(Math.min(...datas) + 1, 'days')
-      .format('DD/MM/YYYY'),
-  );
-  return +dias + Math.min(...datas);
-}
-//Checkboxes para situações e atividades
-function initCheckboxes() {
-  $(`#repetitivosCheck`).change(() => {
-    if ($(`#repetitivosCheck`).prop('checked')) {
-      tableRegap.addFilter(returnRep);
-    } else {
-      tableRegap.removeFilter(returnRep);
-    }
-  });
-  $(`#aguardandoPauta`).change(() => {
-    if ($(`#aguardandoPauta`).prop('checked')) {
-      tableRegap.addFilter(agPauta);
-    } else {
-      tableRegap.removeFilter(agPauta);
-    }
-  });
-  $(`#abaixoUM`).change(() => {
-    if ($(`#abaixoUM`).prop('checked')) {
-      tableRegap.addFilter('Valor_Originario', '<=', 8000000);
-    } else {
-      tableRegap.removeFilter('Valor_Originario', '<=', 8000000);
-    }
-  });
-}
-function agPauta(data) {
-  return (
-    data.Atividade.includes('Para Relatar') &&
-    data.Situacao.includes('AGUARDANDO PAUTA')
-  );
-}
-function returnRep(data) {
-  return !data.Observacoes.includes('.REP.');
-}
+
 function elementosTabelas() {
   $('.dataRelRegap').change(() => {
     $.ajax({
-      url: `/julgamento/conselheiros/${$(
-        '#dataRelRegap option:selected',
-      ).val()}`,
+      url: `/julgamento/conselheiros/listaregap`,
       type: 'POST',
-      data: {},
+      data: {
+        get: 'relatorio',
+        idRel: $('#dataRelRegap option:selected').val(),
+      },
       beforeSend: function () {
         $('.progressRegap').toggle();
       },
     })
       .done(function (msg) {
         $('.classProcessos').show();
-        // msg.forEach((r) => {
-        //   r.DAAPS = parseInt($('#daps').text()) + r.Dias_na_Atividade;
-        //   console.log(r);
-        // });
-        //console.log(msg);
-        dataTable(msg);
-        grafico(msg);
+
+        msg[0].relatorio.forEach((r) => {
+          r.Dias_da_Dist = moment().diff(
+            moment(r.dtUltDist, 'DD/MM/YYYY'),
+            'days',
+          );
+          r.Dias_da_SJ = moment().diff(
+            moment(r.dtSessao, 'DD/MM/YYYY'),
+            'days',
+          );
+          r.Dias_na_Atividade = moment().diff(
+            moment(r.entradaAtividade, 'DD/MM/YYYY'),
+            'days',
+          );
+          r.DAAPS = parseInt($('#daps').text()) + r.Dias_na_Atividade;
+        });
+        dadosPlot = msg[0].relatorio;
+        dataTable(msg[0].relatorio);
+        grafico(msg[0].relatorio);
         $('.progressRegap').toggle();
       })
       .fail(function (jqXHR, textStatus, msg) {
@@ -216,45 +88,12 @@ function elementosTabelas() {
         M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
       });
   });
-
-  document
-    .getElementById('mostraColunasAtividade')
-    .addEventListener('click', function () {
-      if (agrupadoRegap == false) {
-        tableRegap.setGroupBy(['Atividade', 'Situacao']);
-        agrupadoRegap = true;
-      } else {
-        tableRegap.setGroupBy();
-        agrupadoRegap = false;
-      }
-    });
-
-  $('.Atividade').change(() => {
-    //console.log($("select option:selected").val());
-    tableRegap.setFilter(
-      'Atividade',
-      '=',
-      $('#atividadeSelect option:selected').val(),
-    );
-    if ($('#atividadeSelect option:selected').val() == 'Todas') {
-      tableRegap.removeFilter(
-        'Atividade',
-        '=',
-        $('#atividadeSelect option:selected').val(),
-      );
-    } else {
-      tableRegap.setFilter(
-        'Atividade',
-        '=',
-        $('#atividadeSelect option:selected').val(),
-      );
-    }
-  });
 }
+
 //TABELA REGAP
 function dataTable(dados) {
   let tabledata = dados;
-  tableRegap = new Tabulator('#tabelaRegap', {
+  table = new Tabulator('#tabelaRegap', {
     data: tabledata,
     pagination: 'local',
     height: '1000px',
@@ -266,8 +105,8 @@ function dataTable(dados) {
     responsiveLayoutCollapseStartOpen: false,
     initialSort: [
       { column: 'Dias_na_Atividade', dir: 'desc' },
-      { column: 'Atividade', dir: 'desc' },
-      { column: 'HE_CARF', dir: 'desc' },
+      { column: 'processo', dir: 'desc' },
+      { column: 'atividade', dir: 'desc' },
     ],
     downloadConfig: {
       columnCalcs: false,
@@ -285,7 +124,8 @@ function dataTable(dados) {
       },
       {
         title: 'Processo',
-        field: 'Processo',
+        field: 'processo',
+        formatter: coloreProc,
         sorter: 'number',
         hozAlign: 'center',
         headerFilter: 'input',
@@ -296,7 +136,8 @@ function dataTable(dados) {
       },
       {
         title: 'Contribuinte',
-        field: 'Contribuinte',
+        field: 'contribuinte',
+        formatter: coloreProc,
         headerFilter: 'input',
         sorter: 'string',
         hozAlign: 'center',
@@ -306,18 +147,8 @@ function dataTable(dados) {
         download: true,
       },
       {
-        title: 'Equipe Atual',
-        field: 'Equipe_Atual',
-        sorter: 'string',
-        hozAlign: 'center',
-        headerFilter: 'input',
-        editor: false,
-        responsive: 2,
-        download: true,
-      },
-      {
         title: 'Ind. Apenso',
-        field: 'Ind_Apenso',
+        field: 'apenso',
         sorter: 'string',
         hozAlign: 'center',
         editor: false,
@@ -326,7 +157,7 @@ function dataTable(dados) {
       },
       {
         title: 'Atividade',
-        field: 'Atividade',
+        field: 'atividade',
         sorter: 'string',
         hozAlign: 'center',
         topCalc: countCalc,
@@ -336,7 +167,7 @@ function dataTable(dados) {
       },
       {
         title: 'Situação de Julgamento',
-        field: 'Situacao',
+        field: 'situacao',
         sorter: 'string',
         headerFilter: 'input',
         topCalc: countCalc,
@@ -347,7 +178,7 @@ function dataTable(dados) {
       },
       {
         title: 'Entrada na Atividade',
-        field: 'Entrada_na_Atividade',
+        field: 'entradaAtividade',
         sorter: 'date',
         hozAlign: 'center',
         editor: false,
@@ -356,7 +187,7 @@ function dataTable(dados) {
       },
       {
         title: 'Horas CARF',
-        field: 'HE_CARF',
+        field: 'HE',
         sorter: 'number',
         hozAlign: 'center',
         headerFilter: 'input',
@@ -379,30 +210,72 @@ function dataTable(dados) {
       },
       {
         title: 'Dias na Atividade na Próxima Sessão',
-        field: 'Dias_na_Atividade',
+        field: 'DAAPS',
         sorter: 'number',
         width: 140,
         hozAlign: 'center',
         editor: false,
-        //mutator: formatValorDAPS,
-        formatter: formatDAPS,
-        accessor: downloadValorDAPS,
-        accessorParams: {},
-        accessorDownload: downloadValorDAPS,
+        formatter: coloreDias,
         responsive: 0,
-        download: false,
+        download: true,
       },
       {
         title: 'Valor Originário',
-        field: 'Valor_Originario',
+        field: 'valorOrig',
         sorter: 'number',
         hozAlign: 'center',
         editor: false,
         formatter: formatValor,
-        accessorDownload: downloadValor,
         responsive: 0,
         download: true,
       },
+      {
+        title: 'Observações',
+        field: 'obs',
+        sorter: 'string',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 2,
+        download: true,
+      },
+      {
+        title: 'Prioridade',
+        field: 'prioridade',
+        sorter: 'string',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 2,
+        download: true,
+      },
+      {
+        title: 'Assunto',
+        field: 'assunto',
+        sorter: 'string',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 2,
+        download: true,
+      },
+
+      {
+        title: 'Motivo da Prioridade',
+        field: 'motPrior',
+        sorter: 'string',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 2,
+        download: true,
+      },
+      {
+        title: 'Alegações',
+        field: 'alegacoes',
+        sorter: 'string',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 2,
+        download: true,
+      },
+
       {
         title: 'Dias da Sessão de Julgamento',
         field: 'Dias_da_SJ',
@@ -415,7 +288,7 @@ function dataTable(dados) {
       },
       {
         title: 'Data da Sessão de Julgamento',
-        field: 'Data_da_Sessao_Julgamento',
+        field: 'dtSessao',
         sorter: 'number',
         hozAlign: 'center',
         editor: false,
@@ -442,30 +315,12 @@ function dataTable(dados) {
       },
       {
         title: 'Última Equipe',
-        field: 'Equipe_Ultima',
-        sorter: 'string',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 1,
-        download: false,
-      },
-      {
-        title: 'Alegações',
-        field: 'Alegacoes_CARF',
+        field: 'ultEquipe',
         sorter: 'string',
         hozAlign: 'center',
         editor: false,
         responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Observações',
-        field: 'Observacoes',
-        sorter: 'string',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 1,
-        download: true,
+        download: false,
       },
     ],
     autoColumns: false,
@@ -473,12 +328,10 @@ function dataTable(dados) {
     langs: langs,
   });
 }
-
 let formatValorDAPS = function (value, data, type, params, column) {
   let valor = calendario(value);
   return valor;
 };
-
 function formatDAPS(cell) {
   let value = calendario(cell.getValue());
   if (
@@ -545,10 +398,187 @@ function formatDAPS(cell) {
   }
   return value;
 }
-
 let downloadValorDAPS = function (value, data, type, params, column) {
-  console.log(value);
   let valor = calendario(value);
-  console.log(valor);
   return valor;
 };
+function grafico(dados) {
+  var layoutAtividade = {
+    //title: 'Carga de Horas por atividade',
+    shapes: [],
+    yaxis: {
+      showticklabels: true,
+      tickangle: 0,
+      tickfont: {
+        family: 'Arial',
+        size: 10,
+        color: 'black',
+      },
+    },
+    margin: {
+      l: 200,
+      r: 50,
+      b: 50,
+      t: 50,
+    },
+  };
+  let config = { responsive: true, displaylogo: false };
+  let somatorio = d3
+    .nest()
+    .rollup((v) => {
+      return [
+        {
+          y: 'Para Relatar - Aguardando Pauta',
+          x: d3.sum(v, (d) => {
+            if (
+              d.atividade == 'Para Relatar' &&
+              d.situacao == 'AGUARDANDO PAUTA'
+            ) {
+              return d.HE;
+            }
+          }),
+        },
+        {
+          y: 'Para Relatar - Cancelado',
+          x: d3.sum(v, (d) => {
+            if (d.atividade == 'Para Relatar' && d.situacao == 'CANCELADO') {
+              return d.HE;
+            }
+          }),
+        },
+        {
+          y: 'Para Relatar - Retirado de Pauta',
+          x: d3.sum(v, (d) => {
+            if (
+              d.atividade == 'Para Relatar' &&
+              d.situacao == 'RETIRADO DE PAUTA'
+            ) {
+              return d.HE;
+            }
+          }),
+        },
+        {
+          y: 'Para Relatar - Pedido de Vista',
+          x: d3.sum(v, (d) => {
+            if (
+              d.atividade == 'Para Relatar' &&
+              d.situacao == 'PEDIDO DE VISTA'
+            ) {
+              return d.HE;
+            }
+          }),
+        },
+        {
+          y: 'Para Relatar - Indicado para Pauta',
+          x: d3.sum(v, (d) => {
+            if (
+              d.atividade == 'Para Relatar' &&
+              d.situacao == 'INDICADO PARA PAUTA'
+            ) {
+              return d.HE;
+            }
+          }),
+        },
+        {
+          y: 'Para Relatar - Em Sessão',
+          x: d3.sum(v, (d) => {
+            if (d.atividade == 'Para Relatar' && d.situacao == 'EM SESSÃO') {
+              return d.HE;
+            }
+          }),
+        },
+        {
+          y: 'Para Relatar - Em Pauta',
+          x: d3.sum(v, (d) => {
+            if (d.atividade == 'Para Relatar' && d.situacao == 'EM PAUTA') {
+              return d.HE;
+            }
+          }),
+        },
+        {
+          y: 'Formalizar Voto Vencedor',
+          x: d3.sum(v, (d) => {
+            if (d.atividade == 'Formalizar Voto Vencedor') {
+              return d.HE;
+            }
+          }),
+        },
+        {
+          y: 'Apreciar e Assinar Documento',
+          x: d3.sum(v, (d) => {
+            if (d.atividade == 'Apreciar e Assinar Documento') {
+              return d.HE;
+            }
+          }),
+        },
+        {
+          y: 'Formalizar Decisão',
+          x: d3.sum(v, (d) => {
+            if (d.atividade == 'Formalizar Decisao') {
+              return d.HE;
+            }
+          }),
+        },
+        {
+          y: 'Corrigir Decisão',
+          x: d3.sum(v, (d) => {
+            if (
+              d.atividade == 'Corrigir Decisao' ||
+              d.atividade == 'Corrigir Decisão'
+            ) {
+              return d.HE;
+            }
+          }),
+        },
+      ];
+    })
+    .entries(dados);
+
+  let arrayDados = [];
+  arrayDados.y = [];
+  arrayDados.x = [];
+  arrayDados.text = [];
+  arrayDados.color = [];
+
+  let cores = [
+    'rgb(204, 204, 204)',
+    'rgb(254, 181, 204)',
+    'rgb(104,204, 204)',
+    'rgb(124, 181, 204)',
+    'rgb(164, 204, 204)',
+    'rgb(184, 181, 204)',
+    'rgb(84, 105, 119)',
+    'rgb(144, 181, 204)',
+    'rgb(119, 110, 84)',
+    'rgb(134, 224, 234)',
+    'rgb(134, 131, 224)',
+  ];
+  somatorio = somatorio.sort((a, b) => {
+    return a.x - b.x;
+  });
+  somatorio.forEach((row, index) => {
+    arrayDados.y.push(row.y);
+    arrayDados.x.push(row.x);
+    arrayDados.color.push(cores[index]);
+    arrayDados.text.push(row.y);
+  });
+  arrayDados.type = 'bar';
+  arrayDados.orientation = 'h';
+  arrayDados.type = 'bar';
+  arrayDados.fillcolor = 'cls';
+  arrayDados.hovertemplate = `<i>Carga</i>: %{x:.d} Horas CARF<br>                         
+                              <b>%{text}</b>`;
+  arrayDados.marker = {
+    color: arrayDados.color,
+    width: 4,
+    colorscale: 'Viridis',
+    line: {},
+  };
+
+  Plotly.newPlot(
+    document.getElementById('barrasAtividade'),
+    [arrayDados],
+    layoutAtividade,
+    config,
+  );
+}

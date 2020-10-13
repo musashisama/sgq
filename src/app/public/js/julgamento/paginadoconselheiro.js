@@ -24,7 +24,7 @@ let responsiveLayout = true;
 let tableOcorrencias,
   tableReinp,
   tableReinpDet = null;
-let d3 = Plotly.d3;
+//let d3 = Plotly.d3;
 let agrupadoRegap = false;
 let agrupadoReinp = false;
 

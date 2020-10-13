@@ -16,7 +16,6 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     app_navbar_template = require("../../components/app-navbar.marko"),
     app_navbar_tag = marko_loadTag(app_navbar_template),
     marko_attr = marko_helpers.a,
-    marko_escapeXml = marko_helpers.x,
     app_modal_tabela_legenda_template = require("../../components/app-modal-tabela-legenda.marko"),
     app_modal_tabela_legenda_tag = marko_loadTag(app_modal_tabela_legenda_template),
     app_footer_template = require("../../components/app-footer.marko"),
@@ -48,31 +47,21 @@ function render(input, out, __component, component, state) {
 
   out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Registro de Solicitação</h3><div id=\"dataCAL\"" +
     marko_attr("data-cal", "" + data.cal) +
-    "></div><div class=\"row\"><div class=\"card hoverable blue-grey darken-1 col s12\"><div class=\"card-content white-text\"><span class=\"card-title\"><strong>Cons. <span class=\"nomeSol\">" +
-    marko_escapeXml(data.user.nome) +
-    "</span></strong> - " +
-    marko_escapeXml(data.user.tipo) +
-    "</span><strong>CPF:</strong><span id=\"cpfCons\">" +
-    marko_escapeXml(data.user.cpf) +
-    "</span><br><strong>Turma:</strong>" +
-    marko_escapeXml(data.user.unidade) +
-    "<br><strong>Final do Mandato:</strong>" +
-    marko_escapeXml(data.user.dtFimMandato) +
-    "<br> Falta(m) <strong><span id=\"daps\"></span></strong> dia(s) para a próxima sessão, que será realizada em <strong><span id=\"ps\"></span></strong>.</div></div></div><div class=\"row\"><ul class=\"collapsible col s6\"><li><div class=\"collapsible-header\"><i class=\"material-icons\">filter_drama</i>REGAP - Justificar Suspensão de Prazos Regimentais</div><div class=\"collapsible-body\"><span>Afastamentos e licenças</span><br><span>Prorrogação de Voto Vencedor - art. 45, §1º, inciso II do RICARF</span><br><span>Prorrogação de Prazo de Processo de Imunidade</span><br><span>Prorrogação de Prazo autorizada pela Presidência do CARF - art. 45, §1º, inciso II, item b do RICARF</span><br><span>Justificativa para deixar de praticar de ato processual (Art. 45, IV RICARF)</span></div></li><li><div class=\"collapsible-header\"><i class=\"material-icons\">place</i>REINP - Redução de Horas da Meta de Produtividade</div><div class=\"collapsible-body\"><span>Afastamentos e licenças</span><br><span>Mudança de Colegiado que implique em alteração do calendário da sessão de julgamento</span><br><span>Não cumprimento da meta por ausência de carga de processo</span><br><span>1º sorteio com prazo inferior a 21 dias da indicação</span><br><span>Assumir interinamente presidência de turma por no mínimo um mês</span><br><span>Participação em sessão TO/CSRF a partir de abril de 2020</span><br><span>Participação em sessão presencial ou virtual de TEX para sustentação oral</span></div></li><li><div class=\"collapsible-header\"><i class=\"material-icons\">whatshot</i>Dispensa de Sorteio</div><div class=\"collapsible-body\"><div class=\"collection\"><a href=\"#!\" class=\"collection-item\">Excesso de Horas em Lotes de Sorteio</a><a href=\"#!\" class=\"collection-item\">Distribuição de processos reflexos ou decorrentes</a><a href=\"#!\" class=\"collection-item \">Formalização de Voto Vencedor</a><a href=\"#!\" class=\"collection-item\">Participação em TO/CSRF de março de 2019 até março de 2020</a></div></div></li><li><div class=\"collapsible-header\"><i class=\"material-icons\">whatshot</i>Outras solicitações</div><div class=\"collapsible-body\"><span>Justificar faltas à sessões de julgamento</span></div></li></ul><div class=\"col s6\"><h5>Orientações</h5><p>As solicitações que constem afastamentos para redução de meta e justificativa de suspensão de prazos e faltas à sessões de julgamento deverão ser efetuadas <strong>após</strong> transcorrido o evento. Caso sejam efetuadas antes do evento, serão <strong>rejeitadas</strong>.</p></div></div></div></main><footer class=\"page-footer rodape\"></footer>");
+    "></div><div class=\"row\"><div class=\"col s12 m12\"><div class=\"card hoverable cardAzul\"><div class=\"card-content\"><span class=\"card-title\">Orientações:</span> As solicitações que constem afastamentos para redução de meta e justificativa de suspensão de prazos e faltas à sessões de julgamento deverão ser efetuadas <strong>após</strong> transcorrido o evento. Caso sejam efetuadas antes do evento, serão <strong>rejeitadas</strong>.</div></div></div><ul class=\"collapsible col s6 m6\"><li><div class=\"collapsible-header\"><i class=\"material-icons\">filter_drama</i>REGAP - Justificar Suspensão de Prazos Regimentais</div><div class=\"collapsible-body\"><span>Afastamentos e licenças</span><br><span>Prorrogação de Voto Vencedor - art. 45, §1º, inciso II do RICARF</span><br><span>Prorrogação de Prazo de Processo de Imunidade</span><br><span>Prorrogação de Prazo autorizada pela Presidência do CARF - art. 45, §1º, inciso II, item b do RICARF</span><br><span>Justificativa para deixar de praticar de ato processual (Art. 45, IV RICARF)</span></div></li><li><div class=\"collapsible-header\"><i class=\"material-icons\">place</i>REINP - Redução de Horas da Meta de Produtividade</div><div class=\"collapsible-body\"><span>Afastamentos e licenças</span><br><span>Mudança de Colegiado que implique em alteração do calendário da sessão de julgamento</span><br><span>Não cumprimento da meta por ausência de carga de processo</span><br><span>1º sorteio com prazo inferior a 21 dias da indicação</span><br><span>Assumir interinamente presidência de turma por no mínimo um mês</span><br><span>Participação em sessão TO/CSRF a partir de abril de 2020</span><br><span>Participação em sessão presencial ou virtual de TEX para sustentação oral</span></div></li><li><div class=\"collapsible-header\"><i class=\"material-icons\">whatshot</i>Dispensa de Sorteio</div><div class=\"collapsible-body\"><div class=\"collection\"><a href=\"#!\" class=\"collection-item\">Excesso de Horas em Lotes de Sorteio</a><a href=\"#!\" class=\"collection-item\">Distribuição de processos reflexos ou decorrentes</a><a href=\"#!\" class=\"collection-item \">Formalização de Voto Vencedor</a><a href=\"#!\" class=\"collection-item\">Participação em TO/CSRF de março de 2019 até março de 2020</a></div></div></li><li><div class=\"collapsible-header\"><i class=\"material-icons\">whatshot</i>Outras solicitações</div><div class=\"collapsible-body\"><span>Justificar faltas à sessões de julgamento</span></div></li></ul></div></div></main><footer class=\"page-footer rodape\"></footer>");
 
-  app_modal_tabela_legenda_tag({}, out, __component, "78");
+  app_modal_tabela_legenda_tag({}, out, __component, "62");
 
   out.w("<div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda modal-close\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
 
-  app_footer_tag({}, out, __component, "87");
+  app_footer_tag({}, out, __component, "71");
 
-  app_scripts_js_tag({}, out, __component, "88");
+  app_scripts_js_tag({}, out, __component, "72");
 
   out.w("<script src=\"/estatico/js/libs/plotly-latest.min.js\"></script><script src=\"/estatico/js/libs/plotly-locale-pt-br.js\"></script><script>Plotly.setPlotConfig({locale: 'pt-BR'})</script><script src=\"/estatico/js/libs/quill.min.js\"></script><script src=\"/estatico/js/julgamento/conselheiros/regsolicitacoes.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "94");
+  await_reorderer_tag({}, out, __component, "78");
 
   out.w("</body></html>");
 }

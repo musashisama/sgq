@@ -79,6 +79,20 @@ module.exports = (app) => {
     julgControlador.carregaRegapIndividual(),
   );
 
+  app.get(
+    rotasJulgamento.reinpindividual,
+    julgControlador.carregaReinpIndividual(),
+  );
+  app.get(
+    rotasJulgamento.ocorrencias,
+    julgControlador.carregaOcorrenciasCons(),
+  );
+
+  app.post(
+    rotasJulgamento.listaregapindividual,
+    julgControlador.listaRegapIndividual(),
+  );
+
   app.post(
     rotasJulgamento.regapcons,
     julgControlador.carregaTabelaConselheiros(),

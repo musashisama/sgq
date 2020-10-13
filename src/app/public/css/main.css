@@ -618,22 +618,25 @@ summary::-webkit-details-marker {
 .cardPreto {
   background-color: var(--rich-black-fogra-39);
   color: var(--cultured);
-  border-radius: 1em;
+}
+
+.cardVermelho {
+  background-color: var(--ruby-red);
+  color: var(--cultured);
 }
 
 .cardAzulClaro {
   background-color: var(--azul-claro);
-  border-radius: 1em;
+}
+
+.cardAmarelo,
+.cardAmarelo > .linkCard i {
+  background-color: var(--lemon-yellow);
+  color: var(--rich-black-fogra-39);
 }
 
 .linkCard,
 .linkCard i {
   color: var(--cultured);
   text-align: right;
-}
-
-:root {
-  --ruby-red: #a20021ff;
-  --rich-black-fogra-39: #040303ff;
-  --lemon-yellow: #faf33eff;
 }

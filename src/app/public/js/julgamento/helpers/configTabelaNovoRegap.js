@@ -81,13 +81,13 @@ function btnLegenda() {
 }
 function agPauta(data) {
   return (
-    data.Atividade.includes('Para Relatar') &&
-    data.Situacao.includes('AGUARDANDO PAUTA')
+    data.atividade.includes('Para Relatar') &&
+    data.situacao.includes('AGUARDANDO PAUTA')
   );
 }
 
 function returnRep(data) {
-  return !data.Observacoes.includes('.REP.');
+  return !data.obs.includes('.REP.');
 }
 
 function initCheckboxes() {
@@ -107,9 +107,9 @@ function initCheckboxes() {
   });
   $(`#abaixoUM`).change(() => {
     if ($(`#abaixoUM`).prop('checked')) {
-      table.addFilter('Valor_Originario', '<=', 8000000);
+      table.addFilter('valorOrig', '<=', 8000000);
     } else {
-      table.removeFilter('Valor_Originario', '<=', 8000000);
+      table.removeFilter('valorOrig', '<=', 8000000);
     }
   });
 
@@ -129,7 +129,7 @@ function initElementos() {
     .getElementById('mostraColunasAtividade')
     .addEventListener('click', function () {
       if (agrupado == false) {
-        table.setGroupBy(['Atividade', 'Situacao']);
+        table.setGroupBy(['atividade', 'situacao']);
         agrupado = true;
       } else {
         table.setGroupBy();
@@ -139,19 +139,19 @@ function initElementos() {
 
   $('.Atividade').change(() => {
     table.setFilter(
-      'Atividade',
+      'atividade',
       '=',
       $('#atividadeSelect option:selected').val(),
     );
     if ($('#atividadeSelect option:selected').val() == 'Todas') {
       table.removeFilter(
-        'Atividade',
+        'atividade',
         '=',
         $('#atividadeSelect option:selected').val(),
       );
     } else {
       table.setFilter(
-        'Atividade',
+        'atividade',
         '=',
         $('#atividadeSelect option:selected').val(),
       );
@@ -191,46 +191,46 @@ function coloreProc(cell, formatterParams, valor) {
   let value = cell.getValue() ? cell.getValue() : valor;
 
   if (
-    cell.getRow().getData().Questionamento_CARF == 'EMBARGOS DE DECLARAÇÃO' &&
-    cell.getRow().getData().Equipe_Ultima.includes('DIPRO') &&
-    cell.getRow().getData().AtividadeUltima == 'Distribuir / Sortear'
+    cell.getRow().getData().questionamento == 'EMBARGOS DE DECLARAÇÃO' &&
+    cell.getRow().getData().ultEquipe.includes('DIPRO') &&
+    cell.getRow().getData().ultAtividade == 'Distribuir / Sortear'
   ) {
     let elem = document.querySelector('.LegEmbargoSort');
     let estilo = getComputedStyle(elem);
     cell.getElement().style.backgroundColor = estilo.backgroundColor;
   }
   if (
-    cell.getRow().getData().Questionamento_CARF != 'EMBARGOS DE DECLARAÇÃO' &&
-    cell.getRow().getData().Equipe_Ultima.includes('DIPRO') &&
-    cell.getRow().getData().AtividadeUltima == 'Tratar Retorno de Processo'
+    cell.getRow().getData().questionamento != 'EMBARGOS DE DECLARAÇÃO' &&
+    cell.getRow().getData().ultEquipe.includes('DIPRO') &&
+    cell.getRow().getData().ultAtividade == 'Tratar Retorno de Processo'
   ) {
     let elem = document.querySelector('.LegRetornoDilg');
     let estilo = getComputedStyle(elem);
     cell.getElement().style.backgroundColor = estilo.backgroundColor;
   }
   if (
-    cell.getRow().getData().Questionamento_CARF == 'EMBARGOS DE DECLARAÇÃO' &&
-    cell.getRow().getData().Equipe_Ultima.includes('DIPRO') &&
-    cell.getRow().getData().AtividadeUltima == 'Tratar Retorno de Processo'
+    cell.getRow().getData().questionamento == 'EMBARGOS DE DECLARAÇÃO' &&
+    cell.getRow().getData().ultEquipe.includes('DIPRO') &&
+    cell.getRow().getData().ultAtividade == 'Tratar Retorno de Processo'
   ) {
     let elem = document.querySelector('.LegEmbargo');
     let estilo = getComputedStyle(elem);
     cell.getElement().style.backgroundColor = estilo.backgroundColor;
   }
-  if (cell.getRow().getData().Observacoes.includes('PARADIGMA')) {
+  if (cell.getRow().getData().obs.includes('PARADIGMA')) {
     let elem = document.querySelector('.LegParadigma');
     let estilo = getComputedStyle(elem);
     cell.getElement().style.backgroundColor = estilo.backgroundColor;
   }
-  if (cell.getRow().getData().Observacoes.includes('.REP.')) {
+  if (cell.getRow().getData().obs.includes('.REP.')) {
     let elem = document.querySelector('.LegRepetitivo');
     let estilo = getComputedStyle(elem);
     cell.getElement().style.backgroundColor = estilo.backgroundColor;
   }
   if (
-    cell.getRow().getData().Questionamento_CARF == '' &&
-    cell.getRow().getData().Ind_Apenso.includes('S') &&
-    cell.getRow().getData().Situacao == ''
+    cell.getRow().getData().questionamento == '' &&
+    cell.getRow().getData().apenso.includes('S') &&
+    cell.getRow().getData().situacao == ''
   ) {
     let elem = document.querySelector('.LegApenso');
     let estilo = getComputedStyle(elem);
@@ -248,10 +248,10 @@ function coloreProc(cell, formatterParams, valor) {
       cell.getElement().style.backgroundColor = estilo.backgroundColor;
     }
   }
-  if (cell.getRow().getData().Prioridade) {
+  if (cell.getRow().getData().prioridade) {
     if (
-      cell.getRow().getData().Prioridade.includes('MAXIMA') ||
-      cell.getRow().getData().Prioridade.includes('ALTA')
+      cell.getRow().getData().prioridade.includes('MAXIMA') ||
+      cell.getRow().getData().prioridade.includes('ALTA')
     ) {
       let elem = document.querySelector('.LegPrioridade');
       let estilo = getComputedStyle(elem);
@@ -266,8 +266,8 @@ function coloreDias(cell, formatterParams, valor) {
   let value = cell.getValue() ? cell.getValue() : valor;
 
   if (
-    cell.getRow().getData().Atividade == 'Para Relatar' &&
-    cell.getRow().getData().Situacao == 'AGUARDANDO PAUTA'
+    cell.getRow().getData().atividade == 'Para Relatar' &&
+    cell.getRow().getData().situacao == 'AGUARDANDO PAUTA'
   ) {
     if (value >= 180) {
       cell.getElement().style.color = '#D8000C';
@@ -284,25 +284,25 @@ function coloreDias(cell, formatterParams, valor) {
   }
 
   if (
-    cell.getRow().getData().Atividade == 'Formalizar Decisao' &&
+    cell.getRow().getData().atividade == 'Formalizar Decisao' &&
     value >= 30
   ) {
     cell.getElement().style.color = '#D8000C';
     cell.getElement().style.fontWeight = 'bolder';
   }
-  if (cell.getRow().getData().Atividade == 'Formalizar Decisao' && value < 30) {
+  if (cell.getRow().getData().atividade == 'Formalizar Decisao' && value < 30) {
     cell.getElement().style.color = 'rgb(245, 131, 0)';
     cell.getElement().style.fontWeight = 'bolder';
   }
   if (
-    cell.getRow().getData().Atividade == 'Formalizar Voto Vencedor' &&
+    cell.getRow().getData().atividade == 'Formalizar Voto Vencedor' &&
     value >= 30
   ) {
     cell.getElement().style.color = '#D8000C';
     cell.getElement().style.fontWeight = 'bolder';
   }
   if (
-    cell.getRow().getData().Atividade == 'Formalizar Voto Vencedor' &&
+    cell.getRow().getData().atividade == 'Formalizar Voto Vencedor' &&
     value < 30
   ) {
     cell.getElement().style.color = 'rgb(245, 131, 0)';
@@ -310,20 +310,20 @@ function coloreDias(cell, formatterParams, valor) {
   }
 
   if (
-    cell.getRow().getData().Atividade == 'Apreciar e Assinar Documento' &&
+    cell.getRow().getData().atividade == 'Apreciar e Assinar Documento' &&
     value >= 15
   ) {
     cell.getElement().style.color = '#D8000C';
     cell.getElement().style.fontWeight = 'bolder';
   }
   if (
-    cell.getRow().getData().Atividade == 'Apreciar e Assinar Documento' &&
+    cell.getRow().getData().atividade == 'Apreciar e Assinar Documento' &&
     value < 15
   ) {
     cell.getElement().style.color = 'rgb(245, 131, 0)';
     cell.getElement().style.fontWeight = 'bolder';
   }
-  if (cell.getRow().getData().Atividade == 'Corrigir Decisão' && value >= 1) {
+  if (cell.getRow().getData().atividade == 'Corrigir Decisão' && value >= 1) {
     cell.getElement().style.color = '#D8000C';
     cell.getElement().style.fontWeight = 'bolder';
   }
