@@ -47,7 +47,7 @@ function render(input, out, __component, component, state) {
       class: "sidenav"
     }, out, __component, "5");
 
-  out.w("<div id=\"caixa\" class=\"container\"><h3 class=\"center-align titulo\">Gestão de de Relatórios</h3><div id=\"relatorios\"" +
+  out.w("<div id=\"caixa\" class=\"container\"><h3 class=\"center-align titulo\">Gestão de Relatórios da COJUL</h3><div id=\"relatorios\"" +
     marko_attr("data-relatorios", "" + data.relatorios) +
     "></div><div class=\"row\"><div class=\"col s12 right-align\"><a href=\"#!\" id=\"agrupaRel\" title=\"Agrupar/Desagrupar por Tipo de Relatório\" class=\"waves-effect waves-green hoverable z-depth-3 btn-floating blue\"><i class=\"material-icons\">unfold_less</i></a>");
 
