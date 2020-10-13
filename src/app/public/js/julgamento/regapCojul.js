@@ -314,7 +314,7 @@ var layoutAtividade = {
   },
 };
 let config = { responsive: true, displaylogo: false };
-let d3 = Plotly.d3;
+
 let somatorio = d3
   .nest()
   .rollup((v) => {
