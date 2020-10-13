@@ -77,13 +77,7 @@ function render(input, out, __component, component, state) {
       "</option>");
   });
 
-  out.w("</select><label for=\"turmaCons\">Turma/Câmara/Seção:</label></div><div class=\"input-field col s2\"><i class=\"material-icons prefix\">event_seat</i><input id=\"turma\" name=\"turma\"" +
-    marko_attr("value", "") +
-    " type=\"text\" class=\"validate\"><label class=\"active\" for=\"turma\">Turma:</label></div><div class=\"input-field col s2\"><i class=\"material-icons prefix\">event_seat</i><input id=\"camara\" name=\"camara\"" +
-    marko_attr("value", "") +
-    " type=\"text\" class=\"validate\"><label class=\"active\" for=\"camara\">Câmara:</label></div><div class=\"input-field col s2\"><i class=\"material-icons prefix\">event_seat</i><input id=\"setor\" name=\"setor\"" +
-    marko_attr("value", "") +
-    " type=\"text\" class=\"validate\"><label class=\"active\" for=\"setor\">Seção:</label></div><div class=\"input-field col s3\"><i class=\"material-icons prefix\">gps_fixed</i><input id=\"origem\" name=\"origem\"" +
+  out.w("</select><label for=\"turmaCons\">Turma/Câmara/Seção:</label></div><div class=\"input-field col s3\"><i class=\"material-icons prefix\">gps_fixed</i><input id=\"origem\" name=\"origem\"" +
     marko_attr("value", "") +
     " type=\"text\" class=\"validate\"><label class=\"active\" for=\"origem\">Representação:</label></div></div><div class=\"row\"><div class=\"input-field col s3\"><i class=\"material-icons prefix\">details</i><select id=\"tipo\" name=\"tipo\"><option value=\"Titular\">Titular</option><option value=\"Suplente\">Suplente</option></select><label>Titular/Suplente</label></div><div class=\"input field col s3\"><input id=\"dtInicio\" name=\"dtInicio\"" +
     marko_attr("value", "") +
@@ -101,17 +95,17 @@ function render(input, out, __component, component, state) {
       "</option>");
   });
 
-  out.w("</select><label for=\"funcao\">Função:</label></div><div class=\"input-field col s3\"><i class=\"material-icons prefix\">event_note</i><select id=\"mandatoAt\" name=\"mandatoAt\"><option value>Sim</option><option>Não</option></select><label>Mandato Ativo?</label></div></div><div class=\"card-action right-align\"> <a class=\"btn-cons-salva btn-floating blue waves-effect waves-light hoverable z-depth-3\" type=\"submit\" title=\"Salvar\"><i class=\"material-icons\">save</i></a></div></form></div></div><div></div></div></main>");
+  out.w("</select><label for=\"funcao\">Função:</label></div><div class=\"input-field col s3\"><i class=\"material-icons prefix\">event_note</i><select id=\"mandatoAt\" name=\"mandatoAt\"><option value>Sim</option><option>Não</option></select><label>Mandato Ativo?</label></div></div><div class=\"card-action right-align\"><a class=\"btn-cons-salva btn-floating blue waves-effect waves-light hoverable z-depth-3\" type=\"submit\" title=\"Salvar\"><i class=\"material-icons\">save</i></a></div></form></div></div><div></div></div></main>");
 
-  app_footer_tag({}, out, __component, "91");
+  app_footer_tag({}, out, __component, "79");
 
-  app_scripts_js_tag({}, out, __component, "92");
+  app_scripts_js_tag({}, out, __component, "80");
 
   out.w("<script src=\"/estatico/js/pessoal/cadcons.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "94");
+  await_reorderer_tag({}, out, __component, "82");
 
   out.w("</body></html>");
 }

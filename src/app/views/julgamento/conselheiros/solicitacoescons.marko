@@ -9,30 +9,19 @@
         <h3 class="center-align titulo">Registro de Solicitação</h3>
         <div id="dataCAL" data-cal=`${data.cal}`/>
         <div class="row">
-          <div class="card hoverable blue-grey darken-1 col s12">
-            <div class="card-content white-text">
-              <span class="card-title">
-                <strong>
-  Cons.
-                  <span class="nomeSol">${data.user.nome}</span>
-                </strong> - ${data.user.tipo}
-              </span>
-              <strong>CPF:</strong>
-              <span id="cpfCons">${data.user.cpf}</span>
-              <br/>
-              <strong>Turma:</strong>
-              ${data.user.unidade}<br/>
-              <strong>Final do Mandato:</strong>
-              ${data.user.dtFimMandato}<br/>
-              Falta(m)
-              <strong><span id="daps"/></strong>
-              dia(s) para a próxima sessão, que será realizada em
-              <strong><span id="ps"/></strong>.
+          <div class="col s12 m12">
+            <div class="card hoverable cardAzul">
+              <div class="card-content">
+                <span class="card-title">Orientações:</span>
+                As solicitações que constem afastamentos para redução de meta e justificativa de suspensão de prazos e faltas à sessões de julgamento deverão ser efetuadas
+                <strong>após</strong>
+                transcorrido o evento. 
+                Caso sejam efetuadas antes do evento, serão
+                <strong>rejeitadas</strong>.
+              </div>
             </div>
           </div>
-        </div>
-        <div class="row">
-          <ul class="collapsible col s6">
+          <ul class="collapsible col s6 m6">
             <li>
               <div class="collapsible-header">
                 <i class="material-icons">filter_drama</i>REGAP - Justificar Suspensão de Prazos Regimentais
@@ -92,13 +81,6 @@
               </div>
             </li>
           </ul>
-          <div class="col s6">
-            <h5>Orientações</h5>
-            <p>
-              As solicitações que constem afastamentos para redução de meta e justificativa de suspensão de prazos e faltas à sessões de julgamento deverão ser efetuadas <strong>após</strong> transcorrido o evento. 
-              Caso sejam efetuadas antes do evento, serão <strong>rejeitadas</strong>.
-            </p>
-          </div>
         </div>
       </div>
     </main>

@@ -103,6 +103,7 @@ class PessoalDao {
     return new Promise((resolve, reject) => {
       this._db.funcoesCarf
         .find(filtro)
+        .sort({ funcao: 1 })
         .project()
         .toArray(function (erro, res) {
           if (erro) {

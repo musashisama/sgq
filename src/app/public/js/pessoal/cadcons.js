@@ -45,6 +45,8 @@ function btnSalva() {
     } else {
       url = $('#formCadCons').attr('action');
       valores = $('#formCadCons').serializeArray();
+      console.log(valores);
+      valores.push({ name: 'perfil', value: ['carf', 'conselheiro'] });
       $.post(url, valores)
         .done((dados) => {
           if (dados.id == 0) {

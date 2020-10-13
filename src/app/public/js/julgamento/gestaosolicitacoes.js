@@ -319,7 +319,6 @@ function btnArq() {
 }
 function solicitacoes(segep, dipaj) {
   let result;
-  console.log(segep);
   segep == '' || dipaj == ''
     ? (result = 'Em análise')
     : segep == 'DocInval' || dipaj == 'Rejeitada'

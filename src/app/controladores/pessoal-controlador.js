@@ -243,7 +243,7 @@ class PessoalControlador {
     return function (req, resp) {
       const pessoalDao = new PessoalDao(conn);
       pessoalDao.getUnidades({ tipo: 'judicante' }).then((tipo) => {
-        pessoalDao.getfuncoesCarf().then((funcoes) => {
+        pessoalDao.getfuncoesCarf({ area: 'judicante' }).then((funcoes) => {
           resp.marko(templates.pessoal.cadcons, {
             unidades: tipo,
             funcoes: funcoes,
@@ -256,12 +256,14 @@ class PessoalControlador {
     return function (req, resp) {
       const pessoalDao = new PessoalDao(conn);
       pessoalDao.getUnidades().then((tipo) => {
-        pessoalDao.getfuncoesCarf().then((funcoes) => {
-          resp.marko(templates.pessoal.cadpess, {
-            unidades: tipo,
-            funcoes: funcoes,
+        pessoalDao
+          .getfuncoesCarf({ area: 'administrativa' })
+          .then((funcoes) => {
+            resp.marko(templates.pessoal.cadpess, {
+              unidades: tipo,
+              funcoes: funcoes,
+            });
           });
-        });
       });
     };
   }

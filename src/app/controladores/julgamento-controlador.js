@@ -7,6 +7,7 @@ const requestIp = require('request-ip');
 const templates = require('../views/templates');
 const formidable = require('formidable');
 const moment = require('moment');
+const get_ip = require('ipware')().get_ip;
 const tz = require('moment-timezone');
 let sp = 'America/Sao_Paulo';
 moment.updateLocale('en', {
@@ -57,8 +58,11 @@ class JulgamentoControlador {
       portalCojul: '/julgamento/restrito/portalcojul',
       gestaoPortalCojul: '/julgamento/restrito/gestaoportalcojul',
       gestaosolicitacoes: '/julgamento/restrito/gestaosolicitacoes',
-      estoque: '/julgamento/restrito/diagnostico-carga',
       cadastrafaqdipaj: '/julgamento/restrito/cadastrafaqdipaj/:id',
+      gestaoGC: '/julgamento/restrito/gestaoGC/:id',
+      arqdown: '/julgamento/restrito/arqdown/:id',
+      //RELATORIOS COJUL
+      estoque: '/julgamento/restrito/diagnostico-carga',
       carregacsv: '/julgamento/restrito/carrega-csv',
       escolhecsv: '/julgamento/restrito/escolhe-csv',
       escolhecsvregap: '/julgamento/restrito/escolhe-csv-regap',
@@ -76,15 +80,17 @@ class JulgamentoControlador {
       detalhaAnEstoque: '/julgamento/restrito/analise-estoque/detalha/:id',
       detalharegap: '/julgamento/restrito/regap-cojul/detalha/:id',
       regap: '/julgamento/restrito/regap/:id',
-      gestaoGC: '/julgamento/restrito/gestaoGC/:id',
-      arqdown: '/julgamento/restrito/arqdown/:id',
+      gestaorelatorios: '/julgamento/restrito/relatorios/',
       //CONSELHEIROS
       conselheiros: '/julgamento/conselheiros',
       portalconselheiros: '/julgamento/conselheiros/portalconselheiros',
       solicitacoes: '/julgamento/conselheiros/solicitacoes',
+      ocorrencias: '/julgamento/conselheiros/ocorrencias',
       regsolicitacoes: '/julgamento/conselheiros/registro-solicitacoes',
       arquivos: '/julgamento/conselheiros/arquivos',
       regapindividual: '/julgamento/conselheiros/regap',
+      reinpindividual: '/julgamento/conselheiros/reinp',
+      listaregapindividual: '/julgamento/conselheiros/listaregap',
       regapcons: '/julgamento/conselheiros/:id',
     };
   }
@@ -484,6 +490,51 @@ class JulgamentoControlador {
     };
   }
 
+  listaRegapIndividual() {
+    return function (req, resp) {
+      const julgamentoDao = new JulgamentoDao(conn);
+      let filtro, sort, projecao;
+      if (req.body.get == 'listagem') {
+        filtro = { 'conselheiro.cpf': req.user.cpf };
+        projecao = { dtRel: 1, _id: -1 };
+        sort = { dtRel: -1 };
+      }
+      if (req.body.get == 'relatorio') {
+        filtro = {
+          $and: [
+            { 'conselheiro.cpf': req.user.cpf },
+            { _id: new ObjectID(req.body.idRel) },
+          ],
+        };
+        projecao = { relatorio: 1, _id: 0 };
+        sort = { 'relatorio.processo': 1 };
+      }
+      julgamentoDao.getRegap(filtro, sort, projecao).then((regap) => {
+        resp.json(regap);
+      });
+    };
+  }
+
+  handleRelatorios() {
+    return function (req, resp) {
+      const julgamentoDao = new JulgamentoDao(conn);
+      if (req.method == 'GET') {
+        julgamentoDao.getRelatorios().then((rel) => {
+          resp.marko(templates.julgamento.gestaorelatorios, {
+            relatorios: JSON.stringify(rel),
+          });
+        });
+      }
+      if (req.method == 'DELETE') {
+        julgamentoDao
+          .excluiRelatorio({ _id: new ObjectID(req.body.id) })
+          .then((msg) => {
+            resp.json(msg);
+          });
+      }
+    };
+  }
+
   carregaRegapIndividual() {
     return function (req, resp) {
       const pessoalDao = new PessoalDao(conn);
@@ -494,11 +545,57 @@ class JulgamentoControlador {
             classNames: CSVHandler.semanaCores(user[0].unidade),
           })
           .then((cal) => {
-            resp.marko(templates.julgamento.portaldoconselheiro, {
+            resp.marko(templates.julgamento.regap_individual, {
               cal: JSON.stringify(cal),
               user: user[0],
             });
           });
+      });
+    };
+  }
+
+  carregaReinpIndividual() {
+    return function (req, resp) {
+      const pessoalDao = new PessoalDao(conn);
+      const julgamentoDao = new JulgamentoDao(conn);
+      julgamentoDao
+        .getReinp({ 'conselheiro.cpf': req.user.cpf })
+        .then((reinp) => {
+          pessoalDao.getUsers({ cpf: req.user.cpf }).then((user) => {
+            julgamentoDao
+              .getCal({
+                classNames: CSVHandler.semanaCores(user[0].unidade),
+              })
+              .then((cal) => {
+                resp.marko(templates.julgamento.reinp_individual, {
+                  reinp: JSON.stringify(reinp),
+                  cal: JSON.stringify(cal),
+                  user: user[0],
+                });
+              });
+          });
+        });
+    };
+  }
+
+  carregaOcorrenciasCons() {
+    return function (req, resp) {
+      const pessoalDao = new PessoalDao(conn);
+      const julgamentoDao = new JulgamentoDao(conn);
+      pessoalDao.getOcorrencias({ cpf: req.user.cpf }).then((ocorrencias) => {
+        pessoalDao.getUsers({ cpf: req.user.cpf }).then((user) => {
+          julgamentoDao
+            .getCal({
+              classNames: CSVHandler.semanaCores(user[0].unidade),
+            })
+            .then((cal) => {
+              resp.marko(templates.julgamento.ocorrencias, {
+                ocorrencias: JSON.stringify(ocorrencias),
+                cal: JSON.stringify(cal),
+                user: user[0],
+              });
+            });
+        });
       });
     };
   }
@@ -568,7 +665,28 @@ class JulgamentoControlador {
               regapHandler.montaRegap(data, cons, dataRel).then((regap) => {
                 const julgamentoDao = new JulgamentoDao(conn);
                 julgamentoDao.insereVariosRegap(regap).then((respo) => {
-                  resp.send(respo);
+                  if (req.isAuthenticated()) {
+                    registro['usuarioLogado'] = req.user.cpf;
+                  }
+                  let ip =
+                    (req.headers['x-forwarded-for'] || '')
+                      .split(',')
+                      .pop()
+                      .trim() ||
+                    req.connection.remoteAddress ||
+                    req.socket.remoteAddress ||
+                    req.connection.socket.remoteAddress;
+                  const clientIPWare = get_ip(req);
+                  const clientIp = requestIp.getClientIp(req);
+                  registro['clientIP'] = [clientIp, clientIPWare, ip];
+                  registro['tipoRel'] = fields.tipoRel;
+                  registro['dtExtracao'] = moment(
+                    fields.dataExt,
+                    'DD/MM/YYYY',
+                  ).format('DD/MM/YYYY');
+                  julgamentoDao.insereDadosCSV(registro).then((dados) => {
+                    resp.send(respo);
+                  });
                 });
               });
             });
@@ -647,8 +765,6 @@ class JulgamentoControlador {
             }
           });
         } else if (req.method == 'DELETE') {
-          console.log('delete');
-          console.log(req.body);
           julgamentoDao
             .excluiCal({ uniqueId: req.body.uniqueId })
             .then((msg) => {

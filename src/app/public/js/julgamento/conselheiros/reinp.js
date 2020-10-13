@@ -59,11 +59,12 @@ let tableReinp,
   tableReinpDet = null;
 let d3 = Plotly.d3;
 let agrupado = false;
+let agrupadoReinp = false;
 
 function inicializaComponentes() {
   $(document).ready(function () {
-    initSelect();
     formataDados();
+    graficoReinp();
   });
 }
 function formataDados() {
@@ -74,15 +75,11 @@ function formataDados() {
   let T3 = dados.trimestre.T3 ? dados.trimestre.T3 : 0;
   let T4 = dados.trimestre.T4 ? dados.trimestre.T4 : 0;
 
-  let dadosTabela = [
-    {
-      T1: +T1.toFixed(2),
-      T2: +T2.toFixed(2),
-      T3: +T3.toFixed(2),
-      T4: +T4.toFixed(2),
-    },
-  ];
-  dataTableReinp(dadosTabela);
+  $('#horas1T').text(+T1.toFixed(2));
+  $('#horas2T').text(+T2.toFixed(2));
+  $('#horas3T').text(+T3.toFixed(2));
+  $('#horas4T').text(+T4.toFixed(2));
+
   let arrayMes = dados.detalhamento ? dados.detalhamento : [{}];
   dataTableReinpDet(arrayMes.flat());
   document.getElementById('agrupaMes').addEventListener('click', function () {
@@ -95,64 +92,6 @@ function formataDados() {
     }
   });
 }
-function dataTableReinp(msg) {
-  tableReinp = new Tabulator('#tabelaReinp', {
-    data: msg,
-    height: '200px',
-    minHeight: '200px',
-    maxHeight: '900px',
-    layout: layout,
-    responsiveLayout: 'collapse',
-    groupStartOpen: false,
-    responsiveLayoutCollapseStartOpen: false,
-    columns: [
-      {
-        title: '1º Trimestre',
-        field: 'T1',
-        sorter: 'number',
-        hozAlign: 'center',
-        editor: false,
-        formatter: formatTrimestre,
-        responsive: 0,
-        download: true,
-      },
-      {
-        title: '2º Trimestre',
-        field: 'T2',
-        sorter: 'number',
-        hozAlign: 'center',
-        editor: false,
-        formatter: formatTrimestre,
-        responsive: 0,
-        download: true,
-      },
-      {
-        title: '3º Trimestre',
-        field: 'T3',
-        sorter: 'number',
-        hozAlign: 'center',
-        editor: false,
-        formatter: formatTrimestre,
-        responsive: 0,
-        download: true,
-      },
-      {
-        title: '4º Trimestre',
-        field: 'T4',
-        sorter: 'number',
-        hozAlign: 'center',
-        editor: false,
-        formatter: formatTrimestre,
-        responsive: 0,
-        download: true,
-      },
-    ],
-    autoColumns: false,
-    locale: true,
-    langs: langs,
-  });
-}
-
 let formatTrimestre = function formatTrimestre(cell) {
   const valor = +cell.getValue();
   if (valor >= 378) {
@@ -272,3 +211,246 @@ let formatValorReinp = function (valor, data, type, params, column) {
 
   return valor;
 };
+function countCalc(values, data, calcParams) {
+  var calc = 0;
+  let valor = 0;
+  values.forEach(function (value) {
+    if (value) {
+      valor += value;
+      calc++;
+    }
+  });
+
+  return `|𝜲|: ${calc}`;
+}
+function somaCalc(values, data, calcParams) {
+  var calc = 0;
+  let valor = 0;
+  values.forEach(function (value) {
+    if (value > 0) {
+      valor += value;
+      calc++;
+    }
+  });
+
+  return `𝚺: ${valor.toFixed(2)}`;
+}
+
+//GRÁFICO REINP MENSAL
+function dadosGrafico(dados) {
+  let arrayMes = [];
+  dados.forEach((elem) => {
+    elem.detalhamento.forEach((ele) => {
+      arrayMes.push(ele);
+    });
+  });
+  return d3
+    .nest()
+    .rollup((v) => {
+      return {
+        Jan: d3.sum(v, (d) => {
+          if (d.mes == `${new Date().getFullYear()}-01`) {
+            return d.horasEfetivas;
+          }
+        }),
+        Fev: d3.sum(v, (d) => {
+          if (d.mes == `${new Date().getFullYear()}-02`) {
+            return d.horasEfetivas;
+          }
+        }),
+        Mar: d3.sum(v, (d) => {
+          if (d.mes == `${new Date().getFullYear()}-03`) {
+            return d.horasEfetivas;
+          }
+        }),
+        Abr: d3.sum(v, (d) => {
+          if (d.mes == `${new Date().getFullYear()}-04`) {
+            return d.horasEfetivas;
+          }
+        }),
+        Mai: d3.sum(v, (d) => {
+          if (d.mes == `${new Date().getFullYear()}-05`) {
+            return d.horasEfetivas;
+          }
+        }),
+        Jun: d3.sum(v, (d) => {
+          if (d.mes == `${new Date().getFullYear()}-06`) {
+            return d.horasEfetivas;
+          }
+        }),
+        Jul: d3.sum(v, (d) => {
+          if (d.mes == `${new Date().getFullYear()}-07`) {
+            return d.horasEfetivas;
+          }
+        }),
+        Ago: d3.sum(v, (d) => {
+          if (d.mes == `${new Date().getFullYear()}-08`) {
+            return d.horasEfetivas;
+          }
+        }),
+        Set: d3.sum(v, (d) => {
+          if (d.mes == `${new Date().getFullYear()}-09`) {
+            return d.horasEfetivas;
+          }
+        }),
+        Out: d3.sum(v, (d) => {
+          if (d.mes == `${new Date().getFullYear()}-10`) {
+            return d.horasEfetivas;
+          }
+        }),
+        Nov: d3.sum(v, (d) => {
+          if (d.mes == `${new Date().getFullYear()}-11`) {
+            return d.horasEfetivas;
+          }
+        }),
+        Dez: d3.sum(v, (d) => {
+          if (d.mes == `${new Date().getFullYear()}-12`) {
+            return d.horasEfetivas;
+          }
+        }),
+      };
+    })
+    .entries(arrayMes);
+}
+//GRÁFICO REINP TRIMESTRAL
+function dadosGrafico2(data) {
+  let dados = data[0] ? data[0] : { trimestre: { T1: 0, T2: 0, T3: 0, T4: 0 } };
+  let T1 = dados.trimestre.T1 ? dados.trimestre.T1 : 0;
+  let T2 = dados.trimestre.T2 ? dados.trimestre.T2 : 0;
+  let T3 = dados.trimestre.T3 ? dados.trimestre.T3 : 0;
+  let T4 = dados.trimestre.T4 ? dados.trimestre.T4 : 0;
+
+  return {
+    T1: T1.toFixed(2),
+    T2: T2.toFixed(2),
+    T3: T3.toFixed(2),
+    T4: T4.toFixed(2),
+  };
+}
+
+function graficoReinp() {
+  dados = JSON.parse($('#idProdutividade').attr('data-reinp'));
+  let graf = dadosGrafico(dados);
+  let graf2 = dadosGrafico2(dados);
+  let cores = [
+    'rgb(204, 204, 204)',
+    'rgb(254, 181, 204)',
+    'rgb(104,204, 204)',
+    'rgb(124, 181, 204)',
+    'rgb(164, 204, 204)',
+    'rgb(184, 181, 204)',
+    'rgb(84, 105, 119)',
+    'rgb(144, 181, 204)',
+    'rgb(119, 110, 84)',
+    'rgb(134, 224, 234)',
+    'rgb(134, 131, 224)',
+    'rgba(204,204,204,1)',
+    'rgba(222,45,38,0.8)',
+    'rgba(204,204,204,1)',
+    'rgba(204,204,204,1)',
+  ];
+  var layoutMes = {
+    title: 'Indicações por Mês',
+    shapes: [
+      {
+        type: 'line',
+        xref: 'paper',
+        y0: 126.0,
+        x0: 0,
+        y1: 126.0,
+        x1: 100,
+        line: {
+          color: 'rgb(229, 43, 80)',
+          width: 2,
+          dash: 'dot',
+        },
+      },
+    ],
+    yaxis: {
+      showticklabels: true,
+      tickangle: 0,
+      tickfont: {
+        family: 'Arial',
+        size: 10,
+        color: 'black',
+      },
+    },
+    margin: {
+      l: 50,
+      r: 50,
+      b: 50,
+      t: 50,
+    },
+    bargap: 0.05,
+  };
+  var layoutTrimestre = {
+    title: 'Indicações Trimestre',
+    shapes: [
+      {
+        type: 'line',
+        xref: 'paper',
+        y0: 378.0,
+        x0: 0,
+        y1: 378.0,
+        x1: 100,
+        line: {
+          color: 'rgb(229, 43, 80)',
+          width: 2,
+          dash: 'dot',
+        },
+      },
+    ],
+    yaxis: {
+      showticklabels: true,
+      tickangle: 0,
+      tickfont: {
+        family: 'Arial',
+        size: 10,
+        color: 'black',
+      },
+    },
+    margin: {
+      l: 50,
+      r: 50,
+      b: 50,
+      t: 50,
+    },
+    bargap: 0.05,
+  };
+  let config = { responsive: true, displaylogo: false };
+  var trace1 = {
+    x: Object.keys(graf),
+    y: Object.values(graf),
+    type: 'bar',
+    marker: {
+      color: cores,
+    },
+    text: Object.values(graf).map(String),
+    textposition: 'auto',
+    hoverinfo: 'none',
+  };
+  var trace2 = {
+    x: ['1º Trimestre', '2º Trimestre', '3º Trimestre', '4º Trimestre'],
+    y: Object.values(graf2),
+    type: 'bar',
+    marker: {
+      color: cores,
+    },
+    text: Object.values(graf2).map(String),
+    textposition: 'auto',
+    hoverinfo: 'none',
+  };
+  trace1.color = cores;
+  Plotly.newPlot(
+    document.getElementById('barrasReinpMensal'),
+    [trace1],
+    layoutMes,
+    config,
+  );
+  Plotly.newPlot(
+    document.getElementById('barrasReinpTrimestral'),
+    [trace2],
+    layoutTrimestre,
+    config,
+  );
+}
