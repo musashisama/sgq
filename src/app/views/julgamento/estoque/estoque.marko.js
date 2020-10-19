@@ -45,7 +45,7 @@ function render(input, out, __component, component, state) {
       class: "sidenav"
     }, out, __component, "5");
 
-  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Diagnóstico da Carga de Processos dos Conselheiros</h3><br><br><form id=\"formGerencial\" name=\"formGerencial\" action=\"/julgamento/restrito/diagnostico-carga\" method=\"post\"><div class=\"row\"><div class=\"col s12\"><ul class=\"tabs\"><li class=\"litab tab col s3\"><a href=\"#tabTabela\">Carga dos Conselheiros</a></li><li class=\"libox tab col s3\"><a href=\"#tabBoxplot\">Carga nas Seções de Julgamento</a></li><li class=\"libar tab col s3\"><a href=\"#tabBarras\">Carga por Seção/Conselheiro</a></li></ul></div><div id=\"tabTabela\" class=\"col s12\"><div class=\"row\"><div class=\"col s12 right-align\">");
+  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Diagnóstico da Carga de Processos dos Conselheiros</h3><br><br><form id=\"formGerencial\" name=\"formGerencial\" action=\"/julgamento/restrito/diagnostico-carga\" method=\"post\"><div class=\"row\"><div class=\"col s12\"><ul class=\"tabs\"><li class=\"litab tab col s3\"><a href=\"#tabTabela\">Carga dos Conselheiros</a></li><li id=\"stata1\" class=\"libox tab col s3\"><a href=\"#tabBoxplot\">Carga nas Seções de Julgamento</a></li><li id=\"stata2\" class=\"libar tab col s3\"><a href=\"#tabBarras\">Carga por Seção/Conselheiro</a></li></ul></div><div id=\"tabTabela\" class=\"col s12\"><div class=\"row\"><div class=\"col s12 right-align\">");
 
   app_drop_download_tag({}, out, __component, "23");
 
