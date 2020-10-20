@@ -241,7 +241,7 @@ function dataTable(msg) {
         hozAlign: 'center',
         editor: false,
         responsive: 2,
-        download: false,
+        download: true,
       },
     ],
     autoColumns: false,

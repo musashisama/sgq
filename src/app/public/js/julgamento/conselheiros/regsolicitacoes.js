@@ -203,6 +203,14 @@ function arraySol(array) {
     'Turma Ordinária para Turma Ordinária de Seção Diferente',
     'Turma Ordinária para Turma da Câmara Superior de Rcursos Fiscais',
   ];
+  let arrayDispensa = [
+    'Excesso de Horas em Lotes de Sorteio',
+    'Formalização de Voto Vencedor',
+    'Horas Recebidas em Sorteio Extraordinário',
+    'Distribuição de processos reflexos ou decorrentes',
+    'Participação em TO/CSRF de março de 2019 até março de 2020',
+  ];
+
   if (array === 'turma') {
     arrayTurma.forEach((ops, i) => {
       html += `<option class="form-group" value="${ops}">${ops}</option>`;
@@ -309,6 +317,22 @@ function arraySol(array) {
     <i class="far fa-question-circle prefix"/>
     <label for="tipoAfastamento">Selecione o tipo de Mudança:</label>
     <select required name="tipoAfastamento" id="tipoAfastamento">
+    ${html}
+    </select>
+    </div>
+    </div>`;
+    return retorno;
+  }
+  if (array === 'dispensa') {
+    arrayDispensa.forEach((ops, i) => {
+      html += `<option class="form-group" value="${ops}">${ops}</option>`;
+    });
+    let retorno = `
+    <div class='row'>
+    <div class='col s6'>
+    <i class="far fa-question-circle prefix"/>
+    <label for="tipoDispensa">Selecione o tipo de Dispensa:</label>
+    <select required name="tipoDispensa" id="tipoDispensa">
     ${html}
     </select>
     </div>
@@ -795,6 +819,55 @@ function controleForm() {
   });
   //Dispensa de Sorteio
   //Excesso de Horas em Lotes de Sorteio - Nome do lote - Mes e Tamanho
+  $('#dds').click(() => {
+    resetElementos();
+    $('#camposSol').fadeIn('slow', () => {
+      $('#camposSol').append(`
+      <h5>${$('#dds').text()}</h5><br/>
+       ${arraySol('dispensa')}
+      ${campoObs}
+      ${camposArq}
+      ${botoes}
+      `);
+      initElementos();
+      $('#tipoDispensa').change((e) => {
+        if (
+          $('#tipoDispensa option:selected').val() ==
+          'Excesso de Horas em Lotes de Sorteio'
+        ) {
+          $('#camposSol').append(`
+      <h6>${$('#tipoDispensa option:selected').val()}</h6><br/>
+
+       ${nomeLote}
+      ${campoObs}
+      ${camposArq}
+      ${botoes}
+      `);
+        }
+        if (
+          $('#tipoDispensa option:selected').val() ==
+          'Formalização de Voto Vencedor'
+        ) {
+        }
+        if (
+          $('#tipoDispensa option:selected').val() ==
+          'Horas Recebidas em Sorteio Extraordinário'
+        ) {
+        }
+        if (
+          $('#tipoDispensa option:selected').val() ==
+          'Distribuição de processos reflexos ou decorrentes'
+        ) {
+        }
+        if (
+          $('#tipoDispensa option:selected').val() ==
+          'Participação em TO/CSRF de março de 2019 até março de 2020'
+        ) {
+        }
+      });
+    });
+  });
+
   $('#ehl').click(() => {
     resetElementos();
     $('#camposSol').fadeIn('slow', () => {
