@@ -284,7 +284,7 @@ function dataTable(msg) {
         hozAlign: 'center',
         editor: false,
         responsive: 2,
-        download: false,
+        download: true,
       },
     ],
     autoColumns: false,
@@ -458,7 +458,7 @@ arrayDados.type = 'bar';
 arrayDados.orientation = 'h';
 arrayDados.type = 'bar';
 arrayDados.fillcolor = 'cls';
-arrayDados.hovertemplate = `<i>Quantidade</i>: %{x:.d} processos<br>                         
+arrayDados.hovertemplate = `<i>Quantidade</i>: %{x:.d} processos<br>
                         <b>%{text}</b>`;
 arrayDados.marker = {
   color: arrayDados.color,
