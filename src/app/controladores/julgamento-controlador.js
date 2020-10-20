@@ -273,7 +273,7 @@ class JulgamentoControlador {
   carregaGestaoConhecimento() {
     return function (req, resp) {
       const julgamentoDao = new JulgamentoDao(conn);
-      julgamentoDao.getGC({ portal: 'cojul' }).then((msg) => {
+      julgamentoDao.getGC({ portal: 'cojul' }, { uniqueId: -1 }).then((msg) => {
         resp.marko(templates.julgamento.gestaoconhecimento, {
           gc: JSON.stringify(msg),
         });

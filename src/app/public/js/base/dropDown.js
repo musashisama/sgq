@@ -4,6 +4,7 @@ function inicializaComponentes() {
     initDropDown();
     getHeader();
     initToolToast();
+    initToolTip();
     geraBreadcrumb();
     downloadSheet();
     volta();
@@ -80,6 +81,12 @@ function initToolToast() {
 
   $('.toast-action').click(function () {
     M.Toast.dismissAll();
+  });
+}
+
+function initToolTip() {
+  $(document).ready(function () {
+    $('.tooltipped').tooltip();
   });
 }
 

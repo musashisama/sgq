@@ -124,6 +124,19 @@ function inicializaComponentes() {
   });
 }
 
+function clickStats() {
+  $('#stata1').click(() => {
+    setTimeout(() => {
+      grafico(dadosPlot);
+    }, 1000);
+  });
+  $('#stata2').click(() => {
+    setTimeout(() => {
+      grafico(dadosPlot);
+    }, 1000);
+  });
+}
+
 function initScrollSpy() {
   $('.scrollspy').scrollSpy();
 }

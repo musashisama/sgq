@@ -1,4 +1,6 @@
 {
     "emmet.showSuggestionsAsSnippets": true,
-    "python.pythonPath": "E:\\Anaconda\\envs\\CARF\\python.exe"
+    "python.pythonPath": "E:\\Anaconda\\envs\\CARF\\python.exe",
+    "files.trimTrailingWhitespace": true,
+    "files.trimFinalNewlines": true
 }

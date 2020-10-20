@@ -16,7 +16,6 @@ function triggerValidation(el) {
   if (el.value != '')
     if (!regex.test(el.value.toLowerCase())) {
       el.value = '';
-      initToolToast();
     }
 }
 function initBtnSubmit() {
@@ -67,15 +66,6 @@ function initBtnSubmit() {
         M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
       },
     });
-  });
-}
-
-function initToolToast() {
-  var toastHTML = `<span>Favor escolher um arquivo CSV</span><button class="btn-flat toast-action">Ok</button>`;
-  $('.tooltipped').tooltip();
-  M.toast({ html: toastHTML });
-  $('.toast-action').click(function () {
-    M.Toast.dismissAll();
   });
 }
 

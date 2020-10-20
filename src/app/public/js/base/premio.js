@@ -72,7 +72,7 @@ function sendVote() {
         .done(function (msg) {
           var toastHTML = `<span>Voto registrado com sucesso!<br/> Aguarde redirecionamento.</span>`;
           M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
-          document.cookie = 'voto=true';
+          document.cookie = `voto=true;max-age=${3600 * 24 * 30}`;
           setTimeout(function () {
             location.href = `/`;
           }, 2500);
