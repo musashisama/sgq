@@ -145,11 +145,11 @@ class JulgamentoDao {
     });
   }
 
-  getGC(filtro) {
+  getGC(filtro, sort) {
     return new Promise((resolve, reject) => {
       this._db.gc
         .find(filtro)
-        .sort({ _id: 1 })
+        .sort(sort)
         .project()
         .toArray(function (erro, res) {
           if (erro) {

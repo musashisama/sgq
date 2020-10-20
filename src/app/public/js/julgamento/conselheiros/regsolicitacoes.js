@@ -371,6 +371,24 @@ function controleForm() {
   </div>
   </div>
   `;
+  let dataSorteio = `
+   <div class='row'>
+  <div class="form-group dataSorteio input field col s3">
+  <input id="dataSorteio" name="dataSorteio"  type="text" class="datepicker"/>
+  <i class="fas fa-calendar-check prefix"/>
+  <label for="dataSorteio">Data do Sorteio</label>
+  </div>
+  </div>
+  `;
+  let dataIndicacao = `
+   <div class='row'>
+  <div class="form-group dataIndicacao input field col s3">
+  <input id="dataIndicacao" name="dataIndicacao"  type="text" class="datepicker"/>
+  <i class="fas fa-calendar-check prefix"/>
+  <label for="dataIndicacao">Data da Indicação</label>
+  </div>
+  </div>
+  `;
   let botaoAdd = `
   <div class="col s1">
   <a class="btn-floating btn-small waves-effect waves-light blue hoverable">
@@ -387,14 +405,28 @@ function controleForm() {
   <div class="form-group fimAfastamento input field col s3">
   <input id="fimAfastamento" name="fimAfastamento" type="text" class="datepicker"/>
   <i class="far fa-calendar-check prefix"/>
-  <label for="fimAfastamento">Última dia do Afastamento</label>
+  <label for="fimAfastamento">Último dia do Afastamento</label>
+  </div>
+  </div>
+  `;
+  let campoPeriodoInterino = `
+  <div class='row'>
+  <div class="form-group inicioPeriodo input field col s3">
+  <input id="inicioPeriodo" name="inicioPeriodo"  type="text" class="datepicker"/>
+  <i class="fas fa-calendar-check prefix"/>
+  <label for="inicioPeriodo">Início do Período</label>
+  </div>
+  <div class="form-group fimPeriodo input field col s3">
+  <input id="fimPeriodo" name="fimPeriodo" type="text" class="datepicker"/>
+  <i class="far fa-calendar-check prefix"/>
+  <label for="fimPeriodo">Último dia do Período</label>
   </div>
   </div>
   `;
   let diasCorridos = `
   <div class="row">
   <div class ='col s5 diasCorridos'>
-  <h6>Quantidade de dias a serem suspensos: <span id='diasCorridos'/></h6>
+  <h6>Quantidade de dias: <span id='diasCorridos'/></h6>
   </div>
   </div>
   </div>
@@ -690,11 +722,20 @@ function controleForm() {
     $('#camposSol').fadeIn('slow', () => {
       $('#camposSol').append(`
       <h5>${$('#presi').text()}</h5><br/>
+      ${arraySol('turma')}
+      ${campoPeriodoInterino}
+      ${diasCorridos}
       ${campoObs}
       ${camposArq}
       ${botoes}
       `);
       initElementos();
+      $('body').click(() => {
+        let diff = moment($('#fimPeriodo').val(), 'DD/MM/YYYY').businessDiff(
+          moment($('#inicioPeriodo').val(), 'DD/MM/YYYY'),
+        );
+        $('#diasCorridos').html(diff);
+      });
     });
   });
   //Participação em sessão TO/CSRF a partir de abril de 2020
@@ -704,6 +745,8 @@ function controleForm() {
       $('#camposSol').append(`
       <h5>${$('#ptoa').text()}</h5><br/>
       ${arraySol('turmaTO')}
+      ${dataJulgamento}
+      ${campoPeriodo}
       ${campoObs}
       ${camposArq}
       ${botoes}
@@ -718,6 +761,8 @@ function controleForm() {
       $('#camposSol').append(`
       <h5>${$('#pptex').text()}</h5><br/>
       ${arraySol('turmaTex')}
+      ${dataJulgamento}
+      ${campoPeriodo}
       ${campoObs}
       ${camposArq}
       ${botoes}
@@ -732,11 +777,20 @@ function controleForm() {
     $('#camposSol').fadeIn('slow', () => {
       $('#camposSol').append(`
       <h5>${$('#s21').text()}</h5><br/>
+      ${dataSorteio}
+      ${dataIndicacao}
+      ${diasCorridos}
       ${campoObs}
       ${camposArq}
       ${botoes}
       `);
       initElementos();
+      $('body').click(() => {
+        let diff = moment($('#dataIndicacao').val(), 'DD/MM/YYYY').businessDiff(
+          moment($('#dataSorteio').val(), 'DD/MM/YYYY'),
+        );
+        $('#diasCorridos').html(diff);
+      });
     });
   });
   //Dispensa de Sorteio
@@ -800,6 +854,8 @@ function controleForm() {
     $('#camposSol').fadeIn('slow', () => {
       $('#camposSol').append(`
       <h5>${$('#fsj').text()}</h5><br/>
+      ${arraySol('falta')}
+      ${campoPeriodo}
       ${campoObs}
       ${camposArq}
       ${botoes}
