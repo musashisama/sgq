@@ -103,6 +103,32 @@ function resetElementos() {
   $('#mostraArq').hide();
   $('#camposSol').empty();
 }
+function resetElementosDispensa() {
+  $('#classesSol').fadeToggle('slow', 'linear');
+  $('.progress').hide();
+  $('#mostraArq').hide();
+  $('#areaDispensa').empty();
+  //$('#areaBotoes').empty();
+}
+
+function initElementos() {
+  initDatePicker();
+  initSelect();
+  btnEnviaArq();
+  $('.progress').hide();
+  M.updateTextFields();
+  moment.updateLocale('br', {
+    workingWeekdays: [1, 2, 3, 4, 5],
+  });
+  $('#btn-voltar').click(() => {
+    $('#camposSol').fadeOut('slow');
+    resetElementos();
+  });
+  $('#btn-limpar').click(() => {
+    $('#camposSol').fadeOut('slow');
+    resetElementos();
+  });
+}
 
 function arraySol(array) {
   let html = '';
@@ -324,6 +350,7 @@ function arraySol(array) {
     return retorno;
   }
   if (array === 'dispensa') {
+    html = `<<option class="form-group" value="" selected disabled>Clique para selecionar</option>>`;
     arrayDispensa.forEach((ops, i) => {
       html += `<option class="form-group" value="${ops}">${ops}</option>`;
     });
@@ -336,28 +363,17 @@ function arraySol(array) {
     ${html}
     </select>
     </div>
+    <div class='col s6'>
+    <div class="card hoverable cardLaranja">
+              <div class="card-content ">
+                <span class="card-title">Somatório de Horas da Solicitação: <span id='somatorioHoras'>0</span></span>
+              </div>
+            </div>
+          </div>
+    </div>
     </div>`;
     return retorno;
   }
-}
-
-function initElementos() {
-  initDatePicker();
-  initSelect();
-  btnEnviaArq();
-  $('.progress').hide();
-  M.updateTextFields();
-  moment.updateLocale('br', {
-    workingWeekdays: [1, 2, 3, 4, 5],
-  });
-  $('#btn-voltar').click(() => {
-    $('#camposSol').fadeOut('slow');
-    resetElementos();
-  });
-  $('#btn-limpar').click(() => {
-    $('#camposSol').fadeOut('slow');
-    resetElementos();
-  });
 }
 
 function controleForm() {
@@ -558,6 +574,8 @@ function controleForm() {
   </div>
   <div id="enviaArq" class="col s6 valign-wrapper"/>
   </div>
+  `;
+  let msgCogec = `
   <div class="row">
   <blockquote>
   <strong>Importante:</strong> Os afastamentos são aplicáveis <strong>apenas</strong> para efeitos de cálculo das <strong>Metas de Produtividade</strong>. Dúvidas relativas aos <strong>efeitos financeiros</strong> devem ser tratadas diretamente com a <strong>COGEC</strong>.</blockquote>
@@ -824,45 +842,95 @@ function controleForm() {
     $('#camposSol').fadeIn('slow', () => {
       $('#camposSol').append(`
       <h5>${$('#dds').text()}</h5><br/>
-       ${arraySol('dispensa')}
-      ${campoObs}
-      ${camposArq}
-      ${botoes}
+      ${arraySol('dispensa')}
+      <div id='areaDispensa'/>
+      <div id='areaBotoes'/>
+      <div id='areaSolicitacoes'/>
       `);
+      $('#areaBotoes').append(`
+          ${campoObs}
+          ${camposArq}
+          ${botoes}`);
       initElementos();
       $('#tipoDispensa').change((e) => {
+        resetElementosDispensa();
         if (
           $('#tipoDispensa option:selected').val() ==
           'Excesso de Horas em Lotes de Sorteio'
         ) {
-          $('#camposSol').append(`
-      <h6>${$('#tipoDispensa option:selected').val()}</h6><br/>
+          resetElementosDispensa();
+          $('#areaDispensa').append(`
+          <br/>
+          ${nomeLote}
 
-       ${nomeLote}
-      ${campoObs}
-      ${camposArq}
-      ${botoes}
+
       `);
+
+          initElementos();
         }
         if (
           $('#tipoDispensa option:selected').val() ==
           'Formalização de Voto Vencedor'
         ) {
+          resetElementosDispensa();
+          $('#areaDispensa').append(`
+          <br/>
+          ${processos}
+
+          `);
+          // $('#areaBotoes').append(`
+          // ${campoObs}
+          // ${camposArq}
+          // ${botoes}`);
+          initElementos();
         }
         if (
           $('#tipoDispensa option:selected').val() ==
           'Horas Recebidas em Sorteio Extraordinário'
         ) {
+          resetElementosDispensa();
+          $('#areaDispensa').append(`
+          <br/>
+          ${nomeLote}
+
+         `);
+          // $('#areaBotoes').append(`
+          // ${campoObs}
+          // ${camposArq}
+          // ${botoes}`);
+          initElementos();
         }
         if (
           $('#tipoDispensa option:selected').val() ==
           'Distribuição de processos reflexos ou decorrentes'
         ) {
+          resetElementosDispensa();
+          $('#areaDispensa').append(`
+          <br/>
+          ${processos}
+
+          `);
+          // $('#areaBotoes').append(`
+          // ${campoObs}
+          // ${camposArq}
+          // ${botoes}`);
+          initElementos();
         }
         if (
           $('#tipoDispensa option:selected').val() ==
           'Participação em TO/CSRF de março de 2019 até março de 2020'
         ) {
+          resetElementosDispensa();
+          $('#areaDispensa').append(`
+        <br/>
+        ${nomeLote}
+
+        `);
+          // $('#areaBotoes').append(`
+          // ${campoObs}
+          // ${camposArq}
+          // ${botoes}`);
+          // initElementos();
         }
       });
     });
@@ -947,6 +1015,7 @@ function pegaArquivos() {
   return a;
 }
 function btnEnviaArq() {
+  $('#btnEnviaArq').off();
   $('#btnEnviaArq').click((e) => {
     e.preventDefault();
     if ($('#file')[0].files[0]) {
