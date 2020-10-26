@@ -228,9 +228,9 @@ async function montaModal(e, cell, user) {
   $('.pModal').text(``);
   $('.hModal').text(`Solicitação do Conselheiro`);
   let campoJustificativa = ``;
-  campoJustificativa = `<div class='row'>          
+  campoJustificativa = `<div class='row'>
   <div class="input-field col s12">
-  <i class="material-icons prefix">mode_edit</i>        
+  <i class="material-icons prefix">mode_edit</i>
   <textarea id="justificativas" class="materialize-textarea">${
     cell.getRow().getData().justificativas
   }</textarea>
@@ -240,12 +240,12 @@ async function montaModal(e, cell, user) {
   let campoDipaj = `<div class='row'>
   <div class='col s7'>
   <i class="material-icons prefix">live_help</i>
-  <label for="statusApr">Solicitação aprovada ou rejeitada pela DIPAJ?</label> 
+  <label for="statusApr">Solicitação aprovada ou rejeitada pela DIPAJ?</label>
   <select required name="statusApr" id="statusApr">
   <option class="form-group" value='' disabled selected>Escolha uma opção</option>
-  <option class="form-group" value="Aprovada">Aprovar</option>          
-  <option class="form-group" value="Rejeitada">Rejeitar</option>        
-  </select>                   
+  <option class="form-group" value="Aprovada">Aprovar</option>
+  <option class="form-group" value="Rejeitada">Rejeitar</option>
+  </select>
 </div>
 </div> `;
   $('.pModal').append(
@@ -254,27 +254,25 @@ async function montaModal(e, cell, user) {
             <br/>
             <strongSolicitante:</strong> ${user.nome}<br/>
             <strong>CPF:</strong> ${cell.getRow().getData().cpf}<br/>
-            <strong>Turma:</strong> ${user.unidade}<br/> 
+            <strong>Turma:</strong> ${user.unidade}<br/>
             <strong>Solicitação:</strong> ${
               cell.getRow().getData().tipoSolicitacao
             } - <strong>Data da Solicitação:</strong> ${
       cell.getRow().getData().dtCriacao
     }<br/>   <strong>Id da Solicitação:</strong> ${
       cell.getRow().getData().uniqueId
-    }<br/>  
+    }<br/>
             <strong>Detalhes da Solicitação/Turma de Participação:</strong> ${
               cell.getRow().getData().tipoAfastamento
-            }<br/>  
+            }<br/>
             <strong>Data Início:</strong> ${
               cell.getRow().getData().dtInicio
             }<br/>
-            <strong>Data Fim:</strong> ${
-              cell.getRow().getData().dtFim
-            }<br/>             
-            <strong>Status:</strong> ${cell.getRow().getData().status}<br/>  
+            <strong>Data Fim:</strong> ${cell.getRow().getData().dtFim}<br/>
+            <strong>Status:</strong> ${cell.getRow().getData().status}<br/>
             <strong>Observações:</strong> ${
               cell.getRow().getData().observacoes
-            }<br/> 
+            }<br/>
             <strong>Validação Segep:</strong> ${
               cell.getRow().getData().statusSegep == 'DocVal'
                 ? 'Documento(s) Válido(s)'
@@ -282,9 +280,9 @@ async function montaModal(e, cell, user) {
                 ? ''
                 : 'Documento(s) Inválido(s)'
             }     <br />
-            <strong>Arquivos:</strong> ${pegaLinks(cell)}<br/> 
+            <strong>Arquivos:</strong> ${pegaLinks(cell)}<br/>
            </p>
-           </div>           
+           </div>
            ${campoDipaj}
            ${campoJustificativa}
          `,

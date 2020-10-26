@@ -98,17 +98,34 @@ function initCollapsible() {
 }
 
 function resetElementos() {
+  $('#classesSol').off();
   $('#classesSol').fadeToggle('slow', 'linear');
   $('.progress').hide();
   $('#mostraArq').hide();
   $('#camposSol').empty();
 }
 function resetElementosDispensa() {
+  $('#classesSol').off();
   $('#classesSol').fadeToggle('slow', 'linear');
   $('.progress').hide();
   $('#mostraArq').hide();
   $('#areaDispensa').empty();
   //$('#areaBotoes').empty();
+}
+
+function proximoDisp() {
+  $('#btn-proximo').click(() => {
+    $('#camposSol').fadeOut('slow');
+    $('#camposSol').fadeIn('slow', () => {
+      $('#camposSol').append(`
+      <h5>${$('#ehl').text()}</h5><br/>
+      ${campoObs}
+      ${camposArq}
+      ${botoes}
+      `);
+      initElementos();
+    });
+  });
 }
 
 function initElementos() {
@@ -390,6 +407,22 @@ function controleForm() {
   </a>
   <a id="btn-enviar" title="Enviar" class="waves-effect waves-blue hoverable z-depth-3 btn green">
   <i class="material-icons left">send</i>Enviar
+  </a>
+  </div>
+  </div>`;
+  let botoesDisp = `
+  <div class='row valign-wrapper'>
+   <div class='col s12 left-align'>
+  <a id="btn-voltar" title="Voltar" class="waves-effect waves-purple hoverable z-depth-3 btn blue">
+  <i class="fas fa-backspace left"/>Voltar
+  </a>
+  </div>
+  <div class='col s12 right-align'>
+  <a id="btn-limpar" title="Limpar todos os Campos" class="waves-effect waves-purple hoverable z-depth-3 btn red">
+  <i class="material-icons left">cancel</i>Limpar
+  </a>
+  <a id="btn-proximo" title="Proximo Passo" class="waves-effect waves-blue hoverable z-depth-3 btn green">
+  <i class="material-icons left">send</i>Próximo Passo
   </a>
   </div>
   </div>`;
