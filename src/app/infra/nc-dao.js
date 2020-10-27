@@ -1,170 +1,146 @@
 const { ObjectID } = require('mongodb');
 class NCDao {
+  constructor(db) {
+    this._db = db;
+  }
 
-    constructor(db) {
-        this._db = db;
+  buscaNCPorId(nc) {
+    return new Promise((resolve, reject) => {
+      this._db.nc.find({ _id: nc }).toArray(function (erro, res) {
+        if (erro) {
+          return reject('Não foi possível listar as Não Conformidades.');
+        }
+        return resolve(res);
+      });
+    });
+  }
 
-    }
+  atualiza(req) {
+    return new Promise((resolve, reject) => {
+      let id = new ObjectID(req._id);
+      delete req._id;
+      this._db.nc.updateOne({ _id: id }, { $set: req }, function (erro, res) {
+        if (erro) {
+          return reject(erro);
+        }
+        return resolve(res);
+      });
+    });
+  }
 
-    buscaNCPorId(nc) {
-
-        return new Promise((resolve, reject) => {
-
-            this._db.nc
-                .find({ _id: nc })
-                .toArray(function (erro, res) {
-                    if (erro) {
-                        return reject('Não foi possível listar as Não Conformidades.');
-                    }
-                    return resolve(res);
-                });
-
+  listaNC(ordena = {}, filtro = {}) {
+    return new Promise((resolve, reject) => {
+      this._db.nc
+        .find()
+        .sort(ordena)
+        .project(filtro)
+        .toArray(function (erro, res) {
+          if (erro) {
+            return reject('Não foi possível listar as Não Conformidades.');
+          }
+          return resolve(res);
         });
-    }
+    });
+  }
 
-    atualiza(req) {
-
-        return new Promise((resolve, reject) => {
-            let id = new ObjectID(req._id);
-            delete req._id;
-            this._db.nc
-                .updateOne({ _id: id }, { $set: req }, function (erro, res) {
-                    if (erro) {
-                        return reject(erro);
-                    }
-                    return resolve(res);
-                });
-
+  listaUnidades(filtro, ordena) {
+    return new Promise((resolve, reject) => {
+      this._db.unidadesCARF
+        .find()
+        .sort(ordena)
+        .project(filtro)
+        .toArray(function (erro, res) {
+          if (erro) {
+            return reject('Não foi possível listar as Unidades.');
+          }
+          return resolve(res);
         });
+    });
+  }
 
-    }
-
-    listaNC(ordena = {}, filtro = {}) {
-
-        return new Promise((resolve, reject) => {
-
-            this._db.nc
-                .find()
-                .sort(ordena)
-                .project(filtro)
-                .toArray(function (erro, res) {
-                    if (erro) {
-                        return reject('Não foi possível listar as Não Conformidades.');
-                    }
-                    return resolve(res);
-                });
-
+  listaMacro(filtro, ordena) {
+    return new Promise((resolve, reject) => {
+      this._db.macroprocessos
+        .find()
+        .sort(ordena)
+        .project(filtro)
+        .toArray(function (erro, res) {
+          if (erro) {
+            return reject('Não foi possível listar os macroprocessos.');
+          }
+          return resolve(res);
         });
-    }
+    });
+  }
 
-    listaUnidades(filtro, ordena) {
-
-        return new Promise((resolve, reject) => {
-
-            this._db.unidadesCARF
-                .find()
-                .sort(ordena)
-                .project(filtro)
-                .toArray(function (erro, res) {
-                    if (erro) {
-                        return reject('Não foi possível listar as Unidades.');
-                    }
-                    return resolve(res);
-                });
-
+  getRegistrosNC(filtro, ordena) {
+    return new Promise((resolve, reject) => {
+      this._db.registroNC
+        .find()
+        .sort(ordena)
+        .project(filtro)
+        .toArray(function (erro, res) {
+          if (erro) {
+            return reject(
+              'Não foi possível listar os registros de não conformidades.',
+            );
+          }
+          return resolve(res);
         });
-    }
+    });
+  }
 
-    listaMacro(filtro, ordena) {
+  insere(registro) {
+    return new Promise((resolve, reject) => {
+      this._db.registroNC.insertMany(registro, function (erro, res) {
+        if (erro) {
+          console.log(erro);
+          return reject('Não foi possível inserir o registro.');
+        }
+        return resolve(res);
+      });
+    });
+  }
 
-        return new Promise((resolve, reject) => {
+  cadastraNC(registro) {
+    return new Promise((resolve, reject) => {
+      this._db.nc.insertOne(registro, function (erro, res) {
+        if (erro) {
+          return reject('Não foi possível inserir o registro.');
+        }
+        return resolve(res);
+      });
+    });
+  }
+  getDadosForm() {
+    return Promise.all([
+      this.listaMacro({}, { macroprocesso: 1 }),
+      this.listaNC({ nconformidade: 1 }, {}),
+      this.listaUnidades({ _id: 0, sigla: 1, Nome: 1 }, { sigla: 1 }),
+    ]);
+  }
+  getListaTipos() {
+    return Promise.all([
+      this.listaMacro({}, { macroprocesso: 1 }),
+      this.listaNC({ nconformidade: 1 }, {}),
+    ]);
+  }
+  getFormEdicao(id) {
+    return Promise.all([
+      this.listaMacro({}, { macroprocesso: 1 }),
+      this.buscaNCPorId(id),
+    ]);
+  }
 
-            this._db.macroprocessos
-                .find()
-                .sort(ordena)
-                .project(filtro)
-                .toArray(function (erro, res) {
-                    if (erro) {
-                        return reject('Não foi possível listar os macroprocessos.');
-                    }
-                    return resolve(res);
-                });
-
-        });
-    }
-
-
-
-    getRegistrosNC(filtro, ordena) {
-        return new Promise((resolve, reject) => {
-            this._db.registroNC
-                .find()
-                .sort(ordena)
-                .project(filtro)
-                .toArray(function (erro, res) {
-                    if (erro) {
-                        return reject('Não foi possível listar os registros de não conformidades.');
-                    }
-                    return resolve(res);
-                });
-        });
-    }
-
-    insere(registro) {
-
-        return new Promise((resolve, reject) => {
-
-            this._db.registroNC.insertOne(registro, function (erro, res) {
-                if (erro) {
-                    return reject('Não foi possível inserir o registro.');
-                }
-                return resolve(res);
-            })
-        });
-    }
-
-    cadastraNC(registro) {
-
-        return new Promise((resolve, reject) => {
-
-            this._db.nc.insertOne(registro, function (erro, res) {
-                if (erro) {
-                    return reject('Não foi possível inserir o registro.');
-                }
-                return resolve(res);
-            })
-        });
-    }
-    getDadosForm() {
-        return Promise.all([
-            this.listaMacro({}, { macroprocesso: 1 }),
-            this.listaNC({ nconformidade: 1 }, {}),
-            this.listaUnidades({ _id: 0, sigla: 1, Nome: 1 }, { sigla: 1 })
-        ]);
-    }
-    getListaTipos() {
-        return Promise.all([
-            this.listaMacro({}, { macroprocesso: 1 }),
-            this.listaNC({ nconformidade: 1 }, {})
-        ]);
-    }
-    getFormEdicao(id) {
-        return Promise.all([
-            this.listaMacro({}, { macroprocesso: 1 }),
-            this.buscaNCPorId(id)
-        ]);
-    }
-
-    deletaTipoNC(id) {
-        return new Promise((resolve, reject) => {
-            this._db.nc.deleteOne({_id: new ObjectID(id)}, function (erro, res) {
-                if (erro) {
-                    return reject('Não foi possível excluir o registro.');
-                }
-                return resolve(res);
-            })
-        });
-    }
-
+  deletaTipoNC(id) {
+    return new Promise((resolve, reject) => {
+      this._db.nc.deleteOne({ _id: new ObjectID(id) }, function (erro, res) {
+        if (erro) {
+          return reject('Não foi possível excluir o registro.');
+        }
+        return resolve(res);
+      });
+    });
+  }
 }
 module.exports = NCDao;

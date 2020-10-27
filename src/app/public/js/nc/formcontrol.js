@@ -36,7 +36,7 @@ function initModal() {
   $('.modal').modal();
 }
 
-function insereChips() {
+function insereChips(array) {
   $('#formNC').submit();
 }
 
@@ -73,10 +73,22 @@ function montaModal() {
   $('.concorda').click(function () {
     if ($('.chip').length > 0) {
       dados = $('.docref').val();
+      let arrayNC = [];
       dados.split(',').forEach((docref) => {
-        $('.docref').val(docref);
-        insereChips();
+        arrayNC.push({
+          cpfUser: document.formNC.cpfUser.value,
+          docRef: docref,
+          mProcUser: document.formNC.mpProcUser.value,
+          mProcOrigem: document.formNC.mProcOrigem.value,
+          equipeNC: document.formNC.equipeNC.value,
+          descNC: document.formNC.descNC.value,
+          obsParticipante: document.formNC.obsParticipante.value,
+          acaoImediata: document.formNC.acaoImediata.value,
+          dataNC: document.formNC.dataNC.value,
+          EncCorNC: document.formNC.EncCorNC.value,
+        });
       });
+      insereDados(arrayNC);
     } else {
       $('#formNC').submit();
     }
@@ -85,6 +97,26 @@ function montaModal() {
     $('.pModal').text('');
     $('.docref').val('');
   });
+}
+function insereDados(data) {
+  let arrayDados = { dados: data };
+  $.ajax({
+    url: `/qualidade/adiciona-nc`,
+    type: 'POST',
+    data: arrayDados,
+    beforeSend: function () {},
+  })
+    .done(function (msg) {
+      var toastHTML = `<p>${msg.insertedCount} não conformidade(s) registrada(s) com sucesso!</p><p>Aguarde o redirecionamento.</p>`;
+      M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+      // setTimeout(function () {
+      //   location.href = `/qualidade/adiciona-nc`;
+      // }, 1500);
+    })
+    .fail(function (jqXHR, textStatus, msg) {
+      var toastHTML = `<p>Ocorreu um erro.</p><p>${msg}</p>`;
+      M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+    });
 }
 function initChips() {
   $('.docref').keypress(function (event) {
