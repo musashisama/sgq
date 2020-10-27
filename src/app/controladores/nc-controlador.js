@@ -112,7 +112,6 @@ class NCControlador {
         r['horaCriacao'] = moment().format('DD/MM/YYYY');
         r['clientIP'] = clientIp;
       });
-      console.log(registro);
       const ncDao = new NCDao(conn);
       ncDao
         .insere(registro)
