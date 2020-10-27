@@ -109,9 +109,9 @@ function insereDados(data) {
     .done(function (msg) {
       var toastHTML = `<p>${msg.insertedCount} não conformidade(s) registrada(s) com sucesso!</p><p>Aguarde o redirecionamento.</p>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
-      // setTimeout(function () {
-      //   location.href = `/qualidade/adiciona-nc`;
-      // }, 1500);
+      setTimeout(function () {
+        location.href = `/qualidade/adiciona-nc`;
+      }, 1500);
     })
     .fail(function (jqXHR, textStatus, msg) {
       var toastHTML = `<p>Ocorreu um erro.</p><p>${msg}</p>`;
