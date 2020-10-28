@@ -129,7 +129,7 @@ function dataTable() {
       },
       {
         title: 'Macroprocesso Usuário',
-        field: 'mpProcUser',
+        field: 'mProcUser',
         sorter: 'string',
         hozAlign: 'left',
         headerFilter: 'input',
