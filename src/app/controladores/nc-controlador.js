@@ -101,7 +101,6 @@ class NCControlador {
     };
   }
   //Chamado pelo formulário. Cadastra uma ou várias não conformidades. Loga o CPF do usuário autenticado, caso exista.
-  //AJUSTAR PARA CADASTRAR ARRAY DE NC
   cadastra() {
     return function (req, resp) {
       let registro = req.body.dados;
