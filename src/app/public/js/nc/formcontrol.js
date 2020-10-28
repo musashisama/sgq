@@ -53,7 +53,7 @@ function montaModal() {
       document.formNC.docRef.value
     } <br/>
             <strong>Seu macroprocesso:</strong><br/>
-            ${document.formNC.mpProcUser.value} <br/>
+            ${document.formNC.mProcUser.value} <br/>
             <strong>Macroprocesso de origem da não conformidade:</strong><br/>
             ${document.formNC.mProcOrigem.value}<br/>
             <strong>Equipe onde ocorreu a não conformidade:</strong><br/>
