@@ -369,6 +369,7 @@ class CSVHandler {
               Prioridade: valor.Prioridade,
               Motivo_Prioridade: valor.Motivo_Prioridade,
               Assunto: valor.Assunto,
+              Ind_Juntada: valor.Ind_Juntada,
             });
           });
         });
@@ -1070,6 +1071,7 @@ class CSVHandler {
         'Assuntos/Objetos_31': 'Assunto',
         Prioridade_24: 'Prioridade',
         Motivo_da_Prioridade_22: 'Motivo_Prioridade',
+        Indicador_de_Solicitação_d_32: 'Ind_Juntada',
       };
       //Renomeia as colunas e exclui as não utilizadas
       dados.forEach((d) => {
