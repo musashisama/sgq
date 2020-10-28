@@ -78,7 +78,7 @@ function montaModal() {
         arrayNC.push({
           cpfUser: document.formNC.cpfUser.value,
           docRef: docref,
-          mProcUser: document.formNC.mpProcUser.value,
+          mProcUser: document.formNC.mProcUser.value,
           mProcOrigem: document.formNC.mProcOrigem.value,
           equipeNC: document.formNC.equipeNC.value,
           descNC: document.formNC.descNC.value,
