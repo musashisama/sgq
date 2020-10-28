@@ -122,6 +122,7 @@ class regapHandler {
                   assunto: p.Assunto,
                   prioridade: p.Prioridade,
                   motPrior: p.Motivo_Prioridade,
+                  juntada: p.Ind_Juntada,
                 });
               }
             });
@@ -175,6 +176,7 @@ class regapHandler {
         'Assuntos/Objetos_31': 'Assunto',
         Prioridade_24: 'Prioridade',
         Motivo_da_Prioridade_22: 'Motivo_Prioridade',
+        Indicador_de_Solicitação_d_32: 'Ind_Juntada',
       };
       //Renomeia as colunas e exclui as não utilizadas
       dados.forEach((d) => {

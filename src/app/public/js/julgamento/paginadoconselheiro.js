@@ -24,7 +24,6 @@ let responsiveLayout = true;
 let tableOcorrencias,
   tableReinp,
   tableReinpDet = null;
-//let d3 = Plotly.d3;
 let agrupadoRegap = false;
 let agrupadoReinp = false;
 
@@ -142,6 +141,10 @@ function agPauta(data) {
   );
 }
 
+function retJuntada(data) {
+  return data.Ind_Juntada.includes('S');
+}
+
 function returnRep(data) {
   return !data.Observacoes.includes('.REP.');
 }
@@ -172,40 +175,6 @@ function elementosTabelas() {
         M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
       });
   });
-
-  // document
-  //   .getElementById('mostraColunasAtividadeCons')
-  //   .addEventListener('click', function () {
-  //     if (agrupadoRegap == false) {
-  //       tableRegap.setGroupBy(['Atividade', 'Situacao']);
-  //       agrupadoRegap = true;
-  //     } else {
-  //       tableRegap.setGroupBy();
-  //       agrupadoRegap = false;
-  //     }
-  //   });
-
-  // $('.AtividadeCons').change(() => {
-  //   //console.log($("select option:selected").val());
-  //   tableRegap.setFilter(
-  //     'AtividadeCons',
-  //     '=',
-  //     $('#atividadeSelect option:selected').val(),
-  //   );
-  //   if ($('#atividadeSelect option:selected').val() == 'Todas') {
-  //     tableRegap.removeFilter(
-  //       'AtividadeCons',
-  //       '=',
-  //       $('#atividadeSelect option:selected').val(),
-  //     );
-  //   } else {
-  //     tableRegap.setFilter(
-  //       'AtividadeCons',
-  //       '=',
-  //       $('#atividadeSelect option:selected').val(),
-  //     );
-  //   }
-  // });
 }
 
 function formataDados() {
@@ -573,20 +542,20 @@ function elementosModal() {
       $('#divTipo').append(`
             <div class='row'>
                     <div class='col s7'>
-                    <label for="tipoAfastamento">Selecione o tipo de afastamento:</label> 
+                    <label for="tipoAfastamento">Selecione o tipo de afastamento:</label>
                     <select required name="tipoAfastamento" id="tipoAfastamento">
                                  ${html}
-                    </select>                   
+                    </select>
                     </div>
           </div>
           <div class='row'>
             <div class="form-group inicioAfastamento input field col s3 ">
-            <input id="inicioAfastamento" name="inicioAfastamento"  type="text" class="datepicker"/>                      
+            <input id="inicioAfastamento" name="inicioAfastamento"  type="text" class="datepicker"/>
             <label for="inicioAfastamento">Data da Mudança</label>
-            </div> 
+            </div>
           </div>
-          <div class='row'>          
-            <div class="input-field col s12">            
+          <div class='row'>
+            <div class="input-field col s12">
             <i class="material-icons prefix">mode_edit</i>
             <textarea id="observacoes" class="materialize-textarea"></textarea>
             <label for="observacoes">Observações</label>
@@ -626,28 +595,28 @@ function elementosModal() {
       $('#divTipo').append(`
             <div class='row'>
                     <div class='col s7'>
-                    <label for="tipoAfastamento">Selecione o tipo de afastamento:</label> 
+                    <label for="tipoAfastamento">Selecione o tipo de afastamento:</label>
                     <select required name="tipoAfastamento" id="tipoAfastamento">
                                  ${html}
-                    </select>                   
+                    </select>
                     </div>
           </div>
           <div class='row'>
             <div class="form-group inicioAfastamento input field col s3 ">
-            <input id="inicioAfastamento" name="inicioAfastamento"  type="text" class="datepicker"/>                      
+            <input id="inicioAfastamento" name="inicioAfastamento"  type="text" class="datepicker"/>
             <label for="inicioAfastamento">Início do Afastamento</label>
             </div>
             <div class="form-group fimAfastamento input field col s3">
-            <input id="fimAfastamento" name="fimAfastamento" type="text" class="datepicker"/>            
+            <input id="fimAfastamento" name="fimAfastamento" type="text" class="datepicker"/>
             <label for="fimAfastamento">Fim do Afastamento</label>
             </div>
-            <div class ='col s6 diasUteis input-field'>           
+            <div class ='col s6 diasUteis input-field'>
             <input id="diasUteis" name="diasUteis" type="number" class="validate"/>
             <label for="diasUteis">Quantidade de Dias a Suspender</label>
             </div>
           </div>
-          <div class='row'>          
-            <div class="input-field col s12">            
+          <div class='row'>
+            <div class="input-field col s12">
             <i class="material-icons prefix">mode_edit</i>
             <textarea id="observacoes" class="materialize-textarea"></textarea>
             <label for="observacoes">Observações</label>
@@ -688,28 +657,28 @@ function elementosModal() {
       $('#divTipo').append(`
             <div class='row'>
                     <div class='col s7'>
-                    <label for="tipoAfastamento">Selecione o tipo de afastamento:</label> 
+                    <label for="tipoAfastamento">Selecione o tipo de afastamento:</label>
                     <select required name="tipoAfastamento" id="tipoAfastamento">
                                  ${html}
-                    </select>                   
+                    </select>
                     </div>
           </div>
           <div class='row'>
             <div class="form-group inicioAfastamento input field col s3 ">
-            <input id="inicioAfastamento" name="inicioAfastamento"  type="text" class="datepicker"/>                      
+            <input id="inicioAfastamento" name="inicioAfastamento"  type="text" class="datepicker"/>
             <label for="inicioAfastamento">Início do Afastamento</label>
             </div>
             <div class="form-group fimAfastamento input field col s3">
-            <input id="fimAfastamento" name="fimAfastamento" type="text" class="datepicker"/>            
+            <input id="fimAfastamento" name="fimAfastamento" type="text" class="datepicker"/>
             <label for="fimAfastamento">Fim do Afastamento</label>
             </div>
-            <div class ='col s6 diasUteis input-field'>           
+            <div class ='col s6 diasUteis input-field'>
             <input id="diasUteis" name="diasUteis" type="number" class="validate"/>
             <label for="diasUteis">Quantidade de Dias de Sessão de Julgamento</label>
             </div>
           </div>
-          <div class='row'>          
-            <div class="input-field col s12">            
+          <div class='row'>
+            <div class="input-field col s12">
             <i class="material-icons prefix">mode_edit</i>
             <textarea id="observacoes" class="materialize-textarea"></textarea>
             <label for="observacoes">Observações</label>
@@ -750,32 +719,32 @@ function elementosModal() {
       $('#divTipo').append(`
             <div class='row'>
                     <div class='col s7'>
-                    <label for="tipoAfastamento">Selecione o tipo de afastamento:</label> 
+                    <label for="tipoAfastamento">Selecione o tipo de afastamento:</label>
                     <select required name="tipoAfastamento" id="tipoAfastamento">
                                  ${html}
-                    </select>                   
-                    </div>           
-                    <div class ='col s4 horasDeducao input-field'> 
+                    </select>
+                    </div>
+                    <div class ='col s4 horasDeducao input-field'>
                     <input id="horasDeducao" name="horasDeducao" type="number" class="validate"/>
                     <label for="horasDeducao">Total de horas a deduzir da Meta de Produtividade:</label>
                     </div>
           </div>
           <div class='row'>
             <div class="form-group inicioAfastamento input field col s3 ">
-            <input id="inicioAfastamento" name="inicioAfastamento"  type="text" class="datepicker"/>                      
+            <input id="inicioAfastamento" name="inicioAfastamento"  type="text" class="datepicker"/>
             <label for="inicioAfastamento">Início do Afastamento</label>
             </div>
             <div class="form-group fimAfastamento input field col s3">
-            <input id="fimAfastamento" name="fimAfastamento" type="text" class="datepicker"/>            
+            <input id="fimAfastamento" name="fimAfastamento" type="text" class="datepicker"/>
             <label for="fimAfastamento">Fim do Afastamento</label>
             </div>
-            <div class ='col s6 diasUteis input-field'>           
+            <div class ='col s6 diasUteis input-field'>
             <input id="diasUteis" name="diasUteis" type="number" class="validate"/>
             <label for="diasUteis">Dias úteis do Período <strong>(excluídos os dias das Sessões de Julgamento):</strong></label>
             </div>
           </div>
-          <div class='row'>          
-            <div class="input-field col s12">            
+          <div class='row'>
+            <div class="input-field col s12">
             <i class="material-icons prefix">mode_edit</i>
             <textarea id="observacoes" class="materialize-textarea"></textarea>
             <label for="observacoes">Observações</label>
@@ -818,39 +787,39 @@ function elementosModal() {
       $('#divTipo').append(`
             <div class='row'>
             <div class='col s7'>
-            <label for="tipoAfastamento">Selecione a turma de participação:</label> 
+            <label for="tipoAfastamento">Selecione a turma de participação:</label>
             <select required name="tipoAfastamento" id="tipoAfastamento">
                                  ${html}
-            </select>                   
-          </div>           
-          <div class ='col s4 horasDeducao input-field'> 
+            </select>
+          </div>
+          <div class ='col s4 horasDeducao input-field'>
           <input id="horasDeducao" name="horasDeducao" value=4 type="number" class="active validate"/>
            <label for="horasDeducao">Total de horas a deduzir da Meta de Produtividade:</label>
            </div>
           </div>
           <div class='row'>
             <div class="form-group inicioAfastamento input field col s3 ">
-            <input id="inicioAfastamento" name="inicioAfastamento"  type="text" class="datepicker"/>                      
+            <input id="inicioAfastamento" name="inicioAfastamento"  type="text" class="datepicker"/>
             <label for="inicioAfastamento">Data da Sessão de Julgamento</label>
             </div>
             <div class='col s7'>
-            <label for="turno">Turno de Participação</label> 
+            <label for="turno">Turno de Participação</label>
             <select required name="turno" id="turno">
             <option class="form-group" value="Manha">Manhã</option>
             <option class="form-group" value="Tarde">Tarde</option>
-            </select>                   
-          </div>                  
+            </select>
+          </div>
         </div>
-        <div class='row'> 
+        <div class='row'>
         <blockquote>
                     <strong>Importante:</strong>
                     Caso tenha participado de sessão de julgamento em mais de uma turma por turno, selecione <strong>apenas</strong> a primeira turma de participação.
-                    As solicitações deverão ser feitas individualmente para cada turno de participação, onde serão abatidas 4 horas por turno.                    
-                  </blockquote>  
+                    As solicitações deverão ser feitas individualmente para cada turno de participação, onde serão abatidas 4 horas por turno.
+                  </blockquote>
         </div>
-        <div class='row'>          
+        <div class='row'>
         <div class="input-field col s12">
-        <i class="material-icons prefix">mode_edit</i>        
+        <i class="material-icons prefix">mode_edit</i>
         <textarea id="observacoes" class="materialize-textarea"></textarea>
         <label for="observacoes">Observações</label>
         </div>
@@ -889,39 +858,39 @@ function elementosModal() {
       $('#divTipo').append(`
             <div class='row'>
             <div class='col s7'>
-            <label for="tipoAfastamento">Selecione a turma de participação:</label> 
+            <label for="tipoAfastamento">Selecione a turma de participação:</label>
             <select required name="tipoAfastamento" id="tipoAfastamento">
                                  ${html}
-            </select>                   
-          </div>           
-          <div class ='col s4 horasDeducao input-field'> 
+            </select>
+          </div>
+          <div class ='col s4 horasDeducao input-field'>
           <input id="horasDeducao" name="horasDeducao" value=4 type="number" class="active validate"/>
            <label for="horasDeducao">Total de horas a deduzir da Meta de Produtividade:</label>
            </div>
           </div>
           <div class='row'>
             <div class="form-group inicioAfastamento input field col s3 ">
-            <input id="inicioAfastamento" name="inicioAfastamento"  type="text" class="datepicker"/>                      
+            <input id="inicioAfastamento" name="inicioAfastamento"  type="text" class="datepicker"/>
             <label for="inicioAfastamento">Data da Sessão de Julgamento</label>
             </div>
             <div class='col s7'>
-            <label for="turno">Turno de Participação</label> 
+            <label for="turno">Turno de Participação</label>
             <select required name="turno" id="turno">
             <option class="form-group" value="Manha">Manhã</option>
             <option class="form-group" value="Tarde">Tarde</option>
-            </select>                   
-          </div>                  
+            </select>
+          </div>
         </div>
-        <div class='row'> 
+        <div class='row'>
         <blockquote>
                     <strong>Importante:</strong>
                     Caso tenha participado de sessão de julgamento em mais de uma turma por turno, selecione <strong>apenas</strong> a primeira turma de participação.
-                    As solicitações deverão ser feitas individualmente para cada turno de participação, onde serão abatidas 4 horas por turno.                    
-                  </blockquote>  
+                    As solicitações deverão ser feitas individualmente para cada turno de participação, onde serão abatidas 4 horas por turno.
+                  </blockquote>
         </div>
-        <div class='row'>          
+        <div class='row'>
         <div class="input-field col s12">
-        <i class="material-icons prefix">mode_edit</i>        
+        <i class="material-icons prefix">mode_edit</i>
         <textarea id="observacoes" class="materialize-textarea"></textarea>
         <label for="observacoes">Observações</label>
         </div>
@@ -955,25 +924,25 @@ function elementosModal() {
       $('#divTipo').text('');
       $('#enviaArq').text('');
       $('#divTipo').append(`
-            <div class='row'>            
-            <div class ='col s4 horasDeducao input-field'> 
+            <div class='row'>
+            <div class ='col s4 horasDeducao input-field'>
             <input id="horasDeducao" name="horasDeducao" type="number" class="validate"/>
            <label for="horasDeducao">Horas CARF (REGAP):</label>
            </div>
           </div>
           <div class='row'>
-          <div class ='col s3 nomeLote input-field'>           
+          <div class ='col s3 nomeLote input-field'>
           <input id="nomeLote" name="nomeLote" type="text" class="validate"/>
           <label for="nomeLote">Nome do Lote:</strong></label>
           </div>
-            <div class ='col s3 mesSorteio input-field'>           
+            <div class ='col s3 mesSorteio input-field'>
             <input id="mesSorteio" name="mesSorteio" type="text" class="validate"/>
             <label for="mesSorteio">Mês do Sorteio:</strong></label>
-            </div>           
+            </div>
         </div>
-        <div class='row'>          
+        <div class='row'>
         <div class="input-field col s12">
-        <i class="material-icons prefix">mode_edit</i>        
+        <i class="material-icons prefix">mode_edit</i>
         <textarea id="observacoes" class="materialize-textarea"></textarea>
         <label for="observacoes">Observações</label>
         </div>
@@ -1016,29 +985,29 @@ function elementosModal() {
       $('#divTipo').append(`
             <div class='row'>
             <div class='col s7'>
-            <label for="tipoAfastamento">Selecione a turma de participação:</label> 
+            <label for="tipoAfastamento">Selecione a turma de participação:</label>
             <select required name="tipoAfastamento" id="tipoAfastamento">
                                  ${html}
-            </select>                   
-          </div>           
-          <div class ='col s4 horasDeducao input-field'> 
+            </select>
+          </div>
+          <div class ='col s4 horasDeducao input-field'>
           <input id="horasDeducao" name="horasDeducao" type="number" class="validate"/>
            <label for="horasDeducao">Total de horas a deduzir da Meta de Produtividade:</label>
            </div>
           </div>
           <div class='row'>
             <div class="form-group dataSessao input field col s3 ">
-            <input id="dataSessao" name="dataSessao"  type="text" class="datepicker"/>                      
+            <input id="dataSessao" name="dataSessao"  type="text" class="datepicker"/>
             <label for="dataSessao">Data da Sessão de Julgamento</label>
-            </div>    
-            <div class ='col s6 sessoes input-field'>           
+            </div>
+            <div class ='col s6 sessoes input-field'>
             <input id="sessoes" name="sessoes" type="number" class="validate"/>
             <label for="sessoes">Quantidade de sessões:</strong></label>
             </div>
         </div>
-        <div class='row'>          
+        <div class='row'>
         <div class="input-field col s12">
-        <i class="material-icons prefix">mode_edit</i>        
+        <i class="material-icons prefix">mode_edit</i>
         <textarea id="observacoes" class="materialize-textarea"></textarea>
         <label for="observacoes">Observações</label>
         </div>
@@ -1079,33 +1048,33 @@ function elementosModal() {
       $('#divTipo').append(`
             <div class='row'>
             <div class='col s7'>
-            <label for="tipoAfastamento">Selecione a turma de participação:</label> 
+            <label for="tipoAfastamento">Selecione a turma de participação:</label>
             <select required name="tipoAfastamento" id="tipoAfastamento">
                                  ${html}
-            </select>                   
-          </div>           
-          <div class ='col s4 horasDeducao input-field'> 
+            </select>
+          </div>
+          <div class ='col s4 horasDeducao input-field'>
           <input id="horasDeducao" name="horasDeducao" type="number" class="validate"/>
            <label for="horasDeducao">Total de horas a deduzir da Meta de Produtividade:</label>
            </div>
           </div>
           <div class='row'>
             <div class="form-group dataSessao input-field col s3 ">
-            <input id="dataSessao" name="dataSessao"  type="text" class="datepicker"/>                      
+            <input id="dataSessao" name="dataSessao"  type="text" class="datepicker"/>
             <label for="dataSessao">Data da Sessão de Julgamento</label>
-            </div>    
-            <div class ='col s3 numeroAcordao input-field'>           
+            </div>
+            <div class ='col s3 numeroAcordao input-field'>
             <input id="numeroAcordao" name="numeroAcordao" type="text" class="validate"/>
             <label for="numeroAcordao">Número do Acórdão:</strong></label>
             </div>
-            <div class ='col s6 numeroProcesso input-field'>           
+            <div class ='col s6 numeroProcesso input-field'>
             <input id="numeroProcesso" name="numeroProcesso" type="text" class="validate"/>
             <label for="numeroProcesso">Número do Processo:</strong></label>
             </div>
         </div>
-        <div class='row'>          
+        <div class='row'>
         <div class="input-field col s12">
-        <i class="material-icons prefix">mode_edit</i>        
+        <i class="material-icons prefix">mode_edit</i>
         <textarea id="observacoes" class="materialize-textarea"></textarea>
         <label for="observacoes">Observações</label>
         </div>
@@ -1182,22 +1151,22 @@ function handleSOL(registro, metodo, setor) {
   });
 }
 function formArq() {
-  return `    
+  return `
         <div class="file-field left ctoastsucesso input-field form-group col s11">
             <div class="btn">
                 <span>Arquivo</span>
                 <input type="file" name="filetoupload" id='file' accept=".pdf" onchange="" required/>
-            </div>            
+            </div>
             <div class="file-path-wrapper">
                 <input class="file-path validate" type="text"/>
-            </div>           
+            </div>
             <div class="hidden progress">
                 <div class="determinate"/>
-            </div>           
-        </div>    
+            </div>
+        </div>
         <div><a id="btnEnviaArq" class="btn-floating btn-small green waves-effect waves-light hoverable z-depth-3" title="Enviar arquivo">
         <i class="material-icons">add</i>
-      </a>  
+      </a>
     </div>`;
 }
 function montaLi(result) {
@@ -1634,6 +1603,15 @@ function dataTable(dados) {
         responsive: 2,
         download: false,
       },
+      {
+        title: 'Solicitação de Juntada?',
+        field: 'Ind_Juntada',
+        sorter: 'string',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 2,
+        download: true,
+      },
     ],
     autoColumns: false,
     locale: true,
@@ -1878,7 +1856,7 @@ function grafico(dados) {
   arrayDados.orientation = 'h';
   arrayDados.type = 'bar';
   arrayDados.fillcolor = 'cls';
-  arrayDados.hovertemplate = `<i>Carga</i>: %{x:.d} Horas CARF<br>                         
+  arrayDados.hovertemplate = `<i>Carga</i>: %{x:.d} Horas CARF<br>
                             <b>%{text}</b>`;
   arrayDados.marker = {
     color: arrayDados.color,

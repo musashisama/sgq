@@ -322,6 +322,15 @@ function dataTable(dados) {
         responsive: 2,
         download: false,
       },
+      {
+        title: 'Solicitação de Juntada?',
+        field: 'juntada',
+        sorter: 'string',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 2,
+        download: false,
+      },
     ],
     autoColumns: false,
     locale: true,
@@ -566,7 +575,7 @@ function grafico(dados) {
   arrayDados.orientation = 'h';
   arrayDados.type = 'bar';
   arrayDados.fillcolor = 'cls';
-  arrayDados.hovertemplate = `<i>Carga</i>: %{x:.d} Horas CARF<br>                         
+  arrayDados.hovertemplate = `<i>Carga</i>: %{x:.d} Horas CARF<br>
                               <b>%{text}</b>`;
   arrayDados.marker = {
     color: arrayDados.color,

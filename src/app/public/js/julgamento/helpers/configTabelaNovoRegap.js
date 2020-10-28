@@ -86,6 +86,10 @@ function agPauta(data) {
   );
 }
 
+function retJuntada(data) {
+  return data.juntada.includes('S');
+}
+
 function returnRep(data) {
   return !data.obs.includes('.REP.');
 }
@@ -112,7 +116,13 @@ function initCheckboxes() {
       table.removeFilter('valorOrig', '<=', 8000000);
     }
   });
-
+  $(`#juntadaCheck`).change(() => {
+    if ($(`#juntadaCheck`).prop('checked')) {
+      table.addFilter(retJuntada);
+    } else {
+      table.removeFilter(retJuntada);
+    }
+  });
   $(`#expandirCheck`).change(() => {
     if ($(`#expandirCheck`).prop('checked')) {
       let element = document.getElementById('caixa');
