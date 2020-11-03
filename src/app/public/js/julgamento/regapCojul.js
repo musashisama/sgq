@@ -220,7 +220,6 @@ function dataTable(msg) {
         responsive: 2,
         download: true,
       },
-
       {
         title: 'Motivo da Prioridade',
         field: 'Motivo_Prioridade',
@@ -269,8 +268,26 @@ function dataTable(msg) {
         download: false,
       },
       {
+        title: 'Questionamento',
+        field: 'Questionamento_CARF',
+        sorter: 'string',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 2,
+        download: true,
+      },
+      {
         title: 'Retorno Sepoj?',
         field: 'Retorno_Sepoj',
+        sorter: 'string',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 2,
+        download: true,
+      },
+      {
+        title: 'Solicitação de Juntada?',
+        field: 'Ind_Juntada',
         sorter: 'string',
         hozAlign: 'center',
         editor: false,

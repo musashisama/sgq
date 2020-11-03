@@ -1586,6 +1586,15 @@ function dataTable(dados) {
         download: false,
       },
       {
+        title: 'Questionamento',
+        field: 'Questionamento_CARF',
+        sorter: 'string',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 2,
+        download: true,
+      },
+      {
         title: 'Retorno Sepoj?',
         field: 'Retorno_Sepoj',
         sorter: 'string',
