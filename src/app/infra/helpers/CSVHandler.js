@@ -341,7 +341,15 @@ class CSVHandler {
               Equipe_Ultima: valor.Equipe_Ultima,
               Relator: valor.Relator,
               Alegacoes_CARF: valor.Alegacoes_CARF,
-              Questionamento_CARF: valor.Questionamento_CARF,
+              Questionamento_CARF: `${valor.Questionamento_CARF}${
+                valor.Questionamento_2_CARF_20
+                  ? '/ ' + valor.Questionamento_2_CARF_20
+                  : ''
+              } ${
+                valor.Questionamento_3_CARF_21
+                  ? '/ ' + valor.Questionamento_3_CARF_21
+                  : ''
+              }`,
               Resolucao: valor.Resolucao,
               Acordao: valor.Acordao,
               Valor: valor.Valor,
@@ -1077,8 +1085,6 @@ class CSVHandler {
       dados.forEach((d) => {
         delete d['Nome_Unidade_Atual_1'];
         delete d['Horas_Estimadas_17'];
-        delete d['Questionamento_2_CARF_20'];
-        delete d['Questionamento_3_CARF_21'];
         Object.entries(keysMap).forEach((entry) => {
           delete Object.assign(d, { [entry[1]]: d[entry[0]] })[entry[0]];
         });
