@@ -1136,11 +1136,36 @@ class JulgamentoControlador {
       let id = new ObjectID(req.params.id);
       const fileDao = new FileDao(conn);
       fileDao.getArq({ _id: id }).then((arq) => {
-        resp.writeHead(200, {
-          'Content-Type': 'application/pdf',
-          //'Content-Disposition': 'attachment; filename="' + arq[0].nome + '"'
+        // let arquivo = fs.createReadStream(
+        //   new Buffer.from(arq[0].file_data.buffer, 'binary'),
+        // );
+        fs.writeFile(arq[0].nome, arq[0].file_data.buffer, (err) => {
+          if (err) {
+            resp.status(404);
+          }
+          resp.download(arq[0].nome);
+          fs.unlink(arq[0].nome, (error) => {
+            if (error) {
+              console.log(`Erro: ${error}`);
+              resp.status(404);
+            }
+          });
         });
-        resp.end(new Buffer.from(arq[0].file_data.buffer, 'binary'));
+        // resp.writeHead(200, {
+        //   'Content-Type': 'application/octet-stream',
+        //   'Content-Disposition': 'attachment; filename=' + ,
+        // });
+        // arquivo.pipe(resp);
+        // resp.status(200);
+        // console.log(arq[0].nome, arq[0].arquivo.type);
+        // resp.set({
+        //   'Cache-Control': 'no-cache',
+        //   'Content-Type': arq[0].arquivo.type,
+        //   'Content-Disposition': 'attachment; filename=' + arq[0].nome,
+        // });
+        //resp.download(arquivo, arq[0].nome);
+        //resp.end(arq[0].file_data.buffer);
+        //resp.end(new Buffer.from(arq[0].file_data.buffer, 'binary'));
       });
     };
   }
