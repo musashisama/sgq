@@ -877,8 +877,8 @@ function controleForm() {
       <h5>${$('#dds').text()}</h5><br/>
       ${arraySol('dispensa')}
       <div id='areaDispensa'/>
-      <div id='areaBotoes'/>
       <div id='areaSolicitacoes'/>
+      <div id='areaBotoes'/>
       `);
       $('#areaBotoes').append(`
           ${campoObs}
@@ -895,10 +895,7 @@ function controleForm() {
           $('#areaDispensa').append(`
           <br/>
           ${nomeLote}
-
-
       `);
-
           initElementos();
         }
         if (
@@ -909,12 +906,7 @@ function controleForm() {
           $('#areaDispensa').append(`
           <br/>
           ${processos}
-
           `);
-          // $('#areaBotoes').append(`
-          // ${campoObs}
-          // ${camposArq}
-          // ${botoes}`);
           initElementos();
         }
         if (
@@ -925,12 +917,8 @@ function controleForm() {
           $('#areaDispensa').append(`
           <br/>
           ${nomeLote}
-
          `);
-          // $('#areaBotoes').append(`
-          // ${campoObs}
-          // ${camposArq}
-          // ${botoes}`);
+
           initElementos();
         }
         if (
@@ -941,12 +929,8 @@ function controleForm() {
           $('#areaDispensa').append(`
           <br/>
           ${processos}
-
           `);
-          // $('#areaBotoes').append(`
-          // ${campoObs}
-          // ${camposArq}
-          // ${botoes}`);
+
           initElementos();
         }
         if (
@@ -959,11 +943,6 @@ function controleForm() {
         ${nomeLote}
 
         `);
-          // $('#areaBotoes').append(`
-          // ${campoObs}
-          // ${camposArq}
-          // ${botoes}`);
-          // initElementos();
         }
       });
     });
