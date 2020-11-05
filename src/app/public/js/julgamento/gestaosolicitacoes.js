@@ -233,6 +233,8 @@ async function montaModal(e, cell, user) {
   <i class="material-icons prefix">mode_edit</i>
   <textarea id="justificativas" class="materialize-textarea">${
     cell.getRow().getData().justificativas
+      ? cell.getRow().getData().justificativas
+      : ''
   }</textarea>
   <label for="justificativas">Justificativas para <strong>rejeição:</strong></label>
   </div>
@@ -296,10 +298,10 @@ async function montaModal(e, cell, user) {
       uniqueId: cell.getRow().getData().uniqueId,
       justificativas: $('#justificativas').val(),
       statusSegep: cell.getRow().getData().statusSegep,
-      statusDipaj: $('#statusApr').val(),
+      statusDipaj: $('#statusApr option:selected').val(),
       status: solicitacoes(
         cell.getRow().getData().statusSegep,
-        $('#statusApr').val(),
+        $('#statusApr option:selected').val(),
       ),
     };
     handleSOL(dados, 'POST');
@@ -307,6 +309,8 @@ async function montaModal(e, cell, user) {
   $('.cancela').click(function () {
     $('.hModal').text('');
     $('.pModal').text('');
+    $('.hModal').empty();
+    $('.pModal').empty();
     $('#justificativas').empty();
     campoJustificativa = ``;
   });
@@ -319,20 +323,24 @@ function btnArq() {
 }
 function solicitacoes(segep, dipaj) {
   let result;
-  segep == '' || dipaj == ''
-    ? (result = 'Em análise')
-    : segep == 'DocInval' || dipaj == 'Rejeitada'
-    ? (result = 'Rejeitada')
-    : segep == 'DocVal' && dipaj == ''
-    ? (result = 'Aprovada pelo SEGEP')
-    : segep == 'DocVal' && dipaj == 'Aprovada'
-    ? (result = 'Aprovada')
-    : '';
-  console.log(result);
+  if (segep == '' || dipaj == '') {
+    result = 'Em análise';
+  } else if (segep == 'DocInval' || dipaj == 'Rejeitada') {
+    result = 'Rejeitada';
+  } else if (segep == 'DocVal' && dipaj == '') {
+    result = 'Aprovada pelo SEGEP';
+  } else if (segep == 'DocVal' && dipaj == 'Aprovada') {
+    result = 'Aprovada';
+  } else if (segep == '' && dipaj == 'Aprovada') {
+    result = 'Aprovada';
+  } else if (dipaj == 'Aprovada') {
+    result = 'Aprovada';
+  } else result = 'Rejeitada';
+
   return result;
 }
 function pegaLinks(cell) {
-  console.log(cell.getRow().getData().arquivos);
+  //console.log(cell.getRow().getData().arquivos);
   let a =
     typeof cell.getRow().getData().arquivos !== 'undefined'
       ? cell.getRow().getData().arquivos
