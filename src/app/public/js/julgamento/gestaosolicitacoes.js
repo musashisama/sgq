@@ -233,6 +233,8 @@ async function montaModal(e, cell, user) {
   <i class="material-icons prefix">mode_edit</i>
   <textarea id="justificativas" class="materialize-textarea">${
     cell.getRow().getData().justificativas
+      ? cell.getRow().getData().justificativas
+      : ''
   }</textarea>
   <label for="justificativas">Justificativas para <strong>rejeição:</strong></label>
   </div>
