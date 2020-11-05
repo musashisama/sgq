@@ -307,6 +307,8 @@ async function montaModal(e, cell, user) {
   $('.cancela').click(function () {
     $('.hModal').text('');
     $('.pModal').text('');
+    $('#justificativas').empty();
+    campoJustificativa = ``;
   });
 }
 function btnArq() {
