@@ -97,6 +97,12 @@ function initCollapsible() {
   });
 }
 
+function initCollapsibleDisp() {
+  $(document).ready(function () {
+    $('#classesDisp').collapsible();
+  });
+}
+
 function resetElementos() {
   $('#classesSol').off();
   $('#classesSol').fadeToggle('slow', 'linear');
@@ -110,27 +116,13 @@ function resetElementosDispensa() {
   $('.progress').hide();
   $('#mostraArq').hide();
   $('#areaDispensa').empty();
-  //$('#areaBotoes').empty();
-}
-
-function proximoDisp() {
-  $('#btn-proximo').click(() => {
-    $('#camposSol').fadeOut('slow');
-    $('#camposSol').fadeIn('slow', () => {
-      $('#camposSol').append(`
-      <h5>${$('#ehl').text()}</h5><br/>
-      ${campoObs}
-      ${camposArq}
-      ${botoes}
-      `);
-      initElementos();
-    });
-  });
+  $('#areaBotoes').empty();
 }
 
 function initElementos() {
   initDatePicker();
   initSelect();
+  initCollapsibleDisp();
   btnEnviaArq();
   $('.progress').hide();
   M.updateTextFields();
@@ -870,134 +862,155 @@ function controleForm() {
   });
   //Dispensa de Sorteio
   //Excesso de Horas em Lotes de Sorteio - Nome do lote - Mes e Tamanho
+  //Formalização de Voto Vencedor - Número do Processo - Número do Acórdão - HE (Se DtSessao for depois de set/2019 e antes de set/2020 - HE = 3,0. Se DtSessao for depois de set/2020 - 30% >2 e <8) - Data da Sessão
+  //Horas Recebidas em Sorteio Extraordinário//Excesso de Horas em Lotes de Sorteio - Nome do lote - Mes e Tamanho
+  //Distribuição de processos reflexos ou decorrentes - Numero do processo - Data da distribuição e HE
+  //Participação em TO/CSRF de março de 2019 até março de 2020 - DtSessao - Turma - Turno - 4 horas por turno (Vários na mesma)
   $('#dds').click(() => {
     resetElementos();
     $('#camposSol').fadeIn('slow', () => {
       $('#camposSol').append(`
       <h5>${$('#dds').text()}</h5><br/>
-      ${arraySol('dispensa')}
-      <div id='areaDispensa'/>
+      <div id='areaDispensa'>
+      <div class='col s6 offset-s6'>
+    <div class="card hoverable cardLaranja">
+              <div class="card-content ">
+                <span class="card-title">Somatório de Horas da Solicitação: <span id='somatorioHoras'>0</span></span>
+              </div>
+            </div>
+          </div>
+    </div>
+      <ul id="classesDisp" class="collapsible popout col s6 m12">
+            <li>
+              <div class="collapsible-header">
+                <i class="fas fa-hockey-puck"/>Excesso de Horas em Lotes de Sorteio
+              </div>
+              <div class="collapsible-body">
+                 ${nomeLote}
+              </div>
+            </li>
+            <li>
+              <div class="collapsible-header">
+                <i class="fas fa-feather-alt"/>Formalização de Voto Vencedor
+              </div>
+              <div class="collapsible-body">
+                 ${processos}
+              </div>
+            </li>
+            <li>
+              <div class="collapsible-header">
+                <i class="far fa-clock"/>Horas Recebidas em Sorteio Extraordinário
+              </div>
+              <div class="collapsible-body">
+                 ${processos}
+              </div>
+            </li>
+            <li>
+              <div class="collapsible-header">
+                <i class="fas fa-link"/>Distribuição de processos reflexos ou decorrentes
+              </div>
+              <div class="collapsible-body">
+                 ${processos}
+              </div>
+            </li>
+            <li>
+              <div class="collapsible-header">
+                <i class="fas fa-retweet"/>Participação em TO/CSRF de março de 2019 até março de 2020
+              </div>
+              <div class="collapsible-body">
+                 ${processos}
+              </div>
+            </li>
+            </ul>
+            </div>
       <div id='areaSolicitacoes'/>
-      <div id='areaBotoes'/>
+
+            <div id='areaBotoes'/>
       `);
       $('#areaBotoes').append(`
           ${campoObs}
-          ${camposArq}
-          ${botoes}`);
-      initElementos();
-      $('#tipoDispensa').change((e) => {
-        resetElementosDispensa();
-        if (
-          $('#tipoDispensa option:selected').val() ==
-          'Excesso de Horas em Lotes de Sorteio'
-        ) {
-          resetElementosDispensa();
-          $('#areaDispensa').append(`
-          <br/>
-          ${nomeLote}
-      `);
-          initElementos();
-        }
-        if (
-          $('#tipoDispensa option:selected').val() ==
-          'Formalização de Voto Vencedor'
-        ) {
-          resetElementosDispensa();
-          $('#areaDispensa').append(`
-          <br/>
-          ${processos}
           `);
-          initElementos();
-        }
-        if (
-          $('#tipoDispensa option:selected').val() ==
-          'Horas Recebidas em Sorteio Extraordinário'
-        ) {
-          resetElementosDispensa();
-          $('#areaDispensa').append(`
-          <br/>
-          ${nomeLote}
-         `);
-
-          initElementos();
-        }
-        if (
-          $('#tipoDispensa option:selected').val() ==
-          'Distribuição de processos reflexos ou decorrentes'
-        ) {
-          resetElementosDispensa();
-          $('#areaDispensa').append(`
-          <br/>
-          ${processos}
-          `);
-
-          initElementos();
-        }
-        if (
-          $('#tipoDispensa option:selected').val() ==
-          'Participação em TO/CSRF de março de 2019 até março de 2020'
-        ) {
-          resetElementosDispensa();
-          $('#areaDispensa').append(`
-        <br/>
-        ${nomeLote}
-
-        `);
-        }
-      });
-    });
-  });
-
-  $('#ehl').click(() => {
-    resetElementos();
-    $('#camposSol').fadeIn('slow', () => {
-      $('#camposSol').append(`
-      <h5>${$('#ehl').text()}</h5><br/>
-      ${campoObs}
-      ${camposArq}
-      ${botoes}
-      `);
       initElementos();
-    });
-  });
-  //Distribuição de processos reflexos ou decorrentes - Numero do processo - Data da distribuição e HE
-  $('#prd').click(() => {
-    resetElementos();
-    $('#camposSol').fadeIn('slow', () => {
-      $('#camposSol').append(`
-      <h5>${$('#prd').text()}</h5><br/>
-      ${campoObs}
-      ${camposArq}
-      ${botoes}
-      `);
-      initElementos();
-    });
-  });
-  //Formalização de Voto Vencedor - Número do Processo - Número do Acórdão - HE (Se DtSessao for depois de set/2019 e antes de set/2020 - HE = 3,0. Se DtSessao for depois de set/2020 - 30% >2 e <8) - Data da Sessão
-  $('#fvv').click(() => {
-    resetElementos();
-    $('#camposSol').fadeIn('slow', () => {
-      $('#camposSol').append(`
-      <h5>${$('#fvv').text()}</h5><br/>
-      ${campoObs}
-      ${camposArq}
-      ${botoes}
-      `);
-      initElementos();
-    });
-  });
-  //Participação em TO/CSRF de março de 2019 até março de 2020 - DtSessao - Turma - Turno - 4 horas por turno (Vários na mesma)
-  $('#ptoc').click(() => {
-    resetElementos();
-    $('#camposSol').fadeIn('slow', () => {
-      $('#camposSol').append(`
-      <h5>${$('#ptoc').text()}</h5><br/>
-      ${arraySol('turmaTO')}
-      ${campoObs}
-      ${camposArq}
-      ${botoes}
-      `);
-      initElementos();
+      //   $('#tipoDispensa').change((e) => {
+      //     resetElementosDispensa();
+      //     proximoDisp();
+      //     if (
+      //       $('#tipoDispensa option:selected').val() ==
+      //       'Excesso de Horas em Lotes de Sorteio' //Excesso de Horas em Lotes de Sorteio - Nome do lote - Mes e Tamanho
+      //     ) {
+      //       resetElementosDispensa();
+      //       $('#areaDispensa').append(`
+      //       <br/>
+      //       ${nomeLote}
+      //   `);
+      //       $('#areaBotoes').append(`
+
+      //       ${botoesDisp}
+      //       `);
+
+      //       initElementos();
+      //     }
+      //     if (
+      //       $('#tipoDispensa option:selected').val() ==
+      //       'Formalização de Voto Vencedor' //Formalização de Voto Vencedor - Número do Processo - Número do Acórdão - HE (Se DtSessao for depois de set/2019 e antes de set/2020 - HE = 3,0. Se DtSessao for depois de set/2020 - 30% >2 e <8) - Data da Sessão
+      //     ) {
+      //       resetElementosDispensa();
+      //       $('#areaDispensa').append(`
+      //       <br/>
+      //       ${processos}
+      //       `);
+      //       $('#areaBotoes').append(`
+
+      //       ${botoesDisp}
+      //       `);
+      //       initElementos();
+      //     }
+      //     if (
+      //       $('#tipoDispensa option:selected').val() ==
+      //       'Horas Recebidas em Sorteio Extraordinário' //Excesso de Horas em Lotes de Sorteio - Nome do lote - Mes e Tamanho
+      //     ) {
+      //       resetElementosDispensa();
+      //       $('#areaDispensa').append(`
+      //       <br/>
+      //       ${nomeLote}
+      //      `);
+      //       $('#areaBotoes').append(`
+
+      //       ${botoesDisp}
+      //       `);
+      //       initElementos();
+      //     }
+      //     if (
+      //       $('#tipoDispensa option:selected').val() ==
+      //       'Distribuição de processos reflexos ou decorrentes' //Distribuição de processos reflexos ou decorrentes - Numero do processo - Data da distribuição e HE
+      //     ) {
+      //       resetElementosDispensa();
+      //       $('#areaDispensa').append(`
+      //       <br/>
+      //       ${processos}
+      //       `);
+      //       $('#areaBotoes').append(`
+
+      //       ${botoesDisp}
+      //       `);
+      //       initElementos();
+      //     }
+      //     if (
+      //       $('#tipoDispensa option:selected').val() ==
+      //       'Participação em TO/CSRF de março de 2019 até março de 2020' //Participação em TO/CSRF de março de 2019 até março de 2020 - DtSessao - Turma - Turno - 4 horas por turno (Vários na mesma)
+      //     ) {
+      //       resetElementosDispensa();
+      //       $('#areaDispensa').append(`
+      //     <br/>
+      //     ${nomeLote}
+      //     `);
+      //       $('#areaBotoes').append(`
+
+      //       ${botoesDisp}
+      //       `);
+      //       initElementos();
+      //     }
+      //   });
     });
   });
   //Outras solicitações
