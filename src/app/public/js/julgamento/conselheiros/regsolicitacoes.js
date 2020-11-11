@@ -544,6 +544,18 @@ function controleForm() {
   As solicitações deverão ser feitas individualmente para cada turno de participação, onde serão abatidas 4 horas por turno.
   </blockquote>
   </div>`;
+  let turnoPart = `
+   <div class='row'>
+    <div class='col s6'>
+    <i class="far fa-question-circle prefix"/>
+    <label for="tipoAfastamento">Selecione o tipo de afastamento/licença:</label>
+    <select required name="tipoAfastamento" id="tipoAfastamento">
+    <option class="form-group" value="Manha">Manhã</option>
+    <option class="form-group" value="Tarde">Tarde</option>
+    </select>
+    </div>
+    </div>
+    `;
   let nomeLote = `
   <div class='row'>
   <div class ='col s3 nomeLote input-field'>
@@ -605,9 +617,18 @@ function controleForm() {
   <blockquote>
   <strong>Importante:</strong> Os afastamentos são aplicáveis <strong>apenas</strong> para efeitos de cálculo das <strong>Metas de Produtividade</strong>. Dúvidas relativas aos <strong>efeitos financeiros</strong> devem ser tratadas diretamente com a <strong>COGEC</strong>.</blockquote>
   </div>`;
+  let dtDistribuicao = `
+  <div class='row'>
+  <div class="form-group dtDist input field col s3">
+  <input id="dtDist" name="dtDist"  type="text" class="datepicker"/>
+  <i class="fas fa-calendar-check prefix"/>
+  <label for="dtDist">Data da Distribuição</label>
+  </div>
+
+  `;
   let processos = `
 <div class='row'>
-<div class ='col s5 numProc input-field'>
+<div class ='col s3 numProc input-field'>
 <i class=" fas fa-calendar-day prefix"/>
 <input id="numProc" placeholder="Nº do Processo. Somente números" name="numProc"type="text" class="validate">
 <label for="numProc">Número do Processo:</label>
@@ -618,7 +639,7 @@ function controleForm() {
 </div>
 </div>
 <div class='row'>
-<div id="mostraProcessos" class="col s5">
+<div id="mostraProcessos" class="col s3">
 <ul class="collection ulProcessos"/>
 </div>
 </div>`;
@@ -662,6 +683,7 @@ function controleForm() {
       initElementos();
       $('#btnProc').click(() => {
         montaLiProc($('#numProc').val());
+        $('#numProc').val('');
       });
     });
   });
@@ -679,6 +701,10 @@ function controleForm() {
       ${botoes}
       `);
       initElementos();
+      $('#btnProc').click(() => {
+        montaLiProc($('#numProc').val());
+        $('#numProc').val('');
+      });
     });
   });
   //Prorrogação de Prazo autorizada pela Presidência do CARF - art. 45, §1º, inciso II, item b do RICARF
@@ -695,6 +721,10 @@ function controleForm() {
       ${botoes}
       `);
       initElementos();
+      $('#btnProc').click(() => {
+        montaLiProc($('#numProc').val());
+        $('#numProc').val('');
+      });
     });
   });
   //Justificativa para deixar de praticar de ato processual (Art. 45, IV RICARF)
@@ -709,6 +739,10 @@ function controleForm() {
       ${botoes}
       `);
       initElementos();
+      $('#btnProc').click(() => {
+        montaLiProc($('#numProc').val());
+        $('#numProc').val('');
+      });
     });
   });
   //Processo Objeto de Retificação de Ata
@@ -727,6 +761,7 @@ function controleForm() {
       initElementos();
       $('#btnProc').click(() => {
         montaLiProc($('#numProc').val());
+        $('#numProc').val('');
       });
     });
   });
@@ -872,7 +907,7 @@ function controleForm() {
       $('#camposSol').append(`
       <h5>${$('#dds').text()}</h5><br/>
       <div id='areaDispensa'>
-      <div class='col s6 offset-s6'>
+      <div class='col s6 offset-s3'>
     <div class="card hoverable cardLaranja">
               <div class="card-content ">
                 <span class="card-title">Somatório de Horas da Solicitação: <span id='somatorioHoras'>0</span></span>
@@ -902,7 +937,7 @@ function controleForm() {
                 <i class="far fa-clock"/>Horas Recebidas em Sorteio Extraordinário
               </div>
               <div class="collapsible-body">
-                 ${processos}
+                 ${nomeLote}
               </div>
             </li>
             <li>
@@ -911,6 +946,7 @@ function controleForm() {
               </div>
               <div class="collapsible-body">
                  ${processos}
+                 ${dtDistribuicao}
               </div>
             </li>
             <li>
@@ -918,7 +954,9 @@ function controleForm() {
                 <i class="fas fa-retweet"/>Participação em TO/CSRF de março de 2019 até março de 2020
               </div>
               <div class="collapsible-body">
-                 ${processos}
+                 ${dataJulgamento}
+                 ${turnoPart}
+                 ${msgTurno}
               </div>
             </li>
             </ul>
@@ -929,88 +967,14 @@ function controleForm() {
       `);
       $('#areaBotoes').append(`
           ${campoObs}
+          ${camposArq}
+          ${botoes}
           `);
       initElementos();
-      //   $('#tipoDispensa').change((e) => {
-      //     resetElementosDispensa();
-      //     proximoDisp();
-      //     if (
-      //       $('#tipoDispensa option:selected').val() ==
-      //       'Excesso de Horas em Lotes de Sorteio' //Excesso de Horas em Lotes de Sorteio - Nome do lote - Mes e Tamanho
-      //     ) {
-      //       resetElementosDispensa();
-      //       $('#areaDispensa').append(`
-      //       <br/>
-      //       ${nomeLote}
-      //   `);
-      //       $('#areaBotoes').append(`
-
-      //       ${botoesDisp}
-      //       `);
-
-      //       initElementos();
-      //     }
-      //     if (
-      //       $('#tipoDispensa option:selected').val() ==
-      //       'Formalização de Voto Vencedor' //Formalização de Voto Vencedor - Número do Processo - Número do Acórdão - HE (Se DtSessao for depois de set/2019 e antes de set/2020 - HE = 3,0. Se DtSessao for depois de set/2020 - 30% >2 e <8) - Data da Sessão
-      //     ) {
-      //       resetElementosDispensa();
-      //       $('#areaDispensa').append(`
-      //       <br/>
-      //       ${processos}
-      //       `);
-      //       $('#areaBotoes').append(`
-
-      //       ${botoesDisp}
-      //       `);
-      //       initElementos();
-      //     }
-      //     if (
-      //       $('#tipoDispensa option:selected').val() ==
-      //       'Horas Recebidas em Sorteio Extraordinário' //Excesso de Horas em Lotes de Sorteio - Nome do lote - Mes e Tamanho
-      //     ) {
-      //       resetElementosDispensa();
-      //       $('#areaDispensa').append(`
-      //       <br/>
-      //       ${nomeLote}
-      //      `);
-      //       $('#areaBotoes').append(`
-
-      //       ${botoesDisp}
-      //       `);
-      //       initElementos();
-      //     }
-      //     if (
-      //       $('#tipoDispensa option:selected').val() ==
-      //       'Distribuição de processos reflexos ou decorrentes' //Distribuição de processos reflexos ou decorrentes - Numero do processo - Data da distribuição e HE
-      //     ) {
-      //       resetElementosDispensa();
-      //       $('#areaDispensa').append(`
-      //       <br/>
-      //       ${processos}
-      //       `);
-      //       $('#areaBotoes').append(`
-
-      //       ${botoesDisp}
-      //       `);
-      //       initElementos();
-      //     }
-      //     if (
-      //       $('#tipoDispensa option:selected').val() ==
-      //       'Participação em TO/CSRF de março de 2019 até março de 2020' //Participação em TO/CSRF de março de 2019 até março de 2020 - DtSessao - Turma - Turno - 4 horas por turno (Vários na mesma)
-      //     ) {
-      //       resetElementosDispensa();
-      //       $('#areaDispensa').append(`
-      //     <br/>
-      //     ${nomeLote}
-      //     `);
-      //       $('#areaBotoes').append(`
-
-      //       ${botoesDisp}
-      //       `);
-      //       initElementos();
-      //     }
-      //   });
+      $('#btnProc').click(() => {
+        montaLiProc($('#numProc').val());
+        $('#numProc').val('');
+      });
     });
   });
   //Outras solicitações
@@ -1089,12 +1053,12 @@ function montaLi(result) {
 function montaLiProc(processo) {
   $('.ulProcessos').append(`
             <li class="collection-item" id='${processo}'>
-            <div>${processo}<a href="#!" class="aClick secondary-content">
+            <div>${processo}<a href="#!" class="removeProc${processo} secondary-content">
             <i class="material-icons red-text">cancel</i>
             </a>
             </div>
             </li>`);
-  $('.aClick').click((e) => {
+  $(`.removeProc${processo}`).click((e) => {
     $(`#${processo}`).remove();
   });
 }
