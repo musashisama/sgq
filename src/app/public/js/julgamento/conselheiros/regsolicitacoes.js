@@ -119,6 +119,42 @@ function resetElementosDispensa() {
   $('#areaBotoes').empty();
 }
 
+function elementosDispensa() {
+  $('#btnLoteEx').click(() => {
+    montaLiDisp($('#numProc').val());
+    $('#numProc').val('');
+  });
+  $('#btnProc').click(() => {
+    montaLiDisp($('#numProc').val());
+    $('#numProc').val('');
+  });
+  $('#btnProc').click(() => {
+    montaLiDisp($('#numProc').val());
+    $('#numProc').val('');
+  });
+  $('#btnProc').click(() => {
+    montaLiDisp($('#numProc').val());
+    $('#numProc').val('');
+  });
+  $('#btnProc').click(() => {
+    montaLiDisp($('#numProc').val());
+    $('#numProc').val('');
+  });
+}
+
+function montaLiDisp(solicitacao) {
+  $('#ulSolicitacoes').append(`
+            <li class="collection-item" id='${solicitacao}'>
+            <div>${solicitacao}<a href="#!" class="removeDisp${solicitacao} secondary-content">
+            <i class="material-icons red-text">cancel</i>
+            </a>
+            </div>
+            </li>`);
+  $(`.removeDisp${solicitacao}`).click((e) => {
+    $(`#${solicitacao}`).remove();
+  });
+}
+
 function initElementos() {
   initDatePicker();
   initSelect();
@@ -219,7 +255,6 @@ function arraySol(array) {
     'Licença em razão de casamento',
     'Licença por motivo de falecimento (cônjuge, companheiro, pais, madastra ou padrasto, filhos, enteados, menor sob guarda ou tutela e irmãos)',
     'Período de férias (marcado perante a RFB)',
-    'Participação em Seminário promovido pelo CARF',
   ];
   let arrayPrazo = [
     'Licença à gestante',
@@ -402,22 +437,6 @@ function controleForm() {
   </a>
   </div>
   </div>`;
-  let botoesDisp = `
-  <div class='row valign-wrapper'>
-   <div class='col s12 left-align'>
-  <a id="btn-voltar" title="Voltar" class="waves-effect waves-purple hoverable z-depth-3 btn blue">
-  <i class="fas fa-backspace left"/>Voltar
-  </a>
-  </div>
-  <div class='col s12 right-align'>
-  <a id="btn-limpar" title="Limpar todos os Campos" class="waves-effect waves-purple hoverable z-depth-3 btn red">
-  <i class="material-icons left">cancel</i>Limpar
-  </a>
-  <a id="btn-proximo" title="Proximo Passo" class="waves-effect waves-blue hoverable z-depth-3 btn green">
-  <i class="material-icons left">send</i>Próximo Passo
-  </a>
-  </div>
-  </div>`;
   let dataJulgamento = `
    <div class='row'>
   <div class="form-group dtJulgamento input field col s3">
@@ -454,12 +473,6 @@ function controleForm() {
   </div>
   </div>
   `;
-  let botaoAdd = `
-  <div class="col s1">
-  <a class="btn-floating btn-small waves-effect waves-light blue hoverable">
-  <i class="material-icons addDoc tooltipped" data-position="bottom" data-tooltip="Clique aqui para incluir mais de um registro na mesma solicitação.">add</i>
-  </a>
-  </div>`;
   let campoPeriodo = `
   <div class='row'>
   <div class="form-group inicioAfastamento input field col s3">
@@ -526,16 +539,6 @@ function controleForm() {
   <label for="observacoes">Observações</label>
   </div>
   </div>`;
-  let campoTurno = `
-  <div class='row'>
-  <div class='col s4'>
-  <label for="turno">Turno de Participação</label>
-  <select required name="turno" id="turno">
-  <option class="form-group" value="Manha">Manhã</option>
-  <option class="form-group" value="Tarde">Tarde</option>
-  </select>
-  </div>
-  </div>`;
   let msgTurno = `
   <div class='row'>
   <blockquote>
@@ -543,48 +546,6 @@ function controleForm() {
   Caso tenha participado de sessão de julgamento em mais de uma turma por turno, selecione <strong>apenas</strong> a primeira turma de participação.
   As solicitações deverão ser feitas individualmente para cada turno de participação, onde serão abatidas 4 horas por turno.
   </blockquote>
-  </div>`;
-  let turnoPart = `
-   <div class='row'>
-    <div class='col s6'>
-    <i class="far fa-question-circle prefix"/>
-    <label for="tipoAfastamento">Selecione o tipo de afastamento/licença:</label>
-    <select required name="tipoAfastamento" id="tipoAfastamento">
-    <option class="form-group" value="Manha">Manhã</option>
-    <option class="form-group" value="Tarde">Tarde</option>
-    </select>
-    </div>
-    </div>
-    `;
-  let nomeLote = `
-  <div class='row'>
-  <div class ='col s3 nomeLote input-field'>
-  <i class="fas fa-th prefix"/>
-  <input id="nomeLote" name="nomeLote" type="text" class="validate"/>
-  <label for="nomeLote">Nome do Lote:</strong></label>
-  </div>
-  <div class ='col s3 mesSorteio input-field'>
-  <i class="far fa-calendar-minus prefix"/>
-  <input id="mesSorteio" name="mesSorteio" type="text" class="validate"/>
-  <label for="mesSorteio">Mês do Sorteio:</strong></label>
-  </div>
-  <div class ='col s3 horasLote input-field'>
-  <i class="far fa-hourglass prefix"/>
-  <input id="horasLote" name="horasLote" type="text" class="validate"/>
-  <label for="horasLote">Quantidade de Horas do Lote:</strong></label>
-  </div>
-  </div>`;
-  let partSessoes = `
-  <div class='row'>
-  <div class="form-group dataSessao input field col s3 ">
-  <input id="dataSessao" name="dataSessao"  type="text" class="datepicker"/>
-  <i class="fas fa-calendar-alt prefix"/>
-  <label for="dataSessao">Data da Sessão de Julgamento</label>
-  </div>
-  <div class ='col s6 sessoes input-field'>
-  <input id="sessoes" name="sessoes" type="number" class="validate"/>
-  <label for="sessoes">Quantidade de sessões:</strong></label>
-  </div>
   </div>`;
   let camposArq = `
   <div class="row">
@@ -611,20 +572,6 @@ function controleForm() {
   </div>
   <div id="enviaArq" class="col s6 valign-wrapper"/>
   </div>
-  `;
-  let msgCogec = `
-  <div class="row">
-  <blockquote>
-  <strong>Importante:</strong> Os afastamentos são aplicáveis <strong>apenas</strong> para efeitos de cálculo das <strong>Metas de Produtividade</strong>. Dúvidas relativas aos <strong>efeitos financeiros</strong> devem ser tratadas diretamente com a <strong>COGEC</strong>.</blockquote>
-  </div>`;
-  let dtDistribuicao = `
-  <div class='row'>
-  <div class="form-group dtDist input field col s3">
-  <input id="dtDist" name="dtDist"  type="text" class="datepicker"/>
-  <i class="fas fa-calendar-check prefix"/>
-  <label for="dtDist">Data da Distribuição</label>
-  </div>
-
   `;
   let processos = `
 <div class='row'>
@@ -772,7 +719,7 @@ function controleForm() {
     $('#camposSol').show('', () => {
       $('#camposSol').append(`
       <h5>${$('#aflm').text()}</h5><br/>
-      ${arraySol('prazo')}
+      ${arraySol('meta')}
       ${campoPeriodo}
       ${diasUteis}
       ${campoObs}
@@ -916,53 +863,158 @@ function controleForm() {
           </div>
     </div>
       <ul id="classesDisp" class="collapsible popout col s6 m12">
+
             <li>
               <div class="collapsible-header">
                 <i class="fas fa-hockey-puck"/>Excesso de Horas em Lotes de Sorteio
               </div>
               <div class="collapsible-body">
-                 ${nomeLote}
+               <div class='row'>
+              <div class ='col s3 nomeLoteEx input-field'>
+              <i class="fas fa-th prefix"/>
+              <input id="nomeLoteEx" name="nomeLoteEx" type="text" class="validate"/>
+              <label for="nomeLoteEx">Nome do Lote:</strong></label>
+              </div>
+              <div class ='col s2 mesSorteioEx input-field'>
+              <i class="far fa-calendar-minus prefix"/>
+              <input id="mesSorteioEx" name="mesSorteioEx" type="text" class="validate"/>
+              <label for="mesSorteioEx">Mês do Sorteio:</strong></label>
+              </div>
+              <div class ='col s2 horasLoteEx input-field'>
+              <i class="far fa-hourglass prefix"/>
+              <input id="horasLoteEx" name="horasLoteEx" type="text" class="validate"/>
+              <label for="horasLoteEx">HE do Lote:</strong></label>
+              </div>
+              <div><a id="btnLoteEx" class="btn-floating btn-small green waves-effect waves-light hoverable z-depth-3" title="Adicionar Lote">
+              <i class="material-icons">add</i>
+              </a></div>
               </div>
             </li>
+
             <li>
               <div class="collapsible-header">
                 <i class="fas fa-feather-alt"/>Formalização de Voto Vencedor
               </div>
               <div class="collapsible-body">
-                 ${processos}
+              <div class='row'>
+              <div class ='col s3 numProcFVV input-field'>
+              <i class=" fas fa-calendar-day prefix"/>
+              <input id="numProcFVV" placeholder="Nº do Processo. Somente números" name="numProcFVV"type="text" class="validate" />
+              <label for="numProcFVV">Número do Processo:</label>
+              </div>
+              <div class ='col s3 numAcoFVV input-field'>
+              <i class=" fas fa-calendar-day prefix"/>
+              <input id="numAcoFVV" placeholder="Nº do Acórdão. Somente números" name="numAcoFVV"type="text" class="validate" />
+              <label for="numAcoFVV">Número do Acórdão:</label>
+              </div>
+              <div class="form-group dtSessaoFVV input field col s2">
+              <input id="dtSessaoFVV" name="dtSessaoFVV"  type="text" class="datepicker"/>
+              <i class="fas fa-calendar-check prefix"/>
+              <label for="dtSessaoFVV">Data da Sessão</label>
+              </div>
+               <div class ='col s2 horasFVV input-field'>
+              <i class="far fa-hourglass prefix"/>
+              <input id="horasFVV" name="horasFVV" type="text" class="validate"/>
+              <label for="horasFVV">HE do Processo:</strong></label>
+              </div>
+              <div><a id="btnProcFVV" class="btn-floating btn-small green waves-effect waves-light hoverable z-depth-3" title="Adicionar Processo">
+              <i class="material-icons">add</i>
+              </a>
+              </div>
+              </div>
               </div>
             </li>
+
             <li>
               <div class="collapsible-header">
                 <i class="far fa-clock"/>Horas Recebidas em Sorteio Extraordinário
               </div>
               <div class="collapsible-body">
-                 ${nomeLote}
+              <div class='row'>
+              <div class ='col s3 nomeLoteSE input-field'>
+              <i class="fas fa-th prefix"/>
+              <input id="nomeLoteSE" name="nomeLoteSE" type="text" class="validate"/>
+              <label for="nomeLoteSE">Nome do Lote:</strong></label>
+              </div>
+              <div class ='col s2 mesSorteioSE input-field'>
+              <i class="far fa-calendar-minus prefix"/>
+              <input id="mesSorteioSE" name="mesSorteioSE" type="text" class="validate"/>
+              <label for="mesSorteioSE">Mês do Sorteio:</strong></label>
+              </div>
+              <div class ='col s2 horasLoteSE input-field'>
+              <i class="far fa-hourglass prefix"/>
+              <input id="horasLoteSE" name="horasLoteSE" type="text" class="validate"/>
+              <label for="horasLoteSE">HE do Lote:</strong></label>
+              </div>
+              <div><a id="btnLoteSE" class="btn-floating btn-small green waves-effect waves-light hoverable z-depth-3" title="Adicionar Lote">
+              <i class="material-icons">add</i>
+              </a></div>
               </div>
             </li>
+
             <li>
               <div class="collapsible-header">
                 <i class="fas fa-link"/>Distribuição de processos reflexos ou decorrentes
               </div>
               <div class="collapsible-body">
-                 ${processos}
-                 ${dtDistribuicao}
+                <div class='row'>
+              <div class ='col s3 numProcRD input-field'>
+              <i class=" fas fa-calendar-day prefix"/>
+              <input id="numProcRD" placeholder="Nº do Processo. Somente números" name="numProcRD"type="text" class="validate" />
+              <label for="numProcRD">Número do Processo:</label>
               </div>
+               <div class="form-group dtDistRD input field col s2">
+              <input id="dtDistRD" name="dtDistRD"  type="text" class="datepicker"/>
+              <i class="fas fa-calendar-check prefix"/>
+              <label for="dtDistRD">Data da Distribuição</label>
+              </div>
+               <div class ='col s2 horasRD input-field'>
+              <i class="far fa-hourglass prefix"/>
+              <input id="horasRD" name="horasRD" type="text" class="validate"/>
+              <label for="horasRD">HE do Processo:</strong></label>
+              </div>
+              <div><a id="btnProcRD" class="btn-floating btn-small green waves-effect waves-light hoverable z-depth-3" title="Adicionar Processo">
+              <i class="material-icons">add</i>
+              </a>
+              </div>
+
+              </div>
+               </div>
             </li>
+
             <li>
               <div class="collapsible-header">
                 <i class="fas fa-retweet"/>Participação em TO/CSRF de março de 2019 até março de 2020
               </div>
               <div class="collapsible-body">
-                 ${dataJulgamento}
-                 ${turnoPart}
+                 ${arraySol('turmaTO')}
+                 <div class='row'>
+                 <div class="form-group dtJulgamento input field col s3">
+                <input id="dtJulgamento" name="dtJulgamento"  type="text" class="datepicker"/>
+                <i class="fas fa-calendar-check prefix"/>
+                <label for="dtJulgamento">Data do Julgamento</label>
+                </div>
+                <div class='col s6'>
+                <i class="far fa-question-circle prefix"/>
+                <label for="tipoAfastamento">Selecione o turno de participação:</label>
+                <select required name="tipoAfastamento" id="tipoAfastamento">
+                <option class="form-group" value="Manha">Manhã</option>
+                <option class="form-group" value="Tarde">Tarde</option>
+                </select>
+                </div>
+                <div><a id="btnPart" class="btn-floating btn-small green waves-effect waves-light hoverable z-depth-3" title="Adicionar Participação">
+                <i class="material-icons">add</i>
+                </a>
+                </div>
+                </div>
                  ${msgTurno}
               </div>
             </li>
             </ul>
             </div>
-      <div id='areaSolicitacoes'/>
-
+      <div id='areaSolicitacoes' col s6>
+      <ul id='ulSolicitacoes' class='collection'/>
+      </div>
             <div id='areaBotoes'/>
       `);
       $('#areaBotoes').append(`
@@ -971,10 +1023,6 @@ function controleForm() {
           ${botoes}
           `);
       initElementos();
-      $('#btnProc').click(() => {
-        montaLiProc($('#numProc').val());
-        $('#numProc').val('');
-      });
     });
   });
   //Outras solicitações
@@ -994,6 +1042,7 @@ function controleForm() {
     });
   });
 }
+
 function pegaArquivos() {
   let a = [];
   $('.collection-item')
@@ -1050,6 +1099,7 @@ function montaLi(result) {
     handleFile({ _id: result._id }, 'DELETE');
   });
 }
+
 function montaLiProc(processo) {
   $('.ulProcessos').append(`
             <li class="collection-item" id='${processo}'>
@@ -1062,6 +1112,7 @@ function montaLiProc(processo) {
     $(`#${processo}`).remove();
   });
 }
+
 function handleFile(arquivo, metodo) {
   let fd;
   if (metodo == 'DELETE') {
