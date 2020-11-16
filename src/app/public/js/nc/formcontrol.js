@@ -90,7 +90,20 @@ function montaModal() {
       });
       insereDados(arrayNC);
     } else {
-      $('#formNC').submit();
+      let arrayNC = [];
+      arrayNC.push({
+        cpfUser: document.formNC.cpfUser.value,
+        docRef: '',
+        mProcUser: document.formNC.mProcUser.value,
+        mProcOrigem: document.formNC.mProcOrigem.value,
+        equipeNC: document.formNC.equipeNC.value,
+        descNC: document.formNC.descNC.value,
+        obsParticipante: document.formNC.obsParticipante.value,
+        acaoImediata: document.formNC.acaoImediata.value,
+        dataNC: document.formNC.dataNC.value,
+        EncCorNC: document.formNC.EncCorNC.value,
+      });
+      insereDados(arrayNC);
     }
   });
   $('.cancela').click(function () {

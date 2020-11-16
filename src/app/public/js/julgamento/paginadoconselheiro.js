@@ -496,7 +496,6 @@ function elementosModal() {
     'Licença para tratamento de saúde',
     'Licença em razão de casamento',
     'Licença por motivo de falecimento (cônjuge, companheiro, pais, madastra ou padrasto, filhos, enteados, menor sob guarda ou tutela e irmãos)',
-    'Participação em Seminário promovido pelo CARF',
     'Período de férias (marcado perante a RFB)',
   ];
 
