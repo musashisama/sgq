@@ -124,19 +124,19 @@ function elementosDispensa() {
     montaLiDisp($('#numProc').val());
     $('#numProc').val('');
   });
-  $('#btnProc').click(() => {
+  $('#btnProcFVV').click(() => {
     montaLiDisp($('#numProc').val());
     $('#numProc').val('');
   });
-  $('#btnProc').click(() => {
+  $('#btnLoteSE').click(() => {
     montaLiDisp($('#numProc').val());
     $('#numProc').val('');
   });
-  $('#btnProc').click(() => {
+  $('#btnProcRD').click(() => {
     montaLiDisp($('#numProc').val());
     $('#numProc').val('');
   });
-  $('#btnProc').click(() => {
+  $('#btnPart').click(() => {
     montaLiDisp($('#numProc').val());
     $('#numProc').val('');
   });
