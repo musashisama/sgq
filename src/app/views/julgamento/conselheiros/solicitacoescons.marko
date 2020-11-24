@@ -13,18 +13,25 @@
             <div class="card hoverable cardAzul">
               <div class="card-content">
                 <span class="card-title">Orientações:</span>
-                As solicitações que constem afastamentos para redução de meta e justificativa de suspensão de prazos e faltas à sessões de julgamento deverão ser efetuadas
-                <strong>após</strong>
-                transcorrido o evento.
-                Caso sejam efetuadas antes do evento, serão
-                <strong>rejeitadas</strong>.
+                <ul>
+                  <li>
+                    <i class="fas fa-bullhorn"/> As solicitações que constem afastamentos para redução de meta e justificativa de suspensão de prazos e faltas à sessões de julgamento deverão ser efetuadas <strong>após</strong> transcorrido o evento.
+                    Caso sejam efetuadas antes do evento, serão <strong>rejeitadas</strong>.
+                  </li>
+                  <li>
+                    <i class="fas fa-bullhorn"/> As solicitações de Dispensa de Sorteio só poderão ser enviadas caso o somatório total seja maior ou igual a 126 horas.
+                  </li>
+                  <li>
+                    <i class="fas fa-bullhorn"/> Retornos de Diligência e Retorno de Embargos não são considerados como horas excedentes para fins de Dispensa de Sorteio.
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
           <ul id="classesSol" class="collapsible popout col s6 m12">
             <li>
               <div class="collapsible-header">
-                <i class="material-icons">filter_drama</i>REGAP - Justificar Suspensão de Prazos Regimentais
+                <i class="fas fa-calendar-plus"/>REGAP - Justificar Suspensão de Prazos Regimentais
               </div>
               <div class="collapsible-body">
                 <div class="collection">
@@ -39,7 +46,7 @@
             </li>
             <li>
               <div class="collapsible-header">
-                <i class="material-icons">place</i>REINP - Redução de Horas da Meta de Produtividade
+                <i class="fas fa-level-down-alt"/>REINP - Redução de Horas da Meta de Produtividade
               </div>
               <div class="collapsible-body">
                 <div class="collection">
@@ -55,21 +62,22 @@
             </li>
             <li>
               <div class="collapsible-header">
-                <i class="material-icons">whatshot</i>Dispensa de Sorteio
+                <i class="fas fa-list-ul"/>Dispensa de Sorteio
               </div>
               <div class="collapsible-body">
                 <div class="collection">
-                  <a href="#!" id="dds" class="collection-item">Dipensa de Sorteio</a>
+                  <a href="#!" id="dds" class="collection-item">Dispensa de Sorteio</a>
                 </div>
               </div>
             </li>
             <li>
               <div class="collapsible-header">
-                <i class="material-icons">whatshot</i>Outras solicitações
+                <i class="fas fa-clinic-medical"/>Justificativa de Faltas e Controle da COGEC
               </div>
               <div class="collapsible-body">
                 <div class="collection">
-                  <a href="#!" id="fsj" class="collection-item">Justificar faltas à sessões de julgamento</a>
+                  <a href="#!" id="fsj" class="collection-item">Justificar Faltas à Sessões de Julgamento</a>
+                  <a href="#!" id="atc" class="collection-item">Licenças e Afastamentos para Controle da COGEC</a>
                 </div>
               </div>
             </li>
@@ -96,6 +104,7 @@
       </div>
     </div>
     <app-footer/>
+    <app-modal/>
     <app-scripts-js/>
     <script src="/estatico/js/libs/plotly-latest.min.js"/>
     <script src="/estatico/js/libs/plotly-locale-pt-br.js"/>
