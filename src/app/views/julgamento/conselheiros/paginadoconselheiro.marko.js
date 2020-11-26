@@ -51,7 +51,7 @@ function render(input, out, __component, component, state) {
     marko_escapeXml(data.user.nome) +
     "</span></strong> - " +
     marko_escapeXml(data.user.tipo) +
-    "</h3><div class=\"row\"><div class=\"col s12\"><p><h6><strong>CPF:</strong><span id=\"cpfCons\">" +
+    "</h3><div class=\"row\"><div class=\"col s12\"><a href=\"/julgamento/conselheiros/portalconselheiros\"><p><strong>Clique aqui para acessar o novo Portal do Conselheiro</strong></p></a><p><h6><strong>CPF:</strong><span id=\"cpfCons\">" +
     marko_escapeXml(data.user.cpf) +
     "</span></h6></p><p><h6><strong>Turma:</strong> " +
     marko_escapeXml(data.user.unidade) +
@@ -79,7 +79,7 @@ function render(input, out, __component, component, state) {
     marko_attr("data-reinp", "" + data.reinp) +
     "></div><br><br><br><p><h4>Produtividade Trimestral</h4></p><p class=\"red white-text\" style=\"font-size:1.5em;\"><strong>ATENÇÃO:</strong> A DIPAJ tem ciência de que os dados do REINP não estão refletindo os valores corretos da produtividade dos Conselheiros. <br><br><strong>Todos</strong> os dados estão sendo verificados <strong>manualmente</strong> e os valores incorretos <strong>não serão utilizados</strong> para qualquer fim. <br><br>Ao <strong>término</strong> do processo de análise, a DIPAJ informará todos os conselheiros por e-mail. <br><br>Nesse ínterim, <strong>favor não enviar</strong> mensagens para a DIPAJ informando dos erros no relatório.</p><div class=\"row\"><div id=\"tabelaReinp\"></div></div><p><h4>Processos</h4></p><div class=\"row\"><div class=\"col s12 right-align\"><a class=\"dropdownDownloadCons waves-effect waves-yellow hoverable z-depth-3 btn-floating red\" href=\"#\" data-target=\"dropdownReinp\"><i class=\"material-icons\">file_download</i></a><ul id=\"dropdownReinp\" class=\"dropdown-content\"><li class=\"divider\" tabindex=\"-1\"></li><li><a class=\"xlsxDownReinp\" href=\"#!\"><i class=\"xlsxDownReinp material-icons\">file_download</i>XLSX</a></li><li class=\"divider\" tabindex=\"-1\"></li><li><a class=\"csvDownReinp\" href=\"#!\"><i class=\"csvDownReinp material-icons\">file_download</i>CSV</a></li><li class=\"divider\" tabindex=\"-1\"></li></ul><a href=\"#!\" id=\"agrupaMes\" title=\"Agrupar/Desagrupar por Mês\" class=\"waves-effect waves-yellow hoverable z-depth-3 btn-floating blue\"><i class=\"material-icons\">unfold_less</i></a></div></div><div class=\"row\"><div id=\"tabelaReinpDet\"></div></div></div><div id=\"stats\" class=\"col s12\"><div class=\"row classProcessos\"><h4>Carga Horária de processos por atividade:</h4><div class=\"col s8\"><div id=\"barrasAtividade\"></div></div></div><div class=\"row\"><h4>Produtividade Mensal e Trimestral:</h4></div><div class=\"row\"><div class=\"col s6\"><div id=\"barrasReinpMensal\"></div></div><div class=\"col s6\"><div id=\"barrasReinpTrimestral\"></div></div></div></div><div id=\"ocorrencias\" class=\"col s12\"><br><div class=\"row\"><div id=\"tabelaOcorrencias\"" +
     marko_attr("data-ocorrencias", "" + data.ocorrencias) +
-    "></div></div></div><div id=\"solicitacoes\" class=\"col s12\"><br><div class=\"row\"><div class=\"col s1 offset-s11\"><a id=\"btnSolModal\" class=\"btn-floating green waves-effect waves-light hoverable z-depth-3 right\" title=\"Fazer nova solicitação\" href=\"#solModal\"><i class=\"material-icons\">add</i></a></div></div><br><div class=\"row\"><div id=\"tabelaSolicitacoes\"" +
+    "></div></div></div><div id=\"solicitacoes\" class=\"col s12\"><br><br><div class=\"row\"><div id=\"tabelaSolicitacoes\"" +
     marko_attr("data-tpSol", "" + data.tpSol) +
     marko_attr("data-solicitacoes", "" + data.solicitacoes) +
     "></div></div><div id=\"solModal\" class=\"modal modal-fixed-footer\"><div class=\"modal-content\"><h4 class=\"hSModal\">Inclusão de Solicitação</h4><div class=\"pSModal\"><div class=\"row\"><div class=\"col s7\"><h5>Tipo de Solicitação</h5><label for=\"tipoSolicitacao\">Selecione o tipo de solicitação:</label><select required name=\"tipoSolicitacao\" id=\"tipoSolicitacao\"><option class=\"form-group\"" +
@@ -100,19 +100,19 @@ function render(input, out, __component, component, state) {
 
   out.w("</select><label for=\"tipoSolicitacao\">Selecione o tipo de solicitação:</label></div></div><div class=\"row\"><div class=\"col s12\"><span id=\"divTipo\"></span></div></div><div class=\"row valign-wrapper\"><div id=\"enviaArq\" class=\"col s6 valign-wrapper\"></div><div id=\"mostraArq\" class=\"col s6\"><ul class=\"collection arqsUp\"></ul></div></div><blockquote><strong>Importante:</strong> Os afastamentos são aplicáveis <strong>apenas</strong> para efeitos de cálculo das <strong>Metas de Produtividade</strong>.<br> Dúvidas relativas aos <strong>efeitos financeiros</strong> devem ser tratadas diretamente com a <strong>COGEC</strong>.</blockquote></div></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda modal-close\">Confirma <i class=\"material-icons right\">send</i></button></div></div></div></div></div></main><footer class=\"page-footer rodape\"></footer>");
 
-  app_modal_tabela_legenda_tag({}, out, __component, "209");
+  app_modal_tabela_legenda_tag({}, out, __component, "208");
 
   out.w("<div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda modal-close\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
 
-  app_footer_tag({}, out, __component, "218");
+  app_footer_tag({}, out, __component, "217");
 
-  app_scripts_js_tag({}, out, __component, "219");
+  app_scripts_js_tag({}, out, __component, "218");
 
   out.w("<script src=\"/estatico/js/libs/plotly-latest.min.js\"></script><script src=\"/estatico/js/libs/plotly-locale-pt-br.js\"></script><script>Plotly.setPlotConfig({locale: 'pt-BR'})</script><script src=\"/estatico/js/libs/quill.min.js\"></script><script src=\"/estatico/js/julgamento/helpers/configTabelaRegap.js\"></script><script src=\"/estatico/js/julgamento/paginadoconselheiro.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "226");
+  await_reorderer_tag({}, out, __component, "225");
 
   out.w("</body></html>");
 }

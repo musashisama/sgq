@@ -41,6 +41,7 @@ cliente.connect(url, opcoes, function (err, cliente) {
   dados.reinp = dbo.collection('reinp');
   dados.regap = dbo.collection('regap');
   dados.votacaoPremio = dbo.collection('votacaoPremio');
+  dados.regSolicitacoes = dbo.collection('regSolicitacoes');
 });
 
 process.on('SIGINT', () =>

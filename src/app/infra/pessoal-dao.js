@@ -146,15 +146,16 @@ class PessoalDao {
 
   editaConsReinp(filtro, registro) {
     return new Promise((resolve, reject) => {
-      this._db.usuarios.updateOne(filtro, { $set: registro }, function (
-        erro,
-        res,
-      ) {
-        if (erro) {
-          return reject('Erro na base de dados. Tente novamente mais tarde.');
-        }
-        return resolve(res);
-      });
+      this._db.usuarios.updateOne(
+        filtro,
+        { $set: registro },
+        function (erro, res) {
+          if (erro) {
+            return reject('Erro na base de dados. Tente novamente mais tarde.');
+          }
+          return resolve(res);
+        },
+      );
     });
   }
 
@@ -192,15 +193,15 @@ class PessoalDao {
 
   excluiOcorrencia(id) {
     return new Promise((resolve, reject) => {
-      this._db.ocorrencias.deleteOne({ _id: new ObjectID(id) }, function (
-        erro,
-        res,
-      ) {
-        if (erro) {
-          return reject('Não foi possível excluir o registro.');
-        }
-        return resolve(res);
-      });
+      this._db.ocorrencias.deleteOne(
+        { _id: new ObjectID(id) },
+        function (erro, res) {
+          if (erro) {
+            return reject('Não foi possível excluir o registro.');
+          }
+          return resolve(res);
+        },
+      );
     });
   }
 
@@ -212,6 +213,60 @@ class PessoalDao {
         }
         return resolve(res);
       });
+    });
+  }
+
+  getRegSolicitacoes(filtro) {
+    return new Promise((resolve, reject) => {
+      this._db.regSolicitacoes
+        .find(filtro)
+        .project()
+        .toArray(function (erro, res) {
+          if (erro) {
+            return reject('Erro na base de dados. Tente novamente mais tarde.');
+          }
+          return resolve(res);
+        });
+    });
+  }
+
+  excluiRegSolicitacao(id) {
+    return new Promise((resolve, reject) => {
+      this._db.regSolicitacoes.deleteOne(
+        { _id: new ObjectID(id) },
+        function (erro, res) {
+          if (erro) {
+            return reject('Não foi possível excluir o registro.');
+          }
+          return resolve(res);
+        },
+      );
+    });
+  }
+
+  cadastraRegSolicitacao(registro) {
+    return new Promise((resolve, reject) => {
+      this._db.regSolicitacoes.insertOne(registro, function (erro, res) {
+        if (erro) {
+          return reject('Não foi possível inserir o registro.');
+        }
+        return resolve(res);
+      });
+    });
+  }
+
+  editaRegSolicitacao(registro) {
+    return new Promise((resolve, reject) => {
+      this._db.regSolicitacoes.updateOne(
+        { uniqueId: registro.uniqueId },
+        { $set: registro },
+        function (erro, res) {
+          if (erro) {
+            return reject('Erro na base de dados. Tente novamente mais tarde.');
+          }
+          return resolve(res);
+        },
+      );
     });
   }
 
@@ -231,15 +286,15 @@ class PessoalDao {
 
   excluiSolicitacao(id) {
     return new Promise((resolve, reject) => {
-      this._db.solicitacoes.deleteOne({ _id: new ObjectID(id) }, function (
-        erro,
-        res,
-      ) {
-        if (erro) {
-          return reject('Não foi possível excluir o registro.');
-        }
-        return resolve(res);
-      });
+      this._db.solicitacoes.deleteOne(
+        { _id: new ObjectID(id) },
+        function (erro, res) {
+          if (erro) {
+            return reject('Não foi possível excluir o registro.');
+          }
+          return resolve(res);
+        },
+      );
     });
   }
 
@@ -287,15 +342,15 @@ class PessoalDao {
 
   excluitpSolicitacao(id) {
     return new Promise((resolve, reject) => {
-      this._db.tpSolicitacoes.deleteOne({ _id: new ObjectID(id) }, function (
-        erro,
-        res,
-      ) {
-        if (erro) {
-          return reject('Não foi possível excluir o registro.');
-        }
-        return resolve(res);
-      });
+      this._db.tpSolicitacoes.deleteOne(
+        { _id: new ObjectID(id) },
+        function (erro, res) {
+          if (erro) {
+            return reject('Não foi possível excluir o registro.');
+          }
+          return resolve(res);
+        },
+      );
     });
   }
 

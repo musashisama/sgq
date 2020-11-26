@@ -58,6 +58,8 @@ class JulgamentoControlador {
       portalCojul: '/julgamento/restrito/portalcojul',
       gestaoPortalCojul: '/julgamento/restrito/gestaoportalcojul',
       gestaosolicitacoes: '/julgamento/restrito/gestaosolicitacoes',
+      gestaoregsolicitacoes: '/julgamento/restrito/gestaoregsolicitacoes',
+      detalhasolicitacao: '/julgamento/restrito/detalhasolicitacao/:id',
       cadastrafaqdipaj: '/julgamento/restrito/cadastrafaqdipaj/:id',
       gestaoGC: '/julgamento/restrito/gestaoGC/:id',
       arqdown: '/julgamento/restrito/arqdown/:id',
@@ -87,6 +89,7 @@ class JulgamentoControlador {
       solicitacoes: '/julgamento/conselheiros/solicitacoes',
       ocorrencias: '/julgamento/conselheiros/ocorrencias',
       regsolicitacoes: '/julgamento/conselheiros/registro-solicitacoes',
+      consolicitacoes: '/julgamento/conselheiros/acompanha-solicitacoes',
       arquivos: '/julgamento/conselheiros/arquivos',
       regapindividual: '/julgamento/conselheiros/regap',
       reinpindividual: '/julgamento/conselheiros/reinp',
@@ -454,20 +457,114 @@ class JulgamentoControlador {
 
   handleRegSolicitacoes() {
     return function (req, resp) {
-      const pessoalDao = new PessoalDao(conn);
-      const julgamentoDao = new JulgamentoDao(conn);
-      pessoalDao.getUsers({ cpf: req.user.cpf }).then((user) => {
-        julgamentoDao
-          .getCal({
-            classNames: CSVHandler.semanaCores(user[0].unidade),
-          })
-          .then((cal) => {
-            resp.marko(templates.julgamento.solicitacoescons, {
-              cal: JSON.stringify(cal),
-              user: user[0],
+      if (req.method == 'GET') {
+        const pessoalDao = new PessoalDao(conn);
+        const julgamentoDao = new JulgamentoDao(conn);
+        pessoalDao.getUsers({ cpf: req.user.cpf }).then((user) => {
+          julgamentoDao
+            .getCal({
+              classNames: CSVHandler.semanaCores(user[0].unidade),
+            })
+            .then((cal) => {
+              resp.marko(templates.julgamento.solicitacoescons, {
+                cal: JSON.stringify(cal),
+                user: JSON.stringify(user[0]),
+              });
+            });
+        });
+      }
+      if (req.method == 'POST') {
+        const pessoalDao = new PessoalDao(conn);
+        pessoalDao.cadastraRegSolicitacao(req.body).then((res) => {
+          let URL = url.parse(
+            (req.headers.referrer || req.headers.referer).replace('/login', ''),
+          );
+          let endereco =
+            req.body.setor == 'DIPAJ'
+              ? 'dipaj@carf.economia.gov.br'
+              : 'segep@carf.economia.gov.br';
+          let urlMail = req.body.setor == 'DIPAJ' ? 'julgamento' : 'pessoal';
+          Mailer.enviaMail(
+            endereco,
+            `[SGI] Nova solicitação - ${req.body.nome}`,
+            `<br/>
+            ${req.body.html}
+                    <p><a href="http://${URL.host}/${urlMail}/restrito/detalhasolicitacao/${req.body.uniqueId}"><strong>Gerenciar Solicitações</strong></a></p>
+                    `,
+          );
+          resp.send(req.body.uniqueId);
+        });
+      }
+    };
+  }
+
+  handleRegSolicitacoesDipaj() {
+    return function (req, resp) {
+      if (req.method == 'GET') {
+        const pessoalDao = new PessoalDao(conn);
+        pessoalDao.getRegSolicitacoes().then((solicitacoes) => {
+          resp.marko(templates.julgamento.gestaoregsolicitacoes, {
+            solicitacoes: JSON.stringify(solicitacoes),
+          });
+        });
+      }
+      if (req.method == 'POST') {
+        const pessoalDao = new PessoalDao(conn);
+        pessoalDao.cadastraRegSolicitacao(req.body).then((res) => {
+          resp.send(req.body.uniqueId);
+        });
+      }
+    };
+  }
+
+  handleDetalhaSolicitacoesDipaj() {
+    return function (req, resp) {
+      if (req.method == 'GET') {
+        const pessoalDao = new PessoalDao(conn);
+        pessoalDao
+          .getRegSolicitacoes({ uniqueId: req.params.id })
+          .then((solicitacao) => {
+            resp.marko(templates.julgamento.detalhasolicitacao, {
+              solicitacao: JSON.stringify(solicitacao[0]),
             });
           });
-      });
+      }
+      if (req.method == 'POST') {
+        const pessoalDao = new PessoalDao(conn);
+        req.body.servDipaj = req.user.cpf;
+        pessoalDao.editaRegSolicitacao(req.body).then((res) => {
+          resp.send(res);
+        });
+      }
+    };
+  }
+
+  handleConsSolicitacoes() {
+    return function (req, resp) {
+      if (req.method == 'GET') {
+        const pessoalDao = new PessoalDao(conn);
+        const julgamentoDao = new JulgamentoDao(conn);
+        pessoalDao.getUsers({ cpf: req.user.cpf }).then((user) => {
+          julgamentoDao
+            .getCal({
+              classNames: CSVHandler.semanaCores(user[0].unidade),
+            })
+            .then((cal) => {
+              pessoalDao
+                .getRegSolicitacoes({ cpf: req.user.cpf })
+                .then((solicitacoes) => {
+                  resp.marko(templates.julgamento.consolicitacoes, {
+                    cal: JSON.stringify(cal),
+                    user: JSON.stringify(user[0]),
+                    solicitacoes: JSON.stringify(solicitacoes),
+                  });
+                });
+            });
+        });
+      }
+      if (req.method == 'POST') {
+        console.log(req.body);
+      }
     };
   }
 
@@ -935,7 +1032,6 @@ class JulgamentoControlador {
       resp.marko(templates.julgamento.carregacsv, { dados: '' });
     };
   }
-
   //ESTOQUE
   carregaPaginaDiag() {
     return function (req, resp) {
@@ -1130,42 +1226,16 @@ class JulgamentoControlador {
       );
     };
   }
-
   arquivoDown() {
     return function (req, resp) {
       let id = new ObjectID(req.params.id);
       const fileDao = new FileDao(conn);
       fileDao.getArq({ _id: id }).then((arq) => {
-        // let arquivo = fs.createReadStream(
-        //   new Buffer.from(arq[0].file_data.buffer, 'binary'),
-        // );
-        fs.writeFile(arq[0].nome, arq[0].file_data.buffer, (err) => {
-          if (err) {
-            resp.status(404);
-          }
-          resp.download(arq[0].nome);
-          fs.unlink(arq[0].nome, (error) => {
-            if (error) {
-              console.log(`Erro: ${error}`);
-              resp.status(404);
-            }
-          });
+        resp.writeHead(200, {
+          'Content-Type': 'application/pdf',
+          //'Content-Disposition': 'attachment; filename="' + arq[0].nome + '"'
         });
-        // resp.writeHead(200, {
-        //   'Content-Type': 'application/octet-stream',
-        //   'Content-Disposition': 'attachment; filename=' + ,
-        // });
-        // arquivo.pipe(resp);
-        // resp.status(200);
-        // console.log(arq[0].nome, arq[0].arquivo.type);
-        // resp.set({
-        //   'Cache-Control': 'no-cache',
-        //   'Content-Type': arq[0].arquivo.type,
-        //   'Content-Disposition': 'attachment; filename=' + arq[0].nome,
-        // });
-        //resp.download(arquivo, arq[0].nome);
-        //resp.end(arq[0].file_data.buffer);
-        //resp.end(new Buffer.from(arq[0].file_data.buffer, 'binary'));
+        resp.end(new Buffer.from(arq[0].file_data.buffer, 'binary'));
       });
     };
   }
@@ -1220,7 +1290,6 @@ class JulgamentoControlador {
       }
     };
   }
-
   handleCorrigeReinp() {
     return function (req, resp) {
       if (req.method == 'GET') {

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <app-scripts-css/>
+  <body>
+    <app-header/>
+    <main class="conteudoPrincipal">
+      <app-navbar id="slide-out" class="sidenav"/>
+      <div class="container">
+        <h3 class="center-align titulo">Acompanhamento de Solicitações</h3>
+        <div id="solicitacoes" data-solicitacoes=`${data.solicitacoes}`/>
+        <div class="row">
+          <div class="col s12 m12">
+            <div class="card hoverable cardAzul">
+              <div class="card-content">
+                <span class="card-title">Orientações:</span>
+                <ul>
+                  <li>
+                    <i class="fas fa-bullhorn"/> As solicitações que constem afastamentos para redução de meta e justificativa de suspensão de prazos e faltas à sessões de julgamento deverão ser efetuadas <strong>após</strong> transcorrido o evento.
+                    Caso sejam efetuadas antes do evento, serão <strong>rejeitadas</strong>.
+                  </li>
+                  <li>
+                    <i class="fas fa-bullhorn"/> As solicitações de Dispensa de Sorteio só poderão ser enviadas caso o somatório total seja maior ou igual a 126 horas.
+                  </li>
+                  <li>
+                    <i class="fas fa-bullhorn"/> Retornos de Diligência e Retorno de Embargos não são considerados como horas excedentes para fins de Dispensa de Sorteio.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12 right-align">
+              <a href="#!" id="agrupaSol" title="Agrupar/Desagrupar por Tipo de Solicitação" class="waves-effect waves-green hoverable z-depth-3 btn-floating blue">
+                <i class="material-icons">unfold_less</i>
+              </a>
+              <app-drop-download/>
+              <div class="form-group input-field  col s3">
+                <select class="status" name="status" id="status">
+                  <option class="form-group" value="Todas" selected>Todas</option>
+                  <option class="form-group" value="Encaminhada para Análise">Encaminhada para Análise</option>
+                  <option class="form-group" value="Aprovada">Aprovada</option>
+                  <option class="form-group" value="Rejeitada">Rejeitada</option>
+                </select>
+                <label>Selecione o status para filtrar:</label>
+              </div>
+            </div>
+          </div>
+          <div id="tabelaSolicitacoes"/>
+          <div class="solAprovada"/>
+          <div class="solEncaminhada "/>
+          <div class="solRejeitada"/>
+        </div>
+        <br/>
+      </div>
+    </main>
+    <footer class="page-footer rodape"/>
+    <app-modal-tabela-legenda/>
+    <!--Modal Structure-->
+    <div id="modal1" class="modal">
+      <div class="modal-content">
+        <h4 class="hModal">Modal Header</h4>
+        <p class="pModal"/>
+      </div>
+      <div class="modal-footer">
+        <button class="btn waves-effect waves-light concorda modal-close">
+          Fechar <i class="material-icons right">send</i>
+        </button>
+      </div>
+    </div>
+    <app-footer/>
+    <app-modal/>
+    <app-scripts-js/>
+    <script src="/estatico/js/libs/plotly-latest.min.js"/>
+    <script src="/estatico/js/libs/plotly-locale-pt-br.js"/>
+    <script>Plotly.setPlotConfig({locale: 'pt-BR'})</script>
+    <script src="/estatico/js/libs/quill.min.js"/>
+    <script src="/estatico/js/julgamento/conselheiros/consolicitacoes.js"/>
+  </body>
+</html>

@@ -77,8 +77,13 @@ function montaModal(html, dados) {
   $('.hModal').text('Confirmação de Registro de Solicitação');
   $('.pModal').append(
     `<p class="pModal ">
-            <br/>
-            Verifique se os dados abaixo estão corretos e clique em "Confirma" para efetuar o registro.<br/><br/>
+            <p><strong>Conselheiro:</strong> ${
+              JSON.parse($('#dataUser').attr('data-user')).nome
+            }</p>
+            <p><strong>CPF:</strong> ${
+              JSON.parse($('#dataUser').attr('data-user')).cpf
+            }</p>
+            <p><strong>Verifique</strong> se os dados abaixo estão corretos e clique em <strong>"Confirma"</strong> para efetuar o registro:</p>
 
             ${html}
 
@@ -87,13 +92,15 @@ function montaModal(html, dados) {
   $('.concorda').click(function () {
     $('.pModal').text('');
     $('.hModal').text('');
-    console.log(dados);
+    dados.html = html;
+    handleSOL(dados, 'POST', 'DIPAJ');
     $('#btn-enviar').removeClass('modal-trigger');
   });
   $('.cancela').click(function () {
     $('.pModal').text('');
     $('.hModal').text('');
     $('#btn-enviar').removeClass('modal-trigger');
+    $('.modal').modal('destroy');
   });
 }
 
@@ -163,7 +170,7 @@ function valorFVV(data, he) {
     } else return he;
   } else return 0;
 }
-
+//Faz validações de todos os campos de solicitações de dispensa e envia os valores e grupos de dispensa para a função de montagem e formatação  da listagem de solicitações.
 function elementosDispensa() {
   $('#btnLoteEx').click(() => {
     if (
@@ -175,13 +182,16 @@ function elementosDispensa() {
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
     } else {
       montaLiDisp(
-        `Tipo: Excesso de Horas em Lotes de Sorteio, Nome do Lote: ${$(
+        `<strong>Tipo:</strong> Excesso de Horas em Lotes de Sorteio, <strong>Nome do Lote:</strong> ${$(
           '#nomeLoteEx',
-        ).val()}, Mês do Sorteio: ${$(
+        ).val()}, <strong>Mês do Sorteio:</strong> ${$(
           '#mesSorteioEx',
-        ).val()}, Horas em Excesso do Lote: ${+$('#horasLoteEx').val() - 126}`,
+        ).val()}, <strong>Horas em Excesso do Lote:</strong> ${
+          +$('#horasLoteEx').val() - 126
+        }`,
         moment().unix(),
         +$('#horasLoteEx').val() - 126,
+        'G1',
       );
       $('#nomeLoteEx').val('');
       $('#mesSorteioEx').val('');
@@ -199,11 +209,11 @@ function elementosDispensa() {
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
     } else {
       montaLiDisp(
-        `Tipo: Formalização de Voto Vencedor, Número do Processo: ${$(
+        `<strong>Tipo:</strong> Formalização de Voto Vencedor, </strong>Número do Processo:<strong> ${$(
           '#numProcFVV',
-        ).val()}, Número do Acórdão: ${$(
+        ).val()}, <strong>Número do Acórdão:</strong> ${$(
           '#numAcoFVV',
-        ).val()}, Data da Sessão: ${$(
+        ).val()}, <strong>Data da Sessão:</strong> ${$(
           '#dtSessaoFVV',
         ).val()}, HE CARF: ${+valorFVV(
           $('#dtSessaoFVV').val(),
@@ -211,7 +221,8 @@ function elementosDispensa() {
         )}`,
         moment().unix(),
         +valorFVV($('#dtSessaoFVV').val(), $('#horasFVV').val()),
-        $('#dtSessaoFVV').val(),
+        //$('#dtSessaoFVV').val(),
+        'G2',
       );
       $('#numProcFVV').val('');
       $('#numAcoFVV').val('');
@@ -229,13 +240,16 @@ function elementosDispensa() {
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
     } else {
       montaLiDisp(
-        `Tipo: Horas Recebidas em Sorteio Extraordinário, Nome do Lote/nº do Processo: ${$(
+        `<strong>Tipo:</strong> Horas Recebidas em Sorteio Extraordinário, <strong>Nome do Lote/nº do Processo:</strong> ${$(
           '#nomeLoteSE',
-        ).val()}, Mês do Sorteio: ${$(
+        ).val()}, <strong>Mês do Sorteio:</strong> ${$(
           '#mesSorteioSE',
-        ).val()}, Horas do Lote/Processo: ${+$('#horasLoteSE').val()}`,
+        ).val()}, <strong>Horas do Lote/Processo:</strong> ${+$(
+          '#horasLoteSE',
+        ).val()}`,
         moment().unix(),
         +$('#horasLoteSE').val(),
+        'G1',
       );
       $('#nomeLoteSE').val('');
       $('#mesSorteioSE').val('');
@@ -252,13 +266,14 @@ function elementosDispensa() {
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
     } else {
       montaLiDisp(
-        `Tipo: Distribuição de Processos Reflexos ou Decorrentes, Número do Processo: ${$(
+        `<strong>Tipo:</strong> Distribuição de Processos Reflexos ou Decorrentes, <strong>Número do Processo:</strong> ${$(
           '#numProcRD',
-        ).val()}, Data da Distribuição: ${$('#dtDistRD').val()}, HE CARF: ${+$(
-          '#horasRD',
-        ).val()}`,
+        ).val()}, <strong>Data da Distribuição:</strong> ${$(
+          '#dtDistRD',
+        ).val()}, <strong>HE CARF:</strong> ${+$('#horasRD').val()}`,
         moment().unix(),
         +$('#horasRD').val(),
+        'G1',
       );
       $('#numProcRD').val('');
       $('#dtDistRD').val('');
@@ -271,47 +286,49 @@ function elementosDispensa() {
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
     } else {
       montaLiDisp(
-        `Tipo: Participação em TO/CSRF de março de 2019 até março de 2020, Turma de Participação: ${$(
+        `<strong>Tipo:</strong> Participação em TO/CSRF de março de 2019 até março de 2020, <strong>Turma de Participação:</strong> ${$(
           '#tipoAfastamento option:selected',
-        ).val()}, Data do Julgamento: ${$('#dtJulgamento').val()}, Turno: ${$(
+        ).val()}, <strong>Data do Julgamento:</strong> ${$(
+          '#dtJulgamento',
+        ).val()}, <strong>Turno:</strong> ${$(
           '#turnoPart option:selected',
         ).val()}, HE CARF: 4`,
         moment().unix(),
         4,
+        'G2',
       );
       $('#dtJulgamento').val('');
     }
   });
   $('#btnSeminario').click(() => {
     montaLiDisp(
-      `Tipo: Participação em Seminário Promovido pelo CARF, Data de Participação: ${$(
+      `<strong>Tipo:</strong> Participação em Seminário Promovido pelo CARF, <strong>Data de Participação:</strong> ${$(
         '#turnoSeminario option:selected',
-      ).text()}, HE CARF:${+$('#turnoSeminario option:selected').val()}`,
+      ).text()}, <strong>HE CARF:</strong>${+$(
+        '#turnoSeminario option:selected',
+      ).val()}`,
       moment().unix(),
       +$('#turnoSeminario option:selected').val(),
+      'G2',
     );
   });
   $('#btnProcAdHoc').click(() => {
-    if (
-      !$('#numProcAdHoc').val() ||
-      !$('#dtDistAdHoc').val() ||
-      !$('#horasAdHoc').val()
-    ) {
+    if (!$('#numProcAdHoc').val() || !$('#dtDistAdHoc').val()) {
       var toastHTML = `<span>Todos os campos devem ser preenchidos.</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
     } else {
       montaLiDisp(
-        `Tipo: Relatoria de Processos <em>ad hoc</em>, Número do Processo: ${$(
+        `<strong>Tipo:</strong> Relatoria de Processos <em>ad hoc</em>, <strong>Número do Processo:</strong> ${$(
           '#numProcAdHoc',
-        ).val()}, Data da Distribuição: ${$(
+        ).val()}, <strong>Data da Distribuição:</strong> ${$(
           '#dtDistAdHoc',
-        ).val()}, HE CARF: ${+$('#horasAdHoc').val()}`,
+        ).val()}, <strong>HE CARF:</strong> 2`,
         moment().unix(),
-        +$('#horasAdHoc').val(),
+        2,
+        'G2',
       );
       $('#numProcAdHoc').val('');
       $('#dtDistAdHoc').val('');
-      $('#horasAdHoc').val('');
     }
   });
   $('#btnProcDev').click(() => {
@@ -324,13 +341,14 @@ function elementosDispensa() {
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
     } else {
       montaLiDisp(
-        `Tipo: Processos Devolvidos Por Impedimento, Suspeição ou por Impossibilidade de Julgamento, Número do Processo: ${$(
+        `<strong>Tipo:</strong> Processos Devolvidos Por Impedimento, Suspeição ou por Impossibilidade de Julgamento, <strong>Número do Processo:</strong> ${$(
           '#numProcDev',
-        ).val()}, Data da Distribuição: ${$('#dtDistDev').val()}, HE CARF: ${+$(
-          '#horasDev',
-        ).val()}`,
+        ).val()}, <strong>Data da Distribuição:</strong> ${$(
+          '#dtDistDev',
+        ).val()}, <strong>HE CARF:</strong> ${+$('#horasDev').val()}`,
         moment().unix(),
         +-$('#horasDev').val(),
+        'G1',
       );
       $('#numProcDev').val('');
       $('#dtDistDev').val('');
@@ -347,7 +365,19 @@ function montaLiPart(solicitacao, id, valor) {
             </a>
             </div>
             </li>`);
+  +$('#somatorioHoras').html(+$('#somatorioHoras').html() + valor);
+  if (+$('#somatorioHoras').html() >= 126) {
+    $('#cardSoma').removeClass('cardLaranja');
+    $('#cardSoma').addClass('cardVerde');
+  }
+  if (+$('#somatorioHoras').html() < 126) {
+    $('#cardSoma').removeClass('cardVerde');
+    $('#cardSoma').addClass('cardLaranja');
+  }
   $(`.removePart${id}`).click((e) => {
+    +$('#somatorioHoras').html(
+      +$('#somatorioHoras').html() - +$(`.removePart${id}`).attr('data-valor'),
+    );
     $(`#${id}`).remove();
   });
 }
@@ -357,19 +387,36 @@ function pegaParts() {
   $('.collection-parts')
     .get()
     .forEach((c) => {
-      parts.push('<br />' + $(c).text());
+      parts.push(
+        '<br />' +
+          $(c)
+            .text()
+            .replace(/(\r\n|\n|\r)/gm, ''),
+      );
     });
   return parts;
 }
 
-function montaLiDisp(solicitacao, id, valor) {
+function montaLiDisp(solicitacao, id, valor, grupo) {
   $('#ulSolicitacoes').append(`
             <li class="collection-item collection-disp" id='${id}'>
-            <div>${solicitacao}<a href="#!" data-valor=${+valor} class="removeDisp${id}  secondary-content">
+            <div>${solicitacao}<a href="#!" data-G1=${
+    grupo == 'G1' ? +valor : 0
+  } data-G2=${
+    grupo == 'G2' ? +valor : 0
+  } data-valor=${+valor} class="removeDisp${id}  secondary-content">
             <i class="red-text	far fa-trash-alt"/>
             </a>
             </div>
             </li>`);
+  if (grupo == 'G1') {
+    $('#G1').html(+$('#G1').html() + +valor);
+    console.log($('#G1').html());
+  }
+  if (grupo == 'G2') {
+    $('#G2').html(+$('#G2').html() + +valor);
+    console.log($('#G2').html());
+  }
   +$('#somatorioHoras').html(+$('#somatorioHoras').html() + valor);
   if (+$('#somatorioHoras').html() >= 126) {
     $('#cardSoma').removeClass('cardLaranja');
@@ -380,6 +427,8 @@ function montaLiDisp(solicitacao, id, valor) {
     $('#cardSoma').addClass('cardLaranja');
   }
   $(`.removeDisp${id}`).click((e) => {
+    +$('#G1').html(+$('#G1').html() - +$(`.removeDisp${id}`).attr('data-G1'));
+    +$('#G2').html(+$('#G2').html() - +$(`.removeDisp${id}`).attr('data-G2'));
     +$('#somatorioHoras').html(
       +$('#somatorioHoras').html() - +$(`.removeDisp${id}`).attr('data-valor'),
     );
@@ -400,7 +449,12 @@ function pegaDisp() {
   $('.collection-disp')
     .get()
     .forEach((c) => {
-      disp.push('<br />' + $(c).text());
+      disp.push(
+        '<br />' +
+          $(c)
+            .text()
+            .replace(/(\r\n|\n|\r)/gm, ''),
+      );
     });
   return disp;
 }
@@ -800,7 +854,7 @@ function controleForm() {
   <blockquote>
   <strong>Importante:</strong>
   Caso tenha participado de sessão de julgamento em mais de uma turma por turno, selecione <strong>apenas</strong> a primeira turma de participação.
-  As solicitações deverão ser feitas individualmente para cada turno de participação, onde serão abatidas 4 horas por turno.
+  As solicitações deverão ser feitas individualmente para cada turno de participação, onde serão abatidas 4 horas por turno. Caso haja mais de uma solicitação para <strong>uma mesma data e turno</strong>, <strong>todas serão rejeitadas.</strong>
   </blockquote>
   </div>`;
   let camposArq = `
@@ -881,13 +935,15 @@ function controleForm() {
         } else {
           let html = `
           <div class='row'>
-          <p>REGAP: ${$('#aflp').text()}</p>
-          <p>Tipo: ${$('#tipoAfastamento option:selected').val()}</p>
-          <p>Início: ${$('#inicioAfastamento').val()}</p>
-          <p>Fim: ${$('#fimAfastamento').val()}</p>
-          <p>Dias: ${diff}</p>
-          <p>Observações: ${$('#observacoes').val()}</p>
-          <p>Arquivos:${$('.arqsUp').children().text()}</p>
+          <h5>REGAP: ${$('#aflp').text()}</h5>
+          <p><strong>Tipo:</strong> ${$(
+            '#tipoAfastamento option:selected',
+          ).val()}</p>
+          <p><strong>Início:</strong> ${$('#inicioAfastamento').val()}</p>
+          <p><strong>Fim:</strong> ${$('#fimAfastamento').val()}</p>
+          <p><strong>Dias:</strong> ${diff}</p>
+          <p><strong>Observações:</strong> ${$('#observacoes').val()}</p>
+          <p><strong>Arquivos:</strong>${pegaArquivos(true)}</p>
           `;
           let dados = {
             uniqueId: moment().unix(),
@@ -901,6 +957,7 @@ function controleForm() {
               arquivos: pegaArquivos(),
             },
           };
+          initModal();
           $('#btn-enviar').addClass('modal-trigger');
           montaModal(html, dados);
         }
@@ -946,13 +1003,13 @@ function controleForm() {
         } else {
           let html = `
           <div class='row'>
-          <p>REGAP: ${$('#pvv').text()}</p>
-          <p>Quantidade de Dias a serem Prorrogados: ${$(
+          <h5>REGAP: ${$('#pvv').text()}</h5>
+          <p><strong>Quantidade de Dias a serem Prorrogados:</strong> ${$(
             '#diasProrrogacao',
           ).val()}</p>
-          <p>Processo(s): ${pegaProcs()}</p>
-          <p>Observações: ${$('#observacoes').val()}</p>
-          <p>Arquivos:${$('.arqsUp').children().text()}</p>
+          <p><strong>Processo(s):</strong> ${pegaProcs()}</p>
+          <p><strong>Observações:</strong> ${$('#observacoes').val()}</p>
+          <p><strong>Arquivos:</strong>${pegaArquivos(true)}</p>
           `;
           let dados = {
             uniqueId: moment().unix(),
@@ -964,6 +1021,7 @@ function controleForm() {
               arquivos: pegaArquivos(),
             },
           };
+          initModal();
           $('#btn-enviar').addClass('modal-trigger');
           montaModal(html, dados);
         }
@@ -1009,13 +1067,13 @@ function controleForm() {
         } else {
           let html = `
           <div class='row'>
-          <p>REGAP: ${$('#ppi').text()}</p>
-          <p>Quantidade de Dias a serem Prorrogados: ${$(
+          <h5>REGAP: ${$('#ppi').text()}</h5>
+          <p><strong>Quantidade de Dias a serem Prorrogados:</strong> ${$(
             '#diasProrrogacao',
           ).val()}</p>
-          <p>Processo(s): ${pegaProcs()}</p>
-          <p>Observações: ${$('#observacoes').val()}</p>
-          <p>Arquivos:${$('.arqsUp').children().text()}</p>
+          <p><strong>Processo(s):</strong> ${pegaProcs()}</p>
+          <p><strong>Observações:</strong> ${$('#observacoes').val()}</p>
+          <p><strong>Arquivos:</strong>${pegaArquivos(true)}</p>
           `;
           let dados = {
             uniqueId: moment().unix(),
@@ -1027,6 +1085,7 @@ function controleForm() {
               arquivos: pegaArquivos(),
             },
           };
+          initModal();
           $('#btn-enviar').addClass('modal-trigger');
           montaModal(html, dados);
         }
@@ -1072,13 +1131,13 @@ function controleForm() {
         } else {
           let html = `
           <div class='row'>
-          <p>REGAP: ${$('#ppa').text()}</p>
-          <p>Quantidade de Dias a serem Prorrogados: ${$(
+          <h5>REGAP: ${$('#ppa').text()}</h5>
+          <p><strong>Quantidade de Dias a serem Prorrogados:</strong> ${$(
             '#diasProrrogacao',
           ).val()}</p>
-          <p>Processo(s): ${pegaProcs()}</p>
-          <p>Observações: ${$('#observacoes').val()}</p>
-          <p>Arquivos:${$('.arqsUp').children().text()}</p>
+          <p><strong>Processo(s):</strong> ${pegaProcs()}</p>
+          <p><strong>Observações:</strong> ${$('#observacoes').val()}</p>
+          <p><strong>Arquivos:</strong>${pegaArquivos(true)}</p>
           `;
           let dados = {
             uniqueId: moment().unix(),
@@ -1090,6 +1149,7 @@ function controleForm() {
               arquivos: pegaArquivos(),
             },
           };
+          initModal();
           $('#btn-enviar').addClass('modal-trigger');
           montaModal(html, dados);
         }
@@ -1130,10 +1190,10 @@ function controleForm() {
         } else {
           let html = `
           <div class='row'>
-          <p>REGAP: ${$('#dpa').text()}</p>
-          <p>Processo(s): ${pegaProcs()}</p>
-          <p>Observações: ${$('#observacoes').val()}</p>
-          <p>Arquivos:${$('.arqsUp').children().text()}</p>
+          <h5>REGAP: ${$('#dpa').text()}</h5>
+          <p><strong>Processo(s):</strong> ${pegaProcs()}</p>
+          <p><strong>Observações:</strong> ${$('#observacoes').val()}</p>
+          <p><strong>Arquivos:</strong>${pegaArquivos(true)}</p>
           `;
           let dados = {
             uniqueId: moment().unix(),
@@ -1144,6 +1204,7 @@ function controleForm() {
               arquivos: pegaArquivos(),
             },
           };
+          initModal();
           $('#btn-enviar').addClass('modal-trigger');
           montaModal(html, dados);
         }
@@ -1183,14 +1244,21 @@ function controleForm() {
         if (!$('#dtJulgamento').val() || !$('.ulProcessos').children().text()) {
           var toastHTML = `<span>Os campos Data do Julgamento e Número do(s) Processo(s) precisam estar preenchidos.</span>`;
           M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+        } else if (
+          moment($('#dtJulgamento').val(), 'DD/MM/YYYY').isAfter(moment())
+        ) {
+          var toastHTML = `<span>Somente podem ser cadastrados eventos já ocorridos e finalizados.</span>`;
+          M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
         } else {
           let html = `
           <div class='row'>
-          <p>REGAP: ${$('#ora').text()}</p>
-          <p>Data do Julgamento: ${$('#dtJulgamento').val()}</p>
-          <p>Processo(s): ${pegaProcs()}</p>
-          <p>Observações: ${$('#observacoes').val()}</p>
-          <p>Arquivos:${$('.arqsUp').children().text()}</p>
+          <h5>REGAP: ${$('#ora').text()}</h5>
+          <p><strong>Data do Julgamento:</strong> ${$(
+            '#dtJulgamento',
+          ).val()}</p>
+          <p><strong>Processo(s):</strong> ${pegaProcs()}</p>
+          <p><strong>Observações:</strong> ${$('#observacoes').val()}</p>
+          <p><strong>Arquivos:</strong>${pegaArquivos(true)}</p>
           `;
           let dados = {
             uniqueId: moment().unix(),
@@ -1202,6 +1270,7 @@ function controleForm() {
               arquivos: pegaArquivos(),
             },
           };
+          initModal();
           $('#btn-enviar').addClass('modal-trigger');
           montaModal(html, dados);
         }
@@ -1243,18 +1312,20 @@ function controleForm() {
         } else {
           let html = `
           <div class='row'>
-          <p>REINP: ${$('#aflm').text()}</p>
-          <p>Tipo: ${$('#tipoAfastamento option:selected').val()}</p>
-          <p>Início: ${$('#inicioAfastamento').val()}</p>
-          <p>Fim: ${$('#fimAfastamento').val()}</p>
-          <p>Dias úteis (excluídos os dias de sessão): ${$(
+          <h5>REINP: ${$('#aflm').text()}</h5>
+          <p><strong>Tipo:</strong> ${$(
+            '#tipoAfastamento option:selected',
+          ).val()}</p>
+          <p><strong>Início:</strong> ${$('#inicioAfastamento').val()}</p>
+          <p><strong>Fim:</strong> ${$('#fimAfastamento').val()}</p>
+          <p><strong>Dias úteis (excluídos os dias de sessão):<strong> ${$(
             '#diasUteis',
           ).text()}</p>
-          <p>Horas a serem reduzidas da meta de produtividade: ${$(
+          <p><strong>Horas a serem reduzidas da meta de produtividade:</strong> ${$(
             '#horasMeta',
           ).text()}</p>
-          <p>Observações: ${$('#observacoes').val()}</p>
-          <p>Arquivos:${$('.arqsUp').children().text()}</p>
+          <p><strong>Observações:</strong> ${$('#observacoes').val()}</p>
+          <p><strong>Arquivos:</strong>${pegaArquivos(true)}</p>
           `;
           let dados = {
             uniqueId: moment().unix(),
@@ -1269,6 +1340,7 @@ function controleForm() {
               arquivos: pegaArquivos(),
             },
           };
+          initModal();
           $('#btn-enviar').addClass('modal-trigger');
           montaModal(html, dados);
         }
@@ -1300,11 +1372,13 @@ function controleForm() {
         } else {
           let html = `
           <div class='row'>
-          <p>REINP: ${$('#mcc').text()}</p>
-          <p>Tipo: ${$('#tipoAfastamento option:selected').val()}</p>
-          <p>Data da Mudança: ${$('#dtMudanca').val()}</p>
-          <p>Observações: ${$('#observacoes').val()}</p>
-          <p>Arquivos:${$('.arqsUp').children().text()}</p>
+          <h5>REINP: ${$('#mcc').text()}</h5>
+          <p><strong>Tipo:</strong> ${$(
+            '#tipoAfastamento option:selected',
+          ).val()}</p>
+          <p><strong>Data da Mudança:</strong> ${$('#dtMudanca').val()}</p>
+          <p><strong>Observações:</strong> ${$('#observacoes').val()}</p>
+          <p><strong>Arquivos:</strong>${pegaArquivos(true)}</p>
           `;
           let dados = {
             uniqueId: moment().unix(),
@@ -1316,6 +1390,7 @@ function controleForm() {
               arquivos: pegaArquivos(),
             },
           };
+          initModal();
           $('#btn-enviar').addClass('modal-trigger');
           montaModal(html, dados);
         }
@@ -1336,9 +1411,9 @@ function controleForm() {
       $('#btn-enviar').click((e) => {
         let html = `
           <div class='row'>
-          <p>REINP: ${$('#acp').text()}</p>
-          <p>Observações: ${$('#observacoes').val()}</p>
-          <p>Arquivos:${$('.arqsUp').children().text()}</p>
+          <h5>REINP: ${$('#acp').text()}</h5>
+          <p><strong>Observações:</strong> ${$('#observacoes').val()}</p>
+          <p><strong>Arquivos:</strong>${pegaArquivos(true)}</p>
           `;
         let dados = {
           uniqueId: moment().unix(),
@@ -1348,6 +1423,7 @@ function controleForm() {
             arquivos: pegaArquivos(),
           },
         };
+        initModal();
         $('#btn-enviar').addClass('modal-trigger');
         montaModal(html, dados);
       });
@@ -1386,13 +1462,17 @@ function controleForm() {
         } else {
           let html = `
           <div class='row'>
-          <p>REINP: ${$('#presi').text()}</p>
-          <p>Tipo: ${$('#tipoAfastamento option:selected').val()}</p>
-          <p>Início do Período: ${$('#inicioPeriodo').val()}</p>
-          <p>Fim do Período: ${$('#fimPeriodo').val()}</p>
-          <p>Dias Corridos: ${diff}</p>
-          <p>Observações: ${$('#observacoes').val()}</p>
-          <p>Arquivos:${$('.arqsUp').children().text()}</p>
+          <h5>REINP: ${$('#presi').text()}</h5>
+          <p><strong>Tipo:</strong> ${$(
+            '#tipoAfastamento option:selected',
+          ).val()}</p>
+          <p><strong>Início do Período:</strong> ${$(
+            '#inicioPeriodo',
+          ).val()}</p>
+          <p><strong>Fim do Período:</strong> ${$('#fimPeriodo').val()}</p>
+          <p><strong>Dias Corridos:</strong> ${diff}</p>
+          <p><strong>Observações:</strong> ${$('#observacoes').val()}</p>
+          <p><strong>Arquivos:</strong>${pegaArquivos(true)}</p>
           `;
           let dados = {
             uniqueId: moment().unix(),
@@ -1405,6 +1485,7 @@ function controleForm() {
               arquivos: pegaArquivos(),
             },
           };
+          initModal();
           $('#btn-enviar').addClass('modal-trigger');
           montaModal(html, dados);
         }
@@ -1438,6 +1519,15 @@ function controleForm() {
                 </div>
                 </div>
                 <div class='row'>
+                <div class='col s6 offset-s3'>
+                <div id='cardSoma' class="card hoverable cardLaranja">
+                <div class="card-content ">
+                <span class="card-title">Somatório de Horas da Solicitação: <span id='somatorioHoras'>0</span></span>
+                </div>
+                </div>
+                </div>
+                </div>
+                <div class='row'>
                 <div id="mostraPart" class="col s12">
                 <ul id="ulPart" class="collection"/>
                 </div>
@@ -1457,55 +1547,76 @@ function controleForm() {
         ) {
           var toastHTML = `<span>Somente podem ser cadastrados eventos já ocorridos e finalizados.</span>`;
           M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+        } else if (
+          moment($('#dtJulgamento').val(), 'DD/MM/YYYY').isBefore(
+            moment('01/04/2020', 'DD/MM/YYYY'),
+          )
+        ) {
+          var toastHTML = `<span>Somente a partir de abril de 2020.</span>`;
+          M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
         } else {
           montaLiPart(
-            `Turma de Participação: ${$(
+            `<strong>Turma de Participação:</strong> ${$(
               '#tipoAfastamento option:selected',
             ).val()},
-        Data do Julgamento: ${$('#dtJulgamento').val()},
-        Turno: ${$('#turnoPart option:selected').val()}`,
+        <strong>Data do Julgamento:</strong> ${$('#dtJulgamento').val()},
+        <strong>Turno:</strong> ${$(
+          '#turnoPart option:selected',
+        ).val()}, <strong>HE CARF:</strong> ${4}`,
             moment().unix(),
             4,
           );
         }
-        $('#btn-enviar').click((e) => {
-          if (!$('#ulPart').children().text()) {
-            var toastHTML = `<span>Deve ser adicionada pelo menos uma participação.</span>`;
-            M.toast({
-              html: toastHTML,
-              classes: 'rounded',
-              timeRemaining: 500,
-            });
-          } else if (
-            moment($('#dtJulgamento').val(), 'DD/MM/YYYY').isAfter(moment())
-          ) {
-            var toastHTML = `<span>Somente podem ser cadastrados eventos já ocorridos e finalizados.</span>`;
-            M.toast({
-              html: toastHTML,
-              classes: 'rounded',
-              timeRemaining: 500,
-            });
-          } else {
-            let html = `
-            <div class='row'>
-            <p>REINP: ${$('#ptoa').text()}</p>
-            <p>Participações: ${pegaParts()}</p>
-            <p>Observações: ${$('#observacoes').val()}</p>
-            <p>Arquivos:${$('.arqsUp').children().text()}</p>
-            `;
-            let dados = {
-              uniqueId: moment().unix(),
-              tipo: `REINP: ${$('#ptoa').text()}`,
-              dados: {
-                participacoes: pegaParts(),
-                observacoes: $('#observacoes').val(),
-                arquivos: pegaArquivos(),
-              },
-            };
-            $('#btn-enviar').addClass('modal-trigger');
-            montaModal(html, dados);
-          }
-        });
+      });
+      $('#btn-enviar').click((e) => {
+        if (!$('#ulPart').children().text()) {
+          var toastHTML = `<span>Deve ser adicionada pelo menos uma participação.</span>`;
+          M.toast({
+            html: toastHTML,
+            classes: 'rounded',
+            timeRemaining: 500,
+          });
+        } else if (
+          moment($('#dtJulgamento').val(), 'DD/MM/YYYY').isAfter(moment())
+        ) {
+          var toastHTML = `<span>Somente podem ser cadastrados eventos já ocorridos e finalizados.</span>`;
+          M.toast({
+            html: toastHTML,
+            classes: 'rounded',
+            timeRemaining: 500,
+          });
+        } else if (
+          moment($('#dtJulgamento').val(), 'DD/MM/YYYY').isBefore(
+            moment('01/04/2020', 'DD/MM/YYYY'),
+          )
+        ) {
+          var toastHTML = `<span>Somente a partir de abril de 2020.</span>`;
+          M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+        } else {
+          let html = `
+              <div class='row'>
+              <h5>REINP: ${$('#ptoa').text()}</h5>
+              <p><strong>Participações:</strong> ${pegaParts()}</p>
+              <p><strong>Somatório de Horas:</strong> ${+$(
+                '#somatorioHoras',
+              ).html()}</p>
+              <p><strong>Observações:</strong> ${$('#observacoes').val()}</p>
+              <p><strong>Arquivos:</strong>${pegaArquivos(true)}</p>
+              `;
+          let dados = {
+            uniqueId: moment().unix(),
+            tipo: `REINP: ${$('#ptoa').text()}`,
+            dados: {
+              somatorioHoras: +$('#somatorioHoras').html(),
+              participacoes: pegaParts(),
+              observacoes: $('#observacoes').val(),
+              arquivos: pegaArquivos(),
+            },
+          };
+          initModal();
+          $('#btn-enviar').addClass('modal-trigger');
+          montaModal(html, dados);
+        }
       });
     });
   });
@@ -1536,6 +1647,15 @@ function controleForm() {
                 </div>
                 </div>
                 <div class='row'>
+                <div class='col s6 offset-s3'>
+                <div id='cardSoma' class="card hoverable cardLaranja">
+                <div class="card-content ">
+                <span class="card-title">Somatório de Horas da Solicitação: <span id='somatorioHoras'>0</span></span>
+                </div>
+                </div>
+                </div>
+                </div>
+                <div class='row'>
                 <div id="mostraPart" class="col s12">
                 <ul id="ulPart" class="collection"/>
                 </div>
@@ -1555,55 +1675,76 @@ function controleForm() {
         ) {
           var toastHTML = `<span>Somente podem ser cadastrados eventos já ocorridos e finalizados.</span>`;
           M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+        } else if (
+          moment($('#dtJulgamento').val(), 'DD/MM/YYYY').isBefore(
+            moment('01/04/2020', 'DD/MM/YYYY'),
+          )
+        ) {
+          var toastHTML = `<span>Somente a partir de abril de 2020.</span>`;
+          M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
         } else {
           montaLiPart(
-            `Turma de Participação: ${$(
+            `<strong>Turma de Participação:</strong> ${$(
               '#tipoAfastamento option:selected',
             ).val()},
-        Data do Julgamento: ${$('#dtJulgamento').val()},
-        Turno: ${$('#turnoPart option:selected').val()}`,
+        <strong>Data do Julgamento:</strong> ${$('#dtJulgamento').val()},
+        <strong>Turno:</strong> ${$(
+          '#turnoPart option:selected',
+        ).val()}, <strong>HE CARF:</strong> ${4}`,
             moment().unix(),
             4,
           );
         }
-        $('#btn-enviar').click((e) => {
-          if (!$('#ulPart').children().text()) {
-            var toastHTML = `<span>Deve ser adicionada pelo menos uma participação.</span>`;
-            M.toast({
-              html: toastHTML,
-              classes: 'rounded',
-              timeRemaining: 500,
-            });
-          } else if (
-            moment($('#dtJulgamento').val(), 'DD/MM/YYYY').isAfter(moment())
-          ) {
-            var toastHTML = `<span>Somente podem ser cadastrados eventos já ocorridos e finalizados.</span>`;
-            M.toast({
-              html: toastHTML,
-              classes: 'rounded',
-              timeRemaining: 500,
-            });
-          } else {
-            let html = `
-            <div class='row'>
-            <p>REINP: ${$('#pptex').text()}</p>
-            <p>Participações: ${pegaParts()}</p>
-            <p>Observações: ${$('#observacoes').val()}</p>
-            <p>Arquivos:${$('.arqsUp').children().text()}</p>
-            `;
-            let dados = {
-              uniqueId: moment().unix(),
-              tipo: `REINP: ${$('#pptex').text()}`,
-              dados: {
-                participacoes: pegaParts(),
-                observacoes: $('#observacoes').val(),
-                arquivos: pegaArquivos(),
-              },
-            };
-            $('#btn-enviar').addClass('modal-trigger');
-            montaModal(html, dados);
-          }
-        });
+      });
+      $('#btn-enviar').click((e) => {
+        if (!$('#ulPart').children().text()) {
+          var toastHTML = `<span>Deve ser adicionada pelo menos uma participação.</span>`;
+          M.toast({
+            html: toastHTML,
+            classes: 'rounded',
+            timeRemaining: 500,
+          });
+        } else if (
+          moment($('#dtJulgamento').val(), 'DD/MM/YYYY').isAfter(moment())
+        ) {
+          var toastHTML = `<span>Somente podem ser cadastrados eventos já ocorridos e finalizados.</span>`;
+          M.toast({
+            html: toastHTML,
+            classes: 'rounded',
+            timeRemaining: 500,
+          });
+        } else if (
+          moment($('#dtJulgamento').val(), 'DD/MM/YYYY').isBefore(
+            moment('01/04/2020', 'DD/MM/YYYY'),
+          )
+        ) {
+          var toastHTML = `<span>Somente a partir de abril de 2020.</span>`;
+          M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+        } else {
+          let html = `
+              <div class='row'>
+              <h5>REINP: ${$('#pptex').text()}</h5>
+              <p><strong>Participações:</strong> ${pegaParts()}</p>
+               <p><strong>Somatório de Horas:</strong> ${+$(
+                 '#somatorioHoras',
+               ).html()}</p>
+              <p><strong>Observações:</strong> ${$('#observacoes').val()}</p>
+              <p><strong>Arquivos:</strong>${pegaArquivos(true)}</p>
+              `;
+          let dados = {
+            uniqueId: moment().unix(),
+            tipo: `REINP: ${$('#pptex').text()}`,
+            dados: {
+              somatorioHoras: +$('#somatorioHoras').html(),
+              participacoes: pegaParts(),
+              observacoes: $('#observacoes').val(),
+              arquivos: pegaArquivos(),
+            },
+          };
+          initModal();
+          $('#btn-enviar').addClass('modal-trigger');
+          montaModal(html, dados);
+        }
       });
     });
   });
@@ -1645,12 +1786,14 @@ function controleForm() {
         } else {
           let html = `
           <div class='row'>
-          <p>REINP: ${$('#s21').text()}</p>
-          <p>Data do Sorteio: ${$('#dataSorteio').val()}</p>
-          <p>Data da Indicação para Pauta: ${$('#dataIndicacao').val()}</p>
-          <p>Dias corridos: ${diff}</p>
-          <p>Observações: ${$('#observacoes').val()}</p>
-          <p>Arquivos:${$('.arqsUp').children().text()}</p>
+          <h5>REINP: ${$('#s21').text()}</h5>
+          <p><strong>Data do Sorteio:</strong> ${$('#dataSorteio').val()}</p>
+          <p><strong>Data da Indicação para Pauta:</strong> ${$(
+            '#dataIndicacao',
+          ).val()}</p>
+          <p><strong>Dias corridos:</strong> ${diff}</p>
+          <p><strong>Observações:</strong> ${$('#observacoes').val()}</p>
+          <p><strong>Arquivos:</strong>${pegaArquivos(true)}</p>
           `;
           let dados = {
             uniqueId: moment().unix(),
@@ -1663,6 +1806,7 @@ function controleForm() {
               arquivos: pegaArquivos(),
             },
           };
+          initModal();
           $('#btn-enviar').addClass('modal-trigger');
           montaModal(html, dados);
         }
@@ -1696,7 +1840,7 @@ function controleForm() {
               </div>
               <div class ='col s2 mesSorteioEx input-field'>
               <i class="far fa-calendar-minus prefix"/>
-              <input id="mesSorteioEx" name="mesSorteioEx" type="text" class="validate"/>
+              <input id="mesSorteioEx" placeholder="mm/aaaa" name="mesSorteioEx" type="text" class="validate"/>
               <label for="mesSorteioEx">Mês do Sorteio:</strong></label>
               </div>
               <div class ='col s2 horasLoteEx input-field'>
@@ -1718,7 +1862,7 @@ function controleForm() {
 
 <li>
               <div class="collapsible-header">
-                <i class="fas fa-undo-alt"/>Processos Devolvidos por Impedimento, Suspeição ou por Impossibilidade de Julgamento
+                <i class="fas fa-undo-alt"/>Processos Devolvidos por Impedimento, Suspeição ou por Impossibilidade de Julgamento (Sem Retorno)
               </div>
               <div class="collapsible-body">
                 <div class='row'>
@@ -1801,7 +1945,7 @@ function controleForm() {
               </div>
               <div class ='col s2 mesSorteioSE input-field'>
               <i class="far fa-calendar-minus prefix"/>
-              <input id="mesSorteioSE" name="mesSorteioSE" type="text" class="validate"/>
+              <input id="mesSorteioSE" placeholder="mm/aaaa" name="mesSorteioSE" type="text" class="validate"/>
               <label for="mesSorteioSE">Mês do Sorteio:</strong></label>
               </div>
               <div class ='col s3 horasLoteSE input-field'>
@@ -1920,11 +2064,6 @@ function controleForm() {
               <i class="fas fa-calendar-check prefix"/>
               <label for="dtDistAdHoc">Data da Distribuição</label>
               </div>
-               <div class ='col s2 horasAdHoc input-field'>
-              <i class="far fa-hourglass prefix"/>
-              <input id="horasAdHoc" name="horasRD" type="text" class="validate"/>
-              <label for="horasAdHoc">HE CARF:</strong></label>
-              </div>
               <div><a id="btnProcAdHoc" class="btn-floating btn-small green waves-effect waves-light hoverable z-depth-3" title="Adicionar Processo">
               <i class="material-icons">add</i>
               </a>
@@ -1942,6 +2081,8 @@ function controleForm() {
             <div id='cardSoma' class="card hoverable cardLaranja">
             <div class="card-content ">
             <span class="card-title">Somatório de Horas da Solicitação: <span id='somatorioHoras'>0</span></span>
+           <span id="G1" class="hide">0</span>
+           <span id="G2" class="hide">0</span>
             </div>
             </div>
             </div>
@@ -1975,22 +2116,33 @@ function controleForm() {
         } else {
           let html = `
             <div class='row'>
-            <p>Dispensa de Sorteio</p>
-            <p>Solicitações:<br> ${pegaDisp()}</p>
-            <p>Somatório de Horas:${+$('#somatorioHoras').html()}</p>
-            <p>Observações: ${$('#observacoes').val()}</p>
-            <p>Arquivos:${$('.arqsUp').children().text()}</p>
+            <h5>Dispensa de Sorteio</h5>
+            <p><strong>Solicitações:</strong><br /> ${pegaDisp()}</p>
+            <p><strong>Somatório de Horas:</strong>${+$(
+              '#somatorioHoras',
+            ).html()}</p>
+            <p><strong>Observações:</strong> ${$('#observacoes').val()}</p>
+            <p><strong>Arquivos:</strong>${pegaArquivos(true)}</p>
+            <p><strong>Grupo Excesso de Horas, Sorteio Extraordinário, Reflexos/Decorrentes,  :</strong> ${$(
+              '#G1',
+            ).html()} horas.</p>
+            <p><strong>Grupo Formalizar Voto Vencedor, Seminário CARF, Participação em TO/CSRF, Relatoria <em>ad hoc</em>:</strong> ${$(
+              '#G2',
+            ).html()} horas.</p>
             `;
           let dados = {
             uniqueId: moment().unix(),
             tipo: `Dispensa de Sorteio`,
             dados: {
+              G1: +$('#G1').html(),
+              G2: +$('#G2').html(),
               solicitacoes: pegaDisp(),
               somatorioHoras: +$('#somatorioHoras').html(),
               observacoes: $('#observacoes').val(),
               arquivos: pegaArquivos(),
             },
           };
+          initModal();
           $('#btn-enviar').addClass('modal-trigger');
           montaModal(html, dados);
         }
@@ -2028,13 +2180,15 @@ function controleForm() {
         } else {
           let html = `
           <div class='row'>
-          <p>${$('#fsj').text()}</p>
-          <p>Tipo: ${$('#tipoAfastamento option:selected').val()}</p>
-          <p>Início: ${$('#inicioAfastamento').val()}</p>
-          <p>Fim: ${$('#fimAfastamento').val()}</p>
-          <p>Dias de Sessão: ${$('#diasSessao').val()}</p>
-          <p>Observações: ${$('#observacoes').val()}</p>
-          <p>Arquivos:${$('.arqsUp').children().text()}</p>
+          <h5>${$('#fsj').text()}</h5>
+          <p><strong>Tipo:</strong> ${$(
+            '#tipoAfastamento option:selected',
+          ).val()}</p>
+          <p><strong>Início:</strong> ${$('#inicioAfastamento').val()}</p>
+          <p><strong>Fim</strong>: ${$('#fimAfastamento').val()}</p>
+          <p><strong>Dias de Sessão:</strong> ${$('#diasSessao').val()}</p>
+          <p><strong>Observações:</strong> ${$('#observacoes').val()}</p>
+          <p><strong>Arquivos:</strong>${pegaArquivos(true)}</p>
           `;
           let dados = {
             uniqueId: moment().unix(),
@@ -2048,6 +2202,7 @@ function controleForm() {
               arquivos: pegaArquivos(),
             },
           };
+          initModal();
           $('#btn-enviar').addClass('modal-trigger');
           montaModal(html, dados);
         }
@@ -2056,13 +2211,26 @@ function controleForm() {
   });
 }
 
-function pegaArquivos() {
+function pegaArquivos(html) {
   let a = [];
-  $('.collection-arqs')
-    .get()
-    .forEach((c) => {
-      a.push($(c).attr('data-id'));
-    });
+  if (html == true) {
+    $('.collection-arqs')
+      .get()
+      .forEach((c) => {
+        a.push(
+          '<br />' +
+            $(c)
+              .text()
+              .replace(/(\r\n|\n|\r)/gm, ''),
+        );
+      });
+  } else {
+    $('.collection-arqs')
+      .get()
+      .forEach((c) => {
+        a.push($(c).attr('data-id'));
+      });
+  }
   return a;
 }
 function btnEnviaArq() {
@@ -2078,23 +2246,23 @@ function btnEnviaArq() {
 }
 function handleSOL(registro, metodo, setor) {
   registro.setor = setor;
-  registro.cpf = $('#cpfCons').text();
-  registro.uniqueId = moment.now();
-  registro.dtCriacao = moment().format('DD/MM/YYYY');
-  registro.nome = $('.nomeSol').text();
+  registro.cpf = JSON.parse($('#dataUser').attr('data-user')).cpf;
+  registro.nome = JSON.parse($('#dataUser').attr('data-user')).nome;
+  registro.dtCriacao = moment().format('DD/MM/YYYY - HH:mm');
+  registro.status = 'Encaminhada para Análise';
   $.ajax({
-    url: '/julgamento/conselheiros/solicitacoes',
+    url: '/julgamento/conselheiros/registro-solicitacoes',
     data: registro,
     type: metodo,
     success: function (result) {
-      var toastHTML = `<span>Dados atualizados com sucesso!</span>`;
+      var toastHTML = `<span>Solicitação nº ${result} criada com sucesso!</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
       setTimeout((a) => {
         location.reload();
-      }, 1100);
+      }, 2500);
     },
     error: function (result) {
-      var toastHTML = `<span>Ocorreu um erro.</span>`;
+      var toastHTML = `<span>Ocorreu um erro na criação da solicitação. Tente novamente.</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
       console.log(result);
     },
@@ -2126,13 +2294,26 @@ function montaLiProc(processo) {
   });
 }
 
-function pegaProcs() {
+function pegaProcs(html) {
   let procs = [];
-  $('.collection-procs')
-    .get()
-    .forEach((c) => {
-      procs.push($(c).attr('data-id'));
-    });
+  if (html == true) {
+    $('.collection-procs')
+      .get()
+      .forEach((c) => {
+        procs.push(
+          '<br />' +
+            $(c)
+              .text()
+              .replace(/(\r\n|\n|\r)/gm, ''),
+        );
+      });
+  } else {
+    $('.collection-procs')
+      .get()
+      .forEach((c) => {
+        procs.push($(c).attr('data-id'));
+      });
+  }
   return procs;
 }
 
@@ -2145,7 +2326,7 @@ function handleFile(arquivo, metodo) {
       data: fd,
       type: metodo,
       success: function (result) {
-        var toastHTML = `<span>Dados atualizados com sucesso!</span>`;
+        var toastHTML = `<span>Arquivo excluído com sucesso.</span>`;
         M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
         console.log(result);
         $(`#${fd._id}`).remove();
@@ -2186,7 +2367,7 @@ function handleFile(arquivo, metodo) {
       contentType: false,
       type: metodo,
       success: function (result) {
-        var toastHTML = `<span>Dados atualizados com sucesso!</span>`;
+        var toastHTML = `<span>Arquivo enviado com sucesso.</span>`;
         M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
         console.log(result);
         $('#mostraArq').show();

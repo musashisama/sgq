@@ -123,6 +123,16 @@ module.exports = (app) => {
     .post(julgControlador.handleSolicitacoes());
 
   app
+    .route(rotasJulgamento.gestaoregsolicitacoes)
+    .get(julgControlador.handleRegSolicitacoesDipaj())
+    .post(julgControlador.handleRegSolicitacoesDipaj());
+
+  app
+    .route(rotasJulgamento.detalhasolicitacao)
+    .get(julgControlador.handleDetalhaSolicitacoesDipaj())
+    .post(julgControlador.handleDetalhaSolicitacoesDipaj());
+
+  app
     .route(rotasJulgamento.enviacorrigereinp)
     .post(julgControlador.handleCorrigeReinp());
 
