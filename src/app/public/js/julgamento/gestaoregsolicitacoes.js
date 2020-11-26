@@ -11,7 +11,12 @@ function inicializaComponentes() {
     tabelaSolicitacoes();
     initOpcoes();
     initElementos();
+    initSelect();
   });
+}
+
+function initSelect() {
+  $('select').formSelect();
 }
 
 function initElementos() {
