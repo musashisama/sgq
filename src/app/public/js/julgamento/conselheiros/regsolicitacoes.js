@@ -917,10 +917,11 @@ function controleForm() {
       initElementos();
       let diff;
       $('body').click(() => {
-        diff = moment($('#fimAfastamento').val(), 'DD/MM/YYYY').diff(
-          moment($('#inicioAfastamento').val(), 'DD/MM/YYYY'),
-          'days',
-        );
+        diff =
+          moment($('#fimAfastamento').val(), 'DD/MM/YYYY').diff(
+            moment($('#inicioAfastamento').val(), 'DD/MM/YYYY'),
+            'days',
+          ) + 1;
         $('#diasCorridos').html(diff);
       });
       $('#btn-enviar').click((e) => {
@@ -1294,9 +1295,10 @@ function controleForm() {
       initElementos();
       let diff;
       $('body').click(() => {
-        diff = moment($('#fimAfastamento').val(), 'DD/MM/YYYY').businessDiff(
-          moment($('#inicioAfastamento').val(), 'DD/MM/YYYY'),
-        );
+        diff =
+          moment($('#fimAfastamento').val(), 'DD/MM/YYYY').businessDiff(
+            moment($('#inicioAfastamento').val(), 'DD/MM/YYYY'),
+          ) + 1;
         $('#diasUteis').html(diff - $('#diasSessao').val());
         $('#horasMeta').html(+$('#diasUteis').html() * 8);
       });
@@ -1445,9 +1447,10 @@ function controleForm() {
       initElementos();
       let diff;
       $('body').click(() => {
-        diff = moment($('#fimPeriodo').val(), 'DD/MM/YYYY').businessDiff(
-          moment($('#inicioPeriodo').val(), 'DD/MM/YYYY'),
-        );
+        diff =
+          moment($('#fimPeriodo').val(), 'DD/MM/YYYY').businessDiff(
+            moment($('#inicioPeriodo').val(), 'DD/MM/YYYY'),
+          ) + 1;
         $('#diasCorridos').html(diff);
       });
       $('#btn-enviar').click((e) => {
@@ -1764,10 +1767,11 @@ function controleForm() {
       initElementos();
       let diff;
       $('body').click(() => {
-        diff = moment($('#dataIndicacao').val(), 'DD/MM/YYYY').diff(
-          moment($('#dataSorteio').val(), 'DD/MM/YYYY'),
-          'days',
-        );
+        diff =
+          moment($('#dataIndicacao').val(), 'DD/MM/YYYY').diff(
+            moment($('#dataSorteio').val(), 'DD/MM/YYYY'),
+            'days',
+          ) + 1;
         $('#diasCorridos').html(diff);
       });
       $('#btn-enviar').click((e) => {
