@@ -476,7 +476,22 @@ class JulgamentoControlador {
       if (req.method == 'POST') {
         const pessoalDao = new PessoalDao(conn);
         pessoalDao.cadastraRegSolicitacao(req.body).then((res) => {
-          console.log(res);
+          let URL = url.parse(
+            (req.headers.referrer || req.headers.referer).replace('/login', ''),
+          );
+          let endereco =
+            req.body.setor == 'DIPAJ'
+              ? 'dipaj@carf.economia.gov.br'
+              : 'segep@carf.economia.gov.br';
+          let urlMail = req.body.setor == 'DIPAJ' ? 'julgamento' : 'pessoal';
+          Mailer.enviaMail(
+            endereco,
+            `[SGI] Nova solicitação - ${req.body.nome}`,
+            `<br/>
+            ${req.body.html}
+                    <p><a href="http://${URL.host}/${urlMail}/restrito/detalhasolicitacao/${req.body.uniqueId}"><strong>Gerenciar Solicitações</strong></a></p>
+                    `,
+          );
           resp.send(req.body.uniqueId);
         });
       }
@@ -496,7 +511,6 @@ class JulgamentoControlador {
       if (req.method == 'POST') {
         const pessoalDao = new PessoalDao(conn);
         pessoalDao.cadastraRegSolicitacao(req.body).then((res) => {
-          console.log(res);
           resp.send(req.body.uniqueId);
         });
       }
@@ -517,6 +531,7 @@ class JulgamentoControlador {
       }
       if (req.method == 'POST') {
         const pessoalDao = new PessoalDao(conn);
+        req.body.servDipaj = req.user.cpf;
         pessoalDao.editaRegSolicitacao(req.body).then((res) => {
           resp.send(res);
         });

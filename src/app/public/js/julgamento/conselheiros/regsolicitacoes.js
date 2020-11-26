@@ -313,11 +313,7 @@ function elementosDispensa() {
     );
   });
   $('#btnProcAdHoc').click(() => {
-    if (
-      !$('#numProcAdHoc').val() ||
-      !$('#dtDistAdHoc').val() ||
-      !$('#horasAdHoc').val()
-    ) {
+    if (!$('#numProcAdHoc').val() || !$('#dtDistAdHoc').val()) {
       var toastHTML = `<span>Todos os campos devem ser preenchidos.</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
     } else {
@@ -326,14 +322,13 @@ function elementosDispensa() {
           '#numProcAdHoc',
         ).val()}, <strong>Data da Distribuição:</strong> ${$(
           '#dtDistAdHoc',
-        ).val()}, <strong>HE CARF:</strong> ${+$('#horasAdHoc').val()}`,
+        ).val()}, <strong>HE CARF:</strong> 2`,
         moment().unix(),
         2,
         'G2',
       );
       $('#numProcAdHoc').val('');
       $('#dtDistAdHoc').val('');
-      $('#horasAdHoc').val('');
     }
   });
   $('#btnProcDev').click(() => {
@@ -2068,11 +2063,6 @@ function controleForm() {
               <input id="dtDistAdHoc" name="dtDistAdHoc"  type="text" class="datepicker"/>
               <i class="fas fa-calendar-check prefix"/>
               <label for="dtDistAdHoc">Data da Distribuição</label>
-              </div>
-               <div class ='col s2 horasAdHoc input-field'>
-              <i class="far fa-hourglass prefix"/>
-              <input id="horasAdHoc" name="horasRD" type="text" class="validate"/>
-              <label for="horasAdHoc">HE CARF:</strong></label>
               </div>
               <div><a id="btnProcAdHoc" class="btn-floating btn-small green waves-effect waves-light hoverable z-depth-3" title="Adicionar Processo">
               <i class="material-icons">add</i>

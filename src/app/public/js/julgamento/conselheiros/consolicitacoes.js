@@ -173,8 +173,18 @@ function montaModal(e, cell, user) {
   $('.hModal').text(``);
   $('.pModal').text(``);
   $('.hModal').text(`Detalhamento da Solicitação`);
-  $('.pModal').append(`${cell.getRow().getData().html}`);
-  console.log(cell.getRow().getData().html);
+  $('.pModal').append(`
+  ${cell.getRow().getData().html}
+  <div class='row'>
+  <p><strong>Status:</strong> ${cell.getRow().getData().status}</p>
+  <p><strong>Justificativas:</strong> ${
+    cell.getRow().getData().justificativas
+      ? cell.getRow().getData().justificativas
+      : ''
+  }</p>
+  </div>
+  `);
+
   btnArq();
   $('.concorda').click(function () {
     $('.hModal').text('');

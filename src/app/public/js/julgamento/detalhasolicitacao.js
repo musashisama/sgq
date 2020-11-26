@@ -130,14 +130,14 @@ function handleSOL(registro) {
       var toastHTML = `<span>Dados atualizados com sucesso!</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
       setInterval(() => {
-        location.reload();
+        location.href('/julgamento/restrito/gestaoregsolicitacoes');
       }, 1000);
     },
     error: function (result) {
       var toastHTML = `<span>Ocorreu um erro.</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
       setInterval(() => {
-        location.reload();
+        location.href('/julgamento/restrito/gestaoregsolicitacoes');
       }, 1000);
     },
   });
