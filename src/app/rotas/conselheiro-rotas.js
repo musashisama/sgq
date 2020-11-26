@@ -17,7 +17,7 @@ module.exports = (app) => {
     }
   });
 
-  app.use(rotasJulgamento.conselheiros, function (req, resp, next) {
+  app.use(rotasJulgamento.portalconselheiros, function (req, resp, next) {
     req.session.baseUrl = req.baseUrl;
     if (req.isAuthenticated()) {
       resp.set('autenticado', true);
@@ -27,7 +27,7 @@ module.exports = (app) => {
     }
   });
 
-  app.use(rotasJulgamento.portalconselheiros, function (req, resp, next) {
+  app.use(rotasJulgamento.conselheiros, function (req, resp, next) {
     req.session.baseUrl = req.baseUrl;
     if (req.isAuthenticated()) {
       resp.set('autenticado', true);
@@ -44,7 +44,7 @@ module.exports = (app) => {
     .put(julgControlador.handleArquivos())
     .delete(julgControlador.handleArquivos());
 
-  app.use(rotasJulgamento.conselheiros, function (req, resp, next) {
+  app.use(rotasJulgamento.portalconselheiros, function (req, resp, next) {
     if (ACL.checaACL(req.user.perfis, 'conselheiro')) {
       next();
     } else {
@@ -63,6 +63,12 @@ module.exports = (app) => {
     .get(julgControlador.handleRegSolicitacoes())
     .post(julgControlador.handleRegSolicitacoes())
     .delete(julgControlador.handleRegSolicitacoes());
+
+  app
+    .route(rotasJulgamento.consolicitacoes)
+    .get(julgControlador.handleConsSolicitacoes())
+    .post(julgControlador.handleConsSolicitacoes())
+    .delete(julgControlador.handleConsSolicitacoes());
 
   app.get(
     rotasJulgamento.conselheiros,

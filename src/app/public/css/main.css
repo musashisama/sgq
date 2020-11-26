@@ -5,6 +5,7 @@
   --ruby-red: #a20021ff;
   --rich-black-fogra-39: #040303ff;
   --lemon-yellow: #faf33eff;
+  --fuchsia-escuro: rgb(100, 59, 84);
   --antique-fuchsia: #995d81ff;
   --cultured: #efefefff;
   --azul-claro: #82a6dbbd;
@@ -573,7 +574,7 @@ summary::-webkit-details-marker {
 }
 
 .LegApenso {
-  background-color: #2e6b63;
+  background-color: #ff9100;
 }
 
 .LegEmbargoSort {
@@ -609,6 +610,10 @@ summary::-webkit-details-marker {
   color: var(--cultured);
 }
 
+.cardFuchsiaEscuro {
+  background-color: var(--fuchsia-escuro);
+  color: var(--cultured);
+}
 .cardFuchsia,
 .solRejeitada {
   background-color: var(--antique-fuchsia);

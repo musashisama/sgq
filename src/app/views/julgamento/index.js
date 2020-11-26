@@ -22,6 +22,8 @@ module.exports = {
   gestaoPortal: require('./portalcojul/gestaoPortal.marko'),
   portalCojul: require('./portalcojul/portalCojul.marko'),
   gestaosolicitacoes: require('./gestaosolicitacoes/gestaosolicitacoes.marko'),
+  gestaoregsolicitacoes: require('./gestaosolicitacoes/gestaoregsolicitacoes.marko'),
+  detalhasolicitacao: require('./gestaosolicitacoes/detalhasolicitacao.marko'),
   gestaorelatorios: require('./gestaorelatorios/gestaorelatorios.marko'),
   //Conselheiros
   paginadoconselheiro: require('./conselheiros/paginadoconselheiro.marko'),
@@ -30,4 +32,5 @@ module.exports = {
   reinp_individual: require('./conselheiros/reinp_individual.marko'),
   ocorrencias: require('./conselheiros/ocorrencias.marko'),
   solicitacoescons: require('./conselheiros/solicitacoescons.marko'),
+  consolicitacoes: require('./conselheiros/consolicitacoes.marko'),
 };

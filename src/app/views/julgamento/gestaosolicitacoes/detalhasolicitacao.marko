@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <app-scripts-css/>
+  <body>
+    <app-header/>
+    <main class="conteudoPrincipal">
+      <app-navbar id="slide-out" class="sidenav"/>
+      <div class="container">
+        <h3 class="center-align titulo">Detalhamento de Solicitação</h3>
+        <div id="dadosSolicitacao" data-solicitacao=`${data.solicitacao}`/>
+        <div class="row">
+          <div id="solicitacao" class="col s12"/>
+        </div>
+      </div>
+    </main>
+    <footer class="page-footer rodape"/>
+    <app-modal-tabela-legenda/>
+    <!--Modal Structure-->
+    <div id="modal1" class="modal">
+      <div class="modal-content">
+        <h4 class="hModal">Modal Header</h4>
+        <p class="pModal"/>
+      </div>
+      <div class="modal-footer">
+        <button class="btn waves-effect waves-light concorda modal-close">
+          Fechar <i class="material-icons right">send</i>
+        </button>
+      </div>
+    </div>
+    <app-footer/>
+    <app-modal/>
+    <app-scripts-js/>
+    <script src="/estatico/js/libs/plotly-latest.min.js"/>
+    <script src="/estatico/js/libs/plotly-locale-pt-br.js"/>
+    <script>Plotly.setPlotConfig({locale: 'pt-BR'})</script>
+    <script src="/estatico/js/libs/quill.min.js"/>
+    <script src="/estatico/js/julgamento/detalhasolicitacao.js"/>
+  </body>
+</html>
