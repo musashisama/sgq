@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <app-scripts-css/>
+  <body>
+    <app-header/>
+    <main class="conteudoPrincipal">
+      <app-navbar id="slide-out" class="sidenav"/>
+      <div class="container">
+        <h3 class="center-align titulo">Relatório Gerencial de Acompanhamento de Prazos - Novo</h3>
+        <div id="dataCAL" data-cal=`${data.cal}`/>
+        <div class="row">
+          <div class="col s12">
+            <div class="card hoverable cardAzul z-depth-4 cardBorda">
+              <div class="card-content white-text">
+                <span class="card-title">Conselheiro(a): ${data.user} - ${data.tipo}</span>
+                <p>
+                  <h6>CPF: ${data.cpf}</h6>
+                </p>
+                <p>
+                  <h6>Colegiado: ${data.turma} ${data.camara} ${data.setor}</h6>
+                </p>
+                <p>
+                  <h6>Final do Mandato: ${data.dtFimMandato}</h6>
+                </p>
+                <p>
+                  <h6>Relatorio extraído do e-Processo em ${data.dataEnvio}</h6>
+                </p>
+                <p>
+                  <h6>
+                    Falta(m) <strong><span id="daps"/></strong> dia(s) para a próxima sessão, que será realizada em <strong><span id="ps"/></strong>.
+                  </h6>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br/>
+        <br/>
+        <form id="formGerencial" data-regap=`${data.relatorio}` name="formGerencial" action="/julgamento/restrito/regap-cojul/detalha/" method="post">
+          <div class="row">
+            <div class="col s12">
+              <ul class="tabs">
+                <li class="tab col s3">
+                  <a href="#processos">Processos</a>
+                </li>
+                <li class="tab col s3">
+                  <a href="#stats">Estatísticas</a>
+                </li>
+              </ul>
+            </div>
+            <div id="processos" class="col s12">
+              <br/>
+              <div class="row">
+                <div class="form-group input-field  col s3">
+                  <select class="Atividade" name="atividadeSelect" id="atividadeSelect">
+                    <option class="form-group" value="Todas" selected>Todas</option>
+                    <option class="form-group" value="Para Relatar">Para Relatar</option>
+                    <option class="form-group" value="Formalizar Decisao">Formalizar Decisão</option>
+                    <option class="form-group" value="Formalizar Voto Vencedor">Formalizar Voto Vencedor</option>
+                    <option class="form-group" value="Corrigir Decisão">Corrigir Decisão</option>
+                    <option class="form-group" value="Apreciar e Assinar Documento">Apreciar e Assinar Documento</option>
+                  </select>
+                  <label>Selecione a atividade para filtrar:</label>
+                </div>
+                <div class="col s3 right-align"/>
+                <div class="col s12 right-align">
+                  <app-drop-download/>
+                  <a href="#!" id="mostraColunasAtividade" title="Agrupar/Desagrupar por Atividade" class="waves-effect waves-yellow hoverable z-depth-3 btn-floating blue">
+                    <i class="material-icons">unfold_less</i>
+                  </a>
+                  <a href="#modal2" id="mostraLegenda" title="Mostrar Legenda da Tabela" class="waves-effect waves-purple hoverable z-depth-3 btn-floating black">
+                    <i class="material-icons">details</i>
+                  </a>
+                </div>
+              </div>
+              <div id="tabelaRegap"/>
+            </div>
+            <div id="stats" class="col s12">Test 2</div>
+          </div>
+        </form>
+      </div>
+    </main>
+    <footer class="page-footer rodape"/>
+    <app-modal-tabela-legenda/>
+    <!--Modal Structure-->
+    <div id="modal1" class="modal">
+      <div class="modal-content">
+        <h4 class="hModal">Modal Header</h4>
+        <p class="pModal"/>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-red btn-flat cancela">Cancela</a>
+        <button class="btn waves-effect waves-light concorda" type="submit" name="action">
+          Confirma <i class="material-icons right">send</i>
+        </button>
+      </div>
+    </div>
+    <app-footer/>
+    <app-scripts-js/>
+    <script src="/estatico/js/libs/plotly-latest.min.js"/>
+    <script src="/estatico/js/libs/plotly-locale-pt-br.js"/>
+    <script>Plotly.setPlotConfig({locale: 'pt-BR'})</script>
+    <script src="/estatico/js/julgamento/helpers/configTabelaNovoRegap.js"/>
+    <script src="/estatico/js/julgamento/regap-individual.js"/>
+  </body>
+</html>
