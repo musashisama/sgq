@@ -12,6 +12,8 @@ module.exports = {
   corrigeReinp: require('./reinp/corrigereinp.marko'),
   regapCojul: require('./regap/regapCojul.marko'),
   regap: require('./regap/regap.marko'),
+  regap_individual_cojul: require('./regap/regapIndividualCojul.marko'),
+  regap_consolidado: require('./regap/regapConsolidado.marko'),
   faqdipaj: require('./faqdipaj/faqdipaj.marko'),
   cadastrafaqdipaj: require('./faqdipaj/cadastrafaqdipaj.marko'),
   formFAQ: require('./faqdipaj/formFAQ.marko'),
