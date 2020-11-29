@@ -230,17 +230,14 @@ class PessoalDao {
     });
   }
 
-  excluiRegSolicitacao(id) {
+  excluiRegSolicitacao(filtro) {
     return new Promise((resolve, reject) => {
-      this._db.regSolicitacoes.deleteOne(
-        { _id: new ObjectID(id) },
-        function (erro, res) {
-          if (erro) {
-            return reject('Não foi possível excluir o registro.');
-          }
-          return resolve(res);
-        },
-      );
+      this._db.regSolicitacoes.deleteOne(filtro, function (erro, res) {
+        if (erro) {
+          return reject('Não foi possível excluir o registro.');
+        }
+        return resolve(res);
+      });
     });
   }
 

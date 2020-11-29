@@ -119,6 +119,13 @@ function tabelaSolicitacoes() {
         download: true,
       },
       {
+        title: 'Excluir Solicitação',
+        formatter: formatDeleta,
+        cellClick: clickDeleta,
+        width: 140,
+        hozAlign: 'center',
+      },
+      {
         title: 'html',
         field: 'html',
         sorter: 'string',
@@ -162,17 +169,41 @@ let formatNome = function formatNome(cell) {
   return `<a class='black-text btndetalha' href='#modal1' title='Detalhar Solicitação'><i class='material-icons'>details</i></a>`;
 };
 
+let formatDeleta = function formatDeleta(cell) {
+  if (cell.getRow().getData().status == 'Encaminhada para Análise') {
+    return `<a id='btnDeleta' class='red-text' href='#modal1' title='Excluir Solicitação'> <i class="red-text	far fa-trash-alt"/></a>`;
+  } else {
+    return `<a class='black-text btndetalha' href='#modal1' title='Detalhar Solicitação'><i class='material-icons'>details</i></a>`;
+  }
+};
+
 function clickEdita(e, cell) {
   e.preventDefault();
   console.log(cell.getRow().getData().html);
   $('.btndetalha').addClass('modal-trigger');
-  montaModal(e, cell);
+  montaModal(e, cell, 'Detalhamento da SOlicitação');
 }
 
-function montaModal(e, cell, user) {
+function clickDeleta(e, cell) {
+  e.preventDefault();
+  if (cell.getRow().getData().status != 'Encaminhada para Análise') {
+    var toastHTML = `<span>Solicitações já aprovadas ou rejeitadas não podem ser excluídas.</span>`;
+    M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+  } else {
+    handleSOL(
+      (dados = {
+        uniqueId: cell.getRow().getData().uniqueId,
+        status: 'Solicitação Excluída pelo Usuário',
+      }),
+      'DELETE',
+    );
+  }
+}
+
+function montaModal(e, cell, titulo) {
   $('.hModal').text(``);
   $('.pModal').text(``);
-  $('.hModal').text(`Detalhamento da Solicitação`);
+  $('.hModal').text(titulo);
   $('.pModal').append(`
   ${cell.getRow().getData().html}
   <div class='row'>
@@ -244,24 +275,22 @@ async function pegaArquivo(arquivo) {
 }
 
 function handleSOL(registro, metodo) {
-  registro.dtAproveReject = moment().format('DD/MM/YYYY, HH:mm:ss');
   $.ajax({
-    url: '/julgamento/restrito/gestaosolicitacoes',
+    url: '/julgamento/conselheiros/registro-solicitacoes',
     data: registro,
     type: metodo,
     success: function (result) {
-      var toastHTML = `<span>Dados atualizados com sucesso!</span>`;
+      var toastHTML = `<span>Solicitação nº ${result} excluída com sucesso!</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
-      setInterval(() => {
+      console.log(result);
+      setTimeout((a) => {
         location.reload();
-      }, 1000);
+      }, 2500);
     },
     error: function (result) {
-      var toastHTML = `<span>Ocorreu um erro.</span>`;
+      var toastHTML = `<span>Ocorreu um erro na exclusão da solicitação. Tente novamente mais tarde.</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
-      setInterval(() => {
-        location.reload();
-      }, 1000);
+      console.log(result);
     },
   });
 }

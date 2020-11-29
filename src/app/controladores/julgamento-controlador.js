@@ -473,6 +473,14 @@ class JulgamentoControlador {
             });
         });
       }
+      if (req.method == 'DELETE') {
+        const pessoalDao = new PessoalDao(conn);
+        pessoalDao
+          .excluiRegSolicitacao({ uniqueId: req.body.uniqueId })
+          .then((res) => {
+            resp.send(req.body.uniqueId);
+          });
+      }
       if (req.method == 'POST') {
         const pessoalDao = new PessoalDao(conn);
         pessoalDao.cadastraRegSolicitacao(req.body).then((res) => {
