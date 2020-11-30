@@ -10,8 +10,10 @@ module.exports = {
   reinpgeral: require('./reinp/reinpgeral.marko'),
   detalhareinp: require('./reinp/detalhareinp.marko'),
   corrigeReinp: require('./reinp/corrigereinp.marko'),
+  //REGAP Antigo
   regapCojul: require('./regap/regapCojul.marko'),
   regap: require('./regap/regap.marko'),
+  //Novo REGAP
   regap_individual_cojul: require('./regap/regapIndividualCojul.marko'),
   regap_consolidado: require('./regap/regapConsolidado.marko'),
   faqdipaj: require('./faqdipaj/faqdipaj.marko'),

@@ -9,7 +9,13 @@ function initTabs() {
   $('.tabs').tabs();
 }
 function dataTable(msg) {
-  let tabledata = JSON.parse($('#formGerencial').attr('data-regap'));
+  let tabledata = JSON.parse($('#tabelaRegap').attr('data-regap'));
+  tabledata.forEach((element) => {
+    element.Dias_na_Atividade = retornaDias(element.entradaAtividade);
+    element.Dias_da_Dist = retornaDias(element.dtUltDist);
+    element.Dias_da_SJ = retornaDias(element.dtSessao);
+    element.DAAPS = parseInt($('#daps').text()) + element.Dias_na_Atividade;
+  });
   table = new Tabulator('#tabelaRegap', {
     data: tabledata,
     pagination: 'local',
@@ -45,7 +51,7 @@ function dataTable(msg) {
       },
       {
         title: 'Processo',
-        field: 'Processo',
+        field: 'processo',
         formatter: coloreProc,
         sorter: 'number',
         hozAlign: 'center',
@@ -57,7 +63,7 @@ function dataTable(msg) {
       },
       {
         title: 'Contribuinte',
-        field: 'Contribuinte',
+        field: 'contribuinte',
         formatter: coloreProc,
         headerFilter: 'input',
         sorter: 'string',
@@ -68,18 +74,8 @@ function dataTable(msg) {
         download: true,
       },
       {
-        title: 'Equipe Atual',
-        field: 'Equipe_Atual',
-        sorter: 'string',
-        hozAlign: 'center',
-        headerFilter: 'input',
-        editor: false,
-        responsive: 2,
-        download: true,
-      },
-      {
         title: 'Ind. Apenso',
-        field: 'Ind_Apenso',
+        field: 'apenso',
         sorter: 'string',
         hozAlign: 'center',
         editor: false,
@@ -88,7 +84,7 @@ function dataTable(msg) {
       },
       {
         title: 'Atividade',
-        field: 'Atividade',
+        field: 'atividade',
         sorter: 'string',
         hozAlign: 'center',
         topCalc: countCalc,
@@ -98,7 +94,7 @@ function dataTable(msg) {
       },
       {
         title: 'Situação de Julgamento',
-        field: 'Situacao',
+        field: 'situacao',
         sorter: 'string',
         headerFilter: 'input',
         topCalc: countCalc,
@@ -109,7 +105,7 @@ function dataTable(msg) {
       },
       {
         title: 'Entrada na Atividade',
-        field: 'Entrada_na_Atividade',
+        field: 'entradaAtividade',
         sorter: 'date',
         hozAlign: 'center',
         editor: false,
@@ -118,7 +114,7 @@ function dataTable(msg) {
       },
       {
         title: 'Horas CARF',
-        field: 'HE_CARF',
+        field: 'HE',
         sorter: 'number',
         hozAlign: 'center',
         headerFilter: 'input',
@@ -140,19 +136,29 @@ function dataTable(msg) {
         download: true,
       },
       {
+        title: 'Dias na Atividade na Próxima Sessão',
+        field: 'DAAPS',
+        sorter: 'number',
+        width: 140,
+        hozAlign: 'center',
+        editor: false,
+        formatter: coloreDias,
+        responsive: 0,
+        download: true,
+      },
+      {
         title: 'Valor Originário',
-        field: 'Valor_Originario',
+        field: 'valorOrig',
         sorter: 'number',
         hozAlign: 'center',
         editor: false,
         formatter: formatValor,
-        accessorDownload: downloadValor,
         responsive: 0,
         download: true,
       },
       {
         title: 'Observações',
-        field: 'Observacoes',
+        field: 'obs',
         sorter: 'string',
         hozAlign: 'center',
         editor: false,
@@ -161,7 +167,7 @@ function dataTable(msg) {
       },
       {
         title: 'Prioridade',
-        field: 'Prioridade',
+        field: 'prioridade',
         sorter: 'string',
         hozAlign: 'center',
         editor: false,
@@ -170,7 +176,7 @@ function dataTable(msg) {
       },
       {
         title: 'Assunto',
-        field: 'Assunto',
+        field: 'assunto',
         sorter: 'string',
         hozAlign: 'center',
         editor: false,
@@ -180,7 +186,7 @@ function dataTable(msg) {
 
       {
         title: 'Motivo da Prioridade',
-        field: 'Motivo_Prioridade',
+        field: 'motPrior',
         sorter: 'string',
         hozAlign: 'center',
         editor: false,
@@ -189,7 +195,7 @@ function dataTable(msg) {
       },
       {
         title: 'Alegações',
-        field: 'Alegacoes_CARF',
+        field: 'alegacoes',
         sorter: 'string',
         hozAlign: 'center',
         editor: false,
@@ -209,7 +215,7 @@ function dataTable(msg) {
       },
       {
         title: 'Data da Sessão de Julgamento',
-        field: 'Data_da_Sessao_Julgamento',
+        field: 'dtSessao',
         sorter: 'number',
         hozAlign: 'center',
         editor: false,
@@ -226,15 +232,6 @@ function dataTable(msg) {
         download: false,
       },
       {
-        title: 'Questionamento',
-        field: 'Questionamento_CARF',
-        sorter: 'string',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
-        download: true,
-      },
-      {
         title: 'Retorno Sepoj?',
         field: 'Retorno_Sepoj',
         sorter: 'string',
@@ -244,22 +241,22 @@ function dataTable(msg) {
         download: true,
       },
       {
-        title: 'Solicitação de Juntada?',
-        field: 'Ind_Juntada',
+        title: 'Última Equipe',
+        field: 'ultEquipe',
         sorter: 'string',
         hozAlign: 'center',
         editor: false,
         responsive: 2,
-        download: true,
+        download: false,
       },
       {
-        title: 'Última Equipe',
-        field: 'Equipe_Ultima',
+        title: 'Solicitação de Juntada?',
+        field: 'juntada',
         sorter: 'string',
         hozAlign: 'center',
         editor: false,
         responsive: 2,
-        download: true,
+        download: false,
       },
     ],
     autoColumns: false,

@@ -3,15 +3,16 @@ initialSort = [{ column: 'nome', dir: 'asc' }];
 function inicializaComponentes() {
   $(document).ready(function () {
     initSelect();
-    dataTable();
     initTabs();
     elementosTabela();
+    getRelatorios();
   });
 }
 
 function initTabs() {
   $('.tabs').tabs();
 }
+
 function elementosTabela() {
   $('.Atividade').change(() => {
     table.setFilter('Atividade', '=', $('select option:selected').val());
@@ -32,23 +33,28 @@ function elementosTabela() {
         agrupadoT = false;
       }
     });
+  $('#consultaRegap').click((e) => {
+    selectRelatorios();
+  });
 }
 
-function getRelatorios(data) {
+function getRelatorios() {
   $.ajax({
-    url: `/julgamento/conselheiros/listaregap`,
+    url: `/julgamento/restrito/regap_consolidado/`,
     type: 'POST',
-    data: data,
+    data: {
+      get: 'listagem',
+    },
     beforeSend: function () {
       $('.progressRegap').toggle();
     },
   })
     .done(function (msg) {
-      msg.forEach((m) => {
+      msg.reverse().forEach((m) => {
         $('#dataRelRegap').append(
           $('<option>', {
-            value: m._id,
-            text: moment.unix(m.dtRel).format('DD/MM/YYYY'),
+            value: m,
+            text: moment.unix(m).format('DD/MM/YYYY'),
           }),
         );
         $('#dataRelRegap').formSelect();
@@ -60,54 +66,69 @@ function getRelatorios(data) {
     });
 }
 
-function elementosTabelas() {
-  $('.dataRelRegap').change(() => {
-    $.ajax({
-      url: `/julgamento/conselheiros/listaregap`,
-      type: 'POST',
-      data: {
-        get: 'relatorio',
-        idRel: $('#dataRelRegap option:selected').val(),
-      },
-      beforeSend: function () {
-        $('.progressRegap').toggle();
-      },
-    })
-      .done(function (msg) {
-        $('.classProcessos').show();
+function selectRelatorios() {
+  $.ajax({
+    url: `/julgamento/restrito/regap_consolidado/`,
+    type: 'POST',
+    data: {
+      get: 'relatorio',
+      dtRel: $('#dataRelRegap option:selected').val(),
+      semana: $('#semanaRelRegap option:selected').val(),
+    },
+    beforeSend: function () {
+      $('#tabelaRegap').val('');
+      $('.progressRegap').toggle();
+    },
+  })
+    .done(function (msg) {
+      $('.classProcessos').show();
+      let dados = [];
 
-        msg[0].relatorio.forEach((r) => {
-          r.Dias_da_Dist = moment().diff(
-            moment(r.dtUltDist, 'DD/MM/YYYY'),
-            'days',
-          );
-          r.Dias_da_SJ = moment().diff(
-            moment(r.dtSessao, 'DD/MM/YYYY'),
-            'days',
-          );
-          r.Dias_na_Atividade = moment().diff(
-            moment(r.entradaAtividade, 'DD/MM/YYYY'),
-            'days',
-          );
-          r.DAAPS = parseInt($('#daps').text()) + r.Dias_na_Atividade;
+      msg.forEach((m) => {
+        m.relatorio.forEach((r) => {
+          dados.push({
+            cpf: m.conselheiro.cpf,
+            nome: m.conselheiro.nome,
+            processo: r.processo,
+            contribuinte: r.contribuinte,
+            equipe: r.equipe,
+            atividade: r.atividade,
+            situacao: r.situacao,
+            entradaAtividade: r.entradaAtividade,
+            HE: r.HE,
+            valorOrig: r.valorOrig,
+            Dias_na_Atividade: retornaDias(r.entradaAtividade),
+            Dias_da_Dist: retornaDias(r.dtUltDist),
+            Dias_da_SJ: retornaDias(r.dtSessao),
+            apenso: r.apenso,
+            obs: r.obs,
+            prioridade: r.prioridade,
+            assunto: r.assunto,
+            motPrior: r.motPrior,
+            alegacoes: r.alegacoes,
+            dtSessao: r.dtSessao,
+            ultEquipe: r.ultEquipe,
+            ret_Sepoj: r.ultEquipe,
+            juntada: r.juntada,
+          });
         });
-        dadosPlot = msg[0].relatorio;
-        dataTable(msg[0].relatorio);
-        grafico(msg[0].relatorio);
-        $('.progressRegap').toggle();
-      })
-      .fail(function (jqXHR, textStatus, msg) {
-        var toastHTML = `<span>Ocorreu um erro.</span>`;
-        M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
       });
-  });
+      dataTable(dados);
+      initElementos();
+      $('.progressRegap').toggle();
+    })
+    .fail(function (jqXHR, textStatus, msg) {
+      var toastHTML = `<span>Ocorreu um erro.</span>`;
+      M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+    });
 }
 
 function initSelect() {
   $('select').formSelect();
 }
+
 function dataTable(msg) {
-  let tabledata = JSON.parse($('form').attr('data-regapCojul'));
+  let tabledata = msg;
   table = new Tabulator('#tabelaRegap', {
     data: tabledata,
     pagination: 'local',
@@ -134,30 +155,21 @@ function dataTable(msg) {
         download: true,
       },
       {
-        title: 'CPF',
-        field: 'CPF',
-        sorter: 'string',
-        hozAlign: 'left',
-        headerFilter: 'input',
-        editor: false,
-        responsive: 2,
-        formatter: formatNome,
-        download: true,
-      },
-      {
-        title: 'Responsável Atual',
+        title: 'Responsável',
         field: 'nome',
         sorter: 'string',
+        width: 200,
+        formatter: formatNome,
         hozAlign: 'left',
         headerFilter: 'input',
+        topCalc: countCalc,
         editor: false,
-        formatter: formatNome,
         responsive: 0,
         download: true,
       },
       {
         title: 'Processo',
-        field: 'Processo',
+        field: 'processo',
         formatter: coloreProc,
         sorter: 'number',
         hozAlign: 'center',
@@ -169,7 +181,7 @@ function dataTable(msg) {
       },
       {
         title: 'Contribuinte',
-        field: 'Contribuinte',
+        field: 'contribuinte',
         formatter: coloreProc,
         headerFilter: 'input',
         sorter: 'string',
@@ -180,18 +192,8 @@ function dataTable(msg) {
         download: true,
       },
       {
-        title: 'Equipe Atual',
-        field: 'Equipe_Atual',
-        sorter: 'string',
-        hozAlign: 'center',
-        headerFilter: 'input',
-        editor: false,
-        responsive: 2,
-        download: true,
-      },
-      {
         title: 'Ind. Apenso',
-        field: 'Ind_Apenso',
+        field: 'apenso',
         sorter: 'string',
         hozAlign: 'center',
         editor: false,
@@ -200,7 +202,7 @@ function dataTable(msg) {
       },
       {
         title: 'Atividade',
-        field: 'Atividade',
+        field: 'atividade',
         sorter: 'string',
         hozAlign: 'center',
         topCalc: countCalc,
@@ -210,7 +212,7 @@ function dataTable(msg) {
       },
       {
         title: 'Situação de Julgamento',
-        field: 'Situacao',
+        field: 'situacao',
         sorter: 'string',
         headerFilter: 'input',
         topCalc: countCalc,
@@ -221,7 +223,7 @@ function dataTable(msg) {
       },
       {
         title: 'Entrada na Atividade',
-        field: 'Entrada_na_Atividade',
+        field: 'entradaAtividade',
         sorter: 'date',
         hozAlign: 'center',
         editor: false,
@@ -230,7 +232,7 @@ function dataTable(msg) {
       },
       {
         title: 'Horas CARF',
-        field: 'HE_CARF',
+        field: 'HE',
         sorter: 'number',
         hozAlign: 'center',
         headerFilter: 'input',
@@ -253,18 +255,17 @@ function dataTable(msg) {
       },
       {
         title: 'Valor Originário',
-        field: 'Valor_Originario',
+        field: 'valorOrig',
         sorter: 'number',
         hozAlign: 'center',
         editor: false,
         formatter: formatValor,
-        accessorDownload: downloadValor,
         responsive: 0,
         download: true,
       },
       {
         title: 'Observações',
-        field: 'Observacoes',
+        field: 'obs',
         sorter: 'string',
         hozAlign: 'center',
         editor: false,
@@ -273,7 +274,7 @@ function dataTable(msg) {
       },
       {
         title: 'Prioridade',
-        field: 'Prioridade',
+        field: 'prioridade',
         sorter: 'string',
         hozAlign: 'center',
         editor: false,
@@ -282,16 +283,17 @@ function dataTable(msg) {
       },
       {
         title: 'Assunto',
-        field: 'Assunto',
+        field: 'assunto',
         sorter: 'string',
         hozAlign: 'center',
         editor: false,
         responsive: 2,
         download: true,
       },
+
       {
         title: 'Motivo da Prioridade',
-        field: 'Motivo_Prioridade',
+        field: 'motPrior',
         sorter: 'string',
         hozAlign: 'center',
         editor: false,
@@ -300,7 +302,7 @@ function dataTable(msg) {
       },
       {
         title: 'Alegações',
-        field: 'Alegacoes_CARF',
+        field: 'alegacoes',
         sorter: 'string',
         hozAlign: 'center',
         editor: false,
@@ -320,7 +322,7 @@ function dataTable(msg) {
       },
       {
         title: 'Data da Sessão de Julgamento',
-        field: 'Data_da_Sessao_Julgamento',
+        field: 'dtSessao',
         sorter: 'number',
         hozAlign: 'center',
         editor: false,
@@ -337,26 +339,9 @@ function dataTable(msg) {
         download: false,
       },
       {
-        title: 'Questionamento',
-        field: 'Questionamento_CARF',
-        sorter: 'string',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
-        download: true,
-      },
-      {
         title: 'Retorno Sepoj?',
-        field: 'Retorno_Sepoj',
-        sorter: 'string',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Solicitação de Juntada?',
-        field: 'Ind_Juntada',
+        field: 'ret_Sepoj',
+        formatter: retornoSepoj,
         sorter: 'string',
         hozAlign: 'center',
         editor: false,
@@ -365,12 +350,21 @@ function dataTable(msg) {
       },
       {
         title: 'Última Equipe',
-        field: 'Equipe_Ultima',
+        field: 'ultEquipe',
         sorter: 'string',
         hozAlign: 'center',
         editor: false,
         responsive: 2,
-        download: true,
+        download: false,
+      },
+      {
+        title: 'Solicitação de Juntada?',
+        field: 'juntada',
+        sorter: 'string',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 2,
+        download: false,
       },
     ],
     autoColumns: false,
@@ -379,182 +373,184 @@ function dataTable(msg) {
   });
 }
 
-dados = JSON.parse($('form').attr('data-regapCojul'));
-var layoutAtividade = {
-  title: 'Processos por atividade',
-  shapes: [],
-  yaxis: {
-    showticklabels: true,
-    tickangle: 0,
-    tickfont: {
-      family: 'Arial',
-      size: 10,
-      color: 'black',
+function montaGraficos(msg) {
+  dados = JSON.parse(msg);
+  var layoutAtividade = {
+    title: 'Processos por atividade',
+    shapes: [],
+    yaxis: {
+      showticklabels: true,
+      tickangle: 0,
+      tickfont: {
+        family: 'Arial',
+        size: 10,
+        color: 'black',
+      },
     },
-  },
-  margin: {
-    l: 200,
-    r: 30,
-    b: 50,
-    t: 100,
-  },
-};
-let config = { responsive: true, displaylogo: false };
+    margin: {
+      l: 200,
+      r: 30,
+      b: 50,
+      t: 100,
+    },
+  };
+  let config = { responsive: true, displaylogo: false };
 
-let somatorio = d3
-  .nest()
-  .rollup((v) => {
-    return [
-      {
-        y: 'Para Relatar - Aguardando Pauta',
-        x: d3.sum(v, (d) => {
-          if (
-            d.Atividade == 'Para Relatar' &&
-            d.Situacao == 'AGUARDANDO PAUTA'
-          ) {
-            return 1;
-          }
-        }),
-      },
-      {
-        y: 'Para Relatar - Cancelado',
-        x: d3.sum(v, (d) => {
-          if (d.Atividade == 'Para Relatar' && d.Situacao == 'CANCELADO') {
-            return 1;
-          }
-        }),
-      },
-      {
-        y: 'Para Relatar - Retirado de Pauta',
-        x: d3.sum(v, (d) => {
-          if (
-            d.Atividade == 'Para Relatar' &&
-            d.Situacao == 'RETIRADO DE PAUTA'
-          ) {
-            return 1;
-          }
-        }),
-      },
-      {
-        y: 'Para Relatar - Pedido de Vista',
-        x: d3.sum(v, (d) => {
-          if (
-            d.Atividade == 'Para Relatar' &&
-            d.Situacao == 'PEDIDO DE VISTA'
-          ) {
-            return 1;
-          }
-        }),
-      },
-      {
-        y: 'Para Relatar - Indicado para Pauta',
-        x: d3.sum(v, (d) => {
-          if (
-            d.Atividade == 'Para Relatar' &&
-            d.Situacao == 'INDICADO PARA PAUTA'
-          ) {
-            return 1;
-          }
-        }),
-      },
-      {
-        y: 'Para Relatar - Em Sessão',
-        x: d3.sum(v, (d) => {
-          if (d.Atividade == 'Para Relatar' && d.Situacao == 'EM SESSÃO') {
-            return 1;
-          }
-        }),
-      },
-      {
-        y: 'Para Relatar - Em Pauta',
-        x: d3.sum(v, (d) => {
-          if (d.Atividade == 'Para Relatar' && d.Situacao == 'EM PAUTA') {
-            return 1;
-          }
-        }),
-      },
-      {
-        y: 'Formalizar Voto Vencedor',
-        x: d3.sum(v, (d) => {
-          if (d.Atividade == 'Formalizar Voto Vencedor') {
-            return 1;
-          }
-        }),
-      },
-      {
-        y: 'Apreciar e Assinar Documento',
-        x: d3.sum(v, (d) => {
-          if (d.Atividade == 'Apreciar e Assinar Documento') {
-            return 1;
-          }
-        }),
-      },
-      {
-        y: 'Formalizar Decisão',
-        x: d3.sum(v, (d) => {
-          if (d.Atividade == 'Formalizar Decisao') {
-            return 1;
-          }
-        }),
-      },
-      {
-        y: 'Corrigir Decisão',
-        x: d3.sum(v, (d) => {
-          if (
-            d.Atividade == 'Corrigir Decisao' ||
-            d.Atividade == 'Corrigir Decisão'
-          ) {
-            return 1;
-          }
-        }),
-      },
-    ];
-  })
-  .entries(dados);
+  let somatorio = d3
+    .nest()
+    .rollup((v) => {
+      return [
+        {
+          y: 'Para Relatar - Aguardando Pauta',
+          x: d3.sum(v, (d) => {
+            if (
+              d.Atividade == 'Para Relatar' &&
+              d.Situacao == 'AGUARDANDO PAUTA'
+            ) {
+              return 1;
+            }
+          }),
+        },
+        {
+          y: 'Para Relatar - Cancelado',
+          x: d3.sum(v, (d) => {
+            if (d.Atividade == 'Para Relatar' && d.Situacao == 'CANCELADO') {
+              return 1;
+            }
+          }),
+        },
+        {
+          y: 'Para Relatar - Retirado de Pauta',
+          x: d3.sum(v, (d) => {
+            if (
+              d.Atividade == 'Para Relatar' &&
+              d.Situacao == 'RETIRADO DE PAUTA'
+            ) {
+              return 1;
+            }
+          }),
+        },
+        {
+          y: 'Para Relatar - Pedido de Vista',
+          x: d3.sum(v, (d) => {
+            if (
+              d.Atividade == 'Para Relatar' &&
+              d.Situacao == 'PEDIDO DE VISTA'
+            ) {
+              return 1;
+            }
+          }),
+        },
+        {
+          y: 'Para Relatar - Indicado para Pauta',
+          x: d3.sum(v, (d) => {
+            if (
+              d.Atividade == 'Para Relatar' &&
+              d.Situacao == 'INDICADO PARA PAUTA'
+            ) {
+              return 1;
+            }
+          }),
+        },
+        {
+          y: 'Para Relatar - Em Sessão',
+          x: d3.sum(v, (d) => {
+            if (d.Atividade == 'Para Relatar' && d.Situacao == 'EM SESSÃO') {
+              return 1;
+            }
+          }),
+        },
+        {
+          y: 'Para Relatar - Em Pauta',
+          x: d3.sum(v, (d) => {
+            if (d.Atividade == 'Para Relatar' && d.Situacao == 'EM PAUTA') {
+              return 1;
+            }
+          }),
+        },
+        {
+          y: 'Formalizar Voto Vencedor',
+          x: d3.sum(v, (d) => {
+            if (d.Atividade == 'Formalizar Voto Vencedor') {
+              return 1;
+            }
+          }),
+        },
+        {
+          y: 'Apreciar e Assinar Documento',
+          x: d3.sum(v, (d) => {
+            if (d.Atividade == 'Apreciar e Assinar Documento') {
+              return 1;
+            }
+          }),
+        },
+        {
+          y: 'Formalizar Decisão',
+          x: d3.sum(v, (d) => {
+            if (d.Atividade == 'Formalizar Decisao') {
+              return 1;
+            }
+          }),
+        },
+        {
+          y: 'Corrigir Decisão',
+          x: d3.sum(v, (d) => {
+            if (
+              d.Atividade == 'Corrigir Decisao' ||
+              d.Atividade == 'Corrigir Decisão'
+            ) {
+              return 1;
+            }
+          }),
+        },
+      ];
+    })
+    .entries(dados);
 
-let arrayDados = [];
-arrayDados.y = [];
-arrayDados.x = [];
-arrayDados.text = [];
-arrayDados.color = [];
+  let arrayDados = [];
+  arrayDados.y = [];
+  arrayDados.x = [];
+  arrayDados.text = [];
+  arrayDados.color = [];
 
-let cores = [
-  'rgb(204, 204, 204)',
-  'rgb(254, 181, 204)',
-  'rgb(104,204, 204)',
-  'rgb(124, 181, 204)',
-  'rgb(164, 204, 204)',
-  'rgb(184, 181, 204)',
-  'rgb(84, 105, 119)',
-  'rgb(144, 181, 204)',
-  'rgb(119, 110, 84)',
-  'rgb(134, 224, 234)',
-  'rgb(134, 131, 224)',
-];
-somatorio = somatorio.sort((a, b) => {
-  return a.x - b.x;
-});
-somatorio.forEach((row, index) => {
-  arrayDados.y.push(row.y);
-  arrayDados.x.push(row.x);
-  arrayDados.color.push(cores[index]);
-  arrayDados.text.push(row.y);
-});
-arrayDados.type = 'bar';
-arrayDados.orientation = 'h';
-arrayDados.type = 'bar';
-arrayDados.fillcolor = 'cls';
-arrayDados.hovertemplate = `<i>Quantidade</i>: %{x:.d} processos<br>
+  let cores = [
+    'rgb(204, 204, 204)',
+    'rgb(254, 181, 204)',
+    'rgb(104,204, 204)',
+    'rgb(124, 181, 204)',
+    'rgb(164, 204, 204)',
+    'rgb(184, 181, 204)',
+    'rgb(84, 105, 119)',
+    'rgb(144, 181, 204)',
+    'rgb(119, 110, 84)',
+    'rgb(134, 224, 234)',
+    'rgb(134, 131, 224)',
+  ];
+  somatorio = somatorio.sort((a, b) => {
+    return a.x - b.x;
+  });
+  somatorio.forEach((row, index) => {
+    arrayDados.y.push(row.y);
+    arrayDados.x.push(row.x);
+    arrayDados.color.push(cores[index]);
+    arrayDados.text.push(row.y);
+  });
+  arrayDados.type = 'bar';
+  arrayDados.orientation = 'h';
+  arrayDados.type = 'bar';
+  arrayDados.fillcolor = 'cls';
+  arrayDados.hovertemplate = `<i>Quantidade</i>: %{x:.d} processos<br>
                         <b>%{text}</b>`;
-arrayDados.marker = {
-  color: arrayDados.color,
-  width: 4,
-  colorscale: 'Viridis',
-  line: {},
-};
-Plotly.newPlot(
-  document.getElementById('barrasAtividade'),
-  [arrayDados],
-  layoutAtividade,
-  config,
-);
+  arrayDados.marker = {
+    color: arrayDados.color,
+    width: 4,
+    colorscale: 'Viridis',
+    line: {},
+  };
+  Plotly.newPlot(
+    document.getElementById('barrasAtividade'),
+    [arrayDados],
+    layoutAtividade,
+    config,
+  );
+}
