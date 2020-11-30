@@ -94,15 +94,16 @@ class JulgamentoDao {
 
   atualizaCal(filtro, registro) {
     return new Promise((resolve, reject) => {
-      this._db.calendario.updateOne(filtro, { $set: registro }, function (
-        erro,
-        res,
-      ) {
-        if (erro) {
-          return reject('Não foi possível atualizar o registro de eventos.');
-        }
-        return resolve(res);
-      });
+      this._db.calendario.updateOne(
+        filtro,
+        { $set: registro },
+        function (erro, res) {
+          if (erro) {
+            return reject('Não foi possível atualizar o registro de eventos.');
+          }
+          return resolve(res);
+        },
+      );
     });
   }
 
@@ -223,15 +224,16 @@ class JulgamentoDao {
 
   atualizaPortal(filtro, registro) {
     return new Promise((resolve, reject) => {
-      this._db.portal.updateOne(filtro, { $set: registro }, function (
-        erro,
-        res,
-      ) {
-        if (erro) {
-          return reject('Não foi possível atualizar o registro de eventos.');
-        }
-        return resolve(res);
-      });
+      this._db.portal.updateOne(
+        filtro,
+        { $set: registro },
+        function (erro, res) {
+          if (erro) {
+            return reject('Não foi possível atualizar o registro de eventos.');
+          }
+          return resolve(res);
+        },
+      );
     });
   }
 
@@ -283,6 +285,18 @@ class JulgamentoDao {
         });
     });
   }
+
+  getRegapDistinct(filtro) {
+    return new Promise((resolve, reject) => {
+      this._db.regap.distinct(filtro, function (erro, res) {
+        if (erro) {
+          return reject(`Não foi possível listar os registros. Erro: ${erro}`);
+        }
+        return resolve(res);
+      });
+    });
+  }
+
   atualizaDataRegap(filtro, registro) {
     return new Promise((resolve, reject) => {
       this._db.regap.updateMany(filtro, registro, function (erro, res) {

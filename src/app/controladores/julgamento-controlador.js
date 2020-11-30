@@ -82,6 +82,9 @@ class JulgamentoControlador {
       detalhaAnEstoque: '/julgamento/restrito/analise-estoque/detalha/:id',
       detalharegap: '/julgamento/restrito/regap-cojul/detalha/:id',
       regap: '/julgamento/restrito/regap/:id',
+      regap_individual_cojul:
+        '/julgamento/restrito/regap_consolidado/detalha/:id',
+      regap_consolidado: '/julgamento/restrito/regap_consolidado/',
       gestaorelatorios: '/julgamento/restrito/relatorios/',
       //CONSELHEIROS
       conselheiros: '/julgamento/conselheiros',
@@ -620,6 +623,114 @@ class JulgamentoControlador {
     };
   }
 
+  carregaRegapConsolidado() {
+    return function (req, resp) {
+      if (req.method === 'GET') {
+        resp.marko(templates.julgamento.regap_consolidado);
+      }
+      if (req.method === 'POST') {
+        const julgamentoDao = new JulgamentoDao(conn);
+        let filtro, sort, projecao;
+        if (req.body.get == 'listagem') {
+          filtro = 'dtRel';
+          projecao = {};
+          sort = { dtRel: -1 };
+          julgamentoDao
+            .getRegapDistinct(filtro, sort, projecao)
+            .then((regap) => {
+              resp.json(regap);
+            });
+        }
+        if (req.body.get == 'relatorio') {
+          req.body.semana == 'Todas'
+            ? (filtro = { dtRel: +req.body.dtRel })
+            : (filtro = {
+                $and: [
+                  { dtRel: +req.body.dtRel },
+                  {
+                    'conselheiro.semana': req.body.semana,
+                  },
+                ],
+              });
+          projecao = {};
+          sort = { 'relatorio.processo': 1 };
+          julgamentoDao.getRegap(filtro, sort, projecao).then((regap) => {
+            resp.json(regap);
+          });
+        }
+      }
+    };
+  }
+
+  carregaRegapConsDetalha() {
+    return function (req, resp) {
+      if (req.method === 'GET') {
+        let params = req.params.id.split('&');
+        console.log(params);
+        let projecao = { relatorio: 1, _id: 0 };
+        let sort = { 'relatorio.processo': 1 };
+        let filtro = {
+          $and: [
+            { dtRel: +params[1] },
+            {
+              'conselheiro.cpf': params[0],
+            },
+          ],
+        };
+        const julgamentoDao = new JulgamentoDao(conn);
+        const pessoalDao = new PessoalDao(conn);
+        pessoalDao.getUsers({ cpf: params[0] }).then((user) => {
+          console.log(user[0]);
+          julgamentoDao
+            .getCal({
+              classNames: CSVHandler.semanaCores(user[0].unidade),
+            })
+            .then((cal) => {
+              console.log(cal);
+              julgamentoDao.getRegap(filtro, sort, projecao).then((regap) => {
+                resp.marko(templates.julgamento.regap_individual_cojul, {
+                  relatorio: JSON.stringify(regap[0].relatorio),
+                  cal: JSON.stringify(cal),
+                  user: user[0],
+                });
+              });
+            });
+        });
+      }
+      if (req.method === 'POST') {
+        const julgamentoDao = new JulgamentoDao(conn);
+        let filtro, sort, projecao;
+        if (req.body.get == 'listagem') {
+          filtro = 'dtRel';
+          projecao = {};
+          sort = { dtRel: -1 };
+          julgamentoDao
+            .getRegapDistinct(filtro, sort, projecao)
+            .then((regap) => {
+              resp.json(regap);
+            });
+        }
+        if (req.body.get == 'relatorio') {
+          req.body.semana == 'Todas'
+            ? (filtro = { dtRel: +req.body.dtRel })
+            : (filtro = {
+                $and: [
+                  { dtRel: +req.body.dtRel },
+                  {
+                    'conselheiro.semana': req.body.semana,
+                  },
+                ],
+              });
+          projecao = {};
+          sort = { 'relatorio.processo': 1 };
+          julgamentoDao.getRegap(filtro, sort, projecao).then((regap) => {
+            resp.json(regap);
+          });
+        }
+      }
+    };
+  }
+
   handleRelatorios() {
     return function (req, resp) {
       const julgamentoDao = new JulgamentoDao(conn);
@@ -789,6 +900,7 @@ class JulgamentoControlador {
                     fields.dataExt,
                     'DD/MM/YYYY',
                   ).format('DD/MM/YYYY');
+                  registro['dtEnvio'] = moment().format('DD/MM/YYYY');
                   julgamentoDao.insereDadosCSV(registro).then((dados) => {
                     resp.send(respo);
                   });

@@ -64,18 +64,9 @@ function elementosTabelas() {
         $('.classProcessos').show();
 
         msg[0].relatorio.forEach((r) => {
-          r.Dias_da_Dist = moment().diff(
-            moment(r.dtUltDist, 'DD/MM/YYYY'),
-            'days',
-          );
-          r.Dias_da_SJ = moment().diff(
-            moment(r.dtSessao, 'DD/MM/YYYY'),
-            'days',
-          );
-          r.Dias_na_Atividade = moment().diff(
-            moment(r.entradaAtividade, 'DD/MM/YYYY'),
-            'days',
-          );
+          r.Dias_na_Atividade = retornaDias(r.entradaAtividade);
+          r.Dias_da_Dist = retornaDias(r.dtUltDist);
+          r.Dias_da_SJ = retornaDias(r.dtSessao);
           r.DAAPS = parseInt($('#daps').text()) + r.Dias_na_Atividade;
         });
         dadosPlot = msg[0].relatorio;

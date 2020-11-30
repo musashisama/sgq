@@ -53,7 +53,9 @@ function initSelect() {
 }
 
 function calendario(dias) {
-  let calendario = JSON.parse($('#dataCAL').attr('data-cal'));
+  let calendario = $('#dataCAL').attr('data-cal')
+    ? JSON.parse($('#dataCAL').attr('data-cal'))
+    : [{}];
   let datas = [];
   calendario.forEach((c) => {
     if (moment(c.start, 'DD/MM/YYYY').isSameOrAfter(moment())) {
@@ -93,6 +95,12 @@ function retJuntada(data) {
 function returnRep(data) {
   return !data.obs.includes('.REP.');
 }
+
+let retornoSepoj = function retornoSepoj(cell) {
+  if (cell.getRow().getData().ultEquipe.includes('SEPOJ-COSUP-CARF-MF-DF')) {
+    return 'Sim';
+  } else return 'Não';
+};
 
 function initCheckboxes() {
   $(`#repetitivosCheck`).change(() => {
@@ -170,9 +178,9 @@ function initElementos() {
 }
 
 let formatNome = function formatNome(cell) {
-  return `<a href='/julgamento/restrito/regap-cojul/detalha/${
-    cell.getRow().getData().CPF
-  }'>${cell.getValue()}</a>`;
+  return `<a href='/julgamento/restrito/regap_consolidado/detalha/${
+    cell.getRow().getData().cpf
+  }&${$('#dataRelRegap option:selected').val()}'>${cell.getValue()}</a>`;
 };
 
 let formatValor = function formatValor(cell) {
@@ -246,11 +254,11 @@ function coloreProc(cell, formatterParams, valor) {
     let estilo = getComputedStyle(elem);
     cell.getElement().style.backgroundColor = estilo.backgroundColor;
   }
-  if (cell.getRow().getData().Assunto) {
+  if (cell.getRow().getData().assunto) {
     if (
-      cell.getRow().getData().Assunto.includes('PARADIGMA') ||
-      cell.getRow().getData().Assunto.includes('Paradigma') ||
-      cell.getRow().getData().Assunto.includes('paradigma')
+      cell.getRow().getData().assunto.includes('PARADIGMA') ||
+      cell.getRow().getData().assunto.includes('Paradigma') ||
+      cell.getRow().getData().assunto.includes('paradigma')
     ) {
       let elem = document.querySelector('.LegProcessoParadigma');
       let estilo = getComputedStyle(elem);
@@ -338,6 +346,10 @@ function coloreDias(cell, formatterParams, valor) {
     cell.getElement().style.fontWeight = 'bolder';
   }
   return value;
+}
+
+function retornaDias(atividade) {
+  return +moment().diff(moment(atividade, 'DD/MM/YYYY'), 'days') + 1;
 }
 
 function mediaCalc(values, data, calcParams) {

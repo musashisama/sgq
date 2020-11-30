@@ -58,10 +58,30 @@ module.exports = (app) => {
     rotasJulgamento.regapCojul,
     julgControlador.carregaPaginaRegapCojul(),
   );
+
+  //Novo REGAP
+
+  app
+    .route(rotasJulgamento.regap_consolidado)
+    .get(julgControlador.carregaRegapConsolidado())
+    .post(julgControlador.carregaRegapConsolidado());
+
+  app
+    .route(rotasJulgamento.regap_individual_cojul)
+    .get(julgControlador.carregaRegapConsDetalha())
+    .post(julgControlador.carregaRegapConsDetalha());
+
+  app.get(rotasJulgamento.detalharegap, julgControlador.carregaPaginaRegap());
+  app.get(
+    rotasJulgamento.regapCojul,
+    julgControlador.carregaPaginaRegapCojul(),
+  );
+
   app.get(
     rotasJulgamento.analiseEstoque,
     julgControlador.carregaPaginaAnaliseEstoque(),
   );
+
   app.get(rotasJulgamento.reinp, julgControlador.carregaPaginaReinp());
   app.get(
     rotasJulgamento.detalhareinp,
