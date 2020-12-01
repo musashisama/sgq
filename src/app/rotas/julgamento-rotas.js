@@ -81,7 +81,10 @@ module.exports = (app) => {
     rotasJulgamento.analiseEstoque,
     julgControlador.carregaPaginaAnaliseEstoque(),
   );
-
+  app
+    .route(rotasJulgamento.estoque_conselheiros)
+    .get(julgControlador.carregaPaginaEstoque())
+    .post(julgControlador.carregaPaginaEstoque());
   app.get(rotasJulgamento.reinp, julgControlador.carregaPaginaReinp());
   app.get(
     rotasJulgamento.detalhareinp,

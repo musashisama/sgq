@@ -1,6 +1,7 @@
 module.exports = {
   //COJUL
   estoque: require('./estoque/estoque.marko'),
+  estoque_conselheiros: require('./estoque/estoque_conselheiros.marko'),
   analiseEstoque: require('./estoque/analiseEstoque.marko'),
   carregacsv: require('./carregacsv/carregacsv.marko'),
   escolhecsv: require('./escolhecsv/escolhecsv.marko'),
