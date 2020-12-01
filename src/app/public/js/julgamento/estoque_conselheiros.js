@@ -80,6 +80,7 @@ function selectRelatorios() {
       msg.forEach((m) => {
         m.relatorio.forEach((r) => {
           if (
+            !r.obs.includes('.REP.') &&
             r.atividade == 'Para Relatar' &&
             r.situacao == 'AGUARDANDO PAUTA'
           ) {
