@@ -80,8 +80,8 @@ function selectRelatorios() {
       msg.forEach((m) => {
         m.relatorio.forEach((r) => {
           if (
-            r.atividade == 'Formalizar Voto Vencedor' ||
-            (r.atividade == 'Para Relatar' && r.situacao == 'AGUARDANDO PAUTA')
+            r.atividade == 'Para Relatar' &&
+            r.situacao == 'AGUARDANDO PAUTA'
           ) {
             parcial.push({
               cpf: m.conselheiro.cpf,
