@@ -44,9 +44,11 @@ function btnSalva() {
       return false;
     } else {
       url = $('#formCadCons').attr('action');
+      let mail = $('#email').val().toLowerCase();
+      $('#email').val(mail);
       valores = $('#formCadCons').serializeArray();
-      console.log(valores);
-      valores.push({ name: 'perfil', value: ['carf', 'conselheiro'] });
+      let perfis = ['carf', 'conselheiro'];
+      valores.push({ name: 'perfil', value: perfis });
       $.post(url, valores)
         .done((dados) => {
           if (dados.id == 0) {

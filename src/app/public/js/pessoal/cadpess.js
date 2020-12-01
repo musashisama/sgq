@@ -45,6 +45,8 @@ function btnSalva() {
       return false;
     } else {
       url = $('#formCadPess').attr('action');
+      let mail = $('#email').val().toLowerCase();
+      $('#email').val(mail);
       valores = $('#formCadPess').serializeArray();
       console.log($('#formCadPess').serializeArray());
       $.post(url, valores)
