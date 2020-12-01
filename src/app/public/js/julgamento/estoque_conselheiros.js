@@ -54,6 +54,8 @@ function elementosTabela() {
       }
     });
   $('#consultaEstoque').click((e) => {
+    $('#tabelaEstoque').empty();
+
     selectRelatorios();
   });
 }
@@ -68,11 +70,11 @@ function selectRelatorios() {
       semana: $('#semanaRelEstoque option:selected').val(),
     },
     beforeSend: function () {
-      $('#tabelaEstoque').val('');
       $('.progressEstoque').toggle();
     },
   })
     .done(function (msg) {
+      $('.progressEstoque').toggle();
       $('.classProcessos').show();
       let parcial = [];
       msg.forEach((m) => {
@@ -126,7 +128,6 @@ function selectRelatorios() {
       console.log(dados);
       dataTable(dados);
       initElementos();
-      $('.progressEstoque').toggle();
     })
     .fail(function (jqXHR, textStatus, msg) {
       var toastHTML = `<span>Ocorreu um erro.</span>`;
