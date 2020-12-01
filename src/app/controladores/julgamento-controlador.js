@@ -65,6 +65,7 @@ class JulgamentoControlador {
       arqdown: '/julgamento/restrito/arqdown/:id',
       //RELATORIOS COJUL
       estoque: '/julgamento/restrito/diagnostico-carga',
+      estoque_conselheiros: '/julgamento/restrito/estoque_conselheiros',
       carregacsv: '/julgamento/restrito/carrega-csv',
       escolhecsv: '/julgamento/restrito/escolhe-csv',
       escolhecsvregap: '/julgamento/restrito/escolhe-csv-regap',
@@ -1153,6 +1154,34 @@ class JulgamentoControlador {
     };
   }
   //ESTOQUE
+  carregaPaginaEstoque() {
+    return function (req, resp) {
+      if (req.method === 'GET') {
+        resp.marko(templates.julgamento.estoque_conselheiros);
+      }
+      if (req.method === 'POST') {
+        const julgamentoDao = new JulgamentoDao(conn);
+        let filtro, sort, projecao;
+        if (req.body.get == 'relatorio') {
+          req.body.semana == 'Todas'
+            ? (filtro = { dtRel: +req.body.dtRel })
+            : (filtro = {
+                $and: [
+                  { dtRel: +req.body.dtRel },
+                  {
+                    'conselheiro.semana': req.body.semana,
+                  },
+                ],
+              });
+          projecao = {};
+          sort = { 'relatorio.processo': 1 };
+          julgamentoDao.getRegap(filtro, sort, projecao).then((regap) => {
+            resp.json(regap);
+          });
+        }
+      }
+    };
+  }
   carregaPaginaDiag() {
     return function (req, resp) {
       let caminho = req.params.id;
