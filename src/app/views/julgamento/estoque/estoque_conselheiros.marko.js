@@ -57,11 +57,11 @@ function render(input, out, __component, component, state) {
     marko_attr("value", "Amarela") +
     ">Amarela</option><option id=\"semanaAzul\" class=\"form-group\"" +
     marko_attr("value", "Azul") +
-    ">Azul</option></select><label>Selecione a Semana:</label></div><div class=\"form-group col s1\"><a href=\"#!\" id=\"consultaEstoque\" title=\"Consultar Relatório\" class=\"waves-effect waves-green hoverable z-depth-3 btn-floating blue\"><i class=\"far fa-arrow-alt-circle-right\"></i></a></div></div><div class=\"row\"><div class=\"col s12 right-align\">");
+    ">Azul</option></select><label>Selecione a Semana:</label></div><div class=\"form-group col s1\"><a href=\"#!\" id=\"consultaEstoque\" title=\"Consultar Relatório\" class=\"waves-effect waves-green hoverable z-depth-3 btn-floating blue\"><i class=\"far fa-arrow-alt-circle-right\"></i></a></div><div class=\"progressEstoque col s3\"><div class=\"preloader-wrapper small active\"><div class=\"spinner-layer spinner-green-only\"><div class=\"circle-clipper left\"><div class=\"circle\"></div></div><div class=\"gap-patch\"><div class=\"circle\"></div></div><div class=\"circle-clipper right\"><div class=\"circle\"></div></div></div></div></div></div><div class=\"row\"><div class=\"col s12 right-align\">");
 
-  app_drop_download_tag({}, out, __component, "34");
+  app_drop_download_tag({}, out, __component, "43");
 
-  out.w("<a href=\"#!\" id=\"mostraColunasTurma\" title=\"Agrupar/Desagrupar por Turma/Câmara/Seção\" class=\"waves-effect waves-yellow hoverable z-depth-3 btn-floating orange\"><i class=\"material-icons\">unfold_more</i></a></div></div><div class=\"progressEstoque col s3\"><div class=\"preloader-wrapper small active\"><div class=\"spinner-layer spinner-green-only\"><div class=\"circle-clipper left\"><div class=\"circle\"></div></div><div class=\"gap-patch\"><div class=\"circle\"></div></div><div class=\"circle-clipper right\"><div class=\"circle\"></div></div></div></div></div><div id=\"tabelaEstoque\"></div></div><div id=\"stats\" class=\"col s12\"><h4>Quantidade de processos por atividade:</h4><p><div style=\"width:100%;auto;\" id=\"barrasAtividade\"></div></p></div></div></main><footer class=\"page-footer rodape\"></footer>");
+  out.w("<a href=\"#!\" id=\"mostraColunasTurma\" title=\"Agrupar/Desagrupar por Turma/Câmara/Seção\" class=\"waves-effect waves-yellow hoverable z-depth-3 btn-floating orange\"><i class=\"material-icons\">unfold_more</i></a></div></div><div id=\"tabelaEstoque\"></div></div><div id=\"stats\" class=\"col s12\"><h4>Quantidade de processos por atividade:</h4><p><div style=\"width:100%;auto;\" id=\"barrasAtividade\"></div></p></div></div></main><footer class=\"page-footer rodape\"></footer>");
 
   app_modal_tabela_legenda_tag({}, out, __component, "52");
 

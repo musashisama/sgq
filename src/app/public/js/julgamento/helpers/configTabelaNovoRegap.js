@@ -180,7 +180,11 @@ function initElementos() {
 let formatNome = function formatNome(cell) {
   return `<a href='/julgamento/restrito/regap_consolidado/detalha/${
     cell.getRow().getData().cpf
-  }&${$('#dataRelRegap option:selected').val()}'>${cell.getValue()}</a>`;
+  }&${
+    $('#dataRelRegap option:selected').val()
+      ? $('#dataRelRegap option:selected').val()
+      : $('#dataRelEstoque option:selected').val()
+  }'>${cell.getValue()}</a>`;
 };
 
 let formatValor = function formatValor(cell) {
