@@ -181,7 +181,7 @@ function clickEdita(e, cell) {
   e.preventDefault();
   console.log(cell.getRow().getData().html);
   $('.btndetalha').addClass('modal-trigger');
-  montaModal(e, cell, 'Detalhamento da SOlicitação');
+  montaModal(e, cell, 'Detalhamento da Solicitação');
 }
 
 function clickDeleta(e, cell) {
