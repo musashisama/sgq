@@ -418,7 +418,9 @@ function montaLiDisp(solicitacao, id, valor, grupo) {
     $('#G2').html(+$('#G2').html() + +valor);
     console.log($('#G2').html());
   }
+  $('#cardSoma').slideUp(300).slideDown(300);
   +$('#somatorioHoras').html(+$('#somatorioHoras').html() + valor);
+
   if (+$('#somatorioHoras').html() >= 126) {
     $('#cardSoma').removeClass('cardLaranja');
     $('#cardSoma').addClass('cardVerde');
@@ -428,11 +430,13 @@ function montaLiDisp(solicitacao, id, valor, grupo) {
     $('#cardSoma').addClass('cardLaranja');
   }
   $(`.removeDisp${id}`).click((e) => {
+    $('#cardSoma').slideUp(300).slideDown(300);
     +$('#G1').html(+$('#G1').html() - +$(`.removeDisp${id}`).attr('data-G1'));
     +$('#G2').html(+$('#G2').html() - +$(`.removeDisp${id}`).attr('data-G2'));
     +$('#somatorioHoras').html(
       +$('#somatorioHoras').html() - +$(`.removeDisp${id}`).attr('data-valor'),
     );
+
     $(`#${id}`).remove();
     if (+$('#somatorioHoras').html() >= 126) {
       $('#cardSoma').removeClass('cardLaranja');
