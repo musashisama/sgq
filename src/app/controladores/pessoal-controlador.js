@@ -11,7 +11,6 @@ class PessoalControlador {
       agenda: '/pessoal/agenda',
       unidades: '/pessoal/restrito/unidades',
       pessoas: '/pessoal/restrito/pessoas',
-      gestaosolicitacoes: '/pessoal/restrito/gestaosolicitacoes',
       detalhaPess: '/pessoal/restrito/pessoas/:id',
       getcadastro: '/pessoal/restrito/getcadastro',
       cadastraPess: '/pessoal/restrito/pessoas/cadastra',
@@ -28,9 +27,54 @@ class PessoalControlador {
       excluiOcorrenciaPess: '/pessoal/restrito/pessoas/exclui-ocorrencia/:id',
       portalCogec: '/pessoal/restrito/portalcogec',
       gestaoPortalCogec: '/pessoal/restrito/gestaoportalcogec',
+      //Solicitações
+      gestaosolicitacoes: '/pessoal/restrito/gestaosolicitacoes',
+      gestaoregsolicitacoes: '/pessoal/restrito/gestaoregsolicitacoes',
+      detalhasolicitacao: '/pessoal/restrito/detalhasolicitacao/:id',
+    };
+  }
+  handleRegSolicitacoesSegep() {
+    return function (req, resp) {
+      if (req.method == 'GET') {
+        const pessoalDao = new PessoalDao(conn);
+        pessoalDao
+          .getRegSolicitacoes({ setor: 'SEGEP' })
+          .then((solicitacoes) => {
+            resp.marko(templates.pessoal.gestaoregsolicitacoes, {
+              solicitacoes: JSON.stringify(solicitacoes),
+            });
+          });
+      }
+      if (req.method == 'POST') {
+        const pessoalDao = new PessoalDao(conn);
+        pessoalDao.cadastraRegSolicitacao(req.body).then((res) => {
+          resp.send(req.body.uniqueId);
+        });
+      }
     };
   }
 
+  handleDetalhaSolicitacoesSegep() {
+    return function (req, resp) {
+      if (req.method == 'GET') {
+        const pessoalDao = new PessoalDao(conn);
+        pessoalDao
+          .getRegSolicitacoes({ uniqueId: req.params.id })
+          .then((solicitacao) => {
+            resp.marko(templates.pessoal.detalhasolicitacao, {
+              solicitacao: JSON.stringify(solicitacao[0]),
+            });
+          });
+      }
+      if (req.method == 'POST') {
+        const pessoalDao = new PessoalDao(conn);
+        req.body.servSegep = req.user.cpf;
+        pessoalDao.editaRegSolicitacao(req.body).then((res) => {
+          resp.send(res);
+        });
+      }
+    };
+  }
   handleSolicitacoes() {
     return function (req, resp) {
       if (req.method == 'GET') {

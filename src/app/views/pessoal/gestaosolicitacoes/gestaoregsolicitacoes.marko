@@ -6,7 +6,7 @@
     <main class="conteudoPrincipal">
       <app-navbar id="slide-out" class="sidenav"/>
       <div class="container">
-        <h3 class="center-align titulo">Gestão de Solicitações dos Conselheiros - Módulo de Julgamento</h3>
+        <h3 class="center-align titulo">Gestão de Solicitações dos Conselheiros - Módulo de Pessoal</h3>
         <div id="solicitacoes" data-solicitacoes=`${data.solicitacoes}`/>
         <div class="row">
           <div class="col s12 m12">
@@ -41,7 +41,8 @@
                 <select class="status" name="status" id="status">
                   <option class="form-group" value="Todas" selected>Todas</option>
                   <option class="form-group" value="Encaminhada para Análise">Encaminhada para Análise</option>
-                  <option class="form-group" value="Aprovada">Aprovada</option>
+                  <option class="form-group" value="Aprovada com Efeitos Financeiros">Aprovada com Efeitos Financeiros</option>
+                  <option class="form-group" value="Aprovada sem Efeitos Financeiros">Aprovada sem Efeitos Financeiros</option>
                   <option class="form-group" value="Rejeitada">Rejeitada</option>
                 </select>
                 <label>Selecione o status para filtrar:</label>
@@ -78,6 +79,6 @@
     <script src="/estatico/js/libs/plotly-locale-pt-br.js"/>
     <script>Plotly.setPlotConfig({locale: 'pt-BR'})</script>
     <script src="/estatico/js/libs/quill.min.js"/>
-    <script src="/estatico/js/julgamento/gestaoregsolicitacoes.js"/>
+    <script src="/estatico/js/pessoal/gestaoregsolicitacoes.js"/>
   </body>
 </html>

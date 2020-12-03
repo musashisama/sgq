@@ -170,7 +170,7 @@ let formatNome = function formatNome(cell) {
 };
 
 let formatDeleta = function formatDeleta(cell) {
-  if (cell.getRow().getData().status == 'Encaminhada para Análise') {
+  if (cell.getRow().getData().status.includes('Encaminhada para Análise')) {
     return `<a id='btnDeleta' class='red-text' href='#modal1' title='Excluir Solicitação'> <i class="red-text	far fa-trash-alt"/></a>`;
   } else {
     return `<a class='black-text btndetalha' href='#modal1' title='Detalhar Solicitação'><i class='material-icons'>details</i></a>`;
@@ -186,7 +186,7 @@ function clickEdita(e, cell) {
 
 function clickDeleta(e, cell) {
   e.preventDefault();
-  if (cell.getRow().getData().status != 'Encaminhada para Análise') {
+  if (!cell.getRow().getData().status.includes('Encaminhada para Análise')) {
     var toastHTML = `<span>Solicitações já aprovadas ou rejeitadas não podem ser excluídas.</span>`;
     M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
   } else {
