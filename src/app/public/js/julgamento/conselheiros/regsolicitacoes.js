@@ -954,9 +954,9 @@ function controleForm() {
           var toastHTML = `<span>Os campos de início e fim do afastamento precisam estar preenchidos.</span>`;
           M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
         } else if (
-          moment($('#fimAfastamento').val(), 'DD/MM/YYYY').isAfter(moment())
+          moment($('#inicioAfastamento').val(), 'DD/MM/YYYY').isAfter(moment())
         ) {
-          var toastHTML = `<span>Somente podem ser cadastrados eventos já ocorridos e finalizados.</span>`;
+          var toastHTML = `<span>Somente podem ser cadastrados eventos já iniciados ou finalizados.</span>`;
           M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
         } else {
           let html = `
@@ -1338,9 +1338,9 @@ function controleForm() {
           var toastHTML = `<span>Os campos de início e fim do afastamento precisam estar preenchidos.</span>`;
           M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
         } else if (
-          moment($('#fimAfastamento').val(), 'DD/MM/YYYY').isAfter(moment())
+          moment($('#inicioAfastamento').val(), 'DD/MM/YYYY').isAfter(moment())
         ) {
-          var toastHTML = `<span>Somente podem ser cadastrados eventos já ocorridos e finalizados.</span>`;
+          var toastHTML = `<span>Somente podem ser cadastrados eventos já iniciados ou finalizados.</span>`;
           M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
         } else {
           let html = `
@@ -2216,9 +2216,9 @@ function controleForm() {
           var toastHTML = `<span>Os campos de início/fim do afastamento e dias de sessão precisam estar preenchidos.</span>`;
           M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
         } else if (
-          moment($('#fimAfastamento').val(), 'DD/MM/YYYY').isAfter(moment())
+          moment($('#inicioAfastamento').val(), 'DD/MM/YYYY').isAfter(moment())
         ) {
-          var toastHTML = `<span>Somente podem ser cadastrados eventos já ocorridos e finalizados.</span>`;
+          var toastHTML = `<span>Somente podem ser cadastrados eventos já iniciados ou finalizados.</span>`;
           M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
         } else {
           let html = `
@@ -2253,6 +2253,8 @@ function controleForm() {
       });
     });
   });
+
+  //Licenças e Afastamentos para Controle da COGEC
   $('#lacc').click(() => {
     resetElementos();
     $('#camposSol').fadeIn('slow', () => {
@@ -2285,11 +2287,6 @@ function controleForm() {
           M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
         } else if (!$('.arqsUp').children().text()) {
           var toastHTML = `<span>É necessário o envio de pelo menos um arquivo. Selecione o arquivo em seu computador e clique em «+» para enviá-lo.</span>`;
-          M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
-        } else if (
-          moment($('#fimAfastamento').val(), 'DD/MM/YYYY').isAfter(moment())
-        ) {
-          var toastHTML = `<span>Somente podem ser cadastrados eventos já ocorridos e finalizados.</span>`;
           M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
         } else {
           let html = `
