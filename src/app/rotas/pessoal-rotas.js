@@ -101,4 +101,14 @@ module.exports = (app) => {
     .get(pessoalControlador.handleSolicitacoes())
     .post(pessoalControlador.handleSolicitacoes())
     .delete(pessoalControlador.handleSolicitacoes());
+
+  app
+    .route(rotasPessoal.gestaoregsolicitacoes)
+    .get(pessoalControlador.handleRegSolicitacoesSegep())
+    .post(pessoalControlador.handleRegSolicitacoesSegep());
+
+  app
+    .route(rotasPessoal.detalhasolicitacao)
+    .get(pessoalControlador.handleDetalhaSolicitacoesSegep())
+    .post(pessoalControlador.handleDetalhaSolicitacoesSegep());
 };

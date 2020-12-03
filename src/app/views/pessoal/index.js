@@ -9,4 +9,6 @@ module.exports = {
   gestaoPortal: require('./portalcogec/gestaoPortal.marko'),
   portalCogec: require('./portalcogec/portalcogec.marko'),
   gestaosolicitacoes: require('./gestaosolicitacoes/gestaosolicitacoes.marko'),
+  gestaoregsolicitacoes: require('./gestaosolicitacoes/gestaoregsolicitacoes.marko'),
+  detalhasolicitacao: require('./gestaosolicitacoes/detalhasolicitacao.marko'),
 };

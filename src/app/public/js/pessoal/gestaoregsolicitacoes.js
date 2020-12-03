@@ -85,7 +85,6 @@ function tabelaSolicitacoes() {
         field: 'uniqueId',
         sorter: 'string',
         hozAlign: 'left',
-        formatter: coloreID,
         editor: false,
         headerFilter: 'input',
         responsive: 0,
@@ -117,7 +116,6 @@ function tabelaSolicitacoes() {
         field: 'tipo',
         sorter: 'string',
         hozAlign: 'left',
-        formatter: coloreID,
         editor: false,
         headerFilter: 'input',
         responsive: 0,
@@ -148,7 +146,7 @@ function tabelaSolicitacoes() {
       },
       {
         title: 'Tratada por',
-        field: 'servDipaj',
+        field: 'servSegep',
         sorter: 'string',
         hozAlign: 'left',
         editor: false,
@@ -186,6 +184,7 @@ function tabelaSolicitacoes() {
 
 function colore(cell, formatterParams, valor) {
   let value = cell.getValue() ? cell.getValue() : valor;
+
   if (cell.getRow().getData().status.includes('Aprovada com')) {
     let elem = document.querySelector('.solAprovada');
     let estilo = getComputedStyle(elem);
@@ -194,12 +193,6 @@ function colore(cell, formatterParams, valor) {
   }
   if (cell.getRow().getData().status.includes('Aprovada sem')) {
     let elem = document.querySelector('.solAprovadaSem');
-    let estilo = getComputedStyle(elem);
-    cell.getElement().style.backgroundColor = estilo.backgroundColor;
-    cell.getElement().style.color = estilo.color;
-  }
-  if (cell.getRow().getData().status == 'Aprovada') {
-    let elem = document.querySelector('.solAprovada');
     let estilo = getComputedStyle(elem);
     cell.getElement().style.backgroundColor = estilo.backgroundColor;
     cell.getElement().style.color = estilo.color;
@@ -219,21 +212,8 @@ function colore(cell, formatterParams, valor) {
   return value;
 }
 
-function coloreID(cell, formatterParams, valor) {
-  let value = cell.getValue() ? cell.getValue() : valor;
-
-  if (cell.getRow().getData().tipo.includes('COGEC')) {
-    let elem = document.querySelector('.solRejeitada');
-    let estilo = getComputedStyle(elem);
-    cell.getElement().style.backgroundColor = estilo.backgroundColor;
-    cell.getElement().style.color = estilo.color;
-  }
-
-  return value;
-}
-
 let formatNome = function formatNome(cell) {
-  return `<a class='black-text btndetalha' href=${`/julgamento/restrito/detalhasolicitacao/${
+  return `<a class='black-text btndetalha' href=${`/pessoal/restrito/detalhasolicitacao/${
     cell.getRow().getData().uniqueId
   }`} title='Detalhar Solicitação'><i class='material-icons'>details</i></a>`;
 };
@@ -305,7 +285,7 @@ async function pegaArquivo(arquivo) {
 function carregaSol(registro, metodo) {
   registro.dtAproveReject = moment().format('DD/MM/YYYY, HH:mm:ss');
   $.ajax({
-    url: '/julgamento/restrito/detalhasolicitacao',
+    url: '/pessoal/restrito/detalhasolicitacao',
     data: registro,
     type: metodo,
     success: function (result) {
@@ -328,7 +308,7 @@ function carregaSol(registro, metodo) {
 function handleSOL(registro, metodo) {
   registro.dtAproveReject = moment().format('DD/MM/YYYY, HH:mm:ss');
   $.ajax({
-    url: '/julgamento/restrito/gestaosolicitacoes',
+    url: '/pessoal/restrito/gestaosolicitacoes',
     data: registro,
     type: metodo,
     success: function (result) {

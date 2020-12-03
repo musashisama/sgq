@@ -93,7 +93,8 @@ function montaModal(html, dados) {
     $('.pModal').text('');
     $('.hModal').text('');
     dados.html = html;
-    handleSOL(dados, 'POST', 'DIPAJ');
+    console.log(dados.setor);
+    handleSOL(dados, 'POST', dados.setor);
     $('#btn-enviar').removeClass('modal-trigger');
   });
   $('.cancela').click(function () {
@@ -571,6 +572,14 @@ function arraySol(array) {
     'Participação em Seminário promovido pelo CARF',
     'Período de férias (marcado perante a RFB)',
   ];
+  let arrayCogec = [
+    'Licença à gestante',
+    'Licença à adotante',
+    'Licença à paternidade',
+    'Licença para tratamento de saúde',
+    'Licença em razão de casamento',
+    'Licença por motivo de falecimento (cônjuge, companheiro, pais, madastra ou padrasto, filhos, enteados, menor sob guarda ou tutela e irmãos)',
+  ];
   let arrayMudanca = [
     'Turma Extraordinária para Turma Ordinária da mesma Seção',
     'Turma Extraordinária para Turma Ordinária de Seção Diferente',
@@ -668,6 +677,22 @@ function arraySol(array) {
   }
   if (array === 'prazo') {
     arrayPrazo.forEach((ops, i) => {
+      html += `<option class="form-group" value="${ops}">${ops}</option>`;
+    });
+    let retorno = `
+    <div class='row'>
+    <div class='col s6'>
+    <i class="far fa-question-circle prefix"/>
+    <label for="tipoAfastamento">Selecione o tipo de afastamento/licença:</label>
+    <select required name="tipoAfastamento" id="tipoAfastamento">
+    ${html}
+    </select>
+    </div>
+    </div>`;
+    return retorno;
+  }
+  if (array === 'cogec') {
+    arrayCogec.forEach((ops, i) => {
       html += `<option class="form-group" value="${ops}">${ops}</option>`;
     });
     let retorno = `
@@ -948,6 +973,7 @@ function controleForm() {
           `;
           let dados = {
             uniqueId: moment().unix(),
+            setor: 'DIPAJ',
             tipo: `REGAP: ${$('#aflp').text()}`,
             dados: {
               tipoAfastamento: $('#tipoAfastamento option:selected').val(),
@@ -1015,6 +1041,7 @@ function controleForm() {
           let dados = {
             uniqueId: moment().unix(),
             tipo: `REGAP: ${$('#pvv').text()}`,
+            setor: 'DIPAJ',
             dados: {
               diasProrrogacao: $('#diasProrrogacao').val(),
               processos: pegaProcs(),
@@ -1079,6 +1106,7 @@ function controleForm() {
           let dados = {
             uniqueId: moment().unix(),
             tipo: `REGAP: ${$('#ppi').text()}`,
+            setor: 'DIPAJ',
             dados: {
               diasProrrogacao: $('#diasProrrogacao').val(),
               processos: pegaProcs(),
@@ -1143,6 +1171,7 @@ function controleForm() {
           let dados = {
             uniqueId: moment().unix(),
             tipo: `REGAP: ${$('#ppa').text()}`,
+            setor: 'DIPAJ',
             dados: {
               diasProrrogacao: $('#diasProrrogacao').val(),
               processos: pegaProcs(),
@@ -1199,6 +1228,7 @@ function controleForm() {
           let dados = {
             uniqueId: moment().unix(),
             tipo: `REGAP: ${$('#dpa').text()}`,
+            setor: 'DIPAJ',
             dados: {
               processos: pegaProcs(),
               observacoes: $('#observacoes').val(),
@@ -1264,6 +1294,7 @@ function controleForm() {
           let dados = {
             uniqueId: moment().unix(),
             tipo: `REGAP: ${$('#ora').text()}`,
+            setor: 'DIPAJ',
             dados: {
               dataJulgamento: $('#dtJulgamento').val(),
               processos: pegaProcs(),
@@ -1332,6 +1363,7 @@ function controleForm() {
           let dados = {
             uniqueId: moment().unix(),
             tipo: `REINP: ${$('#aflm').text()}`,
+            setor: 'DIPAJ',
             dados: {
               tipoAfastamento: $('#tipoAfastamento option:selected').val(),
               inicioAfastamento: $('#inicioAfastamento').val(),
@@ -1385,6 +1417,7 @@ function controleForm() {
           let dados = {
             uniqueId: moment().unix(),
             tipo: `REINP: ${$('#mcc').text()}`,
+            setor: 'DIPAJ',
             dados: {
               tipoAfastamento: $('#tipoAfastamento option:selected').val(),
               dtMudanca: $('#dtMudanca').val(),
@@ -1420,6 +1453,7 @@ function controleForm() {
         let dados = {
           uniqueId: moment().unix(),
           tipo: `REINP: ${$('#acp').text()}`,
+          setor: 'DIPAJ',
           dados: {
             observacoes: $('#observacoes').val(),
             arquivos: pegaArquivos(),
@@ -1480,6 +1514,7 @@ function controleForm() {
           let dados = {
             uniqueId: moment().unix(),
             tipo: `REINP: ${$('#presi').text()}`,
+            setor: 'DIPAJ',
             dados: {
               inicioPeriodo: $('#inicioPeriodo').val(),
               fimPeriodo: $('#fimPeriodo').val(),
@@ -1609,6 +1644,7 @@ function controleForm() {
           let dados = {
             uniqueId: moment().unix(),
             tipo: `REINP: ${$('#ptoa').text()}`,
+            setor: 'DIPAJ',
             dados: {
               somatorioHoras: +$('#somatorioHoras').html(),
               participacoes: pegaParts(),
@@ -1737,6 +1773,7 @@ function controleForm() {
           let dados = {
             uniqueId: moment().unix(),
             tipo: `REINP: ${$('#pptex').text()}`,
+            setor: 'DIPAJ',
             dados: {
               somatorioHoras: +$('#somatorioHoras').html(),
               participacoes: pegaParts(),
@@ -1802,6 +1839,7 @@ function controleForm() {
           let dados = {
             uniqueId: moment().unix(),
             tipo: `REINP: ${$('#s21').text()}`,
+            setor: 'DIPAJ',
             dados: {
               dtSorteio: $('#dataSorteio').val(),
               dtindicacao: $('#dataIndicacao').val(),
@@ -2137,6 +2175,7 @@ function controleForm() {
           let dados = {
             uniqueId: moment().unix(),
             tipo: `Dispensa de Sorteio`,
+            setor: 'DIPAJ',
             dados: {
               G1: +$('#G1').html(),
               G2: +$('#G2').html(),
@@ -2197,11 +2236,83 @@ function controleForm() {
           let dados = {
             uniqueId: moment().unix(),
             tipo: $('#fsj').text(),
+            setor: 'DIPAJ',
             dados: {
               tipoAfastamento: $('#tipoAfastamento option:selected').val(),
               inicioAfastamento: $('#inicioAfastamento').val(),
               fimAfastamento: $('#fimAfastamento').val(),
               diasSessao: $('#diasSessao').val(),
+              observacoes: $('#observacoes').val(),
+              arquivos: pegaArquivos(),
+            },
+          };
+          initModal();
+          $('#btn-enviar').addClass('modal-trigger');
+          montaModal(html, dados);
+        }
+      });
+    });
+  });
+  $('#lacc').click(() => {
+    resetElementos();
+    $('#camposSol').fadeIn('slow', () => {
+      $('#camposSol').append(`
+      <h5>${$('#lacc').text()}</h5><br/>
+      ${arraySol('cogec')}
+      ${campoPeriodo}
+      ${diasCorridos}
+      ${campoObs}
+      ${camposArq}
+      ${botoes}
+      `);
+      initElementos();
+      let diff;
+      $('body').click(() => {
+        diff =
+          moment($('#fimAfastamento').val(), 'DD/MM/YYYY').diff(
+            moment($('#inicioAfastamento').val(), 'DD/MM/YYYY'),
+            'days',
+          ) + 1;
+        $('#diasCorridos').html(diff);
+      });
+      $('#btn-enviar').click((e) => {
+        if (!$('#fimAfastamento').val() || !$('#inicioAfastamento').val()) {
+          var toastHTML = `<span>Os campos de início e fim do afastamento precisam estar preenchidos.</span>`;
+          M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+        }
+        if (!$('#fimAfastamento').val() || !$('#inicioAfastamento').val()) {
+          var toastHTML = `<span>Os campos de início e fim do afastamento precisam estar preenchidos.</span>`;
+          M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+        } else if (!$('.arqsUp').children().text()) {
+          var toastHTML = `<span>É necessário o envio de pelo menos um arquivo. Selecione o arquivo em seu computador e clique em «+» para enviá-lo.</span>`;
+          M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+        } else if (
+          moment($('#fimAfastamento').val(), 'DD/MM/YYYY').isAfter(moment())
+        ) {
+          var toastHTML = `<span>Somente podem ser cadastrados eventos já ocorridos e finalizados.</span>`;
+          M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+        } else {
+          let html = `
+          <div class='row'>
+          <h5>${$('#lacc').text()}</h5>
+          <p><strong>Tipo:</strong> ${$(
+            '#tipoAfastamento option:selected',
+          ).val()}</p>
+          <p><strong>Início:</strong> ${$('#inicioAfastamento').val()}</p>
+          <p><strong>Fim:</strong> ${$('#fimAfastamento').val()}</p>
+          <p><strong>Dias:</strong> ${diff}</p>
+          <p><strong>Observações:</strong> ${$('#observacoes').val()}</p>
+          <p><strong>Arquivos:</strong>${pegaArquivos(true)}</p>
+          `;
+          let dados = {
+            uniqueId: moment().unix(),
+            setor: 'SEGEP',
+            tipo: `${$('#lacc').text()}`,
+            dados: {
+              tipoAfastamento: $('#tipoAfastamento option:selected').val(),
+              inicioAfastamento: $('#inicioAfastamento').val(),
+              fimAfastamento: $('#fimAfastamento').val(),
+              diasCorridos: diff,
               observacoes: $('#observacoes').val(),
               arquivos: pegaArquivos(),
             },
@@ -2253,7 +2364,7 @@ function handleSOL(registro, metodo, setor) {
   registro.cpf = JSON.parse($('#dataUser').attr('data-user')).cpf;
   registro.nome = JSON.parse($('#dataUser').attr('data-user')).nome;
   registro.dtCriacao = moment().format('DD/MM/YYYY - HH:mm');
-  registro.status = 'Encaminhada para Análise';
+  registro.status = `Encaminhada para Análise - ${setor}`;
   $.ajax({
     url: '/julgamento/conselheiros/registro-solicitacoes',
     data: registro,

@@ -43,13 +43,16 @@ function montaSolicitacao() {
           .justificativas
       : ''
   }</textarea>
-  <label for="justificativas" class='active'>Justificativas/Observações para Rejeição:</label>
+  <label for="justificativas" class='active'>Justificativas/Observações para Aprovação/Rejeição:</label>
   </div>
   </div>
   <div class='row'>
   <div class='col s12 offset-s12 right'>
-  <button id='aprovar' class="btn waves-effect waves-light green right">
-  Aprovar <i class='far fa-thumbs-up' />
+  <button id='aprovarCom' class="btn waves-effect waves-light green right">
+  Aprovar com efeitos Financeiros <i class='far fa-thumbs-up' />
+  </button>
+  <button id='aprovarSem' class="btn waves-effect waves-light blue right">
+  Aprovar sem efeitos Financeiros <i class='far fa-thumbs-up' />
   </button>
   <button id='rejeitar' class="btn waves-effect waves-light red right">
   Rejeitar <i class="far fa-thumbs-down right" />
@@ -60,8 +63,8 @@ function montaSolicitacao() {
   initCollapsible();
   $('#rejeitar').click((e) => {
     if (!$('#justificativas').val()) {
-      var toastHTML = `<span>Caso a solicitação seja rejeitada, é obrigatório po preenchimento do campo
-«Justificativas/Observações para Rejeição».</span>`;
+      var toastHTML = `<span>É obrigatório po preenchimento do campo
+«Justificativas/Observações para Aprovação/Rejeição».</span>`;
       M.toast({
         html: toastHTML,
         classes: 'rounded',
@@ -77,16 +80,47 @@ function montaSolicitacao() {
       handleSOL(dados);
     }
   });
-  $('#aprovar').click((e) => {
-    let dados = {
-      uniqueId: JSON.parse($('#dadosSolicitacao').attr('data-solicitacao'))
-        .uniqueId,
-      status: 'Aprovada',
-      justificativas: $('#justificativas').val()
-        ? $('#justificativas').val()
-        : 'Solicitação Aprovada.',
-    };
-    handleSOL(dados);
+  $('#aprovarCom').click((e) => {
+    if (!$('#justificativas').val()) {
+      var toastHTML = `<span>É obrigatório po preenchimento do campo
+«Justificativas/Observações para Aprovação/Rejeição».</span>`;
+      M.toast({
+        html: toastHTML,
+        classes: 'rounded',
+        timeRemaining: 500,
+      });
+    } else {
+      let dados = {
+        uniqueId: JSON.parse($('#dadosSolicitacao').attr('data-solicitacao'))
+          .uniqueId,
+        status: 'Aprovada com Efeitos Financeiros',
+        justificativas: $('#justificativas').val()
+          ? $('#justificativas').val()
+          : 'Solicitação Aprovada.',
+      };
+      handleSOL(dados);
+    }
+  });
+  $('#aprovarSem').click((e) => {
+    if (!$('#justificativas').val()) {
+      var toastHTML = `<span>É obrigatório po preenchimento do campo
+«Justificativas/Observações para Aprovação/Rejeição».</span>`;
+      M.toast({
+        html: toastHTML,
+        classes: 'rounded',
+        timeRemaining: 500,
+      });
+    } else {
+      let dados = {
+        uniqueId: JSON.parse($('#dadosSolicitacao').attr('data-solicitacao'))
+          .uniqueId,
+        status: 'Aprovada sem Efeitos Financeiros',
+        justificativas: $('#justificativas').val()
+          ? $('#justificativas').val()
+          : 'Solicitação Aprovada.',
+      };
+      handleSOL(dados);
+    }
   });
 }
 
@@ -123,14 +157,14 @@ function pegaLinks(arquivos) {
 function handleSOL(registro) {
   registro.dtAproveReject = moment().format('DD/MM/YYYY - HH:mm');
   $.ajax({
-    url: `/julgamento/restrito/detalhasolicitacao/${registro.uniqueId}`,
+    url: `/pessoal/restrito/detalhasolicitacao/${registro.uniqueId}`,
     data: registro,
     type: 'POST',
     success: function (result) {
       var toastHTML = `<span>Dados atualizados com sucesso!</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
       setInterval(() => {
-        location.replace('/julgamento/restrito/gestaoregsolicitacoes');
+        location.replace('/pessoal/restrito/gestaoregsolicitacoes');
       }, 1000);
     },
     error: function (result) {
