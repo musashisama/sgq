@@ -56,7 +56,7 @@ let options = {
 layout = 'fitDataFill';
 let responsiveLayout = true;
 let tableReinp,
-  tableReinpDet = null;
+  table = null;
 let d3 = Plotly.d3;
 let agrupado = false;
 let agrupadoReinp = false;
@@ -84,10 +84,10 @@ function formataDados() {
   dataTableReinpDet(arrayMes.flat());
   document.getElementById('agrupaMes').addEventListener('click', function () {
     if (agrupadoReinp == false) {
-      tableReinpDet.setGroupBy(['mes']);
+      table.setGroupBy(['mes']);
       agrupadoReinp = true;
     } else {
-      tableReinpDet.setGroupBy();
+      table.setGroupBy();
       agrupadoReinp = false;
     }
   });
@@ -106,7 +106,7 @@ let formatTrimestre = function formatTrimestre(cell) {
 };
 
 function dataTableReinpDet(msg) {
-  tableReinpDet = new Tabulator('#tabelaReinpDet', {
+  table = new Tabulator('#tabelaReinpDet', {
     data: msg,
     pagination: 'local',
     height: '600px',
