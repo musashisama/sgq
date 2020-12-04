@@ -681,13 +681,11 @@ class JulgamentoControlador {
         const julgamentoDao = new JulgamentoDao(conn);
         const pessoalDao = new PessoalDao(conn);
         pessoalDao.getUsers({ cpf: params[0] }).then((user) => {
-          console.log(user[0]);
           julgamentoDao
             .getCal({
               classNames: CSVHandler.semanaCores(user[0].unidade),
             })
             .then((cal) => {
-              console.log(cal);
               julgamentoDao.getRegap(filtro, sort, projecao).then((regap) => {
                 resp.marko(templates.julgamento.regap_individual_cojul, {
                   relatorio: JSON.stringify(regap[0].relatorio),

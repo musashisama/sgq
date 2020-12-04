@@ -102,7 +102,7 @@ function geraBreadcrumb() {
         <div class="col offset-s2">
           <a href="${links[0].link}" class="breadcrumb center">${links[0].nome}</a>
           <a href="${links[2].link}" class="breadcrumb center go-back">${links[2].nome}</a>
-         <a href="${links[1].link}" class="breadcrumb center">${links[1].nome}</a>      
+         <a href="${links[1].link}" class="breadcrumb center">${links[1].nome}</a>
        </div>
      </div>
       </div>`);

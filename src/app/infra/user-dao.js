@@ -57,6 +57,9 @@ class UserDao {
 
   cadastraUser(registro) {
     return new Promise((resolve, reject) => {
+      if (registro.cargo == 'Conselheiro') {
+        registro.perfil = ['carf', 'conselheiro'];
+      } else registro.Perfil = ['carf'];
       this._db.usuarios.insertOne(registro, function (erro, res) {
         if (erro) {
           return reject('Não foi possível inserir o registro.');
