@@ -285,6 +285,16 @@ function elementosDispensa() {
     if (!$('#dtJulgamento').val()) {
       var toastHTML = `<span>Todos os campos devem ser preenchidos.</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+    } else if (
+      moment($('#dtJulgamento').val(), 'DD/MM/YYYY').isBefore(
+        moment('01/03/2019', 'DD/MM/YYYY'),
+      ) ||
+      moment($('#dtJulgamento').val(), 'DD/MM/YYYY').isAfter(
+        moment('31/03/2020', 'DD/MM/YYYY'),
+      )
+    ) {
+      var toastHTML = `<span>Observe o período da participação. Somente entre 01/03/2019 e 31/03/2020</span>`;
+      M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
     } else {
       montaLiDisp(
         `<strong>Tipo:</strong> Participação em TO/CSRF de março de 2019 até março de 2020, <strong>Turma de Participação:</strong> ${$(
@@ -945,7 +955,7 @@ function controleForm() {
       `);
       initElementos();
       let diff;
-      $('body').click(() => {
+      $('body').mousemove(() => {
         diff =
           moment($('#fimAfastamento').val(), 'DD/MM/YYYY').diff(
             moment($('#inicioAfastamento').val(), 'DD/MM/YYYY'),
@@ -1329,7 +1339,7 @@ function controleForm() {
       `);
       initElementos();
       let diff;
-      $('body').click(() => {
+      $('body').mousemove(() => {
         diff =
           moment($('#fimAfastamento').val(), 'DD/MM/YYYY').businessDiff(
             moment($('#inicioAfastamento').val(), 'DD/MM/YYYY'),
@@ -1355,6 +1365,9 @@ function controleForm() {
           ).val()}</p>
           <p><strong>Início:</strong> ${$('#inicioAfastamento').val()}</p>
           <p><strong>Fim:</strong> ${$('#fimAfastamento').val()}</p>
+           <p><strong>Dias de Sessão programados no período:<strong> ${$(
+             '#diasSessao',
+           ).val()}</p>
           <p><strong>Dias úteis (excluídos os dias de sessão):<strong> ${$(
             '#diasUteis',
           ).text()}</p>
@@ -1373,6 +1386,7 @@ function controleForm() {
               inicioAfastamento: $('#inicioAfastamento').val(),
               fimAfastamento: $('#fimAfastamento').val(),
               diasUteis: $('#diasUteis').text(),
+              diasSessao: $('#diasSessao').val(),
               horasReducao: $('#horasMeta').text(),
               observacoes: $('#observacoes').val(),
               arquivos: pegaArquivos(),
@@ -1484,7 +1498,7 @@ function controleForm() {
       `);
       initElementos();
       let diff;
-      $('body').click(() => {
+      $('body').mousemove(() => {
         diff =
           moment($('#fimPeriodo').val(), 'DD/MM/YYYY').businessDiff(
             moment($('#inicioPeriodo').val(), 'DD/MM/YYYY'),
@@ -1807,7 +1821,7 @@ function controleForm() {
       `);
       initElementos();
       let diff;
-      $('body').click(() => {
+      $('body').mousemove(() => {
         diff =
           moment($('#dataIndicacao').val(), 'DD/MM/YYYY').diff(
             moment($('#dataSorteio').val(), 'DD/MM/YYYY'),
@@ -2273,7 +2287,7 @@ function controleForm() {
       `);
       initElementos();
       let diff;
-      $('body').click(() => {
+      $('body').mousemove(() => {
         diff =
           moment($('#fimAfastamento').val(), 'DD/MM/YYYY').diff(
             moment($('#inicioAfastamento').val(), 'DD/MM/YYYY'),
