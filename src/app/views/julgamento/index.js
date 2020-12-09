@@ -38,4 +38,9 @@ module.exports = {
   ocorrencias: require('./conselheiros/ocorrencias.marko'),
   solicitacoescons: require('./conselheiros/solicitacoescons.marko'),
   consolicitacoes: require('./conselheiros/consolicitacoes.marko'),
+  indicapauta: require('./conselheiros/indicapauta.marko'),
+  //COSUP
+  gestaoPortalCosup: require('./cosup/portalcosup/gestaoPortal.marko'),
+  portalCosup: require('./cosup/portalcosup/portalCosup.marko'),
+  gestaoIndicacao: require('./cosup/indicacao/gestaoIndicacao.marko'),
 };

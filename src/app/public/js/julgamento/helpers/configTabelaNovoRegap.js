@@ -143,38 +143,40 @@ function initCheckboxes() {
 }
 
 function initElementos() {
-  document
-    .getElementById('mostraColunasAtividade')
-    .addEventListener('click', function () {
-      if (agrupado == false) {
-        table.setGroupBy(['atividade', 'situacao']);
-        agrupado = true;
-      } else {
-        table.setGroupBy();
-        agrupado = false;
-      }
-    });
+  if ($('#mostraColunasAtividade').length > 0) {
+    document
+      .getElementById('mostraColunasAtividade')
+      .addEventListener('click', function () {
+        if (agrupado == false) {
+          table.setGroupBy(['atividade', 'situacao']);
+          agrupado = true;
+        } else {
+          table.setGroupBy();
+          agrupado = false;
+        }
+      });
 
-  $('.Atividade').change(() => {
-    table.setFilter(
-      'atividade',
-      '=',
-      $('#atividadeSelect option:selected').val(),
-    );
-    if ($('#atividadeSelect option:selected').val() == 'Todas') {
-      table.removeFilter(
-        'atividade',
-        '=',
-        $('#atividadeSelect option:selected').val(),
-      );
-    } else {
+    $('.Atividade').change(() => {
       table.setFilter(
         'atividade',
         '=',
         $('#atividadeSelect option:selected').val(),
       );
-    }
-  });
+      if ($('#atividadeSelect option:selected').val() == 'Todas') {
+        table.removeFilter(
+          'atividade',
+          '=',
+          $('#atividadeSelect option:selected').val(),
+        );
+      } else {
+        table.setFilter(
+          'atividade',
+          '=',
+          $('#atividadeSelect option:selected').val(),
+        );
+      }
+    });
+  }
 }
 
 let formatNome = function formatNome(cell) {

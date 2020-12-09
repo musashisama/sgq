@@ -269,10 +269,11 @@ class JulgamentoDao {
     });
   }
 
-  getRegap(filtro, sort, projecao) {
+  getRegap(filtro, sort, projecao, limit = -6) {
     return new Promise((resolve, reject) => {
       this._db.regap
         .find(filtro)
+        .limit(limit)
         .sort(sort)
         .project(projecao)
         .toArray(function (erro, res) {
