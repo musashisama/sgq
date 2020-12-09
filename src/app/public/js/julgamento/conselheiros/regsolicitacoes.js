@@ -852,16 +852,14 @@ function controleForm() {
   `;
   let diasUteis = `
   <div class="row">
+  <div class ='col s5 diasUteis'>
+  <h6>Quantidade de dias úteis (excluídos os dias de sessão): <span id='diasUteis'/></h6>
+  <h6>Horas a serem reduzidas da meta: <span id='horasMeta'/></h6>
+  </div>
   <div class ='col s5 diasSessao input-field'>
   <i class=" fas fa-calendar-day prefix"/>
   <input id="diasSessao" name="diasSessao" type="number" class="validate" value=0/>
-  <label for="diasSessao">Qtde de Dias de Sessão programados no período acima:</label>
-  </div>
-  <div class ='col s5 diasUteis'>
-  <h6>Quantidade de dias úteis (excluídos os dias de sessão): <span id='diasUteis'/></h6>
-  </div>
-   <div class ='col s3 horasMeta'>
-  Horas a serem reduzidas da meta: <span id='horasMeta'/>
+  <label for="diasSessao">Qtde de Dias de Sessão programados no período acima (se houver):</label>
   </div>
   </div>`;
   let diasSessao = `
@@ -869,7 +867,7 @@ function controleForm() {
   <div class ='col s5 diasSessao input-field'>
   <i class=" fas fa-calendar-day prefix"/>
   <input id="diasSessao" name="diasSessao" type="number" class="validate" value=0/>
-  <label for="diasSessao">Qtde de Dias de Sessão programados no período acima:</label>
+  <label for="diasSessao">Qtde de Dias de Sessão programados no período acima (se houver):</label>
   </div>
   </div>`;
   let diasProrrogacao = `
