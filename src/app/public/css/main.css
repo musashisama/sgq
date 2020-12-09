@@ -1,5 +1,6 @@
 :root {
   --azul-carf: #0062a0ff;
+  --azul-indicacao: rgb(43, 53, 109);
   --laranja-carf: #ee813cff;
   --green-munsell: #00a878ff;
   --green-semEfeito: rgb(9, 78, 59);
@@ -600,6 +601,15 @@ summary::-webkit-details-marker {
   color: var(--cultured);
 }
 
+.cardAzulClaro {
+  background-color: var(--azul-claro);
+}
+
+.cardAzulIndicacao {
+  background-color: var(--azul-indicacao);
+  color: var(--cultured);
+}
+
 .cardLaranja {
   background-color: var(--laranja-carf);
   color: var(--cultured);
@@ -636,10 +646,6 @@ summary::-webkit-details-marker {
   color: var(--cultured);
 }
 
-.cardAzulClaro {
-  background-color: var(--azul-claro);
-}
-
 .cardAmarelo,
 .cardAmarelo > .linkCard i {
   background-color: var(--lemon-yellow);
@@ -650,4 +656,8 @@ summary::-webkit-details-marker {
 .linkCard i {
   color: var(--cultured);
   text-align: right;
+}
+
+.classIndica {
+  font-size: 2em;
 }

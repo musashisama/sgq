@@ -96,9 +96,11 @@ class JulgamentoControlador {
       consolicitacoes: '/julgamento/conselheiros/acompanha-solicitacoes',
       arquivos: '/julgamento/conselheiros/arquivos',
       regapindividual: '/julgamento/conselheiros/regap',
+      pegaAlegacao: '/julgamento/conselheiros/pega-alegacao',
       reinpindividual: '/julgamento/conselheiros/reinp',
       listaregapindividual: '/julgamento/conselheiros/listaregap',
       regapcons: '/julgamento/conselheiros/:id',
+      indicapauta: '/julgamento/conselheiros/indicacao-pauta',
     };
   }
 
@@ -569,6 +571,62 @@ class JulgamentoControlador {
                     cal: JSON.stringify(cal),
                     user: JSON.stringify(user[0]),
                     solicitacoes: JSON.stringify(solicitacoes),
+                  });
+                });
+            });
+        });
+      }
+      if (req.method == 'POST') {
+        console.log(req.body);
+      }
+    };
+  }
+
+  handleTabAlegacoes() {
+    return function (req, resp) {
+      const http = require('http');
+      http
+        .get(
+          `http://dispe.carf/tab-alegacoes/alegacoes/${req.body.idAlegacao}.json`,
+          (response) => {
+            let data = '';
+            response.on('data', (chunk) => {
+              data += chunk;
+            });
+            response.on('end', () => {
+              resp.send(JSON.parse(data));
+            });
+          },
+        )
+        .on('error', (err) => {
+          resp.send('Erro' + err.message);
+        });
+    };
+  }
+
+  handleIndicaPauta() {
+    return function (req, resp) {
+      if (req.method == 'GET') {
+        const pessoalDao = new PessoalDao(conn);
+        const julgamentoDao = new JulgamentoDao(conn);
+        let filtro, sort, projecao, limit;
+        filtro = { 'conselheiro.cpf': req.user.cpf };
+        projecao = {};
+        sort = {};
+        limit = -1;
+        pessoalDao.getUsers({ cpf: req.user.cpf }).then((user) => {
+          julgamentoDao
+            .getCal({
+              classNames: CSVHandler.semanaCores(user[0].unidade),
+            })
+            .then((cal) => {
+              julgamentoDao
+                .getRegap(filtro, sort, projecao, limit)
+                .then((regap) => {
+                  resp.marko(templates.julgamento.indicapauta, {
+                    relatorio: JSON.stringify(regap[0].relatorio),
+                    cal: JSON.stringify(cal),
+                    user: user[0],
                   });
                 });
             });

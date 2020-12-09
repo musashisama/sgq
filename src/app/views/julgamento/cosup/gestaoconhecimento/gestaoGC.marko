@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <app-scripts-css/>
+  <body>
+    <app-header/>
+    <link rel="stylesheet" href="/estatico/css/libs/quill.snow.css"/>
+    <main class="conteudoPrincipal">
+      <app-navbar id="slide-out" class="sidenav"/>
+      <div class="container">
+        <h3 class="center-align titulo">Cadastro de Itens da Gestão do Conhecimento - DIPAJ/COJUL</h3>
+        <br/>
+        <div class="row">
+          <h5 class="">Título</h5>
+          <br/>
+          <div id="editorTitulo" class="col s12">
+            <p id="tituloGC"/>
+            <br/>
+          </div>
+        </div>
+        <div class="row">
+          <h5 class="">Descrição</h5>
+          <br/>
+          <div id="editorDesc" class="col s12">
+            <p id="descGC"/>
+            <br/>
+          </div>
+        </div>
+        <div class="row">
+          <h5 class="">Link</h5>
+          <br/>
+          <div id="editorLink" class="col s12">
+            <p id="linkGC"/>
+            <br/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s4">
+            <select required name="secaoGC" id="secaoGC">
+              <option value="" disabled selected>Escolha uma opção:</option>
+              <option value="manuais">Manuais</option>
+              <option value="legis">Legislação</option>
+              <option value="recursos">Ferramentas</option>             
+            </select>
+            <label>Qual o tipo?</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s1 offset-s11">
+            <a id="aModal" class="btn-floating btn-insere waves-effect waves-light red" title="Clique para enviar" href=`#modal1`>
+              <i class="material-icons">send</i>
+            </a>
+          </div>
+        </div>
+        <div data-gc=`${data.gc}`/>
+      </div>
+    </main>
+    <app-footer/>
+    <div id="modal1" class="modal">
+      <div class="modal-content">
+        <h4 class="hModal">Modal Header</h4>
+        <p class="pModal"/>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-red btn-flat cancela">Cancela</a>
+        <button class="btn waves-effect waves-light concorda" type="submit" name="action">
+          Confirma <i class="material-icons right">send</i>
+        </button>
+      </div>
+    </div>
+    <app-scripts-js/>
+    <script src="/estatico/js/libs/quill.min.js"/>
+    <script src="/estatico/js/julgamento/gestaoGC.js"/>
+  </body>
+</html>

@@ -53,6 +53,10 @@ module.exports = (app) => {
   });
 
   app
+    .route(rotasJulgamento.pegaAlegacao)
+    .post(julgControlador.handleTabAlegacoes());
+
+  app
     .route(rotasJulgamento.solicitacoes)
     .get(julgControlador.handleSolicitacoes())
     .post(julgControlador.handleSolicitacoes())
@@ -69,6 +73,12 @@ module.exports = (app) => {
     .get(julgControlador.handleConsSolicitacoes())
     .post(julgControlador.handleConsSolicitacoes())
     .delete(julgControlador.handleConsSolicitacoes());
+
+  app
+    .route(rotasJulgamento.indicapauta)
+    .get(julgControlador.handleIndicaPauta())
+    .post(julgControlador.handleIndicaPauta())
+    .delete(julgControlador.handleIndicaPauta());
 
   app.get(
     rotasJulgamento.conselheiros,

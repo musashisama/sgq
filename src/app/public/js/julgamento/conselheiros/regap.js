@@ -91,9 +91,9 @@ function dataTable(dados) {
     minHeight: '300px',
     maxHeight: '1000px',
     layout: 'fitData',
-    responsiveLayout: 'collapse',
-    groupStartOpen: false,
-    responsiveLayoutCollapseStartOpen: false,
+    // responsiveLayout: 'collapse',
+    // groupStartOpen: false,
+    // responsiveLayoutCollapseStartOpen: false,
     initialSort: [
       { column: 'Dias_na_Atividade', dir: 'desc' },
       { column: 'processo', dir: 'desc' },
@@ -103,16 +103,16 @@ function dataTable(dados) {
       columnCalcs: false,
     },
     columns: [
-      {
-        formatter: 'responsiveCollapse',
-        width: 30,
-        minWidth: 30,
-        hozAlign: 'left',
-        resizable: false,
-        headerSort: false,
-        responsive: 0,
-        download: true,
-      },
+      // {
+      //   formatter: 'responsiveCollapse',
+      //   width: 30,
+      //   minWidth: 30,
+      //   hozAlign: 'left',
+      //   resizable: false,
+      //   headerSort: false,
+      //   responsive: 0,
+      //   download: true,
+      // },
       {
         title: 'Processo',
         field: 'processo',
@@ -261,6 +261,7 @@ function dataTable(dados) {
         title: 'Alegações',
         field: 'alegacoes',
         sorter: 'string',
+        cellClick: alegaJSON,
         hozAlign: 'center',
         editor: false,
         responsive: 2,
@@ -337,6 +338,7 @@ function dataTable(dados) {
     langs: langs,
   });
 }
+
 let formatValorDAPS = function (value, data, type, params, column) {
   let valor = calendario(value);
   return valor;
@@ -411,6 +413,28 @@ let downloadValorDAPS = function (value, data, type, params, column) {
   let valor = calendario(value);
   return valor;
 };
+
+function alegaJSON(e, cell) {
+  $.ajax({
+    url: '/julgamento/conselheiros/pega-alegacao',
+    data: { idAlegacao: cell.getValue() },
+    type: 'POST',
+    success: function (result) {
+      var toastHTML = `${JSON.stringify(result.descricao)}`;
+      M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+      window.open(
+        `http://dispe.carf/tab-alegacoes/alegacoes/${result.codigo}`,
+        '_blank',
+      );
+    },
+    error: function (result) {
+      var toastHTML = `<span>Ocorreu um erro na criação da solicitação. Tente novamente.</span>`;
+
+      M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+      console.log(result);
+    },
+  });
+}
 function grafico(dados) {
   var layoutAtividade = {
     //title: 'Carga de Horas por atividade',

@@ -1340,10 +1340,9 @@ function controleForm() {
       initElementos();
       let diff;
       $('body').mousemove(() => {
-        diff =
-          moment($('#fimAfastamento').val(), 'DD/MM/YYYY').businessDiff(
-            moment($('#inicioAfastamento').val(), 'DD/MM/YYYY'),
-          ) + 1;
+        diff = moment($('#fimAfastamento').val(), 'DD/MM/YYYY').businessDiff(
+          moment($('#inicioAfastamento').val(), 'DD/MM/YYYY'),
+        );
         $('#diasUteis').html(diff - $('#diasSessao').val());
         $('#horasMeta').html(+$('#diasUteis').html() * 8);
       });
@@ -1499,10 +1498,9 @@ function controleForm() {
       initElementos();
       let diff;
       $('body').mousemove(() => {
-        diff =
-          moment($('#fimPeriodo').val(), 'DD/MM/YYYY').businessDiff(
-            moment($('#inicioPeriodo').val(), 'DD/MM/YYYY'),
-          ) + 1;
+        diff = moment($('#fimPeriodo').val(), 'DD/MM/YYYY').businessDiff(
+          moment($('#inicioPeriodo').val(), 'DD/MM/YYYY'),
+        );
         $('#diasCorridos').html(diff);
       });
       $('#btn-enviar').click((e) => {
@@ -1807,6 +1805,7 @@ function controleForm() {
     });
   });
   //1º sorteio com prazo inferior a 21 dias da indicação
+  //ARRUMAR CONTAGEM
   $('#s21').click(() => {
     resetElementos();
     $('#camposSol').fadeIn('slow', () => {
@@ -1822,11 +1821,10 @@ function controleForm() {
       initElementos();
       let diff;
       $('body').mousemove(() => {
-        diff =
-          moment($('#dataIndicacao').val(), 'DD/MM/YYYY').diff(
-            moment($('#dataSorteio').val(), 'DD/MM/YYYY'),
-            'days',
-          ) + 1;
+        diff = moment($('#dataIndicacao').val(), 'DD/MM/YYYY').diff(
+          moment($('#dataSorteio').val(), 'DD/MM/YYYY'),
+          'days',
+        );
         $('#diasCorridos').html(diff);
       });
       $('#btn-enviar').click((e) => {
