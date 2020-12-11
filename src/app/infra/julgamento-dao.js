@@ -269,7 +269,7 @@ class JulgamentoDao {
     });
   }
 
-  getRegap(filtro, sort, projecao, limit = -6) {
+  getRegap(filtro, sort, projecao, limit = 0) {
     return new Promise((resolve, reject) => {
       this._db.regap
         .find(filtro)
