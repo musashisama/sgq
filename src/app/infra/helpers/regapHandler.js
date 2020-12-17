@@ -149,8 +149,8 @@ class regapHandler {
     return new Promise((resolve, reject) => {
       let keysMap = {
         Nome_Lote_Atual_3: 'Observacoes',
-        CPF_Responsável_Atual_4: 'cpf',
-        Nome_Responsável_5: 'Nome',
+        CPF_do_Responsável_pelo_Pr_4: 'cpf',
+        Nome_do_Responsável_pelo_P_5: 'Nome',
         Número_Processo_6: 'Processo',
         Nome_Contribuinte_7: 'Contribuinte',
         Indicador_de_Processo_Apen_8: 'Ind_Apenso',
@@ -174,8 +174,8 @@ class regapHandler {
         Data_Distribuição_Última_12: 'Data_ultima_distribuicao',
         'Valor_Originário_Lançado/P_30': 'Valor_Originario',
         'Assuntos/Objetos_31': 'Assunto',
-        Prioridade_24: 'Prioridade',
-        Motivo_da_Prioridade_22: 'Motivo_Prioridade',
+        Prioridade_do_Processo_24: 'Prioridade',
+        Motivo_da_Prioridade_do_Pr_22: 'Motivo_Prioridade',
         Indicador_de_Solicitação_d_32: 'Ind_Juntada',
       };
       //Renomeia as colunas e exclui as não utilizadas
