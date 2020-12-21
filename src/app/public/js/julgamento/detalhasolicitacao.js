@@ -58,6 +58,7 @@ function montaSolicitacao() {
   </div>
   `);
   initCollapsible();
+  M.textareaAutoResize($('#justificativas'));
   $('#rejeitar').click((e) => {
     if (!$('#justificativas').val()) {
       var toastHTML = `<span>Caso a solicitação seja rejeitada, é obrigatório po preenchimento do campo
