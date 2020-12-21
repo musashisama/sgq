@@ -173,13 +173,12 @@ let formatDeleta = function formatDeleta(cell) {
   if (cell.getRow().getData().status.includes('Encaminhada para Análise')) {
     return `<a id='btnDeleta' class='red-text' href='#modal1' title='Excluir Solicitação'> <i class="red-text	far fa-trash-alt"/></a>`;
   } else {
-    return `<a class='black-text btndetalha' href='#modal1' title='Detalhar Solicitação'><i class='material-icons'>details</i></a>`;
+    return ``;
   }
 };
 
 function clickEdita(e, cell) {
   e.preventDefault();
-  console.log(cell.getRow().getData().html);
   $('.btndetalha').addClass('modal-trigger');
   montaModal(e, cell, 'Detalhamento da Solicitação');
 }
@@ -282,7 +281,7 @@ function handleSOL(registro, metodo) {
     success: function (result) {
       var toastHTML = `<span>Solicitação nº ${result} excluída com sucesso!</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
-      console.log(result);
+
       setTimeout((a) => {
         location.reload();
       }, 2500);
@@ -290,7 +289,6 @@ function handleSOL(registro, metodo) {
     error: function (result) {
       var toastHTML = `<span>Ocorreu um erro na exclusão da solicitação. Tente novamente mais tarde.</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
-      console.log(result);
     },
   });
 }
