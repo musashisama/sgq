@@ -288,8 +288,7 @@ function dataTable(msg) {
         formatter: 'tickCross',
         responsive: 0,
         download: true,
-        headerTooltip:
-          'O valor originário do processo é inferior a 8 (OITO) milhões de reais?',
+        headerTooltip: 'Lote antecipado em sorteio Jan/2021',
       },
       {
         title: 'Sorteio',
@@ -299,8 +298,17 @@ function dataTable(msg) {
         editor: false,
         responsive: 0,
         download: true,
-        headerTooltip:
-          'O valor originário do processo é inferior a 8 (OITO) milhões de reais?',
+        headerTooltip: 'Sorteio Ordinário',
+      },
+      {
+        title: 'DIPRO',
+        field: 'dipro',
+        sorter: 'string',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 0,
+        visible: false,
+        download: true,
       },
     ],
     autoColumns: false,
