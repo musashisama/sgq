@@ -88,6 +88,7 @@ function selectRelatorios() {
               cpf: m.conselheiro.cpf,
               nome: m.conselheiro.nome,
               equipe: m.conselheiro.equipe,
+              semana: m.conselheiro.semana,
               HE: r.HE,
               valorOrig: r.valorOrig,
             });
@@ -118,15 +119,18 @@ function selectRelatorios() {
             dado.cpf = dado.key;
             dado.nome = p.nome;
             dado.equipe = p.equipe;
+            dado.semana = p.semana;
             dado.HE = +dado.values.HE.toFixed(2);
             dado.Valor = +dado.values.Valor.toFixed(2);
             dado.qtdeProc = dado.values.qtdeProc;
+            dado.antecipado = loteAntecipado(+dado.values.HE);
+            dado.sorteioNormal = sorteioNormal(+dado.values.HE);
+            console.log(dado.antecipado);
             delete dado.key;
             delete dado.values;
           }
         });
       });
-      console.log(dados);
       dataTable(dados);
       initElementos();
     })
@@ -135,6 +139,30 @@ function selectRelatorios() {
       console.log(msg);
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
     });
+}
+
+function loteAntecipado(HE) {
+  if (HE < 100) {
+    return true;
+  }
+  if (HE <= 135 && HE > 100) {
+    return true;
+  }
+  if (HE >= 135) {
+    return false;
+  }
+}
+
+function sorteioNormal(HE) {
+  if (HE < 100) {
+    return '2 lotes';
+  }
+  if (HE <= 135 && HE > 100) {
+    return '1 lote';
+  }
+  if (HE >= 135) {
+    return 'Sorteio Normal';
+  }
 }
 
 function initSelect() {
@@ -156,7 +184,7 @@ function dataTable(msg) {
     },
     groupStartOpen: false,
     responsiveLayoutCollapseStartOpen: false,
-    initialSort: [{ column: 'HE', dir: 'desc' }],
+    initialSort: [{ column: 'HE', dir: 'asc' }],
     columns: [
       {
         formatter: 'responsiveCollapse',
@@ -194,6 +222,16 @@ function dataTable(msg) {
         download: true,
       },
       {
+        title: 'Semana',
+        field: 'semana',
+        sorter: 'string',
+        formatter: formatSemana,
+        hozAlign: 'center',
+        editor: false,
+        responsive: 0,
+        download: true,
+      },
+      {
         title: 'Equipe',
         field: 'equipe',
         sorter: 'string',
@@ -206,6 +244,7 @@ function dataTable(msg) {
       {
         title: 'Quantidade',
         field: 'qtdeProc',
+        topCalc: somaCalc,
         sorter: 'number',
         hozAlign: 'center',
         editor: false,
@@ -216,6 +255,7 @@ function dataTable(msg) {
         title: 'Carga em horas',
         field: 'HE',
         sorter: 'number',
+        topCalc: somaCalc,
         hozAlign: 'center',
         editor: false,
         responsive: 0,
@@ -225,9 +265,9 @@ function dataTable(msg) {
         title: '',
         field: 'HE',
         sorter: 'number',
-        hozAlign: 'left',
-        width: 250,
-        formatter: 'progress',
+        hozAlign: 'center',
+        width: 40,
+        formatter: 'traffic',
         formatterParams: {
           min: 0,
           max: 1000,
@@ -239,12 +279,52 @@ function dataTable(msg) {
         },
         download: false,
       },
+      {
+        title: 'Lote antecipado?',
+        field: 'antecipado',
+        sorter: 'boolean',
+        hozAlign: 'center',
+        editor: false,
+        formatter: 'tickCross',
+        responsive: 0,
+        download: true,
+        headerTooltip:
+          'O valor originário do processo é inferior a 8 (OITO) milhões de reais?',
+      },
+      {
+        title: 'Sorteio',
+        field: 'sorteioNormal',
+        sorter: 'string',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 0,
+        download: true,
+        headerTooltip:
+          'O valor originário do processo é inferior a 8 (OITO) milhões de reais?',
+      },
     ],
     autoColumns: false,
     locale: true,
     langs: langs,
   });
 }
+
+let formatSemana = function formatSemana(cell) {
+  const valor = cell.getValue();
+  if (valor == 'Verde') {
+    cell.getElement().style.color = 'rgb(0,200, 0)';
+    cell.getElement().style.fontWeight = 'bolder';
+  }
+  if (valor == 'Amarela') {
+    cell.getElement().style.color = 'rgb(255,211,0)';
+    cell.getElement().style.fontWeight = 'bolder';
+  }
+  if (valor == 'Azul') {
+    cell.getElement().style.color = 'rgb(0,0,200)';
+    cell.getElement().style.fontWeight = 'bolder';
+  }
+  return valor;
+};
 
 function montaGraficos(msg) {
   dados = JSON.parse(msg);
