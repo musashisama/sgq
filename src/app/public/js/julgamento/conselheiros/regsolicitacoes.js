@@ -890,7 +890,7 @@ function controleForm() {
   <div class='row'>
   <blockquote>
   <strong>Importante:</strong>
-  Caso tenha participado de sessão de julgamento em mais de uma turma por turno, selecione <strong>apenas</strong> a primeira turma de participação.
+  <strong>Você pode adicionar mais de uma participação na mesma solicitação.</strong> Caso tenha participado de sessão de julgamento em mais de uma turma por turno, selecione <strong>apenas</strong> a primeira turma de participação.
   As solicitações deverão ser feitas individualmente para cada turno de participação, onde serão abatidas 4 horas por turno. Caso haja mais de uma solicitação para <strong>uma mesma data e turno</strong>, <strong>todas serão rejeitadas.</strong>
   </blockquote>
   </div>`;
