@@ -14,11 +14,18 @@ function inicializaComponentes() {
       initCalendar(calendarEl, eventos);
     });
     initModal();
+    initCollapsible();
     btnLegenda();
   });
 }
 function initModal() {
   $('.modal').modal();
+}
+
+function initCollapsible() {
+  $(document).ready(function () {
+    $('#perAquisitivos').collapsible();
+  });
 }
 
 async function getEventos() {
@@ -41,20 +48,20 @@ function montaModal() {
     `<p class="pModal ">
             <br/>
             <ul  style='width:50%'>
-            <li class="fc-event evCal Verde center"> 1ª Turma da CSRF + Turmas Ordinárias da 2ª Seção + TE 1ª Seção</li>           
-            <li class="fc-event evCal Azul center">2ª Turma da CSRF + Turmas Ordinárias da 3ª Seção + TE 2ª Seção</li> 
+            <li class="fc-event evCal Verde center"> 1ª Turma da CSRF + Turmas Ordinárias da 2ª Seção + TE 1ª Seção</li>
+            <li class="fc-event evCal Azul center">2ª Turma da CSRF + Turmas Ordinárias da 3ª Seção + TE 2ª Seção</li>
             <li class="fc-event evCal Amarela black-text center">3ª Turma da CSRF + Turmas Ordinárias da 1ª Seção + TE 3ª Seção</li>
-            <li class="fc-event evCal Vermelha center">TE 1ª Seção</li> 
-            <li class="fc-event evCal Roxa center">TE 3ª Seção</li> 
-            <li class="fc-event evCal Laranja center">TE 2ª Seção</li>                
-            <li class="fc-event evCal Cinza center">2ª Turma da CSRF + Turmas Ordinárias da 3ª Seção</li>               
-            <li class="fc-event evCal VerdeClara center">1ª Turma da CSRF + Turmas Ordinárias da 2ª Seção</li>    
-            <li class="fc-event evCal Rosa center">3ª Turma da CSRF + Turmas Ordinárias da 1ª Seção</li>  
-            <li class="fc-event evCal Preta white-text center">Turmas Ordinárias da 2ª Seção + TE 1ª Seção</li>    
+            <li class="fc-event evCal Vermelha center">TE 1ª Seção</li>
+            <li class="fc-event evCal Roxa center">TE 3ª Seção</li>
+            <li class="fc-event evCal Laranja center">TE 2ª Seção</li>
+            <li class="fc-event evCal Cinza center">2ª Turma da CSRF + Turmas Ordinárias da 3ª Seção</li>
+            <li class="fc-event evCal VerdeClara center">1ª Turma da CSRF + Turmas Ordinárias da 2ª Seção</li>
+            <li class="fc-event evCal Rosa center">3ª Turma da CSRF + Turmas Ordinárias da 1ª Seção</li>
+            <li class="fc-event evCal Preta white-text center">Turmas Ordinárias da 2ª Seção + TE 1ª Seção</li>
             <li class="fc-event evCal AzulClara center">1ª Turma da CSRF + 3ª Turma da CSRF + Turmas Ordinárias da 1ª Seção + TE 3ª Seção</li>
-            <li class="fc-event evCal Musgo center">Pleno da CSRF</li>                  
-          </ul>       
-            
+            <li class="fc-event evCal Musgo center">Pleno da CSRF</li>
+          </ul>
+
             </p>`,
   );
   $('.cancela').click(function () {});
