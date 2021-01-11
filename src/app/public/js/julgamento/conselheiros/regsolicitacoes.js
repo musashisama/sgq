@@ -482,8 +482,33 @@ function initElementos() {
   btnEnviaArq();
   $('.progress').hide();
   M.updateTextFields();
+  //PORTARIA ME Nº 430, DE 30 DE DEZEMBRO DE 2020
+  feriados = [
+    '24-12-2020',
+    '25-12-2020',
+    '31-12-2020',
+    '01-01-2021',
+    '15-02-2021',
+    '16-02-2021',
+    '17-02-2021',
+    '02-04-2021',
+    '21-04-2021',
+    '01-05-2021',
+    '03-06-2021',
+    '07-09-2021',
+    '12-10-2021',
+    '28-10-2021',
+    '02-11-2021',
+    '15-11-2021',
+    '24-12-2021',
+    '25-12-2021',
+    '31-12-2021',
+    '01-01-2022',
+  ];
   moment.updateLocale('br', {
     workingWeekdays: [1, 2, 3, 4, 5],
+    holidays: feriados,
+    holidayFormat: 'DD-MM-YYYY',
   });
   $('#btn-voltar').click(() => {
     $('#camposSol').fadeOut('slow');

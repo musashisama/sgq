@@ -55,21 +55,21 @@ function render(input, out, __component, component, state) {
 
   app_drop_download_tag({}, out, __component, "65");
 
-  out.w("<a href=\"#!\" id=\"mostraColunasAtividade\" title=\"Agrupar/Desagrupar por Atividade\" class=\"waves-effect waves-green hoverable z-depth-3 btn-floating blue\"><i class=\"material-icons\">unfold_less</i></a><a href=\"#modal2\" id=\"mostraLegenda\" title=\"Mostrar Legenda da Tabela\" class=\"waves-effect waves-purple hoverable z-depth-3 btn-floating black\"><i class=\"material-icons\">details</i></a></div></div><div id=\"tabelaRegap\"></div><p><div class=\"col s12 m12\"><div class=\"card hoverable cardVermelho\"><div class=\"card-content\"><span class=\"card-title center\">ATENÇÃO</span><a id=\"oitomilhoes\"></a>* O campo \"Valor Originário\" é extraído diretamente do e-Processo e não leva em consideração outros fatores que possam alterar o valor a ser considerado para indicação. Dessa forma, para casos concretos, deverão ser somadas a esse valor outras informações, nos termos das <strong>orientações para indicação de pauta</strong>.</div></div></div></p></div><div id=\"stats\" class=\"col s12\"><h4>Quantidade de processos por atividade:</h4><div class=\"row\"><div class=\"s12\" style=\"width:100%;\" id=\"barrasAtividade\"></div></div></div></div></div></main><footer class=\"page-footer rodape\"></footer>");
+  out.w("<a href=\"#!\" id=\"mostraColunasAtividade\" title=\"Agrupar/Desagrupar por Atividade\" class=\"waves-effect waves-green hoverable z-depth-3 btn-floating blue\"><i class=\"material-icons\">unfold_less</i></a><a href=\"#!\" id=\"agrupaData\" title=\"Agrupar/Desagrupar por Data de Distribuição\" class=\"waves-effect waves-green hoverable z-depth-3 btn-floating grey\"><i class=\"material-icons\">unfold_less</i></a><a href=\"#modal2\" id=\"mostraLegenda\" title=\"Mostrar Legenda da Tabela\" class=\"waves-effect waves-purple hoverable z-depth-3 btn-floating black\"><i class=\"material-icons\">details</i></a></div></div><div id=\"tabelaRegap\"></div><p><div class=\"col s12 m12\"><div class=\"card hoverable cardVermelho\"><div class=\"card-content\"><span class=\"card-title center\">ATENÇÃO</span><a id=\"oitomilhoes\"></a>* O campo \"Valor Originário\" é extraído diretamente do e-Processo e não leva em consideração outros fatores que possam alterar o valor a ser considerado para indicação. Dessa forma, para casos concretos, deverão ser somadas a esse valor outras informações, nos termos das <strong>orientações para indicação de pauta</strong>.</div></div></div></p></div><div id=\"stats\" class=\"col s12\"><h4>Quantidade de processos por atividade:</h4><div class=\"row\"><div class=\"s12\" style=\"width:100%;\" id=\"barrasAtividade\"></div></div></div></div></div></main><footer class=\"page-footer rodape\"></footer>");
 
-  app_modal_tabela_legenda_tag({}, out, __component, "83");
+  app_modal_tabela_legenda_tag({}, out, __component, "85");
 
   out.w("<div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
 
-  app_footer_tag({}, out, __component, "92");
+  app_footer_tag({}, out, __component, "94");
 
-  app_scripts_js_tag({}, out, __component, "93");
+  app_scripts_js_tag({}, out, __component, "95");
 
   out.w("<script src=\"/estatico/js/libs/plotly-latest.min.js\"></script><script src=\"/estatico/js/libs/plotly-locale-pt-br.js\"></script><script>Plotly.setPlotConfig({locale: 'pt-BR'})</script><script src=\"/estatico/js/julgamento/helpers/configTabelaNovoRegap.js\"></script><script src=\"/estatico/js/julgamento/conselheiros/regap.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "99");
+  await_reorderer_tag({}, out, __component, "101");
 
   out.w("</body></html>");
 }
