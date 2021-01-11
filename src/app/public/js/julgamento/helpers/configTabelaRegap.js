@@ -194,7 +194,7 @@ let formatValor = function formatValor(cell) {
   return `${valor.toLocaleString('pt-BR', formato)}`;
 };
 let downloadValor = function (value, data, type, params, column) {
-  return value.includes('.') ? value.replace('.', ',') : value;
+  return typeof value != 'undefined' ? value.replace('.', ',') : value;
 };
 
 function coloreProc(cell, formatterParams, valor) {
