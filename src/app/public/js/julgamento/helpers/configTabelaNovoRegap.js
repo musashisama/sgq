@@ -37,6 +37,7 @@ responsiveLayout = true;
 let table = null;
 let tabledata = '';
 let agrupado = false;
+let agrupadoData = false;
 let agrupadoT = false;
 let d3 = Plotly.d3;
 function inicializaComponentes() {
@@ -143,6 +144,19 @@ function initCheckboxes() {
 }
 
 function initElementos() {
+  if ($('#agrupaData').length > 0) {
+    document
+      .getElementById('agrupaData')
+      .addEventListener('click', function () {
+        if (agrupadoData == false) {
+          table.setGroupBy(['entradaAtividade', 'atividade', 'situacao']);
+          agrupadoData = true;
+        } else {
+          table.setGroupBy();
+          agrupadoData = false;
+        }
+      });
+  }
   if ($('#mostraColunasAtividade').length > 0) {
     document
       .getElementById('mostraColunasAtividade')
