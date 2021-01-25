@@ -2,6 +2,7 @@ inicializaComponentes();
 function inicializaComponentes() {
   $(document).ready(function () {
     initSelect();
+    verificaFeriado();
     initTabs();
     initCollapsible();
     calendario();
@@ -507,8 +508,8 @@ function initElementos() {
   ];
   moment.updateLocale('br', {
     workingWeekdays: [1, 2, 3, 4, 5],
-    holidays: feriados,
-    holidayFormat: 'DD-MM-YYYY',
+    //holidays: feriados,
+    //holidayFormat: 'DD-MM-YYYY',
   });
   $('#btn-voltar').click(() => {
     $('#camposSol').fadeOut('slow');
@@ -518,6 +519,45 @@ function initElementos() {
     $('#camposSol').fadeOut('slow');
     resetElementos();
   });
+}
+
+function verificaFeriado(inicio, fim, relatorio) {
+  let meioPeriodo = [
+    '24-12-2020',
+    '31-12-2021',
+    '31-12-2020',
+    '24-12-2021',
+    '17-02-2021',
+  ];
+  let feriados = [
+    '25-12-2020',
+    '01-01-2021',
+    '15-02-2021',
+    '16-02-2021',
+    '02-04-2021',
+    '21-04-2021',
+    '01-05-2021',
+    '03-06-2021',
+    '07-09-2021',
+    '12-10-2021',
+    '28-10-2021',
+    '02-11-2021',
+    '15-11-2021',
+    '25-12-2021',
+    '01-01-2022',
+  ];
+  diff =
+    moment($('#fimAfastamento').val(), 'DD/MM/YYYY').diff(
+      moment($('#inicioAfastamento').val(), 'DD/MM/YYYY'),
+      'days',
+    ) + 1;
+  $('#diasCorridos').html(diff);
+  diff =
+    moment($('#fimAfastamento').val(), 'DD/MM/YYYY').businessDiff(
+      moment($('#inicioAfastamento').val(), 'DD/MM/YYYY'),
+    ) + 1;
+  $('#diasUteis').html(diff - $('#diasSessao').val());
+  $('#horasMeta').html(+$('#diasUteis').html() * 8);
 }
 
 function arraySol(array) {
@@ -1863,7 +1903,7 @@ function controleForm() {
         ) {
           var toastHTML = `<span>Somente podem ser cadastrados eventos já ocorridos e finalizados.</span>`;
           M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
-        } else if (+diff < 21) {
+        } else if (+diff >= 21) {
           var toastHTML = `<span>A diferença deve ser de no mínimo 21 dias.</span>`;
           M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
         } else {
