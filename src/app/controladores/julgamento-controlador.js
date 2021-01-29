@@ -1272,9 +1272,9 @@ class JulgamentoControlador {
           reinp.forEach((elem) => {
             users.forEach((user) => {
               if (elem.conselheiro.cpf == user.cpf) {
-                elem.setor = user.setor;
-                elem.camara = user.camara;
-                elem.turma = user.turma;
+                // elem.setor = user.setor;
+                // elem.camara = user.camara;
+                // elem.turma = user.turma;
                 elem._id = new ObjectID(user._id);
                 elem.unidade = user.unidade;
               }

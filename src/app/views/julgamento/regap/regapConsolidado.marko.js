@@ -16,6 +16,8 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     app_navbar_template = require("../../components/app-navbar.marko"),
     app_navbar_tag = marko_loadTag(app_navbar_template),
     marko_attr = marko_helpers.a,
+    app_valor_maximo_template = require("../../components/app-valor-maximo.marko"),
+    app_valor_maximo_tag = marko_loadTag(app_valor_maximo_template),
     app_drop_download_template = require("../../components/app-drop-download.marko"),
     app_drop_download_tag = marko_loadTag(app_drop_download_template),
     app_modal_tabela_legenda_template = require("../../components/app-modal-tabela-legenda.marko"),
@@ -57,25 +59,29 @@ function render(input, out, __component, component, state) {
     marko_attr("value", "Amarela") +
     ">Amarela</option><option id=\"semanaAzul\" class=\"form-group\"" +
     marko_attr("value", "Azul") +
-    ">Azul</option></select><label>Selecione a Semana:</label></div><div class=\"form-group col s1\"><a href=\"#!\" id=\"consultaRegap\" title=\"Consultar Relatório\" class=\"waves-effect waves-green hoverable z-depth-3 btn-floating blue\"><i class=\"far fa-arrow-alt-circle-right\"></i></a></div></div><div class=\"row\"><div class=\"form-group input-field  col s3\"><select class=\"Atividade\" name=\"atividadeSelect\" id=\"atividadeSelect\"><option class=\"form-group\" value=\"Todas\" selected>Todas</option><option class=\"form-group\" value=\"Para Relatar\">Para Relatar</option><option class=\"form-group\" value=\"Formalizar Decisao\">Formalizar Decisão</option><option class=\"form-group\" value=\"Formalizar Voto Vencedor\">Formalizar Voto Vencedor</option><option class=\"form-group\" value=\"Corrigir Decisão\">Corrigir Decisão</option><option class=\"form-group\" value=\"Apreciar e Assinar Documento\">Apreciar e Assinar Documento</option></select><label>Selecione a atividade para filtrar:</label></div><div class=\"row\"><div class=\"form-group input-field  col s2\"><label><input name=\"repetitivosCheck\" id=\"repetitivosCheck\" type=\"checkbox\"><span>Ocultar Repetitivos</span></label></div><div class=\"form-group input-field  col s2\"><label><input name=\"aguardandoPauta\" id=\"aguardandoPauta\" type=\"checkbox\"><span>Somente \"Aguardando Pauta\"?</span></label></div><div class=\"form-group input-field  col s2\"><label><input name=\"abaixoUM\" id=\"abaixoUM\" type=\"checkbox\"><span><a href=\"#oitomilhoes\">Somente Abaixo de R$ 8 milhões?*</a></span></label></div><div class=\"form-group input-field  col s2\"><label><input name=\"juntadaCheck\" id=\"juntadaCheck\" type=\"checkbox\"><span>Solicitação de Juntada Pendente?</span></label></div></div></div><div class=\"row\"><div class=\"col s12 right-align\">");
+    ">Azul</option></select><label>Selecione a Semana:</label></div><div class=\"form-group col s1\"><a href=\"#!\" id=\"consultaRegap\" title=\"Consultar Relatório\" class=\"waves-effect waves-green hoverable z-depth-3 btn-floating blue\"><i class=\"far fa-arrow-alt-circle-right\"></i></a></div></div><div class=\"row\"><div class=\"form-group input-field  col s3\"><select class=\"Atividade\" name=\"atividadeSelect\" id=\"atividadeSelect\"><option class=\"form-group\" value=\"Todas\" selected>Todas</option><option class=\"form-group\" value=\"Para Relatar\">Para Relatar</option><option class=\"form-group\" value=\"Formalizar Decisao\">Formalizar Decisão</option><option class=\"form-group\" value=\"Formalizar Voto Vencedor\">Formalizar Voto Vencedor</option><option class=\"form-group\" value=\"Corrigir Decisão\">Corrigir Decisão</option><option class=\"form-group\" value=\"Apreciar e Assinar Documento\">Apreciar e Assinar Documento</option></select><label>Selecione a atividade para filtrar:</label></div><div class=\"row\"><div class=\"form-group input-field  col s2\"><label><input name=\"repetitivosCheck\" id=\"repetitivosCheck\" type=\"checkbox\"><span>Ocultar Repetitivos</span></label></div><div class=\"form-group input-field  col s2\"><label><input name=\"aguardandoPauta\" id=\"aguardandoPauta\" type=\"checkbox\"><span>Somente \"Aguardando Pauta\"?</span></label></div>");
 
-  app_drop_download_tag({}, out, __component, "62");
+  app_valor_maximo_tag({}, out, __component, "51");
+
+  out.w("<div class=\"form-group input-field  col s2\"><label><input name=\"juntadaCheck\" id=\"juntadaCheck\" type=\"checkbox\"><span>Solicitação de Juntada Pendente?</span></label></div></div></div><div class=\"row\"><div class=\"col s12 right-align\">");
+
+  app_drop_download_tag({}, out, __component, "58");
 
   out.w("<a href=\"#!\" id=\"mostraColunasAtividade\" title=\"Agrupar/Desagrupar por Atividade\" class=\"waves-effect waves-green hoverable z-depth-3 btn-floating blue\"><i class=\"material-icons\">unfold_less</i></a><a href=\"#!\" id=\"mostraColunasTurma\" title=\"Agrupar/Desagrupar por Turma/Câmara/Seção\" class=\"waves-effect waves-yellow hoverable z-depth-3 btn-floating orange\"><i class=\"material-icons\">unfold_more</i></a><a href=\"#modal2\" id=\"mostraLegenda\" title=\"Mostrar Legenda da Tabela\" class=\"waves-effect waves-purple hoverable z-depth-3 btn-floating black\"><i class=\"material-icons\">details</i></a></div></div><div class=\"progressRegap col s3\"><div class=\"preloader-wrapper small active\"><div class=\"spinner-layer spinner-green-only\"><div class=\"circle-clipper left\"><div class=\"circle\"></div></div><div class=\"gap-patch\"><div class=\"circle\"></div></div><div class=\"circle-clipper right\"><div class=\"circle\"></div></div></div></div></div><div id=\"tabelaRegap\"></div></div><div id=\"stats\" class=\"col s12\"><h4>Quantidade de processos por atividade:</h4><p><div style=\"width:100%;auto;\" id=\"barrasAtividade\"></div></p></div></div></main><footer class=\"page-footer rodape\"></footer>");
 
-  app_modal_tabela_legenda_tag({}, out, __component, "84");
+  app_modal_tabela_legenda_tag({}, out, __component, "80");
 
   out.w("<div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
 
-  app_footer_tag({}, out, __component, "93");
+  app_footer_tag({}, out, __component, "89");
 
-  app_scripts_js_tag({}, out, __component, "94");
+  app_scripts_js_tag({}, out, __component, "90");
 
   out.w("<script src=\"/estatico/js/libs/plotly-latest.min.js\"></script><script src=\"/estatico/js/libs/plotly-locale-pt-br.js\"></script><script>Plotly.setPlotConfig({locale: 'pt-BR'})</script><script src=\"/estatico/js/julgamento/helpers/configTabelaNovoRegap.js\"></script><script src=\"/estatico/js/julgamento/regap-consolidado.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "100");
+  await_reorderer_tag({}, out, __component, "96");
 
   out.w("</body></html>");
 }
@@ -94,6 +100,7 @@ marko_template.meta = {
       "marko/src/core-tags/components/component-globals-tag",
       "../../components/app-header.marko",
       "../../components/app-navbar.marko",
+      "../../components/app-valor-maximo.marko",
       "../../components/app-drop-download.marko",
       "../../components/app-modal-tabela-legenda.marko",
       "../../components/app-footer.marko",

@@ -32,6 +32,7 @@ let langs = {
     },
   },
 };
+let minimoApto = 12000000;
 layout = 'fitDataFill';
 responsiveLayout = true;
 let table = null;
@@ -120,9 +121,9 @@ function initCheckboxes() {
   });
   $(`#abaixoUM`).change(() => {
     if ($(`#abaixoUM`).prop('checked')) {
-      table.addFilter('valorOrig', '<=', 8000000);
+      table.addFilter('valorOrig', '<=', minimoApto);
     } else {
-      table.removeFilter('valorOrig', '<=', 8000000);
+      table.removeFilter('valorOrig', '<=', minimoApto);
     }
   });
   $(`#juntadaCheck`).change(() => {
@@ -211,11 +212,11 @@ let formatValor = function formatValor(cell) {
     localeMatcher: 'best fit',
   };
   const valor = +cell.getValue();
-  if (valor >= 8000000) {
+  if (valor >= minimoApto) {
     cell.getElement().style.color = 'rgb(245, 131, 0)';
     cell.getElement().style.fontWeight = 'bolder';
   }
-  if (valor < 8000000) {
+  if (valor < minimoApto) {
     cell.getElement().style.color = 'rgb(63, 138, 2)';
     cell.getElement().style.fontWeight = 'bolder';
   }
