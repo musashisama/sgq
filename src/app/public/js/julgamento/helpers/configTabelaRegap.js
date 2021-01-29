@@ -39,6 +39,7 @@ let tabledata = '';
 let agrupado = false;
 let agrupadoT = false;
 let d3 = Plotly.d3;
+let minimoApto = 12000000;
 function inicializaComponentes() {
   $(document).ready(function () {
     initSelect();
@@ -111,9 +112,9 @@ function initCheckboxes() {
   });
   $(`#abaixoUM`).change(() => {
     if ($(`#abaixoUM`).prop('checked')) {
-      table.addFilter('Valor_Originario', '<=', 8000000);
+      table.addFilter('Valor_Originario', '<=', minimoApto);
     } else {
-      table.removeFilter('Valor_Originario', '<=', 8000000);
+      table.removeFilter('Valor_Originario', '<=', minimoApto);
     }
   });
   $(`#juntadaCheck`).change(() => {
@@ -183,11 +184,11 @@ let formatValor = function formatValor(cell) {
     localeMatcher: 'best fit',
   };
   const valor = +cell.getValue();
-  if (valor >= 8000000) {
+  if (valor >= minimoApto) {
     cell.getElement().style.color = 'rgb(245, 131, 0)';
     cell.getElement().style.fontWeight = 'bolder';
   }
-  if (valor < 8000000) {
+  if (valor < minimoApto) {
     cell.getElement().style.color = 'rgb(63, 138, 2)';
     cell.getElement().style.fontWeight = 'bolder';
   }

@@ -87,11 +87,15 @@ function initCalendar(calendarEl, eventos) {
     selectable: false,
     selecMirror: true,
     locale: 'pt-br',
-    weekNumbers: true,
+    weekNumbers: false,
+    showNonCurrentDates: false,
     weekNumbersWithinDays: true,
     weekNumberCalculation: 'ISO',
     navLinks: true,
     eventLimit: true,
+    eventMouseEnter: function (info) {
+      //console.log(info.event);
+    },
     eventSources: [
       {
         events: eventos,
