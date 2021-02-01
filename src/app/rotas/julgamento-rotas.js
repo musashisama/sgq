@@ -169,6 +169,10 @@ module.exports = (app) => {
     .get(julgControlador.handleRelatorios())
     .delete(julgControlador.handleRelatorios());
 
+  app
+    .route(rotasJulgamento.relatorios_antigos)
+    .get(julgControlador.carregaRelAntigos());
+
   app.post(rotasJulgamento.carregacsv, julgControlador.carregaCSV());
   app
     .route(rotasJulgamento.calendario)

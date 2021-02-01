@@ -67,21 +67,21 @@ function render(input, out, __component, component, state) {
 
   app_drop_download_tag({}, out, __component, "58");
 
-  out.w("<a href=\"#!\" id=\"mostraColunasAtividade\" title=\"Agrupar/Desagrupar por Atividade\" class=\"waves-effect waves-green hoverable z-depth-3 btn-floating blue\"><i class=\"material-icons\">unfold_less</i></a><a href=\"#!\" id=\"mostraColunasTurma\" title=\"Agrupar/Desagrupar por Turma/Câmara/Seção\" class=\"waves-effect waves-yellow hoverable z-depth-3 btn-floating orange\"><i class=\"material-icons\">unfold_more</i></a><a href=\"#modal2\" id=\"mostraLegenda\" title=\"Mostrar Legenda da Tabela\" class=\"waves-effect waves-purple hoverable z-depth-3 btn-floating black\"><i class=\"material-icons\">details</i></a></div></div><div class=\"progressRegap col s3\"><div class=\"preloader-wrapper small active\"><div class=\"spinner-layer spinner-green-only\"><div class=\"circle-clipper left\"><div class=\"circle\"></div></div><div class=\"gap-patch\"><div class=\"circle\"></div></div><div class=\"circle-clipper right\"><div class=\"circle\"></div></div></div></div></div><div id=\"tabelaRegap\"></div></div><div id=\"stats\" class=\"col s12\"><h4>Quantidade de processos por atividade:</h4><p><div style=\"width:100%;auto;\" id=\"barrasAtividade\"></div></p></div></div></main><footer class=\"page-footer rodape\"></footer>");
+  out.w("<a href=\"#!\" id=\"mostraColunasAtividade\" title=\"Agrupar/Desagrupar por Atividade\" class=\"waves-effect waves-green hoverable z-depth-3 btn-floating blue\"><i class=\"material-icons\">unfold_less</i></a><a href=\"#!\" id=\"mostraColunasTurma\" title=\"Agrupar/Desagrupar por Turma/Câmara/Seção\" class=\"waves-effect waves-yellow hoverable z-depth-3 btn-floating orange\"><i class=\"material-icons\">unfold_more</i></a><a href=\"#modal2\" id=\"mostraLegenda\" title=\"Mostrar Legenda da Tabela\" class=\"waves-effect waves-purple hoverable z-depth-3 btn-floating black\"><i class=\"material-icons\">details</i></a></div></div><div class=\"progressRegap col s3\"><div class=\"preloader-wrapper small active\"><div class=\"spinner-layer spinner-green-only\"><div class=\"circle-clipper left\"><div class=\"circle\"></div></div><div class=\"gap-patch\"><div class=\"circle\"></div></div><div class=\"circle-clipper right\"><div class=\"circle\"></div></div></div></div></div><div id=\"tabelaRegap\"></div></div><div id=\"stats\" class=\"col s12\"><h4>Estoque por faixa de valor:</h4><div class=\"row\"><div class=\"col s12 right-align\"><div class=\"input-field col s3\"><input id=\"minimo\" min=\"\" max=\"\" step=1 type=\"number\" class=\"validate\"><label for=\"minimo\">Valor Mínimo (em milhões de R$)</label></div><div class=\"input-field col s3\"><input id=\"maximo\" type=\"number\" min=\"\" max=\"\" step=1 class=\"validate\"><label for=\"maximo\">Valor Máximo (em milhões de R$)</label></div><div class=\"col s1\"><a id=\"btnFiltro\" class=\"waves-effect waves-light btn\">Filtrar</a></div><a href=\"#!\" id=\"agrupaSecao\" title=\"Agrupar/Desagrupar por Seção\" class=\"waves-effect waves-red hoverable z-depth-3 btn-floating orange\"><i class=\"material-icons\">unfold_more</i></a></div></div><p><div id=\"tabelaFaixaValor\"></div></p><h4>Quantidade de processos por atividade:</h4><p><div style=\"width:100%;auto;\" id=\"barrasAtividade\"></div></p></div></div></main><footer class=\"page-footer rodape\"></footer>");
 
-  app_modal_tabela_legenda_tag({}, out, __component, "80");
+  app_modal_tabela_legenda_tag({}, out, __component, "95");
 
   out.w("<div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
 
-  app_footer_tag({}, out, __component, "89");
+  app_footer_tag({}, out, __component, "104");
 
-  app_scripts_js_tag({}, out, __component, "90");
+  app_scripts_js_tag({}, out, __component, "105");
 
   out.w("<script src=\"/estatico/js/libs/plotly-latest.min.js\"></script><script src=\"/estatico/js/libs/plotly-locale-pt-br.js\"></script><script>Plotly.setPlotConfig({locale: 'pt-BR'})</script><script src=\"/estatico/js/julgamento/helpers/configTabelaNovoRegap.js\"></script><script src=\"/estatico/js/julgamento/regap-consolidado.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "96");
+  await_reorderer_tag({}, out, __component, "111");
 
   out.w("</body></html>");
 }

@@ -61,21 +61,21 @@ function render(input, out, __component, component, state) {
 
   app_drop_download_tag({}, out, __component, "43");
 
-  out.w("<a href=\"#!\" id=\"mostraColunasTurma\" title=\"Agrupar/Desagrupar por Turma/Câmara/Seção\" class=\"waves-effect waves-yellow hoverable z-depth-3 btn-floating orange\"><i class=\"material-icons\">unfold_more</i></a></div></div><div id=\"tabelaEstoque\"></div></div><div id=\"stats\" class=\"col s12\"><h4>Quantidade de processos por atividade:</h4><p><div style=\"width:100%;auto;\" id=\"barrasAtividade\"></div></p></div></div></main><footer class=\"page-footer rodape\"></footer>");
+  out.w("<a href=\"#!\" id=\"mostraColunasTurma\" title=\"Agrupar/Desagrupar por Turma/Câmara/Seção\" class=\"waves-effect waves-yellow hoverable z-depth-3 btn-floating orange\"><i class=\"material-icons\">unfold_more</i></a></div></div><div id=\"tabelaEstoque\"></div></div><div id=\"stats\" class=\"col s12\"><h4>Estoque por faixa de valor:</h4><div class=\"row\"><div class=\"col s12 right-align\"><div class=\"input-field col s3\"><input id=\"minimo\" min=\"\" max=\"\" step=1 type=\"number\" class=\"validate\"><label for=\"minimo\">Valor Mínimo (em milhões de R$)</label></div><div class=\"input-field col s3\"><input id=\"maximo\" type=\"number\" min=\"\" max=\"\" step=1 class=\"validate\"><label for=\"maximo\">Valor Máximo (em milhões de R$)</label></div><div class=\"col s1\"><a id=\"btnFiltro\" class=\"waves-effect waves-light btn\">Filtrar</a></div><a href=\"#!\" id=\"agrupaSecao\" title=\"Agrupar/Desagrupar por Seção\" class=\"waves-effect waves-red hoverable z-depth-3 btn-floating orange\"><i class=\"material-icons\">unfold_more</i></a></div></div><p><div id=\"tabelaFaixaValor\"></div></p><h4>Quantidade de processos por atividade:</h4><p><div style=\"width:100%;auto;\" id=\"barrasAtividade\"></div></p></div></div></main><footer class=\"page-footer rodape\"></footer>");
 
-  app_modal_tabela_legenda_tag({}, out, __component, "52");
+  app_modal_tabela_legenda_tag({}, out, __component, "67");
 
   out.w("<div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
 
-  app_footer_tag({}, out, __component, "61");
+  app_footer_tag({}, out, __component, "76");
 
-  app_scripts_js_tag({}, out, __component, "62");
+  app_scripts_js_tag({}, out, __component, "77");
 
-  out.w("<script src=\"/estatico/js/libs/plotly-latest.min.js\"></script><script src=\"/estatico/js/libs/plotly-locale-pt-br.js\"></script><script>Plotly.setPlotConfig({locale: 'pt-BR'})</script><script src=\"/estatico/js/julgamento/helpers/configTabelaNovoRegap.js\"></script><script src=\"/estatico/js/julgamento/estoque_conselheiros.js\"></script>");
+  out.w("<script src=\"/estatico/js/libs/wNumb.min.js\"></script><script src=\"/estatico/js/libs/nouislider.min.js\"></script><script src=\"/estatico/js/libs/plotly-latest.min.js\"></script><script src=\"/estatico/js/libs/plotly-locale-pt-br.js\"></script><script>Plotly.setPlotConfig({locale: 'pt-BR'})</script><script src=\"/estatico/js/julgamento/helpers/configTabelaNovoRegap.js\"></script><script src=\"/estatico/js/julgamento/estoque_conselheiros.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "68");
+  await_reorderer_tag({}, out, __component, "85");
 
   out.w("</body></html>");
 }
