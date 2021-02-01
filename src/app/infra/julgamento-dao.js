@@ -198,7 +198,7 @@ class JulgamentoDao {
     return new Promise((resolve, reject) => {
       this._db.portal
         .find(filtro)
-        .sort({ _id: -1 })
+        .sort({ ordem: 1 })
         .project()
         .toArray(function (erro, res) {
           if (erro) {

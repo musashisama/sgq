@@ -11,6 +11,7 @@ module.exports = {
   reinpgeral: require('./reinp/reinpgeral.marko'),
   detalhareinp: require('./reinp/detalhareinp.marko'),
   corrigeReinp: require('./reinp/corrigereinp.marko'),
+  relatorios_antigos: require('./portalcojul/relatorios-antigos.marko'),
   //REGAP Antigo
   regapCojul: require('./regap/regapCojul.marko'),
   regap: require('./regap/regap.marko'),

@@ -36,24 +36,20 @@ function montaReinp() {
       }
     });
   let reinp = JSON.parse($('#reinpData').attr('data-reinp'));
-  console.log(reinp);
   let dadosTabela = [];
   reinp.forEach((e) => {
     dadosTabela.push({
       nome: e.conselheiro.nome,
       cpf: e.conselheiro.cpf,
       unidade: e.conselheiro.setor,
-      //T1: e.trimestre.T1.toFixed(2),
       T1: somaTrimestre('1', e),
       T2: somaTrimestre('2', e),
       T3: somaTrimestre('3', e),
       T4: somaTrimestre('4', e),
-      // T2: e.trimestre.T2.toFixed(2),
-      // T3: e.trimestre.T3.toFixed(2),
-      // T4: e.trimestre.T4.toFixed(2),
     });
   });
   dataTable(dadosTabela);
+  dadosGrafico(reinp);
 }
 
 function somaMes(mes, processos) {
@@ -182,148 +178,6 @@ function dataTable(msg) {
         responsive: 0,
         download: true,
       },
-      // {
-      //   formatter: 'responsiveCollapse',
-      //   width: 50,
-      //   minWidth: 30,
-      //   hozAlign: 'left',
-      //   resizable: false,
-      //   headerSort: false,
-      //   responsive: 0,
-      //   download: true,
-      // },
-      // {
-      //   title: 'Janeiro',
-      //   field: 'Jan',
-      //   width: largColuna,
-      //   sorter: 'number',
-      //   hozAlign: 'center',
-      //   editor: false,
-      //   formatter: formatMes,
-      //   responsive: 2,
-      //   download: true,
-      // },
-      // {
-      //   title: 'Fevereiro',
-      //   field: 'Fev',
-      //   width: largColuna,
-      //   sorter: 'number',
-      //   hozAlign: 'center',
-      //   editor: false,
-      //   formatter: formatMes,
-      //   responsive: 2,
-      //   download: true,
-      // },
-      // {
-      //   title: 'Março',
-      //   field: 'Mar',
-      //   width: largColuna,
-      //   sorter: 'number',
-      //   hozAlign: 'center',
-      //   editor: false,
-      //   formatter: formatMes,
-      //   responsive: 2,
-      //   download: true,
-      // },
-      // {
-      //   title: 'Abril',
-      //   field: 'Abr',
-      //   width: largColuna,
-      //   sorter: 'number',
-      //   hozAlign: 'center',
-      //   editor: false,
-      //   formatter: formatMes,
-      //   responsive: 2,
-      //   download: true,
-      // },
-      // {
-      //   title: 'Maio',
-      //   field: 'Mai',
-      //   width: largColuna,
-      //   sorter: 'number',
-      //   hozAlign: 'center',
-      //   editor: false,
-      //   formatter: formatMes,
-      //   responsive: 2,
-      //   download: true,
-      // },
-      // {
-      //   title: 'Junho',
-      //   field: 'Jun',
-      //   width: largColuna,
-      //   sorter: 'number',
-      //   hozAlign: 'center',
-      //   editor: false,
-      //   formatter: formatMes,
-      //   responsive: 2,
-      //   download: true,
-      // },
-      // {
-      //   title: 'Julho',
-      //   field: 'Jul',
-      //   width: largColuna,
-      //   sorter: 'number',
-      //   hozAlign: 'center',
-      //   editor: false,
-      //   formatter: formatMes,
-      //   responsive: 2,
-      //   download: true,
-      // },
-      // {
-      //   title: 'Agosto',
-      //   field: 'Ago',
-      //   width: largColuna,
-      //   sorter: 'number',
-      //   hozAlign: 'center',
-      //   editor: false,
-      //   formatter: formatMes,
-      //   responsive: 2,
-      //   download: true,
-      // },
-      // {
-      //   title: 'Setembro',
-      //   field: 'Set',
-      //   width: largColuna,
-      //   sorter: 'number',
-      //   hozAlign: 'center',
-      //   editor: false,
-      //   formatter: formatMes,
-      //   responsive: 2,
-      //   download: true,
-      // },
-      // {
-      //   title: 'Outubro',
-      //   field: 'Out',
-      //   width: largColuna,
-      //   sorter: 'number',
-      //   hozAlign: 'center',
-      //   editor: false,
-      //   formatter: formatMes,
-      //   responsive: 2,
-      //   download: true,
-      // },
-      // {
-      //   title: 'Novembro',
-      //   field: 'Nov',
-      //   width: largColuna,
-      //   sorter: 'number',
-      //   hozAlign: 'center',
-      //   editor: false,
-      //   formatter: formatMes,
-      //   responsive: 2,
-      //   download: true,
-      // },
-      // {
-      //   title: 'Dezembro',
-      //   field: 'Dez',
-      //   width: largColuna,
-      //   sorter: 'number',
-      //   hozAlign: 'center',
-      //   editor: false,
-      //   formatter: formatMes,
-      //   responsive: 2,
-      //   download: true,
-      // },
     ],
     autoColumns: false,
     locale: true,
@@ -437,62 +291,62 @@ function dadosGrafico(dados) {
     .rollup((v) => {
       return {
         Jan: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-01`) {
+          if (d.mes == `01/${new Date().getFullYear()}`) {
             return d.horasEfetivas;
           }
         }),
         Fev: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-02`) {
+          if (d.mes == `02/${new Date().getFullYear()}`) {
             return d.horasEfetivas;
           }
         }),
         Mar: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-03`) {
+          if (d.mes == `03/${new Date().getFullYear()}`) {
             return d.horasEfetivas;
           }
         }),
         Abr: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-04`) {
+          if (d.mes == `04/${new Date().getFullYear()}`) {
             return d.horasEfetivas;
           }
         }),
         Mai: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-05`) {
+          if (d.mes == `05/${new Date().getFullYear()}`) {
             return d.horasEfetivas;
           }
         }),
         Jun: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-06`) {
+          if (d.mes == `06/${new Date().getFullYear()}`) {
             return d.horasEfetivas;
           }
         }),
         Jul: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-07`) {
+          if (d.mes == `07/${new Date().getFullYear()}`) {
             return d.horasEfetivas;
           }
         }),
         Ago: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-08`) {
+          if (d.mes == `08/${new Date().getFullYear()}`) {
             return d.horasEfetivas;
           }
         }),
         Set: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-09`) {
+          if (d.mes == `09/${new Date().getFullYear()}`) {
             return d.horasEfetivas;
           }
         }),
         Out: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-10`) {
+          if (d.mes == `10/${new Date().getFullYear()}`) {
             return d.horasEfetivas;
           }
         }),
         Nov: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-11`) {
+          if (d.mes == `11/${new Date().getFullYear()}`) {
             return d.horasEfetivas;
           }
         }),
         Dez: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-12`) {
+          if (d.mes == `12/${new Date().getFullYear()}`) {
             return d.horasEfetivas;
           }
         }),

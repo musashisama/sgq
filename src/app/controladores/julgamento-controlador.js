@@ -87,6 +87,7 @@ class JulgamentoControlador {
         '/julgamento/restrito/regap_consolidado/detalha/:id',
       regap_consolidado: '/julgamento/restrito/regap_consolidado/',
       gestaorelatorios: '/julgamento/restrito/relatorios/',
+      relatorios_antigos: '/julgamento/restrito/relatorios_antigos/',
       //CONSELHEIROS
       conselheiros: '/julgamento/conselheiros',
       portalconselheiros: '/julgamento/conselheiros/portalconselheiros',
@@ -654,6 +655,12 @@ class JulgamentoControlador {
             });
           });
       });
+    };
+  }
+
+  carregaRelAntigos() {
+    return function (req, resp) {
+      resp.marko(templates.julgamento.relatorios_antigos);
     };
   }
 
@@ -1272,9 +1279,6 @@ class JulgamentoControlador {
           reinp.forEach((elem) => {
             users.forEach((user) => {
               if (elem.conselheiro.cpf == user.cpf) {
-                // elem.setor = user.setor;
-                // elem.camara = user.camara;
-                // elem.turma = user.turma;
                 elem._id = new ObjectID(user._id);
                 elem.unidade = user.unidade;
               }
