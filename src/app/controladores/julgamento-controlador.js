@@ -86,6 +86,7 @@ class JulgamentoControlador {
       regap_individual_cojul:
         '/julgamento/restrito/regap_consolidado/detalha/:id',
       regap_consolidado: '/julgamento/restrito/regap_consolidado/',
+      indicasdores_cig: '/julgamento/restrito/indicadores_cig/',
       gestaorelatorios: '/julgamento/restrito/relatorios/',
       relatorios_antigos: '/julgamento/restrito/relatorios_antigos/',
       //CONSELHEIROS
@@ -102,6 +103,12 @@ class JulgamentoControlador {
       listaregapindividual: '/julgamento/conselheiros/listaregap',
       regapcons: '/julgamento/conselheiros/:id',
       indicapauta: '/julgamento/conselheiros/indicacao-pauta',
+    };
+  }
+
+  handleIndicadores() {
+    return function (req, resp) {
+      resp.marko(templates.julgamento.indicadores_CIG);
     };
   }
 
@@ -836,25 +843,9 @@ class JulgamentoControlador {
 
   carregaReinpIndividual() {
     return function (req, resp) {
-      const pessoalDao = new PessoalDao(conn);
-      const julgamentoDao = new JulgamentoDao(conn);
-      julgamentoDao
-        .getReinp({ 'conselheiro.cpf': req.user.cpf })
-        .then((reinp) => {
-          pessoalDao.getUsers({ cpf: req.user.cpf }).then((user) => {
-            julgamentoDao
-              .getCal({
-                classNames: CSVHandler.semanaCores(user[0].unidade),
-              })
-              .then((cal) => {
-                resp.marko(templates.julgamento.reinp_individual, {
-                  reinp: JSON.stringify(reinp),
-                  cal: JSON.stringify(cal),
-                  user: user[0],
-                });
-              });
-          });
-        });
+      if (req.method === 'GET') {
+        resp.marko(templates.julgamento.reinp_individual);
+      }
     };
   }
 
@@ -901,42 +892,6 @@ class JulgamentoControlador {
         }
         registro['nome'] = files.file.name;
         let oldpath = files.file.path;
-        if (fields.tipoRel == 'REINP') {
-          fs.readFile(files.file.path, 'utf8', (err, data) => {
-            let json = JSON.parse(data);
-            const pessoalDao = new PessoalDao(conn);
-            pessoalDao.getUsers({ cargo: 'Conselheiro' }).then((cons) => {
-              json.forEach((elem) => {
-                cons.forEach((con) => {
-                  if (
-                    CSVHandler._removerAcentos(
-                      elem.conselheiro.nome.toLowerCase(),
-                    ) == CSVHandler._removerAcentos(con.nome).toLowerCase() ||
-                    CSVHandler._removerAcentos(
-                      elem.conselheiro.nome.toLowerCase(),
-                    ) ==
-                      (typeof con.nomeReinp !== 'undefined'
-                        ? CSVHandler._removerAcentos(
-                            con.nomeReinp,
-                          ).toLowerCase()
-                        : 'null')
-                  ) {
-                    elem.conselheiro.cpf = con.cpf.toString();
-                  }
-                });
-              });
-              const julgamentoDao = new JulgamentoDao(conn);
-              julgamentoDao
-                .insereReinp(json)
-                .then((res) => {
-                  resp.json(fields.trimestre + new Date().getFullYear());
-                })
-                .catch((erro) => {
-                  resp.json(erro);
-                });
-            });
-          });
-        }
         if (fields.tipoRel == 'novoREGAP') {
           fs.readFile(files.file.path, 'latin1', (err, data) => {
             const pessoalDao = new PessoalDao(conn);
@@ -1270,33 +1225,69 @@ class JulgamentoControlador {
       });
     };
   }
+
   carregaPaginaReinp() {
     return function (req, resp) {
-      let julgamentoDao = new JulgamentoDao(conn);
-      julgamentoDao.getReinp().then((reinp) => {
-        const pessoalDao = new PessoalDao(conn);
-        pessoalDao.getUsers().then((users) => {
-          reinp.forEach((elem) => {
-            users.forEach((user) => {
-              if (elem.conselheiro.cpf == user.cpf) {
-                elem._id = new ObjectID(user._id);
-                elem.unidade = user.unidade;
-              }
+      if (req.method === 'GET') {
+        resp.marko(templates.julgamento.reinpgeral);
+      }
+      if (req.method === 'POST') {
+        const julgamentoDao = new JulgamentoDao(conn);
+        let filtro, sort, projecao;
+        if (req.body.get == 'listagem') {
+          filtro = 'detalhamento.ano';
+          projecao = {};
+          sort = { 'detalhamento.ano': -1 };
+          julgamentoDao.getAnosReinp(filtro, sort, projecao).then((reinp) => {
+            resp.json(reinp);
+          });
+        }
+        if (req.body.get == 'relatorio') {
+          let filtro = {};
+          if (req.body.tipo == 'conselheiro') {
+            filtro = {
+              $and: [
+                { 'conselheiro.cpf': req.user.cpf },
+                { 'detalhamento.ano': req.body.ano },
+              ],
+            };
+          } else {
+            filtro = {
+              'detalhamento.ano': req.body.ano,
+            };
+          }
+          projecao = {};
+          sort = {};
+          julgamentoDao.getReinp(filtro, sort, projecao).then((reinp) => {
+            const pessoalDao = new PessoalDao(conn);
+            pessoalDao.getUsers().then((users) => {
+              reinp.forEach((elem) => {
+                users.forEach((user) => {
+                  if (elem.conselheiro.cpf == user.cpf) {
+                    elem._id = new ObjectID(user._id);
+                    elem.conselheiro.unidade = user.unidade;
+                    elem.ano = req.body.ano;
+                  }
+                });
+              });
+              resp.json(reinp);
             });
           });
-          resp.marko(templates.julgamento.reinpgeral, {
-            reinp: JSON.stringify(reinp),
-            users: JSON.stringify(users),
-          });
-        });
-      });
+        }
+      }
     };
   }
+
   carregaPaginaDetalhaReinp() {
     return function (req, resp) {
-      let cpf = req.params.id;
+      let parametros = req.params.id.split('&');
+      let ano = parametros[1];
+      let cpf = parametros[0];
+      let filtro = {
+        $and: [{ 'conselheiro.cpf': cpf }, { 'detalhamento.ano': ano }],
+      };
       const julgamentoDao = new JulgamentoDao(conn);
-      julgamentoDao.getReinp({ 'conselheiro.cpf': cpf }).then((dados) => {
+      julgamentoDao.getReinp(filtro).then((dados) => {
         const pessoalDao = new PessoalDao(conn);
         pessoalDao.getUsers({ cpf: cpf }).then((user) => {
           resp.marko(templates.julgamento.detalhareinp, {

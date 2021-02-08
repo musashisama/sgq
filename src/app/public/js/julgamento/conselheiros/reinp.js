@@ -63,24 +63,80 @@ let agrupadoReinp = false;
 
 function inicializaComponentes() {
   $(document).ready(function () {
-    formataDados();
-    graficoReinp();
+    getRelatoriosInd('conselheiro');
+    //formataDados();
+    //graficoReinp();
   });
+
+  function getRelatoriosInd(tipo) {
+    $.ajax({
+      url: `/julgamento/restrito/reinp/`,
+      type: 'POST',
+      data: {
+        get: 'listagem',
+      },
+      beforeSend: function () {
+        $('.progressReinp').toggle();
+      },
+    })
+      .done(function (msg) {
+        msg.forEach((m) => {
+          $('#anosReinp').append(`
+        <div class="col s12 m2">
+            <div class="card hoverable cardAzul">
+              <div class="card-content">
+                <span class="card-title center"><a href='' id='reinp${m}' class='white-text'>${m}</a></span>
+              </div>
+            </div>
+       `);
+          $(`#reinp${m}`).click((e) => {
+            e.preventDefault();
+            tipo ? selectRelatoriosInd(m, tipo) : selectRelatoriosInd(m);
+          });
+        });
+      })
+      .fail(function (jqXHR, textStatus, msg) {
+        var toastHTML = `<span>Ocorreu um erro.</span>`;
+        M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+      });
+  }
+
+  function selectRelatoriosInd(ano, tipo) {
+    $.ajax({
+      url: `/julgamento/restrito/reinp/`,
+      type: 'POST',
+      data: {
+        get: 'relatorio',
+        ano: ano,
+        tipo: tipo,
+      },
+      beforeSend: function () {
+        $('#tabelaReinp').val('');
+        $('.progressReinp').toggle();
+      },
+    })
+      .done(function (msg) {
+        formataDados(msg[0]);
+        $('.progressReinp').toggle();
+      })
+      .fail(function (jqXHR, textStatus, msg) {
+        var toastHTML = `<span>Ocorreu um erro.</span>`;
+        M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+      });
+  }
 }
-function formataDados() {
-  let data = JSON.parse($('#idProdutividade').attr('data-reinp'));
-  let dados = data[0] ? data[0] : { trimestre: { T1: 0, T2: 0, T3: 0, T4: 0 } };
-  let T1 = dados.trimestre.T1 ? dados.trimestre.T1 : 0;
-  let T2 = dados.trimestre.T2 ? dados.trimestre.T2 : 0;
-  let T3 = dados.trimestre.T3 ? dados.trimestre.T3 : 0;
-  let T4 = dados.trimestre.T4 ? dados.trimestre.T4 : 0;
+function formataDados(msg) {
+  let T1 = somaTrimestre('1', msg);
+  let T2 = somaTrimestre('2', msg);
+  let T3 = somaTrimestre('3', msg);
+  let T4 = somaTrimestre('4', msg);
 
   $('#horas1T').text(+T1.toFixed(2));
   $('#horas2T').text(+T2.toFixed(2));
   $('#horas3T').text(+T3.toFixed(2));
   $('#horas4T').text(+T4.toFixed(2));
-
-  let arrayMes = dados.detalhamento ? dados.detalhamento : [{}];
+  graficoReinpInd(msg);
+  let arrayMes = msg.detalhamento ? msg.detalhamento : [{}];
   dataTableReinpDet(arrayMes.flat());
   document.getElementById('agrupaMes').addEventListener('click', function () {
     if (agrupadoReinp == false) {
@@ -92,18 +148,6 @@ function formataDados() {
     }
   });
 }
-let formatTrimestre = function formatTrimestre(cell) {
-  const valor = +cell.getValue();
-  if (valor >= 378) {
-    cell.getElement().style.color = 'green';
-    cell.getElement().style.fontWeight = 'bolder';
-  }
-  if (valor < 378) {
-    cell.getElement().style.color = 'red';
-    cell.getElement().style.fontWeight = 'bolder';
-  }
-  return valor;
-};
 
 function dataTableReinpDet(msg) {
   table = new Tabulator('#tabelaReinpDet', {
@@ -176,7 +220,7 @@ function dataTableReinpDet(msg) {
       },
       {
         title: 'Código',
-        field: 'classificacao.codigo',
+        field: 'classificacao.tipo',
         sorter: 'string',
         hozAlign: 'center',
         editor: false,
@@ -313,25 +357,88 @@ function dadosGrafico(dados) {
     .entries(arrayMes);
 }
 //GRÁFICO REINP TRIMESTRAL
-function dadosGrafico2(data) {
-  let dados = data[0] ? data[0] : { trimestre: { T1: 0, T2: 0, T3: 0, T4: 0 } };
-  let T1 = dados.trimestre.T1 ? dados.trimestre.T1 : 0;
-  let T2 = dados.trimestre.T2 ? dados.trimestre.T2 : 0;
-  let T3 = dados.trimestre.T3 ? dados.trimestre.T3 : 0;
-  let T4 = dados.trimestre.T4 ? dados.trimestre.T4 : 0;
-
+function dadosGrafico(dados) {
+  let arrayMes = dados.detalhamento;
+  return d3
+    .nest()
+    .rollup((v) => {
+      return {
+        Jan: d3.sum(v, (d) => {
+          if (d.mes == `01/${d.ano}`) {
+            return d.horasEfetivas;
+          }
+        }),
+        Fev: d3.sum(v, (d) => {
+          if (d.mes == `02/${d.ano}`) {
+            return d.horasEfetivas;
+          }
+        }),
+        Mar: d3.sum(v, (d) => {
+          if (d.mes == `03/${d.ano}`) {
+            return d.horasEfetivas;
+          }
+        }),
+        Abr: d3.sum(v, (d) => {
+          if (d.mes == `04/${d.ano}`) {
+            return d.horasEfetivas;
+          }
+        }),
+        Mai: d3.sum(v, (d) => {
+          if (d.mes == `05/${d.ano}`) {
+            return d.horasEfetivas;
+          }
+        }),
+        Jun: d3.sum(v, (d) => {
+          if (d.mes == `06/${d.ano}`) {
+            return d.horasEfetivas;
+          }
+        }),
+        Jul: d3.sum(v, (d) => {
+          if (d.mes == `07/${d.ano}`) {
+            return d.horasEfetivas;
+          }
+        }),
+        Ago: d3.sum(v, (d) => {
+          if (d.mes == `08/${d.ano}`) {
+            return d.horasEfetivas;
+          }
+        }),
+        Set: d3.sum(v, (d) => {
+          if (d.mes == `09/${d.ano}`) {
+            return d.horasEfetivas;
+          }
+        }),
+        Out: d3.sum(v, (d) => {
+          if (d.mes == `10/${d.ano}`) {
+            return d.horasEfetivas;
+          }
+        }),
+        Nov: d3.sum(v, (d) => {
+          if (d.mes == `11/${d.ano}`) {
+            return d.horasEfetivas;
+          }
+        }),
+        Dez: d3.sum(v, (d) => {
+          if (d.mes == `12/${d.ano}`) {
+            return d.horasEfetivas;
+          }
+        }),
+      };
+    })
+    .entries(arrayMes);
+}
+function dadosGrafico2(dados) {
   return {
-    T1: T1.toFixed(2),
-    T2: T2.toFixed(2),
-    T3: T3.toFixed(2),
-    T4: T4.toFixed(2),
+    T1: somaTrimestre('1', dados),
+    T2: somaTrimestre('2', dados),
+    T3: somaTrimestre('3', dados),
+    T4: somaTrimestre('4', dados),
   };
 }
 
-function graficoReinp() {
-  dados = JSON.parse($('#idProdutividade').attr('data-reinp'));
-  let graf = dadosGrafico(dados);
-  let graf2 = dadosGrafico2(dados);
+function graficoReinpInd(msg) {
+  let graf = dadosGrafico(msg);
+  let graf2 = dadosGrafico2(msg);
   let cores = [
     'rgb(204, 204, 204)',
     'rgb(254, 181, 204)',
@@ -350,7 +457,7 @@ function graficoReinp() {
     'rgba(204,204,204,1)',
   ];
   var layoutMes = {
-    title: 'Indicações por Mês',
+    title: 'Indicações por mês',
     shapes: [
       {
         type: 'line',
@@ -377,9 +484,9 @@ function graficoReinp() {
     },
     margin: {
       l: 50,
-      r: 50,
+      r: 30,
       b: 50,
-      t: 50,
+      t: 100,
     },
     bargap: 0.05,
   };
@@ -410,10 +517,10 @@ function graficoReinp() {
       },
     },
     margin: {
-      l: 50,
-      r: 50,
+      l: 200,
+      r: 30,
       b: 50,
-      t: 50,
+      t: 100,
     },
     bargap: 0.05,
   };

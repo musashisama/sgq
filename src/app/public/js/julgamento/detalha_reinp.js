@@ -57,26 +57,17 @@ function formataDados() {
   let data = JSON.parse($('#formReinp').attr('data-reinp'));
   let dados = data[0];
   let user = JSON.parse($('#formReinp').attr('data-user'));
-  let T1 = dados.trimestre.T1;
-  let T2 = dados.trimestre.T2;
-  let T3 = dados.trimestre.T3;
-  let T4 = dados.trimestre.T4;
   let dadosTabela = [
     {
-      T1: +T1.toFixed(2),
-      T2: +T2.toFixed(2),
-      T3: +T3.toFixed(2),
-      T4: +T4.toFixed(2),
+      T1: somaTrimestre('1', dados),
+      T2: somaTrimestre('2', dados),
+      T3: somaTrimestre('3', dados),
+      T4: somaTrimestre('4', dados),
       unidade: user.unidade,
     },
   ];
   dataTable(dadosTabela);
-
   let arrayMes = dados.detalhamento;
-  // dados.forEach((d) => {
-  //   arrayMes.push(d.detalhamento);
-  // });
-
   dataTable2(arrayMes.flat());
   return dadosTabela;
 }
@@ -159,60 +150,6 @@ function dataTable(msg) {
   });
 }
 
-let formatMes = function formatNome(cell) {
-  return `${cell.getValue()}`;
-};
-let formatTrimestre = function formatNome(cell) {
-  const valor = +cell.getValue();
-  if (valor >= 378) {
-    cell.getElement().style.color = 'green';
-    cell.getElement().style.fontWeight = 'bolder';
-  }
-  if (valor < 378) {
-    cell.getElement().style.color = 'red';
-    cell.getElement().style.fontWeight = 'bolder';
-  }
-  return valor;
-};
-
-function mediaCalc(values, data, calcParams) {
-  var calc = 0;
-  let valor = 0;
-  values.forEach(function (value) {
-    if (value > 0) {
-      valor += +value;
-      calc++;
-    }
-  });
-
-  return `𝛍: ${(valor / calc).toFixed(2)}`;
-}
-
-function somaCalc(values, data, calcParams) {
-  var calc = 0;
-  let valor = 0;
-  values.forEach(function (value) {
-    if (value > 0) {
-      valor += +value;
-      calc++;
-    }
-  });
-
-  return `𝚺: ${valor}`;
-}
-
-function countCalc(values, data, calcParams) {
-  var calc = 0;
-  let valor = 0;
-  values.forEach(function (value) {
-    if (value) {
-      valor += value;
-      calc++;
-    }
-  });
-
-  return `|𝜲|: ${calc}`;
-}
 document.getElementById('agrupaMes').addEventListener('click', function () {
   if (agrupado == false) {
     table.setGroupBy(['mes']);
@@ -290,7 +227,7 @@ function dataTable2(msg) {
       },
       {
         title: 'Código',
-        field: 'classificacao.codigo',
+        field: 'classificacao.tipo',
         sorter: 'string',
         hozAlign: 'center',
         editor: false,
@@ -327,73 +264,68 @@ let formatValorReinp = function (valor, data, type, params, column) {
 };
 
 function dadosGrafico(dados) {
-  let arrayMes = [];
-  dados.forEach((elem) => {
-    elem.detalhamento.forEach((ele) => {
-      arrayMes.push(ele);
-    });
-  });
+  let arrayMes = dados.detalhamento;
   return d3
     .nest()
     .rollup((v) => {
       return {
         Jan: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-01`) {
+          if (d.mes == `01/${d.ano}`) {
             return d.horasEfetivas;
           }
         }),
         Fev: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-02`) {
+          if (d.mes == `02/${d.ano}`) {
             return d.horasEfetivas;
           }
         }),
         Mar: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-03`) {
+          if (d.mes == `03/${d.ano}`) {
             return d.horasEfetivas;
           }
         }),
         Abr: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-04`) {
+          if (d.mes == `04/${d.ano}`) {
             return d.horasEfetivas;
           }
         }),
         Mai: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-05`) {
+          if (d.mes == `05/${d.ano}`) {
             return d.horasEfetivas;
           }
         }),
         Jun: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-06`) {
+          if (d.mes == `06/${d.ano}`) {
             return d.horasEfetivas;
           }
         }),
         Jul: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-07`) {
+          if (d.mes == `07/${d.ano}`) {
             return d.horasEfetivas;
           }
         }),
         Ago: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-08`) {
+          if (d.mes == `08/${d.ano}`) {
             return d.horasEfetivas;
           }
         }),
         Set: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-09`) {
+          if (d.mes == `09/${d.ano}`) {
             return d.horasEfetivas;
           }
         }),
         Out: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-10`) {
+          if (d.mes == `10/${d.ano}`) {
             return d.horasEfetivas;
           }
         }),
         Nov: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-11`) {
+          if (d.mes == `11/${d.ano}`) {
             return d.horasEfetivas;
           }
         }),
         Dez: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-12`) {
+          if (d.mes == `12/${d.ano}`) {
             return d.horasEfetivas;
           }
         }),
@@ -402,20 +334,15 @@ function dadosGrafico(dados) {
     .entries(arrayMes);
 }
 function dadosGrafico2(dados) {
-  let T1 = dados.trimestre.T1;
-  let T2 = dados.trimestre.T2;
-  let T3 = dados.trimestre.T3;
-  let T4 = dados.trimestre.T4;
-
   return {
-    T1: T1.toFixed(2),
-    T2: T2.toFixed(2),
-    T3: T3.toFixed(2),
-    T4: T4.toFixed(2),
+    T1: somaTrimestre('1', dados),
+    T2: somaTrimestre('2', dados),
+    T3: somaTrimestre('3', dados),
+    T4: somaTrimestre('4', dados),
   };
 }
 dados = JSON.parse($('#formReinp').attr('data-reinp'));
-let graf = dadosGrafico(dados);
+let graf = dadosGrafico(dados[0]);
 let graf2 = dadosGrafico2(dados[0]);
 let cores = [
   'rgb(204, 204, 204)',
@@ -461,7 +388,7 @@ var layoutMes = {
     },
   },
   margin: {
-    l: 200,
+    l: 50,
     r: 30,
     b: 50,
     t: 100,

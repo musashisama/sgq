@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <app-scripts-css/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.css"/>
+  <body>
+    <app-header/>
+    <main class="conteudoPrincipal">
+      <app-navbar id="slide-out" class="sidenav"/>
+      <div class="container">
+        <h3 class="center-align titulo">Indicadores do CIG</h3>
+        <br/>
+        <div class="col s12">
+          <ul class="tabs">
+            <li class="tab col s3">
+              <a href="#paraRelatarCSRF">Para Relatar - CSRF</a>
+            </li>
+            <li class="tab col s3">
+              <a href="#paraRelatarTO">Para Relatar - Turmas Ordinárias</a>
+            </li>
+            <li class="tab col s3">
+              <a href="#paraRelatarTEX">Para Relatar - Turmas Extraordinárias</a>
+            </li>
+          </ul>
+        </div>
+        <div id="paraRelatarCSRF" class="col s12">
+          <h4>Temporalidade Média na Atividade «Para Relatar» nas Turmas da Câmara Superior</h4>
+          <p>
+            <div style="width:100%;auto;" id="graficoCSRF"/>
+            <div style="width:100%;">
+              <canvas id="myChart" width="900" height="450"/>
+            </div>
+          </p>
+        </div>
+        <div id="paraRelatarTO" class="col s12">
+          <h4>Temporalidade Média na Atividade «Para Relatar» nas Turmas Ordinárias</h4>
+          <p>
+            <div style="width:100%;auto;" id="graficoTO"/>
+          </p>
+        </div>
+        <div id="paraRelatarTEX" class="col s12">
+          <h4>Temporalidade Média na Atividade «Para Relatar» nas Turmas Extraordinárias</h4>
+          <p>
+            <div style="width:100%;auto;" id="graficoTEX"/>
+          </p>
+        </div>
+      </div>
+    </main>
+    <footer class="page-footer rodape"/>
+    <app-modal-tabela-legenda/>
+    <!--Modal Structure-->
+    <div id="modal1" class="modal">
+      <div class="modal-content">
+        <h4 class="hModal">Modal Header</h4>
+        <p class="pModal"/>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-red btn-flat cancela">Cancela</a>
+        <button class="btn waves-effect waves-light concorda" type="submit" name="action">
+          Confirma <i class="material-icons right">send</i>
+        </button>
+      </div>
+    </div>
+    <app-footer/>
+    <app-scripts-js/>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"/>
+    <script src="/estatico/js/julgamento/cig/indicadoresCIG.js"/>
+  </body>
+</html>

@@ -147,4 +147,6 @@ function initDatePicker() {
       weekdaysAbbrev: diasAbrev,
     },
   });
+  $('#dataExt').val(moment().format('DD/MM/YYYY'));
+  M.updateTextFields();
 }
