@@ -483,7 +483,7 @@ function graficoReinpInd(msg) {
       },
     },
     margin: {
-      l: 200,
+      l: 50,
       r: 30,
       b: 50,
       t: 100,
