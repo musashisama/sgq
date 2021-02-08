@@ -31,6 +31,8 @@ module.exports = {
   gestaoregsolicitacoes: require('./gestaosolicitacoes/gestaoregsolicitacoes.marko'),
   detalhasolicitacao: require('./gestaosolicitacoes/detalhasolicitacao.marko'),
   gestaorelatorios: require('./gestaorelatorios/gestaorelatorios.marko'),
+  //CIG
+  indicadores_CIG: require('./cig/indicadores_cojul.marko'),
   //Conselheiros
   paginadoconselheiro: require('./conselheiros/paginadoconselheiro.marko'),
   regap_individual: require('./conselheiros/regap_individual.marko'),

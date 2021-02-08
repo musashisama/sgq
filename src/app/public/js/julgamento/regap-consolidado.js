@@ -415,7 +415,6 @@ function preparaDadosGrafico(dados, min = 0, max = 1000000000000) {
         r.relatorio.forEach((e) => {
           if (
             e.atividade == 'Para Relatar' &&
-            e.situacao == 'AGUARDANDO PAUTA' &&
             e.valorOrig >= min &&
             e.valorOrig <= max
           ) {

@@ -8,6 +8,24 @@
       <div class="container">
         <h3 class="center-align titulo">Relatório de Indicação para Pauta - REINP</h3>
         <br/>
+        <div class="row">
+          <div id="anosReinp"/>
+        </div>
+        <div class="progressReinp col s3">
+          <div class="preloader-wrapper small active">
+            <div class="spinner-layer spinner-green-only">
+              <div class="circle-clipper left">
+                <div class="circle"/>
+              </div>
+              <div class="gap-patch">
+                <div class="circle"/>
+              </div>
+              <div class="circle-clipper right">
+                <div class="circle"/>
+              </div>
+            </div>
+          </div>
+        </div>
         <form id="formReinp" data-users=`${data.users}` name="formGerencial" action="" method="post">
           <div class="col s12">
             <ul class="tabs">
@@ -45,7 +63,7 @@
             </div>
             <div class="row">
               <p>
-                <strong>Atenção!</strong> O somatório de horas indicadas acima não leva em consideração as horas dos processos em lotes de repetitivos. 
+                <strong>Atenção!</strong> O somatório de horas indicadas acima não leva em consideração as horas dos processos em lotes de repetitivos.
                 Sendo assim, qualquer divergência encontrada entre estes números e os constantes dos Dados Abertos do CARF é normal e esperada,
                 visto que lá são considerados todos os processos.
               </p>
@@ -73,6 +91,7 @@
     <script src="/estatico/js/libs/plotly-latest.min.js"/>
     <script src="/estatico/js/libs/plotly-locale-pt-br.js"/>
     <script>Plotly.setPlotConfig({locale: 'pt-BR'})</script>
+    <script src="/estatico/js/julgamento/helpers/reinpHelper.js"/>
     <script src="/estatico/js/julgamento/reinp_geral.js"/>
   </body>
 </html>

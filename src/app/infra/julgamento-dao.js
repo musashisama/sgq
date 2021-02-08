@@ -328,6 +328,17 @@ class JulgamentoDao {
       });
     });
   }
+
+  getAnosReinp(filtro) {
+    return new Promise((resolve, reject) => {
+      this._db.reinp.distinct(filtro, function (erro, res) {
+        if (erro) {
+          return reject(`Não foi possível listar os registros. Erro: ${erro}`);
+        }
+        return resolve(res);
+      });
+    });
+  }
   getReinp(filtro) {
     return new Promise((resolve, reject) => {
       this._db.reinp

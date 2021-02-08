@@ -8,7 +8,7 @@
       <div id="caixa" class="container">
         <h3 class="center-align titulo">Relatório Gerencial de Indicação para Pauta</h3>
         <br/>
-        <div id="idProdutividade" data-reinp=`${data.reinp}`/>
+        <div id="idProdutividade" data-user=`${data.user}` data-reinp=`${data.reinp}`/>
         <div class="row">
           <p>
             <h4>Produtividade Trimestral</h4>
@@ -30,6 +30,9 @@
                 mensagens para a DIPAJ informando dos erros no relatório.
               </div>
             </div>
+          </div>
+          <div class="row">
+            <div id="anosReinp"/>
           </div>
           <div class="row">
             <div class="col s12 m3">
@@ -112,6 +115,7 @@
     <script src="/estatico/js/libs/plotly-latest.min.js"/>
     <script src="/estatico/js/libs/plotly-locale-pt-br.js"/>
     <script>Plotly.setPlotConfig({locale: 'pt-BR'})</script>
+    <script src="/estatico/js/julgamento/helpers/reinpHelper.js"/>
     <script src="/estatico/js/julgamento/conselheiros/reinp.js"/>
   </body>
 </html>

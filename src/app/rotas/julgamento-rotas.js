@@ -67,6 +67,11 @@ module.exports = (app) => {
     .post(julgControlador.carregaRegapConsolidado());
 
   app
+    .route(rotasJulgamento.reinp)
+    .get(julgControlador.carregaPaginaReinp())
+    .post(julgControlador.carregaPaginaReinp());
+
+  app
     .route(rotasJulgamento.regap_individual_cojul)
     .get(julgControlador.carregaRegapConsDetalha())
     .post(julgControlador.carregaRegapConsDetalha());
@@ -85,7 +90,7 @@ module.exports = (app) => {
     .route(rotasJulgamento.estoque_conselheiros)
     .get(julgControlador.carregaPaginaEstoque())
     .post(julgControlador.carregaPaginaEstoque());
-  app.get(rotasJulgamento.reinp, julgControlador.carregaPaginaReinp());
+  //app.get(rotasJulgamento.reinp, julgControlador.carregaPaginaReinp());
   app.get(
     rotasJulgamento.detalhareinp,
     julgControlador.carregaPaginaDetalhaReinp(),
@@ -163,6 +168,11 @@ module.exports = (app) => {
     .route(rotasJulgamento.corrigereinp)
     .get(julgControlador.handleCorrigeReinp())
     .post(julgControlador.handleCorrigeReinp());
+
+  app
+    .route(rotasJulgamento.indicasdores_cig)
+    .get(julgControlador.handleIndicadores())
+    .post(julgControlador.handleIndicadores());
 
   app
     .route(rotasJulgamento.gestaorelatorios)
