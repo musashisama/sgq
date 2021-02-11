@@ -1,11 +1,45 @@
 let dadosPlot;
+let AtivApes = false;
 inicializaComponentes();
 function inicializaComponentes() {
   $(document).ready(function () {
     getRelatorios({ get: 'listagem' });
     elementosTabelas();
+    elementosApes749();
     initTabs();
     clickStats();
+  });
+}
+
+function returnApes(data) {
+  return data.apes == true;
+}
+function elementosApes749() {
+  $(`#apes749Check`).change(() => {
+    if ($(`#apes749Check`).prop('checked')) {
+      table.addFilter(returnApes);
+    } else {
+      table.removeFilter(returnApes);
+    }
+  });
+  document
+    .getElementById('mostraColunasAtividadeApes')
+    .addEventListener('click', function () {
+      if (AtivApes == false) {
+        tableApes.setGroupBy(['atividade']);
+        AtivApes = true;
+      } else {
+        tableApes.setGroupBy();
+        AtivApes = false;
+      }
+    });
+  $('#xlsxDownApes').click(() => {
+    tableApes.download('xlsx', `${$('#gerApes749').text()}.xlsx`, {
+      sheetName: 'Relatório',
+    });
+  });
+  $('#consultaRegap').click((e) => {
+    selectRelatorios();
   });
 }
 
@@ -62,15 +96,17 @@ function elementosTabelas() {
     })
       .done(function (msg) {
         $('.classProcessos').show();
-
+        console.log(msg[0].relatorio);
         msg[0].relatorio.forEach((r) => {
           r.Dias_na_Atividade = retornaDias(r.entradaAtividade);
           r.Dias_da_Dist = retornaDias(r.dtUltDist);
           r.Dias_da_SJ = retornaDias(r.dtSessao);
           r.DAAPS = parseInt($('#daps').text()) + r.Dias_na_Atividade;
+          r.diff = +r.apesHE - +r.HE;
         });
         dadosPlot = msg[0].relatorio;
         dataTable(msg[0].relatorio);
+        dataTableApes(msg[0].relatorio);
         grafico(msg[0].relatorio);
         $('.progressRegap').toggle();
       })
@@ -615,3 +651,99 @@ function grafico(dados) {
     config,
   );
 }
+
+function dataTableApes(msg) {
+  let tabledataApes = msg;
+  tableApes = new Tabulator('#tabelaApes', {
+    data: tabledataApes,
+    minHeight: '300px',
+    maxHeight: '1000px',
+    height: '900px',
+    layout: 'fitDataFill',
+    paginationInitialPage: 1,
+    downloadConfig: {
+      columnCalcs: true,
+    },
+    groupStartOpen: true,
+
+    columns: [
+      {
+        title: 'Processo',
+        field: 'processo',
+        sorter: 'number',
+        hozAlign: 'center',
+        headerFilter: 'input',
+        topCalc: countCalc,
+        editor: false,
+        download: true,
+        width: 200,
+      },
+
+      {
+        title: 'Atividade',
+        field: 'atividade',
+        sorter: 'string',
+        hozAlign: 'center',
+        headerFilter: 'input',
+        topCalc: countCalc,
+        editor: false,
+        width: 150,
+        download: true,
+      },
+      {
+        title: 'Situação de Julgamento',
+        field: 'situacao',
+        sorter: 'string',
+        headerFilter: 'input',
+        topCalc: countCalc,
+        hozAlign: 'center',
+        editor: false,
+        width: 150,
+      },
+      {
+        title: 'Horas CARF',
+        field: 'HE',
+        sorter: 'number',
+        hozAlign: 'center',
+        headerFilter: 'input',
+        topCalc: somaCalc,
+        editor: false,
+        width: 90,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Diferença',
+        field: 'diff',
+        sorter: 'number',
+        hozAlign: 'center',
+        formatter: formatDiff,
+        headerFilter: 'input',
+        topCalc: somaCalc,
+        editor: false,
+        width: 100,
+        download: true,
+      },
+      {
+        title: 'Solicitação',
+        field: 'solicitacao',
+        sorter: 'number',
+        hozAlign: 'center',
+        headerFilter: 'input',
+        editor: false,
+        width: 100,
+        download: true,
+      },
+    ],
+    autoColumns: false,
+    locale: true,
+    langs: langs,
+  });
+  tableApes.setFilter([{ field: 'apes', type: '=', value: true }]);
+}
+
+let formatDiff = function formatDiff(cell) {
+  const valor = +cell.getRow().getData().diff;
+
+  return `${valor.toFixed(2)}`;
+};

@@ -293,62 +293,62 @@ function dadosGrafico(dados) {
     .rollup((v) => {
       return {
         Jan: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-01`) {
+          if (d.mes == `01/${d.ano}`) {
             return d.horasEfetivas;
           }
         }),
         Fev: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-02`) {
+          if (d.mes == `02/${d.ano}`) {
             return d.horasEfetivas;
           }
         }),
         Mar: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-03`) {
+          if (d.mes == `03/${d.ano}`) {
             return d.horasEfetivas;
           }
         }),
         Abr: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-04`) {
+          if (d.mes == `04/${d.ano}`) {
             return d.horasEfetivas;
           }
         }),
         Mai: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-05`) {
+          if (d.mes == `05/${d.ano}`) {
             return d.horasEfetivas;
           }
         }),
         Jun: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-06`) {
+          if (d.mes == `06/${d.ano}`) {
             return d.horasEfetivas;
           }
         }),
         Jul: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-07`) {
+          if (d.mes == `07/${d.ano}`) {
             return d.horasEfetivas;
           }
         }),
         Ago: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-08`) {
+          if (d.mes == `08/${d.ano}`) {
             return d.horasEfetivas;
           }
         }),
         Set: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-09`) {
+          if (d.mes == `09/${d.ano}`) {
             return d.horasEfetivas;
           }
         }),
         Out: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-10`) {
+          if (d.mes == `10/${d.ano}`) {
             return d.horasEfetivas;
           }
         }),
         Nov: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-11`) {
+          if (d.mes == `11/${d.ano}`) {
             return d.horasEfetivas;
           }
         }),
         Dez: d3.sum(v, (d) => {
-          if (d.mes == `${new Date().getFullYear()}-12`) {
+          if (d.mes == `12/${d.ano}`) {
             return d.horasEfetivas;
           }
         }),
@@ -517,7 +517,7 @@ function graficoReinpInd(msg) {
       },
     },
     margin: {
-      l: 200,
+      l: 75,
       r: 30,
       b: 50,
       t: 100,

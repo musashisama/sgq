@@ -422,7 +422,7 @@ var layoutTrimestre = {
     },
   },
   margin: {
-    l: 200,
+    l: 75,
     r: 30,
     b: 50,
     t: 100,

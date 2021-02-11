@@ -1,5 +1,8 @@
 let colegiados = new Set();
+let grupoApes, ativRegap;
+AtivApes = false;
 let tableMinMax = '';
+let tableApes = '';
 inicializaComponentes();
 initialSort = [{ column: 'nome', dir: 'asc' }];
 function inicializaComponentes() {
@@ -15,7 +18,18 @@ function initTabs() {
   $('.tabs').tabs();
 }
 
+function returnApes(data) {
+  return data.apes == true;
+}
+
 function elementosTabela() {
+  $(`#apes749Check`).change(() => {
+    if ($(`#apes749Check`).prop('checked')) {
+      table.addFilter(returnApes);
+    } else {
+      table.removeFilter(returnApes);
+    }
+  });
   $('.Atividade').change(() => {
     table.setFilter('Atividade', '=', $('select option:selected').val());
     if ($('select option:selected').val() == 'Todas') {
@@ -28,13 +42,51 @@ function elementosTabela() {
     .getElementById('mostraColunasTurma')
     .addEventListener('click', function () {
       if (agrupadoT == false) {
-        table.setGroupBy(['Equipe_Atual']);
+        table.setGroupBy(['equipe']);
         agrupadoT = true;
       } else {
         table.setGroupBy();
         agrupadoT = false;
       }
     });
+  document
+    .getElementById('mostraColunasAtividade')
+    .addEventListener('click', function () {
+      if (ativRegap == false) {
+        table.setGroupBy(['atividade']);
+        ativRegap = true;
+      } else {
+        table.setGroupBy();
+        ativRegap = false;
+      }
+    });
+  document
+    .getElementById('mostraColunasAtividadeApes')
+    .addEventListener('click', function () {
+      if (AtivApes == false) {
+        tableApes.setGroupBy(['atividade']);
+        AtivApes = true;
+      } else {
+        tableApes.setGroupBy();
+        AtivApes = false;
+      }
+    });
+  document
+    .getElementById('mostraColunasTurmaApes')
+    .addEventListener('click', function () {
+      if (grupoApes == false) {
+        tableApes.setGroupBy(['equipe']);
+        grupoApes = true;
+      } else {
+        tableApes.setGroupBy();
+        grupoApes = false;
+      }
+    });
+  $('#xlsxDownApes').click(() => {
+    tableApes.download('xlsx', `${$('#gerApes749').text()}.xlsx`, {
+      sheetName: 'Relatório',
+    });
+  });
   $('#consultaRegap').click((e) => {
     selectRelatorios();
   });
@@ -118,10 +170,14 @@ function selectRelatorios() {
             ultEquipe: r.ultEquipe,
             ret_Sepoj: r.ultEquipe,
             juntada: r.juntada,
+            apes: r.apes,
+            apesHE: r.apesHE,
+            diff: +r.apesHE - +r.HE,
           });
         });
       });
       dataTable(dados);
+      dataTableApes(dados);
       initElementos();
       $('.progressRegap').toggle();
       montaGraficos(msg);
@@ -224,6 +280,7 @@ function dataTable(msg) {
         title: 'Atividade',
         field: 'atividade',
         sorter: 'string',
+        headerFilter: 'input',
         hozAlign: 'center',
         topCalc: countCalc,
         editor: false,
@@ -392,6 +449,115 @@ function dataTable(msg) {
     langs: langs,
   });
 }
+
+function dataTableApes(msg) {
+  let tabledataApes = msg;
+  tableApes = new Tabulator('#tabelaApes', {
+    data: tabledataApes,
+    minHeight: '300px',
+    maxHeight: '1000px',
+    height: '900px',
+    layout: 'fitDataFill',
+    paginationInitialPage: 1,
+    downloadConfig: {
+      columnCalcs: true,
+    },
+    groupStartOpen: true,
+
+    columns: [
+      {
+        title: 'Responsável',
+        field: 'nome',
+        sorter: 'string',
+        width: 200,
+        hozAlign: 'left',
+        headerFilter: 'input',
+        topCalc: countCalc,
+        editor: false,
+
+        download: true,
+      },
+      {
+        title: 'Processo',
+        field: 'processo',
+        sorter: 'number',
+        hozAlign: 'center',
+        headerFilter: 'input',
+        topCalc: countCalc,
+        editor: false,
+        download: true,
+        width: 200,
+      },
+      {
+        title: 'Equipe Atual',
+        field: 'equipe',
+        width: 200,
+        sorter: 'string',
+        hozAlign: 'left',
+        headerFilter: 'input',
+        topCalc: countCalc,
+        width: 200,
+        download: true,
+      },
+
+      {
+        title: 'Atividade',
+        field: 'atividade',
+        sorter: 'string',
+        hozAlign: 'center',
+        headerFilter: 'input',
+        topCalc: countCalc,
+        editor: false,
+        width: 150,
+        download: true,
+      },
+      {
+        title: 'Situação de Julgamento',
+        field: 'situacao',
+        sorter: 'string',
+        headerFilter: 'input',
+        topCalc: countCalc,
+        hozAlign: 'center',
+        editor: false,
+        width: 150,
+      },
+      {
+        title: 'Horas CARF',
+        field: 'HE',
+        sorter: 'number',
+        hozAlign: 'center',
+        headerFilter: 'input',
+        topCalc: somaCalc,
+        editor: false,
+        width: 90,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Diferença',
+        field: 'diff',
+        sorter: 'number',
+        hozAlign: 'center',
+        formatter: formatDiff,
+        headerFilter: 'input',
+        topCalc: somaCalc,
+        editor: false,
+        width: 100,
+        download: true,
+      },
+    ],
+    autoColumns: false,
+    locale: true,
+    langs: langs,
+  });
+  tableApes.setFilter([{ field: 'apes', type: '=', value: true }]);
+}
+
+let formatDiff = function formatDiff(cell) {
+  const valor = +cell.getRow().getData().diff;
+
+  return `${valor.toFixed(2)}`;
+};
 
 function preparaDadosGrafico(dados, min = 0, max = 1000000000000) {
   let dadosGrafico = [];

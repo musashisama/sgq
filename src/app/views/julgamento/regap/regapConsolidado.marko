@@ -16,6 +16,9 @@
             <li class="tab col s3">
               <a href="#stats">Estatísticas</a>
             </li>
+            <li class="tab col s3">
+              <a href="#apes749">Apuração Especial nº 749</a>
+            </li>
           </ul>
         </div>
         <div id="processos" class="col s12">
@@ -55,6 +58,12 @@
               <label>Selecione a atividade para filtrar:</label>
             </div>
             <div class="row">
+              <div class="form-group input-field  col s2">
+                <label>
+                  <input name="apes749Check" id="apes749Check" type="checkbox"/>
+                  <span>Somente APES749</span>
+                </label>
+              </div>
               <div class="form-group input-field  col s2">
                 <label>
                   <input name="repetitivosCheck" id="repetitivosCheck" type="checkbox"/>
@@ -134,6 +143,27 @@
           <p>
             <div style="width:100%;auto;" id="barrasAtividade"/>
           </p>
+        </div>
+        <div id="apes749" class="col s12">
+          <h4 id="gerApes749" class="center">Gerencial Apuração Especial 749</h4>
+          <div class="row">
+            <div class="row">
+              <div class="col s12 right-align">
+                <a href="#!" id="mostraColunasAtividadeApes" title="Agrupar/Desagrupar por Atividade" class="waves-effect waves-green hoverable z-depth-3 btn-floating blue">
+                  <i class="material-icons">unfold_less</i>
+                </a>
+                <a href="#!" id="mostraColunasTurmaApes" title="Agrupar/Desagrupar por Colegiado" class="waves-effect waves-yellow hoverable z-depth-3 btn-floating orange">
+                  <i class="material-icons">unfold_more</i>
+                </a>
+                <a href="#!" id="xlsxDownApes" title="Download da Tabela" class="waves-effect waves-yellow hoverable z-depth-3 btn-floating red">
+                  <i class="material-icons">file_download</i>
+                </a>
+              </div>
+            </div>
+            <p>
+              <div id="tabelaApes"/>
+            </p>
+          </div>
         </div>
       </div>
     </main>

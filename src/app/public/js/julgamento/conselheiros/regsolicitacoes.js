@@ -93,7 +93,6 @@ function montaModal(html, dados) {
     $('.pModal').text('');
     $('.hModal').text('');
     dados.html = html;
-    console.log(dados.setor);
     handleSOL(dados, 'POST', dados.setor);
     $('#btn-enviar').removeClass('modal-trigger');
   });
@@ -366,6 +365,27 @@ function elementosDispensa() {
       $('#horasDev').val('');
     }
   });
+
+  $('#btnProcApes').click(() => {
+    if (!$('#numProcApes').val() || !$('#horasApes').val()) {
+      var toastHTML = `<span>Todos os campos devem ser preenchidos.</span>`;
+      M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+    } else {
+      montaLiDisp(
+        `<strong>Tipo:</strong> Apuração Especial nº 749, <strong>Número da Solicitação:</strong> ${$(
+          '#numSol',
+        ).val()},<strong>Número do Processo:</strong> ${$(
+          '#numProcApes',
+        ).val()}, <strong>Saldo de Horas:</strong> ${+$('#horasApes').val()}`,
+        moment().unix(),
+        +$('#horasApes').val(),
+        'G1',
+      );
+      $('#numSol').val('');
+      $('#numProcApes').val('');
+      $('#horasApes').val('');
+    }
+  });
 }
 
 function montaLiPart(solicitacao, id, valor) {
@@ -462,6 +482,21 @@ function montaLiDisp(solicitacao, id, valor, grupo) {
 function pegaDisp() {
   let disp = [];
   $('.collection-disp')
+    .get()
+    .forEach((c) => {
+      disp.push(
+        '<br />' +
+          $(c)
+            .text()
+            .replace(/(\r\n|\n|\r)/gm, ''),
+      );
+    });
+  return disp;
+}
+
+function pegaAPES() {
+  let disp = [];
+  $('.collection-apes')
     .get()
     .forEach((c) => {
       disp.push(
@@ -1019,6 +1054,65 @@ function controleForm() {
 </div>
 <div class='row'>
 <div id="mostraProcessos" class="col s3">
+<ul class="collection ulProcessos"/>
+</div>
+</div>`;
+  let processosRape = `
+<div class='row'>
+<div class ='col s4 numSol input-field'>
+<i class=" fas fa-calendar-day prefix"/>
+<input id="numSol" placeholder="Número (ID) da Solicitação de Verificação" name="numSol" type="text" class="validate">
+<label for="numSol">Número (ID) da Solicitação de Verificação:</label>
+</div>
+<div class ='col s3 numProc input-field'>
+<i class=" fas fa-calendar-day prefix"/>
+<input id="numProc" placeholder="Nº do Processo. Somente números" name="numProc" type="text" class="validate">
+<label for="numProc">Número do Processo:</label>
+</div>
+<div class ='col s2 saldoHE input-field'>
+<i class=" fas fa-calendar-day prefix"/>
+<input id="saldoHE" placeholder="Saldo de Horas" name="saldoHE" type="text" class="validate">
+<label for="saldoHE">Saldo de Horas:</label>
+</div>
+<div><a id="btnProc" class="btn-floating btn-small green waves-effect waves-light hoverable z-depth-3" title="Adicionar processo">
+<i class="material-icons">add</i>
+</a>
+</div>
+</div>
+<div class='row'>
+<div id="mostraProcessos" class="col s12">
+<ul class="collection ulProcessos"/>
+</div>
+</div>`;
+  let processosDMH = `
+<div class='row'>
+<div class ='col s3 numProc input-field'>
+<i class=" fas fa-calendar-day prefix"/>
+<input id="numProc" placeholder="Nº do Processo. Somente números" name="numProc" type="text" class="validate">
+<label for="numProc">Número do Processo:</label>
+</div>
+<div class ='col s2 heRegap input-field'>
+<i class=" fas fa-calendar-day prefix"/>
+<input id="heRegap" placeholder="HE REGAP Atual" name="heRegap" type="text" class="validate">
+<label for="heRegap">HE REGAP Atual:</label>
+</div>
+<div class='col s3'>
+                <i class="far fa-question-circle prefix"/>
+                <label for="tipoProc">Selecione o tipo:</label>
+                <select required name="tipoProc" id="tipoProc">
+                <option class="form-group" value="RORV">Recurso de Ofício/Voluntário</option>
+                <option class="form-group" value="RESP">Recurso Especial</option>
+                <option class="form-group" value="SEMB">Embargo recebido em sorteio</option>
+                <option class="form-group" value="RD">Retorno de Diligência - Próprio Conselheiro</option>
+                </select>
+                </div>
+<div><a id="btnProc" class="btn-floating btn-small green waves-effect waves-light hoverable z-depth-3" title="Adicionar processo">
+<i class="material-icons">add</i>
+</a>
+</div>
+</div>
+<div class='row'>
+<div id="mostraProcessos" class="col s12">
 <ul class="collection ulProcessos"/>
 </div>
 </div>`;
@@ -1900,7 +1994,6 @@ function controleForm() {
     });
   });
   //1º sorteio com prazo inferior a 21 dias da indicação
-  //ARRUMAR CONTAGEM
   $('#s21').click(() => {
     resetElementos();
     $('#camposSol').fadeIn('slow', () => {
@@ -1967,6 +2060,75 @@ function controleForm() {
       });
     });
   });
+  $('#rape').click(() => {
+    resetElementos();
+    $('#camposSol').fadeIn('slow', () => {
+      $('#camposSol').append(`
+      <h5>${$('#rape').text()}</h5><br/>
+      ${processosRape}
+      ${campoObs}
+      <blockquote>
+              <strong>Importante:</strong>
+             Deverá ser informado o saldo de horas definido na solicitção de verificação. Ex: Se um processo tinha no REGAP 12 horas e na solicitação de verificação foi constatado que a atribuição correta é de 15 horas, o saldo é de 3 horas e esse é o valor a ser informado no campo «Saldo de Horas»
+              </blockquote>
+      ${botoes}
+      `);
+      initElementos();
+      $('#btnProc').click(() => {
+        if (
+          !$('#numProc').val() ||
+          $('#numProc').val().includes('/') ||
+          $('#numProc').val().includes('.') ||
+          $('#numProc').val().includes('-') ||
+          $('#numProc').val().includes('\\')
+        ) {
+          var toastHTML = `<span>Somente números!</span>`;
+          M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+        } else {
+          let string = `<strong>Número da Solicitação:</strong> ${$(
+            '#numSol',
+          ).val()}, <strong>Número do Processo:</strong> ${$(
+            '#numProc',
+          ).val()}, <strong>Saldo de Horas:</strong> ${$('#saldoHE').val()}`;
+          montaLiAPES($('#numProc').val(), string);
+          $('#numSol').val('');
+          $('#numProc').val('');
+          $('#saldoHE').val('');
+        }
+      });
+      $('#btn-enviar').click((e) => {
+        if (!$('#dtJulgamento').val() || !$('.ulProcessos').children().text()) {
+          var toastHTML = `<span>Os campos Data do Julgamento e Número do(s) Processo(s) precisam estar preenchidos.</span>`;
+          M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+        } else if (
+          moment($('#dtJulgamento').val(), 'DD/MM/YYYY').isAfter(moment())
+        ) {
+          var toastHTML = `<span>Somente podem ser cadastrados eventos já ocorridos e finalizados.</span>`;
+          M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+        } else {
+          let html = `
+          <div class='row'>
+          <h5>REINP: ${$('#rape').text()}</h5>
+          <p><strong>Processo(s):</strong> ${pegaProcs()}</p>
+          <p><strong>Observações:</strong> ${$('#observacoes').val()}</p>
+          `;
+          let dados = {
+            uniqueId: moment().unix(),
+            tipo: `REGAP: ${$('#rape').text()}`,
+            setor: 'DIPAJ',
+            dados: {
+              processos: pegaProcs(),
+              observacoes: $('#observacoes').val(),
+            },
+          };
+          initModal();
+          $('#btn-enviar').addClass('modal-trigger');
+          montaModal(html, dados);
+        }
+      });
+    });
+  });
+
   //Dispensa de Sorteio
   //Excesso de Horas em Lotes de Sorteio - Nome do lote - Mes e Tamanho
   //Formalização de Voto Vencedor - Número do Processo - Número do Acórdão - HE (Se DtSessao for depois de set/2019 e antes de set/2020 - HE = 3,0. Se DtSessao for depois de set/2020 - 30% >2 e <8) - Data da Sessão
@@ -1978,9 +2140,7 @@ function controleForm() {
     $('#camposSol').fadeIn('slow', () => {
       $('#camposSol').append(`
       <h5>${$('#dds').text()}</h5><br/>
-
       <ul id="classesDisp" class="collapsible popout col s6 m12">
-
             <li>
               <div class="collapsible-header">
                 <i class="fas fa-hockey-puck"/>Excesso de Horas em Lotes de Sorteio
@@ -2014,7 +2174,7 @@ function controleForm() {
              </div>
             </li>
 
-<li>
+            <li>
               <div class="collapsible-header">
                 <i class="fas fa-undo-alt"/>Processos Devolvidos por Impedimento, Suspeição ou por Impossibilidade de Julgamento (Sem Retorno)
               </div>
@@ -2227,6 +2387,42 @@ function controleForm() {
                </div>
             </li>
 
+            <li>
+              <div class="collapsible-header">
+                <i class="fas fa-clipboard-list"/>Apuração Especial nº 749
+              </div>
+              <div class="collapsible-body">
+                <div class='row'>
+                <div class ='col s4 numSol input-field'>
+              <i class=" fas fa-calendar-day prefix"/>
+              <input id="numSol" placeholder="Número (ID) da Solicitação de Verificação" name="numSol" type="text" class="validate">
+              <label for="numSol">Número (ID) da Solicitação de Verificação:</label>
+              </div>
+              <div class ='col s3 numProcApes input-field'>
+              <i class=" fas fa-calendar-day prefix"/>
+              <input id="numProcApes" placeholder="Nº do Processo. Somente números" name="numProcApes" type="text" class="validate" />
+              <label for="numProcApes">Número do Processo:</label>
+              </div>
+
+               <div class ='col s2 horasApes input-field'>
+              <i class="far fa-hourglass prefix"/>
+              <input id="horasApes" name="horasApes" type="text" class="validate"/>
+              <label for="horasApes">Saldo de Horas:</strong></label>
+              </div>
+              <div><a id="btnProcApes" class="btn-floating btn-small green waves-effect waves-light hoverable z-depth-3" title="Adicionar Processo">
+              <i class="material-icons">add</i>
+              </a>
+              </div>
+
+              </div>
+              <blockquote>
+              <strong>Importante:</strong>
+             Deverá ser informado o saldo de horas definido na solicitção de verificação. Ex: Se um processo tinha no REGAP 12 horas e na solicitação de verificação foi constatado que a atribuição correta é de 15 horas, o saldo é de 3 horas e esse é o valor a ser informado no campo «Saldo de Horas»
+              </blockquote>
+               </div>
+
+            </li>
+
             </ul>
             </div>
             <div id='areaDispensa'>
@@ -2305,6 +2501,63 @@ function controleForm() {
     });
   });
   //Outras solicitações
+  //RAPURAÇÃO ESPECIAL 749
+  $('#dmh').click(() => {
+    resetElementos();
+    $('#camposSol').fadeIn('slow', () => {
+      $('#camposSol').append(`
+      <h5>${$('#dmh').text()}</h5><br/>
+      ${processosDMH}
+      ${campoObs}
+      ${botoes}
+      `);
+      initElementos();
+      $('#btnProc').click(() => {
+        if (
+          !$('#numProc').val() ||
+          $('#numProc').val().includes('/') ||
+          $('#numProc').val().includes('.') ||
+          $('#numProc').val().includes('-') ||
+          $('#numProc').val().includes('\\')
+        ) {
+          var toastHTML = `<span>O campo «Número de Processo» deve estar preenchido somente com números!</span>`;
+          M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+        } else {
+          let string = `<strong>HE REGAP Atual:</strong> ${$(
+            '#heRegap',
+          ).val()}, <strong>Tipo:</strong> ${$(
+            '#tipoProc option:selected',
+          ).text()}`;
+          montaLiAPES($('#numProc').val(), string);
+          $('#numProc').val('');
+          $('#heRegap').val('');
+        }
+      });
+      $('#btn-enviar').click((e) => {
+        let html = `
+          <div class='row'>
+          <h5>${$('#dmh').text()}</h5>
+          <p><strong>Processo(s):</strong> ${pegaAPES()}</p>
+          <p><strong>Observações:</strong> ${$('#observacoes').val()}</p>
+          `;
+        let dados = {
+          uniqueId: moment().unix(),
+          tipo: `${$('#dmh').text()}`,
+          setor: 'DIPAJ',
+          dados: {
+            processos: pegaAPES(),
+            heRegap: $('#heRegap').val(),
+            heOriginal: $('#heOriginal').val(),
+            tipo: $('#tipoProc option:selected').val(),
+            observacoes: $('#observacoes').val(),
+          },
+        };
+        initModal();
+        $('#btn-enviar').addClass('modal-trigger');
+        montaModal(html, dados);
+      });
+    });
+  });
   //Justificar faltas à sessões de julgamento - arrayFalta - período do afastamento
   $('#fsj').click(() => {
     resetElementos();
@@ -2502,6 +2755,19 @@ function montaLi(result) {
             </li>`);
   $('.aClick').click((e) => {
     handleFile({ _id: result._id }, 'DELETE');
+  });
+}
+
+function montaLiAPES(processo, dados) {
+  $('.ulProcessos').append(`
+            <li class="collection-item collection-apes" data-id='${processo}' id='${processo}'>
+            <div>${processo}, ${dados}<a href="#!" class="removeProc${processo} secondary-content">
+            <i class="red-text	far fa-trash-alt"/>
+            </a>
+            </div>
+            </li>`);
+  $(`.removeProc${processo}`).click((e) => {
+    $(`#${processo}`).remove();
   });
 }
 

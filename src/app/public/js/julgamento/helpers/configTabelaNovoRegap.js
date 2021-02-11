@@ -298,6 +298,14 @@ function coloreProc(cell, formatterParams, valor) {
       cell.getElement().style.backgroundColor = estilo.backgroundColor;
     }
   }
+  //APES749
+  if (cell.getRow().getData().apes == true) {
+    let elem = document.querySelector('.LegAPES749');
+    let estilo = getComputedStyle(elem);
+    cell.getRow().getCell('HE').getElement().style.color = estilo.color;
+    cell.getRow().getCell('HE').getElement().style.backgroundColor =
+      estilo.backgroundColor;
+  }
   return value;
 }
 
