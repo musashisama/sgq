@@ -1,6 +1,8 @@
 const fs = require('fs');
 const moment = require('moment');
 const d3 = require('d3');
+const conn = require('../../../config/mongodb').dados;
+const JulgamentoDao = require('../../infra/julgamento-dao');
 
 let semanaAzul = [
   '2ª TURMA-CSRF-CARF-MF-DF',
@@ -71,65 +73,92 @@ class regapHandler {
       let parcial = [];
       let regap = [];
       let entrada = d3.csvParse(relatorio);
-      regapHandler.HorasCARF(entrada).then((horasAjustadas) => {
-        regapHandler.renomeiaColunas(horasAjustadas).then((parcial) => {
-          parcial.forEach((p) => {
-            cons.forEach((c) => {
-              if (p.cpf == c.cpf) {
-                if (
-                  regapHandler.semanaCores(p.Equipe_Atual) === 'Verde' ||
-                  regapHandler.semanaCores(p.Equipe_Atual) === 'Amarela' ||
-                  regapHandler.semanaCores(p.Equipe_Atual) === 'Azul'
-                ) {
-                  cpfs.add(p.cpf);
-                }
-              }
-            });
-          });
-          cpfs.forEach((c) => {
-            regap.push({ conselheiro: { cpf: c } });
-          });
-          regap.forEach((r) => {
-            r.relatorio = [];
-            r.dtRel = dataRel;
+      const julgamentoDao = new JulgamentoDao(conn);
+      julgamentoDao.getAPES().then((apes) => {
+        regapHandler.HorasCARF(entrada).then((horasAjustadas) => {
+          regapHandler.renomeiaColunas(horasAjustadas).then((parcial) => {
             parcial.forEach((p) => {
-              if (r.conselheiro.cpf == p.cpf) {
-                r.conselheiro.nome = p.Nome;
-                r.conselheiro.equipe = p.Equipe_Atual;
-                r.conselheiro.semana = regapHandler.semanaCores(p.Equipe_Atual);
-                r.relatorio.push({
-                  dtRel: dataRel,
-                  processo: p.Processo,
-                  contribuinte: p.Contribuinte,
-                  situacao: p.Situacao,
-                  atividade: p.Atividade,
-                  HE: +p.HE_CARF,
-                  valor: +p.Valor,
-                  obs: p.Observacoes,
-                  apenso: p.Ind_Apenso,
-                  entradaAtividade: p.Entrada_na_Atividade,
-                  questionamento: p.Questionamento_CARF,
-                  ultEquipe: p.Equipe_Ultima,
-                  relator: p.Relator,
-                  numReso: p.Resolucao,
-                  numAco: p.Acordao,
-                  ultAtividade: p.AtividadeUltima,
-                  red: [p.Redator1, p.Redator2, p.Redator3],
-                  alegacoes: p.Alegacoes_CARF,
-                  dtSessao: p.Data_da_Sessao_Julgamento,
-                  dtUltDist: p.Data_ultima_distribuicao,
-                  valorOrig: +p.Valor_Originario,
-                  assunto: p.Assunto,
-                  prioridade: p.Prioridade,
-                  motPrior: p.Motivo_Prioridade,
-                  juntada: p.Ind_Juntada,
-                });
-              }
+              cons.forEach((c) => {
+                if (p.cpf == c.cpf) {
+                  if (
+                    regapHandler.semanaCores(p.Equipe_Atual) === 'Verde' ||
+                    regapHandler.semanaCores(p.Equipe_Atual) === 'Amarela' ||
+                    regapHandler.semanaCores(p.Equipe_Atual) === 'Azul'
+                  ) {
+                    cpfs.add(p.cpf);
+                  }
+                }
+              });
             });
+            cpfs.forEach((c) => {
+              regap.push({ conselheiro: { cpf: c } });
+            });
+            regap.forEach((r) => {
+              r.relatorio = [];
+              r.dtRel = dataRel;
+              parcial.forEach((p) => {
+                if (r.conselheiro.cpf == p.cpf) {
+                  r.conselheiro.nome = p.Nome;
+                  r.conselheiro.equipe = p.Equipe_Atual;
+                  r.conselheiro.semana = regapHandler.semanaCores(
+                    p.Equipe_Atual,
+                  );
+                  r.relatorio.push({
+                    dtRel: dataRel,
+                    processo: p.Processo,
+                    contribuinte: p.Contribuinte,
+                    situacao: p.Situacao,
+                    atividade: p.Atividade,
+                    HE: +p.HE_CARF,
+                    valor: +p.Valor,
+                    obs: p.Observacoes,
+                    apenso: p.Ind_Apenso,
+                    entradaAtividade: p.Entrada_na_Atividade,
+                    questionamento: p.Questionamento_CARF,
+                    ultEquipe: p.Equipe_Ultima,
+                    relator: p.Relator,
+                    numReso: p.Resolucao,
+                    numAco: p.Acordao,
+                    ultAtividade: p.AtividadeUltima,
+                    red: [p.Redator1, p.Redator2, p.Redator3],
+                    alegacoes: p.Alegacoes_CARF,
+                    dtSessao: p.Data_da_Sessao_Julgamento,
+                    dtUltDist: p.Data_ultima_distribuicao,
+                    valorOrig: +p.Valor_Originario,
+                    assunto: p.Assunto,
+                    prioridade: p.Prioridade,
+                    motPrior: p.Motivo_Prioridade,
+                    juntada: p.Ind_Juntada,
+                    apes: false,
+                    apesHE: 0,
+                  });
+                }
+              });
+            });
+            regap.forEach((r) => {
+              r.relatorio.forEach((elem) => {
+                apes.forEach((apesp) => {
+                  if (apesp.Processo == elem.processo) {
+                    elem.apes = true;
+                    elem.apesHE = +apesp.HE_EPROC;
+                  }
+                });
+              });
+            });
+
+            return resolve(regap);
           });
-          return resolve(regap);
         });
       });
+    });
+  }
+
+  static verificaAPES(apes, processo) {
+    apes.forEach((a) => {
+      if (a.Processo == processo) {
+        console.log(processo);
+        return '749';
+      } else return 'na';
     });
   }
 

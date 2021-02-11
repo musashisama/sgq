@@ -1,4 +1,4 @@
-function getRelatorios(tipo) {
+function getRelatorios(tipo, callback) {
   $.ajax({
     url: `/julgamento/restrito/reinp/`,
     type: 'POST',
@@ -19,6 +19,7 @@ function getRelatorios(tipo) {
               </div>
             </div>
        `);
+        callback(m);
         $(`#reinp${m}`).click((e) => {
           e.preventDefault();
           tipo ? selectRelatorios(m, tipo) : selectRelatorios(m);
@@ -29,6 +30,10 @@ function getRelatorios(tipo) {
       var toastHTML = `<span>Ocorreu um erro.</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
     });
+}
+
+function testeCallback(valor) {
+  console.log('Chamou callbak: ' + valor);
 }
 
 function selectRelatorios(ano, tipo) {

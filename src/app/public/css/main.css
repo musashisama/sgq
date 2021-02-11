@@ -588,6 +588,11 @@ summary::-webkit-details-marker {
   color: var(--cultured);
 }
 
+.LegAPES749 {
+  background-color: var(--rich-black-fogra-39);
+  color: var(--cultured);
+}
+
 #solModal .modal {
   width: 100%;
   height: 100%;

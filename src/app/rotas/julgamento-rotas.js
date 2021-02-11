@@ -52,6 +52,11 @@ module.exports = (app) => {
     }
   });
 
+  app
+    .route(rotasJulgamento.apes749)
+    .get(julgControlador.apes749())
+    .post(julgControlador.apes749());
+
   app.get(rotasJulgamento.regap, julgControlador.carregaPaginaRegap());
   app.get(rotasJulgamento.detalharegap, julgControlador.carregaPaginaRegap());
   app.get(

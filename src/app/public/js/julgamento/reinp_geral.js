@@ -11,7 +11,7 @@ initialSort = [{ column: 'nome', dir: 'asc' }];
 function inicializaComponentes() {
   $(document).ready(function () {
     initSelect();
-    getRelatorios();
+    getRelatorios('', testeCallback);
     initTabs();
   });
 }

@@ -103,6 +103,26 @@ class JulgamentoControlador {
       listaregapindividual: '/julgamento/conselheiros/listaregap',
       regapcons: '/julgamento/conselheiros/:id',
       indicapauta: '/julgamento/conselheiros/indicacao-pauta',
+      //APURAÇÕES ESPECIAIS
+      apes749: '/julgamento/apes749/',
+    };
+  }
+
+  apes749() {
+    return function (req, resp) {
+      // const julgamentoDao = new JulgamentoDao(conn);
+      // julgamentoDao.getAPES().then((apes) => {
+      //   console.log(apes);
+      //   resp.json(apes);
+      // });
+      console.log(req.body.apes);
+      if (req.body.apes == 'apes749') {
+        const julgamentoDao = new JulgamentoDao(conn);
+        julgamentoDao.getAPES().then((apes) => {
+          console.log(apes);
+          resp.json(apes);
+        });
+      }
     };
   }
 
@@ -739,7 +759,6 @@ class JulgamentoControlador {
     return function (req, resp) {
       if (req.method === 'GET') {
         let params = req.params.id.split('&');
-        console.log(params);
         let projecao = { relatorio: 1, _id: 0 };
         let sort = { 'relatorio.processo': 1 };
         let filtro = {
@@ -1247,8 +1266,8 @@ class JulgamentoControlador {
           if (req.body.tipo == 'conselheiro') {
             filtro = {
               $and: [
-                { 'conselheiro.cpf': req.user.cpf },
                 { 'detalhamento.ano': req.body.ano },
+                { 'conselheiro.cpf': req.user.cpf },
               ],
             };
           } else {
