@@ -1059,11 +1059,6 @@ function controleForm() {
 </div>`;
   let processosRape = `
 <div class='row'>
-<div class ='col s4 numSol input-field'>
-<i class=" fas fa-calendar-day prefix"/>
-<input id="numSol" placeholder="Número (ID) da Solicitação de Verificação" name="numSol" type="text" class="validate">
-<label for="numSol">Número (ID) da Solicitação de Verificação:</label>
-</div>
 <div class ='col s3 numProc input-field'>
 <i class=" fas fa-calendar-day prefix"/>
 <input id="numProc" placeholder="Nº do Processo. Somente números" name="numProc" type="text" class="validate">

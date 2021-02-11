@@ -678,6 +678,18 @@ function dataTableApes(msg) {
         download: true,
         width: 200,
       },
+      {
+        title: 'Contribuinte',
+        field: 'contribuinte',
+        formatter: coloreProc,
+        headerFilter: 'input',
+        sorter: 'string',
+        hozAlign: 'center',
+        width: 150,
+        editor: false,
+        responsive: 0,
+        download: true,
+      },
 
       {
         title: 'Atividade',
