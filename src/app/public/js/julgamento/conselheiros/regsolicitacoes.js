@@ -1019,7 +1019,7 @@ function controleForm() {
   <div class="file-field left ctoastsucesso input-field form-group col s6">
   <div class="btn">
   <span>Arquivo</span>
-  <input type="file" name="filetoupload" id='file' accept=".pdf" onchange="" required/>
+  <input type="file" name="filetoupload" id='file' accept=".pdf" onchange="handleFile(this.files[0], 'POST')" required/>
   </div>
   <div class="file-path-wrapper">
   <input class="file-path validate" type="text"/>
@@ -1027,10 +1027,6 @@ function controleForm() {
   <div class="hidden progress">
   <div class="determinate"/>
   </div>
-  </div>
-  <div><a id="btnEnviaArq" class="btn-floating btn-small green waves-effect waves-light hoverable z-depth-3" title="Enviar arquivo">
-  <i class="material-icons">add</i>
-  </a>
   </div>
   </div>
   <div class="row valign-wrapper">
@@ -2098,7 +2094,7 @@ function controleForm() {
           let html = `
           <div class='row'>
           <h5>REINP: ${$('#rape').text()}</h5>
-          <p><strong>Processo(s):</strong> ${pegaProcs()}</p>
+          <p><strong>Processo(s):</strong> ${pegaAPES()}</p>
           <p><strong>Observações:</strong> ${$('#observacoes').val()}</p>
           `;
           let dados = {
@@ -2106,7 +2102,7 @@ function controleForm() {
             tipo: `REINP: ${$('#rape').text()}`,
             setor: 'DIPAJ',
             dados: {
-              processos: pegaProcs(),
+              processos: pegaAPES(),
               observacoes: $('#observacoes').val(),
             },
           };
@@ -2699,17 +2695,6 @@ function pegaArquivos(html) {
   }
   return a;
 }
-function btnEnviaArq() {
-  $('#btnEnviaArq').off();
-  $('#btnEnviaArq').click((e) => {
-    e.preventDefault();
-    if ($('#file')[0].files[0]) {
-      $('#btnEnviaArq').toggle();
-      var arq = $('#file')[0].files[0];
-      handleFile(arq, 'POST');
-    }
-  });
-}
 function handleSOL(registro, metodo, setor) {
   registro.setor = setor;
   registro.cpf = JSON.parse($('#dataUser').attr('data-user')).cpf;
@@ -2796,7 +2781,21 @@ function pegaProcs(html) {
   return procs;
 }
 
+function btnEnviaArq() {
+  $('#btnEnviaArq').off();
+  $('#btnEnviaArq').click((e) => {
+    e.preventDefault();
+    if ($('#file')[0].files[0]) {
+      $('#btnEnviaArq').toggle();
+      var arq = $('#file')[0].files[0];
+      handleFile(arq, 'POST');
+    }
+  });
+}
+
 function handleFile(arquivo, metodo) {
+  console.log(arquivo);
+  console.log($('#file')[0].files[0]);
   let fd;
   if (metodo == 'DELETE') {
     fd = arquivo;
