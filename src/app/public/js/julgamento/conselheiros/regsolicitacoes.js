@@ -2098,7 +2098,7 @@ function controleForm() {
           let html = `
           <div class='row'>
           <h5>REINP: ${$('#rape').text()}</h5>
-          <p><strong>Processo(s):</strong> ${pegaProcs()}</p>
+          <p><strong>Processo(s):</strong> ${pegaAPES()}</p>
           <p><strong>Observações:</strong> ${$('#observacoes').val()}</p>
           `;
           let dados = {
@@ -2106,7 +2106,7 @@ function controleForm() {
             tipo: `REINP: ${$('#rape').text()}`,
             setor: 'DIPAJ',
             dados: {
-              processos: pegaProcs(),
+              processos: pegaAPES(),
               observacoes: $('#observacoes').val(),
             },
           };
