@@ -2055,6 +2055,7 @@ function controleForm() {
       });
     });
   });
+  //APURAÇÃO ESPECIAL749
   $('#rape').click(() => {
     resetElementos();
     $('#camposSol').fadeIn('slow', () => {
@@ -2064,7 +2065,7 @@ function controleForm() {
       ${campoObs}
       <blockquote>
               <strong>Importante:</strong>
-             Deverá ser informado o saldo de horas definido na solicitção de verificação. Ex: Se um processo tinha no REGAP 12 horas e na solicitação de verificação foi constatado que a atribuição correta é de 15 horas, o saldo é de 3 horas e esse é o valor a ser informado no campo «Saldo de Horas»
+             Deverá ser informado o saldo de horas definido na solicitação de verificação. Ex: Se um processo tinha no REGAP 12 horas e na solicitação de verificação foi constatado que a atribuição correta é de 15 horas, o saldo é de 3 horas e esse é o valor a ser informado no campo «Saldo de Horas»
               </blockquote>
       ${botoes}
       `);
@@ -2080,9 +2081,7 @@ function controleForm() {
           var toastHTML = `<span>Somente números!</span>`;
           M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
         } else {
-          let string = `<strong>Número da Solicitação:</strong> ${$(
-            '#numSol',
-          ).val()}, <strong>Número do Processo:</strong> ${$(
+          let string = `<strong>Número do Processo:</strong> ${$(
             '#numProc',
           ).val()}, <strong>Saldo de Horas:</strong> ${$('#saldoHE').val()}`;
           montaLiAPES($('#numProc').val(), string);
@@ -2092,13 +2091,8 @@ function controleForm() {
         }
       });
       $('#btn-enviar').click((e) => {
-        if (!$('#dtJulgamento').val() || !$('.ulProcessos').children().text()) {
-          var toastHTML = `<span>Os campos Data do Julgamento e Número do(s) Processo(s) precisam estar preenchidos.</span>`;
-          M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
-        } else if (
-          moment($('#dtJulgamento').val(), 'DD/MM/YYYY').isAfter(moment())
-        ) {
-          var toastHTML = `<span>Somente podem ser cadastrados eventos já ocorridos e finalizados.</span>`;
+        if (!$('.ulProcessos').children().text()) {
+          var toastHTML = `<span>O campo  Número do(s) Processo(s) precisa estar preenchido.</span>`;
           M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
         } else {
           let html = `
@@ -2109,7 +2103,7 @@ function controleForm() {
           `;
           let dados = {
             uniqueId: moment().unix(),
-            tipo: `REGAP: ${$('#rape').text()}`,
+            tipo: `REINP: ${$('#rape').text()}`,
             setor: 'DIPAJ',
             dados: {
               processos: pegaProcs(),
