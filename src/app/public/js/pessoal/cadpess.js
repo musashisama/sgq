@@ -48,7 +48,8 @@ function btnSalva() {
       let mail = $('#email').val().toLowerCase();
       $('#email').val(mail);
       valores = $('#formCadPess').serializeArray();
-      console.log($('#formCadPess').serializeArray());
+      let perfis = ['carf'];
+      valores.push({ name: 'perfil', value: perfis });
       $.post(url, valores)
         .done((dados) => {
           if (dados.id == 0) {

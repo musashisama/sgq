@@ -1049,6 +1049,12 @@ function controleForm() {
 </div>
 </div>
 <div class='row'>
+<blockquote>
+  <strong>Importante:</strong>
+  Você pode adicionar mais de um processo na mesma solicitação, bastando clicar no botão verde '+' para cada processo que for objeto desta solicitação.
+  </blockquote>
+</div>
+<div class='row'>
 <div id="mostraProcessos" class="col s3">
 <ul class="collection ulProcessos"/>
 </div>
@@ -1069,6 +1075,12 @@ function controleForm() {
 <i class="material-icons">add</i>
 </a>
 </div>
+</div>
+<div class='row'>
+<blockquote>
+  <strong>Importante:</strong>
+  Você pode adicionar mais de um processo na mesma solicitação, bastando clicar no botão verde '+' para cada processo que for objeto desta solicitação.
+  </blockquote>
 </div>
 <div class='row'>
 <div id="mostraProcessos" class="col s12">
@@ -1101,6 +1113,12 @@ function controleForm() {
 <i class="material-icons">add</i>
 </a>
 </div>
+</div>
+<div class='row'>
+<blockquote>
+  <strong>Importante:</strong>
+  Você pode adicionar mais de um processo na mesma solicitação, bastando clicar no botão verde '+' para cada processo que for objeto desta solicitação.
+  </blockquote>
 </div>
 <div class='row'>
 <div id="mostraProcessos" class="col s12">
@@ -2061,7 +2079,7 @@ function controleForm() {
       ${campoObs}
       <blockquote>
               <strong>Importante:</strong>
-             Deverá ser informado o saldo de horas definido na solicitação de verificação. Ex: Se um processo tinha no REGAP 12 horas e na solicitação de verificação foi constatado que a atribuição correta é de 15 horas, o saldo é de 3 horas e esse é o valor a ser informado no campo «Saldo de Horas»
+            O campo «Saldo de Horas» deverá ser preenchido com o valor da coluna «Diferença» na tabela da aba «APURAÇÂO ESPECIAL Nº749».
               </blockquote>
       ${botoes}
       `);
@@ -2402,7 +2420,7 @@ function controleForm() {
               </div>
               <blockquote>
               <strong>Importante:</strong>
-             Deverá ser informado o saldo de horas definido na solicitção de verificação. Ex: Se um processo tinha no REGAP 12 horas e na solicitação de verificação foi constatado que a atribuição correta é de 15 horas, o saldo é de 3 horas e esse é o valor a ser informado no campo «Saldo de Horas»
+              O campo «Saldo de Horas» deverá ser preenchido com o valor da coluna «Diferença» na tabela da aba «APURAÇÂO ESPECIAL Nº749».
               </blockquote>
                </div>
 
