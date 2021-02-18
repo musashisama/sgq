@@ -181,16 +181,15 @@ function elementosDispensa() {
       var toastHTML = `<span>Todos os campos devem ser preenchidos.</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
     } else {
+      let val = parseFloat($('#horasLoteEx').val().replace(',', '.'));
       montaLiDisp(
         `<strong>Tipo:</strong> Excesso de Horas em Lotes de Sorteio, <strong>Nome do Lote:</strong> ${$(
           '#nomeLoteEx',
         ).val()}, <strong>Mês do Sorteio:</strong> ${$(
           '#mesSorteioEx',
-        ).val()}, <strong>Horas em Excesso do Lote:</strong> ${
-          +$('#horasLoteEx').val() - 126
-        }`,
+        ).val()}, <strong>Horas em Excesso do Lote:</strong> ${val - 126}`,
         moment().unix(),
-        +$('#horasLoteEx').val() - 126,
+        val - 126,
         'G1',
       );
       $('#nomeLoteEx').val('');
@@ -208,6 +207,7 @@ function elementosDispensa() {
       var toastHTML = `<span>Todos os campos devem ser preenchidos.</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
     } else {
+      let val = parseFloat($('#horasFVV').val().replace(',', '.'));
       montaLiDisp(
         `<strong>Tipo:</strong> Formalização de Voto Vencedor, </strong>Número do Processo:<strong> ${$(
           '#numProcFVV',
@@ -215,12 +215,9 @@ function elementosDispensa() {
           '#numAcoFVV',
         ).val()}, <strong>Data da Sessão:</strong> ${$(
           '#dtSessaoFVV',
-        ).val()}, HE CARF: ${+valorFVV(
-          $('#dtSessaoFVV').val(),
-          $('#horasFVV').val(),
-        )}`,
+        ).val()}, HE CARF: ${+valorFVV($('#dtSessaoFVV').val(), val)}`,
         moment().unix(),
-        +valorFVV($('#dtSessaoFVV').val(), $('#horasFVV').val()),
+        +valorFVV($('#dtSessaoFVV').val(), val),
         //$('#dtSessaoFVV').val(),
         'G2',
       );
@@ -239,16 +236,15 @@ function elementosDispensa() {
       var toastHTML = `<span>Todos os campos devem ser preenchidos.</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
     } else {
+      let val = parseFloat($('#horasLoteSE').val().replace(',', '.'));
       montaLiDisp(
         `<strong>Tipo:</strong> Horas Recebidas em Sorteio Extraordinário, <strong>Nome do Lote/nº do Processo:</strong> ${$(
           '#nomeLoteSE',
         ).val()}, <strong>Mês do Sorteio:</strong> ${$(
           '#mesSorteioSE',
-        ).val()}, <strong>Horas do Lote/Processo:</strong> ${+$(
-          '#horasLoteSE',
-        ).val()}`,
+        ).val()}, <strong>Horas do Lote/Processo:</strong> ${val}`,
         moment().unix(),
-        +$('#horasLoteSE').val(),
+        val,
         'G1',
       );
       $('#nomeLoteSE').val('');
@@ -265,14 +261,15 @@ function elementosDispensa() {
       var toastHTML = `<span>Todos os campos devem ser preenchidos.</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
     } else {
+      let val = parseFloat($('#horasRD').val().replace(',', '.'));
       montaLiDisp(
         `<strong>Tipo:</strong> Distribuição de Processos Reflexos ou Decorrentes, <strong>Número do Processo:</strong> ${$(
           '#numProcRD',
         ).val()}, <strong>Data da Distribuição:</strong> ${$(
           '#dtDistRD',
-        ).val()}, <strong>HE CARF:</strong> ${+$('#horasRD').val()}`,
+        ).val()}, <strong>HE CARF:</strong> ${val}`,
         moment().unix(),
-        +$('#horasRD').val(),
+        val,
         'G1',
       );
       $('#numProcRD').val('');
@@ -350,14 +347,15 @@ function elementosDispensa() {
       var toastHTML = `<span>Todos os campos devem ser preenchidos.</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
     } else {
+      let val = parseFloat($('#horasDev').val().replace(',', '.'));
       montaLiDisp(
         `<strong>Tipo:</strong> Processos Devolvidos Por Impedimento, Suspeição ou por Impossibilidade de Julgamento, <strong>Número do Processo:</strong> ${$(
           '#numProcDev',
         ).val()}, <strong>Data da Distribuição:</strong> ${$(
           '#dtDistDev',
-        ).val()}, <strong>HE CARF:</strong> ${+$('#horasDev').val()}`,
+        ).val()}, <strong>HE CARF:</strong> ${val}`,
         moment().unix(),
-        +-$('#horasDev').val(),
+        -val,
         'G1',
       );
       $('#numProcDev').val('');
@@ -371,14 +369,15 @@ function elementosDispensa() {
       var toastHTML = `<span>Todos os campos devem ser preenchidos.</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
     } else {
+      let val = parseFloat($('#horasApes').val().replace(',', '.'));
       montaLiDisp(
         `<strong>Tipo:</strong> Apuração Especial nº 749, <strong>Número da Solicitação:</strong> ${$(
           '#numSol',
         ).val()},<strong>Número do Processo:</strong> ${$(
           '#numProcApes',
-        ).val()}, <strong>Saldo de Horas:</strong> ${+$('#horasApes').val()}`,
+        ).val()}, <strong>Saldo de Horas:</strong> ${val}`,
         moment().unix(),
-        +$('#horasApes').val(),
+        val,
         'G1',
       );
       $('#numSol').val('');
