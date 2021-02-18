@@ -131,6 +131,7 @@ class regapHandler {
                     juntada: p.Ind_Juntada,
                     apes: false,
                     apesHE: 0,
+                    solicitacao: '',
                   });
                 }
               });
@@ -141,6 +142,7 @@ class regapHandler {
                   if (apesp.Processo == elem.processo) {
                     elem.apes = true;
                     elem.apesHE = +apesp.HE_EPROC;
+                    elem.solicitacao = apesp.solicitacao;
                   }
                 });
               });

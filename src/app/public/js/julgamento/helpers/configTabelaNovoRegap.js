@@ -229,33 +229,6 @@ let downloadValor = function (value, data, type, params, column) {
 function coloreProc(cell, formatterParams, valor) {
   let value = cell.getValue() ? cell.getValue() : valor;
 
-  if (
-    cell.getRow().getData().questionamento == 'EMBARGOS DE DECLARAÇÃO' &&
-    cell.getRow().getData().ultEquipe.includes('DIPRO') &&
-    cell.getRow().getData().ultAtividade == 'Distribuir / Sortear'
-  ) {
-    let elem = document.querySelector('.LegEmbargoSort');
-    let estilo = getComputedStyle(elem);
-    cell.getElement().style.backgroundColor = estilo.backgroundColor;
-  }
-  if (
-    cell.getRow().getData().questionamento != 'EMBARGOS DE DECLARAÇÃO' &&
-    cell.getRow().getData().ultEquipe.includes('DIPRO') &&
-    cell.getRow().getData().ultAtividade == 'Tratar Retorno de Processo'
-  ) {
-    let elem = document.querySelector('.LegRetornoDilg');
-    let estilo = getComputedStyle(elem);
-    cell.getElement().style.backgroundColor = estilo.backgroundColor;
-  }
-  if (
-    cell.getRow().getData().questionamento == 'EMBARGOS DE DECLARAÇÃO' &&
-    cell.getRow().getData().ultEquipe.includes('DIPRO') &&
-    cell.getRow().getData().ultAtividade == 'Tratar Retorno de Processo'
-  ) {
-    let elem = document.querySelector('.LegEmbargo');
-    let estilo = getComputedStyle(elem);
-    cell.getElement().style.backgroundColor = estilo.backgroundColor;
-  }
   if (cell.getRow().getData().obs.includes('PARADIGMA')) {
     let elem = document.querySelector('.LegParadigma');
     let estilo = getComputedStyle(elem);
@@ -297,6 +270,60 @@ function coloreProc(cell, formatterParams, valor) {
       cell.getElement().style.color = estilo.color;
       cell.getElement().style.backgroundColor = estilo.backgroundColor;
     }
+  }
+  if (
+    cell.getRow().getData().questionamento == 'EMBARGOS DE DECLARAÇÃO' &&
+    cell.getRow().getData().ultEquipe.includes('DIPRO') &&
+    cell.getRow().getData().ultAtividade == 'Distribuir / Sortear'
+  ) {
+    let elem = document.querySelector('.LegEmbargoSort');
+    let estilo = getComputedStyle(elem);
+    cell.getElement().style.backgroundColor = estilo.backgroundColor;
+  }
+  if (
+    cell.getRow().getData().questionamento != 'EMBARGOS DE DECLARAÇÃO' &&
+    cell.getRow().getData().ultEquipe.includes('DIPRO') &&
+    cell.getRow().getData().ultAtividade == 'Tratar Retorno de Processo'
+  ) {
+    let elem = document.querySelector('.LegRetornoDilg');
+    let estilo = getComputedStyle(elem);
+    cell.getElement().style.backgroundColor = estilo.backgroundColor;
+  }
+  if (
+    cell.getRow().getData().questionamento == 'EMBARGOS DE DECLARAÇÃO' &&
+    cell.getRow().getData().ultEquipe.includes('DIPRO') &&
+    cell.getRow().getData().ultAtividade == 'Tratar Retorno de Processo'
+  ) {
+    let elem = document.querySelector('.LegEmbargo');
+    let estilo = getComputedStyle(elem);
+    cell.getElement().style.backgroundColor = estilo.backgroundColor;
+  }
+  if (
+    cell.getRow().getData().questionamento == 'EMBARGO DE DECLARAÇÃO' &&
+    cell.getRow().getData().ultEquipe.includes('DIPRO') &&
+    cell.getRow().getData().ultAtividade == 'Distribuir / Sortear'
+  ) {
+    let elem = document.querySelector('.LegEmbargoSort');
+    let estilo = getComputedStyle(elem);
+    cell.getElement().style.backgroundColor = estilo.backgroundColor;
+  }
+  if (
+    cell.getRow().getData().questionamento != 'EMBARGO DE DECLARAÇÃO' &&
+    cell.getRow().getData().ultEquipe.includes('DIPRO') &&
+    cell.getRow().getData().ultAtividade == 'Tratar Retorno de Processo'
+  ) {
+    let elem = document.querySelector('.LegRetornoDilg');
+    let estilo = getComputedStyle(elem);
+    cell.getElement().style.backgroundColor = estilo.backgroundColor;
+  }
+  if (
+    cell.getRow().getData().questionamento == 'EMBARGO DE DECLARAÇÃO' &&
+    cell.getRow().getData().ultEquipe.includes('DIPRO') &&
+    cell.getRow().getData().ultAtividade == 'Tratar Retorno de Processo'
+  ) {
+    let elem = document.querySelector('.LegEmbargo');
+    let estilo = getComputedStyle(elem);
+    cell.getElement().style.backgroundColor = estilo.backgroundColor;
   }
   //APES749
   if (cell.getRow().getData().apes == true) {
