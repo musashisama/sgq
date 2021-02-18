@@ -158,7 +158,14 @@ function resetElementosDispensa() {
 }
 
 function valorFVV(data, he) {
-  if (moment(data, 'DD/MM/YYYY').isBetween('2019-09-01', '2020-09-30')) {
+  if (
+    moment(data, 'DD/MM/YYYY').isBetween(
+      '2019-09-01',
+      '2020-09-30',
+      undefined,
+      [],
+    )
+  ) {
     return 3;
   } else if (moment(data, 'DD/MM/YYYY').isAfter('2020-09-30')) {
     he = he * 0.3;

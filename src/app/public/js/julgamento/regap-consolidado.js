@@ -161,6 +161,8 @@ function selectRelatorios() {
             Dias_da_Dist: retornaDias(r.dtUltDist),
             Dias_da_SJ: retornaDias(r.dtSessao),
             apenso: r.apenso,
+            questionamento: r.questionamento,
+            ultAtividade: r.ultAtividade,
             obs: r.obs,
             prioridade: r.prioridade,
             assunto: r.assunto,
@@ -435,6 +437,26 @@ function dataTable(msg) {
         download: false,
       },
       {
+        title: 'Questionamento',
+        field: 'questionamento',
+        sorter: 'string',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 2,
+        download: true,
+      },
+      {
+        title: 'Diferença',
+        field: 'diff',
+        sorter: 'number',
+        hozAlign: 'center',
+        formatter: formatDiff,
+        visible: false,
+        editor: false,
+        width: 100,
+        download: true,
+      },
+      {
         title: 'Solicitação de Juntada?',
         field: 'juntada',
         sorter: 'string',
@@ -442,6 +464,16 @@ function dataTable(msg) {
         editor: false,
         responsive: 2,
         download: false,
+      },
+      {
+        title: 'APES749',
+        field: 'apes',
+        sorter: 'boolean',
+        hozAlign: 'center',
+        editor: false,
+        visible: false,
+        responsive: 2,
+        download: true,
       },
     ],
     autoColumns: false,
@@ -545,6 +577,18 @@ function dataTableApes(msg) {
         width: 100,
         download: true,
       },
+      {
+        title: 'Solicitação',
+        field: 'solicitacao',
+        sorter: 'number',
+        hozAlign: 'center',
+        headerFilter: 'input',
+        cellEdited: editaSol,
+        topCalc: countCalc,
+        editor: 'input',
+        width: 100,
+        download: true,
+      },
     ],
     autoColumns: false,
     locale: true,
@@ -552,6 +596,12 @@ function dataTableApes(msg) {
   });
   tableApes.setFilter([{ field: 'apes', type: '=', value: true }]);
 }
+
+let editaSol = function editaSol(cell) {
+  if (cell.getValue()) {
+    console.log(cell.getValue());
+  }
+};
 
 let formatDiff = function formatDiff(cell) {
   const valor = +cell.getRow().getData().diff;
