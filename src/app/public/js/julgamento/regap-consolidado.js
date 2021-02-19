@@ -137,7 +137,6 @@ function selectRelatorios() {
     .done(function (msg) {
       $('.classProcessos').show();
       let dados = [];
-
       msg.forEach((m) => {
         m.relatorio.forEach((r) => {
           if (m.conselheiro.equipe == '3ª CÂMARA-3ªSEÇÃO-CARF-MF-DF') {
@@ -176,6 +175,13 @@ function selectRelatorios() {
             apesHE: r.apesHE,
             diff: +r.apesHE - +r.HE,
           });
+        });
+      });
+      dados.forEach((d) => {
+        apes.forEach((a) => {
+          if (a.Processo == d.processo) {
+            d.solicitacao = a.solicitacao;
+          }
         });
       });
       dataTable(dados);
@@ -599,7 +605,22 @@ function dataTableApes(msg) {
 
 let editaSol = function editaSol(cell) {
   if (cell.getValue()) {
-    console.log(cell.getValue());
+    $.ajax({
+      url: `/julgamento/apes749/`,
+      type: 'PUT',
+      data: {
+        processo: cell.getRow().getData().processo,
+        solicitacao: cell.getValue(),
+      },
+    })
+      .done(function (msg) {
+        var toastHTML = `<span>Processo atualizado com sucesso.</span>`;
+        M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+      })
+      .fail(function (jqXHR, textStatus, msg) {
+        var toastHTML = `<span>Ocorreu um erro.</span>`;
+        M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+      });
   }
 };
 

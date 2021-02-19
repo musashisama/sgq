@@ -1,13 +1,14 @@
 inicializaComponentes();
 function inicializaComponentes() {
   $(document).ready(function () {
-    dataTable();
+    getApes(dataTable());
     initTabs();
   });
 }
 function initTabs() {
   $('.tabs').tabs();
 }
+
 function dataTable(msg) {
   let tabledata = JSON.parse($('#tabelaRegap').attr('data-regap'));
   tabledata.forEach((element) => {
@@ -16,6 +17,15 @@ function dataTable(msg) {
     element.Dias_da_SJ = retornaDias(element.dtSessao);
     element.DAAPS = parseInt($('#daps').text()) + element.Dias_na_Atividade;
   });
+
+  tabledata.forEach((d) => {
+    apes.forEach((a) => {
+      if (a.Processo == d.processo) {
+        d.solicitacao = a.solicitacao;
+      }
+    });
+  });
+
   table = new Tabulator('#tabelaRegap', {
     data: tabledata,
     pagination: 'local',
@@ -34,9 +44,9 @@ function dataTable(msg) {
     groupStartOpen: false,
     responsiveLayoutCollapseStartOpen: false,
     initialSort: [
-      { column: 'Atividade', dir: 'desc' },
+      { column: 'atividade', dir: 'desc' },
       { column: 'Dias_na_Atividade', dir: 'desc' },
-      { column: 'HE_CARF', dir: 'desc' },
+      { column: 'HE', dir: 'desc' },
     ],
     columns: [
       {

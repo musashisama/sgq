@@ -110,18 +110,21 @@ class JulgamentoControlador {
 
   apes749() {
     return function (req, resp) {
-      // const julgamentoDao = new JulgamentoDao(conn);
-      // julgamentoDao.getAPES().then((apes) => {
-      //   console.log(apes);
-      //   resp.json(apes);
-      // });
-      console.log(req.body.apes);
-      if (req.body.apes == 'apes749') {
+      if (req.method == 'POST') {
+        if (req.body.apes == 'apes749') {
+          const julgamentoDao = new JulgamentoDao(conn);
+          julgamentoDao.getAPES().then((apes) => {
+            resp.json(apes);
+          });
+        }
+      }
+      if (req.method == 'PUT') {
         const julgamentoDao = new JulgamentoDao(conn);
-        julgamentoDao.getAPES().then((apes) => {
-          console.log(apes);
-          resp.json(apes);
-        });
+        julgamentoDao
+          .updateAPES([req.body.processo], req.body.solicitacao)
+          .then((apes) => {
+            resp.json(apes);
+          });
       }
     };
   }

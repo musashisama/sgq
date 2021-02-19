@@ -1,3 +1,4 @@
+let apes = '';
 inicializaComponentes();
 let langs = {
   'pt-br': {
@@ -41,8 +42,10 @@ let agrupado = false;
 let agrupadoData = false;
 let agrupadoT = false;
 let d3 = Plotly.d3;
+
 function inicializaComponentes() {
   $(document).ready(function () {
+    getApes();
     initSelect();
     initModal();
     initElementos();
@@ -71,6 +74,23 @@ function calendario(dias) {
       .format('DD/MM/YYYY'),
   );
   return +dias + Math.min(...datas);
+}
+
+function getApes() {
+  $.ajax({
+    url: `/julgamento/apes749/`,
+    type: 'POST',
+    data: {
+      apes: 'apes749',
+    },
+  })
+    .done(function (msg) {
+      apes = msg;
+    })
+    .fail(function (jqXHR, textStatus, msg) {
+      var toastHTML = `<span>Ocorreu um erro.</span>`;
+      M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+    });
 }
 
 function initModal() {
@@ -327,11 +347,19 @@ function coloreProc(cell, formatterParams, valor) {
   }
   //APES749
   if (cell.getRow().getData().apes == true) {
-    let elem = document.querySelector('.LegAPES749');
-    let estilo = getComputedStyle(elem);
-    cell.getRow().getCell('HE').getElement().style.color = estilo.color;
-    cell.getRow().getCell('HE').getElement().style.backgroundColor =
-      estilo.backgroundColor;
+    if (cell.getRow().getData().solicitacao != '') {
+      let elem = document.querySelector('.LegAPES749OK');
+      let estilo = getComputedStyle(elem);
+      cell.getRow().getCell('HE').getElement().style.color = estilo.color;
+      cell.getRow().getCell('HE').getElement().style.backgroundColor =
+        estilo.backgroundColor;
+    } else {
+      let elem = document.querySelector('.LegAPES749');
+      let estilo = getComputedStyle(elem);
+      cell.getRow().getCell('HE').getElement().style.color = estilo.color;
+      cell.getRow().getCell('HE').getElement().style.backgroundColor =
+        estilo.backgroundColor;
+    }
   }
   return value;
 }
