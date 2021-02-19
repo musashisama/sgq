@@ -104,6 +104,13 @@ function elementosTabelas() {
           r.DAAPS = parseInt($('#daps').text()) + r.Dias_na_Atividade;
           r.diff = +r.apesHE - +r.HE;
         });
+        msg[0].relatorio.forEach((d) => {
+          apes.forEach((a) => {
+            if (a.Processo == d.processo) {
+              d.solicitacao = a.solicitacao;
+            }
+          });
+        });
         dadosPlot = msg[0].relatorio;
         dataTable(msg[0].relatorio);
         dataTableApes(msg[0].relatorio);

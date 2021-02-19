@@ -340,6 +340,21 @@ class JulgamentoDao {
     });
   }
 
+  updateAPES(arrayProc, sol) {
+    return new Promise((resolve, reject) => {
+      this._db.APES749.updateMany(
+        { Processo: { $in: arrayProc } },
+        { $set: { solicitacao: sol } },
+        function (erro, res) {
+          if (erro) {
+            return reject('Não foi possível atualizar o registro.');
+          }
+          return resolve(res);
+        },
+      );
+    });
+  }
+
   getAnosReinp(filtro) {
     return new Promise((resolve, reject) => {
       this._db.reinp.distinct(filtro, function (erro, res) {
