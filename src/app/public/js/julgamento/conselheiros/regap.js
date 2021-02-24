@@ -15,13 +15,13 @@ function returnApes(data) {
   return data.apes == true;
 }
 function elementosApes749() {
-  $(`#apes749Check`).change(() => {
-    if ($(`#apes749Check`).prop('checked')) {
-      table.addFilter(returnApes);
-    } else {
-      table.removeFilter(returnApes);
-    }
-  });
+  // $(`#apes749Check`).change(() => {
+  //   if ($(`#apes749Check`).prop('checked')) {
+  //     table.addFilter(returnApes);
+  //   } else {
+  //     table.removeFilter(returnApes);
+  //   }
+  // });
   document
     .getElementById('mostraColunasAtividadeApes')
     .addEventListener('click', function () {
@@ -82,6 +82,10 @@ function getRelatorios(data) {
 }
 
 function elementosTabelas() {
+  $('#listaProcApes').click((e) => {
+    e.preventDefault();
+    getApes('cons', dataTableApes);
+  });
   $('.dataRelRegap').change(() => {
     $.ajax({
       url: `/julgamento/conselheiros/listaregap`,
@@ -104,16 +108,16 @@ function elementosTabelas() {
           r.DAAPS = parseInt($('#daps').text()) + r.Dias_na_Atividade;
           r.diff = +r.apesHE - +r.HE;
         });
-        msg[0].relatorio.forEach((d) => {
-          apes.forEach((a) => {
-            if (a.Processo == d.processo) {
-              d.solicitacao = a.solicitacao;
-            }
-          });
-        });
+        // msg[0].relatorio.forEach((d) => {
+        //   apes.forEach((a) => {
+        //     if (a.Processo == d.processo) {
+        //       d.solicitacao = a.solicitacao;
+        //     }
+        //   });
+        // });
         dadosPlot = msg[0].relatorio;
         dataTable(msg[0].relatorio);
-        dataTableApes(msg[0].relatorio);
+        //dataTableApes(msg[0].relatorio);
         grafico(msg[0].relatorio);
         $('.progressRegap').toggle();
       })
@@ -126,6 +130,7 @@ function elementosTabelas() {
 
 //TABELA REGAP
 function dataTable(dados) {
+  console.log(dados);
   let tabledata = dados;
   table = new Tabulator('#tabelaRegap', {
     data: tabledata,
@@ -660,9 +665,10 @@ function grafico(dados) {
 }
 
 function dataTableApes(msg) {
+  console.log(msg);
   let tabledataApes = msg;
   tableApes = new Tabulator('#tabelaApes', {
-    data: tabledataApes,
+    data: msg,
     minHeight: '300px',
     maxHeight: '1000px',
     height: '900px',
@@ -672,7 +678,7 @@ function dataTableApes(msg) {
       columnCalcs: true,
     },
     groupStartOpen: true,
-
+    initialSort: [{ column: 'solicitacao', dir: 'desc' }],
     columns: [
       {
         title: 'Processo',
@@ -684,18 +690,6 @@ function dataTableApes(msg) {
         editor: false,
         download: true,
         width: 200,
-      },
-      {
-        title: 'Contribuinte',
-        field: 'contribuinte',
-        formatter: coloreProc,
-        headerFilter: 'input',
-        sorter: 'string',
-        hozAlign: 'center',
-        width: 150,
-        editor: false,
-        responsive: 0,
-        download: true,
       },
 
       {
@@ -720,18 +714,6 @@ function dataTableApes(msg) {
         width: 150,
       },
       {
-        title: 'Horas CARF',
-        field: 'HE',
-        sorter: 'number',
-        hozAlign: 'center',
-        headerFilter: 'input',
-        topCalc: somaCalc,
-        editor: false,
-        width: 90,
-        responsive: 0,
-        download: true,
-      },
-      {
         title: 'Diferença',
         field: 'diff',
         sorter: 'number',
@@ -743,22 +725,22 @@ function dataTableApes(msg) {
         width: 100,
         download: true,
       },
-      {
-        title: 'Solicitação',
-        field: 'solicitacao',
-        sorter: 'number',
-        hozAlign: 'center',
-        headerFilter: 'input',
-        editor: false,
-        width: 100,
-        download: true,
-      },
+      // {
+      //   title: 'Solicitação',
+      //   field: 'solicitacao',
+      //   sorter: 'number',
+      //   hozAlign: 'center',
+      //   //formatter: coloreApes,
+      //   headerFilter: 'input',
+      //   editor: false,
+      //   width: 100,
+      //   download: true,
+      // },
     ],
     autoColumns: false,
     locale: true,
     langs: langs,
   });
-  tableApes.setFilter([{ field: 'apes', type: '=', value: true }]);
 }
 
 let formatDiff = function formatDiff(cell) {

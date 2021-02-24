@@ -90,8 +90,8 @@ class JulgamentoControlador {
       gestaorelatorios: '/julgamento/restrito/relatorios/',
       relatorios_antigos: '/julgamento/restrito/relatorios_antigos/',
       //CONSELHEIROS
-      conselheiros: '/julgamento/conselheiros',
       portalconselheiros: '/julgamento/conselheiros/portalconselheiros',
+      conselheiros: '/julgamento/conselheiros',
       solicitacoes: '/julgamento/conselheiros/solicitacoes',
       ocorrencias: '/julgamento/conselheiros/ocorrencias',
       regsolicitacoes: '/julgamento/conselheiros/registro-solicitacoes',
@@ -112,10 +112,18 @@ class JulgamentoControlador {
     return function (req, resp) {
       if (req.method == 'POST') {
         if (req.body.apes == 'apes749') {
-          const julgamentoDao = new JulgamentoDao(conn);
-          julgamentoDao.getAPES().then((apes) => {
-            resp.json(apes);
-          });
+          if (req.body.tipo == 'cojul') {
+            const julgamentoDao = new JulgamentoDao(conn);
+            julgamentoDao.getAPES().then((apes) => {
+              resp.json(apes);
+            });
+          }
+          if (req.body.tipo == 'cons') {
+            const julgamentoDao = new JulgamentoDao(conn);
+            julgamentoDao.getAPES({ cpf: req.user.cpf }).then((apes) => {
+              resp.json(apes);
+            });
+          }
         }
       }
       if (req.method == 'PUT') {

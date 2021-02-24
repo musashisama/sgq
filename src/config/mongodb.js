@@ -42,7 +42,7 @@ cliente.connect(url, opcoes, function (err, cliente) {
   dados.regap = dbo.collection('regap');
   dados.votacaoPremio = dbo.collection('votacaoPremio');
   dados.regSolicitacoes = dbo.collection('regSolicitacoes');
-  dados.APES749 = dbo.collection('APES749');
+  dados.APES749 = dbo.collection('apesControle');
 });
 
 process.on('SIGINT', () =>
