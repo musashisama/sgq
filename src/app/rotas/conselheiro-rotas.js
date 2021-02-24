@@ -82,7 +82,7 @@ module.exports = (app) => {
 
   app.get(
     rotasJulgamento.conselheiros,
-    julgControlador.carregaPaginaConselheiros(),
+    julgControlador.carregaPortalConselheiros(),
   );
 
   app.get(

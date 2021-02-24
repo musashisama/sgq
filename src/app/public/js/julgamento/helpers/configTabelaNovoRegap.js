@@ -45,7 +45,6 @@ let d3 = Plotly.d3;
 
 function inicializaComponentes() {
   $(document).ready(function () {
-    getApes();
     initSelect();
     initModal();
     initElementos();
@@ -76,16 +75,18 @@ function calendario(dias) {
   return +dias + Math.min(...datas);
 }
 
-function getApes() {
+function getApes(tipo, callback) {
   $.ajax({
     url: `/julgamento/apes749/`,
     type: 'POST',
     data: {
+      tipo: tipo,
+      dtRel: 1613740247,
       apes: 'apes749',
     },
   })
     .done(function (msg) {
-      apes = msg;
+      callback(msg);
     })
     .fail(function (jqXHR, textStatus, msg) {
       var toastHTML = `<span>Ocorreu um erro.</span>`;
@@ -346,20 +347,38 @@ function coloreProc(cell, formatterParams, valor) {
     cell.getElement().style.backgroundColor = estilo.backgroundColor;
   }
   //APES749
-  if (cell.getRow().getData().apes == true) {
-    if (cell.getRow().getData().solicitacao != '') {
-      let elem = document.querySelector('.LegAPES749OK');
-      let estilo = getComputedStyle(elem);
-      cell.getRow().getCell('HE').getElement().style.color = estilo.color;
-      cell.getRow().getCell('HE').getElement().style.backgroundColor =
-        estilo.backgroundColor;
-    } else {
-      let elem = document.querySelector('.LegAPES749');
-      let estilo = getComputedStyle(elem);
-      cell.getRow().getCell('HE').getElement().style.color = estilo.color;
-      cell.getRow().getCell('HE').getElement().style.backgroundColor =
-        estilo.backgroundColor;
+  if (cell.getRow().getData().apes) {
+    if (cell.getRow().getData().apes == true) {
+      if (cell.getRow().getData().solicitacao != '') {
+        let elem = document.querySelector('.LegAPES749OK');
+        let estilo = getComputedStyle(elem);
+        cell.getRow().getCell('HE').getElement().style.color = estilo.color;
+        cell.getRow().getCell('HE').getElement().style.backgroundColor =
+          estilo.backgroundColor;
+      } else {
+        let elem = document.querySelector('.LegAPES749');
+        let estilo = getComputedStyle(elem);
+        cell.getRow().getCell('HE').getElement().style.color = estilo.color;
+        cell.getRow().getCell('HE').getElement().style.backgroundColor =
+          estilo.backgroundColor;
+      }
     }
+  }
+  return value;
+}
+
+function coloreApes(cell, formatterParams, valor) {
+  let value = cell.getValue() ? cell.getValue() : '';
+  if (cell.getRow().getData().solicitacao != '') {
+    let elem = document.querySelector('.LegAPES749OK');
+    let estilo = getComputedStyle(elem);
+    cell.getRow().getCell('processo').getElement().style.color = estilo.color;
+    cell.getRow().getCell('processo').getElement().style.backgroundColor =
+      estilo.backgroundColor;
+    cell.getRow().getCell('solicitacao').getElement().style.color =
+      estilo.color;
+    cell.getRow().getCell('solicitacao').getElement().style.backgroundColor =
+      estilo.backgroundColor;
   }
   return value;
 }
@@ -454,7 +473,7 @@ function somaCalc(values, data, calcParams) {
   let valor = 0;
   values.forEach(function (value) {
     if (value > 0) {
-      valor += value;
+      valor += +value;
       calc++;
     }
   });

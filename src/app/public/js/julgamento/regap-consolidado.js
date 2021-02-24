@@ -23,6 +23,10 @@ function returnApes(data) {
 }
 
 function elementosTabela() {
+  $('#listaProcApes').click((e) => {
+    e.preventDefault();
+    getApes('cojul', dataTableApes);
+  });
   $(`#apes749Check`).change(() => {
     if ($(`#apes749Check`).prop('checked')) {
       table.addFilter(returnApes);
@@ -177,15 +181,15 @@ function selectRelatorios() {
           });
         });
       });
-      dados.forEach((d) => {
-        apes.forEach((a) => {
-          if (a.Processo == d.processo) {
-            d.solicitacao = a.solicitacao;
-          }
-        });
-      });
+      // dados.forEach((d) => {
+      //   apes.forEach((a) => {
+      //     if (a.Processo == d.processo) {
+      //       d.solicitacao = a.solicitacao;
+      //     }
+      //   });
+      // });
       dataTable(dados);
-      dataTableApes(dados);
+      //dataTableApes(dados);
       initElementos();
       $('.progressRegap').toggle();
       montaGraficos(msg);
@@ -501,11 +505,11 @@ function dataTableApes(msg) {
       columnCalcs: true,
     },
     groupStartOpen: true,
-
+    initialSort: [{ column: 'solicitacao', dir: 'desc' }],
     columns: [
       {
         title: 'Responsável',
-        field: 'nome',
+        field: 'conselheiro',
         sorter: 'string',
         width: 200,
         hozAlign: 'left',
@@ -560,18 +564,6 @@ function dataTableApes(msg) {
         width: 150,
       },
       {
-        title: 'Horas CARF',
-        field: 'HE',
-        sorter: 'number',
-        hozAlign: 'center',
-        headerFilter: 'input',
-        topCalc: somaCalc,
-        editor: false,
-        width: 90,
-        responsive: 0,
-        download: true,
-      },
-      {
         title: 'Diferença',
         field: 'diff',
         sorter: 'number',
@@ -600,7 +592,6 @@ function dataTableApes(msg) {
     locale: true,
     langs: langs,
   });
-  tableApes.setFilter([{ field: 'apes', type: '=', value: true }]);
 }
 
 let editaSol = function editaSol(cell) {
