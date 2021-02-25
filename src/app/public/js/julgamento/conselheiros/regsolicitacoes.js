@@ -1074,8 +1074,8 @@ function controleForm() {
 </div>
 <div class ='col s2 saldoHE input-field'>
 <i class=" fas fa-calendar-day prefix"/>
-<input id="saldoHE" placeholder="Saldo de Horas" name="saldoHE" type="text" class="validate">
-<label for="saldoHE">Saldo de Horas:</label>
+<input id="saldoHE" placeholder="Diferença de Horas" name="saldoHE" type="text" class="validate">
+<label for="saldoHE">Diferença de Horas:</label>
 </div>
 <div><a id="btnProc" class="btn-floating btn-small green waves-effect waves-light hoverable z-depth-3" title="Adicionar processo">
 <i class="material-icons">add</i>
@@ -1083,6 +1083,10 @@ function controleForm() {
 </div>
 </div>
 <div class='row'>
+<blockquote>
+<strong>Importante:</strong>
+  O campo «Diferença de Horas» deverá ser preenchido com o valor da coluna «Diferença» na tabela da aba «APURAÇÂO ESPECIAL Nº749» do SGI-REGAP.
+</blockquote>
 <blockquote>
   <strong>Importante:</strong>
   Você pode adicionar mais de um processo na mesma solicitação, bastando clicar no botão verde '+' para cada processo que for objeto desta solicitação.
@@ -2083,10 +2087,6 @@ function controleForm() {
       <h5>${$('#rape').text()}</h5><br/>
       ${processosRape}
       ${campoObs}
-      <blockquote>
-              <strong>Importante:</strong>
-            O campo «Saldo de Horas» deverá ser preenchido com o valor da coluna «Diferença» na tabela da aba «APURAÇÂO ESPECIAL Nº749».
-              </blockquote>
       ${botoes}
       `);
       initElementos();
@@ -2416,7 +2416,7 @@ function controleForm() {
                <div class ='col s2 horasApes input-field'>
               <i class="far fa-hourglass prefix"/>
               <input id="horasApes" name="horasApes" type="text" class="validate"/>
-              <label for="horasApes">Saldo de Horas:</strong></label>
+              <label for="horasApes">Diferença de Horas:</strong></label>
               </div>
               <div><a id="btnProcApes" class="btn-floating btn-small green waves-effect waves-light hoverable z-depth-3" title="Adicionar Processo">
               <i class="material-icons">add</i>
@@ -2426,7 +2426,7 @@ function controleForm() {
               </div>
               <blockquote>
               <strong>Importante:</strong>
-              O campo «Saldo de Horas» deverá ser preenchido com o valor da coluna «Diferença» na tabela da aba «APURAÇÂO ESPECIAL Nº749».
+              O campo «Diferença de Horas» deverá ser preenchido com o valor da coluna «Diferença» na tabela da aba «APURAÇÂO ESPECIAL Nº749».
               </blockquote>
                </div>
 
@@ -2510,7 +2510,7 @@ function controleForm() {
     });
   });
   //Outras solicitações
-  //RAPURAÇÃO ESPECIAL 749
+  //APURAÇÃO ESPECIAL 749
   $('#dmh').click(() => {
     resetElementos();
     $('#camposSol').fadeIn('slow', () => {
