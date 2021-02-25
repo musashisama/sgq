@@ -225,6 +225,10 @@ let formatNome = function formatNome(cell) {
   }'>${cell.getValue()}</a>`;
 };
 
+function numberConvert(value, data, type, component) {
+  return Number(value);
+}
+
 let formatValor = function formatValor(cell) {
   const formato = {
     style: 'currency',
@@ -478,7 +482,7 @@ function somaCalc(values, data, calcParams) {
     }
   });
 
-  return `𝚺: ${valor.toFixed(2)}`;
+  return `𝚺: ${Number(valor.toFixed(2))}`;
 }
 
 function countCalc(values, data, calcParams) {
