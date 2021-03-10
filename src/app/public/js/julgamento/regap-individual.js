@@ -1,7 +1,8 @@
 inicializaComponentes();
 function inicializaComponentes() {
   $(document).ready(function () {
-    getApes(dataTable());
+    dataTable();
+    //getApes(dataTable());
     initTabs();
   });
 }
@@ -18,13 +19,13 @@ function dataTable(msg) {
     element.DAAPS = parseInt($('#daps').text()) + element.Dias_na_Atividade;
   });
 
-  tabledata.forEach((d) => {
-    apes.forEach((a) => {
-      if (a.Processo == d.processo) {
-        d.solicitacao = a.solicitacao;
-      }
-    });
-  });
+  // tabledata.forEach((d) => {
+  //   apes.forEach((a) => {
+  //     if (a.Processo == d.processo) {
+  //       d.solicitacao = a.solicitacao;
+  //     }
+  //   });
+  // });
 
   table = new Tabulator('#tabelaRegap', {
     data: tabledata,

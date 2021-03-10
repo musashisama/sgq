@@ -1274,11 +1274,12 @@ class JulgamentoControlador {
         }
         if (req.body.get == 'relatorio') {
           let filtro = {};
+          let cpf = req.user.cpf;
           if (req.body.tipo == 'conselheiro') {
             filtro = {
               $and: [
                 { 'detalhamento.ano': req.body.ano },
-                { 'conselheiro.cpf': req.user.cpf },
+                { 'conselheiro.cpf': cpf },
               ],
             };
           } else {
