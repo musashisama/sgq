@@ -33,7 +33,7 @@ let langs = {
     },
   },
 };
-let minimoApto = 12000000;
+let minimoApto = 36000000;
 layout = 'fitDataFill';
 responsiveLayout = true;
 let table = null;

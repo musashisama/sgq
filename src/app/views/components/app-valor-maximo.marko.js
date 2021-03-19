@@ -10,7 +10,7 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.w("<div class=\"form-group input-field  col s2\"><label><input name=\"abaixoUM\" id=\"abaixoUM\" type=\"checkbox\"><span><a href=\"#oitomilhoes\">Somente Abaixo de R$ 12 milhões?*</a></span></label></div>");
+  out.w("<div class=\"form-group input-field  col s2\"><label><input name=\"abaixoUM\" id=\"abaixoUM\" type=\"checkbox\"><span><a href=\"#oitomilhoes\">Somente Abaixo de R$ 36 milhões?*</a></span></label></div>");
 }
 
 marko_template._ = marko_renderer(render, {
