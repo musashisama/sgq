@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <app-scripts-css/>
+  <body>
+    <app-header/>
+    <main class="conteudoPrincipal">
+      <app-navbar id="slide-out" class="sidenav"/>
+      <div class="container">
+        <h3 class="center-align titulo">Editar Período de Indicação para Pauta</h3>
+        <br/>
+        <div class="conteudoPrincipal"/>
+        <div id="dadosIndicacao" data-indicacao=`${data.indicacao}`/>
+        <div class="row">
+          <h4>Colegiados</h4>
+        </div>
+        <div class="row">
+          <div class="col s4">
+            <i class="far fa-question-circle prefix"/>
+            <label for="tipoColegiado">Colegiados:</label>
+            <select required name="tipoColegiado" id="tipoColegiado">
+              <option class="form-group" value="TE">Turmas Extraordinárias</option>
+              <option class="form-group" value="TOCSRF">Turmas Ordinárias e Câmara Superior</option>
+            </select>
+          </div>
+          <div class="col s2">
+            <i class="far fa-question-circle prefix"/>
+            <label for="semana">Semana:</label>
+            <select required name="semana" id="semana">
+              <option class="form-group" value="Verde">Verde</option>
+              <option class="form-group" value="Amarela">Amarela</option>
+              <option class="form-group" value="Azul">Azul</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <h4>Períodos</h4>
+        </div>
+        <div class="row">
+          <div class="row">
+            <h5 class="col s6">Mês da Indicação</h5>
+            <div class="col s3">
+              <i class="far fa-calendar-alt prefix"/>
+              <label for="mes">Mês da Indicação:</label>
+              <select required name="mes" id="mes">
+                <option class="form-group" value="01">Janeiro</option>
+                <option class="form-group" value="02">Fevereiro</option>
+                <option class="form-group" value="03">Março</option>
+                <option class="form-group" value="04">Abril</option>
+                <option class="form-group" value="05">Maio</option>
+                <option class="form-group" value="06">Junho</option>
+                <option class="form-group" value="07">Julho</option>
+                <option class="form-group" value="08">Agosto</option>
+                <option class="form-group" value="09">Setembro</option>
+                <option class="form-group" value="10">Outubro</option>
+                <option class="form-group" value="11">Novembro</option>
+                <option class="form-group" value="12">Dezembro</option>
+              </select>
+            </div>
+            <div class="col s3">
+              <span id="selectAno"/>
+            </div>
+          </div>
+          <div class="row">
+            <h5 class="col s6">Indicação pelos Conselheiros</h5>
+            <div class="form-group abreIndicacao input field col s3">
+              <input id="abreIndicacao" name="abreIndicacao" type="text" class="datepicker"/>
+              <i class="fas fa-calendar-check prefix"/>
+              <label for="abreIndicacao">Abertura da Indicação</label>
+            </div>
+            <div class="form-group fechaIndicacao input field col s3">
+              <input id="fechaIndicacao" name="fechaIndicacao" type="text" class="datepicker"/>
+              <i class="fas fa-calendar-check prefix"/>
+              <label for="fechaIndicacao">Data Limite da Indicação</label>
+            </div>
+          </div>
+          <div class="row">
+            <h5 class="col s6">Conferência dos Questionamentos</h5>
+            <div class="form-group confereQuest input field col s6">
+              <input id="confereQuest" name="confereQuest" type="text" class="datepicker"/>
+              <i class="fas fa-calendar-check prefix"/>
+              <label for="confereQuest">Conferência dos Questionamentos</label>
+            </div>
+          </div>
+          <div class="row">
+            <h5 class="col s6">Consolidação da Pauta</h5>
+            <div class="form-group consolidaPauta input field col s6">
+              <input id="consolidaPauta" name="consolidaPauta" type="text" class="datepicker"/>
+              <i class="fas fa-calendar-check prefix"/>
+              <label for="consolidaPauta">Consolidação da Pauta</label>
+            </div>
+          </div>
+          <div class="row">
+            <h5 class="col s6">Ordenação da Pauta</h5>
+            <div class="form-group ordenaPauta input field col s6">
+              <input id="ordenaPauta" name="ordenaPauta" type="text" class="datepicker"/>
+              <i class="fas fa-calendar-check prefix"/>
+              <label for="ordenaPauta">Ordenação da Pauta</label>
+            </div>
+          </div>
+          <div class="row">
+            <h5 class="col s6">Lançamento no e-Processo</h5>
+            <div class="form-group eProcesso input field col s6">
+              <input id="eProcesso" name="eProcesso" type="text" class="datepicker"/>
+              <i class="fas fa-calendar-check prefix"/>
+              <label for="eProcesso">Lançamento no e-Processo</label>
+            </div>
+          </div>
+          <div class="row">
+            <h5 class="col s6">Envio para IN-DOU</h5>
+            <div class="form-group envioIN input field col s6">
+              <input id="envioIN" name="envioIN" type="text" class="datepicker"/>
+              <i class="fas fa-calendar-check prefix"/>
+              <label for="envioIN">Envio para IN-DOU</label>
+            </div>
+          </div>
+          <div class="row">
+            <h5 class="col s6">Publicação no Sítio do CARF</h5>
+            <div class="form-group publicaSitio input field col s6">
+              <input id="publicaSitio" name="publicaSitio" type="text" class="datepicker"/>
+              <i class="fas fa-calendar-check prefix"/>
+              <label for="publicaSitio">Publicação no Sítio do CARF</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s12 offset-s12">
+            <a id="aModal" class="btn-floating btn-large waves-effect waves-light blue btn-atualiza" href=`#modal1`>
+              <i class="material-icons right ">save</i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </main>
+    <app-footer/>
+    <app-modal/>
+    <app-scripts-js/>
+    <script src="/estatico/js/julgamento/cosup/editaIndicacao.js"/>
+  </body>
+</html>

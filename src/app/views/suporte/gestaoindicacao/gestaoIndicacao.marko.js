@@ -2,7 +2,7 @@
 "use strict";
 
 var marko_template = module.exports = require("marko/src/html").t(__filename),
-    marko_componentType = "/sgq$1.0.0/src/app/views/suporte/portalcosup/gestaoPortal.marko",
+    marko_componentType = "/sgq$1.0.0/src/app/views/suporte/gestaoindicacao/gestaoIndicacao.marko",
     components_helpers = require("marko/src/runtime/components/helpers"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
@@ -16,8 +16,12 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     app_navbar_template = require("../../components/app-navbar.marko"),
     app_navbar_tag = marko_loadTag(app_navbar_template),
     marko_attr = marko_helpers.a,
+    app_drop_download_template = require("../../components/app-drop-download.marko"),
+    app_drop_download_tag = marko_loadTag(app_drop_download_template),
     app_footer_template = require("../../components/app-footer.marko"),
     app_footer_tag = marko_loadTag(app_footer_template),
+    app_modal_template = require("../../components/app-modal.marko"),
+    app_modal_tag = marko_loadTag(app_modal_template),
     app_scripts_js_template = require("../../components/app-scripts-js.marko"),
     app_scripts_js_tag = marko_loadTag(app_scripts_js_template),
     init_components_tag = marko_loadTag(require("marko/src/core-tags/components/init-components-tag")),
@@ -36,30 +40,32 @@ function render(input, out, __component, component, state) {
 
   app_header_tag({}, out, __component, "3");
 
-  out.w("<link rel=\"stylesheet\" href=\"/estatico/css/libs/quill.snow.css\"><main class=\"conteudoPrincipal\">");
+  out.w("<main class=\"conteudoPrincipal\">");
 
   app_navbar_tag({
       id: "slide-out",
       class: "sidenav"
-    }, out, __component, "6");
+    }, out, __component, "5");
 
-  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Cadastro de Itens do Portal da COSUP</h3><br><div class=\"row\"><h5 class=\"\">Título</h5><br><div id=\"editorTitulo\" class=\"col s12\"><p id=\"tituloGC\"></p><br></div></div><div class=\"row\"><h5 class=\"\">Descrição</h5><br><div id=\"editorDesc\" class=\"col s12\"><p id=\"descGC\"></p><br></div></div><div class=\"row\"><h5 class=\"\">Link</h5><br><div id=\"editorLink\" class=\"col s12\"><p id=\"linkGC\"></p><br></div></div><div class=\"row\"><div class=\"input-field col s4\"><select required name=\"secaoGC\" id=\"secaoGC\"><option value=\"\" disabled selected>Escolha uma opção:</option><option value=\"relatorios\">Relatorios</option><option value=\"solicitacoes\">Solicitações</option><option value=\"recursos\">Ferramentas</option></select><label>Qual o tipo?</label></div></div><div class=\"row\"><div class=\"col s1 offset-s11\"><a id=\"aModal\" class=\"btn-floating btn-insere waves-effect waves-light red\" title=\"Clique para enviar\"" +
-    marko_attr("href", "#modal1") +
-    "><i class=\"material-icons\">send</i></a></div></div><div" +
-    marko_attr("data-portal", "" + data.portal) +
-    "></div></div></main>");
+  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Gestão da Indicação para Pauta</h3><br><div class=\"row conteudoPrincipal\"></div><div class=\"row\"><a class=\"waves-effect waves-light btn btn-cria\"" +
+    marko_attr("href", "/suporte/restrito/cria-indicacao") +
+    "><i class=\"material-icons right \">cloud</i>Criar Período de Indicação para Pauta</a></div><br><div class=\"row\"><h4>Gerenciar períodos de Indicação para Pauta</h4></div><div class=\"row\"><div class=\"col s12 right-align\">");
 
-  app_footer_tag({}, out, __component, "41");
+  app_drop_download_tag({}, out, __component, "18");
 
-  out.w("<div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
+  out.w("</div></div><div class=\"row\"><div id=\"cardsColegiados\"></div></div></div></main>");
 
-  app_scripts_js_tag({}, out, __component, "50");
+  app_footer_tag({}, out, __component, "21");
 
-  out.w("<script src=\"/estatico/js/libs/quill.min.js\"></script><script src=\"/estatico/js/julgamento/cosup/gestaoPortalCosup.js\"></script>");
+  app_modal_tag({}, out, __component, "22");
+
+  app_scripts_js_tag({}, out, __component, "23");
+
+  out.w("<script src=\"/estatico/js/julgamento/cosup/gestaoIndicacao.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "53");
+  await_reorderer_tag({}, out, __component, "25");
 
   out.w("</body></html>");
 }
@@ -72,13 +78,15 @@ marko_template._ = marko_renderer(render, {
 marko_template.Component = marko_defineComponent({}, marko_template._);
 
 marko_template.meta = {
-    id: "/sgq$1.0.0/src/app/views/suporte/portalcosup/gestaoPortal.marko",
+    id: "/sgq$1.0.0/src/app/views/suporte/gestaoindicacao/gestaoIndicacao.marko",
     tags: [
       "../../components/app-scripts-css.marko",
       "marko/src/core-tags/components/component-globals-tag",
       "../../components/app-header.marko",
       "../../components/app-navbar.marko",
+      "../../components/app-drop-download.marko",
       "../../components/app-footer.marko",
+      "../../components/app-modal.marko",
       "../../components/app-scripts-js.marko",
       "marko/src/core-tags/components/init-components-tag",
       "marko/src/core-tags/core/await/reorderer-renderer"

@@ -174,9 +174,7 @@ function montaModal(e, cell) {
             <br/>
             <strong>Usuário:</strong> ${cell.getRow().getData().nome}<br/>
             <strong>CPF:</strong> ${cell.getRow().getData().cpf}<br/>
-            <strong>Perfis:</strong> ${
-              cell.getRow().getData().perfil
-            }<br/>          
+            <strong>Perfis:</strong> ${cell.getRow().getData().perfil}<br/>
             <form id="formEditaPerfis" name="formEditaPerfis" action="#">
             <p>
             <label>
@@ -234,11 +232,17 @@ function montaModal(e, cell) {
         </p>
         <p>
           <label>
+            <input type="checkbox" id='suporte' value='suporte' name="perfis"/>
+            <span>Suporte</span>
+          </label>
+        </p>
+        <p>
+          <label>
             <input type="checkbox" id='teste' value='teste' name="perfis"/>
             <span>Teste</span>
           </label>
         </p>
-    
+
 </form></p>`,
   );
   perfis.forEach((perfil) => {

@@ -42,19 +42,19 @@ function render(input, out, __component, component, state) {
 
   out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Portal da COSUP</h3><div class=\"row\"><div class=\"input-field col s12\"><i class=\"material-icons prefix\">textsms</i><input type=\"text\" id=\"autocomplete-input\" class=\"autocomplete\"><label for=\"autocomplete-input\">Do que você precisa?</label></div></div><div id=\"portal\"" +
     marko_attr("data-portal", "" + data.portal) +
-    "></div><div class=\"row\"><div class=\"row conteudoPrincipal\"><div class=\"col s4 m4 divManuais\"><div class=\"card-panel  green lighten-1\"><span class=\"white-text\"><h4 class=\"center white-text\">Ferramentas</h4></span></div></div><div class=\"row\"></div><div class=\"col s4 m4 divRecursos\"><div class=\"card-panel light-blue darken-3\"><span class=\"white-text\"><h4 class=\"center white-text\">Recursos</h4></span></div></div><div class=\"row\"></div></div><div class=\"row\"><div class=\"col s4\"><ul class=\"collapsible relatorios\"></ul></div><div class=\"col s4\"><ul class=\"collapsible solicitacoes\"></ul></div><div class=\"col s4\"><ul class=\"collapsible recursos\"></ul></div></div></div></div></main>");
+    "></div><div class=\"row conteudoPrincipal\"><div class=\"col s6 m6 divManuais\"><div class=\"card-panel  green lighten-1\"><span class=\"white-text\"><h4 class=\"center white-text\">Ferramentas</h4></span></div></div><div class=\"row\"></div><div class=\"col s6 m6 divRecursos\"><div class=\"card-panel light-blue darken-3\"><span class=\"white-text\"><h4 class=\"center white-text\">Recursos</h4></span></div></div><div class=\"row\"></div></div><div class=\"row\"><div class=\"col s6 m6\"><ul class=\"collapsible relatorios\"></ul></div><div class=\"col s6 m6\"><ul class=\"collapsible recursos\"></ul></div></div></div></main>");
 
-  app_footer_tag({}, out, __component, "33");
+  app_footer_tag({}, out, __component, "30");
 
   out.w("<div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Fechar</a></div></div>");
 
-  app_scripts_js_tag({}, out, __component, "40");
+  app_scripts_js_tag({}, out, __component, "37");
 
   out.w("<script src=\"/estatico/js/julgamento/cosup/portalcosup.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "42");
+  await_reorderer_tag({}, out, __component, "39");
 
   out.w("</body></html>");
 }
