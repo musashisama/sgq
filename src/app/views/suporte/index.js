@@ -3,5 +3,7 @@ module.exports = {
   gestaoGC: require('./gestaoconhecimento/gestaoGC.marko'),
   gestaoPortalCosup: require('./portalcosup/gestaoPortal.marko'),
   portalCosup: require('./portalcosup/portalCosup.marko'),
-  gestaoIndicacao: require('./indicacao/gestaoIndicacao.marko'),
+  gestaoIndicacao: require('./gestaoindicacao/gestaoIndicacao.marko'),
+  criaIndicacao: require('./gestaoindicacao/criaIndicacao.marko'),
+  editaIndicacao: require('./gestaoindicacao/editaIndicacao.marko'),
 };

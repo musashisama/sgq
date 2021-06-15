@@ -30,6 +30,7 @@ class ACL {
       gestor: ['admin', 'gestor'],
       serpro: ['admin', 'serpro'],
       teste: ['admin', 'teste'],
+      suporte: ['admin', 'suporte'],
     };
     return acl[ACL];
   }

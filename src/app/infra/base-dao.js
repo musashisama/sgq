@@ -42,7 +42,7 @@ class BaseDao {
         .project(filtro)
         .toArray(function (erro, res) {
           if (erro) {
-            return reject('Não foi possível listar os macroprocessos.');
+            return reject('Não foi possível listar os perfis.');
           }
           return resolve(res);
         });

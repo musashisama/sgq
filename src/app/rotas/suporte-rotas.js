@@ -1,11 +1,11 @@
-const PessoalControlador = require('../controladores/pessoal-controlador');
-const pessoalControlador = new PessoalControlador();
 const BaseControlador = require('../controladores/base-controlador');
 const ACL = require('../infra/helpers/ACL');
+const SuporteControlador = require('../controladores/suporte-controlador');
+const supControlador = new SuporteControlador();
 
 module.exports = (app) => {
-  const rotasPessoal = PessoalControlador.rotas();
   const rotasBase = BaseControlador.rotas();
+  const rotasSuporte = SuporteControlador.rotas();
 
   app.use('/*', function (req, resp, next) {
     if (req.isAuthenticated()) {
@@ -17,7 +17,7 @@ module.exports = (app) => {
     }
   });
 
-  app.use(rotasPessoal.autenticadas, function (req, resp, next) {
+  app.use(rotasSuporte.autenticadas, function (req, resp, next) {
     req.session.baseUrl = req.baseUrl;
     if (req.isAuthenticated()) {
       resp.set('autenticado', true);
@@ -26,8 +26,10 @@ module.exports = (app) => {
       resp.redirect(rotasBase.login);
     }
   });
+  app.get(rotasSuporte.portalCosup, supControlador.carregaPortalCosup());
+  app.get(rotasSuporte.gestaoPortalCosup, supControlador.handlePortalCosup());
 
-  app.use(rotasPessoal.autenticadas, function (req, resp, next) {
+  app.use(rotasSuporte.autenticadas, function (req, resp, next) {
     if (
       ACL.checaACL(req.user.perfis, 'suporte') ||
       ACL.checaACL(req.user.perfis, 'serpro')
@@ -38,11 +40,27 @@ module.exports = (app) => {
     }
   });
 
-  app.use(rotasPessoal.autenticadas, function (req, resp, next) {
+  app.use(rotasSuporte.autenticadas, function (req, resp, next) {
     if (ACL.checaACL(req.user.perfis, 'suporte')) {
       next();
     } else {
       resp.render(403);
     }
   });
+
+  app.get(
+    rotasSuporte.gestaoIndicacao,
+    supControlador.carregaGestaoIndicacao(),
+  );
+
+  app.get(rotasSuporte.criaIndicacao, supControlador.carregaCriaIndicacao());
+  app
+    .route(rotasSuporte.editaPeriodo)
+    .get(supControlador.carregaEditaIndicacao())
+    .post(supControlador.carregaEditaIndicacao());
+  app
+    .route(rotasSuporte.handle_periodo)
+    .get(supControlador.handlePeriodo())
+    .post(supControlador.handlePeriodo())
+    .delete(supControlador.handlePeriodo());
 };
