@@ -76,9 +76,9 @@ function montaReinp(msg) {
   msg.forEach((e) => {
     dadosTabela.push({
       ano: e.ano,
-      nome: e.conselheiro.nome,
-      cpf: e.conselheiro.cpf,
-      unidade: e.conselheiro.unidade,
+      nome: e.nome,
+      cpf: e.cpf,
+      unidade: e.unidade,
       T1: somaTrimestre('1', e),
       T2: somaTrimestre('2', e),
       T3: somaTrimestre('3', e),
