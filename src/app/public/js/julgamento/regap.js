@@ -151,8 +151,8 @@ function dataTable(msg) {
         download: true,
       },
       {
-        title: 'Valor Sem TJM (Atual)',
-        field: 'Valor_Sem_TJM',
+        title: 'Valor Crédito Lançado (Multa de Ofício)',
+        field: 'Valor_Credito_Lancado',
         sorter: 'number',
         hozAlign: 'center',
         editor: false,
@@ -162,8 +162,8 @@ function dataTable(msg) {
         download: true,
       },
       {
-        title: 'Valor Crédito Lançado (Multa de Ofício)',
-        field: 'Valor_Credito_Lancado',
+        title: 'Valor Sem TJM (Atual)',
+        field: 'Valor_Sem_TJM',
         sorter: 'number',
         hozAlign: 'center',
         editor: false,
