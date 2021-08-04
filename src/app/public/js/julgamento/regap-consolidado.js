@@ -160,6 +160,8 @@ function selectRelatorios() {
             entradaAtividade: r.entradaAtividade,
             HE: r.HE,
             valorOrig: r.valorOrig,
+            valorSemTJM: r.valorSemTJM,
+            valorCrdLanc: r.valorCrdLanc,
             Dias_na_Atividade: retornaDias(r.entradaAtividade),
             Dias_da_Dist: retornaDias(r.dtUltDist),
             Dias_da_SJ: retornaDias(r.dtSessao),
@@ -205,6 +207,7 @@ function initSelect() {
 }
 
 function dataTable(msg) {
+  console.log(msg);
   let tabledata = msg;
   table = new Tabulator('#tabelaRegap', {
     data: tabledata,
@@ -352,6 +355,28 @@ function dataTable(msg) {
         formatter: formatValor,
         accessorDownload: numberConvert,
         responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Valor Sem TJM (Atual)',
+        field: 'valorSemTJM',
+        sorter: 'number',
+        hozAlign: 'center',
+        editor: false,
+        formatter: formatValor,
+        accessorDownload: numberConvert,
+        responsive: 1,
+        download: true,
+      },
+      {
+        title: 'Valor Crédito Lançado (Multa de Ofício)',
+        field: 'valorCrdLanc',
+        sorter: 'number',
+        hozAlign: 'center',
+        editor: false,
+        formatter: formatValor,
+        accessorDownload: numberConvert,
+        responsive: 1,
         download: true,
       },
       {
