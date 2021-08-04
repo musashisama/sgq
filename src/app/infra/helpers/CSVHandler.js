@@ -165,7 +165,6 @@ class CSVHandler {
                     parcial.push(dado);
                   }
                 });
-                //console.log(dados.length + "   " + parcial.length);
                 CSVHandler._escreveZip(path + gerado, parcial).then(() => {
                   let csvmongo = CSVHandler._montaObjRelatorio(parcial, tipo);
                   CSVHandler._excluiCSV(arq);
@@ -176,57 +175,6 @@ class CSVHandler {
               });
           });
         });
-      } else {
-        // if (tipo == 'REINP') {
-        //   fs.readFile(arq, 'utf8', function (err, data) {
-        //     data = data.replace(/;"Métrica";/gi, ';');
-        //     data = data.replace(/;;/gi, ';');
-        //     let dados = d3.csvParse(data);
-        //     gerado = gerado + arq.split('/')[arq.split('/').length - 1];
-        //     let rex2 = /([0-9])([0-9]ª)/gi;
-        //     let rex3 = /( )([0-9])/gi;
-        //     CSVHandler._renomeiaReinp(dados).then((dados) => {
-        //       CSVHandler._horas_Reinp(dados).then((dados) => {
-        //         dados.forEach((dado) => {
-        //           dado.Equipe = dado.Equipe.replace(rex3, '$2');
-        //           dado.Equipe = dado.Equipe.replace(rex2, '$2');
-        //           dado.Data = moment(
-        //             CSVHandler._ajustaData(dado.Data_Situacao, true),
-        //           ).format('DD/MM/YYYY');
-        //           delete dado.Data_Situacao;
-        //         });
-        //         CSVHandler._escreveZip(path + gerado, dados).then(() => {
-        //           let csvmongo = CSVHandler._montaObjRelatorio(dados, tipo);
-        //           CSVHandler._excluiCSV(arq);
-        //           CSVHandler._excluiCSV(`${path}${gerado}`);
-        //           gerado = 'Gerencial-';
-        //           return resolve(csvmongo);
-        //         });
-        //       });
-        //     });
-        //   });
-        // }
-        // if (tipo == 'REINP') {
-        //   let jsonT1 = JSON.parse(fs.readFileSync('REINP03.json', 'utf8'));
-        //   let jsonT2 = JSON.parse(fs.readFileSync('REINP06.json', 'utf8'));
-        //   let cons = JSON.parse(fs.readFileSync('cons.json', 'utf8'));
-        //   fs.readFile(arq,'utf8', function(err,data){
-        //     let json = JSON.parse(data)
-        //     console.log(json);
-        //   })
-        //   jsonT1.forEach((element) => {
-        //     cons.forEach((cons) => {
-        //       element.conselheiro.trimestre = 'T1';
-        //       if (
-        //         removerAcentos(element.conselheiro.nome.toLowerCase()) ==
-        //         removerAcentos(cons.nome).toLowerCase()
-        //       ) {
-        //         element.conselheiro.cpf = cons.cpf.toString();
-        //       }
-        //     });
-        //   });
-        //   //fs.writeFileSync('T1.json', JSON.stringify(json));
-        // }
       }
     });
   }
@@ -355,8 +303,13 @@ class CSVHandler {
               Acordao: valor.Acordao,
               Valor: valor.Valor,
               Valor_Originario: valor.Valor_Originario,
+              Imposto_Proj: valor.Imposto_Proj,
               Valor_Sem_TJM: valor.Valor_Sem_TJM,
               Valor_Credito_Lancado: valor.Valor_Credito_Lancado,
+              Valor_Original:
+                +valor.Valor_Credito_Lancado +
+                +valor.valor.Imposto_Proj +
+                +valor.Valor_Originario,
               AtividadeUltima: valor.AtividadeUltima,
               Dias_na_Atividade: Math.floor(
                 (hoje - CSVHandler._ajustaData(valor.Entrada_na_Atividade)) /
@@ -1081,6 +1034,7 @@ class CSVHandler {
         'Valor_Originário_Lançado/P_30': 'Valor_Originario',
         Valor_do_Processo_sem_TJM__33: 'Valor_Sem_TJM',
         'Valor_do_Crédito_Lançado_(_34': 'Valor_Credito_Lancado',
+        Imposto_Projetado_Sobre_La_35: 'Imposto_Proj',
         'Assuntos/Objetos_31': 'Assunto',
         Prioridade_24: 'Prioridade',
         Motivo_da_Prioridade_22: 'Motivo_Prioridade',

@@ -159,7 +159,18 @@ function dataTable(msg) {
         download: true,
       },
       {
-        title: 'Valor Originário',
+        title: 'Valor Original',
+        field: 'valorOriginal',
+        sorter: 'number',
+        hozAlign: 'center',
+        editor: false,
+        formatter: formatValor,
+        accessorDownload: numberConvert,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Valor Originário Lançado/Pleiteado',
         field: 'valorOrig',
         sorter: 'number',
         hozAlign: 'center',
@@ -183,6 +194,18 @@ function dataTable(msg) {
       {
         title: 'Valor Sem TJM (Atual)',
         field: 'valorSemTJM',
+        sorter: 'number',
+        hozAlign: 'center',
+        editor: false,
+        formatter: formatValor,
+        accessorDownload: numberConvert,
+        responsive: 1,
+        download: true,
+      },
+      {
+        title:
+          'Imposto Projetado Sobre Lançamento de Reduções de Base de Cálculo e/ou de Imposto',
+        field: 'impostoProj',
         sorter: 'number',
         hozAlign: 'center',
         editor: false,
