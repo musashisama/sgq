@@ -237,16 +237,17 @@ class CSVHandler {
       let dados = [];
       var comprimidos = zip.getEntries();
       zip.extractEntryTo(comprimidos[0], path, false, true);
-      fs.readFile(`${path}${comprimidos[0].entryName}`, 'utf8', function (
-        err,
-        data,
-      ) {
-        if (err) {
-          return reject;
-        }
-        dados = d3.csvParse(data);
-        return resolve(dados);
-      });
+      fs.readFile(
+        `${path}${comprimidos[0].entryName}`,
+        'utf8',
+        function (err, data) {
+          if (err) {
+            return reject;
+          }
+          dados = d3.csvParse(data);
+          return resolve(dados);
+        },
+      );
       fs.unlink(`${path}${comprimidos[0].entryName}`, function (error) {
         if (error) {
           console.log(`Erro: ${error}`);
@@ -354,6 +355,8 @@ class CSVHandler {
               Acordao: valor.Acordao,
               Valor: valor.Valor,
               Valor_Originario: valor.Valor_Originario,
+              Valor_Sem_TJM: valor.Valor_Sem_TJM,
+              Valor_Credito_Lancado: valor.Valor_Credito_Lancado,
               AtividadeUltima: valor.AtividadeUltima,
               Dias_na_Atividade: Math.floor(
                 (hoje - CSVHandler._ajustaData(valor.Entrada_na_Atividade)) /
@@ -1076,6 +1079,8 @@ class CSVHandler {
         Data_Sessão_CARF_16: 'Data_da_Sessao_Julgamento',
         Data_Distribuição_Última_12: 'Data_ultima_distribuicao',
         'Valor_Originário_Lançado/P_30': 'Valor_Originario',
+        Valor_do_Processo_sem_TJM__33: 'Valor_Sem_TJM',
+        'Valor_do_Crédito_Lançado_(_34': 'Valor_Credito_Lancado',
         'Assuntos/Objetos_31': 'Assunto',
         Prioridade_24: 'Prioridade',
         Motivo_da_Prioridade_22: 'Motivo_Prioridade',
