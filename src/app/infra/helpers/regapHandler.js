@@ -119,6 +119,11 @@ class regapHandler {
                   valorOrig: +p.Valor_Originario,
                   valorSemTJM: +p.Valor_Sem_TJM,
                   valorCrdLanc: +p.Valor_Credito_Lancado,
+                  impostoProj: +p.Imposto_Proj,
+                  valorOriginal:
+                    +p.Imposto_Proj +
+                    +p.Valor_Credito_Lancado +
+                    +p.Valor_Originario,
                   assunto: p.Assunto,
                   prioridade: p.Prioridade,
                   motPrior: p.Motivo_Prioridade,
@@ -174,6 +179,7 @@ class regapHandler {
         Data_Distribuição_Última_12: 'Data_ultima_distribuicao',
         'Valor_Originário_Lançado/P_30': 'Valor_Originario',
         Valor_do_Processo_sem_TJM__33: 'Valor_Sem_TJM',
+        Imposto_Projetado_Sobre_La_35: 'Imposto_Proj',
         'Valor_do_Crédito_Lançado_(_34': 'Valor_Credito_Lancado',
         'Assuntos/Objetos_31': 'Assunto',
         Prioridade_do_Processo_24: 'Prioridade',

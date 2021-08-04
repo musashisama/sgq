@@ -140,6 +140,17 @@ function dataTable(msg) {
         download: true,
       },
       {
+        title: 'Valor Original',
+        field: 'Valor_Original',
+        sorter: 'number',
+        hozAlign: 'center',
+        editor: false,
+        formatter: formatValor,
+        accessorDownload: downloadValor,
+        responsive: 0,
+        download: true,
+      },
+      {
         title: 'Valor Originário',
         field: 'Valor_Originario',
         sorter: 'number',
@@ -147,7 +158,7 @@ function dataTable(msg) {
         editor: false,
         formatter: formatValor,
         accessorDownload: downloadValor,
-        responsive: 0,
+        responsive: 1,
         download: true,
       },
       {

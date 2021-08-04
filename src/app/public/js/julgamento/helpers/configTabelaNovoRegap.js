@@ -142,9 +142,9 @@ function initCheckboxes() {
   });
   $(`#abaixoUM`).change(() => {
     if ($(`#abaixoUM`).prop('checked')) {
-      table.addFilter('valorOrig', '<=', minimoApto);
+      table.addFilter('valorOriginal', '<=', minimoApto);
     } else {
-      table.removeFilter('valorOrig', '<=', minimoApto);
+      table.removeFilter('valorOriginal', '<=', minimoApto);
     }
   });
   $(`#juntadaCheck`).change(() => {
