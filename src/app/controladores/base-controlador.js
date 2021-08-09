@@ -107,8 +107,7 @@ http://${URL.host}/altera-senha/${registro.controle}
             msg: {
               cor: 'login_error',
               alert: 'error',
-              text:
-                'Endereço não encontrado na base. Entre em contato com o administrador do sistema.',
+              text: 'Endereço não encontrado na base. Entre em contato com o administrador do sistema.',
             },
           });
       });
@@ -126,8 +125,7 @@ http://${URL.host}/altera-senha/${registro.controle}
           msg: {
             cor: 'login_error',
             alert: 'error',
-            text:
-              'Solicitação inválida. Caso queira trocar sua senha, crie uma nova solicitação.',
+            text: 'Solicitação inválida. Caso queira trocar sua senha, crie uma nova solicitação.',
           },
         });
       }
@@ -144,8 +142,7 @@ http://${URL.host}/altera-senha/${registro.controle}
                 msg: {
                   cor: 'login_error',
                   alert: 'error',
-                  text:
-                    'Solicitação expirada. Crie uma nova solicitação de troca de senha.',
+                  text: 'Solicitação expirada. Crie uma nova solicitação de troca de senha.',
                 },
               });
           }
@@ -153,8 +150,7 @@ http://${URL.host}/altera-senha/${registro.controle}
             msg: {
               cor: 'login_error',
               alert: 'error',
-              text:
-                'Solicitação inexistente. Caso queira trocar sua senha, crie uma nova solicitação.',
+              text: 'Solicitação inexistente. Caso queira trocar sua senha, crie uma nova solicitação.',
             },
           });
         })
@@ -175,8 +171,7 @@ http://${URL.host}/altera-senha/${registro.controle}
           msg: {
             cor: 'login_error',
             alert: 'error',
-            text:
-              'Solicitação inválida. Caso queira trocar sua senha, crie uma nova solicitação.',
+            text: 'Solicitação inválida. Caso queira trocar sua senha, crie uma nova solicitação.',
           },
         });
       }
@@ -223,11 +218,11 @@ http://${URL.host}/altera-senha/${registro.controle}
           .getUsers(
             { premio: false },
             { nome: 1 },
-            { nome: 1, cargo: 1, funcao: 1, premio: 1 },
+            { nome: 1, cargo: 1, funcao: 1, premio: 1 , mandatoAt: 1},
           )
           .then((user) => {
             user.forEach((u) => {
-              if (u.cargo == 'Conselheiro') {
+              if (u.cargo == 'Conselheiro' && u.mandatoAt == 'Sim') {
                 cons.push(u.nome);
               }
               if (
