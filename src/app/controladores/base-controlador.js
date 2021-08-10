@@ -216,9 +216,9 @@ http://${URL.host}/altera-senha/${registro.controle}
         let terc = [];
         userDao
           .getUsers(
-            { premio: false },
+            { premio: { $ne: true } },
             { nome: 1 },
-            { nome: 1, cargo: 1, funcao: 1, premio: 1 , mandatoAt: 1},
+            { nome: 1, cargo: 1, funcao: 1, premio: 1, mandatoAt: 1 },
           )
           .then((user) => {
             user.forEach((u) => {
