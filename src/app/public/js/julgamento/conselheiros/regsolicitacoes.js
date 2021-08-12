@@ -74,6 +74,7 @@ function initModal() {
 function montaModal(html, dados) {
   $('.pModal').text('');
   $('.hModal').text('');
+  console.log(dados);
   $('.hModal').text('Confirmação de Registro de Solicitação');
   $('.pModal').append(
     `<p class="pModal ">
@@ -82,6 +83,9 @@ function montaModal(html, dados) {
             }</p>
             <p><strong>CPF:</strong> ${
               JSON.parse($('#dataUser').attr('data-user')).cpf
+            }</p>
+            <p><strong>Unidade:</strong> ${
+              JSON.parse($('#dataUser').attr('data-user')).unidade
             }</p>
             <p><strong>Verifique</strong> se os dados abaixo estão corretos e clique em <strong>"Confirma"</strong> para efetuar o registro:</p>
 
@@ -2723,6 +2727,7 @@ function handleSOL(registro, metodo, setor) {
   registro.setor = setor;
   registro.cpf = JSON.parse($('#dataUser').attr('data-user')).cpf;
   registro.nome = JSON.parse($('#dataUser').attr('data-user')).nome;
+  registro.unidade = JSON.parse($('#dataUser').attr('data-user')).unidade;
   registro.dtCriacao = moment().format('DD/MM/YYYY - HH:mm');
   registro.status = `Encaminhada para Análise - ${setor}`;
   $.ajax({
