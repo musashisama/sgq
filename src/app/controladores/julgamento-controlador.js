@@ -1265,9 +1265,9 @@ class JulgamentoControlador {
         const julgamentoDao = new JulgamentoDao(conn);
         let filtro, sort, projecao;
         if (req.body.get == 'listagem') {
-          filtro = 'detalhamento.ano';
+          filtro = 'ano';
           projecao = {};
-          sort = { 'detalhamento.ano': -1 };
+          sort = { ano: -1 };
           julgamentoDao.getAnosReinp(filtro, sort, projecao).then((reinp) => {
             resp.json(reinp);
           });
@@ -1277,32 +1277,17 @@ class JulgamentoControlador {
           let cpf = req.user.cpf;
           if (req.body.tipo == 'conselheiro') {
             filtro = {
-              $and: [
-                { 'detalhamento.ano': req.body.ano },
-                { 'conselheiro.cpf': cpf },
-              ],
+              $and: [{ ano: req.body.ano }, { cpf: cpf }],
             };
           } else {
             filtro = {
-              'detalhamento.ano': req.body.ano,
+              ano: req.body.ano,
             };
           }
           projecao = {};
           sort = {};
           julgamentoDao.getReinp(filtro, sort, projecao).then((reinp) => {
-            const pessoalDao = new PessoalDao(conn);
-            pessoalDao.getUsers().then((users) => {
-              reinp.forEach((elem) => {
-                users.forEach((user) => {
-                  if (elem.conselheiro.cpf == user.cpf) {
-                    elem._id = new ObjectID(user._id);
-                    elem.conselheiro.unidade = user.unidade;
-                    elem.ano = req.body.ano;
-                  }
-                });
-              });
-              resp.json(reinp);
-            });
+            resp.json(reinp);
           });
         }
       }
@@ -1315,7 +1300,7 @@ class JulgamentoControlador {
       let ano = parametros[1];
       let cpf = parametros[0];
       let filtro = {
-        $and: [{ 'conselheiro.cpf': cpf }, { 'detalhamento.ano': ano }],
+        $and: [{ cpf: cpf }, { ano: ano }],
       };
       const julgamentoDao = new JulgamentoDao(conn);
       julgamentoDao.getReinp(filtro).then((dados) => {
