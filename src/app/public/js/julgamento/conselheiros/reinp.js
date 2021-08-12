@@ -116,7 +116,8 @@ function inicializaComponentes() {
       },
     })
       .done(function (msg) {
-        formataDados(msg[0]);
+        //console.log(msg);
+        formataDados(msg);
         $('.progressReinp').toggle();
       })
       .fail(function (jqXHR, textStatus, msg) {
@@ -137,7 +138,8 @@ function formataDados(msg) {
   $('#horas4T').text(+T4.toFixed(2));
   graficoReinpInd(msg);
   let arrayMes = msg.detalhamento ? msg.detalhamento : [{}];
-  dataTableReinpDet(arrayMes.flat());
+  console.log(arrayMes);
+  dataTableReinpDet(msg);
   document.getElementById('agrupaMes').addEventListener('click', function () {
     if (agrupadoReinp == false) {
       table.setGroupBy(['mes']);
@@ -208,7 +210,7 @@ function dataTableReinpDet(msg) {
       },
       {
         title: 'Horas Efetivas',
-        field: 'horasEfetivas',
+        field: 'he',
         topCalc: somaCalc,
         sorter: 'number',
         hozAlign: 'center',
@@ -220,7 +222,7 @@ function dataTableReinpDet(msg) {
       },
       {
         title: 'Código',
-        field: 'classificacao.tipo',
+        field: 'tipo',
         sorter: 'string',
         hozAlign: 'center',
         editor: false,
@@ -229,7 +231,7 @@ function dataTableReinpDet(msg) {
       },
       {
         title: 'Descrição',
-        field: 'classificacao.descricao',
+        field: 'obs',
         sorter: 'string',
         hozAlign: 'center',
         editor: false,
@@ -284,7 +286,7 @@ function somaCalc(values, data, calcParams) {
 function dadosGrafico(dados) {
   let arrayMes = [];
   dados.forEach((elem) => {
-    elem.detalhamento.forEach((ele) => {
+    elem.forEach((ele) => {
       arrayMes.push(ele);
     });
   });
@@ -294,62 +296,62 @@ function dadosGrafico(dados) {
       return {
         Jan: d3.sum(v, (d) => {
           if (d.mes == `01/${d.ano}`) {
-            return d.horasEfetivas;
+            return d.he;
           }
         }),
         Fev: d3.sum(v, (d) => {
           if (d.mes == `02/${d.ano}`) {
-            return d.horasEfetivas;
+            return d.he;
           }
         }),
         Mar: d3.sum(v, (d) => {
           if (d.mes == `03/${d.ano}`) {
-            return d.horasEfetivas;
+            return d.he;
           }
         }),
         Abr: d3.sum(v, (d) => {
           if (d.mes == `04/${d.ano}`) {
-            return d.horasEfetivas;
+            return d.he;
           }
         }),
         Mai: d3.sum(v, (d) => {
           if (d.mes == `05/${d.ano}`) {
-            return d.horasEfetivas;
+            return d.he;
           }
         }),
         Jun: d3.sum(v, (d) => {
           if (d.mes == `06/${d.ano}`) {
-            return d.horasEfetivas;
+            return d.he;
           }
         }),
         Jul: d3.sum(v, (d) => {
           if (d.mes == `07/${d.ano}`) {
-            return d.horasEfetivas;
+            return d.he;
           }
         }),
         Ago: d3.sum(v, (d) => {
           if (d.mes == `08/${d.ano}`) {
-            return d.horasEfetivas;
+            return d.he;
           }
         }),
         Set: d3.sum(v, (d) => {
           if (d.mes == `09/${d.ano}`) {
-            return d.horasEfetivas;
+            return d.he;
           }
         }),
         Out: d3.sum(v, (d) => {
           if (d.mes == `10/${d.ano}`) {
-            return d.horasEfetivas;
+            return d.he;
           }
         }),
         Nov: d3.sum(v, (d) => {
           if (d.mes == `11/${d.ano}`) {
-            return d.horasEfetivas;
+            return d.he;
           }
         }),
         Dez: d3.sum(v, (d) => {
           if (d.mes == `12/${d.ano}`) {
-            return d.horasEfetivas;
+            return d.he;
           }
         }),
       };
@@ -358,69 +360,69 @@ function dadosGrafico(dados) {
 }
 //GRÁFICO REINP TRIMESTRAL
 function dadosGrafico(dados) {
-  let arrayMes = dados.detalhamento;
+  let arrayMes = dados;
   return d3
     .nest()
     .rollup((v) => {
       return {
         Jan: d3.sum(v, (d) => {
           if (d.mes == `01/${d.ano}`) {
-            return d.horasEfetivas;
+            return d.he;
           }
         }),
         Fev: d3.sum(v, (d) => {
           if (d.mes == `02/${d.ano}`) {
-            return d.horasEfetivas;
+            return d.he;
           }
         }),
         Mar: d3.sum(v, (d) => {
           if (d.mes == `03/${d.ano}`) {
-            return d.horasEfetivas;
+            return d.he;
           }
         }),
         Abr: d3.sum(v, (d) => {
           if (d.mes == `04/${d.ano}`) {
-            return d.horasEfetivas;
+            return d.he;
           }
         }),
         Mai: d3.sum(v, (d) => {
           if (d.mes == `05/${d.ano}`) {
-            return d.horasEfetivas;
+            return d.he;
           }
         }),
         Jun: d3.sum(v, (d) => {
           if (d.mes == `06/${d.ano}`) {
-            return d.horasEfetivas;
+            return d.he;
           }
         }),
         Jul: d3.sum(v, (d) => {
           if (d.mes == `07/${d.ano}`) {
-            return d.horasEfetivas;
+            return d.he;
           }
         }),
         Ago: d3.sum(v, (d) => {
           if (d.mes == `08/${d.ano}`) {
-            return d.horasEfetivas;
+            return d.he;
           }
         }),
         Set: d3.sum(v, (d) => {
           if (d.mes == `09/${d.ano}`) {
-            return d.horasEfetivas;
+            return d.he;
           }
         }),
         Out: d3.sum(v, (d) => {
           if (d.mes == `10/${d.ano}`) {
-            return d.horasEfetivas;
+            return d.he;
           }
         }),
         Nov: d3.sum(v, (d) => {
           if (d.mes == `11/${d.ano}`) {
-            return d.horasEfetivas;
+            return d.he;
           }
         }),
         Dez: d3.sum(v, (d) => {
           if (d.mes == `12/${d.ano}`) {
-            return d.horasEfetivas;
+            return d.he;
           }
         }),
       };

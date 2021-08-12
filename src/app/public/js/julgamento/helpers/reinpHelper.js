@@ -1,3 +1,5 @@
+let anoEscolhido;
+let dadosPlot;
 function getRelatorios(tipo, callback) {
   $.ajax({
     url: `/julgamento/restrito/reinp/`,
@@ -22,6 +24,7 @@ function getRelatorios(tipo, callback) {
         callback(m);
         $(`#reinp${m}`).click((e) => {
           e.preventDefault();
+          anoEscolhido = m;
           tipo ? selectRelatorios(m, tipo) : selectRelatorios(m);
         });
       });
@@ -33,7 +36,7 @@ function getRelatorios(tipo, callback) {
 }
 
 function testeCallback(valor) {
-  console.log('Chamou callbak: ' + valor);
+  //console.log('Chamou callbak: ' + valor);
 }
 
 function selectRelatorios(ano, tipo) {
@@ -73,30 +76,64 @@ function montaReinp(msg) {
       }
     });
   let dadosTabela = [];
-  msg.forEach((e) => {
+  let cpfs = new Set();
+  msg.forEach((m) => {
+    cpfs.add(m.cpf);
+  });
+  let relatorio = [];
+  cpfs.forEach((c) => {
+    relatorio.push({ cpf: c });
+  });
+  relatorio.forEach((r) => {
+    msg.forEach((m) => {
+      if (r.cpf == m.cpf) {
+        r.nome = m.nome;
+        r.unidade = m.unidade;
+        r.processos = [];
+      }
+    });
+  });
+  msg.forEach((m) => {
+    relatorio.forEach((r) => {
+      if (r.cpf == m.cpf) {
+        r.processos.push({
+          processo: m.processo,
+          contribuinte: m.contribuinte,
+          tipo: m.tipo,
+          mes: m.mes,
+          trimestre: m.trimestre,
+          ano: m.ano,
+          he: m.he,
+          retorno: m.retorno,
+          obs: m.obs,
+        });
+      }
+    });
+  });
+  //console.log(relatorio);
+  relatorio.forEach((e) => {
     dadosTabela.push({
-      ano: e.ano,
+      ano: anoEscolhido,
       nome: e.nome,
       cpf: e.cpf,
       unidade: e.unidade,
-      T1: somaTrimestre('1', e),
-      T2: somaTrimestre('2', e),
-      T3: somaTrimestre('3', e),
-      T4: somaTrimestre('4', e),
+      T1: somaTrimestre('1', e.processos),
+      T2: somaTrimestre('2', e.processos),
+      T3: somaTrimestre('3', e.processos),
+      T4: somaTrimestre('4', e.processos),
     });
   });
   dataTable(dadosTabela);
-  dadosGrafico(msg);
 }
 
 function somaMes(mes, processos) {
   let soma = 0;
-  processos.detalhamento.forEach((p) => {
-    if (p.mes == mes) {
-      if (p.horasEfetivas == 7.8) {
-        p.horasEfetivas = 8;
+  processos.forEach((p) => {
+    if (p.mes == mes && p.retorno == 'NÃO') {
+      if (p.he == 7.8) {
+        p.he = 8;
       }
-      soma += p.horasEfetivas;
+      soma += p.he;
     }
   });
   return +soma.toFixed(2);
@@ -104,12 +141,12 @@ function somaMes(mes, processos) {
 
 function somaTrimestre(trimestre, processos) {
   let soma = 0;
-  processos.detalhamento.forEach((p) => {
-    if (p.trimestre == trimestre) {
-      if (p.horasEfetivas == 7.8) {
-        p.horasEfetivas = 8;
+  processos.forEach((p) => {
+    if (p.trimestre == trimestre && p.retorno == 'NÃO') {
+      if (p.he == 7.8) {
+        p.he = 8;
       }
-      soma += p.horasEfetivas;
+      soma += p.he;
     }
   });
   return +soma.toFixed(2);
