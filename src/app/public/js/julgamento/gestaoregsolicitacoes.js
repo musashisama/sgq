@@ -102,6 +102,17 @@ function tabelaSolicitacoes() {
         download: true,
       },
       {
+        title: 'Unidade',
+        field: 'unidade',
+        sorter: 'string',
+        hozAlign: 'left',
+        editor: false,
+        headerFilter: 'input',
+        responsive: 0,
+        visible: false,
+        download: true,
+      },
+      {
         title: 'Data da Solicitação',
         field: 'dtCriacao',
         sorter: 'date',

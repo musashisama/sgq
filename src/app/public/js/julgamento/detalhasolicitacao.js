@@ -21,6 +21,9 @@ function montaSolicitacao() {
   <p><strong>CPF:</strong> ${
     JSON.parse($('#dadosSolicitacao').attr('data-solicitacao')).cpf
   }</p>
+  <p><strong>Unidade:</strong> ${
+    JSON.parse($('#dadosSolicitacao').attr('data-solicitacao')).unidade
+  }</p>
 <p><strong>Data de Criação:</strong> ${
     JSON.parse($('#dadosSolicitacao').attr('data-solicitacao')).dtCriacao
   }</p>
