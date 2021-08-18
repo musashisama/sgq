@@ -49,23 +49,25 @@ function render(input, out, __component, component, state) {
 
   out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Gestão da Indicação para Pauta</h3><br><div class=\"row conteudoPrincipal\"></div><div class=\"row\"><a class=\"waves-effect waves-light btn btn-cria\"" +
     marko_attr("href", "/suporte/restrito/cria-indicacao") +
-    "><i class=\"material-icons right \">cloud</i>Criar Período de Indicação para Pauta</a></div><br><div class=\"row\"><h4>Gerenciar períodos de Indicação para Pauta</h4></div><div class=\"row\"><div class=\"col s12 right-align\">");
+    "><i class=\"material-icons right \">cloud</i>Criar Período de Indicação para Pauta</a></div><br><div class=\"row\"><h4>Gerenciar períodos de Indicação para Pauta</h4></div><div class=\"row\"><div class=\"col s12 right-align\"><div class=\"row\">");
 
-  app_drop_download_tag({}, out, __component, "18");
+  app_drop_download_tag({}, out, __component, "19");
 
-  out.w("</div></div><div class=\"row\"><div id=\"cardsColegiados\"></div></div></div></main>");
+  out.w("</div><div id=\"tabelaIndicacoes\"" +
+    marko_attr("data-indicacoes", "" + data.indicacoes) +
+    "></div></div></div><div class=\"row\"><div id=\"cardsColegiados\"></div></div></div></main>");
 
-  app_footer_tag({}, out, __component, "21");
+  app_footer_tag({}, out, __component, "23");
 
-  app_modal_tag({}, out, __component, "22");
+  app_modal_tag({}, out, __component, "24");
 
-  app_scripts_js_tag({}, out, __component, "23");
+  app_scripts_js_tag({}, out, __component, "25");
 
   out.w("<script src=\"/estatico/js/julgamento/cosup/gestaoIndicacao.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "25");
+  await_reorderer_tag({}, out, __component, "27");
 
   out.w("</body></html>");
 }

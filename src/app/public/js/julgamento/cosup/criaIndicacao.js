@@ -51,37 +51,43 @@ function montaModal() {
   $('.pModal').append(
     `<p class="pModal ">
             <br/>
-            Colegiados: ${$('#tipoColegiado option:selected').text()}<br/>
-            Semana: ${$('#semana option:selected').text()}<br/>
-            Mês: ${$('#mes option:selected').text()}<br/>
-            Ano: ${$('#ano option:selected').text()}<br/>
-    Indicação pelos Conselheiros: de ${$('#abreIndicacao').val()} a ${$(
-      '#fechaIndicacao',
-    ).val()}<br/>
-    Conferência dos Questionamentos: ${$('#confereQuest').val()}<br/>
-    Consolidação da Pauta: ${$('#consolidaPauta').val()}<br/>
-    Ordenação da Pauta: ${$('#ordenaPauta').val()}<br/>
-    Lançamento no e-Processo:${$('#eProcesso').val()}<br/>
-    Envio para IN-DOU: ${$('#envioIN').val()}<br/>
-    Publicação no Sítio do CARF: ${$('#publicaSitio').val()}<br/>
+            <strong>Tipo de Sessão:</strong> ${$(
+              '#tipoSessao option:selected',
+            ).text()}<br/>
+            <strong>Colegiados:</strong> ${$(
+              '#tipoColegiado option:selected',
+            ).text()}<br/>
+            <strong>Semana:</strong> ${$('#semana option:selected').text()}<br/>
+           <strong> Mês:</strong> ${$('#mes option:selected').text()}<br/>
+            <strong>Ano:</strong> ${$('#ano option:selected').text()}<br/>
+    <strong> Período de Indicação pelos Conselheiros: </strong> de ${$(
+      '#abreIndicacao',
+    ).val()} a ${$('#fechaIndicacao').val()}<br/>
+
             </p>`,
+    // Conferência dos Questionamentos: ${$('#confereQuest').val()}<br/>
+    // Consolidação da Pauta: ${$('#consolidaPauta').val()}<br/>
+    // Ordenação da Pauta: ${$('#ordenaPauta').val()}<br/>
+    // Lançamento no e-Processo:${$('#eProcesso').val()}<br/>
+    // Envio para IN-DOU: ${$('#envioIN').val()}<br/>
+    // Publicação no Sítio do CARF: ${$('#publicaSitio').val()}<br/>
   );
   $('.concorda').click(function () {
     let data = {
+      tipoSessao: $('#tipoSessao').val(),
       tipoColegiado: $('#tipoColegiado').val(),
       semana: $('#semana').val(),
       mes: $('#mes').val(),
       ano: $('#ano').val(),
       abreIndicacao: $('#abreIndicacao').val(),
       fechaIndicacao: $('#fechaIndicacao').val(),
-      confereQuest: $('#confereQuest').val(),
-      consolidaPauta: $('#consolidaPauta').val(),
-      ordenaPauta: $('#ordenaPauta').val(),
-      eProcesso: $('#eProcesso').val(),
-      envioIN: $('#envioIN').val(),
-      publicaSitio: $('#publicaSitio').val(),
+      // confereQuest: $('#confereQuest').val(),
+      // consolidaPauta: $('#consolidaPauta').val(),
+      // ordenaPauta: $('#ordenaPauta').val(),
+      // eProcesso: $('#eProcesso').val(),
+      // envioIN: $('#envioIN').val(),
+      // publicaSitio: $('#publicaSitio').val(),
     };
-    console.log(data);
     handleIndicacao(data, 'POST');
     $('.pModal').text('');
   });
@@ -96,13 +102,17 @@ function handleIndicacao(registro, metodo) {
     data: registro,
     type: metodo,
     success: function (result) {
-      console.log(result);
-      location.assign('/suporte/restrito/gestao-indicacao');
+      var toastHTML = `<span>Período criado com sucesso. Redirecionando.</span>`;
+      M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+      //console.log(result);
+      setTimeout(function () {
+        location.assign('/suporte/restrito/gestao-indicacao');
+      }, 1500);
     },
     error: function (result) {
       var toastHTML = `<span>Ocorreu um erro.</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
-      console.log(result);
+      //console.log(result);
     },
   });
 }
