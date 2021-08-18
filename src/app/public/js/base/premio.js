@@ -27,13 +27,13 @@ function ocultaSPA() {
 }
 
 function initBtns() {
-  $('.btnSelCons').click((e) => {
+  $('.selectCons').change((e) => {
     $('#nomeCons').text($('.selectCons option:selected').text());
   });
-  $('.btnSelServ').click((e) => {
+  $('.selectServ').change((e) => {
     $('#nomeServ').text($('.selectServ option:selected').text());
   });
-  $('.btnSelTerc').click((e) => {
+  $('.selectTerc').change((e) => {
     $('#nomeTerc').text($('.selectTerc option:selected').text());
   });
   $('.btnCancelCons').click((e) => {

@@ -13,18 +13,13 @@ function inicializaComponentes() {
 function initValues() {
   let dados = JSON.parse($('#dadosIndicacao').attr('data-indicacao'));
   dados = dados[0];
+  $(`#tipoSessao`).val(dados.tipoSessao);
   $(`#tipoColegiado`).val(dados.tipoColegiado);
   $(`#semana`).val(dados.semana);
   $(`#mes`).val(dados.mes);
   $(`#ano`).val(dados.ano);
   $('#abreIndicacao').val(dados.abreIndicacao);
   $('#fechaIndicacao').val(dados.fechaIndicacao);
-  $('#confereQuest').val(dados.confereQuest);
-  $('#consolidaPauta').val(dados.consolidaPauta);
-  $('#ordenaPauta').val(dados.ordenaPauta);
-  $('#eProcesso').val(dados.eProcesso);
-  $('#envioIN').val(dados.envioIN);
-  $('#publicaSitio').val(dados.publicaSitio);
   initSelect();
 }
 
