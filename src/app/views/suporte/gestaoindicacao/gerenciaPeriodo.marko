@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <app-scripts-css/>
+  <body>
+    <app-header/>
+    <main class="conteudoPrincipal">
+      <app-navbar id="slide-out" class="sidenav"/>
+      <div class="container">
+        <h3 class="center-align titulo">Gerenciar Período de Indicação para Pauta</h3>
+        <br/>
+        <div class="row conteudoPrincipal"/>
+        <br/>
+        <div class="row">
+          <h4>Gerenciar Período de Indicação para Pauta</h4>
+        </div>
+        <div class="row">
+          <div class="col s12 right-align">
+            <div class="row">
+              <app-drop-download/>
+            </div>
+            <div id="periodo" data-periodo=`${data.periodo}`/>
+          </div>
+        </div>
+        <div class="row">
+          <div id="cardsColegiados"/>
+        </div>
+      </div>
+    </main>
+    <app-footer/>
+    <app-modal/>
+    <app-scripts-js/>
+    <script src="/estatico/js/julgamento/cosup/gerenciaIndicacao.js"/>
+  </body>
+</html>

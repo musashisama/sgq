@@ -59,6 +59,10 @@ module.exports = (app) => {
     .get(supControlador.carregaEditaIndicacao())
     .post(supControlador.carregaEditaIndicacao());
   app
+    .route(rotasSuporte.gerenciaPeriodo)
+    .get(supControlador.gerenciaPeriodo())
+    .post(supControlador.gerenciaPeriodo());
+  app
     .route(rotasSuporte.handle_periodo)
     .get(supControlador.handlePeriodo())
     .post(supControlador.handlePeriodo())

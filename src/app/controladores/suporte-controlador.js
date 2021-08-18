@@ -163,5 +163,33 @@ class SuporteControlador {
       }
     };
   }
+  gerenciaPeriodo() {
+    return function (req, resp) {
+      if (req.method == 'GET') {
+        const suporteDAO = new SuporteDAO(conn);
+        suporteDAO
+          .getIndicacoes({ _id: new ObjectID(req.params.id) })
+          .then((msg) => {
+            console.log(msg);
+            resp.marko(templates.suporte.gerenciaPeriodo, {
+              periodo: JSON.stringify(msg),
+            });
+          });
+      } else {
+        if (req.method == 'POST' || req.method == 'PUT') {
+          const suporteDAO = new SuporteDAO(conn);
+          suporteDAO.criaIndicacao(req.body).then((result) => {
+            resp.send(result);
+          });
+        } else if (req.method == 'DELETE') {
+          julgamentoDao
+            .excluiPortal({ uniqueId: req.body.uniqueId })
+            .then((msg) => {
+              resp.json(msg);
+            });
+        }
+      }
+    };
+  }
 }
 module.exports = SuporteControlador;

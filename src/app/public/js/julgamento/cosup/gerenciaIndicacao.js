@@ -6,39 +6,27 @@ function inicializaComponentes() {
     anoIndica();
     initSelect();
     initDatePicker();
-    initValues();
   });
 }
 
-function initValues() {
-  let dados = JSON.parse($('#dadosIndicacao').attr('data-indicacao'));
-  dados = dados[0];
-  $(`#tipoSessao`).val(dados.tipoSessao);
-  $(`#tipoColegiado`).val(dados.tipoColegiado);
-  $(`#semana`).val(dados.semana);
-  $(`#mes`).val(dados.mes);
-  $(`#ano`).val(dados.ano);
-  $('#abreIndicacao').val(dados.abreIndicacao);
-  $('#fechaIndicacao').val(dados.fechaIndicacao);
-  initSelect();
-}
-
 function anoIndica() {
+  dados = JSON.parse($('#periodo').attr('data-periodo'));
+  console.log(dados);
   $('#selectAno').append(`
    <i class="far fa-calendar-alt prefix"/>
               <label for="ano">Ano da Indicação:</label>
               <select required name="ano" id="ano">
   <option class='form-group' value=${moment().year()}>${moment().year()}</option>
-  <option class='form-group' value=${parseInt(moment().year() + 1)}>${
+  <option class='form-group' value=${moment().year() + 1}>${
     moment().year() + 1
   }</option>
-  <option class='form-group' value=${parseInt(moment().year() + 2)}>${
+  <option class='form-group' value=${moment().year() + 2}>${
     moment().year() + 2
   }</option>
-  <option class='form-group' value=${parseInt(moment().year() + 3)}>${
+  <option class='form-group' value=${moment().year()}+3>${
     moment().year() + 3
   }</option>
-  <option class='form-group' value=${parseInt(moment().year() + 4)}>${
+  <option class='form-group' value=${moment().year()}+4>${
     moment().year() + 4
   }</option>
               </select>
@@ -54,7 +42,7 @@ function initSelect() {
 }
 
 function btnCriaIndicacao() {
-  $('.btn-atualiza').click((e) => {
+  $('.btn-cria').click((e) => {
     $('#aModal').addClass('modal-trigger');
     montaModal();
   });
@@ -79,6 +67,12 @@ function montaModal() {
     ).val()} a ${$('#fechaIndicacao').val()}<br/>
 
             </p>`,
+    // Conferência dos Questionamentos: ${$('#confereQuest').val()}<br/>
+    // Consolidação da Pauta: ${$('#consolidaPauta').val()}<br/>
+    // Ordenação da Pauta: ${$('#ordenaPauta').val()}<br/>
+    // Lançamento no e-Processo:${$('#eProcesso').val()}<br/>
+    // Envio para IN-DOU: ${$('#envioIN').val()}<br/>
+    // Publicação no Sítio do CARF: ${$('#publicaSitio').val()}<br/>
   );
   $('.concorda').click(function () {
     let data = {
@@ -89,6 +83,12 @@ function montaModal() {
       ano: $('#ano').val(),
       abreIndicacao: $('#abreIndicacao').val(),
       fechaIndicacao: $('#fechaIndicacao').val(),
+      // confereQuest: $('#confereQuest').val(),
+      // consolidaPauta: $('#consolidaPauta').val(),
+      // ordenaPauta: $('#ordenaPauta').val(),
+      // eProcesso: $('#eProcesso').val(),
+      // envioIN: $('#envioIN').val(),
+      // publicaSitio: $('#publicaSitio').val(),
     };
     handleIndicacao(data, 'POST');
     $('.pModal').text('');
@@ -99,20 +99,22 @@ function montaModal() {
 }
 
 function handleIndicacao(registro, metodo) {
-  let dados = JSON.parse($('#dadosIndicacao').attr('data-indicacao'));
-  dados = dados[0];
-  registro._id = dados._id;
   $.ajax({
-    url: `/suporte/restrito/edita-periodo/${dados._id}`,
+    url: '/suporte/restrito/handle-periodo',
     data: registro,
     type: metodo,
     success: function (result) {
-      location.assign('/suporte/restrito/gestao-indicacao');
+      var toastHTML = `<span>Período criado com sucesso. Redirecionando.</span>`;
+      M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+      //console.log(result);
+      setTimeout(function () {
+        location.assign('/suporte/restrito/gestao-indicacao');
+      }, 1500);
     },
     error: function (result) {
       var toastHTML = `<span>Ocorreu um erro.</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
-      console.log(result);
+      //console.log(result);
     },
   });
 }
