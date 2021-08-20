@@ -18,7 +18,7 @@ class SuporteDao {
     return new Promise((resolve, reject) => {
       this._db.periodosIndicacao
         .find(filtro)
-        .sort({ _id: 1 })
+        .sort({ _id: -1 })
         .project()
         .toArray(function (erro, res) {
           if (erro) {

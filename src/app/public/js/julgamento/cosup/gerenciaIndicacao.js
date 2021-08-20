@@ -1,37 +1,164 @@
+let semanaAzulTOCSRF = [
+  '2ª TURMA-CSRF-CARF-MF-DF',
+  '1ª TO-2ªCÂMARA-3ªSEÇÃO-CARF-MF-DF',
+  '2ª TO-2ªCÂMARA-3ªSEÇÃO-CARF-MF-DF',
+  '1ª TO-3ªCÂMARA-3ªSEÇÃO-CARF-MF-DF',
+  '2ª TO-3ªCÂMARA-3ªSEÇÃO-CARF-MF-DF',
+  '1ª TO-4ªCÂMARA-3ªSEÇÃO-CARF-MF-DF',
+  '2ª TO-4ªCÂMARA-3ªSEÇÃO-CARF-MF-DF',
+];
+let semanaAzulTE = [
+  '1ª TE-2ªSEÇÃO-2001-CARF-MF-DF',
+  '2ª TE-2ªSEÇÃO-2002-CARF-MF-DF',
+  '3ª TE-2ªSEÇÃO-2003-CARF-MF-DF',
+];
+let semanaVerdeTOCSRF = [
+  '1ª TURMA-CSRF-CARF-MF-DF',
+  '1ª TO-2ªCÂMARA-2ªSEÇÃO-CARF-MF-DF',
+  '1ª TO-2ªCÂMARA-2ªSEÇÃO-CARF-MF-DF',
+  '2ª TO-2ªCÂMARA-2ªSEÇÃO-CARF-MF-DF',
+  '2ª TO-2ªCAMARA-2ªSEÇÃO-CARF-MF-DF',
+  '1ª TO-3ªCÂMARA-2ªSEÇÃO-CARF-MF-DF',
+  '2ª TO-3ªCÂMARA-2ªSEÇÃO-CARF-MF-DF',
+  '1ª TO-4ªCÂMARA-2ªSEÇÃO-CARF-MF-DF',
+  '2ª TO-4ªCÂMARA-2ªSEÇÃO-CARF-MF-DF',
+];
+let semanaVerdeTE = [
+  '1ª TE-1ªSEÇÃO-1001-CARF-MF-DF',
+  '2ª TE-1ªSEÇÃO-1002-CARF-MF-DF',
+  '3ª TE-1ªSEÇÃO-1003-CARF-MF-DF',
+];
+let semanaAmarelaTOCSRF = [
+  '3ª TURMA-CSRF-CARF-MF-DF',
+  '1ª TO-2ªCÂMARA-1ªSEÇÃO-CARF-MF-DF',
+  '2ª TO-2ªCÂMARA-1ªSEÇÃO-CARF-MF-DF',
+  '1ª TO-3ªCÂMARA-1ªSEÇÃO-CARF-MF-DF',
+  '2ª TO-3ªCÂMARA-1ªSEÇÃO-CARF-MF-DF',
+  '1ª TO-4ªCÂMARA-1ªSEÇÃO-CARF-MF-DF',
+  '2ª TO-4ªCÂMARA-1ªSEÇÃO-CARF-MF-DF',
+];
+let semanaAmarelaTE = [
+  '1ª TE-3ªSEÇÃO-3001-CARF-MF-DF',
+  '2ª TE-3ªSEÇÃO-3002-CARF-MF-DF',
+  '3ª TE-3ªSEÇÃO-3003-CARF-MF-DF',
+];
+let dados = JSON.parse($('#periodo').attr('data-periodo'));
+let users = JSON.parse($('#periodo').attr('data-cons'));
 inicializaComponentes();
 function inicializaComponentes() {
   $(document).ready(function () {
-    btnCriaIndicacao();
     initModal();
-    anoIndica();
+    montaCard();
+    montaTabela();
     initSelect();
     initDatePicker();
   });
 }
 
-function anoIndica() {
-  dados = JSON.parse($('#periodo').attr('data-periodo'));
-  console.log(dados);
-  $('#selectAno').append(`
-   <i class="far fa-calendar-alt prefix"/>
-              <label for="ano">Ano da Indicação:</label>
-              <select required name="ano" id="ano">
-  <option class='form-group' value=${moment().year()}>${moment().year()}</option>
-  <option class='form-group' value=${moment().year() + 1}>${
-    moment().year() + 1
-  }</option>
-  <option class='form-group' value=${moment().year() + 2}>${
-    moment().year() + 2
-  }</option>
-  <option class='form-group' value=${moment().year()}+3>${
-    moment().year() + 3
-  }</option>
-  <option class='form-group' value=${moment().year()}+4>${
-    moment().year() + 4
-  }</option>
-              </select>
+function montaCard() {
+  let periodo = dados[0];
+  $('#cardInfo').append(`
+    <div class="col s12 m12">
+      <div class="card white darken-1">
+        <div class="card-content black-text">
+          <span class="card-title">Semana ${periodo.semana}</span>
+          <p>Mês da Indicação: ${periodo.mes}/${periodo.ano}</p>
+          <p>Período da Indicação: ${periodo.abreIndicacao} a ${periodo.fechaIndicacao}</p>
+        </div>
+      </div>
+    </div>
+
   `);
 }
+
+function montaTabela() {
+  let periodo = dados[0];
+  let dadosTabela = [];
+  if (periodo.semana == 'Amarela') {
+    if (periodo.tipoColegiado == 'TOCSRF') {
+      semanaAmarelaTOCSRF.forEach((colegiado) => {
+        dadosTabela.push({ colegiado: colegiado, id: periodo._id });
+      });
+      tabelaColegiados(dadosTabela);
+    }
+    if (periodo.tipoColegiado == 'TE') {
+      semanaAmarelaTE.forEach((colegiado) => {
+        dadosTabela.push({ colegiado: colegiado, id: periodo._id });
+      });
+      tabelaColegiados(dadosTabela);
+    }
+  }
+  if (periodo.semana == 'Azul') {
+    if (periodo.tipoColegiado == 'TOCSRF') {
+      semanaAzulTOCSRF.forEach((colegiado) => {
+        dadosTabela.push({ colegiado: colegiado, id: periodo._id });
+      });
+      tabelaColegiados(dadosTabela);
+    }
+    if (periodo.tipoColegiado == 'TE') {
+      semanaAzulTE.forEach((colegiado) => {
+        dadosTabela.push({ colegiado: colegiado, id: periodo._id });
+      });
+      tabelaColegiados(dadosTabela);
+    }
+  }
+  if (periodo.semana == 'Verde') {
+    if (periodo.tipoColegiado == 'TOCSRF') {
+      semanaVerdeTOCSRF.forEach((colegiado) => {
+        dadosTabela.push({ colegiado: colegiado, id: periodo._id });
+      });
+      tabelaColegiados(dadosTabela);
+    }
+    if (periodo.tipoColegiado == 'TE') {
+      semanaVerdeTE.forEach((colegiado) => {
+        dadosTabela.push({ colegiado: colegiado, id: periodo._id });
+      });
+      tabelaColegiados(dadosTabela);
+    }
+  }
+}
+
+function tabelaColegiados(dados) {
+  table = new Tabulator('#tabelaColegiados', {
+    data: dados,
+    pagination: 'local',
+    height: '1000px',
+    minHeight: '300px',
+    maxHeight: '1000px',
+    layout: 'fitDataStretch',
+    movableRows: false,
+    responsiveLayout: 'collapse',
+    initialSort: [],
+    groupStartOpen: false,
+    responsiveLayoutCollapseStartOpen: false,
+    columns: [
+      {
+        title: 'Colegiado',
+        field: 'colegiado',
+        sorter: 'string',
+        hozAlign: 'left',
+        editor: false,
+        headerFilter: 'input',
+        responsive: 0,
+      },
+      {
+        title: 'Gerenciar',
+        formatter: formatGerencia,
+        hozAlign: 'center',
+        download: false,
+      },
+    ],
+  });
+}
+
+let formatGerencia = function formatGerencia(cell) {
+  return `
+  <a class='black-text btnedita' href='/suporte/restrito/gerencia-colegiado/${
+    cell.getRow().getData().id
+  }&${cell.getRow().getData().colegiado}
+  }' title='Gerenciar Colegiado'><i class='material-icons'>settings</i></a>
+  `;
+};
 
 function initModal() {
   $('.modal').modal();
@@ -39,84 +166,6 @@ function initModal() {
 
 function initSelect() {
   $('select').formSelect();
-}
-
-function btnCriaIndicacao() {
-  $('.btn-cria').click((e) => {
-    $('#aModal').addClass('modal-trigger');
-    montaModal();
-  });
-}
-
-function montaModal() {
-  $('.hModal').text('Criação de Período de Indicação para Pauta');
-  $('.pModal').append(
-    `<p class="pModal ">
-            <br/>
-            <strong>Tipo de Sessão:</strong> ${$(
-              '#tipoSessao option:selected',
-            ).text()}<br/>
-            <strong>Colegiados:</strong> ${$(
-              '#tipoColegiado option:selected',
-            ).text()}<br/>
-            <strong>Semana:</strong> ${$('#semana option:selected').text()}<br/>
-           <strong> Mês:</strong> ${$('#mes option:selected').text()}<br/>
-            <strong>Ano:</strong> ${$('#ano option:selected').text()}<br/>
-    <strong> Período de Indicação pelos Conselheiros: </strong> de ${$(
-      '#abreIndicacao',
-    ).val()} a ${$('#fechaIndicacao').val()}<br/>
-
-            </p>`,
-    // Conferência dos Questionamentos: ${$('#confereQuest').val()}<br/>
-    // Consolidação da Pauta: ${$('#consolidaPauta').val()}<br/>
-    // Ordenação da Pauta: ${$('#ordenaPauta').val()}<br/>
-    // Lançamento no e-Processo:${$('#eProcesso').val()}<br/>
-    // Envio para IN-DOU: ${$('#envioIN').val()}<br/>
-    // Publicação no Sítio do CARF: ${$('#publicaSitio').val()}<br/>
-  );
-  $('.concorda').click(function () {
-    let data = {
-      tipoSessao: $('#tipoSessao').val(),
-      tipoColegiado: $('#tipoColegiado').val(),
-      semana: $('#semana').val(),
-      mes: $('#mes').val(),
-      ano: $('#ano').val(),
-      abreIndicacao: $('#abreIndicacao').val(),
-      fechaIndicacao: $('#fechaIndicacao').val(),
-      // confereQuest: $('#confereQuest').val(),
-      // consolidaPauta: $('#consolidaPauta').val(),
-      // ordenaPauta: $('#ordenaPauta').val(),
-      // eProcesso: $('#eProcesso').val(),
-      // envioIN: $('#envioIN').val(),
-      // publicaSitio: $('#publicaSitio').val(),
-    };
-    handleIndicacao(data, 'POST');
-    $('.pModal').text('');
-  });
-  $('.cancela').click(function () {
-    $('.pModal').text('');
-  });
-}
-
-function handleIndicacao(registro, metodo) {
-  $.ajax({
-    url: '/suporte/restrito/handle-periodo',
-    data: registro,
-    type: metodo,
-    success: function (result) {
-      var toastHTML = `<span>Período criado com sucesso. Redirecionando.</span>`;
-      M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
-      //console.log(result);
-      setTimeout(function () {
-        location.assign('/suporte/restrito/gestao-indicacao');
-      }, 1500);
-    },
-    error: function (result) {
-      var toastHTML = `<span>Ocorreu um erro.</span>`;
-      M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
-      //console.log(result);
-    },
-  });
 }
 
 function initDatePicker() {

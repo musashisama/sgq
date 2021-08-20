@@ -56,8 +56,8 @@ function dataTable(data) {
   let tabledata = data;
   table = new Tabulator('#tabelaIndicacao', {
     data: tabledata,
-    pagination: 'local',
-    height: '1000px',
+    //pagination: 'local',
+    //height: '1000px',
     minHeight: '300px',
     maxHeight: '1000px',
     layout: 'fitData',
@@ -129,7 +129,6 @@ function dataTable(data) {
         responsive: 2,
         download: true,
       },
-
       {
         title: 'Horas CARF',
         field: 'HE',
@@ -165,13 +164,47 @@ function dataTable(data) {
         download: true,
       },
       {
-        title: 'Valor Originário',
+        title: 'Valor Original',
+        field: 'valorOriginal',
+        sorter: 'number',
+        hozAlign: 'center',
+        editor: false,
+        formatter: formatValor,
+        accessorDownload: numberConvert,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Valor Originário Lançado/Pleiteado',
         field: 'valorOrig',
         sorter: 'number',
         hozAlign: 'center',
         editor: false,
         formatter: formatValor,
+        accessorDownload: numberConvert,
         responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Valor Crédito Lançado (Multa de Ofício)',
+        field: 'valorCrdLanc',
+        sorter: 'number',
+        hozAlign: 'center',
+        editor: false,
+        formatter: formatValor,
+        accessorDownload: numberConvert,
+        responsive: 1,
+        download: true,
+      },
+      {
+        title: 'Valor Sem TJM (Atual)',
+        field: 'valorSemTJM',
+        sorter: 'number',
+        hozAlign: 'center',
+        editor: false,
+        formatter: formatValor,
+        accessorDownload: numberConvert,
+        responsive: 1,
         download: true,
       },
       {
@@ -210,7 +243,6 @@ function dataTable(data) {
         responsive: 2,
         download: true,
       },
-
       {
         title: 'Motivo da Prioridade',
         field: 'motPrior',
@@ -229,65 +261,9 @@ function dataTable(data) {
         responsive: 2,
         download: true,
       },
-
-      {
-        title: 'Dias da Sessão de Julgamento',
-        field: 'Dias_da_SJ',
-        sorter: 'number',
-        width: 150,
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
-        download: false,
-      },
-      {
-        title: 'Data da Sessão de Julgamento',
-        field: 'dtSessao',
-        sorter: 'number',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
-        download: false,
-      },
-      {
-        title: 'Dias da Última Distribuição',
-        field: 'Dias_da_Dist',
-        sorter: 'number',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
-        download: false,
-      },
-      {
-        title: 'Retorno Sepoj?',
-        field: 'Retorno_Sepoj',
-        sorter: 'string',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Última Equipe',
-        field: 'ultEquipe',
-        sorter: 'string',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
-        download: false,
-      },
       {
         title: 'Questionamento',
         field: 'questionamento',
-        sorter: 'string',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Solicitação de Juntada?',
-        field: 'juntada',
         sorter: 'string',
         hozAlign: 'center',
         editor: false,
@@ -382,7 +358,6 @@ let formatIndica = function formatIndica(cell) {
 };
 function clickIndica(e, cell) {
   if (cell.getElement().style.color == 'green') {
-    $('#cardSoma').slideUp(10).slideDown(10);
     +$('#somatorioHoras').html(
       +$('#somatorioHoras').html() - +cell.getRow().getData().HE,
     );
@@ -393,7 +368,6 @@ function clickIndica(e, cell) {
       }),
     );
   } else {
-    $('#cardSoma').slideUp(10).slideDown(10);
     cell.getElement().style.color = 'green';
     +$('#somatorioHoras').html(
       +$('#somatorioHoras').html() + +cell.getRow().getData().HE,
@@ -401,7 +375,7 @@ function clickIndica(e, cell) {
     cell.getRow().update({
       apto: false,
       vinculacao: false,
-      abaixo: +cell.getRow().getData().valorOrig >= 8000000 ? false : true,
+      abaixo: false,
       sumula: false,
       liminar: false,
     });
@@ -456,13 +430,23 @@ function controleTabs() {
     tableAptidao.redraw();
     tableAptidao.redraw();
   });
+  $('#botaoVerifica').click((e) => {
+    $('#alegaTab').removeClass('disabled');
+    $('.tabs').tabs('select', 'alega');
+    console.log(tableAptidao.getData());
+    tableAptidao.redraw();
+  });
+  $('#alegaTab').click((e) => {
+    tableAptidao.redraw();
+    tableAptidao.redraw();
+  });
 }
 
 function dataTableAptidao() {
   tableAptidao = new Tabulator('#tabelaAptidao', {
     data: [],
-    pagination: 'local',
-    height: '1000px',
+    //pagination: 'local',
+    // height: '1000px',
     minHeight: '200px',
     maxHeight: '1000px',
     layout: 'fitData',
@@ -516,7 +500,7 @@ function dataTableAptidao() {
       },
 
       {
-        title: 'Abaixo de 8 milhões?',
+        title: `Abaixo de ${minimoAptoString}`,
         field: 'abaixo',
         sorter: 'boolean',
         hozAlign: 'center',
@@ -525,8 +509,7 @@ function dataTableAptidao() {
         responsive: 0,
         cellClick: clickBool,
         download: true,
-        headerTooltip:
-          'O valor originário do processo é inferior a 8 (OITO) milhões de reais?',
+        headerTooltip: `O valor originário do processo é inferior a ${minimoAptoString}`,
       },
       {
         title: 'Súmula?',
@@ -567,15 +550,48 @@ function dataTableAptidao() {
         headerTooltip:
           'Trata-se de decisão/liminar judicial para julgamento imediato?',
       },
-
       {
-        title: 'Valor Originário',
-        field: 'valorOrig',
+        title: 'Valor Original',
+        field: 'valorOriginal',
         sorter: 'number',
-        hozAlign: 'right',
+        hozAlign: 'center',
         editor: false,
         formatter: formatValor,
+        accessorDownload: numberConvert,
         responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Valor Originário Lançado/Pleiteado',
+        field: 'valorOrig',
+        sorter: 'number',
+        hozAlign: 'center',
+        editor: false,
+        formatter: formatValor,
+        accessorDownload: numberConvert,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Valor Crédito Lançado (Multa de Ofício)',
+        field: 'valorCrdLanc',
+        sorter: 'number',
+        hozAlign: 'center',
+        editor: false,
+        formatter: formatValor,
+        accessorDownload: numberConvert,
+        responsive: 1,
+        download: true,
+      },
+      {
+        title: 'Valor Sem TJM (Atual)',
+        field: 'valorSemTJM',
+        sorter: 'number',
+        hozAlign: 'center',
+        editor: false,
+        formatter: formatValor,
+        accessorDownload: numberConvert,
+        responsive: 1,
         download: true,
       },
       {
@@ -585,57 +601,6 @@ function dataTableAptidao() {
         hozAlign: 'center',
         headerFilter: 'input',
         topCalc: somaCalc,
-        editor: false,
-        responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Ind. Apenso',
-        field: 'apenso',
-        sorter: 'string',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Dias na Atividade',
-        field: 'Dias_na_Atividade',
-        sorter: 'number',
-        hozAlign: 'center',
-        width: 140,
-        topCalc: mediaCalc,
-        editor: false,
-        formatter: coloreDias,
-        responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Dias na Atividade na Próxima Sessão',
-        field: 'DAAPS',
-        sorter: 'number',
-        width: 140,
-        hozAlign: 'center',
-        editor: false,
-        formatter: coloreDias,
-        responsive: 2,
-        download: true,
-      },
-
-      {
-        title: 'Assunto/Objeto',
-        field: 'assunto',
-        sorter: 'string',
-        hozAlign: 'left',
-        editor: false,
-        responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Observações/Nome do Lote',
-        field: 'obs',
-        sorter: 'string',
-        hozAlign: 'left',
         editor: false,
         responsive: 2,
         download: true,
@@ -656,90 +621,6 @@ function dataTableAptidao() {
         hozAlign: 'left',
         editor: false,
         responsive: 0,
-        download: true,
-      },
-      {
-        title: 'Prioridade',
-        field: 'prioridade',
-        sorter: 'string',
-        hozAlign: 'left',
-        editor: false,
-        responsive: 2,
-        download: true,
-      },
-
-      {
-        title: 'Motivo da Prioridade',
-        field: 'motPrior',
-        sorter: 'string',
-        hozAlign: 'left',
-        editor: true,
-        responsive: 2,
-        download: true,
-      },
-
-      {
-        title: 'Entrada na Atividade',
-        field: 'entradaAtividade',
-        sorter: 'date',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Dias da Sessão de Julgamento',
-        field: 'Dias_da_SJ',
-        sorter: 'number',
-        width: 150,
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
-        download: false,
-      },
-      {
-        title: 'Data da Sessão de Julgamento',
-        field: 'dtSessao',
-        sorter: 'number',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
-        download: false,
-      },
-      {
-        title: 'Dias da Última Distribuição',
-        field: 'Dias_da_Dist',
-        sorter: 'number',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
-        download: false,
-      },
-      {
-        title: 'Retorno Sepoj?',
-        field: 'Retorno_Sepoj',
-        sorter: 'string',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Última Equipe',
-        field: 'ultEquipe',
-        sorter: 'string',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
-        download: false,
-      },
-      {
-        title: 'Solicitação de Juntada?',
-        field: 'juntada',
-        sorter: 'string',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
         download: true,
       },
     ],

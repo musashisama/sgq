@@ -8,6 +8,7 @@
       <div class="container">
         <h3 class="center-align titulo">Portal do(a) Conselheiro(a)</h3>
         <div id="dataCAL" data-cal=`${data.cal}`/>
+        <div id="dataPauta" data-pauta=`${data.pauta}`/>
         <div class="row">
           <div class="card hoverable cardAzulClaro col s12">
             <div class="card-content">
@@ -29,7 +30,22 @@
           </div>
         </div>
         <div class="row">
-          <div class="col s12 m6">
+          <div class="col s12 m12">
+            <div class="card hoverable cardAzulIndicacao">
+              <div class="card-content">
+                <span class="card-title">Indicação para Pauta</span>
+                <p id="pautaAberta"/>
+              </div>
+              <div class="card-action linkCard">
+                <a id="linkIndicacao" href="/julgamento/conselheiros/indicacao-pauta">
+                  <i class="material-icons">send</i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s6 m6">
             <div class="card hoverable cardAzul">
               <div class="card-content">
                 <span class="card-title">REGAP</span>
@@ -42,20 +58,7 @@
               </div>
             </div>
           </div>
-          <!-- <div class="col s12 m6">
-            <div class="card hoverable cardAzulIndicacao">
-              <div class="card-content">
-                <span class="card-title">Indicação para Pauta</span>
-                <p>Indicação de Processos para Pauta de Julgamento</p>
-              </div>
-              <div class="card-action linkCard">
-                <a href="/julgamento/conselheiros/indicacao-pauta">
-                  <i class="material-icons">send</i>
-                </a>
-              </div>
-            </div>
-          </div> -->
-          <div class="col s12 m6">
+          <div class="col s6 m6">
             <div class="card hoverable cardLaranja">
               <div class="card-content ">
                 <span class="card-title">REINP</span>
@@ -70,7 +73,7 @@
               </div>
             </div>
           </div>
-          <div class="col s12 m6">
+          <div class="col s6 m6">
             <div class="card hoverable cardFuchsiaEscuro">
               <div class="card-content ">
                 <span class="card-title">Acompanhamento de Solicitações</span>
@@ -83,7 +86,7 @@
               </div>
             </div>
           </div>
-          <div class="col s12 m6">
+          <div class="col s6 m6">
             <div class="card hoverable cardFuchsia">
               <div class="card-content ">
                 <span class="card-title">Registro de Solicitação</span>
@@ -96,7 +99,7 @@
               </div>
             </div>
           </div>
-          <div class="col s12 m6">
+          <div class="col s6 m6">
             <div class="card hoverable cardVerde">
               <div class="card-content ">
                 <span class="card-title">Ocorrências</span>
@@ -109,7 +112,7 @@
               </div>
             </div>
           </div>
-          <div class="col s12 m6">
+          <div class="col s6 m6">
             <div class="card hoverable cardAmarelo">
               <div class="card-content ">
                 <span class="card-title">Gestão do Conhecimento</span>
@@ -122,7 +125,7 @@
               </div>
             </div>
           </div>
-          <div class="col s12 m6">
+          <div class="col s6 m6">
             <div class="card hoverable cardVermelho">
               <div class="card-content ">
                 <span class="card-title">Perguntas & Respostas</span>
@@ -135,7 +138,7 @@
               </div>
             </div>
           </div>
-          <div class="col s12 m6">
+          <div class="col s6 m6">
             <div class="card hoverable cardPreto">
               <div class="card-content ">
                 <span class="card-title">Antiga Página do(a) Conselheiro(a)</span>
@@ -172,6 +175,7 @@
     <script src="/estatico/js/libs/plotly-locale-pt-br.js"/>
     <script>Plotly.setPlotConfig({locale: 'pt-BR'})</script>
     <script src="/estatico/js/libs/quill.min.js"/>
+    <script src="/estatico/js/julgamento/conselheiros/portalcons.js"/>
     <script src="/estatico/js/julgamento/conselheiros/regsolicitacoes.js"/>
   </body>
 </html>

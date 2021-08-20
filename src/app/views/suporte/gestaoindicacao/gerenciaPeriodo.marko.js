@@ -15,8 +15,6 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     app_header_tag = marko_loadTag(app_header_template),
     app_navbar_template = require("../../components/app-navbar.marko"),
     app_navbar_tag = marko_loadTag(app_navbar_template),
-    app_drop_download_template = require("../../components/app-drop-download.marko"),
-    app_drop_download_tag = marko_loadTag(app_drop_download_template),
     marko_attr = marko_helpers.a,
     app_footer_template = require("../../components/app-footer.marko"),
     app_footer_tag = marko_loadTag(app_footer_template),
@@ -47,13 +45,10 @@ function render(input, out, __component, component, state) {
       class: "sidenav"
     }, out, __component, "5");
 
-  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Gerenciar Período de Indicação para Pauta</h3><br><div class=\"row conteudoPrincipal\"></div><br><div class=\"row\"><h4>Gerenciar Período de Indicação para Pauta</h4></div><div class=\"row\"><div class=\"col s12 right-align\"><div class=\"row\">");
-
-  app_drop_download_tag({}, out, __component, "16");
-
-  out.w("</div><div id=\"periodo\"" +
+  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Gerenciar Período de Indicação para Pauta</h3><br><div class=\"row conteudoPrincipal\"></div><br><div class=\"row\"><h4>Gerenciar Período de Indicação para Pauta</h4></div><div class=\"row\"><div id=\"cardInfo\"></div></div><div class=\"row\"><div class=\"col s12 right-align\"><div id=\"periodo\"" +
+    marko_attr("data-cons", "" + data.cons) +
     marko_attr("data-periodo", "" + data.periodo) +
-    "></div></div></div><div class=\"row\"><div id=\"cardsColegiados\"></div></div></div></main>");
+    "></div></div></div><div class=\"row\"><div id=\"tabelaColegiados\"></div></div></div></main>");
 
   app_footer_tag({}, out, __component, "20");
 
@@ -84,7 +79,6 @@ marko_template.meta = {
       "marko/src/core-tags/components/component-globals-tag",
       "../../components/app-header.marko",
       "../../components/app-navbar.marko",
-      "../../components/app-drop-download.marko",
       "../../components/app-footer.marko",
       "../../components/app-modal.marko",
       "../../components/app-scripts-js.marko",

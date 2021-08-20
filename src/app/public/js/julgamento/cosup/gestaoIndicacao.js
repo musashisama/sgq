@@ -132,8 +132,14 @@ function tabelaIndicacoes(dados) {
         responsive: 0,
       },
       {
+        title: 'Editar',
+        formatter: formatEditar,
+        hozAlign: 'center',
+        download: false,
+      },
+      {
         title: 'Gerenciar',
-        formatter: formatNome,
+        formatter: formatGerenciar,
         hozAlign: 'center',
         download: false,
       },
@@ -141,11 +147,15 @@ function tabelaIndicacoes(dados) {
   });
 }
 
-let formatNome = function formatNome(cell) {
+let formatEditar = function formatEditar(cell) {
   return `
   <a class='black-text btnedita' href='/suporte/restrito/edita-periodo/${
     cell.getRow().getData()._id
   }' title='Detalhar Solicitação'><i class='material-icons'>details</i></a>
+ `;
+};
+let formatGerenciar = function formatGerenciar(cell) {
+  return `
   <a class='black-text btnedita' href='/suporte/restrito/gerencia-periodo/${
     cell.getRow().getData()._id
   }' title='Gerenciar'><i class='material-icons'>settings</i></a>

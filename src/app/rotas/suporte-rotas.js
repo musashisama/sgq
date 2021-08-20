@@ -63,6 +63,10 @@ module.exports = (app) => {
     .get(supControlador.gerenciaPeriodo())
     .post(supControlador.gerenciaPeriodo());
   app
+    .route(rotasSuporte.gerenciaColegiado)
+    .get(supControlador.gerenciaColegiado())
+    .post(supControlador.gerenciaColegiado());
+  app
     .route(rotasSuporte.handle_periodo)
     .get(supControlador.handlePeriodo())
     .post(supControlador.handlePeriodo())
