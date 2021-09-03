@@ -1,16 +1,28 @@
 let dadosPlot;
-let tableAptidao, tableIndicacao;
+let tableAptidao, tableIndicacao, tableConfirmacao;
 inicializaComponentes();
 function inicializaComponentes() {
   $(document).ready(function () {
     elementosTabelas();
     initTabs();
+    initCollapsible();
+    initSelect();
     controleTabs();
   });
 }
 
+function initSelect() {
+  $('select').formSelect();
+}
+
 function initTabs() {
   $('.tabs').tabs();
+}
+
+function initCollapsible() {
+  $(document).ready(function () {
+    $('.collapsible').collapsible();
+  });
 }
 
 function getRelatorios(data) {
@@ -46,9 +58,11 @@ function elementosTabelas() {
     r.Dias_da_Dist = retornaDias(r.dtUltDist);
     r.Dias_da_SJ = retornaDias(r.dtSessao);
     r.DAAPS = parseInt($('#daps').text()) + r.Dias_na_Atividade;
+    r.confirmaQuest = 'Correto';
   });
   dataTable(tabledata);
   dataTableAptidao();
+  dataTableConfirmacao();
 }
 
 //Tabela para Indicação
@@ -362,6 +376,11 @@ function clickIndica(e, cell) {
       +$('#somatorioHoras').html() - +cell.getRow().getData().HE,
     );
     cell.getElement().style.color = 'black';
+    tableConfirmacao.deleteRow(
+      tableAptidao.getRows().filter((row) => {
+        return row.getData().processo == cell.getRow().getData().processo;
+      }),
+    );
     tableAptidao.deleteRow(
       tableAptidao.getRows().filter((row) => {
         return row.getData().processo == cell.getRow().getData().processo;
@@ -380,6 +399,7 @@ function clickIndica(e, cell) {
       liminar: false,
     });
     tableAptidao.updateOrAddData([cell.getRow().getData()]);
+    tableConfirmacao.updateOrAddData([cell.getRow().getData()]);
   }
 }
 
@@ -433,12 +453,53 @@ function controleTabs() {
   $('#botaoVerifica').click((e) => {
     $('#alegaTab').removeClass('disabled');
     $('.tabs').tabs('select', 'alega');
-    console.log(tableAptidao.getData());
+    let dadosAptidao = tableAptidao.getData();
+    let pauta = JSON.parse($('#dataPauta').attr('data-pauta'));
+    let html = '';
+    dadosAptidao.forEach((d) => {
+      d.idPauta = pauta._id;
+      d.retornoPauta = 'NÃO';
+      html += `
+      <div class='row'>
+      <h5>${d.processo} - ${d.contribuinte}</h5>
+
+      <p><strong>Apto:</strong> ${d.apto}</p>
+      <p><strong>Alegação:</strong> ${d.alegacoes}</p>
+      <p><strong>Questionamento:</strong> ${d.questionamento}</p>
+       <div class="form-group input-field  col s3">
+                <select id='${d.processo}' class="Questionamento" name="questionamentoSelect">
+                <option class="form-group" value="Correto" selected>Correto</option>
+                  <option class="form-group" value="RV">Recurso Voluntário</option>
+                  <option class="form-group" value="RO">Recurso de Ofício</option>
+                  <option class="form-group" value="RVRO">Recurso Voluntário/Recurso de Ofício</option>
+                  <option class="form-group" value="RESP">Recurso Especial</option>
+                  <option class="form-group" value="Embargo">Embargo</option>
+                </select>
+                <label>Questionamento Correto?</label>
+              </div>
+
+      <p /></div>`;
+    });
+    $('#corpoAlega').append(html);
+    initCollapsible();
+    initSelect();
     tableAptidao.redraw();
+    //tableConfirmacao = tableAptidao.getData();
+    tableConfirmacao.redraw();
   });
+
+  $('#botaoConfirma').click((e) => {
+    $('#confirmacaoTab').removeClass('disabled');
+    $('.tabs').tabs('select', 'confirmacao');
+    console.log(tableConfirmacao.getData());
+    tableAptidao.redraw();
+    tableConfirmacao.redraw();
+  });
+
   $('#alegaTab').click((e) => {
     tableAptidao.redraw();
     tableAptidao.redraw();
+    tableConfirmacao.redraw();
   });
 }
 
@@ -454,7 +515,206 @@ function dataTableAptidao() {
     groupStartOpen: false,
     responsiveLayoutCollapseStartOpen: false,
     initialSort: [
-      { column: 'Dias_na_Atividade', dir: 'desc' },
+      { column: 'contribuinte', dir: 'desc' },
+      { column: 'processo', dir: 'desc' },
+    ],
+    downloadConfig: {
+      columnCalcs: false,
+    },
+    columns: [
+      {
+        title: 'Processo Apto?',
+        field: 'apto',
+        sorter: 'boolean',
+        hozAlign: 'center',
+        editor: false,
+        formatter: 'tickCross',
+        responsive: 0,
+        download: true,
+        headerTooltip:
+          'Verificação automática baseada nas respostas das colunas.',
+      },
+      {
+        title: 'Teste Select',
+        field: 'confirmaQuest',
+        hozAlign: 'center',
+        editor: 'select',
+        editorParams: {
+          values: ['Correto', 'resp'],
+          defaultValue: 'Correto',
+        },
+        responsive: 0,
+        download: true,
+        headerTooltip:
+          'Verificação automática baseada nas respostas das colunas.',
+      },
+      {
+        title: 'Processo',
+        field: 'processo',
+        formatter: coloreProc,
+        sorter: 'number',
+        hozAlign: 'center',
+        headerFilter: 'input',
+        topCalc: countCalc,
+        editor: false,
+        responsive: 2,
+        download: true,
+      },
+      {
+        title: 'Contribuinte',
+        field: 'contribuinte',
+        formatter: coloreProc,
+        headerFilter: 'input',
+        sorter: 'string',
+        hozAlign: 'left',
+        width: 150,
+        editor: false,
+        responsive: 0,
+        download: true,
+      },
+
+      {
+        title: `Abaixo de ${minimoAptoString}`,
+        field: 'abaixo',
+        sorter: 'boolean',
+        hozAlign: 'center',
+        editor: false,
+        formatter: 'tickCross',
+        responsive: 0,
+        cellClick: clickBool,
+        download: true,
+        headerTooltip: `O valor originário do processo é inferior a ${minimoAptoString}`,
+      },
+      {
+        title: 'Súmula?',
+        field: 'sumula',
+        sorter: 'boolean',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 0,
+        cellClick: clickBool,
+        download: true,
+        formatter: 'tickCross',
+        headerTooltip:
+          'O processo é objeto de súmula/ resolução do CARF ou tem decisão definitiva do STF /STJ conforme art. 53, § 2º RICARF?',
+      },
+      {
+        title: 'Vinculação?',
+        field: 'vinculacao',
+        sorter: 'boolean',
+        hozAlign: 'center',
+        cellClick: clickBool,
+        editor: false,
+        responsive: 0,
+        download: true,
+        formatter: 'tickCross',
+        headerTooltip:
+          'O processo apto para sessão virtual tem vinculação por decorrência ou reflexo (art. 6º, §1º, II e III) a outro processo de sua relatoria que seja não apto?',
+      },
+      {
+        title: 'Dec./Liminar?',
+        field: 'liminar',
+        sorter: 'boolean',
+        cellClick: clickBool,
+        formatter: 'tickCross',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 0,
+        download: true,
+        headerTooltip:
+          'Trata-se de decisão/liminar judicial para julgamento imediato?',
+      },
+      {
+        title: 'Valor Original',
+        field: 'valorOriginal',
+        sorter: 'number',
+        hozAlign: 'center',
+        editor: false,
+        formatter: formatValor,
+        accessorDownload: numberConvert,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Valor Originário Lançado/Pleiteado',
+        field: 'valorOrig',
+        sorter: 'number',
+        hozAlign: 'center',
+        editor: false,
+        formatter: formatValor,
+        accessorDownload: numberConvert,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Valor Crédito Lançado (Multa de Ofício)',
+        field: 'valorCrdLanc',
+        sorter: 'number',
+        hozAlign: 'center',
+        editor: false,
+        formatter: formatValor,
+        accessorDownload: numberConvert,
+        responsive: 1,
+        download: true,
+      },
+      {
+        title: 'Valor Sem TJM (Atual)',
+        field: 'valorSemTJM',
+        sorter: 'number',
+        hozAlign: 'center',
+        editor: false,
+        formatter: formatValor,
+        accessorDownload: numberConvert,
+        responsive: 1,
+        download: true,
+      },
+      {
+        title: 'Horas CARF',
+        field: 'HE',
+        sorter: 'number',
+        hozAlign: 'center',
+        headerFilter: 'input',
+        topCalc: somaCalc,
+        editor: false,
+        responsive: 2,
+        download: true,
+      },
+      {
+        title: 'Alegações',
+        field: 'alegacoes',
+        sorter: 'string',
+        hozAlign: 'left',
+        editor: true,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Questionamento',
+        field: 'questionamento',
+        sorter: 'string',
+        hozAlign: 'left',
+        editor: false,
+        responsive: 0,
+        download: true,
+      },
+    ],
+    autoColumns: false,
+    locale: true,
+    langs: langs,
+  });
+}
+function dataTableConfirmacao() {
+  tableConfirmacao = new Tabulator('#tabelaConfirmacao', {
+    data: [],
+    //pagination: 'local',
+    // height: '1000px',
+    minHeight: '200px',
+    maxHeight: '1000px',
+    layout: 'fitData',
+    responsiveLayout: false,
+    groupStartOpen: false,
+    responsiveLayoutCollapseStartOpen: false,
+    initialSort: [
       { column: 'contribuinte', dir: 'desc' },
       { column: 'processo', dir: 'desc' },
     ],

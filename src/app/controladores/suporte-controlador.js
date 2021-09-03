@@ -234,7 +234,8 @@ class SuporteControlador {
       const pessoalDAO = new PessoalDAO(conn);
       console.log(req.body);
       if (req.method == 'GET') {
-        console.log(req.params.id);
+        let parametros = req.params.id.split('&');
+        console.log(parametros);
       } else {
         if (req.method == 'POST' || req.method == 'PUT') {
           console.log(req.body);

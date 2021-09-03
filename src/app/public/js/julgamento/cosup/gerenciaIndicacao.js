@@ -155,7 +155,8 @@ let formatGerencia = function formatGerencia(cell) {
   return `
   <a class='black-text btnedita' href='/suporte/restrito/gerencia-colegiado/${
     cell.getRow().getData().id
-  }&${cell.getRow().getData().colegiado}
+  }&${
+    cell.getRow().getData().colegiado
   }' title='Gerenciar Colegiado'><i class='material-icons'>settings</i></a>
   `;
 };

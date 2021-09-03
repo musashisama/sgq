@@ -7,6 +7,7 @@
       <app-navbar id="slide-out" class="sidenav"/>
       <div id="caixa" class="container">
         <div id="dataCAL" data-cal=`${data.cal}`/>
+        <div id="dataPauta" data-pauta=`${data.pauta}`/>
         <h3 class="center-align titulo">Indicação de Processos para Pauta de Julgamento</h3>
         <br/>
         <h6/>
@@ -86,7 +87,14 @@
           </div>
           <div id="alega" class="col s12">
             <h4 class="center">Verificar Alegações e Questionamentos</h4>
-            <div class="row"/>
+            <div class="row">
+              <div id="corpoAlega"/>
+              <div class="col s6 offset-s3">
+                <a id="botaoConfirma" class="waves-effect waves-light btn-large right">
+                  <i class="fas fa-arrow-alt-circle-right right"/>Proceder para Confirmação
+                </a>
+              </div>
+            </div>
           </div>
           <div id="confirmacao" class="col s12">
             <h4 class="center">Confirmar Indicação para Pauta</h4>

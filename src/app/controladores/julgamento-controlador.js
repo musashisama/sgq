@@ -649,6 +649,7 @@ class JulgamentoControlador {
       if (req.method == 'GET') {
         const pessoalDao = new PessoalDao(conn);
         const julgamentoDao = new JulgamentoDao(conn);
+        const suporteDao = new SuporteDao(conn);
         let filtro, sort, projecao, limit;
         filtro = { 'conselheiro.cpf': req.user.cpf };
         projecao = {};
@@ -663,11 +664,18 @@ class JulgamentoControlador {
               julgamentoDao
                 .getRegap(filtro, sort, projecao, limit)
                 .then((regap) => {
-                  resp.marko(templates.julgamento.indicapauta, {
-                    relatorio: JSON.stringify(regap[0].relatorio),
-                    cal: JSON.stringify(cal),
-                    user: user[0],
-                  });
+                  suporteDao
+                    .getIndicacoes({
+                      semana: CSVHandler.semanaCores(user[0].unidade),
+                    })
+                    .then((indicacoes) => {
+                      resp.marko(templates.julgamento.indicapauta, {
+                        relatorio: JSON.stringify(regap[0].relatorio),
+                        cal: JSON.stringify(cal),
+                        user: user[0],
+                        pauta: JSON.stringify(indicacoes[0]),
+                      });
+                    });
                 });
             });
         });

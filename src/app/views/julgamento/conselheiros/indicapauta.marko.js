@@ -49,27 +49,29 @@ function render(input, out, __component, component, state) {
 
   out.w("<div id=\"caixa\" class=\"container\"><div id=\"dataCAL\"" +
     marko_attr("data-cal", "" + data.cal) +
+    "></div><div id=\"dataPauta\"" +
+    marko_attr("data-pauta", "" + data.pauta) +
     "></div><h3 class=\"center-align titulo\">Indicação de Processos para Pauta de Julgamento</h3><br><h6></h6><div class=\"col s12 m12\"><div class=\"card hoverable cardAzul\"><div class=\"card-content\">Falta(m) <strong><span id=\"daps\"></span></strong> dia(s) para a próxima sessão, que será realizada em <strong><span id=\"ps\"></span></strong>.</div></div></div><div class=\"row\"><div class=\"col s6 offset-s3\"><div id=\"cardSoma\" class=\"card hoverable cardLaranja\"><div class=\"card-content \"><span class=\"card-title\">Somatório de Horas da Indicação: <span id=\"somatorioHoras\">0</span></span></div></div></div></div><div class=\"row\"><div class=\"col s12\"><ul class=\"tabs\"><li id=\"processosTab\" class=\"tab col s3\"><a href=\"#processos\">Escolher Processos</a></li><li id=\"aptidaoTab\" class=\"tab col s3 disabled\"><a href=\"#aptidao\">Verificar Aptidão</a></li><li id=\"alegaTab\" class=\"tab col s3 disabled\"><a href=\"#alega\">Verificar Alegações e Questionamentos</a></li><li id=\"confirmacaoTab\" class=\"tab col s3 disabled\"><a href=\"#confirmacao\">Confirmar Indicação</a></li></ul></div><div id=\"processos\" class=\"col s12\"><br><div class=\"row\"><div class=\"col s6 offset-s3\"><span>Para indicar processos para pauta, clique no ícone <i class=\"fas fa-check-square'\"></i>. Ao terminar suas indicações, clique no botão abaixo:</span><a id=\"botaoIndica\" class=\"waves-effect waves-light btn-large\"><i class=\"fas fa-arrow-alt-circle-right right\"></i>Proceder para Verificação de Aptidão para Julgamento</a></div></div><div class=\"row\"><div class=\"col s12 right-align\">");
 
-  app_drop_download_tag({}, out, __component, "45");
+  app_drop_download_tag({}, out, __component, "46");
 
   out.w("<a href=\"#modal2\" id=\"mostraLegenda\" title=\"Mostrar Legenda da Tabela\" class=\"waves-effect waves-purple hoverable z-depth-3 btn-floating black\"><i class=\"material-icons\">details</i></a></div></div><div id=\"tabelaIndicacao\"" +
     marko_attr("data-indicacao", "" + data.relatorio) +
-    "></div></div><div id=\"aptidao\" class=\"col s12\"><h4 class=\"center\">Verificar Aptidão para Julgamento em Sessão Virtual</h4><div class=\"row\"><div class=\"col s6 offset-s3\"><span>Para indicar processos para pauta, clique no ícone <i class=\"fas fa-check-square'\"></i>. Ao terminar suas indicações, clique no botão abaixo:</span><a id=\"botaoVerifica\" class=\"waves-effect waves-light btn-large\"><i class=\"fas fa-arrow-alt-circle-right right\"></i>Proceder para Verificação de Elgações e Questionamentos</a></div></div><div class=\"row\"><div id=\"tabelaAptidao\"></div></div></div><div id=\"alega\" class=\"col s12\"><h4 class=\"center\">Verificar Alegações e Questionamentos</h4><div class=\"row\"></div></div><div id=\"confirmacao\" class=\"col s12\"><h4 class=\"center\">Confirmar Indicação para Pauta</h4><div class=\"row\"><div id=\"tabelaConfirmacao\"></div></div></div></div><p><div class=\"col s12 m12\"><div class=\"card hoverable cardVermelho\"><div class=\"card-content\"><span class=\"card-title center\">ATENÇÃO</span><a id=\"oitomilhoes\"></a>* O campo \"Valor Originário\" é extraído diretamente do e-Processo e não leva em consideração outros fatores que possam alterar o valor a ser considerado no momento da indicação para pauta. Dessa forma, para casos concretos, deverão ser somadas a esse valor outras informações, nos termos das <strong>orientações para indicação de pauta</strong>.</div></div></div></p></div></main><footer class=\"page-footer rodape\"></footer>");
+    "></div></div><div id=\"aptidao\" class=\"col s12\"><h4 class=\"center\">Verificar Aptidão para Julgamento em Sessão Virtual</h4><div class=\"row\"><div class=\"col s6 offset-s3\"><span>Para indicar processos para pauta, clique no ícone <i class=\"fas fa-check-square'\"></i>. Ao terminar suas indicações, clique no botão abaixo:</span><a id=\"botaoVerifica\" class=\"waves-effect waves-light btn-large\"><i class=\"fas fa-arrow-alt-circle-right right\"></i>Proceder para Verificação de Elgações e Questionamentos</a></div></div><div class=\"row\"><div id=\"tabelaAptidao\"></div></div></div><div id=\"alega\" class=\"col s12\"><h4 class=\"center\">Verificar Alegações e Questionamentos</h4><div class=\"row\"><div id=\"corpoAlega\"></div><div class=\"col s6 offset-s3\"><a id=\"botaoConfirma\" class=\"waves-effect waves-light btn-large right\"><i class=\"fas fa-arrow-alt-circle-right right\"></i>Proceder para Confirmação</a></div></div></div><div id=\"confirmacao\" class=\"col s12\"><h4 class=\"center\">Confirmar Indicação para Pauta</h4><div class=\"row\"><div id=\"tabelaConfirmacao\"></div></div></div></div><p><div class=\"col s12 m12\"><div class=\"card hoverable cardVermelho\"><div class=\"card-content\"><span class=\"card-title center\">ATENÇÃO</span><a id=\"oitomilhoes\"></a>* O campo \"Valor Originário\" é extraído diretamente do e-Processo e não leva em consideração outros fatores que possam alterar o valor a ser considerado no momento da indicação para pauta. Dessa forma, para casos concretos, deverão ser somadas a esse valor outras informações, nos termos das <strong>orientações para indicação de pauta</strong>.</div></div></div></p></div></main><footer class=\"page-footer rodape\"></footer>");
 
-  app_modal_tabela_legenda_tag({}, out, __component, "74");
+  app_modal_tabela_legenda_tag({}, out, __component, "79");
 
   out.w("<div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
 
-  app_footer_tag({}, out, __component, "83");
+  app_footer_tag({}, out, __component, "88");
 
-  app_scripts_js_tag({}, out, __component, "84");
+  app_scripts_js_tag({}, out, __component, "89");
 
   out.w("<script src=\"/estatico/js/libs/plotly-latest.min.js\"></script><script src=\"/estatico/js/libs/plotly-locale-pt-br.js\"></script><script>Plotly.setPlotConfig({locale: 'pt-BR'})</script><script src=\"/estatico/js/julgamento/helpers/configTabelaNovoRegap.js\"></script><script src=\"/estatico/js/julgamento/conselheiros/indicacao.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "90");
+  await_reorderer_tag({}, out, __component, "95");
 
   out.w("</body></html>");
 }
