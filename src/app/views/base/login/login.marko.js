@@ -45,7 +45,7 @@ function render(input, out, __component, component, state) {
       class: "sidenav"
     }, out, __component, "5");
 
-  out.w(" <div class=\"container\"><div class=\"row\">");
+  out.w("<div class=\"container\"><div class=\"row\">");
 
   if (data.msg) {
     out.w("<div" +
@@ -61,7 +61,7 @@ function render(input, out, __component, component, state) {
     marko_attr("value", data.id) +
     " placeholder=\"Digite seu CPF.\" class=\"form-control tooltipped\" data-position=\"bottom\" data-tooltip=\"Somente números.\"></div><div class=\"form-group input-field pwd\"><i class=\"material-icons prefix\">lock</i><input type=\"password\" required autocomplete=\"current-password\" id=\"pwd\" name=\"pwd\"" +
     marko_attr("value", data.pwd) +
-    " placeholder=\"Digite sua senha.\" class=\"form-control\"></div> <div class=\"form-group\"><a id=\"aModal\" href=\"#modal1\" class=\"waves-effect waves-light btn-ligaModal btn-small red lighten-3\"><i class=\"material-icons left\">error</i>Esqueci a senha</a><button class=\"btn-small waves-effect waves-light concorda green right\" type=\"submit\" name=\"action\">Efetuar login <i class=\"material-icons left\">send</i></button></div></form></div></div></div></div></div></main><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"></div></div>");
+    " placeholder=\"Digite sua senha.\" class=\"form-control\"></div><div class=\"form-group\"><a id=\"aModal\" href=\"#modal1\" class=\"waves-effect waves-light btn-ligaModal btn-small red lighten-3\"><i class=\"material-icons left\">error</i>1º Acesso / Esqueci a senha</a><button class=\"btn-small waves-effect waves-light concorda green right\" type=\"submit\" name=\"action\">Efetuar login <i class=\"material-icons left\">send</i></button></div></form></div></div></div></div></div></main><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"></div></div>");
 
   app_footer_tag({}, out, __component, "38");
 

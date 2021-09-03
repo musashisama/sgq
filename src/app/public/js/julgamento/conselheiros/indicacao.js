@@ -511,7 +511,7 @@ function dataTableAptidao() {
     minHeight: '200px',
     maxHeight: '1000px',
     layout: 'fitData',
-    responsiveLayout: false,
+    responsiveLayout: 'collapse',
     groupStartOpen: false,
     responsiveLayoutCollapseStartOpen: false,
     initialSort: [
@@ -534,20 +534,7 @@ function dataTableAptidao() {
         headerTooltip:
           'Verificação automática baseada nas respostas das colunas.',
       },
-      {
-        title: 'Teste Select',
-        field: 'confirmaQuest',
-        hozAlign: 'center',
-        editor: 'select',
-        editorParams: {
-          values: ['Correto', 'resp'],
-          defaultValue: 'Correto',
-        },
-        responsive: 0,
-        download: true,
-        headerTooltip:
-          'Verificação automática baseada nas respostas das colunas.',
-      },
+
       {
         title: 'Processo',
         field: 'processo',
@@ -636,6 +623,17 @@ function dataTableAptidao() {
         download: true,
       },
       {
+        title: 'Expandir',
+        formatter: 'responsiveCollapse',
+        width: 60,
+        minWidth: 60,
+        hozAlign: 'center',
+        resizable: false,
+        headerSort: false,
+        responsive: 0,
+        download: false,
+      },
+      {
         title: 'Valor Originário Lançado/Pleiteado',
         field: 'valorOrig',
         sorter: 'number',
@@ -643,7 +641,7 @@ function dataTableAptidao() {
         editor: false,
         formatter: formatValor,
         accessorDownload: numberConvert,
-        responsive: 0,
+        responsive: 1,
         download: true,
       },
       {
@@ -696,6 +694,31 @@ function dataTableAptidao() {
         editor: false,
         responsive: 0,
         download: true,
+      },
+      {
+        title: 'Questionamento Correto?',
+        field: 'confirmaQuest',
+        hozAlign: 'center',
+        editor: 'select',
+        editorParams: {
+          values: [
+            'Correto',
+            'Recurso Voluntário',
+            'Recurso de Ofício',
+            'Recurso Voluntário/Ofício',
+            'Recurso Especial da Procuradoria',
+            'Recurso Especial do Contribuinte',
+            'Recurso Especial Procuradoria/Contribuinte',
+            'Embargo da Procuradoria',
+            'Embargo do Contribuinte',
+            'Embargo Procuradoria/Contribuinte',
+          ],
+          defaultValue: 'Correto',
+        },
+        responsive: 0,
+        download: true,
+        headerTooltip:
+          'Verificação automática baseada nas respostas das colunas.',
       },
     ],
     autoColumns: false,

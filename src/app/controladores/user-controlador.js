@@ -189,6 +189,21 @@ class UserControlador {
     return function (req, resp) {
       let perfis = [];
       if (req.isAuthenticated()) {
+        if (!req.user.cargo.includes('Vice', 0)) {
+          if (
+            req.user.cargo.includes('Presidente de TO', 0) ||
+            req.user.cargo.includes('Presidente de TO Substituto', 0) ||
+            req.user.cargo.includes('Presidente de TE', 0) ||
+            req.user.cargo.includes('Presidente de TE Substituto', 0) ||
+            req.user.cargo.includes('Presidente de Seção de Julgamento', 0) ||
+            req.user.cargo.includes(
+              'Presidente de Seção de Julgamento Substituto',
+              0,
+            )
+          ) {
+            req.user.perfis.push('presidente');
+          }
+        }
         perfis = req.user.perfis;
       }
       resp.send(perfis);
