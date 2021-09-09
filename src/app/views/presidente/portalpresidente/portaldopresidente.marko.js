@@ -46,7 +46,7 @@ function render(input, out, __component, component, state) {
       class: "sidenav"
     }, out, __component, "5");
 
-  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Portal do(a) Conselheiro(a)</h3><div id=\"dataCAL\"" +
+  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Portal do Presidente</h3><div id=\"dataCAL\"" +
     marko_attr("data-cal", "" + data.cal) +
     "></div><div id=\"dataPauta\"" +
     marko_attr("data-pauta", "" + data.pauta) +

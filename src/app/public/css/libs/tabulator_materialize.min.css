@@ -543,11 +543,11 @@
 }
 
 .tabulator-row.tabulator-selected {
-  background-color: #ee6e73;
+  background-color: #6e9bee;
 }
 
 .tabulator-row.tabulator-selected:hover {
-  background-color: #ee6e73;
+  background-color: #6e9bee;
   cursor: pointer;
 }
 

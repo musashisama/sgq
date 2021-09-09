@@ -47,6 +47,7 @@ class SuporteControlador {
       gerenciaPeriodo: '/suporte/restrito/gerencia-periodo/:id',
       gerenciaColegiado: '/suporte/restrito/gerencia-colegiado/:id',
       editaPeriodo: '/suporte/restrito/edita-periodo/:id',
+      consolidacaoPauta: '/suporte/restrito/consolida-pauta/',
     };
   }
 
@@ -227,15 +228,42 @@ class SuporteControlador {
       }
     };
   }
+
+  consolidaPauta() {
+    return function (req, resp) {
+      if (req.method == 'POST') {
+        req.body.processos = JSON.parse(req.body.processos);
+        console.log(req.body);
+        req.body.tipoPauta = 'Consolidada';
+        const suporteDAO = new SuporteDAO(conn);
+        suporteDAO.inserePautaConsolidada(req.body).then((res) => {
+          console.log(res);
+          resp.send(res);
+        });
+      }
+    };
+  }
   gerenciaColegiado() {
     return function (req, resp) {
       const suporteDAO = new SuporteDAO(conn);
       const julgamentoDAO = new JulgamentoDAO(conn);
       const pessoalDAO = new PessoalDAO(conn);
-      console.log(req.body);
       if (req.method == 'GET') {
         let parametros = req.params.id.split('&');
-        console.log(parametros);
+        suporteDAO
+          .getIndicacoesPauta({
+            $and: [
+              { idIndicacao: parametros[0] },
+              { colegiado: parametros[1] },
+            ],
+          })
+          .then((pauta) => {
+            resp.marko(templates.suporte.gerenciaPauta, {
+              pauta: JSON.stringify(pauta),
+              idIndicacao: JSON.stringify(parametros[0]),
+              colegiado: JSON.stringify(parametros[1]),
+            });
+          });
       } else {
         if (req.method == 'POST' || req.method == 'PUT') {
           console.log(req.body);

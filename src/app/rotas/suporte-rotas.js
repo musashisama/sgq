@@ -55,6 +55,10 @@ module.exports = (app) => {
 
   app.get(rotasSuporte.criaIndicacao, supControlador.carregaCriaIndicacao());
   app
+    .route(rotasSuporte.consolidacaoPauta)
+    .post(supControlador.consolidaPauta())
+    .delete(supControlador.consolidaPauta());
+  app
     .route(rotasSuporte.editaPeriodo)
     .get(supControlador.carregaEditaIndicacao())
     .post(supControlador.carregaEditaIndicacao());

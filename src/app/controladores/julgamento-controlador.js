@@ -672,7 +672,7 @@ class JulgamentoControlador {
                       resp.marko(templates.julgamento.indicapauta, {
                         relatorio: JSON.stringify(regap[0].relatorio),
                         cal: JSON.stringify(cal),
-                        user: user[0],
+                        user: JSON.stringify(user[0]),
                         pauta: JSON.stringify(indicacoes[0]),
                       });
                     });
@@ -681,7 +681,12 @@ class JulgamentoControlador {
         });
       }
       if (req.method == 'POST') {
+        let dados = [req.body];
         console.log(req.body);
+        const suporteDao = new SuporteDao(conn);
+        suporteDao.criaIndicacaoPauta(dados).then((resposta) => {
+          resp.send(resposta);
+        });
       }
     };
   }
@@ -702,11 +707,22 @@ class JulgamentoControlador {
                 semana: CSVHandler.semanaCores(user[0].unidade),
               })
               .then((indicacoes) => {
-                resp.marko(templates.julgamento.portaldoconselheiro, {
-                  cal: JSON.stringify(cal),
-                  user: user[0],
-                  pauta: JSON.stringify(indicacoes[0]),
-                });
+                suporteDao
+                  .getIndicacoesPauta({
+                    $and: [
+                      { cpf: req.user.cpf },
+                      { idIndicacao: indicacoes[0]._id.toString() },
+                    ],
+                  })
+                  .then((indicaPauta) => {
+                    console.log(indicaPauta.length);
+
+                    resp.marko(templates.julgamento.portaldoconselheiro, {
+                      cal: JSON.stringify(cal),
+                      user: user[0],
+                      pauta: JSON.stringify(indicacoes[0]),
+                    });
+                  });
               });
           });
       });

@@ -7,4 +7,5 @@ module.exports = {
   gerenciaPeriodo: require('./gestaoindicacao/gerenciaPeriodo.marko'),
   criaIndicacao: require('./gestaoindicacao/criaIndicacao.marko'),
   editaIndicacao: require('./gestaoindicacao/editaIndicacao.marko'),
+  gerenciaPauta: require('./gestaoindicacao/gerenciaPauta.marko'),
 };
