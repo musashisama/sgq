@@ -31,6 +31,7 @@ class ACL {
       serpro: ['admin', 'serpro'],
       teste: ['admin', 'teste'],
       suporte: ['admin', 'suporte'],
+      presidente: ['admin', 'presidente'],
     };
     return acl[ACL];
   }

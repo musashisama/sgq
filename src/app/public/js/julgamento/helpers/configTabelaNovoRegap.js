@@ -34,6 +34,7 @@ let langs = {
   },
 };
 let minimoApto = 36000000;
+let minimoAptoString = 'R$36 milhões';
 layout = 'fitDataFill';
 responsiveLayout = true;
 let table = null;

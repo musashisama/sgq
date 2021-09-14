@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <app-scripts-css/>
+  <body>
+    <app-header/>
+    <main class="conteudoPrincipal">
+      <app-navbar id="slide-out" class="sidenav"/>
+      <div class="container">
+        <h3 class="center-align titulo">Gerenciar Pauta</h3>
+        <br/>
+        <div class="row conteudoPrincipal"/>
+        <br/>
+        <div class="row">
+          <h4>Gerenciar Pauta</h4>
+        </div>
+        <div class="row">
+          <div id="cardInfo"/>
+        </div>
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs">
+              <li id="processosTab" class="tab col s3">
+                <a href="#processos">Processos</a>
+              </li>
+              <li id="retornosTab" class="tab col s5 ">
+                <a href="#retornos">Gerenciar Retornos</a>
+              </li>
+              <li id="virtualTab" class="tab col s3">
+                <a href="#virtual">Pauta Consolidada Virtual</a>
+              </li>
+              <!-- <li id="confirmacaoTab" class="tab col s3 ">
+                <a href="#confirmacao">Confirmar Pauta Conslidada</a>
+              </li> -->
+            </ul>
+          </div>
+          <div id="processos" class="col s12">
+            <div class="row">
+              <div class="col s12 right-align">
+                <div id="pauta" data-pauta=`${data.pauta}` data-idindicacao=`${data.idIndicacao}` data-colegiado=`${data.colegiado}`/>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group input-field  col s3">
+                <label>
+                  <input name="questionamentosCheck" id="questionamentosCheck" type="checkbox"/>
+                  <span>Mostrar Questionamentos Incorretos</span>
+                </label>
+              </div>
+              <div class="form-group input-field  col s3">
+                <label>
+                  <input name="aptosCheck" id="aptosCheck" type="checkbox"/>
+                  <span>Mostrar Somente Não Aptos</span>
+                </label>
+              </div>
+              <div class="col s12 right-align">
+                <app-drop-download/>
+                <a href="#modal2" id="mostraLegenda" title="Mostrar Legenda da Tabela" class="waves-effect waves-purple hoverable z-depth-3 btn-floating black">
+                  <i class="material-icons">details</i>
+                </a>
+              </div>
+            </div>
+            <div class="row"/>
+            <div class="row">
+              <div id="tabelaPauta"/>
+            </div>
+            <div class="row">
+              <a id="botaoCriaVirtual" class="waves-effect waves-light btn-large right">
+                <i class="fas fa-arrow-alt-circle-right right"/>Criar Pauta Consolidada Virtual
+              </a>
+            </div>
+          </div>
+          <div id="retornos" class="col s12">
+            <div class="row"/>
+            <div class="row">
+              <div class="file-field ctoastsucesso input-field form-group col s6">
+                <div class="btn">
+                  <span>Arquivo</span>
+                  <input class="tooltipped" data-position="bottom" data-tooltip="Somente arquivos XLS" type="file" name="filetoupload" id="file" accept=".xls,.xlsx" onchange="triggerValidation(this)"/>
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text"/>
+                </div>
+              </div>
+              <a id="botaoEnviaExcel" class="waves-effect waves-light btn-large">
+                <i class="fas fa-arrow-alt-circle-right right"/>Enviar Planilha
+              </a>
+            </div>
+            <div class="row">
+              <div id="tabelaRetornos"/>
+            </div>
+          </div>
+          <div id="virtual" class="col s12">
+            <div class="row"/>
+            <div class="row"/>
+            <div class="row">
+              <div id="tabelaConsolidadaVirtual"/>
+            </div>
+            <div class="row">
+              <a id="botaoConsolida" class="waves-effect waves-light btn-large right">
+                <i class="fas fa-arrow-alt-circle-right right"/>Consolidar Pauta
+              </a>
+            </div>
+          </div>
+          <!-- <div id="confirmacao" class="col s12">
+            <div class="row">
+              <div id="tabelaConsolidadaVirtual"/>
+            </div>
+            <div class="row">
+              <a id="botaoConsolida" class="waves-effect waves-light btn-large right">
+                <i class="fas fa-arrow-alt-circle-right right"/>Consolidar Pauta
+              </a>
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </main>
+    <footer class="page-footer rodape"/>
+    <app-modal-tabela-legenda/>
+    <!--Modal Structure-->
+    <div id="modal1" class="modal">
+      <div class="modal-content">
+        <h4 class="hModal">Modal Header</h4>
+        <p class="pModal"/>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-red btn-flat cancela">Cancela</a>
+        <button class="btn waves-effect waves-light concorda" type="submit" name="action">
+          Confirma <i class="material-icons right">send</i>
+        </button>
+      </div>
+    </div>
+    <app-footer/>
+    <app-scripts-js/>
+    <script src="/estatico/js/libs/plotly-latest.min.js"/>
+    <script src="/estatico/js/libs/plotly-locale-pt-br.js"/>
+    <script>Plotly.setPlotConfig({locale: 'pt-BR'})</script>
+    <script src="/estatico/js/julgamento/helpers/configTabelaNovoRegap.js"/>
+    <script src="/estatico/js/julgamento/cosup/gerenciaPauta.js"/>
+  </body>
+</html>

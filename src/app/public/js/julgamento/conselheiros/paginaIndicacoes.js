@@ -214,8 +214,6 @@ function handleFAQ(registro, metodo) {
       var toastHTML = `<span>Dados atualizados com sucesso!</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
       console.log(result);
-      quillTitulo.setContents('');
-      quillLink.setContents('');
       location.reload();
     },
     error: function (result) {

@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
-<app-scripts-css/>
+  <app-scripts-css/>
   <body>
-    <app-header />
+    <app-header/>
     <main class="conteudoPrincipal">
-      <app-navbar id="slide-out" class="sidenav"/>    
+      <app-navbar id="slide-out" class="sidenav"/>
       <div class="container">
         <div class="row">
-         <if(data.msg)>
+          <if(data.msg)>
             <div class=`col s4 offset-s4 center-align ${data.msg.cor}`>
               <h6>
                 <i class="material-icons prefix">${data.msg.alert}</i>${data.msg.text}
@@ -32,10 +32,10 @@
                   <div class="form-group input-field pwd">
                     <i class="material-icons prefix">lock</i>
                     <input type="password" required autocomplete="current-password" id="pwd" name="pwd" value=data.pwd placeholder="Digite sua senha." class="form-control"/>
-                  </div>                  
+                  </div>
                   <div class="form-group">
                     <a id="aModal" href="#modal1" class="waves-effect waves-light btn-ligaModal btn-small red lighten-3">
-                      <i class="material-icons left">error</i>Esqueci a senha
+                      <i class="material-icons left">error</i>1º Acesso / Esqueci a senha
                     </a>
                     <button class="btn-small waves-effect waves-light concorda green right" type="submit" name="action">
                       Efetuar login <i class="material-icons left">send</i>
@@ -56,7 +56,7 @@
       </div>
       <div class="modal-footer"/>
     </div>
-   <app-footer/>
+    <app-footer/>
     <app-scripts-js/>
     <script src="/estatico/js/base/login.js"/>
   </body>

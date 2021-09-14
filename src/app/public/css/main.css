@@ -454,6 +454,7 @@ summary::-webkit-details-marker {
   right: 7.5%;
 }
 
+.desenv,
 .perfiladmin,
 .perfilteste,
 .perfilacervo,
@@ -463,6 +464,7 @@ summary::-webkit-details-marker {
 .perfilpessoal,
 .perfilconselheiro,
 .perfilsuporte,
+.perfilpresidente,
 .soregap,
 .soreinp {
   display: none;

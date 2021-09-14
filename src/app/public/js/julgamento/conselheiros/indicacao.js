@@ -1,16 +1,53 @@
 let dadosPlot;
-let tableAptidao, tableIndicacao;
+let dadosIndicacao = [];
+let tableAptidao, tableIndicacao, tableConfirmacao;
 inicializaComponentes();
 function inicializaComponentes() {
   $(document).ready(function () {
     elementosTabelas();
     initTabs();
+    initCollapsible();
+    initSelect();
     controleTabs();
+    downloadPauta();
   });
+}
+
+function downloadPauta() {
+  $('.dropdownDownloadPauta').dropdown({
+    coverTrigger: false,
+    hover: false,
+    constrainWidth: false,
+  });
+  $('.pdfDown').click(() => {
+    tableAptidao.download('pdf', `${$('.titulo').text()}.pdf`, {
+      orientation: 'portrait',
+      title: `${$('.titulo').text()}`,
+      format: 'a4',
+    });
+  });
+  $('.csvDownPauta').click(() => {
+    tableAptidao.download('csv', `${$('.titulo').text()}.csv`);
+  });
+  $('.xlsxDownPauta').click(() => {
+    tableAptidao.download('xlsx', `Indicacao_Pauta.xlsx`, {
+      sheetName: 'Indicação para Pauta',
+    });
+  });
+}
+
+function initSelect() {
+  $('select').formSelect();
 }
 
 function initTabs() {
   $('.tabs').tabs();
+}
+
+function initCollapsible() {
+  $(document).ready(function () {
+    $('.collapsible').collapsible();
+  });
 }
 
 function getRelatorios(data) {
@@ -39,6 +76,12 @@ function getRelatorios(data) {
     });
 }
 
+function shiftAlega(alegacoes) {
+  let array = alegacoes.split(',');
+  array.shift();
+  return array;
+}
+
 function elementosTabelas() {
   let tabledata = JSON.parse($('#tabelaIndicacao').attr('data-indicacao'));
   tabledata.forEach((r) => {
@@ -46,6 +89,17 @@ function elementosTabelas() {
     r.Dias_da_Dist = retornaDias(r.dtUltDist);
     r.Dias_da_SJ = retornaDias(r.dtSessao);
     r.DAAPS = parseInt($('#daps').text()) + r.Dias_na_Atividade;
+    r.confirmaQuest = 'Correto';
+    r.alegacoes = r.alegacoes.replace(';', ',');
+    //r.alegacoes = r.alegacoes.replace(',', '/');
+    r.alegaPrim =
+      r.alegacoes != null || r.alegacoes != ''
+        ? r.alegacoes.split(',')[0]
+        : r.alegacoes;
+    r.alegaSec =
+      r.alegacoes != null || r.alegacoes != ''
+        ? shiftAlega(r.alegacoes)
+        : r.alegacoes;
   });
   dataTable(tabledata);
   dataTableAptidao();
@@ -56,13 +110,40 @@ function dataTable(data) {
   let tabledata = data;
   table = new Tabulator('#tabelaIndicacao', {
     data: tabledata,
-    pagination: 'local',
-    height: '1000px',
-    minHeight: '300px',
-    maxHeight: '1000px',
+    //pagination: 'local',
+    height: '100%',
+    minHeight: '200px',
+    //maxHeight: '1000px',
     layout: 'fitData',
     responsiveLayout: 'collapse',
     groupStartOpen: false,
+    selectable: true,
+    rowSelected: function (row) {
+      +$('#somatorioHoras').html(
+        +$('#somatorioHoras').html() + +row.getData().HE,
+      );
+      row.update({
+        apto: false,
+        vinculacao: false,
+        abaixo: false,
+        sumula: false,
+        liminar: false,
+      });
+      tableAptidao.updateOrAddData([row.getData()]);
+    },
+    rowDeselected: function (row) {
+      +$('#somatorioHoras').html(
+        +$('#somatorioHoras').html() - +row.getData().HE,
+      );
+      if (table.getSelectedRows().length == 0) {
+        +$('#somatorioHoras').html(0);
+      }
+      tableAptidao.deleteRow(
+        tableAptidao.getRows().filter((rowAptidao) => {
+          return rowAptidao.getData().processo == row.getData().processo;
+        }),
+      );
+    },
     responsiveLayoutCollapseStartOpen: false,
     initialSort: [
       { column: 'Dias_na_Atividade', dir: 'desc' },
@@ -73,18 +154,18 @@ function dataTable(data) {
       columnCalcs: false,
     },
     columns: [
-      {
-        title: 'Indicar',
-        formatter: formatIndica,
-        cellClick: clickIndica,
-        width: 100,
-        minWidth: 100,
-        hozAlign: 'center',
-        topCalc: countCalc,
-        editor: false,
-        responsive: 0,
-        download: false,
-      },
+      // {
+      //   title: 'Indicar',
+      //   formatter: formatIndica,
+      //   cellClick: clickIndica,
+      //   width: 100,
+      //   minWidth: 100,
+      //   hozAlign: 'center',
+      //   topCalc: countCalc,
+      //   editor: false,
+      //   responsive: 0,
+      //   download: false,
+      // },
       {
         title: 'Expandir',
         formatter: 'responsiveCollapse',
@@ -103,7 +184,7 @@ function dataTable(data) {
         sorter: 'number',
         hozAlign: 'center',
         headerFilter: 'input',
-        topCalc: countCalc,
+        //topCalc: countCalc,
         editor: false,
         responsive: 0,
         download: true,
@@ -129,14 +210,13 @@ function dataTable(data) {
         responsive: 2,
         download: true,
       },
-
       {
         title: 'Horas CARF',
         field: 'HE',
         sorter: 'number',
         hozAlign: 'center',
         headerFilter: 'input',
-        topCalc: somaCalc,
+        //topCalc: somaCalc,
         editor: false,
         responsive: 0,
         download: true,
@@ -147,7 +227,7 @@ function dataTable(data) {
         sorter: 'number',
         hozAlign: 'center',
         width: 140,
-        topCalc: mediaCalc,
+        //topCalc: mediaCalc,
         editor: false,
         formatter: coloreDias,
         responsive: 0,
@@ -165,13 +245,59 @@ function dataTable(data) {
         download: true,
       },
       {
-        title: 'Valor Originário',
+        title: 'Valor Original',
+        field: 'valorOriginal',
+        sorter: 'number',
+        hozAlign: 'center',
+        editor: false,
+        formatter: formatValor,
+        accessorDownload: numberConvert,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Valor Originário Lançado/Pleiteado',
         field: 'valorOrig',
         sorter: 'number',
         hozAlign: 'center',
         editor: false,
         formatter: formatValor,
+        accessorDownload: numberConvert,
         responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Valor Crédito Lançado (Multa de Ofício)',
+        field: 'valorCrdLanc',
+        sorter: 'number',
+        hozAlign: 'center',
+        editor: false,
+        formatter: formatValor,
+        accessorDownload: numberConvert,
+        responsive: 1,
+        download: true,
+      },
+      {
+        title:
+          'Imposto Projetado Sobre Lançamento de Reduções de Base de Cálculo e/ou de Imposto',
+        field: 'impostoProj',
+        sorter: 'number',
+        hozAlign: 'center',
+        editor: false,
+        formatter: formatValor,
+        accessorDownload: numberConvert,
+        responsive: 1,
+        download: true,
+      },
+      {
+        title: 'Valor Sem TJM (Atual)',
+        field: 'valorSemTJM',
+        sorter: 'number',
+        hozAlign: 'center',
+        editor: false,
+        formatter: formatValor,
+        accessorDownload: numberConvert,
+        responsive: 1,
         download: true,
       },
       {
@@ -210,7 +336,6 @@ function dataTable(data) {
         responsive: 2,
         download: true,
       },
-
       {
         title: 'Motivo da Prioridade',
         field: 'motPrior',
@@ -229,65 +354,9 @@ function dataTable(data) {
         responsive: 2,
         download: true,
       },
-
-      {
-        title: 'Dias da Sessão de Julgamento',
-        field: 'Dias_da_SJ',
-        sorter: 'number',
-        width: 150,
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
-        download: false,
-      },
-      {
-        title: 'Data da Sessão de Julgamento',
-        field: 'dtSessao',
-        sorter: 'number',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
-        download: false,
-      },
-      {
-        title: 'Dias da Última Distribuição',
-        field: 'Dias_da_Dist',
-        sorter: 'number',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
-        download: false,
-      },
-      {
-        title: 'Retorno Sepoj?',
-        field: 'Retorno_Sepoj',
-        sorter: 'string',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Última Equipe',
-        field: 'ultEquipe',
-        sorter: 'string',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
-        download: false,
-      },
       {
         title: 'Questionamento',
         field: 'questionamento',
-        sorter: 'string',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Solicitação de Juntada?',
-        field: 'juntada',
         sorter: 'string',
         hozAlign: 'center',
         editor: false,
@@ -382,7 +451,6 @@ let formatIndica = function formatIndica(cell) {
 };
 function clickIndica(e, cell) {
   if (cell.getElement().style.color == 'green') {
-    $('#cardSoma').slideUp(10).slideDown(10);
     +$('#somatorioHoras').html(
       +$('#somatorioHoras').html() - +cell.getRow().getData().HE,
     );
@@ -393,7 +461,6 @@ function clickIndica(e, cell) {
       }),
     );
   } else {
-    $('#cardSoma').slideUp(10).slideDown(10);
     cell.getElement().style.color = 'green';
     +$('#somatorioHoras').html(
       +$('#somatorioHoras').html() + +cell.getRow().getData().HE,
@@ -401,7 +468,7 @@ function clickIndica(e, cell) {
     cell.getRow().update({
       apto: false,
       vinculacao: false,
-      abaixo: +cell.getRow().getData().valorOrig >= 8000000 ? false : true,
+      abaixo: false,
       sumula: false,
       liminar: false,
     });
@@ -413,13 +480,7 @@ function clickBool(e, cell) {
   if (cell.getValue() == false || !cell.getValue()) {
     cell.setValue(true, true);
   } else cell.setValue(false, true);
-  console.log(
-    `Liminar: ${cell.getRow().getData().liminar}, Abaixo: ${
-      cell.getRow().getData().abaixo
-    }, Sumula: ${cell.getRow().getData().sumula}, Vinculacao: ${
-      cell.getRow().getData().vinculacao
-    }, Apto: ${cell.getRow().getData().apto}`,
-  );
+
   avaliaAptidao(cell);
 }
 
@@ -456,21 +517,97 @@ function controleTabs() {
     tableAptidao.redraw();
     tableAptidao.redraw();
   });
+  $('#botaoVerifica').click((e) => {
+    tableAptidao.redraw();
+    const formato = {
+      style: 'currency',
+      currency: 'BRL',
+      useGrouping: true,
+      localeMatcher: 'best fit',
+    };
+    dadosIndicacao = tableAptidao.getData();
+    let alegacaoNula = 0;
+    dadosIndicacao.forEach((p) => {
+      if (p.confirmaQuest != 'Correto') {
+        p.questionamento = p.confirmaQuest;
+        console.log(p.questionamento, ' ', p.confirmaQuest);
+      }
+      if (p.alegaPrim == '' || p.alegaPrim == null) {
+        alegacaoNula += 1;
+      }
+    });
+    if (alegacaoNula > 0) {
+      var toastHTML = `<span>Há ${alegacaoNula} processos com alegação(ões) não preenchida(s).</span>`;
+      M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 5000 });
+      var toastHTML2 = `É necessário preencher as alegações faltantes para efetuar a confirmação da indicação para pauta.</span>`;
+      M.toast({ html: toastHTML2, classes: 'rounded', timeRemaining: 5000 });
+    } else {
+      dadosIndicacao.forEach((t) => {
+        $('#tabelaConfirmacao').append(
+          `
+        <div class='row'>
+        <h6><strong>Processo:</strong> ${
+          t.processo
+        } - <strong>Contribuinte:</strong> ${t.contribuinte}</h6>
+        <p><strong>Horas CARF:</strong> ${t.HE}</p>
+        <p><strong>Valor Original:</strong> ${t.valorOriginal.toLocaleString(
+          'pt-BR',
+          formato,
+        )}</p>
+        <p><strong>Processo Apto?</strong> ${t.apto == true ? 'Sim' : 'Não'}</p>
+        <p><strong>Questionamento: </strong> ${
+          t.confirmaQuest == 'Correto' ? t.questionamento : t.confirmaQuest
+        }</p>
+        <p><strong>Alegações: </strong> ${
+          t.alegaPrim == '' || t.alegaPrim == null
+            ? '<strong><span class="red-text">Não preenchida</span></strong>'
+            : t.alegaPrim
+        }</p>
+        </div>
+        `,
+        );
+      });
+      $('#confirmacaoTab').removeClass('disabled');
+      $('.tabs').tabs('select', 'confirmacao');
+    }
+  });
+
+  $('#botaoConfirma').click((e) => {
+    $('#confirmacaoTab').removeClass('disabled');
+    $('.tabs').tabs('select', 'confirmacao');
+    let dadosUser = JSON.parse($('#dataUser').attr('data-user'));
+    let dadosPauta = JSON.parse($('#dataPauta').attr('data-pauta'));
+    let dadosGravacao = {};
+    dadosGravacao.cpf = dadosUser.cpf;
+    dadosGravacao.nome = dadosUser.nome;
+    dadosGravacao.colegiado = dadosUser.unidade;
+    dadosGravacao.mesIndicacao = dadosPauta.mes;
+    dadosGravacao.anoIndicacao = dadosPauta.ano;
+    dadosGravacao.idIndicacao = dadosPauta._id;
+    dadosGravacao.processos = dadosIndicacao;
+    //console.log(dadosGravacao);
+    gravaIndicacao(dadosGravacao);
+    tableAptidao.redraw();
+  });
+
+  $('#alegaTab').click((e) => {
+    tableAptidao.redraw();
+    tableAptidao.redraw();
+  });
 }
 
 function dataTableAptidao() {
   tableAptidao = new Tabulator('#tabelaAptidao', {
     data: [],
-    pagination: 'local',
-    height: '1000px',
+    //pagination: 'local',
+    //height: '1000px',
     minHeight: '200px',
-    maxHeight: '1000px',
+    maxHeight: '100%',
     layout: 'fitData',
-    responsiveLayout: false,
+    responsiveLayout: 'collapse',
     groupStartOpen: false,
     responsiveLayoutCollapseStartOpen: false,
     initialSort: [
-      { column: 'Dias_na_Atividade', dir: 'desc' },
       { column: 'contribuinte', dir: 'desc' },
       { column: 'processo', dir: 'desc' },
     ],
@@ -490,6 +627,7 @@ function dataTableAptidao() {
         headerTooltip:
           'Verificação automática baseada nas respostas das colunas.',
       },
+
       {
         title: 'Processo',
         field: 'processo',
@@ -516,7 +654,7 @@ function dataTableAptidao() {
       },
 
       {
-        title: 'Abaixo de 8 milhões?',
+        title: `Abaixo de ${minimoAptoString}`,
         field: 'abaixo',
         sorter: 'boolean',
         hozAlign: 'center',
@@ -525,8 +663,7 @@ function dataTableAptidao() {
         responsive: 0,
         cellClick: clickBool,
         download: true,
-        headerTooltip:
-          'O valor originário do processo é inferior a 8 (OITO) milhões de reais?',
+        headerTooltip: `O valor originário do processo é inferior a ${minimoAptoString}`,
       },
       {
         title: 'Súmula?',
@@ -567,15 +704,71 @@ function dataTableAptidao() {
         headerTooltip:
           'Trata-se de decisão/liminar judicial para julgamento imediato?',
       },
-
       {
-        title: 'Valor Originário',
-        field: 'valorOrig',
+        title: 'Valor Original',
+        field: 'valorOriginal',
         sorter: 'number',
-        hozAlign: 'right',
+        hozAlign: 'center',
         editor: false,
         formatter: formatValor,
+        accessorDownload: numberConvert,
         responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Expandir',
+        formatter: 'responsiveCollapse',
+        width: 60,
+        minWidth: 60,
+        hozAlign: 'center',
+        resizable: false,
+        headerSort: false,
+        responsive: 0,
+        download: false,
+      },
+      {
+        title: 'Valor Originário Lançado/Pleiteado',
+        field: 'valorOrig',
+        sorter: 'number',
+        hozAlign: 'center',
+        editor: false,
+        formatter: formatValor,
+        accessorDownload: numberConvert,
+        responsive: 1,
+        download: true,
+      },
+      {
+        title: 'Valor Crédito Lançado (Multa de Ofício)',
+        field: 'valorCrdLanc',
+        sorter: 'number',
+        hozAlign: 'center',
+        editor: false,
+        formatter: formatValor,
+        accessorDownload: numberConvert,
+        responsive: 1,
+        download: true,
+      },
+      {
+        title:
+          'Imposto Projetado Sobre Lançamento de Reduções de Base de Cálculo e/ou de Imposto',
+        field: 'impostoProj',
+        sorter: 'number',
+        hozAlign: 'center',
+        editor: false,
+        formatter: formatValor,
+        accessorDownload: numberConvert,
+        responsive: 1,
+        download: true,
+      },
+      {
+        title: 'Valor Sem TJM (Atual)',
+        field: 'valorSemTJM',
+        sorter: 'number',
+        hozAlign: 'center',
+        editor: false,
+        formatter: formatValor,
+        accessorDownload: numberConvert,
+        responsive: 1,
         download: true,
       },
       {
@@ -589,66 +782,7 @@ function dataTableAptidao() {
         responsive: 2,
         download: true,
       },
-      {
-        title: 'Ind. Apenso',
-        field: 'apenso',
-        sorter: 'string',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Dias na Atividade',
-        field: 'Dias_na_Atividade',
-        sorter: 'number',
-        hozAlign: 'center',
-        width: 140,
-        topCalc: mediaCalc,
-        editor: false,
-        formatter: coloreDias,
-        responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Dias na Atividade na Próxima Sessão',
-        field: 'DAAPS',
-        sorter: 'number',
-        width: 140,
-        hozAlign: 'center',
-        editor: false,
-        formatter: coloreDias,
-        responsive: 2,
-        download: true,
-      },
 
-      {
-        title: 'Assunto/Objeto',
-        field: 'assunto',
-        sorter: 'string',
-        hozAlign: 'left',
-        editor: false,
-        responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Observações/Nome do Lote',
-        field: 'obs',
-        sorter: 'string',
-        hozAlign: 'left',
-        editor: false,
-        responsive: 2,
-        download: true,
-      },
-      {
-        title: 'Alegações',
-        field: 'alegacoes',
-        sorter: 'string',
-        hozAlign: 'left',
-        editor: true,
-        responsive: 0,
-        download: true,
-      },
       {
         title: 'Questionamento',
         field: 'questionamento',
@@ -659,92 +793,89 @@ function dataTableAptidao() {
         download: true,
       },
       {
-        title: 'Prioridade',
-        field: 'prioridade',
-        sorter: 'string',
-        hozAlign: 'left',
-        editor: false,
-        responsive: 2,
+        title: 'Questionamento Correto?',
+        field: 'confirmaQuest',
+        hozAlign: 'center',
+        editor: 'select',
+        editorParams: {
+          values: [
+            'Correto',
+            'Recurso Voluntário',
+            'Recurso de Ofício',
+            'Recurso Voluntário/Ofício',
+            'Recurso Especial da Procuradoria',
+            'Recurso Especial do Contribuinte',
+            'Recurso Especial Procuradoria/Contribuinte',
+            'Embargo da Procuradoria',
+            'Embargo do Contribuinte',
+            'Embargo Procuradoria/Contribuinte',
+          ],
+          defaultValue: 'Correto',
+        },
+        responsive: 0,
         download: true,
+        headerTooltip:
+          'Verificação automática baseada nas respostas das colunas.',
       },
-
       {
-        title: 'Motivo da Prioridade',
-        field: 'motPrior',
+        title: 'Alegação Principal',
+        field: 'alegaPrim',
         sorter: 'string',
         hozAlign: 'left',
+        editorParams: {
+          search: true,
+          mask: '99.999.9999',
+          elementAttributes: {
+            maxlength: '11', //set the maximum character length of the input element to 10 characters
+          },
+        },
+        //accessor: alegaPrim,
+        //validator: 'required',
         editor: true,
-        responsive: 2,
-        download: true,
-      },
-
-      {
-        title: 'Entrada na Atividade',
-        field: 'entradaAtividade',
-        sorter: 'date',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
+        width: 180,
+        responsive: 0,
         download: true,
       },
       {
-        title: 'Dias da Sessão de Julgamento',
-        field: 'Dias_da_SJ',
-        sorter: 'number',
-        width: 150,
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
-        download: false,
-      },
-      {
-        title: 'Data da Sessão de Julgamento',
-        field: 'dtSessao',
-        sorter: 'number',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
-        download: false,
-      },
-      {
-        title: 'Dias da Última Distribuição',
-        field: 'Dias_da_Dist',
-        sorter: 'number',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
-        download: false,
-      },
-      {
-        title: 'Retorno Sepoj?',
-        field: 'Retorno_Sepoj',
+        title: 'Demais Alegações (separar por "/")',
+        field: 'alegaSec',
         sorter: 'string',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
+        hozAlign: 'left',
+        //validator: 'required',
+        editor: true,
+        width: 250,
+        responsive: 0,
         download: true,
-      },
-      {
-        title: 'Última Equipe',
-        field: 'ultEquipe',
-        sorter: 'string',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
-        download: false,
-      },
-      {
-        title: 'Solicitação de Juntada?',
-        field: 'juntada',
-        sorter: 'string',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
-        download: true,
+        headerTooltip: 'Caso haja mais de um código, separe por barras (/).',
       },
     ],
     autoColumns: false,
     locale: true,
     langs: langs,
+  });
+}
+
+let alegaPrim = function alegaPrim(cell) {
+  if (cell.getValue() != null || cell.getValue() != '') {
+    return cell.getValue();
+  } else return cell.getValue();
+};
+
+function gravaIndicacao(registro) {
+  $.ajax({
+    url: '/julgamento/conselheiros/indicacao-pauta',
+    data: registro,
+    type: 'POST',
+    success: function (result) {
+      var toastHTML = `<span>Dados atualizados com sucesso!</span>`;
+      M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+      console.log(result);
+      //location.reload();
+    },
+    error: function (result) {
+      var toastHTML = `<span>Ocorreu um erro.</span>`;
+      M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+      console.log(result);
+    },
   });
 }

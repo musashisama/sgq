@@ -3,6 +3,7 @@ const Binary = require('mongodb').Binary;
 const JulgamentoDao = require('../infra/julgamento-dao');
 const FileDao = require('../infra/file-dao');
 const PessoalDao = require('../infra/pessoal-dao');
+const SuporteDao = require('../infra/suporte-dao');
 const requestIp = require('request-ip');
 const templates = require('../views/templates');
 const formidable = require('formidable');
@@ -648,10 +649,11 @@ class JulgamentoControlador {
       if (req.method == 'GET') {
         const pessoalDao = new PessoalDao(conn);
         const julgamentoDao = new JulgamentoDao(conn);
+        const suporteDao = new SuporteDao(conn);
         let filtro, sort, projecao, limit;
         filtro = { 'conselheiro.cpf': req.user.cpf };
         projecao = {};
-        sort = {};
+        sort = { dtRel: -1 };
         limit = -1;
         pessoalDao.getUsers({ cpf: req.user.cpf }).then((user) => {
           julgamentoDao
@@ -662,17 +664,29 @@ class JulgamentoControlador {
               julgamentoDao
                 .getRegap(filtro, sort, projecao, limit)
                 .then((regap) => {
-                  resp.marko(templates.julgamento.indicapauta, {
-                    relatorio: JSON.stringify(regap[0].relatorio),
-                    cal: JSON.stringify(cal),
-                    user: user[0],
-                  });
+                  suporteDao
+                    .getIndicacoes({
+                      semana: CSVHandler.semanaCores(user[0].unidade),
+                    })
+                    .then((indicacoes) => {
+                      resp.marko(templates.julgamento.indicapauta, {
+                        relatorio: JSON.stringify(regap[0].relatorio),
+                        cal: JSON.stringify(cal),
+                        user: JSON.stringify(user[0]),
+                        pauta: JSON.stringify(indicacoes[0]),
+                      });
+                    });
                 });
             });
         });
       }
       if (req.method == 'POST') {
+        let dados = [req.body];
         console.log(req.body);
+        const suporteDao = new SuporteDao(conn);
+        suporteDao.criaIndicacaoPauta(dados).then((resposta) => {
+          resp.send(resposta);
+        });
       }
     };
   }
@@ -681,16 +695,33 @@ class JulgamentoControlador {
     return function (req, resp) {
       const pessoalDao = new PessoalDao(conn);
       const julgamentoDao = new JulgamentoDao(conn);
+      const suporteDao = new SuporteDao(conn);
       pessoalDao.getUsers({ cpf: req.user.cpf }).then((user) => {
         julgamentoDao
           .getCal({
             classNames: CSVHandler.semanaCores(user[0].unidade),
           })
           .then((cal) => {
-            resp.marko(templates.julgamento.portaldoconselheiro, {
-              cal: JSON.stringify(cal),
-              user: user[0],
-            });
+            suporteDao
+              .getIndicacoes({
+                semana: CSVHandler.semanaCores(user[0].unidade),
+              })
+              .then((indicacoes) => {
+                suporteDao
+                  .getIndicacoesPauta({
+                    $and: [
+                      { cpf: req.user.cpf },
+                      { idIndicacao: indicacoes[0]._id.toString() },
+                    ],
+                  })
+                  .then((indicaPauta) => {
+                    resp.marko(templates.julgamento.portaldoconselheiro, {
+                      cal: JSON.stringify(cal),
+                      user: user[0],
+                      pauta: JSON.stringify(indicacoes[0]),
+                    });
+                  });
+              });
           });
       });
     };

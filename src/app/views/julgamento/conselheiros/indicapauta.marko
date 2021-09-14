@@ -7,6 +7,8 @@
       <app-navbar id="slide-out" class="sidenav"/>
       <div id="caixa" class="container">
         <div id="dataCAL" data-cal=`${data.cal}`/>
+        <div id="dataUser" data-user=`${data.user}`/>
+        <div id="dataPauta" data-pauta=`${data.pauta}`/>
         <h3 class="center-align titulo">Indicação de Processos para Pauta de Julgamento</h3>
         <br/>
         <h6/>
@@ -35,8 +37,8 @@
               <li id="processosTab" class="tab col s3">
                 <a href="#processos">Escolher Processos</a>
               </li>
-              <li id="aptidaoTab" class="tab col s3 disabled">
-                <a href="#aptidao">Verificar Aptidão</a>
+              <li id="aptidaoTab" class="tab col s5 disabled">
+                <a href="#aptidao">Verificar Aptidão, Alegações e Questionamentos</a>
               </li>
               <li id="confirmacaoTab" class="tab col s3 disabled">
                 <a href="#confirmacao">Confirmar Indicação</a>
@@ -46,13 +48,19 @@
           <div id="processos" class="col s12">
             <br/>
             <div class="row">
-              <div class="col s6 offset-s3">
-                <span>
-                  Para indicar processos para pauta, clique no ícone <i class="fas fa-check-square'"/>. Ao terminar suas indicações, clique no botão abaixo:
-                </span>
+              <div class="col s6 offset-s6">
                 <a id="botaoIndica" class="waves-effect waves-light btn-large">
                   <i class="fas fa-arrow-alt-circle-right right"/>Proceder para Verificação de Aptidão para Julgamento
                 </a>
+              </div>
+              <div class="col s12">
+                <blockquote>
+                  <strong>
+  <p class="valign-wrapper">
+                      <i class="fas fa-info-circle medium blue-text"/> &nbsp;  Para indicar processos para pauta, clique no processo desejado. Ao terminar suas indicações, clique no botão acima.
+                    </p>
+                  </strong>
+                </blockquote>
               </div>
             </div>
             <div class="row">
@@ -68,13 +76,69 @@
           <div id="aptidao" class="col s12">
             <h4 class="center">Verificar Aptidão para Julgamento em Sessão Virtual</h4>
             <div class="row">
+              <div class="col s6 offset-s6">
+                <a id="botaoVerifica" class="waves-effect waves-light btn-large">
+                  <i class="fas fa-arrow-alt-circle-right right"/>Proceder para Confirmação da Indicação
+                </a>
+              </div>
+              <div class="col s12">
+                <blockquote>
+                  <strong>
+  <p class="valign-wrapper">
+                      <i class="fas fa-info-circle medium blue-text"/> &nbsp;  Para verificar aptidão dos processos, clique nos ícones &nbsp;<i class="fa fa-times red-text"/> &nbsp;ou&nbsp; <i class="fa fa-check green-text"/>. A coluna "Processo Apto?" é calculada automaticamente.
+                    </p>
+                  </strong>
+                </blockquote>
+                <blockquote>
+                  <strong>
+  <p class="valign-wrapper">
+                      <i class="fas fa-info-circle medium blue-text"/>
+                      &nbsp;
+                      <a href="http://dispe.carf/tab-alegacoes/" target="_blank">Clique aqui</a>
+                      &nbsp;para acessar a &nbsp;
+                      <a href="http://dispe.carf/tab-alegacoes/" target="_blank">Tabela de Alegações.</a>
+                    </p>
+                  </strong>
+                </blockquote>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s12 right">
+                <a class="dropdownDownloadPauta waves-effect waves-yellow hoverable z-depth-3 btn-floating red right" href="#" data-target="dropdown3">
+                  <i class="material-icons">file_download</i>
+                </a>
+                <ul id="dropdown3" class="dropdown-content">
+                  <li class="divider" tabindex="-1"/>
+                  <li>
+                    <a class="xlsxDownPauta" href="#!">
+                      <i class="xlsxDownPauta material-icons">file_download</i>XLSX
+                    </a>
+                  </li>
+                  <li class="divider" tabindex="-1"/>
+                  <li>
+                    <a class="csvDownPauta" href="#!">
+                      <i class="csvDownPauta material-icons">file_download</i>CSV
+                    </a>
+                  </li>
+                  <li class="divider" tabindex="-1"/>
+                </ul>
+              </div>
+            </div>
+            <div class="row">
               <div id="tabelaAptidao"/>
             </div>
           </div>
           <div id="confirmacao" class="col s12">
-            <h4 class="center">Confirmar Indicação para Pauta</h4>
+            <div class="row">
+              <h4 class="center">Confirmar Indicação para Pauta</h4>
+            </div>
             <div class="row">
               <div id="tabelaConfirmacao"/>
+            </div>
+            <div class="row">
+              <a id="botaoConfirma" class="waves-effect waves-light btn-large right">
+                <i class="fas fa-arrow-alt-circle-right right"/>Confirmar Indicação
+              </a>
             </div>
           </div>
         </div>
@@ -83,7 +147,7 @@
             <div class="card hoverable cardVermelho">
               <div class="card-content">
                 <span class="card-title center">ATENÇÃO</span>
-                <a id="oitomilhoes"/>* O campo "Valor Originário" é extraído diretamente do e-Processo e não leva em consideração outros fatores que possam alterar o valor a ser considerado no momento da indicação para pauta. Dessa forma, para casos concretos, deverão ser somadas a esse valor outras informações, nos termos das
+                <a id="oitomilhoes"/>* O campo "Valor Orignal" é extraído diretamente do e-Processo e não leva em consideração outros fatores que possam alterar o valor a ser considerado no momento da indicação para pauta. Dessa forma, para casos concretos, deverão ser somadas a esse valor outras informações, nos termos das
                 <strong>orientações para indicação de pauta</strong>.
               </div>
             </div>

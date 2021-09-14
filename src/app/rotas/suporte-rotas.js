@@ -55,9 +55,21 @@ module.exports = (app) => {
 
   app.get(rotasSuporte.criaIndicacao, supControlador.carregaCriaIndicacao());
   app
+    .route(rotasSuporte.consolidacaoPauta)
+    .post(supControlador.consolidaPauta())
+    .delete(supControlador.consolidaPauta());
+  app
     .route(rotasSuporte.editaPeriodo)
     .get(supControlador.carregaEditaIndicacao())
     .post(supControlador.carregaEditaIndicacao());
+  app
+    .route(rotasSuporte.gerenciaPeriodo)
+    .get(supControlador.gerenciaPeriodo())
+    .post(supControlador.gerenciaPeriodo());
+  app
+    .route(rotasSuporte.gerenciaColegiado)
+    .get(supControlador.gerenciaColegiado())
+    .post(supControlador.gerenciaColegiado());
   app
     .route(rotasSuporte.handle_periodo)
     .get(supControlador.handlePeriodo())

@@ -17,7 +17,7 @@ module.exports = (app) => {
     }
   });
 
-  app.use(rotasJulgamento.portalconselheiros, function (req, resp, next) {
+  app.use(rotasJulgamento.autenticadas, function (req, resp, next) {
     req.session.baseUrl = req.baseUrl;
     if (req.isAuthenticated()) {
       resp.set('autenticado', true);

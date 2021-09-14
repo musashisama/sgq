@@ -44,6 +44,8 @@ cliente.connect(url, opcoes, function (err, cliente) {
   dados.regSolicitacoes = dbo.collection('regSolicitacoes');
   dados.APES749 = dbo.collection('apesControle');
   dados.periodosIndicacao = dbo.collection('periodosIndicacao');
+  dados.indicacoesPauta = dbo.collection('indicacoesPauta');
+  dados.pautas = dbo.collection('pautas');
 });
 
 process.on('SIGINT', () =>

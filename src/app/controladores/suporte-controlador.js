@@ -3,7 +3,8 @@ const mongo = require('../../config/mongodb').mongo;
 const url = require('../../config/mongodb').url;
 const db = require('../../config/mongodb').db;
 const SuporteDAO = require('../infra/suporte-dao');
-const JulgamentoDao = require('../infra/julgamento-dao');
+const JulgamentoDAO = require('../infra/julgamento-dao');
+const PessoalDAO = require('../infra/pessoal-dao');
 const requestIp = require('request-ip');
 const templates = require('../views/templates');
 const formidable = require('formidable');
@@ -44,21 +45,23 @@ class SuporteControlador {
       portalCosup: '/suporte/restrito/portalcosup',
       gestaoPortalCosup: '/suporte/restrito/gestaoportalcosup',
       gerenciaPeriodo: '/suporte/restrito/gerencia-periodo/:id',
+      gerenciaColegiado: '/suporte/restrito/gerencia-colegiado/:id',
       editaPeriodo: '/suporte/restrito/edita-periodo/:id',
+      consolidacaoPauta: '/suporte/restrito/consolida-pauta/',
     };
   }
 
   handlePortalCosup() {
     return function (req, resp) {
       if (req.method == 'GET') {
-        const julgamentoDao = new JulgamentoDao(conn);
+        const julgamentoDao = new JulgamentoDAO(conn);
         julgamentoDao.getPortal({ portal: 'cosup' }).then((msg) => {
           resp.marko(templates.suporte.gestaoPortalCosup, {
             portal: JSON.stringify(msg),
           });
         });
       } else {
-        const julgamentoDao = new JulgamentoDao(conn);
+        const julgamentoDao = new JulgamentoDAO(conn);
         if (req.method == 'POST' || req.method == 'PUT') {
           julgamentoDao
             .getPortal({ uniqueId: req.body.uniqueId })
@@ -90,7 +93,7 @@ class SuporteControlador {
 
   carregaPortalCosup() {
     return function (req, resp) {
-      const julgamentoDao = new JulgamentoDao(conn);
+      const julgamentoDao = new JulgamentoDAO(conn);
       julgamentoDao.getPortal({ portal: 'cosup' }).then((portal) => {
         resp.marko(templates.suporte.portalCosup, {
           portal: JSON.stringify(portal),
@@ -119,9 +122,12 @@ class SuporteControlador {
   carregaEditaIndicacao() {
     return function (req, resp) {
       if (req.method == 'GET') {
+        let id = new ObjectID(req.params.id);
         const suporteDAO = new SuporteDAO(conn);
+        // const julgamentoDao = new JulgamentoDAO(conn);
+        // const pessoalDao = new pessoalDAO(conn);
         suporteDAO
-          .getIndicacoes({ _id: new ObjectID(req.params.id) })
+          .getIndicacoes({ _id: new ObjectID(id) })
           .then((indicacao) => {
             resp.marko(templates.suporte.editaIndicacao, {
               indicacao: JSON.stringify(indicacao),
@@ -155,6 +161,117 @@ class SuporteControlador {
           });
         } else if (req.method == 'DELETE') {
           julgamentoDao
+            .excluiPortal({ uniqueId: req.body.uniqueId })
+            .then((msg) => {
+              resp.json(msg);
+            });
+        }
+      }
+    };
+  }
+  gerenciaPeriodo() {
+    return function (req, resp) {
+      const suporteDAO = new SuporteDAO(conn);
+      const julgamentoDAO = new JulgamentoDAO(conn);
+      const pessoalDAO = new PessoalDAO(conn);
+      if (req.method == 'GET') {
+        pessoalDAO
+          .getUsers({ $and: [{ cargo: 'Conselheiro' }, { mandatoAt: 'Sim' }] })
+          .then((users) => {
+            suporteDAO
+              .getIndicacoes({ _id: new ObjectID(req.params.id) })
+              .then((msg) => {
+                users.forEach((user) => {
+                  if (
+                    user.unidade == '1ª CÂMARA-1ªSEÇÃO-CARF-MF-DF' ||
+                    user.unidade == '2ª CÂMARA-1ªSEÇÃO-CARF-MF-DF' ||
+                    user.unidade == '3ª CÂMARA-1ªSEÇÃO-CARF-MF-DF' ||
+                    user.unidade == '4ª CÂMARA-1ªSEÇÃO-CARF-MF-DF'
+                  ) {
+                    user.unidade = '1ª TURMA-CSRF-CARF-MF-DF';
+                  }
+                  if (
+                    user.unidade == '1ª CÂMARA-2ªSEÇÃO-CARF-MF-DF' ||
+                    user.unidade == '2ª CÂMARA-2ªSEÇÃO-CARF-MF-DF' ||
+                    user.unidade == '3ª CÂMARA-2ªSEÇÃO-CARF-MF-DF' ||
+                    user.unidade == '4ª CÂMARA-2ªSEÇÃO-CARF-MF-DF'
+                  ) {
+                    user.unidade = '2ª TURMA-CSRF-CARF-MF-DF';
+                  }
+                  if (
+                    user.unidade == '1ª CÂMARA-3ªSEÇÃO-CARF-MF-DF' ||
+                    user.unidade == '2ª CÂMARA-3ªSEÇÃO-CARF-MF-DF' ||
+                    user.unidade == '3ª CÂMARA-3ªSEÇÃO-CARF-MF-DF' ||
+                    user.unidade == '4ª CÂMARA-3ªSEÇÃO-CARF-MF-DF'
+                  ) {
+                    user.unidade = '3ª TURMA-CSRF-CARF-MF-DF';
+                  }
+                });
+                resp.marko(templates.suporte.gerenciaPeriodo, {
+                  periodo: JSON.stringify(msg),
+                  cons: JSON.stringify(users),
+                });
+              });
+          });
+      } else {
+        if (req.method == 'POST' || req.method == 'PUT') {
+          suporteDAO.criaIndicacao(req.body).then((result) => {
+            resp.send(result);
+          });
+        } else if (req.method == 'DELETE') {
+          julgamentoDAO
+            .excluiPortal({ uniqueId: req.body.uniqueId })
+            .then((msg) => {
+              resp.json(msg);
+            });
+        }
+      }
+    };
+  }
+
+  consolidaPauta() {
+    return function (req, resp) {
+      if (req.method == 'POST') {
+        req.body.processos = JSON.parse(req.body.processos);
+        console.log(req.body);
+        req.body.tipoPauta = 'Consolidada';
+        const suporteDAO = new SuporteDAO(conn);
+        suporteDAO.inserePautaConsolidada(req.body).then((res) => {
+          console.log(res);
+          resp.send(res);
+        });
+      }
+    };
+  }
+  gerenciaColegiado() {
+    return function (req, resp) {
+      const suporteDAO = new SuporteDAO(conn);
+      const julgamentoDAO = new JulgamentoDAO(conn);
+      const pessoalDAO = new PessoalDAO(conn);
+      if (req.method == 'GET') {
+        let parametros = req.params.id.split('&');
+        suporteDAO
+          .getIndicacoesPauta({
+            $and: [
+              { idIndicacao: parametros[0] },
+              { colegiado: parametros[1] },
+            ],
+          })
+          .then((pauta) => {
+            resp.marko(templates.suporte.gerenciaPauta, {
+              pauta: JSON.stringify(pauta),
+              idIndicacao: JSON.stringify(parametros[0]),
+              colegiado: JSON.stringify(parametros[1]),
+            });
+          });
+      } else {
+        if (req.method == 'POST' || req.method == 'PUT') {
+          console.log(req.body);
+          // suporteDAO.criaIndicacao(req.body).then((result) => {
+          //   resp.send(result);
+          // });
+        } else if (req.method == 'DELETE') {
+          julgamentoDAO
             .excluiPortal({ uniqueId: req.body.uniqueId })
             .then((msg) => {
               resp.json(msg);

@@ -5,4 +5,5 @@ module.exports = {
   julgamento: require('./julgamento'),
   pessoal: require('./pessoal'),
   suporte: require('./suporte'),
+  presidente: require('./presidente'),
 };
