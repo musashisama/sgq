@@ -711,7 +711,11 @@ class JulgamentoControlador {
                   .getIndicacoesPauta({
                     $and: [
                       { cpf: req.user.cpf },
-                      { idIndicacao: indicacoes[0]._id.toString() },
+                      {
+                        idIndicacao: indicacoes[0]
+                          ? indicacoes[0]._id.toString()
+                          : '',
+                      },
                     ],
                   })
                   .then((indicaPauta) => {

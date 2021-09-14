@@ -30,7 +30,7 @@ function render(input, out, __component, component, state) {
 
   app_scripts_css_tag({}, out, __component, "1");
 
-  out.w(" <body>");
+  out.w("<body>");
 
   component_globals_tag({}, out);
 
@@ -42,7 +42,7 @@ function render(input, out, __component, component, state) {
 
   out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Gestão do Conhecimento - COJUL</h3><div class=\"row\"><div class=\"input-field col s12\"><i class=\"material-icons prefix\">textsms</i><input type=\"text\" id=\"autocomplete-input\" class=\"autocomplete\"><label for=\"autocomplete-input\">Do que você precisa?</label></div></div><div id=\"gc\"" +
     marko_attr("data-gc", "" + data.gc) +
-    "></div><div class=\"row\"><div class=\"row conteudoPrincipal\"><div class=\"col s4 m4 divManuais\"><div class=\"card-panel  green lighten-1\"><span class=\"white-text\"><h4 class=\"center white-text\">Manuais</h4></span></div></div><div class=\"row\"> </div><div class=\"col s4 m4 divLegis\"><div class=\"card-panel orange darken-1\"><span class=\"white-text\"><h4 class=\"center white-text\">Portarias</h4></span></div></div><div class=\"row\"> </div><div class=\"col s4 m4 divRecursos\"><div class=\"card-panel light-blue darken-3\"><span class=\"white-text\"><h4 class=\"center white-text\">Ferramentas de Apoio</h4></span></div></div><div class=\"row\"> </div></div><div class=\"row\"><div class=\"col s4\"><ul class=\"collapsible manuais\"></ul> </div><div class=\"col s4\"><ul class=\"collapsible legis\"></ul> </div><div class=\"col s4\"><ul class=\"collapsible recursos\"></ul> </div></div></div></div></main>");
+    "></div><div class=\"row\"><div class=\"row conteudoPrincipal\"><div class=\"col s4 m4 divManuais\"><div class=\"card-panel  green lighten-1\"><span class=\"white-text\"><h4 class=\"center white-text\">Manuais / Roteiros</h4></span></div></div><div class=\"row\"></div><div class=\"col s4 m4 divLegis\"><div class=\"card-panel orange darken-1\"><span class=\"white-text\"><h4 class=\"center white-text\">Portarias</h4></span></div></div><div class=\"row\"></div><div class=\"col s4 m4 divRecursos\"><div class=\"card-panel light-blue darken-3\"><span class=\"white-text\"><h4 class=\"center white-text\">Ferramentas de Apoio</h4></span></div></div><div class=\"row\"></div></div><div class=\"row\"><div class=\"col s4\"><ul class=\"collapsible manuais\"></ul></div><div class=\"col s4\"><ul class=\"collapsible legis\"></ul></div><div class=\"col s4\"><ul class=\"collapsible recursos\"></ul></div></div></div></div></main>");
 
   app_footer_tag({}, out, __component, "38");
 
@@ -50,7 +50,7 @@ function render(input, out, __component, component, state) {
 
   app_scripts_js_tag({}, out, __component, "45");
 
-  out.w(" <script src=\"/estatico/js/julgamento/gestaoconhecimento.js\"></script> ");
+  out.w("<script src=\"/estatico/js/julgamento/gestaoconhecimento.js\"></script>");
 
   init_components_tag({}, out);
 
