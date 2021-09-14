@@ -715,8 +715,6 @@ class JulgamentoControlador {
                     ],
                   })
                   .then((indicaPauta) => {
-                    console.log(indicaPauta.length);
-
                     resp.marko(templates.julgamento.portaldoconselheiro, {
                       cal: JSON.stringify(cal),
                       user: user[0],

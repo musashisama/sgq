@@ -278,6 +278,18 @@ function dataTable(data) {
         download: true,
       },
       {
+        title:
+          'Imposto Projetado Sobre Lançamento de Reduções de Base de Cálculo e/ou de Imposto',
+        field: 'impostoProj',
+        sorter: 'number',
+        hozAlign: 'center',
+        editor: false,
+        formatter: formatValor,
+        accessorDownload: numberConvert,
+        responsive: 1,
+        download: true,
+      },
+      {
         title: 'Valor Sem TJM (Atual)',
         field: 'valorSemTJM',
         sorter: 'number',
@@ -737,6 +749,18 @@ function dataTableAptidao() {
         download: true,
       },
       {
+        title:
+          'Imposto Projetado Sobre Lançamento de Reduções de Base de Cálculo e/ou de Imposto',
+        field: 'impostoProj',
+        sorter: 'number',
+        hozAlign: 'center',
+        editor: false,
+        formatter: formatValor,
+        accessorDownload: numberConvert,
+        responsive: 1,
+        download: true,
+      },
+      {
         title: 'Valor Sem TJM (Atual)',
         field: 'valorSemTJM',
         sorter: 'number',
@@ -833,7 +857,6 @@ function dataTableAptidao() {
 
 let alegaPrim = function alegaPrim(cell) {
   if (cell.getValue() != null || cell.getValue() != '') {
-    console.log(cell.getValue().split(','));
     return cell.getValue();
   } else return cell.getValue();
 };

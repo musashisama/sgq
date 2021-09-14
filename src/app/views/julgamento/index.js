@@ -42,4 +42,5 @@ module.exports = {
   solicitacoescons: require('./conselheiros/solicitacoescons.marko'),
   consolicitacoes: require('./conselheiros/consolicitacoes.marko'),
   indicapauta: require('./conselheiros/indicapauta.marko'),
+  paginaIndicacoes: require('./conselheiros/paginaIndicacoes.marko'),
 };
