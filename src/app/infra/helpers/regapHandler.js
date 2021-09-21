@@ -219,68 +219,77 @@ class regapHandler {
           );
           d['HORAS_ESTIMADAS_DECIMAL'] = +d['HORAS_ESTIMADAS_DECIMAL']; //
           d['Valor_do_Processo_18'] = +d['Valor_do_Processo_18'];
-          // ALTERAR PARA 12H x (0.65 ou 0.5) ATE PUBLICACAO PORTARIA NOVA
+
           if (
-            d['Nome_Equipe_Atual_2'].includes('CSRF') &&
-            d['HORAS_ESTIMADAS_DECIMAL'] == 0
+            d['Assuntos/Objetos_31'].includes('Projeto minuta de pequeno valor')
           ) {
-            d['HORAS_ESTIMADAS_DECIMAL'] = 6;
-          } else if (
-            !d['Nome_Equipe_Atual_2'].includes('CSRF') &&
-            d['HORAS_ESTIMADAS_DECIMAL'] == 0
-          ) {
-            d['HORAS_ESTIMADAS_DECIMAL'] = 8;
-          }
-          // ITEM III e IV e VI da PORTARIA CARF 2370-2019
-          if (
-            (d['Questionamento_1_CARF_19'] == 'EMBARGOS DE DECLARAÇÃO' ||
-              d['Questionamento_1_CARF_19'] == 'EMBARGO DE DECLARAÇÃO') &&
-            d['Nome_Equipe_Última_23'].includes('DIPRO') &&
-            d['Nome_Atividade_Última_29'] == 'Distribuir / Sortear'
-          ) {
-            d['HORAS_ESTIMADAS_DECIMAL'] = 0.45 * d['HORAS_ESTIMADAS_DECIMAL'];
-          }
-          if (
-            d['Questionamento_1_CARF_19'] != 'EMBARGO DE DECLARAÇÃO' &&
-            d['Nome_Equipe_Última_23'].includes('DIPRO') &&
-            d['Nome_Atividade_Última_29'] == 'Tratar Retorno de Processo'
-          ) {
-            d['HORAS_ESTIMADAS_DECIMAL'] = 0.45 * d['HORAS_ESTIMADAS_DECIMAL'];
-          }
-          // INSERIR 4 HORAS EM PROCESSOS COM MENOS DE 4
-          if (d['HORAS_ESTIMADAS_DECIMAL'] < 4) {
-            d['HORAS_ESTIMADAS_DECIMAL'] = 4.0;
-          }
-          //ALTERAR HORA HE = 2 PORTARIA CARF
-          if (
-            d['Questionamento_1_CARF_19'] == 'EMBARGOS DE DECLARAÇÃO' &&
-            d['Nome_Equipe_Última_23'].includes('DIPRO') &&
-            d['Nome_Atividade_Última_29'] == 'Tratar Retorno de Processo'
-          ) {
-            d['HORAS_ESTIMADAS_DECIMAL'] = 2.0;
-          }
-          if (
-            d['Questionamento_1_CARF_19'] == 'EMBARGO DE DECLARAÇÃO' &&
-            d['Nome_Equipe_Última_23'].includes('DIPRO') &&
-            d['Nome_Atividade_Última_29'] == 'Tratar Retorno de Processo'
-          ) {
-            d['HORAS_ESTIMADAS_DECIMAL'] = 2.0;
-          }
-          //ZERAR HORAS DE PROCESSO APENSO SEM QUESTIONAMENTO
-          if (
-            d['Indicador_de_Processo_Apen_8'] == 'S' &&
-            d['Questionamento_1_CARF_19'] == ''
-          ) {
-            d['HORAS_ESTIMADAS_DECIMAL'] = 0.0;
-          }
-          //Formalizar voto vencedor - 30% - Limitados a mínimo 2 e máximo 8 horas
-          if (d['Nome_Atividade_Atual_11'] == 'Formalizar Voto Vencedor') {
-            d['HORAS_ESTIMADAS_DECIMAL'] = d['HORAS_ESTIMADAS_DECIMAL'] * 0.3;
-            if (d['HORAS_ESTIMADAS_DECIMAL'] <= 2.0) {
-              d['HORAS_ESTIMADAS_DECIMAL'] = 2;
-            }
-            if (d['HORAS_ESTIMADAS_DECIMAL'] >= 8) {
+            d['HORAS_ESTIMADAS_DECIMAL'] == d['HORAS_ESTIMADAS_DECIMAL'];
+          } else {
+            // ALTERAR PARA 12H x (0.65 ou 0.5) ATE PUBLICACAO PORTARIA NOVA
+            if (
+              d['Nome_Equipe_Atual_2'].includes('CSRF') &&
+              d['HORAS_ESTIMADAS_DECIMAL'] == 0
+            ) {
+              d['HORAS_ESTIMADAS_DECIMAL'] = 6;
+            } else if (
+              !d['Nome_Equipe_Atual_2'].includes('CSRF') &&
+              d['HORAS_ESTIMADAS_DECIMAL'] == 0
+            ) {
               d['HORAS_ESTIMADAS_DECIMAL'] = 8;
+            }
+            // ITEM III e IV e VI da PORTARIA CARF 2370-2019
+            if (
+              (d['Questionamento_1_CARF_19'] == 'EMBARGOS DE DECLARAÇÃO' ||
+                d['Questionamento_1_CARF_19'] == 'EMBARGO DE DECLARAÇÃO') &&
+              d['Nome_Equipe_Última_23'].includes('DIPRO') &&
+              d['Nome_Atividade_Última_29'] == 'Distribuir / Sortear'
+            ) {
+              d['HORAS_ESTIMADAS_DECIMAL'] =
+                0.45 * d['HORAS_ESTIMADAS_DECIMAL'];
+            }
+            if (
+              d['Questionamento_1_CARF_19'] != 'EMBARGO DE DECLARAÇÃO' &&
+              d['Nome_Equipe_Última_23'].includes('DIPRO') &&
+              d['Nome_Atividade_Última_29'] == 'Tratar Retorno de Processo'
+            ) {
+              d['HORAS_ESTIMADAS_DECIMAL'] =
+                0.45 * d['HORAS_ESTIMADAS_DECIMAL'];
+            }
+            // INSERIR 4 HORAS EM PROCESSOS COM MENOS DE 4
+            if (d['HORAS_ESTIMADAS_DECIMAL'] < 4) {
+              d['HORAS_ESTIMADAS_DECIMAL'] = 4.0;
+            }
+            //ALTERAR HORA HE = 2 PORTARIA CARF
+            if (
+              d['Questionamento_1_CARF_19'] == 'EMBARGOS DE DECLARAÇÃO' &&
+              d['Nome_Equipe_Última_23'].includes('DIPRO') &&
+              d['Nome_Atividade_Última_29'] == 'Tratar Retorno de Processo'
+            ) {
+              d['HORAS_ESTIMADAS_DECIMAL'] = 2.0;
+            }
+            if (
+              d['Questionamento_1_CARF_19'] == 'EMBARGO DE DECLARAÇÃO' &&
+              d['Nome_Equipe_Última_23'].includes('DIPRO') &&
+              d['Nome_Atividade_Última_29'] == 'Tratar Retorno de Processo'
+            ) {
+              d['HORAS_ESTIMADAS_DECIMAL'] = 2.0;
+            }
+            //ZERAR HORAS DE PROCESSO APENSO SEM QUESTIONAMENTO
+            if (
+              d['Indicador_de_Processo_Apen_8'] == 'S' &&
+              d['Questionamento_1_CARF_19'] == ''
+            ) {
+              d['HORAS_ESTIMADAS_DECIMAL'] = 0.0;
+            }
+            //Formalizar voto vencedor - 30% - Limitados a mínimo 2 e máximo 8 horas
+            if (d['Nome_Atividade_Atual_11'] == 'Formalizar Voto Vencedor') {
+              d['HORAS_ESTIMADAS_DECIMAL'] = d['HORAS_ESTIMADAS_DECIMAL'] * 0.3;
+              if (d['HORAS_ESTIMADAS_DECIMAL'] <= 2.0) {
+                d['HORAS_ESTIMADAS_DECIMAL'] = 2;
+              }
+              if (d['HORAS_ESTIMADAS_DECIMAL'] >= 8) {
+                d['HORAS_ESTIMADAS_DECIMAL'] = 8;
+              }
             }
           }
           transformado.push(d);
