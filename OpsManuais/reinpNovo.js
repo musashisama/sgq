@@ -20,12 +20,11 @@ rel.forEach((r) => {
 rel.forEach((r) => {
   r.he = +r.he + +r.apes749;
   if (r.apes749 != '') {
-    r.obs = `Apuração Especial 749: ${r.apes749} horas.`;
+    r.obs = `Apuração Especial 749: Somadas ${r.apes749} horas às ${r.he} anteriores.`;
   }
 });
-//a
+
 fs.writeFileSync(
   './relatorios/REINP_COMPLETO_FORMATADO.csv',
   d3.csvFormat(rel),
 );
-console.log(rel);
