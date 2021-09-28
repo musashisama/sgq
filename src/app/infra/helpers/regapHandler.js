@@ -57,7 +57,7 @@ let semanaAmarela = [
 class regapHandler {
   constructor() {
     throw new Error(
-      'CSVHandler não pode ser instanciada. Utilize os métodos estáticos.',
+      'regapHandler não pode ser instanciada. Utilize os métodos estáticos.',
     );
   }
 
@@ -212,7 +212,7 @@ class regapHandler {
           d['Nome_Atividade_Atual_11'] == 'Corrigir Decisão' ||
           d['Nome_Atividade_Atual_11'] == 'Corrigir Decisao'
         ) {
-          //Troca , por . nas colunas de HE e Valor e as transforma em números com unary plus '+'. Transforma string e null para números (null vira 0)
+          //Troca ',' por '.' nas colunas de HE e Valor e as transforma em números com unary plus '+'. Transforma string e null para números (null vira 0)
           d['HORAS_ESTIMADAS_DECIMAL'] = d['HORAS_ESTIMADAS_DECIMAL'].replace(
             ',',
             '.',

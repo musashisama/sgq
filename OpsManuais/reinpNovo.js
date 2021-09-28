@@ -20,7 +20,15 @@ rel.forEach((r) => {
 rel.forEach((r) => {
   r.he = +r.he + +r.apes749;
   if (r.apes749 != '') {
-    r.obs = `Apuração Especial 749: Somadas ${r.apes749} horas às ${r.he} anteriores.`;
+    r.obs = `Apuração Especial 749: Somadas ${r.apes749} horas às ${
+      r.he - r.apes749
+    } anteriores.`;
+  }
+  if (r.mes.includes('2020')) {
+    r.ano = '2020';
+  }
+  if (r.mes.includes('2021')) {
+    r.ano = '2021';
   }
 });
 
