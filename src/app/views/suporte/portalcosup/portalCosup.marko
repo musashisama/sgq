@@ -6,7 +6,7 @@
     <main class="conteudoPrincipal">
       <app-navbar/>
       <div class="container">
-        <h3 class="center-align titulo">Portal da COSUP</h3>
+        <h3 class="center-align titulo">Portal da COJUL</h3>
         <div class="row">
           <div class="input-field col s12">
             <i class="material-icons prefix">textsms</i>
@@ -15,30 +15,43 @@
           </div>
         </div>
         <div id="portal" data-portal=`${data.portal}`/>
-        <div class="row conteudoPrincipal">
-          <div class="col s6 m6 divManuais">
-            <div class="card-panel  green lighten-1">
-              <span class="white-text">
-                <h4 class="center white-text">Ferramentas</h4>
-              </span>
-            </div>
-          </div>
-          <div class="row"/>
-          <div class="col s6 m6 divRecursos">
-            <div class="card-panel light-blue darken-3">
-              <span class="white-text">
-                <h4 class="center white-text">Recursos</h4>
-              </span>
-            </div>
-          </div>
-          <div class="row"/>
-        </div>
         <div class="row">
-          <div class="col s6 m6">
-            <ul class="collapsible relatorios"/>
+          <div class="row conteudoPrincipal">
+            <div class="col s4 m4 divManuais">
+              <div class="card-panel  green lighten-1">
+                <span class="white-text">
+                  <h4 class="center white-text">Relatórios</h4>
+                </span>
+              </div>
+            </div>
+            <div class="row"/>
+            <div class="col s4 m4 divLegis">
+              <div class="card-panel orange darken-1">
+                <span class="white-text">
+                  <h4 class="center white-text">Solicitações</h4>
+                </span>
+              </div>
+            </div>
+            <div class="row"/>
+            <div class="col s4 m4 divRecursos">
+              <div class="card-panel light-blue darken-3">
+                <span class="white-text">
+                  <h4 class="center white-text">Ferramentas</h4>
+                </span>
+              </div>
+            </div>
+            <div class="row"/>
           </div>
-          <div class="col s6 m6">
-            <ul class="collapsible recursos"/>
+          <div class="row">
+            <div class="col s4">
+              <ul class="collapsible relatorios"/>
+            </div>
+            <div class="col s4">
+              <ul class="collapsible solicitacoes"/>
+            </div>
+            <div class="col s4">
+              <ul class="collapsible recursos"/>
+            </div>
           </div>
         </div>
       </div>
@@ -54,6 +67,6 @@
       </div>
     </div>
     <app-scripts-js/>
-    <script src="/estatico/js/julgamento/cosup/portalcosup.js"/>
+    <script src="/estatico/js/julgamento/portalcojul.js"/>
   </body>
 </html>

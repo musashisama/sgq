@@ -43,7 +43,7 @@ function render(input, out, __component, component, state) {
       class: "sidenav"
     }, out, __component, "6");
 
-  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Cadastro de Itens do Portal da COSUP</h3><br><div class=\"row\"><h5 class=\"\">Título</h5><br><div id=\"editorTitulo\" class=\"col s12\"><p id=\"tituloGC\"></p><br></div></div><div class=\"row\"><h5 class=\"\">Descrição</h5><br><div id=\"editorDesc\" class=\"col s12\"><p id=\"descGC\"></p><br></div></div><div class=\"row\"><h5 class=\"\">Link</h5><br><div id=\"editorLink\" class=\"col s12\"><p id=\"linkGC\"></p><br></div></div><div class=\"row\"><div class=\"input-field col s4\"><select required name=\"secaoGC\" id=\"secaoGC\"><option value=\"\" disabled selected>Escolha uma opção:</option><option value=\"relatorios\">Relatorios</option><option value=\"solicitacoes\">Solicitações</option><option value=\"recursos\">Ferramentas</option></select><label>Qual o tipo?</label></div></div><div class=\"row\"><div class=\"col s1 offset-s11\"><a id=\"aModal\" class=\"btn-floating btn-insere waves-effect waves-light red\" title=\"Clique para enviar\"" +
+  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Cadastro de Itens do Portal da COJUL</h3><br><div class=\"row\"><h5 class=\"\">Título</h5><br><div id=\"editorTitulo\" class=\"col s12\"><p id=\"tituloGC\"></p><br></div></div><div class=\"row\"><h5 class=\"\">Descrição</h5><br><div id=\"editorDesc\" class=\"col s12\"><p id=\"descGC\"></p><br></div></div><div class=\"row\"><h5 class=\"\">Link</h5><br><div id=\"editorLink\" class=\"col s12\"><p id=\"linkGC\"></p><br></div></div><div class=\"row\"><div class=\"input-field col s4\"><select required name=\"secaoGC\" id=\"secaoGC\"><option value=\"\" disabled selected>Escolha uma opção:</option><option value=\"relatorios\">Relatorios</option><option value=\"solicitacoes\">Solicitações</option><option value=\"recursos\">Ferramentas</option> </select><label>Qual o tipo?</label></div></div><div class=\"row\"><div class=\"col s1 offset-s11\"><a id=\"aModal\" class=\"btn-floating btn-insere waves-effect waves-light red\" title=\"Clique para enviar\"" +
     marko_attr("href", "#modal1") +
     "><i class=\"material-icons\">send</i></a></div></div><div" +
     marko_attr("data-portal", "" + data.portal) +
@@ -55,7 +55,7 @@ function render(input, out, __component, component, state) {
 
   app_scripts_js_tag({}, out, __component, "50");
 
-  out.w("<script src=\"/estatico/js/libs/quill.min.js\"></script><script src=\"/estatico/js/julgamento/cosup/gestaoPortalCosup.js\"></script>");
+  out.w("<script src=\"/estatico/js/libs/quill.min.js\"></script><script src=\"/estatico/js/julgamento/gestaoPortalCojul.js\"></script>");
 
   init_components_tag({}, out);
 
