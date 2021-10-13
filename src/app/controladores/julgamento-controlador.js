@@ -104,6 +104,8 @@ class JulgamentoControlador {
       listaregapindividual: '/julgamento/conselheiros/listaregap',
       regapcons: '/julgamento/conselheiros/:id',
       indicapauta: '/julgamento/conselheiros/indicacao-pauta',
+      //PRESIDENTES
+      gestaoportalpresidente: '/julgamento/restrito/gestaoportalpresidente',
       //APURAÇÕES ESPECIAIS
       apes749: '/julgamento/apes749/',
     };
@@ -203,6 +205,46 @@ class JulgamentoControlador {
           portal: JSON.stringify(portal),
         });
       });
+    };
+  }
+
+  handlePortalPresidente() {
+    return function (req, resp) {
+      if (req.method == 'GET') {
+        const julgamentoDao = new JulgamentoDao(conn);
+        julgamentoDao.getPortal({ portal: 'presidente' }).then((msg) => {
+          resp.marko(templates.presidente.gestaoportalpresidente, {
+            portal: JSON.stringify(msg),
+          });
+        });
+      } else {
+        const julgamentoDao = new JulgamentoDao(conn);
+        if (req.method == 'POST' || req.method == 'PUT') {
+          julgamentoDao
+            .getPortal({ uniqueId: req.body.uniqueId })
+            .then((msg) => {
+              if (!msg[0]) {
+                julgamentoDao.inserePortal(req.body).then((msg) => {
+                  resp.json(msg);
+                });
+              } else {
+                julgamentoDao
+                  .atualizaPortal({ uniqueId: req.body.uniqueId }, req.body)
+                  .then((msg) => {
+                    resp.json(msg);
+                  });
+              }
+            });
+        } else if (req.method == 'DELETE') {
+          console.log('delete');
+          console.log(req.body);
+          julgamentoDao
+            .excluiPortal({ uniqueId: req.body.uniqueId })
+            .then((msg) => {
+              resp.json(msg);
+            });
+        }
+      }
     };
   }
 
