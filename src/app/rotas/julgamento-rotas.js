@@ -145,6 +145,13 @@ module.exports = (app) => {
     .delete(julgControlador.handlePortalCojul());
 
   app
+    .route(rotasJulgamento.gestaoportalpresidente)
+    .get(julgControlador.handlePortalPresidente())
+    .post(julgControlador.handlePortalPresidente())
+    .put(julgControlador.handlePortalPresidente())
+    .delete(julgControlador.handlePortalPresidente());
+
+  app
     .route(rotasJulgamento.gestaoGC)
     .get(julgControlador.handleGC())
     .post(julgControlador.handleGC())

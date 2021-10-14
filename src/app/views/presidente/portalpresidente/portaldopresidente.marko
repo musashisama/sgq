@@ -4,195 +4,58 @@
   <body>
     <app-header/>
     <main class="conteudoPrincipal">
-      <app-navbar id="slide-out" class="sidenav"/>
+      <app-navbar/>
       <div class="container">
-        <h3 class="center-align titulo">Portal do Presidente</h3>
-        <div id="dataCAL" data-cal=`${data.cal}`/>
-        <div id="dataPauta" data-pauta=`${data.pauta}`/>
+        <h3 class="center-align titulo">Portal do Presidente de Colegiado</h3>
         <div class="row">
-          <div class="card hoverable cardAzulClaro col s12">
-            <div class="card-content">
-              <span class="card-title">
-                <strong>Cons.<span class="nomeSol">${data.user.nome}</span></strong>
-              </span>
-              <strong>CPF:</strong>
-              <span id="cpfCons">${data.user.cpf}</span>
-              <br/>
-              <strong>Turma:</strong>
-              ${data.user.unidade}<br/>
-              <strong>Representação:</strong>${data.user.tipo}<br/>
-              <strong>Final do Mandato:</strong>${data.user.dtFimMandato}<br/>
-              Falta(m)
-              <strong><span id="daps"/></strong>
-              dia(s) para a próxima sessão, que será realizada em
-              <strong><span id="ps"/></strong>.
-            </div>
+          <div class="input-field col s12">
+            <i class="material-icons prefix">textsms</i>
+            <input type="text" id="autocomplete-input" class="autocomplete"/>
+            <label for="autocomplete-input">Do que você precisa?</label>
           </div>
         </div>
-        <div id="divPresidenteOrdena"/>
+        <div id="portal" data-portal=`${data.portal}`/>
         <div class="row">
-          <div class="col s12 m12">
-            <div class="card hoverable cardVerde">
-              <div class="card-content">
-                <span class="card-title">Ordenação da Pauta</span>
-                <p>
-                  Pauta aberta para <strong>Ordenação</strong>
-                </p>
-              </div>
-              <div class="card-action linkCard">
-                <a id="linkIndicacao" href="/julgamento/conselheiros/ordenacao-pauta">
-                  <i class="material-icons">send</i>
-                </a>
+          <div class="row conteudoPrincipal">
+            <div class="col s6 m6 divManuais">
+              <div class="card-panel  green lighten-1">
+                <span class="white-text">
+                  <h4 class="center white-text">Relatórios</h4>
+                </span>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col s12 m12">
-            <div class="card hoverable cardAzulIndicacao">
-              <div class="card-content">
-                <span class="card-title">Indicação para Pauta</span>
-                <p id="pautaAberta"/>
-              </div>
-              <div class="card-action linkCard">
-                <a id="linkIndicacao" href="/julgamento/conselheiros/indicacao-pauta">
-                  <i class="material-icons">send</i>
-                </a>
+            <div class="row"/>
+            <div class="col s6 m6 divRecursos">
+              <div class="card-panel light-blue darken-3">
+                <span class="white-text">
+                  <h4 class="center white-text">Roteiros e Manuais</h4>
+                </span>
               </div>
             </div>
+            <div class="row"/>
           </div>
-        </div>
-        <div class="row">
-          <div class="col s6 m6">
-            <div class="card hoverable cardAzul">
-              <div class="card-content">
-                <span class="card-title">REGAP</span>
-                <p>Relatório Gerencial de Acompanhamento de Prazos</p>
-              </div>
-              <div class="card-action linkCard">
-                <a href="/julgamento/conselheiros/regap">
-                  <i class="material-icons">send</i>
-                </a>
-              </div>
+          <div class="row">
+            <div class="col s6">
+              <ul class="collapsible relatorios"/>
             </div>
-          </div>
-          <div class="col s6 m6">
-            <div class="card hoverable cardLaranja">
-              <div class="card-content ">
-                <span class="card-title">REINP</span>
-                <p>Indisponível. Relatório de Indicação para Pauta. Acompanhamento da Produtividade</p>
-                <p>Este relatório será disponibilizado após ajustes a serem efetuados pela DIPAJ.</p>
-              </div>
-              <div class="card-action linkCard">
-                <a href="/julgamento/conselheiros/reinp">
-                  <!-- <a href="#"> --> <i class="material-icons">send</i>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="col s6 m6">
-            <div class="card hoverable cardFuchsiaEscuro">
-              <div class="card-content ">
-                <span class="card-title">Acompanhamento de Solicitações</span>
-                <p>Acompanhar o andamento de solicitações</p>
-              </div>
-              <div class="card-action linkCard">
-                <a href="/julgamento/conselheiros/acompanha-solicitacoes">
-                  <i class="material-icons">send</i>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="col s6 m6">
-            <div class="card hoverable cardFuchsia">
-              <div class="card-content ">
-                <span class="card-title">Registro de Solicitação</span>
-                <p>Cadastrar solicitações</p>
-              </div>
-              <div class="card-action linkCard">
-                <a href="/julgamento/conselheiros/registro-solicitacoes">
-                  <i class="material-icons">send</i>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="col s6 m6">
-            <div class="card hoverable cardVerde">
-              <div class="card-content ">
-                <span class="card-title">Ocorrências</span>
-                <p>Verificação de Ocorrências no Mandato do Conselheiro</p>
-              </div>
-              <div class="card-action linkCard">
-                <a href="/julgamento/conselheiros/ocorrencias">
-                  <i class="material-icons">send</i>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="col s6 m6">
-            <div class="card hoverable cardAmarelo">
-              <div class="card-content ">
-                <span class="card-title">Gestão do Conhecimento</span>
-                <p>Acessar página de Gestão do Conhecimento da COJUL</p>
-              </div>
-              <div class="card-action linkCard">
-                <a href="/julgamento/gestaoconhecimento">
-                  <i class="material-icons">send</i>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="col s6 m6">
-            <div class="card hoverable cardVermelho">
-              <div class="card-content ">
-                <span class="card-title">Perguntas & Respostas</span>
-                <p>Acessar página de Perguntas e Respostas da COJUL</p>
-              </div>
-              <div class="card-action linkCard">
-                <a href="/julgamento/faqdipaj">
-                  <i class="material-icons">send</i>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="col s6 m6">
-            <div class="card hoverable cardPreto">
-              <div class="card-content ">
-                <span class="card-title">Antiga Página do(a) Conselheiro(a)</span>
-                <p>Acessar versão anterior da Página do(a) Conselheiro(a)</p>
-              </div>
-              <div class="card-action linkCard">
-                <a href="/julgamento/conselheiros/">
-                  <i class="material-icons">send</i>
-                </a>
-              </div>
+            <div class="col s6">
+              <ul class="collapsible recursos"/>
             </div>
           </div>
         </div>
       </div>
     </main>
-    <footer class="page-footer rodape"/>
-    <app-modal-tabela-legenda/>
-    <!--Modal Structure-->
+    <app-footer/>
     <div id="modal1" class="modal">
       <div class="modal-content">
         <h4 class="hModal">Modal Header</h4>
         <p class="pModal"/>
       </div>
       <div class="modal-footer">
-        <a href="#!" class="modal-close waves-effect waves-red btn-flat cancela">Cancela</a>
-        <button class="btn waves-effect waves-light concorda modal-close" type="submit" name="action">
-          Confirma <i class="material-icons right">send</i>
-        </button>
+        <a href="#!" class="modal-close waves-effect waves-red btn-flat cancela">Fechar</a>
       </div>
     </div>
-    <app-footer/>
     <app-scripts-js/>
-    <script src="/estatico/js/libs/plotly-latest.min.js"/>
-    <script src="/estatico/js/libs/plotly-locale-pt-br.js"/>
-    <script>Plotly.setPlotConfig({locale: 'pt-BR'})</script>
-    <script src="/estatico/js/libs/quill.min.js"/>
-    <script src="/estatico/js/julgamento/conselheiros/portalcons.js"/>
-    <script src="/estatico/js/julgamento/conselheiros/regsolicitacoes.js"/>
+    <script src="/estatico/js/presidente/portalpresidente.js"/>
   </body>
 </html>

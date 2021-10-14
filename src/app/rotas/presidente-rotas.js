@@ -43,4 +43,24 @@ module.exports = (app) => {
     rotasPresidente.portalpresidente,
     presiControlador.carregaPortalPresidente(),
   );
+
+  app
+    .route(rotasPresidente.regap_consolidado)
+    .get(presiControlador.carregaRegapConsolidado())
+    .post(presiControlador.carregaRegapConsolidado());
+
+  app
+    .route(rotasPresidente.regap_individual_presi)
+    .get(presiControlador.carregaRegapConsDetalha())
+    .post(presiControlador.carregaRegapConsDetalha());
+
+  app
+    .route(rotasPresidente.reinp)
+    .get(presiControlador.carregaPaginaReinp())
+    .post(presiControlador.carregaPaginaReinp());
+
+  app.get(
+    rotasPresidente.detalhareinp,
+    presiControlador.carregaPaginaDetalhaReinp(),
+  );
 };
