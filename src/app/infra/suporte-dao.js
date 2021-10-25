@@ -44,12 +44,24 @@ class SuporteDao {
   }
   criaIndicacaoPauta(registro) {
     return new Promise((resolve, reject) => {
-      this._db.indicacoesPauta.insertMany(registro, function (erro, res) {
-        if (erro) {
-          return reject('Não foi possível inserir o registro.');
-        }
-        return resolve(res);
-      });
+      let filtro = {
+        $and: [
+          { cpf: registro[0].cpf },
+          { idIndicacao: registro[0].idIndicacao },
+        ],
+      };
+      let reg = registro[0];
+      this._db.indicacoesPauta.updateOne(
+        filtro,
+        { $set: reg },
+        { upsert: true },
+        function (erro, res) {
+          if (erro) {
+            return reject('Não foi possível inserir o registro.');
+          }
+          return resolve(res);
+        },
+      );
     });
   }
   getIndicacoesPauta(filtro) {
@@ -68,12 +80,23 @@ class SuporteDao {
   }
   inserePautaConsolidada(registro) {
     return new Promise((resolve, reject) => {
-      this._db.pautas.insert(registro, function (erro, res) {
-        if (erro) {
-          return reject('Não foi possível inserir o registro.');
-        }
-        return resolve(res);
-      });
+      let filtro = {
+        $and: [
+          { colegiado: registro.colegiado },
+          { idIndicacao: registro.idIndicacao },
+        ],
+      };
+      this._db.pautas.updateOne(
+        filtro,
+        { $set: registro },
+        { upsert: true },
+        function (erro, res) {
+          if (erro) {
+            return reject('Não foi possível inserir o registro.');
+          }
+          return resolve(res);
+        },
+      );
     });
   }
 }

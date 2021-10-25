@@ -1,4 +1,4 @@
-let tableVirtual, tableRetornos;
+let tablePauta, tableVirtual, tableRetornos;
 let processos = [];
 let excelRowsJson;
 inicializaComponentes();
@@ -17,7 +17,7 @@ function initTabs() {
 }
 
 function returnRep(data) {
-  return !data.confirmaQuest.includes('Correto');
+  return !data.confirmaQuest.includes('Corrigido');
 }
 
 function returnApto(data) {
@@ -34,6 +34,8 @@ function triggerValidation(el) {
 
 function controleBotoes() {
   $('#botaoEnviaExcel').click(() => {
+    $('#botaoEnviaExcel').toggle();
+    $('#statusRetorno').text('Recebendo Ata');
     let dataRetornos = [];
     let files = $('#file')[0].files[0];
     let reader = new FileReader();
@@ -62,70 +64,91 @@ function controleBotoes() {
           'Nº Processo': 'processo',
           Complemento: 'complemento',
           'Solicitante Vista': 'solicVista',
-          'Sustentação Contribuinte': 'sustContrinuinte',
+          'Sustentação Contribuinte': 'sustContribuinte',
           'Sustentação Procuradoria': 'sustProcuradoria',
           'Qtde Processos': 'qtdeProcessos',
           Item: 'item',
         };
-
+        $('#statusRetorno').text('Lendo Ata');
         excelRowsJson.forEach((r) => {
           Object.entries(keysMap).forEach((entry) => {
             delete Object.assign(r, { [entry[1]]: r[entry[0]] })[entry[0]];
           });
-          r.retorno = 'SIM';
+          r.retorno = retornoPauta(r.textoAta);
           r.processo = r.processo.replace('.', '');
           r.processo = r.processo.replace('/', '');
+          r.processo = r.processo.replace('-', '');
           if (r.decisao.includes('VISTA') || r.decisao.includes('RETIRADO')) {
             dataRetornos.push(r);
           }
         });
-        console.log(excelRowsJson);
-        console.log(dataRetornos);
+        // console.log(excelRowsJson);
+        // console.log(dataRetornos);
+        tabelaRetornos(dataRetornos);
+        tableRetornos.redraw();
       });
     };
     reader.onerror = function (event) {
-      console.error('File could not be read! Code ' + event.target.error.code);
+      console.error(
+        'Não foi possível ler o arquivo! Código: ' + event.target.error.code,
+      );
     };
 
     reader.readAsBinaryString(files);
   });
   $('#botaoCriaVirtual').click(() => {
     let dadosCons = [];
-    let parcial = table.getData();
+    let parcial = tablePauta.getData();
     parcial.forEach((p) => {
       //console.log(p);
       if (p.apto == 'true') {
         dadosCons.push(p);
       }
     });
-    console.log(dadosCons);
+    $('.tabs').tabs('select', 'retornos');
     tabelaVirtual(dadosCons);
-    tabelaVirtual.redraw();
+    tableVirtual.redraw();
+  });
+  $('#botaoAddRetornos').click(() => {
+    tableVirtual.addData(tableRetornos.getSelectedData(), true);
+    tableVirtual.redraw();
+    $('.tabs').tabs('select', 'virtual');
   });
   $('#botaoConsolida').click(() => {
     let dadosPauta = {};
     dadosPauta.idIndicacao = JSON.parse($('#pauta').attr('data-idIndicacao'));
-    processos = table.getData();
+    processos = tableVirtual.getData();
     dadosPauta.colegiado = JSON.parse($('#pauta').attr('data-colegiado'));
     dadosPauta.processos = JSON.stringify(processos);
     gravaConsolidacao(dadosPauta);
   });
   $(`#questionamentosCheck`).change(() => {
     if ($(`#questionamentosCheck`).prop('checked')) {
-      table.addFilter(returnRep);
+      tablePauta.addFilter(returnRep);
     } else {
-      table.removeFilter(returnRep);
+      tablePauta.removeFilter(returnRep);
     }
   });
   $(`#aptosCheck`).change(() => {
     if ($(`#aptosCheck`).prop('checked')) {
-      table.addFilter(returnApto);
+      tablePauta.addFilter(returnApto);
     } else {
-      table.removeFilter(returnApto);
+      tablePauta.removeFilter(returnApto);
     }
   });
 }
-
+function retornoPauta(termo) {
+  if (
+    termo.includes('Hábil') ||
+    termo.includes('HÁBIL') ||
+    termo.includes('hábil') ||
+    termo.includes('vista') ||
+    termo.includes('Vista') ||
+    termo.includes('VISTA')
+  ) {
+    return 'SIM';
+  } else return 'NÃO';
+}
 function initSelect() {
   $('select').formSelect();
 }
@@ -140,14 +163,15 @@ function pegaPauta() {
   let dados = pautaConsolidada.flat();
   dados.forEach((d) => {
     d.retorno = 'NÃO';
+    d.idIndicacao = JSON.parse($('#pauta').attr('data-idindicacao'));
   });
 
   tabelaPauta(dados);
 }
 
 function tabelaPauta(dados) {
-  tabledata = dados;
-  table = new Tabulator('#tabelaPauta', {
+  let tabledata = dados;
+  tablePauta = new Tabulator('#tabelaPauta', {
     data: tabledata,
     //pagination: 'local',
     downloadConfig: {
@@ -325,8 +349,8 @@ function tabelaPauta(dados) {
         editor: 'select',
         formatter: coloreQuest,
         editorParams: {
-          values: ['Correto'],
-          defaultValue: 'Correto',
+          values: ['Corrigido'],
+          defaultValue: 'Corrigido',
         },
         responsive: 0,
         download: true,
@@ -371,8 +395,229 @@ function tabelaPauta(dados) {
   });
 }
 
+function tabelaRetornos(dados) {
+  let tabledata = dados;
+  tableRetornos = new Tabulator('#tabelaRetornos', {
+    data: tabledata,
+    //pagination: 'local',
+    downloadConfig: {
+      //  columnHeaders:false, //do not include column headers in downloaded table
+      //columnGroups:false, //do not include column groups in column headers for downloaded table
+      //rowGroups:false, //do not include row groups in downloaded table
+      columnCalcs: false, //do not include column calcs in downloaded table
+      //dataTree:false, //do not include data tree in downloaded table
+    },
+    height: '1000px',
+    minHeight: '300px',
+    maxHeight: '1000px',
+    layout: 'fitDataStretch',
+    selectable: true,
+    //movableRows: true,
+    responsiveLayout: 'collapse',
+    initialSort: [],
+    index: 'processo',
+    groupStartOpen: false,
+    responsiveLayoutCollapseStartOpen: false,
+    rowSelectionChanged: function (data, rows) {
+      document.getElementById('select-stats').innerHTML = data.length;
+    },
+    columns: [
+      {
+        title: 'Relator',
+        field: 'relator',
+        sorter: 'string',
+        headerFilter: 'input',
+        hozAlign: 'left',
+        editor: false,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Decisão',
+        field: 'decisao',
+        headerFilter: 'input',
+        sorter: 'string',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 0,
+        download: true,
+      },
+
+      {
+        title: 'Processo',
+        field: 'processo',
+        //formatter: coloreProc,
+        sorter: 'number',
+        hozAlign: 'center',
+        headerFilter: 'input',
+        topCalc: countCalc,
+        editor: false,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Contribuinte',
+        field: 'contribuinte',
+        //formatter: coloreProc,
+        headerFilter: 'input',
+        sorter: 'string',
+        hozAlign: 'left',
+        width: 150,
+        editor: false,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Retorno?',
+        field: 'retorno',
+        sorter: 'string',
+        hozAlign: 'center',
+        headerFilter: 'input',
+        editor: 'select',
+        editorParams: {
+          values: ['SIM', 'NÃO'],
+          //defaultValue: 'Correto',
+        },
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Questionamento',
+        field: 'questionamento',
+        hozAlign: 'center',
+        editor: 'select',
+        editorParams: {
+          values: [
+            'Recurso Voluntário',
+            'Recurso de Ofício',
+            'Recurso Voluntário/Ofício',
+            'Recurso Especial da Procuradoria',
+            'Recurso Especial do Contribuinte',
+            'Recurso Especial Procuradoria/Contribuinte',
+            'Embargo da Procuradoria',
+            'Embargo do Contribuinte',
+            'Embargo Procuradoria/Contribuinte',
+          ],
+          defaultValue: 'Correto',
+        },
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Texto da Ata',
+        field: 'textoAta',
+        headerFilter: 'input',
+        sorter: 'string',
+        hozAlign: 'left',
+        width: 150,
+        editor: false,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Complemento',
+        field: 'complemento',
+        sorter: 'string',
+        hozAlign: 'left',
+        editor: false,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Solicitante Vista',
+        field: 'solicVista',
+        sorter: 'string',
+        hozAlign: 'left',
+        editor: false,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Sustentação Contribuinte',
+        field: 'sustContribuinte',
+        sorter: 'string',
+        hozAlign: 'left',
+        editor: false,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Sustentação Procuradoria',
+        field: 'sustProcuradoria',
+        sorter: 'string',
+        hozAlign: 'left',
+        editor: false,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Qtde de Processos',
+        field: 'qtdeProcessos',
+        sorter: 'number',
+        hozAlign: 'left',
+        editor: false,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Item',
+        field: 'item',
+        sorter: 'number',
+        hozAlign: 'left',
+        editor: false,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Vencido',
+        field: 'vencido',
+        sorter: 'string',
+        hozAlign: 'left',
+        editor: false,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Votação',
+        field: 'votacao',
+        sorter: 'string',
+        hozAlign: 'left',
+        editor: false,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Resultado',
+        field: 'resultado',
+        sorter: 'string',
+        hozAlign: 'left',
+        width: 150,
+        editor: false,
+        responsive: 0,
+        download: true,
+      },
+    ],
+    autoColumns: false,
+    locale: true,
+    langs: langs,
+  });
+  tableRetornos.getData().forEach((d) => {
+    let termo = d.textoAta;
+    if (
+      termo.includes('Hábil') ||
+      termo.includes('HÁBIL') ||
+      termo.includes('hábil') ||
+      termo.includes('vista') ||
+      termo.includes('Vista') ||
+      termo.includes('VISTA')
+    ) {
+      tableRetornos.selectRow(+d.processo);
+    }
+  });
+}
+
 function tabelaVirtual(dados) {
-  tabledata = dados;
+  let tabledata = dados;
   tableVirtual = new Tabulator('#tabelaConsolidadaVirtual', {
     data: tabledata,
     //pagination: 'local',
@@ -430,7 +675,7 @@ function tabelaVirtual(dados) {
       {
         title: 'Processo',
         field: 'processo',
-        formatter: coloreProc,
+        //formatter: coloreProc,
         sorter: 'number',
         hozAlign: 'center',
         headerFilter: 'input',
@@ -442,7 +687,7 @@ function tabelaVirtual(dados) {
       {
         title: 'Contribuinte',
         field: 'contribuinte',
-        formatter: coloreProc,
+        //formatter: coloreProc,
         headerFilter: 'input',
         sorter: 'string',
         hozAlign: 'left',
@@ -523,48 +768,51 @@ function tabelaVirtual(dados) {
       //     responsive: 0,
       //     download: true,
       //   },
-      {
-        title: 'Horas CARF',
-        field: 'HE',
-        sorter: 'number',
-        hozAlign: 'center',
-        headerFilter: 'input',
-        topCalc: somaCalc,
-        editor: false,
-        responsive: 2,
-        download: true,
-      },
-
+      // {
+      //   title: 'Horas CARF',
+      //   field: 'HE',
+      //   sorter: 'number',
+      //   hozAlign: 'center',
+      //   headerFilter: 'input',
+      //   topCalc: somaCalc,
+      //   editor: false,
+      //   responsive: 2,
+      //   download: true,
+      // },
       {
         title: 'Questionamento',
         field: 'questionamento',
-        sorter: 'string',
-        hozAlign: 'left',
-        editor: false,
-        responsive: 0,
-        download: true,
-      },
-      {
-        title: 'Questionamento Correto?',
-        field: 'confirmaQuest',
         hozAlign: 'center',
         editor: 'select',
-        formatter: coloreQuest,
         editorParams: {
-          values: ['Correto'],
-          defaultValue: 'Correto',
+          values: [
+            'Recurso Voluntário',
+            'Recurso de Ofício',
+            'Recurso Voluntário/Ofício',
+            'Recurso Especial da Procuradoria',
+            'Recurso Especial do Contribuinte',
+            'Recurso Especial Procuradoria/Contribuinte',
+            'Embargo da Procuradoria',
+            'Embargo do Contribuinte',
+            'Embargo Procuradoria/Contribuinte',
+          ],
         },
-        responsive: 0,
-        download: true,
-        headerTooltip:
-          'Verificação automática baseada nas respostas das colunas.',
       },
       {
         title: 'Alegação Princpal',
         field: 'alegaPrim',
         sorter: 'string',
         hozAlign: 'left',
-        editor: false,
+        // editorParams: {
+        //   search: true,
+        //   mask: '99.999.9999',
+        //   elementAttributes: {
+        //     maxlength: '11', //set the maximum character length of the input element to 10 characters
+        //   },
+        // },
+        //accessor: alegaPrim,
+        //validator: 'required',
+        editor: true,
         width: 180,
         responsive: 0,
         download: true,
@@ -670,8 +918,7 @@ function gravaConsolidacao(registro) {
     success: function (result) {
       var toastHTML = `<span>Dados atualizados com sucesso!</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
-      console.log(result);
-      location.reload();
+      location.href = `/suporte/restrito/portalcosup`;
     },
     error: function (result) {
       var toastHTML = `<span>Ocorreu um erro.</span>`;

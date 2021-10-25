@@ -248,5 +248,12 @@ class PresidenteControlador {
       });
     };
   }
+
+  carregaOrdenaPauta() {
+    return function (req, resp) {};
+  }
+  carregaPautas() {
+    return function (req, resp) {};
+  }
 }
 module.exports = PresidenteControlador;

@@ -14,11 +14,17 @@
           <h4>Períodos de Indicação para Pauta</h4>
         </div>
         <div class="row">
+          <p id="pautaAberta"/>
+          <a id="botaoIndicaPauta" class="waves-effect waves-light btn-large right">
+            <i class="fas fa-arrow-alt-circle-right right"/>Indicar Processos para Pauta
+          </a>
+        </div>
+        <div class="row">
           <div class="col s12 right-align">
             <div class="row">
               <app-drop-download/>
             </div>
-            <div id="tabelaIndicacoes" data-indicacoes=`${data.indicacoes}`/>
+            <div id="tabelaIndicacoes" data-indicaPauta=`${data.indicaPauta}` data-indicacoes=`${data.indicacoes}`/>
           </div>
         </div>
         <div class="row">
@@ -29,6 +35,10 @@
     <app-footer/>
     <app-modal/>
     <app-scripts-js/>
+    <script src="/estatico/js/libs/plotly-latest.min.js"/>
+    <script src="/estatico/js/libs/plotly-locale-pt-br.js"/>
+    <script>Plotly.setPlotConfig({locale: 'pt-BR'})</script>
+    <script src="/estatico/js/julgamento/helpers/configTabelaNovoRegap.js"/>
     <script src="/estatico/js/julgamento/conselheiros/paginaIndicacoes.js"/>
   </body>
 </html>

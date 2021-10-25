@@ -43,23 +43,23 @@ function render(input, out, __component, component, state) {
       class: "sidenav"
     }, out, __component, "6");
 
-  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Cadastro de Itens do Portal da COJUL</h3><br><div class=\"row\"><h5 class=\"\">Título</h5><br><div id=\"editorTitulo\" class=\"col s12\"><p id=\"tituloGC\"></p><br></div></div><div class=\"row\"><h5 class=\"\">Descrição</h5><br><div id=\"editorDesc\" class=\"col s12\"><p id=\"descGC\"></p><br></div></div><div class=\"row\"><h5 class=\"\">Link</h5><br><div id=\"editorLink\" class=\"col s12\"><p id=\"linkGC\"></p><br></div></div><div class=\"row\"><div class=\"input-field col s4\"><select required name=\"secaoGC\" id=\"secaoGC\"><option value=\"\" disabled selected>Escolha uma opção:</option><option value=\"relatorios\">Relatorios</option><option value=\"solicitacoes\">Solicitações</option><option value=\"recursos\">Ferramentas</option> </select><label>Qual o tipo?</label></div></div><div class=\"row\"><div class=\"col s1 offset-s11\"><a id=\"aModal\" class=\"btn-floating btn-insere waves-effect waves-light red\" title=\"Clique para enviar\"" +
+  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Cadastro de Itens do Portal da COJUL</h3><br><div class=\"row\"><h5 class=\"\">Título</h5><br><div id=\"editorTitulo\" class=\"col s12\"><p id=\"tituloGC\"></p><br></div></div><div class=\"row\"><h5 class=\"\">Descrição</h5><br><div id=\"editorDesc\" class=\"col s12\"><p id=\"descGC\"></p><br></div></div><div class=\"row\"><h5 class=\"\">Link</h5><br><div id=\"editorLink\" class=\"col s12\"><p id=\"linkGC\"></p><br></div></div><div class=\"row\"><div class=\"input-field col s4\"><select required name=\"secaoGC\" id=\"secaoGC\"><option value=\"\" disabled selected>Escolha uma opção:</option><option value=\"relatorios\">Relatorios</option><option value=\"recursos\">Ferramentas</option></select><label>Qual o tipo?</label></div></div><div class=\"row\"><div class=\"col s1 offset-s11\"><a id=\"aModal\" class=\"btn-floating btn-insere waves-effect waves-light red\" title=\"Clique para enviar\"" +
     marko_attr("href", "#modal1") +
     "><i class=\"material-icons\">send</i></a></div></div><div" +
     marko_attr("data-portal", "" + data.portal) +
     "></div></div></main>");
 
-  app_footer_tag({}, out, __component, "41");
+  app_footer_tag({}, out, __component, "40");
 
   out.w("<div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
 
-  app_scripts_js_tag({}, out, __component, "50");
+  app_scripts_js_tag({}, out, __component, "49");
 
-  out.w("<script src=\"/estatico/js/libs/quill.min.js\"></script><script src=\"/estatico/js/julgamento/gestaoPortalCojul.js\"></script>");
+  out.w("<script src=\"/estatico/js/libs/quill.min.js\"></script><script src=\"/estatico/js/julgamento/cosup/gestaoPortalCosup.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "53");
+  await_reorderer_tag({}, out, __component, "52");
 
   out.w("</body></html>");
 }

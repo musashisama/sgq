@@ -4,7 +4,7 @@ const d3 = require('d3');
 let reinp2020,
   conselheiros = [];
 reinp2020 = fs.readFileSync('./relatorios/REINPCOMPLETO.csv', 'utf8');
-conselheiros = fs.readFileSync('./relatorios/Conselheiros.csv', 'utf8');
+conselheiros = fs.readFileSync('./relatorios/usuarios.csv', 'utf8');
 
 let rel = d3.csvParse(reinp2020);
 let cons = d3.csvParse(conselheiros);
@@ -13,6 +13,7 @@ rel.forEach((r) => {
   cons.forEach((c) => {
     if (r.cpf == c.cpf) {
       r.unidade = c.unidade;
+      r.funcao = c.funcao;
     }
   });
 });
