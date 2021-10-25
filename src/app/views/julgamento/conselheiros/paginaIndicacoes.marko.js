@@ -47,25 +47,26 @@ function render(input, out, __component, component, state) {
       class: "sidenav"
     }, out, __component, "5");
 
-  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Períodos de Indicação para Pauta</h3><br><div class=\"row conteudoPrincipal\"></div><br><div class=\"row\"><h4>Períodos de Indicação para Pauta</h4></div><div class=\"row\"><div class=\"col s12 right-align\"><div class=\"row\">");
+  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Períodos de Indicação para Pauta</h3><br><div class=\"row conteudoPrincipal\"></div><br><div class=\"row\"><h4>Períodos de Indicação para Pauta</h4></div><div class=\"row\"><p id=\"pautaAberta\"></p><a id=\"botaoIndicaPauta\" class=\"waves-effect waves-light btn-large right\"><i class=\"fas fa-arrow-alt-circle-right right\"></i>Indicar Processos para Pauta</a></div><div class=\"row\"><div class=\"col s12 right-align\"><div class=\"row\">");
 
-  app_drop_download_tag({}, out, __component, "16");
+  app_drop_download_tag({}, out, __component, "20");
 
   out.w("</div><div id=\"tabelaIndicacoes\"" +
+    marko_attr("data-indicaPauta", "" + data.indicaPauta) +
     marko_attr("data-indicacoes", "" + data.indicacoes) +
     "></div></div></div><div class=\"row\"><div id=\"cardsColegiados\"></div></div></div></main>");
 
-  app_footer_tag({}, out, __component, "20");
+  app_footer_tag({}, out, __component, "24");
 
-  app_modal_tag({}, out, __component, "21");
+  app_modal_tag({}, out, __component, "25");
 
-  app_scripts_js_tag({}, out, __component, "22");
+  app_scripts_js_tag({}, out, __component, "26");
 
-  out.w("<script src=\"/estatico/js/julgamento/conselheiros/paginaIndicacoes.js\"></script>");
+  out.w("<script src=\"/estatico/js/libs/plotly-latest.min.js\"></script><script src=\"/estatico/js/libs/plotly-locale-pt-br.js\"></script><script>Plotly.setPlotConfig({locale: 'pt-BR'})</script><script src=\"/estatico/js/julgamento/helpers/configTabelaNovoRegap.js\"></script><script src=\"/estatico/js/julgamento/conselheiros/paginaIndicacoes.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "24");
+  await_reorderer_tag({}, out, __component, "32");
 
   out.w("</body></html>");
 }

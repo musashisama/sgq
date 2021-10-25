@@ -104,6 +104,7 @@ class JulgamentoControlador {
       listaregapindividual: '/julgamento/conselheiros/listaregap',
       regapcons: '/julgamento/conselheiros/:id',
       indicapauta: '/julgamento/conselheiros/indicacao-pauta',
+      paginaIndicacoes: '/julgamento/conselheiros/gestao-indicacoes',
       //PRESIDENTES
       gestaoportalpresidente: '/julgamento/restrito/gestaoportalpresidente',
       //APURAÇÕES ESPECIAIS
@@ -724,7 +725,6 @@ class JulgamentoControlador {
       }
       if (req.method == 'POST') {
         let dados = [req.body];
-        console.log(req.body);
         const suporteDao = new SuporteDao(conn);
         suporteDao.criaIndicacaoPauta(dados).then((resposta) => {
           resp.send(resposta);
@@ -733,11 +733,42 @@ class JulgamentoControlador {
     };
   }
 
+  carregaPaginaIndicacoes() {
+    return function (req, resp) {
+      const pessoalDao = new PessoalDao(conn);
+      const julgamentoDao = new JulgamentoDao(conn);
+      const suporteDao = new SuporteDao(conn);
+      let cor = CSVHandler.semanaCores(req.user.unidade);
+      suporteDao
+        .getIndicacoes({ semana: cor }, { _id: -1 })
+        .then((indicacoes) => {
+          suporteDao
+            .getIndicacoesPauta({
+              $and: [
+                { cpf: req.user.cpf },
+                {
+                  idIndicacao: indicacoes[0]
+                    ? indicacoes[0]._id.toString()
+                    : '',
+                },
+              ],
+            })
+            .then((indicaPauta) => {
+              resp.marko(templates.julgamento.paginaIndicacoes, {
+                indicacoes: JSON.stringify(indicacoes[0]),
+                indicaPauta: JSON.stringify(indicaPauta),
+              });
+            });
+        });
+    };
+  }
+
   carregaPortalConselheiros() {
     return function (req, resp) {
       const pessoalDao = new PessoalDao(conn);
       const julgamentoDao = new JulgamentoDao(conn);
       const suporteDao = new SuporteDao(conn);
+      let cor = CSVHandler.semanaCores(req.user.unidade);
       pessoalDao.getUsers({ cpf: req.user.cpf }).then((user) => {
         julgamentoDao
           .getCal({

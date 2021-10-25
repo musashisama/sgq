@@ -91,6 +91,11 @@ module.exports = (app) => {
   );
 
   app.get(
+    rotasJulgamento.paginaIndicacoes,
+    julgControlador.carregaPaginaIndicacoes(),
+  );
+
+  app.get(
     rotasJulgamento.regapindividual,
     julgControlador.carregaRegapIndividual(),
   );

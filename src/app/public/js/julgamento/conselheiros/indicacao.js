@@ -147,8 +147,8 @@ function dataTable(data) {
     responsiveLayoutCollapseStartOpen: false,
     initialSort: [
       { column: 'Dias_na_Atividade', dir: 'desc' },
+      { column: 'assunto', dir: 'desc' },
       { column: 'contribuinte', dir: 'desc' },
-      { column: 'processo', dir: 'desc' },
     ],
     downloadConfig: {
       columnCalcs: false,
@@ -256,6 +256,24 @@ function dataTable(data) {
         download: true,
       },
       {
+        title: 'Assunto',
+        field: 'assunto',
+        sorter: 'string',
+        hozAlign: 'left',
+        editor: false,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Observações',
+        field: 'obs',
+        sorter: 'string',
+        hozAlign: 'left',
+        editor: false,
+        responsive: 0,
+        download: true,
+      },
+      {
         title: 'Valor Originário Lançado/Pleiteado',
         field: 'valorOrig',
         sorter: 'number',
@@ -309,15 +327,7 @@ function dataTable(data) {
         responsive: 2,
         download: true,
       },
-      {
-        title: 'Observações',
-        field: 'obs',
-        sorter: 'string',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
-        download: true,
-      },
+
       {
         title: 'Prioridade',
         field: 'prioridade',
@@ -327,15 +337,7 @@ function dataTable(data) {
         responsive: 2,
         download: true,
       },
-      {
-        title: 'Assunto',
-        field: 'assunto',
-        sorter: 'string',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
-        download: true,
-      },
+
       {
         title: 'Motivo da Prioridade',
         field: 'motPrior',

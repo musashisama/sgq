@@ -2355,10 +2355,10 @@ function controleForm() {
                 <i class="far fa-question-circle prefix"/>
                 <label for="turnoSeminario">Selecione o turno de participação:</label>
                 <select required name="turnoSeminario" id="turnoSeminario">
-                <option class="form-group" value=8>Dia 24/11/2020</option>
-                <option class="form-group" value=3>Dia 25/11/2020 (1 turno)</option>
-                <option class="form-group" value=6>Dia 25/11/2020 (2 turnos)</option>
-                <option class="form-group" value=3>Dia 26/11/2020</option>
+                <option class="form-group" value=8>Primeiro Dia</option>
+                <option class="form-group" value=4>Segundo Dia (1 turno)</option>
+                <option class="form-group" value=8>Segundo Dia (2 turnos)</option>
+                <option class="form-group" value=4>Terceiro Dia</option>
                 </select>
                 </div>
                 <div><a id="btnSeminario" class="btn-floating btn-small green waves-effect waves-light hoverable z-depth-3" title="Adicionar Participação">
@@ -2369,7 +2369,7 @@ function controleForm() {
                 <div class='row'>
               <blockquote>
               <strong>Importante:</strong>
-              Serão concedidas 8 horas para participação no dia 24/11/2020, 3 horas por turno no dia 25/11/2020 e 3 horas no dia 26/11/2020.
+              Serão concedidas 8 horas para participação no primeiro dia, 4 horas por turno no segundo dia e 4 horas no terceiro dia.
               </blockquote>
              </div>
               </div>

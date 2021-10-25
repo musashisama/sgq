@@ -55,21 +55,21 @@ function render(input, out, __component, component, state) {
 
   app_drop_download_tag({}, out, __component, "38");
 
-  out.w("<a href=\"#modal2\" id=\"mostraLegenda\" title=\"Mostrar Legenda da Tabela\" class=\"waves-effect waves-purple hoverable z-depth-3 btn-floating black\"><i class=\"material-icons\">details</i></a></div></div><div class=\"row\"></div><div class=\"row\"><div id=\"tabelaPauta\"></div></div><div class=\"row\"><a id=\"botaoCriaVirtual\" class=\"waves-effect waves-light btn-large right\"><i class=\"fas fa-arrow-alt-circle-right right\"></i>Criar Pauta Consolidada Virtual</a></div></div><div id=\"retornos\" class=\"col s12\"><div class=\"row\"></div><div class=\"row\"><div class=\"file-field ctoastsucesso input-field form-group col s6\"><div class=\"btn\"><span>Arquivo</span><input class=\"tooltipped\" data-position=\"bottom\" data-tooltip=\"Somente arquivos XLS\" type=\"file\" name=\"filetoupload\" id=\"file\" accept=\".xls,.xlsx\" onchange=\"triggerValidation(this)\"></div><div class=\"file-path-wrapper\"><input class=\"file-path validate\" type=\"text\"></div></div><a id=\"botaoEnviaExcel\" class=\"waves-effect waves-light btn-large\"><i class=\"fas fa-arrow-alt-circle-right right\"></i>Enviar Planilha</a></div><div class=\"row\"><div id=\"tabelaRetornos\"></div></div></div><div id=\"virtual\" class=\"col s12\"><div class=\"row\"></div><div class=\"row\"></div><div class=\"row\"><div id=\"tabelaConsolidadaVirtual\"></div></div><div class=\"row\"><a id=\"botaoConsolida\" class=\"waves-effect waves-light btn-large right\"><i class=\"fas fa-arrow-alt-circle-right right\"></i>Consolidar Pauta</a></div></div></div></div></main><footer class=\"page-footer rodape\"></footer>");
+  out.w("<a href=\"#modal2\" id=\"mostraLegenda\" title=\"Mostrar Legenda da Tabela\" class=\"waves-effect waves-purple hoverable z-depth-3 btn-floating black\"><i class=\"material-icons\">details</i></a></div></div><div class=\"row\"></div><div class=\"row\"><div id=\"tabelaPauta\"></div></div><div class=\"row\"><a id=\"botaoCriaVirtual\" class=\"waves-effect waves-light btn-large right\"><i class=\"fas fa-arrow-alt-circle-right right\"></i>Criar Pauta Consolidada Virtual</a></div></div><div id=\"retornos\" class=\"col s12\"><div class=\"row\"></div><div class=\"row\"><div class=\"file-field ctoastsucesso input-field form-group col s6\"><div class=\"btn\"><span>Arquivo</span><input class=\"tooltipped\" data-position=\"bottom\" data-tooltip=\"Somente arquivos XLS\" type=\"file\" name=\"filetoupload\" id=\"file\" accept=\".xls,.xlsx\" onchange=\"triggerValidation(this)\"></div><div class=\"file-path-wrapper\"><input class=\"file-path validate\" type=\"text\"></div></div><a id=\"botaoEnviaExcel\" class=\"waves-effect waves-light btn-large\"><i class=\"fas fa-arrow-alt-circle-right right\"></i>Enviar Planilha</a></div><div class=\"row\"><p id=\"statusRetorno\"></p><p>Processos selecionados: <span id=\"select-stats\"></span></p></div><div class=\"row\"><div id=\"tabelaRetornos\"></div></div><div class=\"row\"><a id=\"botaoAddRetornos\" class=\"waves-effect waves-light btn-large right\"><i class=\"fas fa-arrow-alt-circle-right right\"></i>Adicionar Retornos à Pauta Consolidada Virtual</a></div></div><div id=\"virtual\" class=\"col s12\"><div class=\"row\"></div><div class=\"row\"></div><div class=\"row\"><div id=\"tabelaConsolidadaVirtual\"></div></div><div class=\"row\"><a id=\"botaoConsolida\" class=\"waves-effect waves-light btn-large right\"><i class=\"fas fa-arrow-alt-circle-right right\"></i>Consolidar Pauta</a></div></div></div></div></main><footer class=\"page-footer rodape\"></footer>");
 
-  app_modal_tabela_legenda_tag({}, out, __component, "69");
+  app_modal_tabela_legenda_tag({}, out, __component, "76");
 
   out.w("<div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\"></p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat cancela\">Cancela</a><button class=\"btn waves-effect waves-light concorda\" type=\"submit\" name=\"action\">Confirma <i class=\"material-icons right\">send</i></button></div></div>");
 
-  app_footer_tag({}, out, __component, "78");
+  app_footer_tag({}, out, __component, "85");
 
-  app_scripts_js_tag({}, out, __component, "79");
+  app_scripts_js_tag({}, out, __component, "86");
 
   out.w("<script src=\"/estatico/js/libs/plotly-latest.min.js\"></script><script src=\"/estatico/js/libs/plotly-locale-pt-br.js\"></script><script>Plotly.setPlotConfig({locale: 'pt-BR'})</script><script src=\"/estatico/js/julgamento/helpers/configTabelaNovoRegap.js\"></script><script src=\"/estatico/js/julgamento/cosup/gerenciaPauta.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "85");
+  await_reorderer_tag({}, out, __component, "92");
 
   out.w("</body></html>");
 }
