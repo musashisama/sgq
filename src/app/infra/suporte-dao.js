@@ -14,7 +14,7 @@ class SuporteDao {
       });
     });
   }
-  getIndicacoes(filtro) {
+  getPeriodosIndicacoes(filtro) {
     return new Promise((resolve, reject) => {
       this._db.periodosIndicacao
         .find(filtro)

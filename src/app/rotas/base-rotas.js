@@ -17,6 +17,7 @@ module.exports = (app) => {
   app.get(rotasBase.logout, baseControlador.logout());
   app.get(rotasBase.principal, baseControlador.principal());
   app.post(rotasBase.enviamail, baseControlador.enviaMail());
+  app.get(rotasBase.alegacoes, baseControlador.tabAlegacoes());
   app.post(rotasBase.formalterasenha, baseControlador.alteraSenha());
   app.get(rotasBase.trocasenhaSemID, baseControlador.login());
   app

@@ -128,6 +128,9 @@ class regapHandler {
                   prioridade: p.Prioridade,
                   motPrior: p.Motivo_Prioridade,
                   juntada: p.Ind_Juntada,
+                  paradigma: p.Ind_Paradigma,
+                  agrupamento: p.Nome_Agrupamento,
+                  qtdeProc: p.Qtde_Processos,
                 });
               }
             });
@@ -185,6 +188,9 @@ class regapHandler {
         Prioridade_do_Processo_24: 'Prioridade',
         Motivo_da_Prioridade_do_Pr_22: 'Motivo_Prioridade',
         Indicador_de_Solicitação_d_32: 'Ind_Juntada',
+        Indicador_de_Paradigma_de__37: 'Ind_Paradigma',
+        Nome_do_Agrupamento_no_CAR_38: 'Nome_Agrupamento',
+        Quantidade_de_Processos_no_39: 'Qtde_Processos',
       };
       //Renomeia as colunas e exclui as não utilizadas
       dados.forEach((d) => {

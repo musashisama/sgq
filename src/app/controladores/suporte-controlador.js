@@ -105,7 +105,7 @@ class SuporteControlador {
   carregaGestaoIndicacao() {
     return function (req, resp) {
       const suporteDAO = new SuporteDAO(conn);
-      suporteDAO.getIndicacoes().then((msg) => {
+      suporteDAO.getPeriodosIndicacoes().then((msg) => {
         resp.marko(templates.suporte.gestaoIndicacao, {
           indicacoes: JSON.stringify(msg),
         });
@@ -127,7 +127,7 @@ class SuporteControlador {
         // const julgamentoDao = new JulgamentoDAO(conn);
         // const pessoalDao = new pessoalDAO(conn);
         suporteDAO
-          .getIndicacoes({ _id: new ObjectID(id) })
+          .getPeriodosIndicacoes({ _id: new ObjectID(id) })
           .then((indicacao) => {
             resp.marko(templates.suporte.editaIndicacao, {
               indicacao: JSON.stringify(indicacao),
@@ -148,7 +148,7 @@ class SuporteControlador {
     return function (req, resp) {
       if (req.method == 'GET') {
         const suporteDAO = new SuporteDAO(conn);
-        suporteDAO.getIndicacoes().then((msg) => {
+        suporteDAO.getPeriodosIndicacoes().then((msg) => {
           resp.marko(templates.suporte.gestaoIndicacao, {
             indicacoes: JSON.stringify(msg),
           });
@@ -179,7 +179,7 @@ class SuporteControlador {
           .getUsers({ $and: [{ cargo: 'Conselheiro' }, { mandatoAt: 'Sim' }] })
           .then((users) => {
             suporteDAO
-              .getIndicacoes({ _id: new ObjectID(req.params.id) })
+              .getPeriodosIndicacoes({ _id: new ObjectID(req.params.id) })
               .then((msg) => {
                 users.forEach((user) => {
                   if (

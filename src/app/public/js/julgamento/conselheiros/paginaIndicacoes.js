@@ -96,9 +96,41 @@ function tabelaIndicacoes() {
         responsive: 0,
         download: true,
       },
+      {
+        title: 'Status da Indicação',
+        field: 'status',
+        //formatter: coloreProc,
+        headerFilter: 'input',
+        sorter: 'string',
+        hozAlign: 'left',
+        width: 150,
+        editor: false,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Gerenciar',
+        field: 'anoIndicacao',
+        formatter: linksIndica,
+        headerFilter: 'input',
+        sorter: 'string',
+        hozAlign: 'left',
+        width: 150,
+        editor: false,
+        responsive: 0,
+        download: true,
+      },
     ],
     autoColumns: false,
     locale: true,
     langs: langs,
   });
 }
+
+let linksIndica = function linksIndica(cell) {
+  return `
+  <a class='black-text btnedita' href='/julgamento/conselheiros/indicacao-pauta/${
+    cell.getRow().getData()._id
+  }'title='Indicar Processos para Pauta'><i class='material-icons'>settings</i></a>
+  `;
+};

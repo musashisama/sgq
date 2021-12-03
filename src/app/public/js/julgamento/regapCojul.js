@@ -194,6 +194,17 @@ function dataTable(msg) {
         download: true,
       },
       {
+        title: 'Valor do Processo (Somente COJUL)',
+        field: 'valorProcessoCOJUL',
+        sorter: 'number',
+        hozAlign: 'center',
+        editor: false,
+        formatter: formatValor,
+        accessorDownload: downloadValor,
+        responsive: 0,
+        download: true,
+      },
+      {
         title: 'Observações',
         field: 'Observacoes',
         sorter: 'string',

@@ -161,6 +161,7 @@ function selectRelatorios() {
             HE: r.HE,
             impostoProj: r.impostoProj,
             valorOrig: r.valorOrig,
+            valor: r.valor,
             valorSemTJM: r.valorSemTJM,
             valorCrdLanc: r.valorCrdLanc,
             valorOriginal: r.valorOriginal,
@@ -182,6 +183,9 @@ function selectRelatorios() {
             apes: r.apes,
             apesHE: r.apesHE,
             diff: +r.apesHE - +r.HE,
+            paradigma: r.paradigma,
+            agrupamento: r.agrupamento,
+            qtdeProc: r.qtdeProc,
           });
         });
       });
@@ -349,6 +353,17 @@ function dataTable(msg) {
         download: true,
       },
       {
+        title: 'Valor do Processo (Somente COJUL)',
+        field: 'valor',
+        sorter: 'number',
+        hozAlign: 'center',
+        editor: false,
+        formatter: formatValor,
+        accessorDownload: numberConvert,
+        responsive: 0,
+        download: true,
+      },
+      {
         title: 'Valor Original',
         field: 'valorOriginal',
         sorter: 'number',
@@ -431,7 +446,33 @@ function dataTable(msg) {
         responsive: 2,
         download: true,
       },
-
+      {
+        title: 'Paradigma?',
+        field: 'paradigma',
+        sorter: 'string',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 2,
+        download: true,
+      },
+      {
+        title: 'Nome do Lote/Agrupamento',
+        field: 'agrupamento',
+        sorter: 'string',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 2,
+        download: true,
+      },
+      {
+        title: 'Qtde de Processos no Lote',
+        field: 'qtdeProc',
+        sorter: 'string',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 2,
+        download: true,
+      },
       {
         title: 'Motivo da Prioridade',
         field: 'motPrior',
