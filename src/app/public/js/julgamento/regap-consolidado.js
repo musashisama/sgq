@@ -150,6 +150,7 @@ function selectRelatorios() {
             m.conselheiro.equipe = '2ª TURMA-CSRF-CARF-MF-DF';
           }
           dados.push({
+            secao: retornaSecao(m.conselheiro.equipe),
             cpf: m.conselheiro.cpf,
             nome: m.conselheiro.nome,
             processo: r.processo,
@@ -210,6 +211,20 @@ function selectRelatorios() {
 
 function initSelect() {
   $('select').formSelect();
+}
+
+function retornaSecao(equipe) {
+  if (equipe) {
+    if (equipe.includes('1ªS') || equipe.includes('1ª Turma')) {
+      return '1ª Seção';
+    }
+    if (equipe.includes('2ªS') || equipe.includes('2ª Turma')) {
+      return '2ª Seção';
+    }
+    if (equipe.includes('3ªS') || equipe.includes('3ª Turma')) {
+      return '3ª Seção';
+    }
+  }
 }
 
 function dataTable(msg) {
@@ -556,6 +571,15 @@ function dataTable(msg) {
         editor: false,
         responsive: 2,
         download: false,
+      },
+      {
+        title: 'Seção',
+        field: 'secao',
+        sorter: 'string',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 2,
+        download: true,
       },
     ],
     autoColumns: false,
