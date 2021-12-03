@@ -215,13 +215,13 @@ function initSelect() {
 
 function retornaSecao(equipe) {
   if (equipe) {
-    if (equipe.includes('1ªS') || equipe.includes('1ª Turma')) {
+    if (equipe.includes('1ªS') || equipe.includes('1ª TURMA')) {
       return '1ª Seção';
     }
-    if (equipe.includes('2ªS') || equipe.includes('2ª Turma')) {
+    if (equipe.includes('2ªS') || equipe.includes('2ª TURMA')) {
       return '2ª Seção';
     }
-    if (equipe.includes('3ªS') || equipe.includes('3ª Turma')) {
+    if (equipe.includes('3ªS') || equipe.includes('3ª TURMA')) {
       return '3ª Seção';
     }
   }
