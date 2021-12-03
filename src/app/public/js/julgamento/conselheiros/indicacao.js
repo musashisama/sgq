@@ -1,4 +1,5 @@
 let dadosPlot;
+let tabAlegacoes = JSON.parse($('#dataAlega').attr('data-alega'));
 let dadosIndicacao = [];
 let tableAptidao, tableIndicacao, tableConfirmacao;
 inicializaComponentes();
@@ -111,11 +112,13 @@ function dataTable(data) {
   table = new Tabulator('#tabelaIndicacao', {
     data: tabledata,
     //pagination: 'local',
+    //paginationSize: 10,
+    //paginationSizeSelector: [10, 25, 50, 100, true],
     height: '100%',
     minHeight: '200px',
     //maxHeight: '1000px',
     layout: 'fitData',
-    responsiveLayout: 'collapse',
+    //responsiveLayout: 'collapse',
     groupStartOpen: false,
     selectable: true,
     rowSelected: function (row) {
@@ -166,17 +169,17 @@ function dataTable(data) {
       //   responsive: 0,
       //   download: false,
       // },
-      {
-        title: 'Expandir',
-        formatter: 'responsiveCollapse',
-        width: 60,
-        minWidth: 60,
-        hozAlign: 'center',
-        resizable: false,
-        headerSort: false,
-        responsive: 0,
-        download: false,
-      },
+      // {
+      //   title: 'Expandir',
+      //   formatter: 'responsiveCollapse',
+      //   width: 60,
+      //   minWidth: 60,
+      //   hozAlign: 'center',
+      //   resizable: false,
+      //   headerSort: false,
+      //   responsive: 0,
+      //   download: false,
+      // },
       {
         title: 'Processo',
         field: 'processo',
@@ -256,8 +259,8 @@ function dataTable(data) {
         download: true,
       },
       {
-        title: 'Assunto',
-        field: 'assunto',
+        title: 'Observações',
+        field: 'obs',
         sorter: 'string',
         hozAlign: 'left',
         editor: false,
@@ -265,8 +268,8 @@ function dataTable(data) {
         download: true,
       },
       {
-        title: 'Observações',
-        field: 'obs',
+        title: 'Assunto',
+        field: 'assunto',
         sorter: 'string',
         hozAlign: 'left',
         editor: false,
@@ -608,6 +611,7 @@ function dataTableAptidao() {
     layout: 'fitData',
     responsiveLayout: 'collapse',
     groupStartOpen: false,
+    index: 'processo',
     responsiveLayoutCollapseStartOpen: false,
     initialSort: [
       { column: 'contribuinte', dir: 'desc' },
@@ -831,9 +835,43 @@ function dataTableAptidao() {
             maxlength: '11', //set the maximum character length of the input element to 10 characters
           },
         },
+        cellEdited: alegEdita,
         //accessor: alegaPrim,
         //validator: 'required',
         editor: true,
+        width: 180,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Tributo',
+        field: 'alegTributo',
+        sorter: 'string',
+        hozAlign: 'left',
+        formatter: alegTributo,
+        editor: false,
+        width: 180,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Matéria',
+        field: 'alegMateria',
+        formatter: alegMateria,
+        sorter: 'string',
+        hozAlign: 'left',
+        editor: false,
+        width: 180,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Tema',
+        field: 'alegTema',
+        formatter: alegTema,
+        sorter: 'string',
+        hozAlign: 'left',
+        editor: false,
         width: 180,
         responsive: 0,
         download: true,
@@ -863,21 +901,78 @@ let alegaPrim = function alegaPrim(cell) {
   } else return cell.getValue();
 };
 
+let alegEdita = function alegEdita(cell) {
+  console.log(cell.getRow().getData().processo);
+  alegMateria(cell), alegTema(cell), alegTributo(cell);
+  tableAptidao.redraw();
+};
+
+let alegTributo = function alegTributo(cell) {
+  let nome = 'Não encontrado';
+  let processo = cell.getRow().getData().processo;
+  let alegacao = cell.getRow().getData().alegaPrim;
+  tabAlegacoes.forEach((t) => {
+    if (t.alegacao_codigo == alegacao) {
+      nome = t.tributo_nome;
+      tableAptidao
+        .updateOrAddData([{ processo: processo, alegTributo: nome }], true)
+        .then((row) => {
+          console.log(row);
+          tableAptidao.redraw();
+        });
+    }
+  });
+  return nome;
+};
+
+let alegMateria = function alegMateria(cell) {
+  let nome = 'Não encontrado';
+  let processo = cell.getRow().getData().processo;
+  let alegacao = cell.getRow().getData().alegaPrim;
+  tabAlegacoes.forEach((t) => {
+    if (t.alegacao_codigo == alegacao) {
+      nome = t.materia_nome;
+      tableAptidao
+        .updateOrAddData([{ processo: processo, alegMateria: nome }], true)
+        .then((row) => {
+          tableAptidao.redraw();
+        });
+    }
+  });
+
+  return nome;
+};
+let alegTema = function alegTema(cell) {
+  let nome = 'Não encontrado';
+  let processo = cell.getRow().getData().processo;
+  let alegacao = cell.getRow().getData().alegaPrim;
+  tabAlegacoes.forEach((t) => {
+    if (t.alegacao_codigo == alegacao) {
+      nome = t.tema_descricao;
+      tableAptidao
+        .updateOrAddData([{ processo: processo, alegTema: nome }], true)
+        .then((row) => {
+          tableAptidao.redraw();
+        });
+    }
+  });
+
+  return nome;
+};
+
 function gravaIndicacao(registro) {
   $.ajax({
-    url: '/julgamento/conselheiros/indicacao-pauta',
+    url: '/julgamento/conselheiros/grava-indicacao-pauta',
     data: registro,
     type: 'POST',
     success: function (result) {
       var toastHTML = `<span>Dados atualizados com sucesso!</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
-      console.log(result);
-      //location.reload();
+      location.href = '/julgamento/conselheiros/gestao-indicacoes';
     },
     error: function (result) {
       var toastHTML = `<span>Ocorreu um erro.</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
-      console.log(result);
     },
   });
 }

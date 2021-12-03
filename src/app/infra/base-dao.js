@@ -100,5 +100,20 @@ class BaseDao {
         });
     });
   }
+
+  getAlegacoes(filtro = null) {
+    return new Promise((resolve, reject) => {
+      this._db.tabAlegacoes
+        .find(filtro)
+        .sort()
+        .project()
+        .toArray(function (erro, res) {
+          if (erro) {
+            return reject('Não foi possível buscar as configurações.');
+          }
+          return resolve(res);
+        });
+    });
+  }
 }
 module.exports = BaseDao;

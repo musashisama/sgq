@@ -3,6 +3,7 @@ const Binary = require('mongodb').Binary;
 const JulgamentoDao = require('../infra/julgamento-dao');
 const FileDao = require('../infra/file-dao');
 const PessoalDao = require('../infra/pessoal-dao');
+const BaseDao = require('../infra/base-dao');
 const SuporteDao = require('../infra/suporte-dao');
 const requestIp = require('request-ip');
 const templates = require('../views/templates');
@@ -103,7 +104,8 @@ class JulgamentoControlador {
       reinpindividual: '/julgamento/conselheiros/reinp',
       listaregapindividual: '/julgamento/conselheiros/listaregap',
       regapcons: '/julgamento/conselheiros/:id',
-      indicapauta: '/julgamento/conselheiros/indicacao-pauta',
+      indicapauta: '/julgamento/conselheiros/indicacao-pauta/:id',
+      gravaIndicacao: '/julgamento/conselheiros/grava-indicacao-pauta/',
       paginaIndicacoes: '/julgamento/conselheiros/gestao-indicacoes',
       //PRESIDENTES
       gestaoportalpresidente: '/julgamento/restrito/gestaoportalpresidente',
@@ -693,6 +695,7 @@ class JulgamentoControlador {
         const pessoalDao = new PessoalDao(conn);
         const julgamentoDao = new JulgamentoDao(conn);
         const suporteDao = new SuporteDao(conn);
+        const baseDAO = new BaseDao(conn);
         let filtro, sort, projecao, limit;
         filtro = { 'conselheiro.cpf': req.user.cpf };
         projecao = {};
@@ -708,15 +711,18 @@ class JulgamentoControlador {
                 .getRegap(filtro, sort, projecao, limit)
                 .then((regap) => {
                   suporteDao
-                    .getIndicacoes({
+                    .getPeriodosIndicacoes({
                       semana: CSVHandler.semanaCores(user[0].unidade),
                     })
                     .then((indicacoes) => {
-                      resp.marko(templates.julgamento.indicapauta, {
-                        relatorio: JSON.stringify(regap[0].relatorio),
-                        cal: JSON.stringify(cal),
-                        user: JSON.stringify(user[0]),
-                        pauta: JSON.stringify(indicacoes[0]),
+                      baseDAO.getAlegacoes().then((alegacoes) => {
+                        resp.marko(templates.julgamento.indicapauta, {
+                          relatorio: JSON.stringify(regap[0].relatorio),
+                          cal: JSON.stringify(cal),
+                          user: JSON.stringify(user[0]),
+                          pauta: JSON.stringify(indicacoes[0]),
+                          alegacoes: JSON.stringify(alegacoes),
+                        });
                       });
                     });
                 });
@@ -725,6 +731,7 @@ class JulgamentoControlador {
       }
       if (req.method == 'POST') {
         let dados = [req.body];
+        console.log(dados);
         const suporteDao = new SuporteDao(conn);
         suporteDao.criaIndicacaoPauta(dados).then((resposta) => {
           resp.send(resposta);
@@ -740,17 +747,17 @@ class JulgamentoControlador {
       const suporteDao = new SuporteDao(conn);
       let cor = CSVHandler.semanaCores(req.user.unidade);
       suporteDao
-        .getIndicacoes({ semana: cor }, { _id: -1 })
+        .getPeriodosIndicacoes({ semana: cor }, { _id: -1 })
         .then((indicacoes) => {
           suporteDao
             .getIndicacoesPauta({
               $and: [
                 { cpf: req.user.cpf },
-                {
-                  idIndicacao: indicacoes[0]
-                    ? indicacoes[0]._id.toString()
-                    : '',
-                },
+                // {
+                //   idIndicacao: indicacoes[0]
+                //     ? indicacoes[0]._id.toString()
+                //     : '',
+                // },
               ],
             })
             .then((indicaPauta) => {
@@ -767,7 +774,7 @@ class JulgamentoControlador {
     return function (req, resp) {
       const pessoalDao = new PessoalDao(conn);
       const julgamentoDao = new JulgamentoDao(conn);
-      const suporteDao = new SuporteDao(conn);
+
       let cor = CSVHandler.semanaCores(req.user.unidade);
       pessoalDao.getUsers({ cpf: req.user.cpf }).then((user) => {
         julgamentoDao
@@ -775,30 +782,10 @@ class JulgamentoControlador {
             classNames: CSVHandler.semanaCores(user[0].unidade),
           })
           .then((cal) => {
-            suporteDao
-              .getIndicacoes({
-                semana: CSVHandler.semanaCores(user[0].unidade),
-              })
-              .then((indicacoes) => {
-                suporteDao
-                  .getIndicacoesPauta({
-                    $and: [
-                      { cpf: req.user.cpf },
-                      {
-                        idIndicacao: indicacoes[0]
-                          ? indicacoes[0]._id.toString()
-                          : '',
-                      },
-                    ],
-                  })
-                  .then((indicaPauta) => {
-                    resp.marko(templates.julgamento.portaldoconselheiro, {
-                      cal: JSON.stringify(cal),
-                      user: user[0],
-                      pauta: JSON.stringify(indicacoes[0]),
-                    });
-                  });
-              });
+            resp.marko(templates.julgamento.portaldoconselheiro, {
+              cal: JSON.stringify(cal),
+              user: user[0],
+            });
           });
       });
     };

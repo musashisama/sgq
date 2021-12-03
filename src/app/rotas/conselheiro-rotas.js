@@ -77,8 +77,8 @@ module.exports = (app) => {
   app
     .route(rotasJulgamento.indicapauta)
     .get(julgControlador.handleIndicaPauta())
-    .post(julgControlador.handleIndicaPauta())
     .delete(julgControlador.handleIndicaPauta());
+  app.post(rotasJulgamento.gravaIndicacao, julgControlador.handleIndicaPauta());
 
   app.get(
     rotasJulgamento.conselheiros,

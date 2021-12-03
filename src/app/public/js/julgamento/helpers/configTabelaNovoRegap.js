@@ -112,12 +112,33 @@ function agPauta(data) {
   );
 }
 
+function ocultaAP(data) {
+  return !(
+    data.atividade.includes('Para Relatar') &&
+    data.situacao.includes('AGUARDANDO PAUTA')
+  );
+}
+
+function ocultaCancelado(data) {
+  return !(
+    data.atividade.includes('Para Relatar') &&
+    data.situacao.includes('CANCELADO')
+  );
+}
+
 function retJuntada(data) {
   return data.juntada.includes('S');
 }
 
 function returnRep(data) {
   return !data.obs.includes('.REP.');
+}
+
+function returnApensosSQ(data) {
+  return !(
+    data.apenso.includes('S') &&
+    (data.questionamento == '' || data.questionamento == null)
+  );
 }
 
 let retornoSepoj = function retornoSepoj(cell) {
@@ -127,6 +148,27 @@ let retornoSepoj = function retornoSepoj(cell) {
 };
 
 function initCheckboxes() {
+  $(`#ocultarCancelado`).change(() => {
+    if ($(`#ocultarCancelado`).prop('checked')) {
+      table.addFilter(ocultaCancelado);
+    } else {
+      table.removeFilter(ocultaCancelado);
+    }
+  });
+  $(`#ocultarAP`).change(() => {
+    if ($(`#ocultarAP`).prop('checked')) {
+      table.addFilter(ocultaAP);
+    } else {
+      table.removeFilter(ocultaAP);
+    }
+  });
+  $(`#ocultarApensoSQ`).change(() => {
+    if ($(`#ocultarApensoSQ`).prop('checked')) {
+      table.addFilter(returnApensosSQ);
+    } else {
+      table.removeFilter(returnApensosSQ);
+    }
+  });
   $(`#repetitivosCheck`).change(() => {
     if ($(`#repetitivosCheck`).prop('checked')) {
       table.addFilter(returnRep);

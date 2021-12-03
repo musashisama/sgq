@@ -19,6 +19,7 @@ class BaseControlador {
       formalterasenha: '/form-altera-senha',
       enviamail: '/enviamail',
       premio: '/votacao-premio',
+      alegacoes: '/tab-alegacoes/:id',
     };
   }
 
@@ -243,6 +244,16 @@ http://${URL.host}/altera-senha/${registro.controle}
             });
           });
       }
+    };
+  }
+
+  tabAlegacoes() {
+    return function (req, resp) {
+      let baseDao = new BaseDao(conn);
+      let filtro = { alegacao_codigo: req.params.id };
+      baseDao.getAlegacoes(filtro).then((alegacao) => {
+        resp.json(alegacao[0]);
+      });
     };
   }
 }
