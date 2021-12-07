@@ -93,7 +93,7 @@ class regapHandler {
             parcial.forEach((p) => {
               if (r.conselheiro.cpf == p.cpf) {
                 r.conselheiro.nome = p.Nome;
-                r.conselheiro.equipe = p.Equipe_Atual;
+                r.conselheiro.equipe = regapHandler.equipeCSRF(p.Equipe_Atual);
                 r.conselheiro.semana = regapHandler.semanaCores(p.Equipe_Atual);
                 r.relatorio.push({
                   dtRel: dataRel,
@@ -151,6 +151,31 @@ class regapHandler {
     if (semanaAzul.includes(turma)) {
       return 'Azul';
     }
+  }
+
+  static equipeCSRF(equipe) {
+    if (
+      equipe == '1ª CÂMARA-3ªSEÇÃO-CARF-MF-DF' ||
+      equipe == '2ª CÂMARA-3ªSEÇÃO-CARF-MF-DF' ||
+      equipe == '3ª CÂMARA-3ªSEÇÃO-CARF-MF-DF' ||
+      equipe == '4ª CÂMARA-3ªSEÇÃO-CARF-MF-DF'
+    ) {
+      return '3ª TURMA-CSRF-CARF-MF-DF';
+    } else if (
+      equipe == '1ª CÂMARA-2ªSEÇÃO-CARF-MF-DF' ||
+      equipe == '2ª CÂMARA-2ªSEÇÃO-CARF-MF-DF' ||
+      equipe == '3ª CÂMARA-2ªSEÇÃO-CARF-MF-DF' ||
+      equipe == '4ª CÂMARA-2ªSEÇÃO-CARF-MF-DF'
+    ) {
+      return '2ª TURMA-CSRF-CARF-MF-DF';
+    } else if (
+      equipe == '1ª CÂMARA-1ªSEÇÃO-CARF-MF-DF' ||
+      equipe == '2ª CÂMARA-1ªSEÇÃO-CARF-MF-DF' ||
+      equipe == '3ª CÂMARA-1ªSEÇÃO-CARF-MF-DF' ||
+      equipe == '4ª CÂMARA-1ªSEÇÃO-CARF-MF-DF'
+    ) {
+      return '1ª TURMA-CSRF-CARF-MF-DF';
+    } else return equipe;
   }
 
   static renomeiaColunas(dados) {

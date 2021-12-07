@@ -89,6 +89,7 @@ function montaReinp(msg) {
       if (r.cpf == m.cpf) {
         r.nome = m.nome;
         r.unidade = m.unidade;
+        r.funcao = m.funcao;
         r.processos = [];
       }
     });
@@ -117,6 +118,7 @@ function montaReinp(msg) {
       nome: e.nome,
       cpf: e.cpf,
       unidade: e.unidade,
+      funcao: e.funcao,
       T1: somaTrimestre('1', e.processos),
       T2: somaTrimestre('2', e.processos),
       T3: somaTrimestre('3', e.processos),

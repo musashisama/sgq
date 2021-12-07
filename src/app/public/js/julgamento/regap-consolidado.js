@@ -143,11 +143,29 @@ function selectRelatorios() {
       let dados = [];
       msg.forEach((m) => {
         m.relatorio.forEach((r) => {
-          if (m.conselheiro.equipe == '3ª CÂMARA-3ªSEÇÃO-CARF-MF-DF') {
+          if (
+            m.conselheiro.equipe == '1ª CÂMARA-3ªSEÇÃO-CARF-MF-DF' ||
+            m.conselheiro.equipe == '2ª CÂMARA-3ªSEÇÃO-CARF-MF-DF' ||
+            m.conselheiro.equipe == '3ª CÂMARA-3ªSEÇÃO-CARF-MF-DF' ||
+            m.conselheiro.equipe == '4ª CÂMARA-3ªSEÇÃO-CARF-MF-DF'
+          ) {
             m.conselheiro.equipe = '3ª TURMA-CSRF-CARF-MF-DF';
           }
-          if (m.conselheiro.equipe == '4ª CÂMARA-2ªSEÇÃO-CARF-MF-DF') {
+          if (
+            m.conselheiro.equipe == '1ª CÂMARA-2ªSEÇÃO-CARF-MF-DF' ||
+            m.conselheiro.equipe == '2ª CÂMARA-2ªSEÇÃO-CARF-MF-DF' ||
+            m.conselheiro.equipe == '3ª CÂMARA-2ªSEÇÃO-CARF-MF-DF' ||
+            m.conselheiro.equipe == '4ª CÂMARA-2ªSEÇÃO-CARF-MF-DF'
+          ) {
             m.conselheiro.equipe = '2ª TURMA-CSRF-CARF-MF-DF';
+          }
+          if (
+            m.conselheiro.equipe == '1ª CÂMARA-1ªSEÇÃO-CARF-MF-DF' ||
+            m.conselheiro.equipe == '2ª CÂMARA-1ªSEÇÃO-CARF-MF-DF' ||
+            m.conselheiro.equipe == '3ª CÂMARA-1ªSEÇÃO-CARF-MF-DF' ||
+            m.conselheiro.equipe == '4ª CÂMARA-1ªSEÇÃO-CARF-MF-DF'
+          ) {
+            m.conselheiro.equipe = '1ª TURMA-CSRF-CARF-MF-DF';
           }
           dados.push({
             secao: retornaSecao(m.conselheiro.equipe),
@@ -253,7 +271,7 @@ function dataTable(msg) {
         resizable: false,
         headerSort: false,
         responsive: 0,
-        download: true,
+        download: false,
       },
       {
         title: 'Responsável',
