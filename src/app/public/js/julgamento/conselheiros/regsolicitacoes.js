@@ -910,6 +910,32 @@ function controleForm() {
   </a>
   </div>
   </div>`;
+  let trimestreReinp = `
+  <div class='row'>
+    <div class='col s3'>
+    <i class="far fa-question-circle prefix"/>
+    <label for="trimestreReducao">Selecione trimestre de aplicação da redução:</label>
+    <select required name="trimestreReducao" id="trimestreReducao">
+    <option class="form-group" value="1">1º Trimestre</option>
+    <option class="form-group" value="2">2º Trimestre</option>
+    <option class="form-group" value="3">3º Trimestre</option>
+    <option class="form-group" value="4">4º Trimestre</option>
+    </select>
+    </div>
+    <div class='col s3'>
+    <i class="far fa-question-circle prefix"/>
+    <label for="anoReducao">Selecione o ano de aplicação da redução:</label>
+    <select required name="anoReducao" id="anoReducao">
+    <option class="form-group" value=${moment().year() - 1}>${
+    moment().year() - 1
+  }</option>
+  <option class="form-group" value=${moment().year()} selected>${moment().year()}</option>
+    <
+    <option class="form-group" value=${moment().year() + 1}>${
+    moment().year() + 1
+  }</option> </select>
+    </div>
+    </div>`;
   let dataJulgamento = `
    <div class='row'>
   <div class="form-group dtJulgamento input field col s3">
@@ -1540,6 +1566,7 @@ function controleForm() {
       ${arraySol('meta')}
       ${campoPeriodo}
       ${diasUteis}
+      ${trimestreReinp}
       ${campoObs}
       ${camposArq}
       ${botoes}
@@ -1586,6 +1613,9 @@ function controleForm() {
           <p><strong>Horas a serem reduzidas da meta de produtividade:</strong> ${$(
             '#horasMeta',
           ).text()}</p>
+          <p><strong>Trimestre em que as horas serão utilizadas:</strong> ${$(
+            '#trimestreReducao',
+          ).val()}/${$('#anoReducao').val()}</p>
           <p><strong>Observações:</strong> ${$('#observacoes').val()}</p>
           <p><strong>Arquivos:</strong>${pegaArquivos(true)}</p>
           `;
@@ -1600,6 +1630,8 @@ function controleForm() {
               diasUteis: $('#diasUteis').text(),
               diasSessao: $('#diasSessao').val(),
               horasReducao: $('#horasMeta').text(),
+              trimestreREINP:
+                $('#trimestreReducao').val() + '/' + $('#anoReducao').val(),
               observacoes: $('#observacoes').val(),
               arquivos: pegaArquivos(),
             },
@@ -1619,6 +1651,7 @@ function controleForm() {
       <h5>${$('#mcc').text()}</h5><br/>
       ${arraySol('mudanca')}
       ${dataMudanca}
+       ${trimestreReinp}
       ${campoObs}
       ${camposArq}
       ${botoes}
@@ -1641,6 +1674,9 @@ function controleForm() {
             '#tipoAfastamento option:selected',
           ).val()}</p>
           <p><strong>Data da Mudança:</strong> ${$('#dtMudanca').val()}</p>
+           <p><strong>Trimestre em que as horas serão utilizadas:</strong> ${$(
+             '#trimestreReducao',
+           ).val()}/${$('#anoReducao').val()}</p>
           <p><strong>Observações:</strong> ${$('#observacoes').val()}</p>
           <p><strong>Arquivos:</strong>${pegaArquivos(true)}</p>
           `;
@@ -1668,6 +1704,7 @@ function controleForm() {
     $('#camposSol').fadeIn('slow', () => {
       $('#camposSol').append(`
       <h5>${$('#acp').text()}</h5><br/>
+       ${trimestreReinp}
       ${campoObs}
       ${camposArq}
       ${botoes}
@@ -1677,6 +1714,9 @@ function controleForm() {
         let html = `
           <div class='row'>
           <h5>REINP: ${$('#acp').text()}</h5>
+           <p><strong>Trimestre em que as horas serão utilizadas:</strong> ${$(
+             '#trimestreReducao',
+           ).val()}/${$('#anoReducao').val()}</p>
           <p><strong>Observações:</strong> ${$('#observacoes').val()}</p>
           <p><strong>Arquivos:</strong>${pegaArquivos(true)}</p>
           `;
@@ -1685,6 +1725,8 @@ function controleForm() {
           tipo: `REINP: ${$('#acp').text()}`,
           setor: 'DIPAJ',
           dados: {
+            trimestreREINP:
+              $('#trimestreReducao').val() + '/' + $('#anoReducao').val(),
             observacoes: $('#observacoes').val(),
             arquivos: pegaArquivos(),
           },
@@ -1704,6 +1746,7 @@ function controleForm() {
       ${arraySol('turma')}
       ${campoPeriodoInterino}
       ${diasCorridos}
+       ${trimestreReinp}
       ${campoObs}
       ${camposArq}
       ${botoes}
@@ -1738,6 +1781,9 @@ function controleForm() {
           ).val()}</p>
           <p><strong>Fim do Período:</strong> ${$('#fimPeriodo').val()}</p>
           <p><strong>Dias Corridos:</strong> ${diff}</p>
+           <p><strong>Trimestre em que as horas serão utilizadas:</strong> ${$(
+             '#trimestreReducao',
+           ).val()}/${$('#anoReducao').val()}</p>
           <p><strong>Observações:</strong> ${$('#observacoes').val()}</p>
           <p><strong>Arquivos:</strong>${pegaArquivos(true)}</p>
           `;
@@ -1749,6 +1795,8 @@ function controleForm() {
               inicioPeriodo: $('#inicioPeriodo').val(),
               fimPeriodo: $('#fimPeriodo').val(),
               diasCorridos: diff,
+              trimestreREINP:
+                $('#trimestreReducao').val() + '/' + $('#anoReducao').val(),
               observacoes: $('#observacoes').val(),
               arquivos: pegaArquivos(),
             },
@@ -1801,6 +1849,7 @@ function controleForm() {
                 </div>
                 </div>
                  ${msgTurno}
+                  ${trimestreReinp}
       ${campoObs}
       ${camposArq}
       ${botoes}
@@ -1868,6 +1917,9 @@ function controleForm() {
               <p><strong>Somatório de Horas:</strong> ${+$(
                 '#somatorioHoras',
               ).html()}</p>
+               <p><strong>Trimestre em que as horas serão utilizadas:</strong> ${$(
+                 '#trimestreReducao',
+               ).val()}/${$('#anoReducao').val()}</p>
               <p><strong>Observações:</strong> ${$('#observacoes').val()}</p>
               <p><strong>Arquivos:</strong>${pegaArquivos(true)}</p>
               `;
@@ -1878,6 +1930,8 @@ function controleForm() {
             dados: {
               somatorioHoras: +$('#somatorioHoras').html(),
               participacoes: pegaParts(),
+              trimestreREINP:
+                $('#trimestreReducao').val() + '/' + $('#anoReducao').val(),
               observacoes: $('#observacoes').val(),
               arquivos: pegaArquivos(),
             },
@@ -1930,6 +1984,7 @@ function controleForm() {
                 </div>
                 </div>
                  ${msgTurno}
+                  ${trimestreReinp}
       ${campoObs}
       ${camposArq}
       ${botoes}
@@ -1997,6 +2052,9 @@ function controleForm() {
                <p><strong>Somatório de Horas:</strong> ${+$(
                  '#somatorioHoras',
                ).html()}</p>
+                <p><strong>Trimestre em que as horas serão utilizadas:</strong> ${$(
+                  '#trimestreReducao',
+                ).val()}/${$('#anoReducao').val()}</p>
               <p><strong>Observações:</strong> ${$('#observacoes').val()}</p>
               <p><strong>Arquivos:</strong>${pegaArquivos(true)}</p>
               `;
@@ -2007,6 +2065,8 @@ function controleForm() {
             dados: {
               somatorioHoras: +$('#somatorioHoras').html(),
               participacoes: pegaParts(),
+              trimestreREINP:
+                $('#trimestreReducao').val() + '/' + $('#anoReducao').val(),
               observacoes: $('#observacoes').val(),
               arquivos: pegaArquivos(),
             },
@@ -2027,6 +2087,7 @@ function controleForm() {
       ${dataSorteio}
       ${dataIndicacao}
       ${diasCorridos}
+       ${trimestreReinp}
       ${campoObs}
       ${camposArq}
       ${botoes}
@@ -2063,6 +2124,9 @@ function controleForm() {
             '#dataIndicacao',
           ).val()}</p>
           <p><strong>Dias corridos:</strong> ${diff}</p>
+           <p><strong>Trimestre em que as horas serão utilizadas:</strong> ${$(
+             '#trimestreReducao',
+           ).val()}/${$('#anoReducao').val()}</p>
           <p><strong>Observações:</strong> ${$('#observacoes').val()}</p>
           <p><strong>Arquivos:</strong>${pegaArquivos(true)}</p>
           `;
@@ -2074,6 +2138,8 @@ function controleForm() {
               dtSorteio: $('#dataSorteio').val(),
               dtindicacao: $('#dataIndicacao').val(),
               diasCorridos: diff,
+              trimestreREINP:
+                $('#trimestreReducao').val() + '/' + $('#anoReducao').val(),
               observacoes: $('#observacoes').val(),
               arquivos: pegaArquivos(),
             },
@@ -2092,6 +2158,7 @@ function controleForm() {
       $('#camposSol').append(`
       <h5>${$('#rape').text()}</h5><br/>
       ${processosRape}
+       ${trimestreReinp}
       ${campoObs}
       ${botoes}
       `);
@@ -2125,6 +2192,9 @@ function controleForm() {
           <div class='row'>
           <h5>REINP: ${$('#rape').text()}</h5>
           <p><strong>Processo(s):</strong> ${pegaAPES()}</p>
+           <p><strong>Trimestre em que as horas serão utilizadas:</strong> ${$(
+             '#trimestreReducao',
+           ).val()}/${$('#anoReducao').val()}</p>
           <p><strong>Observações:</strong> ${$('#observacoes').val()}</p>
           `;
           let dados = {
@@ -2133,6 +2203,8 @@ function controleForm() {
             setor: 'DIPAJ',
             dados: {
               processos: pegaAPES(),
+              trimestreREINP:
+                $('#trimestreReducao').val() + '/' + $('#anoReducao').val(),
               observacoes: $('#observacoes').val(),
             },
           };
