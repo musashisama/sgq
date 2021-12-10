@@ -729,7 +729,9 @@ function arraySol(array) {
     'Turma Extraordinária para Turma Ordinária de Seção Diferente',
     'Turma Ordinária para Turma Ordinária da Mesma Seção',
     'Turma Ordinária para Turma Ordinária de Seção Diferente',
-    'Turma Ordinária para Turma da Câmara Superior de Rcursos Fiscais',
+    'Turma Ordinária para Turma da Câmara Superior de Recursos Fiscais',
+    'Turma Ordinária para Turma Extraordinária da mesma Seção',
+    'Turma Ordinária para Turma Extraordinária de Seção Diferente',
   ];
   let arrayDispensa = [
     'Excesso de Horas em Lotes de Sorteio',
