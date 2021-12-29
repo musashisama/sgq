@@ -2,7 +2,7 @@
 "use strict";
 
 var marko_template = module.exports = require("marko/src/html").t(__filename),
-    marko_componentType = "/sgq$1.0.0/src/app/views/base/principal/principal.marko",
+    marko_componentType = "/sgq$1.0.0/src/app/views/nc/listaregistros/listaregistros.marko",
     components_helpers = require("marko/src/runtime/components/helpers"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
@@ -15,9 +15,9 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     app_header_tag = marko_loadTag(app_header_template),
     app_navbar_template = require("../../components/app-navbar.marko"),
     app_navbar_tag = marko_loadTag(app_navbar_template),
-    marko_escapeXml = marko_helpers.x,
-    app_popup_template = require("../../components/app-popup.marko"),
-    app_popup_tag = marko_loadTag(app_popup_template),
+    app_drop_download_template = require("../../components/app-drop-download.marko"),
+    app_drop_download_tag = marko_loadTag(app_drop_download_template),
+    marko_attr = marko_helpers.a,
     app_footer_template = require("../../components/app-footer.marko"),
     app_footer_tag = marko_loadTag(app_footer_template),
     app_scripts_js_template = require("../../components/app-scripts-js.marko"),
@@ -40,29 +40,28 @@ function render(input, out, __component, component, state) {
 
   out.w("<main class=\"conteudoPrincipal\">");
 
-  app_navbar_tag({}, out, __component, "5");
+  app_navbar_tag({
+      id: "slide-out",
+      class: "sidenav"
+    }, out, __component, "5");
 
-  out.w("<div class=\"container  valign-wrapper\"><div class=\"row center-align\">");
+  out.w("<div class=\"container\"><div class=\"row\"><h3 class=\"center-align titulo\">Registro de Não Conformidades</h3><div class=\"col s12 right-align\">");
 
-  if (data.msg) {
-    out.w("<div id=\"toastsucesso\" class=\"ctoastsucesso\"></div><div id=\"msg\" class=\"controle\">" +
-      marko_escapeXml(data.msg) +
-      "</div>");
-  }
+  app_drop_download_tag({}, out, __component, "10");
 
-  out.w("<div id=\"divImage\" class=\"\"><img src=\"/estatico/imagens/CARF_logo.png\"></div></div></div></main>");
+  out.w("</div></div><div class=\"row\"><form" +
+    marko_attr("data-nc", "" + data.registroNC) +
+    "></form><div id=\"tabelaNC\"></div></div></div></main><div id=\"modal1\" class=\"modal\"><div class=\"modal-content\"><h4 class=\"hModal\">Modal Header</h4><p class=\"pModal\">A bunch of text</p></div><div class=\"modal-footer\"><a href=\"#!\" class=\"modal-close waves-effect waves-red btn-flat\">Cancela</a><a href=\"#!\" class=\"modal-close waves-effect waves-green btn-flat concorda\">Confirma</a></div></div>");
 
-  app_popup_tag({}, out, __component, "12");
+  app_footer_tag({}, out, __component, "21");
 
-  app_footer_tag({}, out, __component, "13");
+  app_scripts_js_tag({}, out, __component, "22");
 
-  app_scripts_js_tag({}, out, __component, "14");
-
-  out.w("<script src=\"/estatico/js/base/popup.js\"></script><script src=\"/estatico/js/base/scprincipal.js\"></script>");
+  out.w("<script src=\"/estatico/js/nc/listaregistronc.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "17");
+  await_reorderer_tag({}, out, __component, "24");
 
   out.w("</body></html>");
 }
@@ -75,13 +74,13 @@ marko_template._ = marko_renderer(render, {
 marko_template.Component = marko_defineComponent({}, marko_template._);
 
 marko_template.meta = {
-    id: "/sgq$1.0.0/src/app/views/base/principal/principal.marko",
+    id: "/sgq$1.0.0/src/app/views/nc/listaregistros/listaregistros.marko",
     tags: [
       "../../components/app-scripts-css.marko",
       "marko/src/core-tags/components/component-globals-tag",
       "../../components/app-header.marko",
       "../../components/app-navbar.marko",
-      "../../components/app-popup.marko",
+      "../../components/app-drop-download.marko",
       "../../components/app-footer.marko",
       "../../components/app-scripts-js.marko",
       "marko/src/core-tags/components/init-components-tag",

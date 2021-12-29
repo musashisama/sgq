@@ -2897,8 +2897,6 @@ function btnEnviaArq() {
 }
 
 function handleFile(arquivo, metodo) {
-  console.log(arquivo);
-  console.log($('#file')[0].files[0]);
   let fd;
   if (metodo == 'DELETE') {
     fd = arquivo;
@@ -2909,13 +2907,11 @@ function handleFile(arquivo, metodo) {
       success: function (result) {
         var toastHTML = `<span>Arquivo excluído com sucesso.</span>`;
         M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
-        console.log(result);
+
         $(`#${fd._id}`).remove();
       },
       error: function (result) {
         var toastHTML = `<span>Ocorreu um erro.</span>`;
-        M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
-        console.log(result);
       },
     });
   } else {
@@ -2950,7 +2946,6 @@ function handleFile(arquivo, metodo) {
       success: function (result) {
         var toastHTML = `<span>Arquivo enviado com sucesso.</span>`;
         M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
-        console.log(result);
         $('#mostraArq').show();
         montaLi(result);
         $('.btnEnviaArq').toggle();

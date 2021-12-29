@@ -101,6 +101,23 @@ class BaseDao {
     });
   }
 
+  getPopup(filtro) {
+    return new Promise((resolve, reject) => {
+      this._db.msgPopup
+        .find(filtro)
+        .sort({ _id: -1 })
+        .project()
+        .toArray(function (erro, res) {
+          if (erro) {
+            return reject(
+              `Não foi possível listar os registros. Erro: ${erro}`,
+            );
+          }
+          return resolve(res);
+        });
+    });
+  }
+
   getAlegacoes(filtro = null) {
     return new Promise((resolve, reject) => {
       this._db.tabAlegacoes

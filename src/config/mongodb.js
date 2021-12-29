@@ -47,6 +47,7 @@ cliente.connect(url, opcoes, function (err, cliente) {
   dados.indicacoesPauta = dbo.collection('indicacoesPauta');
   dados.pautas = dbo.collection('pautas');
   dados.tabAlegacoes = dbo.collection('tabAlegacoes');
+  dados.msgPopup = dbo.collection('msgPopup');
 });
 
 process.on('SIGINT', () =>

@@ -395,5 +395,59 @@ class JulgamentoDao {
       );
     });
   }
+
+  getPopup(filtro) {
+    return new Promise((resolve, reject) => {
+      this._db.msgPopup
+        .find(filtro)
+        .sort()
+        .project()
+        .toArray(function (erro, res) {
+          if (erro) {
+            return reject(
+              `Não foi possível listar os registros. Erro: ${erro}`,
+            );
+          }
+          return resolve(res);
+        });
+    });
+  }
+
+  inserePopup(registro) {
+    return new Promise((resolve, reject) => {
+      this._db.msgPopup.insertOne(registro, function (erro, res) {
+        if (erro) {
+          return reject('Não foi possível inserir o registro.');
+        }
+        return resolve(res);
+      });
+    });
+  }
+
+  atualizaPopup(filtro, registro) {
+    return new Promise((resolve, reject) => {
+      this._db.msgPopup.updateOne(
+        filtro,
+        { $set: registro },
+        function (erro, res) {
+          if (erro) {
+            return reject('Não foi possível atualizar o registro de eventos.');
+          }
+          return resolve(res);
+        },
+      );
+    });
+  }
+
+  excluiPopup(registro) {
+    return new Promise((resolve, reject) => {
+      this._db.msgPopup.deleteOne(registro, function (erro, res) {
+        if (erro) {
+          return reject('Não foi possível removver o registro de eventos.');
+        }
+        return resolve(res);
+      });
+    });
+  }
 }
 module.exports = JulgamentoDao;

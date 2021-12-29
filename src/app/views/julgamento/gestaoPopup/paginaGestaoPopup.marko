@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <app-scripts-css/>
+  <body>
+    <app-header/>
+    <link rel="stylesheet" href="/estatico/css/libs/quill.snow.css"/>
+    <main class="conteudoPrincipal">
+      <app-navbar id="slide-out" class="sidenav"/>
+      <div class="container">
+        <h3 class="center-align titulo">Gestão de Itens do Popup SGI</h3>
+        <div class="row">
+          <a class="waves-effect waves-light btn btn-cria" href=`/julgamento/restrito/gestaopopup/new`>
+            <i class="material-icons right ">cloud</i>Criar Popup
+          </a>
+        </div>
+        <h3 class="center-align titulo">Gerenciar Popups</h3>
+        <div id="tabelaPopups"/>
+        <div id="dataPopups" data-popup=`${data.popup}`/>
+      </div>
+    </main>
+    <app-footer/>
+    <app-modal/>
+    <app-scripts-js/>
+    <script src="/estatico/js/libs/quill.min.js"/>
+    <script src="/estatico/js/julgamento/cojul/gestaoPopup/paginaGestaoPopup.js"/>
+  </body>
+</html>

@@ -144,6 +144,17 @@ module.exports = (app) => {
     .put(julgControlador.handlePortalCojul())
     .delete(julgControlador.handlePortalCojul());
 
+  app.get(
+    rotasJulgamento.gestaoPopup,
+    julgControlador.carregaPaginaGestaoPopup(),
+  );
+  app
+    .route(rotasJulgamento.popup)
+    .get(julgControlador.handleGestaoPopup())
+    .post(julgControlador.handleGestaoPopup())
+    .put(julgControlador.handleGestaoPopup())
+    .delete(julgControlador.handleGestaoPopup());
+
   app
     .route(rotasJulgamento.gestaoportalpresidente)
     .get(julgControlador.handlePortalPresidente())

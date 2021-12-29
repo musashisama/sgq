@@ -57,6 +57,8 @@ class JulgamentoControlador {
       faqdipaj: '/julgamento/faqdipaj',
       gestaoconhecimento: '/julgamento/gestaoconhecimento',
       formFAQ: '/julgamento/restrito/formfaq',
+      popup: '/julgamento/restrito/gestaopopup/:id',
+      gestaoPopup: '/julgamento/restrito/paginagestaopopup',
       portalCojul: '/julgamento/restrito/portalcojul',
       gestaoPortalCojul: '/julgamento/restrito/gestaoportalcojul',
       gestaosolicitacoes: '/julgamento/restrito/gestaosolicitacoes',
@@ -113,7 +115,70 @@ class JulgamentoControlador {
       apes749: '/julgamento/apes749/',
     };
   }
+  arquivoDown() {
+    return function (req, resp) {
+      let id = new ObjectID(req.params.id);
+      const fileDao = new FileDao(conn);
+      fileDao.getArq({ _id: id }).then((arq) => {
+        resp.writeHead(200, {
+          'Content-Type': 'application/pdf',
+          //'Content-Disposition': 'attachment; filename="' + arq[0].nome + '"'
+        });
+        resp.end(new Buffer.from(arq[0].file_data.buffer, 'binary'));
+      });
+    };
+  }
 
+  handleArquivos() {
+    return function (req, resp) {
+      if (req.method == 'DELETE') {
+        const fileDao = new FileDao(conn);
+        fileDao.excluiArq({ _id: new ObjectID(req.body._id) }).then((msg) => {
+          resp.json(msg);
+        });
+      } else if (req.method == 'GET') {
+        fileDao.getArq({ _id: new ObjectID(req.body._id) }).then((msg) => {
+          resp.json(msg);
+        });
+      } else {
+        let form = formidable.IncomingForm({ keepExtensions: true });
+        form.parse(req, function (err, fields, files) {
+          if (err) {
+            console.log(err);
+          }
+          let data = fs.readFileSync(files.file.path);
+          let registro = {};
+          registro.arquivo = files.file;
+          registro.nome = files.file.name;
+          registro.file_data = Binary(data);
+          const fileDao = new FileDao(conn);
+          {
+            if (req.method == 'POST' || req.method == 'PUT') {
+              fileDao
+                .getArq({ _id: new ObjectID(req.body._id) })
+                .then((msg) => {
+                  if (!msg[0]) {
+                    fileDao.insereArq(registro).then((msg) => {
+                      resp.json({ nome: msg.ops[0].nome, _id: msg.ops[0]._id });
+                    });
+                  } else {
+                    delete req.body._id;
+                    fileDao
+                      .atualizaArq(
+                        { _id: new ObjectID(req.body._id) },
+                        req.body,
+                      )
+                      .then((msg) => {
+                        resp.json(msg);
+                      });
+                  }
+                });
+            }
+          }
+        });
+      }
+    };
+  }
   apes749() {
     return function (req, resp) {
       if (req.method == 'POST') {
@@ -185,6 +250,55 @@ class JulgamentoControlador {
               resp.json(msg);
             });
         }
+      }
+    };
+  }
+
+  carregaPaginaGestaoPopup() {
+    return function (req, resp) {
+      const julgamentoDao = new JulgamentoDao(conn);
+      julgamentoDao.getPopup().then((popup) => {
+        resp.marko(templates.julgamento.paginaGestaoPopup, {
+          popup: JSON.stringify(popup),
+        });
+      });
+    };
+  }
+
+  handleGestaoPopup() {
+    return function (req, resp) {
+      const julgamentoDao = new JulgamentoDao(conn);
+      if (req.method == 'GET') {
+        julgamentoDao
+          .getPopup(req.params.id == 'new' ? {} : { uniqueId: req.params.id })
+          .then((popup) => {
+            if (req.params.id != 'new') {
+              popup[0].tipo = 'update';
+            }
+            resp.marko(templates.julgamento.gestaoPopup, {
+              popup: JSON.stringify(popup[0]),
+            });
+          });
+      } else if (req.method == 'POST' || req.method == 'PUT') {
+        julgamentoDao.getPopup({ uniqueId: req.body.uniqueId }).then((msg) => {
+          if (!msg[0]) {
+            julgamentoDao.inserePopup(req.body).then((msg) => {
+              resp.json(msg);
+            });
+          } else {
+            julgamentoDao
+              .atualizaPopup({ uniqueId: req.body.uniqueId }, req.body)
+              .then((msg) => {
+                resp.json(msg);
+              });
+          }
+        });
+      } else if (req.method == 'DELETE') {
+        julgamentoDao
+          .excluiPopup({ uniqueId: req.body.uniqueId })
+          .then((msg) => {
+            resp.json(msg);
+          });
       }
     };
   }
@@ -1537,70 +1651,7 @@ class JulgamentoControlador {
       );
     };
   }
-  arquivoDown() {
-    return function (req, resp) {
-      let id = new ObjectID(req.params.id);
-      const fileDao = new FileDao(conn);
-      fileDao.getArq({ _id: id }).then((arq) => {
-        resp.writeHead(200, {
-          'Content-Type': 'application/pdf',
-          //'Content-Disposition': 'attachment; filename="' + arq[0].nome + '"'
-        });
-        resp.end(new Buffer.from(arq[0].file_data.buffer, 'binary'));
-      });
-    };
-  }
 
-  handleArquivos() {
-    return function (req, resp) {
-      if (req.method == 'DELETE') {
-        const fileDao = new FileDao(conn);
-        fileDao.excluiArq({ _id: new ObjectID(req.body._id) }).then((msg) => {
-          resp.json(msg);
-        });
-      } else if (req.method == 'GET') {
-        fileDao.getArq({ _id: new ObjectID(req.body._id) }).then((msg) => {
-          resp.json(msg);
-        });
-      } else {
-        let form = formidable.IncomingForm({ keepExtensions: true });
-        form.parse(req, function (err, fields, files) {
-          if (err) {
-            console.log(err);
-          }
-          let data = fs.readFileSync(files.file.path);
-          let registro = {};
-          registro.arquivo = files.file;
-          registro.nome = files.file.name;
-          registro.file_data = Binary(data);
-          const fileDao = new FileDao(conn);
-          {
-            if (req.method == 'POST' || req.method == 'PUT') {
-              fileDao
-                .getArq({ _id: new ObjectID(req.body._id) })
-                .then((msg) => {
-                  if (!msg[0]) {
-                    fileDao.insereArq(registro).then((msg) => {
-                      resp.json({ nome: msg.ops[0].nome, _id: msg.ops[0]._id });
-                    });
-                  } else {
-                    delete req.body._id;
-                    fileDao
-                      .atualizaArq(
-                        { _id: new ObjectID(req.body._id) },
-                        req.body,
-                      )
-                      .then((msg) => {
-                        resp.json(msg);
-                      });
-                  }
-                });
-            }
-          }
-        });
-      }
-    };
-  }
   handleCorrigeReinp() {
     return function (req, resp) {
       if (req.method == 'GET') {
