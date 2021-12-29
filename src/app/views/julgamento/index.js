@@ -26,6 +26,8 @@ module.exports = {
   gestaoconhecimento: require('./gestaoconhecimento/gestaoconhecimento.marko'),
   gestaoGC: require('./gestaoconhecimento/gestaoGC.marko'),
   gestaoPortal: require('./portalcojul/gestaoPortal.marko'),
+  gestaoPopup: require('./gestaoPopup/gestaoPopup.marko'),
+  paginaGestaoPopup: require('./gestaoPopup/paginaGestaoPopup.marko'),
   portalCojul: require('./portalcojul/portalCojul.marko'),
   gestaosolicitacoes: require('./gestaosolicitacoes/gestaosolicitacoes.marko'),
   gestaoregsolicitacoes: require('./gestaosolicitacoes/gestaoregsolicitacoes.marko'),

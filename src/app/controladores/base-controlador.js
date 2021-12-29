@@ -2,6 +2,7 @@ const conn = require('../../config/mongodb').dados;
 const templates = require('../views/templates');
 const UserDao = require('../infra/user-dao');
 const BaseDao = require('../infra/base-dao');
+const FileDao = require('../infra/file-dao');
 const { ObjectID } = require('mongodb');
 const Mailer = require('../infra/helpers/Mailer');
 const requestIp = require('request-ip');
@@ -20,6 +21,31 @@ class BaseControlador {
       enviamail: '/enviamail',
       premio: '/votacao-premio',
       alegacoes: '/tab-alegacoes/:id',
+      arqdown: '/arqdown/:id',
+      popups: '/popups',
+    };
+  }
+
+  popups() {
+    return function (req, resp) {
+      let baseDao = new BaseDao(conn);
+      baseDao.getPopup({ ativo: 'true' }).then((popup) => {
+        resp.json(popup);
+      });
+    };
+  }
+
+  arquivoDown() {
+    return function (req, resp) {
+      let id = new ObjectID(req.params.id);
+      const fileDao = new FileDao(conn);
+      fileDao.getArq({ _id: id }).then((arq) => {
+        resp.writeHead(200, {
+          'Content-Type': 'application/pdf',
+          //'Content-Disposition': 'attachment; filename="' + arq[0].nome + '"'
+        });
+        resp.end(new Buffer.from(arq[0].file_data.buffer, 'binary'));
+      });
     };
   }
 

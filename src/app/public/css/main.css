@@ -606,6 +606,11 @@ summary::-webkit-details-marker {
   height: 100%;
 }
 
+hr.new5 {
+  border: 5px solid var(--azul-carf);
+  border-radius: 5px;
+}
+
 /* CARDS */
 
 .cardAzul,

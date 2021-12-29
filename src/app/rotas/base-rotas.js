@@ -28,6 +28,8 @@ module.exports = (app) => {
     .route(rotasBase.premio)
     .get(baseControlador.carregaPremio())
     .post(baseControlador.carregaPremio());
+  app.get(rotasBase.arqdown, baseControlador.arquivoDown());
+  app.get(rotasBase.popups, baseControlador.popups());
   app
     .route(rotasBase.login)
     .get(baseControlador.login())
