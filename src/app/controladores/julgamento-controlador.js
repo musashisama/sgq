@@ -7,6 +7,8 @@ const BaseDao = require('../infra/base-dao');
 const SuporteDao = require('../infra/suporte-dao');
 const requestIp = require('request-ip');
 const templates = require('../views/templates');
+const http = require('http');
+const axios = require('axios');
 const formidable = require('formidable');
 const moment = require('moment');
 const get_ip = require('ipware')().get_ip;
@@ -113,6 +115,7 @@ class JulgamentoControlador {
       gestaoportalpresidente: '/julgamento/restrito/gestaoportalpresidente',
       //APURAÇÕES ESPECIAIS
       apes749: '/julgamento/apes749/',
+      testesasj: '/julgamento/testesasj',
     };
   }
   arquivoDown() {
@@ -265,6 +268,31 @@ class JulgamentoControlador {
     };
   }
 
+  testeSASJ() {
+    return function (req, resp) {
+      let urlSASJ = 'http://10.202.24.29/sasj/api/v1/sgi/informacaoEProcesso/';
+      let data = [
+        '10120001070200919',
+        '10215720824201107',
+        '10580910728201263',
+      ];
+      let options = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+      axios
+        .post(urlSASJ, data, options)
+        .then((res) => {
+          console.log(res.data);
+          resp.send(res.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+  }
+
   handleGestaoPopup() {
     return function (req, resp) {
       const julgamentoDao = new JulgamentoDao(conn);
@@ -275,6 +303,7 @@ class JulgamentoControlador {
             if (req.params.id != 'new') {
               popup[0].tipo = 'update';
             }
+
             resp.marko(templates.julgamento.gestaoPopup, {
               popup: JSON.stringify(popup[0]),
             });
@@ -783,7 +812,6 @@ class JulgamentoControlador {
 
   handleTabAlegacoes() {
     return function (req, resp) {
-      const http = require('http');
       http
         .get(
           `http://dispe.carf/tab-alegacoes/alegacoes/${req.body.idAlegacao}.json`,
