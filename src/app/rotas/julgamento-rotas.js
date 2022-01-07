@@ -51,7 +51,7 @@ module.exports = (app) => {
       resp.render(403);
     }
   });
-
+  app.get(rotasJulgamento.testesasj, julgControlador.testeSASJ());
   app
     .route(rotasJulgamento.apes749)
     .get(julgControlador.apes749())
@@ -208,6 +208,7 @@ module.exports = (app) => {
     .get(julgControlador.carregaRelAntigos());
 
   app.post(rotasJulgamento.carregacsv, julgControlador.carregaCSV());
+
   app
     .route(rotasJulgamento.calendario)
     .get(julgControlador.handleCalendario())
