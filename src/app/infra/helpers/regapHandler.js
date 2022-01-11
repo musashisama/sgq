@@ -12,10 +12,10 @@ let semanaAzul = [
   '2ª TO-3ªCÂMARA-3ªSEÇÃO-CARF-MF-DF',
   '1ª TO-4ªCÂMARA-3ªSEÇÃO-CARF-MF-DF',
   '2ª TO-4ªCÂMARA-3ªSEÇÃO-CARF-MF-DF',
-  '1ª CÂMARA-3ªSEÇÃO-CARF-MF-DF',
-  '2ª CÂMARA-3ªSEÇÃO-CARF-MF-DF',
-  '3ª CÂMARA-3ªSEÇÃO-CARF-MF-DF',
-  '4ª CÂMARA-3ªSEÇÃO-CARF-MF-DF',
+  '1ª CÂMARA-2ªSEÇÃO-CARF-MF-DF',
+  '2ª CÂMARA-2ªSEÇÃO-CARF-MF-DF',
+  '3ª CÂMARA-2ªSEÇÃO-CARF-MF-DF',
+  '4ª CÂMARA-2ªSEÇÃO-CARF-MF-DF',
 ];
 let semanaVerde = [
   '1ª TURMA-CSRF-CARF-MF-DF',
@@ -31,10 +31,10 @@ let semanaVerde = [
   '2ª TO-3ªCÂMARA-2ªSEÇÃO-CARF-MF-DF',
   '1ª TO-4ªCÂMARA-2ªSEÇÃO-CARF-MF-DF',
   '2ª TO-4ªCÂMARA-2ªSEÇÃO-CARF-MF-DF',
-  '1ª CÂMARA-2ªSEÇÃO-CARF-MF-DF',
-  '2ª CÂMARA-2ªSEÇÃO-CARF-MF-DF',
-  '3ª CÂMARA-2ªSEÇÃO-CARF-MF-DF',
-  '4ª CÂMARA-2ªSEÇÃO-CARF-MF-DF',
+  '1ª CÂMARA-1ªSEÇÃO-CARF-MF-DF',
+  '2ª CÂMARA-1ªSEÇÃO-CARF-MF-DF',
+  '3ª CÂMARA-1ªSEÇÃO-CARF-MF-DF',
+  '4ª CÂMARA-1ªSEÇÃO-CARF-MF-DF',
 ];
 let semanaAmarela = [
   '3ª TURMA-CSRF-CARF-MF-DF',
@@ -48,10 +48,10 @@ let semanaAmarela = [
   '2ª TO-3ªCÂMARA-1ªSEÇÃO-CARF-MF-DF',
   '1ª TO-4ªCÂMARA-1ªSEÇÃO-CARF-MF-DF',
   '2ª TO-4ªCÂMARA-1ªSEÇÃO-CARF-MF-DF',
-  '1ª CÂMARA-1ªSEÇÃO-CARF-MF-DF',
-  '2ª CÂMARA-1ªSEÇÃO-CARF-MF-DF',
-  '3ª CÂMARA-1ªSEÇÃO-CARF-MF-DF',
-  '4ª CÂMARA-1ªSEÇÃO-CARF-MF-DF',
+  '1ª CÂMARA-3ªSEÇÃO-CARF-MF-DF',
+  '2ª CÂMARA-3ªSEÇÃO-CARF-MF-DF',
+  '3ª CÂMARA-3ªSEÇÃO-CARF-MF-DF',
+  '4ª CÂMARA-3ªSEÇÃO-CARF-MF-DF',
 ];
 
 class regapHandler {
