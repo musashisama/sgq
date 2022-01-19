@@ -78,6 +78,22 @@ class SuporteDao {
         });
     });
   }
+
+  getPautas(filtro, sort = { _id: -1 }, project) {
+    return new Promise((resolve, reject) => {
+      this._db.pautas
+        .find(filtro)
+        .sort(sort)
+        .project(project)
+        .toArray(function (erro, res) {
+          if (erro) {
+            return reject(`Não foi possível listar as pautas. Erro: ${erro}`);
+          }
+          return resolve(res);
+        });
+    });
+  }
+
   inserePautaConsolidada(registro) {
     return new Promise((resolve, reject) => {
       let filtro = {

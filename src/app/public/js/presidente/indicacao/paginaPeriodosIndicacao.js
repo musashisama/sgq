@@ -1,7 +1,16 @@
-let periodos = JSON.parse($('#tabelaIndicacoes').attr('data-periodos'));
-let indicacoes = JSON.parse($('#tabelaIndicacoes').attr('data-indicacoes'));
-console.log(periodos);
-console.log(indicacoes);
+let periodosIndicacao = JSON.parse($('#tabelaPautas').attr('data-periodos'));
+let pautas = JSON.parse($('#tabelaPautas').attr('data-pautas'));
+pautas.forEach((pauta) => {
+  periodosIndicacao.forEach((periodo) => {
+    if (pauta.idIndicacao == periodo._id) {
+      pauta.abreIndicacao = periodo.abreIndicacao;
+      pauta.fechaIndicacao = periodo.fechaIndicacao;
+      pauta.mesIndicacao = periodo.mesIndicacao;
+    }
+  });
+});
+console.log(periodosIndicacao);
+console.log(pautas);
 inicializaComponentes();
 function inicializaComponentes() {
   $(document).ready(function () {
@@ -18,7 +27,7 @@ function initSelect() {
   $('select').formSelect();
 }
 
-function btnCriaIndicacao() {
+function periodosbtnCriaIndicacao() {
   $('.btn-cria').click((e) => {
     $('#aModal').addClass('modal-trigger');
     montaModal();
@@ -26,7 +35,7 @@ function btnCriaIndicacao() {
 }
 
 function verificaAbertura() {
-  periodos.forEach((periodo) => {
+  periodosIndicacao.forEach((periodo) => {
     if (
       moment(moment()).isBetween(
         moment(periodo.abreIndicacao, 'DD/MM/YYYY'),
@@ -49,8 +58,8 @@ function verificaAbertura() {
 }
 
 function tabelaIndicacoes() {
-  tabledata = periodos;
-  table = new Tabulator('#tabelaIndicacoes', {
+  tabledata = pautas;
+  table = new Tabulator('#tabelaPautas', {
     data: tabledata,
     //pagination: 'local',
     downloadConfig: {
@@ -83,32 +92,6 @@ function tabelaIndicacoes() {
         download: true,
       },
       {
-        title: 'Mes',
-        field: 'mes',
-        //formatter: coloreProc,
-        sorter: 'number',
-        hozAlign: 'center',
-        headerFilter: 'input',
-        topCalc: countCalc,
-        editor: false,
-        responsive: 0,
-        download: true,
-        visible: false,
-      },
-      {
-        title: 'Ano',
-        field: 'ano',
-        //formatter: coloreProc,
-        headerFilter: 'input',
-        sorter: 'string',
-        hozAlign: 'left',
-        width: 150,
-        editor: false,
-        responsive: 0,
-        download: true,
-        visible: false,
-      },
-      {
         title: 'Início Indicação',
         field: 'abreIndicacao',
         sorter: 'date',
@@ -130,8 +113,8 @@ function tabelaIndicacoes() {
       },
       {
         title: 'Status da Indicação',
-        field: 'status',
-        formatter: corStatus,
+        field: 'statusSEPAJ',
+        formatter: corStatusIndicacao,
         headerFilter: 'input',
         sorter: 'string',
         hozAlign: 'left',
@@ -141,8 +124,8 @@ function tabelaIndicacoes() {
       },
       {
         title: 'Gerenciar',
-        //field: 'anoIndicacao',
-        formatter: linksIndica,
+        //field: 'periodosanoIndicacao',
+        formatter: linksIndicacao,
         headerFilter: 'input',
         sorter: 'string',
         hozAlign: 'left',
@@ -158,7 +141,7 @@ function tabelaIndicacoes() {
   });
 }
 
-let corStatus = function corStatus(cell) {
+let corStatusIndicacao = function corStatusIndicacao(cell) {
   if (cell.getValue() == 'Pauta Aberta para Indicações') {
     cell.getElement().style.color = 'rgb(63, 138, 2)';
     cell.getElement().style.fontWeight = 'bolder';
@@ -173,27 +156,22 @@ let corStatus = function corStatus(cell) {
   return cell.getValue();
 };
 
-let linksIndica = function linksIndica(cell) {
-  if (cell.getRow().getData().status == 'Pauta Aberta para Indicações') {
+let linksIndicacao = function linksIndicacao(cell) {
+  if (cell.getRow().getData().statusSEPAJ == 'Aguardando Ordenação') {
     return `
-    <a class='black-text btnVisualiza' href='/julgamento/conselheiros/visualiza-pauta/${
-      cell.getRow().getData()._id
-    }'title='Indicar Processos para Pauta'><i class='material-icons'>find_in_page</i></a>
+    <a class='black-text btnVisualiza' href='/presidente/restrito/visualiza_pauta/${
+      cell.getRow().getData().idIndicacao
+    }'title='Visualizar Pauta'><i class='material-icons'>find_in_page</i></a>
     &nbsp;
-  <a class='black-text btnedita' href='/julgamento/conselheiros/indicacao-pauta/${
-    cell.getRow().getData()._id
-  }'title='Indicar Processos para Pauta'><i class='material-icons'>add_circle</i></a>
+  <a class='black-text btnedita' href='/presidente/restrito/ordena_pauta/${
+    cell.getRow().getData().idIndicacao
+  }'title='Ordenar Pauta'><i class='material-icons'>add_circle</i></a>
   `;
-  } else if (
-    cell.getRow().getData().status ==
-    'Pauta Aguardando Abertura para Indicações'
-  ) {
-    return `<i class='material-icons'/>not_interested</i>`;
   } else {
     return `
-  <a class='black-text btnVisualiza' href='/julgamento/conselheiros/visualiza-pauta/${
-    cell.getRow().getData()._id
-  }'title='Indicar Processos para Pauta'><i class='material-icons'>find_in_page</i></a>
+  <a class='black-text btnVisualiza' href='/presidente/restrito/visualiza_pauta/${
+    cell.getRow().getData().idIndicacao
+  }'title='Visualizar Pauta'><i class='material-icons'>find_in_page</i></a>
   `;
   }
 };

@@ -63,4 +63,13 @@ module.exports = (app) => {
     rotasPresidente.detalhareinp,
     presiControlador.carregaPaginaDetalhaReinp(),
   );
+
+  app.get(
+    rotasPresidente.paginaPeriodosIndicacao,
+    presiControlador.carregaPaginaIndicacoes(),
+  );
+  app
+    .route(rotasPresidente.paginaOrdenaPauta)
+    .get(presiControlador.handleOrdenaPauta())
+    .post(presiControlador.handleOrdenaPauta());
 };

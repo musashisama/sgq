@@ -72,6 +72,11 @@ function montaModal() {
               '#tipoColegiado option:selected',
             ).text()}<br/>
             <strong>Semana:</strong> ${$('#semana option:selected').text()}<br/>
+            <strong>Mês da Indicação:</strong> ${
+              $('#mes option:selected').text() +
+              '/' +
+              $('#ano option:selected').text()
+            }<br/>
            <strong> Mês:</strong> ${$('#mes option:selected').text()}<br/>
             <strong>Ano:</strong> ${$('#ano option:selected').text()}<br/>
     <strong> Período de Indicação pelos Conselheiros: </strong> de ${$(
@@ -87,6 +92,7 @@ function montaModal() {
       semana: $('#semana').val(),
       mes: $('#mes').val(),
       ano: $('#ano').val(),
+      mesIndicacao: $('#mes').val() + '/' + $('#ano').val(),
       abreIndicacao: $('#abreIndicacao').val(),
       fechaIndicacao: $('#fechaIndicacao').val(),
     };

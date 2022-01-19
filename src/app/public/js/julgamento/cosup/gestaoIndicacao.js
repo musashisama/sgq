@@ -54,10 +54,7 @@ function tabelaIndicacoes(dados) {
     layout: 'fitDataStretch',
     movableRows: false,
     responsiveLayout: 'collapse',
-    initialSort: [
-      { column: 'ano', dir: 'desc' },
-      { column: 'mes', dir: 'desc' },
-    ],
+    initialSort: [{ column: 'mesIndicacao', dir: 'desc' }],
     groupStartOpen: false,
     responsiveLayoutCollapseStartOpen: false,
     columns: [
@@ -81,6 +78,19 @@ function tabelaIndicacoes(dados) {
         responsive: 0,
       },
       {
+        title: 'Mes da Indicação',
+        field: 'mesIndicacao',
+        //formatter: coloreProc,
+        sorter: 'date',
+        hozAlign: 'center',
+        headerFilter: 'input',
+        //topCalc: countCalc,
+        sorterParams: { format: 'MM/YYYY' },
+        editor: false,
+        responsive: 0,
+        download: true,
+      },
+      {
         title: 'Mês',
         field: 'mes',
         sorter: 'string',
@@ -89,6 +99,7 @@ function tabelaIndicacoes(dados) {
         headerFilter: 'input',
         topCalc: 'count',
         responsive: 0,
+        visible: false,
       },
       {
         title: 'Ano',
@@ -99,6 +110,7 @@ function tabelaIndicacoes(dados) {
         headerFilter: 'input',
         topCalc: 'count',
         responsive: 0,
+        visible: false,
       },
       {
         title: 'Início Indicação',
