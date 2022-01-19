@@ -1,5 +1,6 @@
 let dadosPlot;
 let tabAlegacoes = JSON.parse($('#dataAlega').attr('data-alega'));
+let dadosPauta = JSON.parse($('#dataPauta').attr('data-pauta'));
 let dadosIndicacao = [];
 let tableAptidao, tableIndicacao, tableConfirmacao;
 inicializaComponentes();
@@ -85,12 +86,19 @@ function shiftAlega(alegacoes) {
 
 function elementosTabelas() {
   let tabledata = JSON.parse($('#tabelaIndicacao').attr('data-indicacao'));
+  $('#mespauta').text(dadosPauta.mesIndicacao);
   tabledata.forEach((r) => {
     r.Dias_na_Atividade = retornaDias(r.entradaAtividade);
     r.Dias_da_Dist = retornaDias(r.dtUltDist);
     r.Dias_da_SJ = retornaDias(r.dtSessao);
     r.DAAPS = parseInt($('#daps').text()) + r.Dias_na_Atividade;
     r.confirmaQuest = 'Correto';
+    r.comParadigma =
+      r.assunto.includes('PARADIGMA') ||
+      r.assunto.includes('paradigma') ||
+      r.assunto.includes('Paradigma')
+        ? 'Processo Paradigma - Complexidade Média'
+        : 'Processo não é Paradigma - Complexidade Média';
     r.alegacoes = r.alegacoes.replace(';', ',');
     //r.alegacoes = r.alegacoes.replace(',', '/');
     r.alegaPrim =
@@ -157,29 +165,6 @@ function dataTable(data) {
       columnCalcs: false,
     },
     columns: [
-      // {
-      //   title: 'Indicar',
-      //   formatter: formatIndica,
-      //   cellClick: clickIndica,
-      //   width: 100,
-      //   minWidth: 100,
-      //   hozAlign: 'center',
-      //   topCalc: countCalc,
-      //   editor: false,
-      //   responsive: 0,
-      //   download: false,
-      // },
-      // {
-      //   title: 'Expandir',
-      //   formatter: 'responsiveCollapse',
-      //   width: 60,
-      //   minWidth: 60,
-      //   hozAlign: 'center',
-      //   resizable: false,
-      //   headerSort: false,
-      //   responsive: 0,
-      //   download: false,
-      // },
       {
         title: 'Processo',
         field: 'processo',
@@ -225,6 +210,16 @@ function dataTable(data) {
         download: true,
       },
       {
+        title: 'Entrada na Atividade',
+        field: 'entradaAtividade',
+        sorter: 'date',
+        width: 140,
+        hozAlign: 'center',
+        editor: false,
+        responsive: 0,
+        download: true,
+      },
+      {
         title: 'Dias na Atividade',
         field: 'Dias_na_Atividade',
         sorter: 'number',
@@ -248,6 +243,17 @@ function dataTable(data) {
         download: true,
       },
       {
+        title: 'Valor do Processo',
+        field: 'valor',
+        sorter: 'number',
+        hozAlign: 'center',
+        editor: false,
+        formatter: formatValor,
+        accessorDownload: numberConvert,
+        responsive: 0,
+        download: true,
+      },
+      {
         title: 'Valor Original',
         field: 'valorOriginal',
         sorter: 'number',
@@ -255,7 +261,7 @@ function dataTable(data) {
         editor: false,
         formatter: formatValor,
         accessorDownload: numberConvert,
-        responsive: 0,
+        responsive: 1,
         download: true,
       },
       {
@@ -284,7 +290,7 @@ function dataTable(data) {
         editor: false,
         formatter: formatValor,
         accessorDownload: numberConvert,
-        responsive: 0,
+        responsive: 1,
         download: true,
       },
       {
@@ -321,16 +327,6 @@ function dataTable(data) {
         responsive: 1,
         download: true,
       },
-      {
-        title: 'Entrada na Atividade',
-        field: 'entradaAtividade',
-        sorter: 'date',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 2,
-        download: true,
-      },
-
       {
         title: 'Prioridade',
         field: 'prioridade',
@@ -535,7 +531,6 @@ function controleTabs() {
     dadosIndicacao.forEach((p) => {
       if (p.confirmaQuest != 'Correto') {
         p.questionamento = p.confirmaQuest;
-        console.log(p.questionamento, ' ', p.confirmaQuest);
       }
       if (p.alegaPrim == '' || p.alegaPrim == null) {
         alegacaoNula += 1;
@@ -568,6 +563,9 @@ function controleTabs() {
             ? '<strong><span class="red-text">Não preenchida</span></strong>'
             : t.alegaPrim
         }</p>
+        <p><strong>Complexidade e Indicação de Paradigma:</strong> ${
+          t.comParadigma
+        }</p>
         </div>
         `,
         );
@@ -581,13 +579,11 @@ function controleTabs() {
     $('#confirmacaoTab').removeClass('disabled');
     $('.tabs').tabs('select', 'confirmacao');
     let dadosUser = JSON.parse($('#dataUser').attr('data-user'));
-    let dadosPauta = JSON.parse($('#dataPauta').attr('data-pauta'));
     let dadosGravacao = {};
     dadosGravacao.cpf = dadosUser.cpf;
     dadosGravacao.nome = dadosUser.nome;
     dadosGravacao.colegiado = dadosUser.unidade;
-    dadosGravacao.mesIndicacao = dadosPauta.mes;
-    dadosGravacao.anoIndicacao = dadosPauta.ano;
+    dadosGravacao.mesIndicacao = dadosPauta.mes + '/' + dadosPauta.ano;
     dadosGravacao.idIndicacao = dadosPauta._id;
     dadosGravacao.processos = dadosIndicacao;
     //console.log(dadosGravacao);
@@ -711,6 +707,17 @@ function dataTableAptidao() {
           'Trata-se de decisão/liminar judicial para julgamento imediato?',
       },
       {
+        title: 'Valor do Processo',
+        field: 'valor',
+        sorter: 'number',
+        hozAlign: 'center',
+        editor: false,
+        formatter: formatValor,
+        accessorDownload: numberConvert,
+        responsive: 0,
+        download: true,
+      },
+      {
         title: 'Valor Original',
         field: 'valorOriginal',
         sorter: 'number',
@@ -820,8 +827,27 @@ function dataTableAptidao() {
         },
         responsive: 0,
         download: true,
-        headerTooltip:
-          'Verificação automática baseada nas respostas das colunas.',
+      },
+      {
+        title: 'Complexidade e Paradigma',
+        field: 'comParadigma',
+        hozAlign: 'center',
+        editor: 'select',
+        width: 250,
+        editorParams: {
+          values: [
+            'Não preenchido pelo conselheiro',
+            'Processo Paradigma - Complexidade Baixa',
+            'Processo Paradigma - Complexidade Média',
+            'Processo Paradigma - Complexidade Alta',
+            'Processo não é Paradigma - Complexidade Baixa',
+            'Processo não é Paradigma - Complexidade Média',
+            'Processo não é Paradigma - Complexidade Alta',
+          ],
+          defaultValue: 'Não preenchido pelo conselheiro',
+        },
+        responsive: 0,
+        download: true,
       },
       {
         title: 'Alegação Principal',
@@ -877,7 +903,7 @@ function dataTableAptidao() {
         download: true,
       },
       {
-        title: 'Demais Alegações (separar por "/")',
+        title: 'Demais Alegações (separar por vírgulas)',
         field: 'alegaSec',
         sorter: 'string',
         hozAlign: 'left',

@@ -2,7 +2,7 @@
 "use strict";
 
 var marko_template = module.exports = require("marko/src/html").t(__filename),
-    marko_componentType = "/sgq$1.0.0/src/app/views/julgamento/conselheiros/paginaIndicacoes.marko",
+    marko_componentType = "/sgq$1.0.0/src/app/views/presidente/indicacao/ordenaPauta.marko",
     components_helpers = require("marko/src/runtime/components/helpers"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
@@ -47,26 +47,26 @@ function render(input, out, __component, component, state) {
       class: "sidenav"
     }, out, __component, "5");
 
-  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Períodos de Indicação para Pauta</h3><br><div class=\"row conteudoPrincipal\"></div><br><div class=\"row\"><h4>Períodos de Indicação para Pauta</h4></div><div class=\"row\"><div class=\"col s12 right-align\"><div class=\"row\">");
+  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Ordenação de Pauta</h3><br><div class=\"row conteudoPrincipal\"></div><br><div class=\"row\"><h4>Gerenciar Ordenação de Pauta</h4></div><div class=\"row\"><div class=\"col s12 right-align\"><div class=\"row\">");
 
   app_drop_download_tag({}, out, __component, "16");
 
-  out.w("</div><div id=\"tabelaIndicacoes\"" +
-    marko_attr("data-indicacoes", "" + data.indicacoes) +
-    marko_attr("data-periodos", "" + data.periodos) +
-    "></div></div></div><div class=\"row\"><div id=\"cardsColegiados\"></div></div></div></main>");
+  out.w("</div><div id=\"tabelaPauta\"" +
+    marko_attr("data-pauta", "" + data.pauta) +
+    marko_attr("data-alegacoes", "" + data.alegacoes) +
+    "></div></div></div><div class=\"row\"><div id=\"cardsColegiados\"></div></div><div class=\"row\"><a id=\"botaoOrdena\" class=\"waves-effect waves-light btn-large right\"><i class=\"fas fa-arrow-alt-circle-right right\"></i>Enviar Pauta Ordenada para o SEPAJ</a></div></div></main>");
 
-  app_footer_tag({}, out, __component, "20");
+  app_footer_tag({}, out, __component, "23");
 
-  app_modal_tag({}, out, __component, "21");
+  app_modal_tag({}, out, __component, "24");
 
-  app_scripts_js_tag({}, out, __component, "22");
+  app_scripts_js_tag({}, out, __component, "25");
 
-  out.w("<script src=\"/estatico/js/libs/plotly-latest.min.js\"></script><script src=\"/estatico/js/libs/plotly-locale-pt-br.js\"></script><script>Plotly.setPlotConfig({locale: 'pt-BR'})</script><script src=\"/estatico/js/julgamento/helpers/configTabelaNovoRegap.js\"></script><script src=\"/estatico/js/julgamento/conselheiros/paginaIndicacoes.js\"></script>");
+  out.w("<script src=\"/estatico/js/libs/plotly-latest.min.js\"></script><script src=\"/estatico/js/libs/plotly-locale-pt-br.js\"></script><script>Plotly.setPlotConfig({locale: 'pt-BR'})</script><script src=\"/estatico/js/julgamento/helpers/configTabelaNovoRegap.js\"></script><script src=\"/estatico/js/presidente/indicacao/paginaOrdenaPauta.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "28");
+  await_reorderer_tag({}, out, __component, "31");
 
   out.w("</body></html>");
 }
@@ -79,7 +79,7 @@ marko_template._ = marko_renderer(render, {
 marko_template.Component = marko_defineComponent({}, marko_template._);
 
 marko_template.meta = {
-    id: "/sgq$1.0.0/src/app/views/julgamento/conselheiros/paginaIndicacoes.marko",
+    id: "/sgq$1.0.0/src/app/views/presidente/indicacao/ordenaPauta.marko",
     tags: [
       "../../components/app-scripts-css.marko",
       "marko/src/core-tags/components/component-globals-tag",

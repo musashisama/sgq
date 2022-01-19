@@ -2,7 +2,7 @@
 "use strict";
 
 var marko_template = module.exports = require("marko/src/html").t(__filename),
-    marko_componentType = "/sgq$1.0.0/src/app/views/julgamento/conselheiros/paginaIndicacoes.marko",
+    marko_componentType = "/sgq$1.0.0/src/app/views/presidente/indicacao/paginaPeriodosIndicacao.marko",
     components_helpers = require("marko/src/runtime/components/helpers"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
@@ -47,12 +47,12 @@ function render(input, out, __component, component, state) {
       class: "sidenav"
     }, out, __component, "5");
 
-  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Períodos de Indicação para Pauta</h3><br><div class=\"row conteudoPrincipal\"></div><br><div class=\"row\"><h4>Períodos de Indicação para Pauta</h4></div><div class=\"row\"><div class=\"col s12 right-align\"><div class=\"row\">");
+  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Ordenação de Pauta</h3><br><div class=\"row conteudoPrincipal\"></div><br><div class=\"row\"><h4>Gerenciar Ordenação de Pauta</h4></div><div class=\"row\"><div class=\"col s12 right-align\"><div class=\"row\">");
 
   app_drop_download_tag({}, out, __component, "16");
 
-  out.w("</div><div id=\"tabelaIndicacoes\"" +
-    marko_attr("data-indicacoes", "" + data.indicacoes) +
+  out.w("</div><div id=\"tabelaPautas\"" +
+    marko_attr("data-pautas", "" + data.pautas) +
     marko_attr("data-periodos", "" + data.periodos) +
     "></div></div></div><div class=\"row\"><div id=\"cardsColegiados\"></div></div></div></main>");
 
@@ -62,7 +62,7 @@ function render(input, out, __component, component, state) {
 
   app_scripts_js_tag({}, out, __component, "22");
 
-  out.w("<script src=\"/estatico/js/libs/plotly-latest.min.js\"></script><script src=\"/estatico/js/libs/plotly-locale-pt-br.js\"></script><script>Plotly.setPlotConfig({locale: 'pt-BR'})</script><script src=\"/estatico/js/julgamento/helpers/configTabelaNovoRegap.js\"></script><script src=\"/estatico/js/julgamento/conselheiros/paginaIndicacoes.js\"></script>");
+  out.w("<script src=\"/estatico/js/libs/plotly-latest.min.js\"></script><script src=\"/estatico/js/libs/plotly-locale-pt-br.js\"></script><script>Plotly.setPlotConfig({locale: 'pt-BR'})</script><script src=\"/estatico/js/julgamento/helpers/configTabelaNovoRegap.js\"></script><script src=\"/estatico/js/presidente/indicacao/paginaPeriodosIndicacao.js\"></script>");
 
   init_components_tag({}, out);
 
@@ -79,7 +79,7 @@ marko_template._ = marko_renderer(render, {
 marko_template.Component = marko_defineComponent({}, marko_template._);
 
 marko_template.meta = {
-    id: "/sgq$1.0.0/src/app/views/julgamento/conselheiros/paginaIndicacoes.marko",
+    id: "/sgq$1.0.0/src/app/views/presidente/indicacao/paginaPeriodosIndicacao.marko",
     tags: [
       "../../components/app-scripts-css.marko",
       "marko/src/core-tags/components/component-globals-tag",

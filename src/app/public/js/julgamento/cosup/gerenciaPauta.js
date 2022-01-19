@@ -83,9 +83,40 @@ function controleBotoes() {
           }
         });
         // console.log(excelRowsJson);
-        // console.log(dataRetornos);
-        tabelaRetornos(dataRetornos);
-        tableRetornos.redraw();
+        let processosAleg = [];
+
+        dataRetornos.forEach((p) => {
+          processosAleg.push(p.processo);
+        });
+        $.ajax({
+          url: '/alegacoes-retorno',
+          data: { processos: processosAleg },
+          type: 'POST',
+          success: function (result) {
+            result.forEach((res) => {
+              dataRetornos.forEach((dr) => {
+                if (res.processo.numero == dr.processo) {
+                  let alegs = res.alegacoesCarf.split(',');
+                  dr.alegaPrim = alegs.shift();
+                  dr.alegaSec = alegs;
+                  dr.alegacoes = res.alegacoesCarf;
+                  dr.questionamento = res.questionamentos;
+                }
+              });
+            });
+            tabelaRetornos(dataRetornos);
+            tableRetornos.redraw();
+          },
+          error: function (result) {
+            var toastHTML = `<span>Ocorreu um erro.</span>`;
+            M.toast({
+              html: toastHTML,
+              classes: 'rounded',
+              timeRemaining: 500,
+            });
+            console.log(result);
+          },
+        });
       });
     };
     reader.onerror = function (event) {
@@ -100,7 +131,6 @@ function controleBotoes() {
     let dadosCons = [];
     let parcial = tablePauta.getData();
     parcial.forEach((p) => {
-      //console.log(p);
       if (p.apto == 'true') {
         dadosCons.push(p);
       }
@@ -118,8 +148,11 @@ function controleBotoes() {
     let dadosPauta = {};
     dadosPauta.idIndicacao = JSON.parse($('#pauta').attr('data-idIndicacao'));
     processos = tableVirtual.getData();
+    console.log(processos);
     dadosPauta.colegiado = JSON.parse($('#pauta').attr('data-colegiado'));
+    dadosPauta.statusSEPAJ = 'Aguardando Ordenação';
     dadosPauta.processos = JSON.stringify(processos);
+    //console.log(dadosPauta);
     gravaConsolidacao(dadosPauta);
   });
   $(`#questionamentosCheck`).change(() => {
@@ -311,6 +344,17 @@ function tabelaPauta(dados) {
           'Trata-se de decisão/liminar judicial para julgamento imediato?',
       },
       {
+        title: 'Valor do Processo',
+        field: 'valor',
+        sorter: 'number',
+        hozAlign: 'center',
+        editor: false,
+        formatter: formatValor,
+        accessorDownload: numberConvert,
+        responsive: 0,
+        download: true,
+      },
+      {
         title: 'Valor Original',
         field: 'valorOriginal',
         sorter: 'number',
@@ -333,12 +377,34 @@ function tabelaPauta(dados) {
         download: true,
       },
 
+      // {
+      //   title: 'Questionamento',
+      //   field: 'questionamento',
+      //   sorter: 'string',
+      //   hozAlign: 'left',
+      //   editor: false,
+      //   responsive: 0,
+      //   download: true,
+      // },
       {
-        title: 'Questionamento',
+        title: 'Questionamento Correto?',
         field: 'questionamento',
-        sorter: 'string',
-        hozAlign: 'left',
-        editor: false,
+        hozAlign: 'center',
+        editor: 'select',
+        editorParams: {
+          values: [
+            'Recurso Voluntário',
+            'Recurso de Ofício',
+            'Recurso Voluntário/Ofício',
+            'Recurso Especial da Procuradoria',
+            'Recurso Especial do Contribuinte',
+            'Recurso Especial Procuradoria/Contribuinte',
+            'Embargo da Procuradoria',
+            'Embargo do Contribuinte',
+            'Embargo Procuradoria/Contribuinte',
+          ],
+          defaultValue: '',
+        },
         responsive: 0,
         download: true,
       },
@@ -375,6 +441,17 @@ function tabelaPauta(dados) {
         hozAlign: 'left',
         editor: false,
         width: 250,
+        responsive: 0,
+        download: true,
+        //headerTooltip: 'Caso haja mais de um código, separe por vírgulas.',
+      },
+      {
+        title: 'Complexidade e Indicação de Paradigma',
+        field: 'comParadigma',
+        sorter: 'string',
+        hozAlign: 'left',
+        editor: false,
+        //width: 250,
         responsive: 0,
         download: true,
         //headerTooltip: 'Caso haja mais de um código, separe por vírgulas.',
@@ -466,6 +543,41 @@ function tabelaRetornos(dados) {
         editor: false,
         responsive: 0,
         download: true,
+      },
+      {
+        title: 'Alegacoes',
+        field: 'alegacoes',
+        //formatter: coloreProc,
+        headerFilter: 'input',
+        sorter: 'string',
+        hozAlign: 'left',
+        width: 150,
+        editor: false,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Alegação Princpal',
+        field: 'alegaPrim',
+        sorter: 'string',
+        topCalc: countCalc,
+        hozAlign: 'left',
+        editor: false,
+        width: 180,
+        responsive: 0,
+        download: true,
+        //headerTooltip: 'Caso haja mais de um código, separe por vírgulas.',
+      },
+      {
+        title: 'Demais Alegações',
+        field: 'alegaSec',
+        sorter: 'string',
+        hozAlign: 'left',
+        editor: false,
+        width: 250,
+        responsive: 0,
+        download: true,
+        //headerTooltip: 'Caso haja mais de um código, separe por vírgulas.',
       },
       {
         title: 'Retorno?',
@@ -634,7 +746,7 @@ function tabelaVirtual(dados) {
     layout: 'fitDataStretch',
     movableRows: true,
     responsiveLayout: 'collapse',
-    initialSort: [],
+    initialSort: [{ column: 'contribuinte', dir: 'desc' }],
     groupStartOpen: false,
     responsiveLayoutCollapseStartOpen: false,
     columns: [
@@ -649,6 +761,15 @@ function tabelaVirtual(dados) {
         responsive: 0,
       },
       {
+        title: 'Item',
+        formatter: 'rownum',
+        field: 'nItem',
+        hozAlign: 'center',
+        width: 40,
+        responsive: 0,
+        download: true,
+      },
+      {
         title: 'Expandir',
         formatter: 'responsiveCollapse',
         width: 60,
@@ -659,23 +780,10 @@ function tabelaVirtual(dados) {
         responsive: 0,
         download: false,
       },
-      //   {
-      //     title: 'Processo Apto?',
-      //     field: 'apto',
-      //     sorter: 'boolean',
-      //     hozAlign: 'center',
-      //     editor: false,
-      //     formatter: 'tickCross',
-      //     responsive: 0,
-      //     download: true,
-      //     headerTooltip:
-      //       'Verificação automática baseada nas respostas das colunas.',
-      //   },
-
       {
         title: 'Processo',
         field: 'processo',
-        //formatter: coloreProc,
+
         sorter: 'number',
         hozAlign: 'center',
         headerFilter: 'input',
@@ -687,7 +795,6 @@ function tabelaVirtual(dados) {
       {
         title: 'Contribuinte',
         field: 'contribuinte',
-        //formatter: coloreProc,
         headerFilter: 'input',
         sorter: 'string',
         hozAlign: 'left',
@@ -706,79 +813,6 @@ function tabelaVirtual(dados) {
         responsive: 0,
         download: true,
       },
-      //   {
-      //     title: `Abaixo de ${minimoAptoString}`,
-      //     field: 'abaixo',
-      //     sorter: 'boolean',
-      //     hozAlign: 'center',
-      //     editor: false,
-      //     formatter: 'tickCross',
-      //     responsive: 0,
-
-      //     download: true,
-      //     headerTooltip: `O valor originário do processo é inferior a ${minimoAptoString}`,
-      //   },
-      //   {
-      //     title: 'Súmula?',
-      //     field: 'sumula',
-      //     sorter: 'boolean',
-      //     hozAlign: 'center',
-      //     editor: false,
-      //     responsive: 0,
-
-      //     download: true,
-      //     formatter: 'tickCross',
-      //     headerTooltip:
-      //       'O processo é objeto de súmula/ resolução do CARF ou tem decisão definitiva do STF /STJ conforme art. 53, § 2º RICARF?',
-      //   },
-      //   {
-      //     title: 'Vinculação?',
-      //     field: 'vinculacao',
-      //     sorter: 'boolean',
-      //     hozAlign: 'center',
-
-      //     editor: false,
-      //     responsive: 0,
-      //     download: true,
-      //     formatter: 'tickCross',
-      //     headerTooltip:
-      //       'O processo apto para sessão virtual tem vinculação por decorrência ou reflexo (art. 6º, §1º, II e III) a outro processo de sua relatoria que seja não apto?',
-      //   },
-      //   {
-      //     title: 'Dec./Liminar?',
-      //     field: 'liminar',
-      //     sorter: 'boolean',
-
-      //     formatter: 'tickCross',
-      //     hozAlign: 'center',
-      //     editor: false,
-      //     responsive: 0,
-      //     download: true,
-      //     headerTooltip:
-      //       'Trata-se de decisão/liminar judicial para julgamento imediato?',
-      //   },
-      //   {
-      //     title: 'Valor Original',
-      //     field: 'valorOriginal',
-      //     sorter: 'number',
-      //     hozAlign: 'center',
-      //     editor: false,
-      //     formatter: formatValor,
-      //     accessorDownload: numberConvert,
-      //     responsive: 0,
-      //     download: true,
-      //   },
-      // {
-      //   title: 'Horas CARF',
-      //   field: 'HE',
-      //   sorter: 'number',
-      //   hozAlign: 'center',
-      //   headerFilter: 'input',
-      //   topCalc: somaCalc,
-      //   editor: false,
-      //   responsive: 2,
-      //   download: true,
-      // },
       {
         title: 'Questionamento',
         field: 'questionamento',
@@ -802,32 +836,24 @@ function tabelaVirtual(dados) {
         title: 'Alegação Princpal',
         field: 'alegaPrim',
         sorter: 'string',
+        topCalc: countCalc,
         hozAlign: 'left',
-        // editorParams: {
-        //   search: true,
-        //   mask: '99.999.9999',
-        //   elementAttributes: {
-        //     maxlength: '11', //set the maximum character length of the input element to 10 characters
-        //   },
-        // },
-        //accessor: alegaPrim,
-        //validator: 'required',
+
         editor: true,
         width: 180,
         responsive: 0,
         download: true,
-        //headerTooltip: 'Caso haja mais de um código, separe por vírgulas.',
       },
       {
         title: 'Demais Alegações',
         field: 'alegaSec',
         sorter: 'string',
+        topCalc: countCalc,
         hozAlign: 'left',
         editor: false,
         width: 250,
         responsive: 0,
         download: true,
-        //headerTooltip: 'Caso haja mais de um código, separe por vírgulas.',
       },
       {
         title: 'Relator',
@@ -852,6 +878,10 @@ function coloreQuest(cell) {
   }
   return cell.getValue();
 }
+
+let nItem = function nItem(cell) {
+  return cell.getRow().getPosition(true);
+};
 
 function initDatePicker() {
   let formato = 'dd/mm/yyyy';
@@ -914,6 +944,7 @@ function gravaConsolidacao(registro) {
   $.ajax({
     url: '/suporte/restrito/consolida-pauta/',
     data: registro,
+    contentType: 'application/json',
     type: 'POST',
     success: function (result) {
       var toastHTML = `<span>Dados atualizados com sucesso!</span>`;
@@ -922,6 +953,7 @@ function gravaConsolidacao(registro) {
     },
     error: function (result) {
       var toastHTML = `<span>Ocorreu um erro.</span>`;
+      console.log(result);
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
       console.log(result);
     },

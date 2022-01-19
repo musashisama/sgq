@@ -2,6 +2,7 @@ const conn = require('../../config/mongodb').dados;
 const mongo = require('../../config/mongodb').mongo;
 const url = require('../../config/mongodb').url;
 const db = require('../../config/mongodb').db;
+const BaseDAO = require('../infra/base-dao');
 const SuporteDAO = require('../infra/suporte-dao');
 const JulgamentoDAO = require('../infra/julgamento-dao');
 const PessoalDAO = require('../infra/pessoal-dao');
@@ -46,6 +47,8 @@ class PresidenteControlador {
         '/presidente/restrito/regap_consolidado/detalha/:id',
       reinp: '/presidente/restrito/reinp/',
       detalhareinp: '/presidente/restrito/reinp/detalha/:id',
+      paginaPeriodosIndicacao: '/presidente/restrito/periodos_indicacao',
+      paginaOrdenaPauta: '/presidente/restrito/ordena_pauta/:id',
     };
   }
 
@@ -61,7 +64,7 @@ class PresidenteControlador {
           })
           .then((cal) => {
             suporteDao
-              .getIndicacoes({
+              .getPeriodosIndicacoes({
                 semana: CSVHandler.semanaCores(user[0].unidade),
               })
               .then((indicacoes) => {
@@ -249,11 +252,55 @@ class PresidenteControlador {
     };
   }
 
-  carregaOrdenaPauta() {
-    return function (req, resp) {};
+  //MÓDULO DE INDICAÇÂO PARA PAUTA
+  handleOrdenaPauta() {
+    return function (req, resp) {
+      if (req.method == 'GET') {
+        const suporteDao = new SuporteDAO(conn);
+        const baseDAO = new BaseDAO(conn);
+        let filtro, sort, projecao, limit;
+        filtro = { idIndicacao: req.params.id };
+
+        baseDAO.getAlegacoes().then((alegacoes) => {
+          suporteDao.getPautas(filtro).then((pauta) => {
+            resp.marko(templates.presidente.ordena_pauta, {
+              pauta: JSON.stringify(pauta[0]),
+              alegacoes: JSON.stringify(alegacoes),
+            });
+          });
+        });
+      }
+      if (req.method == 'POST') {
+        let dados = [req.body];
+        const suporteDao = new SuporteDao(conn);
+        suporteDao.criaIndicacaoPauta(dados).then((resposta) => {
+          resp.send(resposta);
+        });
+      }
+    };
   }
-  carregaPautas() {
-    return function (req, resp) {};
+
+  carregaPaginaIndicacoes() {
+    return function (req, resp) {
+      const pessoalDao = new PessoalDAO(conn);
+      const julgamentoDao = new JulgamentoDAO(conn);
+      const suporteDao = new SuporteDAO(conn);
+      let cor = CSVHandler.semanaCores(req.user.unidade);
+      suporteDao
+        .getPeriodosIndicacoes({ semana: cor }, { _id: 1 })
+        .then((periodos) => {
+          suporteDao
+            .getPautas({
+              $and: [{ colegiado: req.user.unidade }],
+            })
+            .then((pautas) => {
+              resp.marko(templates.presidente.pagina_periodos_indicacao, {
+                periodos: JSON.stringify(periodos),
+                pautas: JSON.stringify(pautas),
+              });
+            });
+        });
+    };
   }
 }
 module.exports = PresidenteControlador;

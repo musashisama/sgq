@@ -271,11 +271,13 @@ class JulgamentoControlador {
   testeSASJ() {
     return function (req, resp) {
       let urlSASJ = 'http://10.202.24.29/sasj/api/v1/sgi/informacaoEProcesso/';
+      console.log(req.body);
       let data = [
         '10120001070200919',
         '10215720824201107',
         '10580910728201263',
       ];
+      data = req.body.processos;
       let options = {
         headers: {
           'Content-Type': 'application/json',
@@ -831,6 +833,7 @@ class JulgamentoControlador {
     };
   }
 
+  //MÓDULO DE INDICAÇÂO PARA PAUTA
   handleIndicaPauta() {
     return function (req, resp) {
       if (req.method == 'GET') {
@@ -854,7 +857,7 @@ class JulgamentoControlador {
                 .then((regap) => {
                   suporteDao
                     .getPeriodosIndicacoes({
-                      semana: CSVHandler.semanaCores(user[0].unidade),
+                      _id: new ObjectID(req.params.id),
                     })
                     .then((indicacoes) => {
                       baseDAO.getAlegacoes().then((alegacoes) => {
@@ -873,7 +876,6 @@ class JulgamentoControlador {
       }
       if (req.method == 'POST') {
         let dados = [req.body];
-        console.log(dados);
         const suporteDao = new SuporteDao(conn);
         suporteDao.criaIndicacaoPauta(dados).then((resposta) => {
           resp.send(resposta);
@@ -881,7 +883,6 @@ class JulgamentoControlador {
       }
     };
   }
-
   carregaPaginaIndicacoes() {
     return function (req, resp) {
       const pessoalDao = new PessoalDao(conn);
@@ -889,25 +890,31 @@ class JulgamentoControlador {
       const suporteDao = new SuporteDao(conn);
       let cor = CSVHandler.semanaCores(req.user.unidade);
       suporteDao
-        .getPeriodosIndicacoes({ semana: cor }, { _id: -1 })
-        .then((indicacoes) => {
+        .getPeriodosIndicacoes({ semana: cor }, { _id: 1 })
+        .then((periodos) => {
           suporteDao
             .getIndicacoesPauta({
-              $and: [
-                { cpf: req.user.cpf },
-                // {
-                //   idIndicacao: indicacoes[0]
-                //     ? indicacoes[0]._id.toString()
-                //     : '',
-                // },
-              ],
+              $and: [{ cpf: req.user.cpf }],
             })
-            .then((indicaPauta) => {
+            .then((indicacoes) => {
               resp.marko(templates.julgamento.paginaIndicacoes, {
-                indicacoes: JSON.stringify(indicacoes[0]),
-                indicaPauta: JSON.stringify(indicaPauta),
+                periodos: JSON.stringify(periodos),
+                indicacoes: JSON.stringify(indicacoes),
               });
             });
+        });
+    };
+  }
+
+  carregaPautaConselheiro() {
+    return function (req, resp) {
+      const suporteDao = new SuporteDao(conn);
+      suporteDao
+        .getIndicacoesPauta({
+          $and: [{ cpf: req.user.cpf }],
+        })
+        .then((indicacoes) => {
+          resp.send(indicacoes);
         });
     };
   }

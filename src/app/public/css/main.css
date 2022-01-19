@@ -270,13 +270,13 @@ h5 {
   padding: 0;
 }
 
-.tabulator-row {
+/* .tabulator-row {
   position: relative;
   box-sizing: border-box;
   min-height: 46px;
   background-color: transparent;
   border: 1px solid var(--azul-carf);
-}
+} */
 
 .tabulator .tabulator-header {
   background-color: var(--azul-carf);

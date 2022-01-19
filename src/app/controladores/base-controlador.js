@@ -8,6 +8,7 @@ const Mailer = require('../infra/helpers/Mailer');
 const requestIp = require('request-ip');
 const bcrypt = require('bcryptjs');
 const url = require('url');
+const axios = require('axios');
 
 class BaseControlador {
   static rotas() {
@@ -23,6 +24,7 @@ class BaseControlador {
       alegacoes: '/tab-alegacoes/:id',
       arqdown: '/arqdown/:id',
       popups: '/popups',
+      alegaRetorno: '/alegacoes-retorno',
     };
   }
 
@@ -46,6 +48,26 @@ class BaseControlador {
         });
         resp.end(new Buffer.from(arq[0].file_data.buffer, 'binary'));
       });
+    };
+  }
+
+  alegacoesRetorno() {
+    return function (req, resp) {
+      let urlSASJ = 'http://10.202.24.29/sasj/api/v1/sgi/informacaoEProcesso/';
+      let data = req.body.processos;
+      let options = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+      axios
+        .post(urlSASJ, data, options)
+        .then((res) => {
+          resp.send(res.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     };
   }
 

@@ -6,12 +6,12 @@
     <main class="conteudoPrincipal">
       <app-navbar id="slide-out" class="sidenav"/>
       <div class="container">
-        <h3 class="center-align titulo">Períodos de Indicação para Pauta</h3>
+        <h3 class="center-align titulo">Ordenação de Pauta</h3>
         <br/>
         <div class="row conteudoPrincipal"/>
         <br/>
         <div class="row">
-          <h4>Períodos de Indicação para Pauta</h4>
+          <h4>Gerenciar Ordenação de Pauta</h4>
         </div>
         <!-- <div class="row">
           <p id="pautaAberta"/>
@@ -24,11 +24,16 @@
             <div class="row">
               <app-drop-download/>
             </div>
-            <div id="tabelaIndicacoes" data-indicacoes=`${data.indicacoes}` data-periodos=`${data.periodos}`/>
+            <div id="tabelaPauta" data-pauta=`${data.pauta}` data-alegacoes=`${data.alegacoes}`/>
           </div>
         </div>
         <div class="row">
           <div id="cardsColegiados"/>
+        </div>
+        <div class="row">
+          <a id="botaoOrdena" class="waves-effect waves-light btn-large right">
+            <i class="fas fa-arrow-alt-circle-right right"/>Enviar Pauta Ordenada para o SEPAJ
+          </a>
         </div>
       </div>
     </main>
@@ -39,6 +44,6 @@
     <script src="/estatico/js/libs/plotly-locale-pt-br.js"/>
     <script>Plotly.setPlotConfig({locale: 'pt-BR'})</script>
     <script src="/estatico/js/julgamento/helpers/configTabelaNovoRegap.js"/>
-    <script src="/estatico/js/julgamento/conselheiros/paginaIndicacoes.js"/>
+    <script src="/estatico/js/presidente/indicacao/paginaOrdenaPauta.js"/>
   </body>
 </html>
