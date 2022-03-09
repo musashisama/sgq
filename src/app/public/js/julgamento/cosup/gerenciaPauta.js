@@ -9,6 +9,7 @@ function inicializaComponentes() {
     initDatePicker();
     pegaPauta();
     controleBotoes();
+    downloadPautaCons();
   });
 }
 
@@ -17,7 +18,7 @@ function initTabs() {
 }
 
 function returnRep(data) {
-  return !data.confirmaQuest.includes('Corrigido');
+  return !data.confirmaQuest.includes('Correto');
 }
 
 function returnApto(data) {
@@ -30,6 +31,29 @@ function triggerValidation(el) {
     if (!regex.test(el.value.toLowerCase())) {
       el.value = '';
     }
+}
+
+function downloadPautaCons() {
+  $('.dropdownDownloadPauta').dropdown({
+    coverTrigger: false,
+    hover: false,
+    constrainWidth: false,
+  });
+  $('.pdfDown').click(() => {
+    tableVirtual.download('pdf', `${$('.titulo').text()}.pdf`, {
+      orientation: 'portrait',
+      title: `${$('.titulo').text()}`,
+      format: 'a4',
+    });
+  });
+  $('.csvDownVirtual').click(() => {
+    tableVirtual.download('csv', `${$('.titulo').text()}.csv`);
+  });
+  $('.xlsxDownVirtual').click(() => {
+    tableVirtual.download('xlsx', `Pauta_Consolidada.xlsx`, {
+      sheetName: 'Indicação para Pauta',
+    });
+  });
 }
 
 function controleBotoes() {
@@ -100,7 +124,11 @@ function controleBotoes() {
                   dr.alegaPrim = alegs.shift();
                   dr.alegaSec = alegs;
                   dr.alegacoes = res.alegacoesCarf;
-                  dr.questionamento = res.questionamentos;
+                  dr.questionamento = res.questionamentos.toString();
+                  dr.comParadigma =
+                    res.indicadorParadigma == true
+                      ? 'Processo Paradigma'
+                      : 'Processo não é Paradigma';
                 }
               });
             });
@@ -146,12 +174,25 @@ function controleBotoes() {
   });
   $('#botaoConsolida').click(() => {
     let dadosPauta = {};
+
     dadosPauta.idIndicacao = JSON.parse($('#pauta').attr('data-idIndicacao'));
-    processos = tableVirtual.getData();
+    tableVirtual.getData().forEach((p) => {
+      let processo = {};
+      processo.processo = p.processo;
+      processo.alegaPrim = p.alegaPrim;
+      processo.alegaSec = p.alegaSec ? p.alegaSec.flat() : '';
+      processo.contribuinte = p.contribuinte;
+      processo.questionamento = p.questionamento;
+      processo.relator = p.relator;
+      processo.retorno = p.retorno;
+      processos.push(processo);
+    });
+    //processos = tableVirtual.getData();
     console.log(processos);
     dadosPauta.colegiado = JSON.parse($('#pauta').attr('data-colegiado'));
     dadosPauta.statusSEPAJ = 'Aguardando Ordenação';
-    dadosPauta.processos = JSON.stringify(processos);
+    //dadosPauta.processos = JSON.stringify(processos);
+    dadosPauta.pauta = processos;
     //console.log(dadosPauta);
     gravaConsolidacao(dadosPauta);
   });
@@ -354,17 +395,17 @@ function tabelaPauta(dados) {
         responsive: 0,
         download: true,
       },
-      {
-        title: 'Valor Original',
-        field: 'valorOriginal',
-        sorter: 'number',
-        hozAlign: 'center',
-        editor: false,
-        formatter: formatValor,
-        accessorDownload: numberConvert,
-        responsive: 0,
-        download: true,
-      },
+      // {
+      //   title: 'Valor Original',
+      //   field: 'valorOriginal',
+      //   sorter: 'number',
+      //   hozAlign: 'center',
+      //   editor: false,
+      //   formatter: formatValor,
+      //   accessorDownload: numberConvert,
+      //   responsive: 0,
+      //   download: true,
+      // },
       {
         title: 'Horas CARF',
         field: 'HE',
@@ -415,7 +456,18 @@ function tabelaPauta(dados) {
         editor: 'select',
         formatter: coloreQuest,
         editorParams: {
-          values: ['Corrigido'],
+          values: [
+            'Corrigido',
+            'Recurso Voluntário',
+            'Recurso de Ofício',
+            'Recurso Voluntário/Ofício',
+            'Recurso Especial da Procuradoria',
+            'Recurso Especial do Contribuinte',
+            'Recurso Especial Procuradoria/Contribuinte',
+            'Embargo da Procuradoria',
+            'Embargo do Contribuinte',
+            'Embargo Procuradoria/Contribuinte',
+          ],
           defaultValue: 'Corrigido',
         },
         responsive: 0,
@@ -626,88 +678,99 @@ function tabelaRetornos(dados) {
         responsive: 0,
         download: true,
       },
+      // {
+      //   title: 'Complemento',
+      //   field: 'complemento',
+      //   sorter: 'string',
+      //   hozAlign: 'left',
+      //   editor: false,
+      //   responsive: 0,
+      //   download: true,
+      // },
+      // {
+      //   title: 'Solicitante Vista',
+      //   field: 'solicVista',
+      //   sorter: 'string',
+      //   hozAlign: 'left',
+      //   editor: false,
+      //   responsive: 0,
+      //   download: true,
+      // },
+      // {
+      //   title: 'Sustentação Contribuinte',
+      //   field: 'sustContribuinte',
+      //   sorter: 'string',
+      //   hozAlign: 'left',
+      //   editor: false,
+      //   responsive: 0,
+      //   download: true,
+      // },
+      // {
+      //   title: 'Sustentação Procuradoria',
+      //   field: 'sustProcuradoria',
+      //   sorter: 'string',
+      //   hozAlign: 'left',
+      //   editor: false,
+      //   responsive: 0,
+      //   download: true,
+      // },
       {
-        title: 'Complemento',
-        field: 'complemento',
+        title: 'Complexidade e Indicação de Paradigma',
+        field: 'comParadigma',
         sorter: 'string',
         hozAlign: 'left',
         editor: false,
+        //width: 250,
         responsive: 0,
         download: true,
+        //headerTooltip: 'Caso haja mais de um código, separe por vírgulas.',
       },
-      {
-        title: 'Solicitante Vista',
-        field: 'solicVista',
-        sorter: 'string',
-        hozAlign: 'left',
-        editor: false,
-        responsive: 0,
-        download: true,
-      },
-      {
-        title: 'Sustentação Contribuinte',
-        field: 'sustContribuinte',
-        sorter: 'string',
-        hozAlign: 'left',
-        editor: false,
-        responsive: 0,
-        download: true,
-      },
-      {
-        title: 'Sustentação Procuradoria',
-        field: 'sustProcuradoria',
-        sorter: 'string',
-        hozAlign: 'left',
-        editor: false,
-        responsive: 0,
-        download: true,
-      },
-      {
-        title: 'Qtde de Processos',
-        field: 'qtdeProcessos',
-        sorter: 'number',
-        hozAlign: 'left',
-        editor: false,
-        responsive: 0,
-        download: true,
-      },
-      {
-        title: 'Item',
-        field: 'item',
-        sorter: 'number',
-        hozAlign: 'left',
-        editor: false,
-        responsive: 0,
-        download: true,
-      },
-      {
-        title: 'Vencido',
-        field: 'vencido',
-        sorter: 'string',
-        hozAlign: 'left',
-        editor: false,
-        responsive: 0,
-        download: true,
-      },
-      {
-        title: 'Votação',
-        field: 'votacao',
-        sorter: 'string',
-        hozAlign: 'left',
-        editor: false,
-        responsive: 0,
-        download: true,
-      },
-      {
-        title: 'Resultado',
-        field: 'resultado',
-        sorter: 'string',
-        hozAlign: 'left',
-        width: 150,
-        editor: false,
-        responsive: 0,
-        download: true,
-      },
+      // {
+      //   title: 'Qtde de Processos',
+      //   field: 'qtdeProcessos',
+      //   sorter: 'number',
+      //   hozAlign: 'left',
+      //   editor: false,
+      //   responsive: 0,
+      //   download: true,
+      // },
+      // {
+      //   title: 'Item',
+      //   field: 'item',
+      //   sorter: 'number',
+      //   hozAlign: 'left',
+      //   editor: false,
+      //   responsive: 0,
+      //   download: true,
+      // },
+      // {
+      //   title: 'Vencido',
+      //   field: 'vencido',
+      //   sorter: 'string',
+      //   hozAlign: 'left',
+      //   editor: false,
+      //   responsive: 0,
+      //   download: true,
+      // },
+      // {
+      //   title: 'Votação',
+      //   field: 'votacao',
+      //   sorter: 'string',
+      //   hozAlign: 'left',
+      //   editor: false,
+      //   responsive: 0,
+      //   download: true,
+      // },
+      // {
+      //   title: 'Resultado',
+      //   field: 'resultado',
+      //   sorter: 'string',
+      //   hozAlign: 'left',
+      //   width: 150,
+      //   editor: false,
+      //   responsive: 0,
+      //   download: true,
+      // },
     ],
     autoColumns: false,
     locale: true,
@@ -856,6 +919,17 @@ function tabelaVirtual(dados) {
         download: true,
       },
       {
+        title: 'Complexidade e Indicação de Paradigma',
+        field: 'comParadigma',
+        sorter: 'string',
+        hozAlign: 'left',
+        editor: false,
+        //width: 250,
+        responsive: 0,
+        download: true,
+        //headerTooltip: 'Caso haja mais de um código, separe por vírgulas.',
+      },
+      {
         title: 'Relator',
         field: 'relator',
         sorter: 'string',
@@ -942,18 +1016,23 @@ function initDatePicker() {
 
 function gravaConsolidacao(registro) {
   $.ajax({
-    url: '/suporte/restrito/consolida-pauta/',
-    data: registro,
+    url: '/suporte/restrito/consolida-pauta',
+    data: registro, //{ dados: JSON.stringify(registro) },
     contentType: 'application/json',
+    dataType: 'text',
     type: 'POST',
+    beforeSend: function () {
+      // setting a timeout
+      //console.log(JSON.stringify(registro));
+    },
     success: function (result) {
+      console.log(result);
       var toastHTML = `<span>Dados atualizados com sucesso!</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
-      location.href = `/suporte/restrito/portalcosup`;
+      //location.href = `/suporte/restrito/portalcosup`;
     },
     error: function (result) {
       var toastHTML = `<span>Ocorreu um erro.</span>`;
-      console.log(result);
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
       console.log(result);
     },

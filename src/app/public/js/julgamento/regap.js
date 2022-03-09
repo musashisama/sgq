@@ -140,6 +140,17 @@ function dataTable(msg) {
         download: true,
       },
       {
+        title: 'Valor do Processo',
+        field: 'valor',
+        sorter: 'number',
+        hozAlign: 'center',
+        editor: false,
+        formatter: formatValor,
+        accessorDownload: numberConvert,
+        responsive: 0,
+        download: true,
+      },
+      {
         title: 'Valor Original',
         field: 'Valor_Original',
         sorter: 'number',
