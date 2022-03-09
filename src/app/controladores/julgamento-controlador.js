@@ -876,6 +876,7 @@ class JulgamentoControlador {
       }
       if (req.method == 'POST') {
         let dados = [req.body];
+        console.log(dados);
         const suporteDao = new SuporteDao(conn);
         suporteDao.criaIndicacaoPauta(dados).then((resposta) => {
           resp.send(resposta);

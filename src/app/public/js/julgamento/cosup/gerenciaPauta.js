@@ -159,11 +159,12 @@ function controleBotoes() {
     let dadosCons = [];
     let parcial = tablePauta.getData();
     parcial.forEach((p) => {
-      if (p.apto == 'true') {
+      if (p.apto == 'true' || p.apto == true) {
         dadosCons.push(p);
       }
     });
     $('.tabs').tabs('select', 'retornos');
+    //tableVirtual.addData(dadosCons, true);
     tabelaVirtual(dadosCons);
     tableVirtual.redraw();
   });
@@ -187,8 +188,8 @@ function controleBotoes() {
       processo.retorno = p.retorno;
       processos.push(processo);
     });
-    //processos = tableVirtual.getData();
-    console.log(processos);
+    processos = tableVirtual.getData();
+    //console.log(processos);
     dadosPauta.colegiado = JSON.parse($('#pauta').attr('data-colegiado'));
     dadosPauta.statusSEPAJ = 'Aguardando Ordenação';
     //dadosPauta.processos = JSON.stringify(processos);
@@ -792,6 +793,7 @@ function tabelaRetornos(dados) {
 }
 
 function tabelaVirtual(dados) {
+  console.log(dados);
   let tabledata = dados;
   tableVirtual = new Tabulator('#tabelaConsolidadaVirtual', {
     data: tabledata,
@@ -846,7 +848,6 @@ function tabelaVirtual(dados) {
       {
         title: 'Processo',
         field: 'processo',
-
         sorter: 'number',
         hozAlign: 'center',
         headerFilter: 'input',
@@ -1017,9 +1018,9 @@ function initDatePicker() {
 function gravaConsolidacao(registro) {
   $.ajax({
     url: '/suporte/restrito/consolida-pauta',
-    data: registro, //{ dados: JSON.stringify(registro) },
+    data: JSON.stringify(registro), //{ dados: JSON.stringify(registro) },
     contentType: 'application/json',
-    dataType: 'text',
+
     type: 'POST',
     beforeSend: function () {
       // setting a timeout
@@ -1029,7 +1030,7 @@ function gravaConsolidacao(registro) {
       console.log(result);
       var toastHTML = `<span>Dados atualizados com sucesso!</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
-      //location.href = `/suporte/restrito/portalcosup`;
+      location.href = `/suporte/restrito/portalcosup`;
     },
     error: function (result) {
       var toastHTML = `<span>Ocorreu um erro.</span>`;
