@@ -119,12 +119,12 @@ function dataTable(data) {
   let tabledata = data;
   table = new Tabulator('#tabelaIndicacao', {
     data: tabledata,
-    //pagination: 'local',
-    //paginationSize: 10,
+    pagination: 'local',
+    // paginationSize: 10,
     //paginationSizeSelector: [10, 25, 50, 100, true],
-    height: '100%',
+    height: '1000px',
     minHeight: '200px',
-    //maxHeight: '1000px',
+    maxHeight: '100%',
     layout: 'fitData',
     //responsiveLayout: 'collapse',
     groupStartOpen: false,
@@ -587,7 +587,7 @@ function controleTabs() {
     dadosGravacao.mesIndicacao = dadosPauta.mes + '/' + dadosPauta.ano;
     dadosGravacao.idIndicacao = dadosPauta._id;
     dadosGravacao.processos = dadosIndicacao;
-    //console.log(dadosGravacao);
+    console.log(dadosGravacao);
     gravaIndicacao(dadosGravacao);
     tableAptidao.redraw();
   });
@@ -601,8 +601,8 @@ function controleTabs() {
 function dataTableAptidao() {
   tableAptidao = new Tabulator('#tabelaAptidao', {
     data: [],
-    //pagination: 'local',
-    //height: '1000px',
+    pagination: 'local',
+    height: '1000px',
     minHeight: '200px',
     maxHeight: '100%',
     layout: 'fitData',
@@ -640,7 +640,7 @@ function dataTableAptidao() {
         headerFilter: 'input',
         topCalc: countCalc,
         editor: false,
-        responsive: 2,
+        responsive: 0,
         download: true,
       },
       {
@@ -876,7 +876,6 @@ let alegTributo = function alegTributo(cell) {
       tableAptidao
         .updateOrAddData([{ processo: processo, alegTributo: nome }], true)
         .then((row) => {
-          console.log(row);
           tableAptidao.redraw();
         });
     }
@@ -922,7 +921,8 @@ let alegTema = function alegTema(cell) {
 function gravaIndicacao(registro) {
   $.ajax({
     url: '/julgamento/conselheiros/grava-indicacao-pauta',
-    data: registro,
+    data: JSON.stringify(registro),
+    contentType: 'application/json',
     type: 'POST',
     success: function (result) {
       var toastHTML = `<span>Dados atualizados com sucesso!</span>`;
