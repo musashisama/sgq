@@ -231,15 +231,17 @@ class SuporteControlador {
 
   consolidaPauta() {
     return function (req, resp) {
+      console.log(req);
       if (req.method == 'POST') {
-        req.body.processos = JSON.parse(req.body.processos);
+        //req.body.processos = JSON.parse(req.body.processos);
         console.log(req.body);
-        req.body.tipoPauta = 'Consolidada';
-        const suporteDAO = new SuporteDAO(conn);
-        suporteDAO.inserePautaConsolidada(req.body).then((res) => {
-          console.log(res);
-          resp.send(res);
-        });
+        // req.body.tipoPauta = 'Consolidada';
+        // const suporteDAO = new SuporteDAO(conn);
+        // suporteDAO.inserePautaConsolidada(req.body).then((res) => {
+        //   console.log(res);
+        //   resp.send(res);
+        // });
+        resp.send('OK');
       }
     };
   }

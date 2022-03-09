@@ -386,7 +386,7 @@ function dataTable(msg) {
         download: true,
       },
       {
-        title: 'Valor do Processo (Somente COJUL)',
+        title: 'Valor do Processo',
         field: 'valor',
         sorter: 'number',
         hozAlign: 'center',

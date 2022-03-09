@@ -63,6 +63,7 @@ class BaseControlador {
       axios
         .post(urlSASJ, data, options)
         .then((res) => {
+          //console.log(res.data);
           resp.send(res.data);
         })
         .catch((error) => {
@@ -251,8 +252,8 @@ http://${URL.host}/altera-senha/${registro.controle}
   carregaPremio() {
     return function (req, resp, next) {
       if (req.method == 'POST') {
-        console.log('post');
-        console.log(req.body);
+        //console.log('post');
+        //console.log(req.body);
         let baseDao = new BaseDao(conn);
         baseDao.regVote(req.body).then((msg) => {
           resp.json(msg);

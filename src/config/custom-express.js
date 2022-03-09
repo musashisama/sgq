@@ -19,6 +19,7 @@ app.use(
     extended: true,
   }),
 );
+app.use(bodyParser.json());
 
 app.use(
   methodOverride(function (req, res) {
