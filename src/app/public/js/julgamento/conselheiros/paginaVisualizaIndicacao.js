@@ -158,6 +158,17 @@ function tabelaIndicacoes() {
         responsive: 0,
         download: true,
       },
+      {
+        title: 'Horas CARF',
+        field: 'HE',
+        sorter: 'number',
+        hozAlign: 'center',
+        headerFilter: 'input',
+        topCalc: somaCalc,
+        editor: false,
+        responsive: 0,
+        download: true,
+      },
       // {
       //   title: 'Valor Original',
       //   field: 'valorOriginal',
