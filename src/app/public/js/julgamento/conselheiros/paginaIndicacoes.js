@@ -173,32 +173,13 @@ let corStatus = function corStatus(cell) {
   return cell.getValue();
 };
 
-// let linksIndica = function linksIndica(cell) {
-//   if (cell.getRow().getData().status == 'Pauta Aberta para Indicações') {
-//     return `
-//     <a class='black-text btnVisualiza' href='/julgamento/conselheiros/visualiza-pauta/${
-//       cell.getRow().getData()._id
-//     }'title='Indicar Processos para Pauta'><i class='material-icons'>find_in_page</i></a>
-//     &nbsp;
-//   <a class='black-text btnedita' href='/julgamento/conselheiros/indicacao-pauta/${
-//     cell.getRow().getData()._id
-//   }'title='Indicar Processos para Pauta'><i class='material-icons'>add_circle</i></a>
-//   `;
-//   } else if (
-//     cell.getRow().getData().status ==
-//     'Pauta Aguardando Abertura para Indicações'
-//   ) {
-//     return `<i class='material-icons'/>not_interested</i>`;
-//   } else {
-//     return `
-//   <a class='black-text btnVisualiza' href='/julgamento/conselheiros/visualiza-pauta/${
-//     cell.getRow().getData()._id
-//   }'title='Indicar Processos para Pauta'><i class='material-icons'>find_in_page</i></a>
-//   `;
-//   }
 let linksIndica = function linksIndica(cell) {
   if (cell.getRow().getData().status == 'Pauta Aberta para Indicações') {
     return `
+    <a class='black-text btnVisualiza' href='/julgamento/conselheiros/visualiza-pauta/${
+      cell.getRow().getData()._id
+    }'title='Indicar Processos para Pauta'><i class='material-icons'>find_in_page</i></a>
+    &nbsp;
   <a class='black-text btnedita' href='/julgamento/conselheiros/indicacao-pauta/${
     cell.getRow().getData()._id
   }'title='Indicar Processos para Pauta'><i class='material-icons'>add_circle</i></a>
@@ -210,6 +191,9 @@ let linksIndica = function linksIndica(cell) {
     return `<i class='material-icons'/>not_interested</i>`;
   } else {
     return `
+  <a class='black-text btnVisualiza' href='/julgamento/conselheiros/visualiza-pauta/${
+    cell.getRow().getData()._id
+  }'title='Indicar Processos para Pauta'><i class='material-icons'>find_in_page</i></a>
   `;
   }
 };
