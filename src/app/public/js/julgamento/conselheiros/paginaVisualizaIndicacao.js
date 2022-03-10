@@ -1,10 +1,21 @@
-let indicacao = JSON.parse($('#tabelaIndicacao').attr('data-indicacao'));
-console.log(indicacao.indicacao);
+let indicacao;
+if (!$('#tabelaIndicacao').attr('data-indicacao') == false) {
+  indicacao = JSON.parse($('#tabelaIndicacao').attr('data-indicacao'));
+} else {
+  indicacao = false;
+}
 inicializaComponentes();
 function inicializaComponentes() {
   $(document).ready(function () {
-    tabelaIndicacoes();
-    $('#periodoIndica').text(indicacao.mesIndicacao);
+    if (!indicacao == false) {
+      tabelaIndicacoes();
+      $('#periodoIndica').text(indicacao.mesIndicacao);
+    } else {
+      $('#h4Periodo').text(
+        'Não foram encontradas indicações para este período',
+      );
+      $('.dropdownDownload').toggle();
+    }
   });
 }
 

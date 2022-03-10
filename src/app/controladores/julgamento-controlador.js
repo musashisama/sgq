@@ -894,7 +894,8 @@ class JulgamentoControlador {
         .then((indicacao) => {
           console.log(indicacao.length);
           resp.marko(templates.julgamento.visualizaIndicacao, {
-            indicacao: JSON.stringify(indicacao[0]),
+            indicacao:
+              indicacao.length > 0 ? JSON.stringify(indicacao[0]) : false,
           });
         });
     };
