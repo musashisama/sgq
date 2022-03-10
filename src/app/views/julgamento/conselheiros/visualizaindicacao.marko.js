@@ -47,7 +47,7 @@ function render(input, out, __component, component, state) {
       class: "sidenav"
     }, out, __component, "5");
 
-  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Visualização da Indicação para Pauta</h3><br><div class=\"row conteudoPrincipal\"></div><br><div class=\"row\"><h4>Período de Indicação: <span id=\"periodoIndica\"></span></h4></div><div class=\"row\"><div class=\"col s12 right-align\"><div class=\"row\">");
+  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Visualização da Indicação para Pauta</h3><br><div class=\"row conteudoPrincipal\"></div><br><div class=\"row\"><h4 id=\"h4Periodo\">Período de Indicação: <span id=\"periodoIndica\"></span></h4></div><div class=\"row\"><div class=\"col s12 right-align\"><div class=\"row\">");
 
   app_drop_download_tag({}, out, __component, "17");
 
