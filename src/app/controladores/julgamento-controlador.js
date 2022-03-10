@@ -111,6 +111,7 @@ class JulgamentoControlador {
       indicapauta: '/julgamento/conselheiros/indicacao-pauta/:id',
       gravaIndicacao: '/julgamento/conselheiros/grava-indicacao-pauta/',
       paginaIndicacoes: '/julgamento/conselheiros/gestao-indicacoes',
+      visualizaIndicacao: '/julgamento/conselheiros/visualiza-pauta/:id',
       //PRESIDENTES
       gestaoportalpresidente: '/julgamento/restrito/gestaoportalpresidente',
       //APURAÇÕES ESPECIAIS
@@ -882,6 +883,20 @@ class JulgamentoControlador {
           resp.send(resposta);
         });
       }
+    };
+  }
+  carregaPaginaVisualizaIndicacao() {
+    return function (req, resp) {
+      const suporteDao = new SuporteDao(conn);
+
+      suporteDao
+        .getIndicacoesPauta({ idIndicacao: req.params.id })
+        .then((indicacao) => {
+          console.log(indicacao.length);
+          resp.marko(templates.julgamento.visualizaIndicacao, {
+            indicacao: JSON.stringify(indicacao[0]),
+          });
+        });
     };
   }
   carregaPaginaIndicacoes() {
