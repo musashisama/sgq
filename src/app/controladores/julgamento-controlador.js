@@ -888,11 +888,11 @@ class JulgamentoControlador {
   carregaPaginaVisualizaIndicacao() {
     return function (req, resp) {
       const suporteDao = new SuporteDao(conn);
-
       suporteDao
-        .getIndicacoesPauta({ idIndicacao: req.params.id })
+        .getIndicacoesPauta({
+          $and: [{ cpf: req.user.cpf }, { idIndicacao: req.params.id }],
+        })
         .then((indicacao) => {
-          console.log(indicacao.length);
           resp.marko(templates.julgamento.visualizaIndicacao, {
             indicacao:
               indicacao.length > 0 ? JSON.stringify(indicacao[0]) : false,
