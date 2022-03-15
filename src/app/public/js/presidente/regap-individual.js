@@ -93,6 +93,7 @@ function dataTable(msg) {
         headerFilter: 'input',
         topCalc: countCalc,
         responsive: 0,
+        formatter: formataTESuperior,
         download: true,
       },
       {

@@ -200,6 +200,18 @@ function dataTable(data) {
         download: true,
       },
       {
+        title: 'Equipe Processo',
+        field: 'equipeProcesso',
+        width: 200,
+        sorter: 'string',
+        hozAlign: 'left',
+        headerFilter: 'input',
+        topCalc: countCalc,
+        responsive: 0,
+        formatter: formataTESuperior,
+        download: true,
+      },
+      {
         title: 'Horas CARF',
         field: 'HE',
         sorter: 'number',
@@ -568,6 +580,7 @@ function controleTabs() {
         <p><strong>Complexidade e Indicação de Paradigma:</strong> ${
           t.comParadigma
         }</p>
+        <p><strong>Equipe da Indicação:</strong> ${t.equipeProcesso}</p>
         </div>
         `,
         );
@@ -584,7 +597,7 @@ function controleTabs() {
     let dadosGravacao = {};
     dadosGravacao.cpf = dadosUser.cpf;
     dadosGravacao.nome = dadosUser.nome;
-    dadosGravacao.colegiado = dadosUser.unidade;
+    dadosGravacao.colegiado = dadosIndicacao[0].equipeProcesso;
     dadosGravacao.mesIndicacao = dadosPauta.mes + '/' + dadosPauta.ano;
     dadosGravacao.idIndicacao = dadosPauta._id;
     dadosGravacao.processos = dadosIndicacao;

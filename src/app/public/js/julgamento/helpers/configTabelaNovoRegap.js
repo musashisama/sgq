@@ -430,6 +430,21 @@ function coloreApes(cell, formatterParams, valor) {
   return value;
 }
 
+function formataTESuperior(cell, formatterParams, valor) {
+  if (
+    cell.getValue() == '4ª TE-2ªSEÇÃO-2004-CARF-MF-DF' ||
+    cell.getValue() == '5ª TE-2ªSEÇÃO-2005-CARF-MF-DF'
+  ) {
+    cell.getElement().style.color = 'rgb(245, 131, 0)';
+    cell.getElement().style.fontWeight = 'bolder';
+  }
+  if (cell.getValue() == '2ª TURMA-CSRF-CARF-MF-DF') {
+    cell.getElement().style.color = 'rgb(63, 138, 2)';
+    cell.getElement().style.fontWeight = 'bolder';
+  }
+  return cell.getValue();
+}
+
 function coloreDias(cell, formatterParams, valor) {
   let value = cell.getValue() ? cell.getValue() : valor;
 
