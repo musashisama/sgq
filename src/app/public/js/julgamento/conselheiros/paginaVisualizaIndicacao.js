@@ -108,6 +108,18 @@ function tabelaIndicacoes() {
         download: true,
       },
       {
+        title: 'Equipe Processo',
+        field: 'equipeProcesso',
+        width: 200,
+        sorter: 'string',
+        hozAlign: 'left',
+        headerFilter: 'input',
+        topCalc: countCalc,
+        responsive: 0,
+        formatter: formataTESuperior,
+        download: true,
+      },
+      {
         title: `Abaixo de ${minimoAptoString}`,
         field: 'abaixo',
         sorter: 'boolean',

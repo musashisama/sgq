@@ -318,6 +318,7 @@ function dataTable(msg) {
         hozAlign: 'left',
         headerFilter: 'input',
         topCalc: countCalc,
+        formatter: formataTESuperior,
         responsive: 0,
         download: true,
       },
