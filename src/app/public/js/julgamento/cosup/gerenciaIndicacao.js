@@ -17,7 +17,7 @@ let semanaAzulTE = [
 let semanaVerdeTOCSRF = [
   '1ª TURMA-CSRF-CARF-MF-DF',
   '1ª TO-2ªCÂMARA-2ªSEÇÃO-CARF-MF-DF',
-  '2ª TO-2ªCÂMARA-2ªSEÇÃO-CARF-MF-DF',
+  '2ª TO-2ªCAMARA-2ªSEÇÃO-CARF-MF-DF',
   '1ª TO-3ªCÂMARA-2ªSEÇÃO-CARF-MF-DF',
   '2ª TO-3ªCÂMARA-2ªSEÇÃO-CARF-MF-DF',
   '1ª TO-4ªCÂMARA-2ªSEÇÃO-CARF-MF-DF',
@@ -43,7 +43,10 @@ let semanaAmarelaTE = [
   '3ª TE-3ªSEÇÃO-3003-CARF-MF-DF',
 ];
 let dados = JSON.parse($('#periodo').attr('data-periodo'));
+let periodo = dados[0];
 let users = JSON.parse($('#periodo').attr('data-cons'));
+let indicacoes = JSON.parse($('#periodo').attr('data-indicacoes'));
+let pautas = JSON.parse($('#periodo').attr('data-pautas'));
 inicializaComponentes();
 function inicializaComponentes() {
   $(document).ready(function () {
@@ -56,7 +59,6 @@ function inicializaComponentes() {
 }
 
 function montaCard() {
-  let periodo = dados[0];
   $('#cardInfo').append(`
     <div class="col s12 m12">
       <div class="card white darken-1">
@@ -72,7 +74,6 @@ function montaCard() {
 }
 
 function montaTabela() {
-  let periodo = dados[0];
   let dadosTabela = [];
   if (periodo.semana == 'Amarela') {
     if (periodo.tipoColegiado == 'TOCSRF') {
@@ -119,6 +120,21 @@ function montaTabela() {
 }
 
 function tabelaColegiados(dados) {
+  dados.forEach((d) => {
+    d.qtdeIndicacoes = 0;
+
+    pautas.forEach((p) => {
+      if (d.colegiado == p.colegiado) {
+        d.statusSEPAJ = p.statusSEPAJ;
+        d.tipoPauta = p.tipoPauta;
+      }
+    });
+    indicacoes.forEach((ind) => {
+      if (d.colegiado == ind.colegiado) {
+        d.qtdeIndicacoes += 1;
+      }
+    });
+  });
   table = new Tabulator('#tabelaColegiados', {
     data: dados,
     pagination: 'local',
@@ -142,23 +158,97 @@ function tabelaColegiados(dados) {
         responsive: 0,
       },
       {
+        title: 'Status',
+        field: 'statusSEPAJ',
+        sorter: 'string',
+        hozAlign: 'center',
+        editor: false,
+        formatter: fStatusSEPAJ,
+        headerFilter: 'input',
+        responsive: 0,
+      },
+      {
+        title: 'Tipo Pauta',
+        field: 'tipoPauta',
+        sorter: 'string',
+        hozAlign: 'center',
+        editor: false,
+        formatter: fTipoPauta,
+        headerFilter: 'input',
+        responsive: 0,
+      },
+      {
+        title: 'Quantidade de Indicações',
+        field: 'qtdeIndicacoes',
+        sorter: 'number',
+        hozAlign: 'center',
+        editor: false,
+        //headerFilter: 'input',
+        responsive: 0,
+      },
+      {
         title: 'Gerenciar',
         formatter: formatGerencia,
-        hozAlign: 'center',
+        hozAlign: 'left',
         download: false,
       },
     ],
   });
 }
 
+let fStatusSEPAJ = function fStatusSEPAJ(cell) {
+  if (cell.getValue() == null || cell.getValue() == 'undefined') {
+    if (
+      moment(moment()).isBetween(
+        moment(periodo.abreIndicacao, 'DD/MM/YYYY'),
+        moment(periodo.fechaIndicacao, 'DD/MM/YYYY'),
+        'day',
+        [],
+      )
+    ) {
+      return 'Aguardando Indicações';
+    } else return 'Aguardando Consolidação';
+  } else return cell.getValue();
+};
+
+let fTipoPauta = function fTipoPauta(cell) {
+  if (cell.getValue() == null || cell.getValue() == 'undefined') {
+    if (
+      moment(moment()).isBetween(
+        moment(periodo.abreIndicacao, 'DD/MM/YYYY'),
+        moment(periodo.fechaIndicacao, 'DD/MM/YYYY'),
+        'day',
+        [],
+      )
+    ) {
+      return 'Aguardando Indicações';
+    } else return 'Pauta ainda não consolidada';
+  } else return cell.getValue();
+};
+
 let formatGerencia = function formatGerencia(cell) {
-  return `
+  if (cell.getRow().getData().tipoPauta == 'Consolidada') {
+    return `<a class='black-text btnVisualiza' href='/suporte/restrito/visualiza-pauta/${
+      cell.getRow().getData().id
+    }&${cell.getRow().getData().colegiado}&${
+      cell.getRow().getData().tipoPauta
+    }'title='Indicar Processos para Pauta'><i class='material-icons'>find_in_page</i></a>
+    &nbsp;
   <a class='black-text btnedita' href='/suporte/restrito/gerencia-colegiado/${
     cell.getRow().getData().id
   }&${
-    cell.getRow().getData().colegiado
-  }' title='Gerenciar Colegiado'><i class='material-icons'>settings</i></a>
+      cell.getRow().getData().colegiado
+    }' title='Gerenciar Colegiado'><i class='material-icons'>settings</i></a>
   `;
+  } else {
+    return `
+  <a class='black-text btnedita' href='/suporte/restrito/gerencia-colegiado/${
+    cell.getRow().getData().id
+  }&${
+      cell.getRow().getData().colegiado
+    }' title='Gerenciar Colegiado'><i class='material-icons'>settings</i></a>
+  `;
+  }
 };
 
 function initModal() {

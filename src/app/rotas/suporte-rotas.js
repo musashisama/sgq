@@ -75,4 +75,6 @@ module.exports = (app) => {
     .get(supControlador.handlePeriodo())
     .post(supControlador.handlePeriodo())
     .delete(supControlador.handlePeriodo());
+
+  app.get(rotasSuporte.visualizaPauta, supControlador.carregaVisualizaPauta());
 };

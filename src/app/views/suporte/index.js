@@ -8,4 +8,5 @@ module.exports = {
   criaIndicacao: require('./gestaoindicacao/criaIndicacao.marko'),
   editaIndicacao: require('./gestaoindicacao/editaIndicacao.marko'),
   gerenciaPauta: require('./gestaoindicacao/gerenciaPauta.marko'),
+  visualizaPauta: require('./gestaoindicacao/visualizaPauta.marko'),
 };
