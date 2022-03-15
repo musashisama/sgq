@@ -85,6 +85,17 @@ function dataTable(msg) {
         download: true,
       },
       {
+        title: 'Equipe Processo',
+        field: 'equipeProcesso',
+        width: 200,
+        sorter: 'string',
+        hozAlign: 'left',
+        headerFilter: 'input',
+        topCalc: countCalc,
+        responsive: 0,
+        download: true,
+      },
+      {
         title: 'Ind. Apenso',
         field: 'apenso',
         sorter: 'string',

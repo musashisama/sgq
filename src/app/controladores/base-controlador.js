@@ -63,7 +63,6 @@ class BaseControlador {
       axios
         .post(urlSASJ, data, options)
         .then((res) => {
-          //console.log(res.data);
           resp.send(res.data);
         })
         .catch((error) => {

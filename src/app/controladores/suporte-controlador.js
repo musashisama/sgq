@@ -5,6 +5,7 @@ const db = require('../../config/mongodb').db;
 const SuporteDAO = require('../infra/suporte-dao');
 const JulgamentoDAO = require('../infra/julgamento-dao');
 const PessoalDAO = require('../infra/pessoal-dao');
+const BaseDao = require('../infra/base-dao');
 const requestIp = require('request-ip');
 const templates = require('../views/templates');
 const formidable = require('formidable');
@@ -48,6 +49,7 @@ class SuporteControlador {
       gerenciaColegiado: '/suporte/restrito/gerencia-colegiado/:id',
       editaPeriodo: '/suporte/restrito/edita-periodo/:id',
       consolidacaoPauta: '/suporte/restrito/consolida-pauta/',
+      visualizaPauta: '/suporte/restrito/visualiza-pauta/:id',
     };
   }
 
@@ -207,10 +209,27 @@ class SuporteControlador {
                     user.unidade = '3ª TURMA-CSRF-CARF-MF-DF';
                   }
                 });
-                resp.marko(templates.suporte.gerenciaPeriodo, {
-                  periodo: JSON.stringify(msg),
-                  cons: JSON.stringify(users),
-                });
+                suporteDAO
+                  .getIndicacoesPauta(
+                    { idIndicacao: req.params.id },
+                    { processos: 0 },
+                  )
+                  .then((indicacoes) => {
+                    suporteDAO
+                      .getPautas(
+                        { idIndicacao: req.params.id },
+                        { _id: -1 },
+                        { pauta: 0 },
+                      )
+                      .then((pautas) => {
+                        resp.marko(templates.suporte.gerenciaPeriodo, {
+                          periodo: JSON.stringify(msg),
+                          cons: JSON.stringify(users),
+                          indicacoes: JSON.stringify(indicacoes),
+                          pautas: JSON.stringify(pautas),
+                        });
+                      });
+                  });
               });
           });
       } else {
@@ -245,11 +264,13 @@ class SuporteControlador {
       }
     };
   }
+
   gerenciaColegiado() {
     return function (req, resp) {
       const suporteDAO = new SuporteDAO(conn);
       const julgamentoDAO = new JulgamentoDAO(conn);
       const pessoalDAO = new PessoalDAO(conn);
+      const baseDAO = new BaseDao(conn);
       if (req.method == 'GET') {
         let parametros = req.params.id.split('&');
         suporteDAO
@@ -260,10 +281,13 @@ class SuporteControlador {
             ],
           })
           .then((pauta) => {
-            resp.marko(templates.suporte.gerenciaPauta, {
-              pauta: JSON.stringify(pauta),
-              idIndicacao: JSON.stringify(parametros[0]),
-              colegiado: JSON.stringify(parametros[1]),
+            baseDAO.getAlegacoes().then((alegacoes) => {
+              resp.marko(templates.suporte.gerenciaPauta, {
+                pauta: JSON.stringify(pauta),
+                idIndicacao: JSON.stringify(parametros[0]),
+                colegiado: JSON.stringify(parametros[1]),
+                alega: JSON.stringify(alegacoes),
+              });
             });
           });
       } else {
@@ -279,6 +303,34 @@ class SuporteControlador {
               resp.json(msg);
             });
         }
+      }
+    };
+  }
+
+  carregaVisualizaPauta() {
+    return function (req, resp) {
+      if (req.method == 'GET') {
+        let parametros = req.params.id.split('&');
+        console.log(parametros);
+        const suporteDAO = new SuporteDAO(conn);
+        suporteDAO
+          .getPautas({
+            $and: [
+              { idIndicacao: parametros[0] },
+              { colegiado: parametros[1] },
+              { tipoPauta: parametros[2] },
+            ],
+          })
+          .then((pauta) => {
+            suporteDAO
+              .getPeriodosIndicacoes({ _id: new ObjectID(parametros[0]) })
+              .then((msg) => {
+                resp.marko(templates.suporte.visualizaPauta, {
+                  pauta: JSON.stringify(pauta[0]),
+                  periodo: JSON.stringify(msg[0]),
+                });
+              });
+          });
       }
     };
   }

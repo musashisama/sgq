@@ -64,12 +64,12 @@ class SuporteDao {
       );
     });
   }
-  getIndicacoesPauta(filtro) {
+  getIndicacoesPauta(filtro, project) {
     return new Promise((resolve, reject) => {
       this._db.indicacoesPauta
         .find(filtro)
         .sort({ _id: -1 })
-        .project()
+        .project(project)
         .toArray(function (erro, res) {
           if (erro) {
             return reject(`Não foi possível listar o FAQ. Erro: ${erro}`);
