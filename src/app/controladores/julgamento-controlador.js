@@ -876,8 +876,8 @@ class JulgamentoControlador {
         });
       }
       if (req.method == 'POST') {
+        req.body.timestamp = moment().unix();
         let dados = [req.body];
-        console.log(dados);
         const suporteDao = new SuporteDao(conn);
         suporteDao.criaIndicacaoPauta(dados).then((resposta) => {
           resp.send(resposta);
