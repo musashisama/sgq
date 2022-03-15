@@ -109,6 +109,7 @@ function elementosTabelas() {
       r.alegacoes != null || r.alegacoes != ''
         ? shiftAlega(r.alegacoes)
         : r.alegacoes;
+    r.reinp = true;
   });
   dataTable(tabledata);
   dataTableAptidao();

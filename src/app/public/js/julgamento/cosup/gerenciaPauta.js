@@ -1,6 +1,7 @@
 let tablePauta, tableVirtual, tableRetornos;
 let processos = [];
 let excelRowsJson;
+let agrupadoRelator = false;
 inicializaComponentes();
 function inicializaComponentes() {
   $(document).ready(function () {
@@ -22,7 +23,8 @@ function returnRep(data) {
 }
 
 function returnApto(data) {
-  return data.apto.includes(false);
+  return data.apto == false;
+  //data.apto.includes(false) ||
 }
 
 let regex = new RegExp('(.*?).(xls|json)$');
@@ -51,6 +53,20 @@ function downloadPautaCons() {
   });
   $('.xlsxDownVirtual').click(() => {
     tableVirtual.download('xlsx', `Pauta_Consolidada.xlsx`, {
+      sheetName: 'Indicação para Pauta',
+    });
+  });
+
+  $('.dropdownDownloadPautaCons').dropdown({
+    coverTrigger: false,
+    hover: false,
+    constrainWidth: false,
+  });
+  $('.csvDownCons').click(() => {
+    tablePauta.download('csv', `${$('.titulo').text()}.csv`);
+  });
+  $('.xlsxDownCons').click(() => {
+    tablePauta.download('xlsx', `Indicacoes_Pauta.xlsx`, {
       sheetName: 'Indicação para Pauta',
     });
   });
@@ -211,6 +227,30 @@ function controleBotoes() {
       tablePauta.removeFilter(returnApto);
     }
   });
+  $(`#colunasAptoCheck`).change(() => {
+    if ($(`#colunasAptoCheck`).prop('checked')) {
+      tablePauta.toggleColumn('abaixo');
+      tablePauta.toggleColumn('sumula');
+      tablePauta.toggleColumn('vinculacao');
+      tablePauta.toggleColumn('liminar');
+    } else {
+      tablePauta.toggleColumn('abaixo');
+      tablePauta.toggleColumn('sumula');
+      tablePauta.toggleColumn('vinculacao');
+      tablePauta.toggleColumn('liminar');
+    }
+  });
+  if ($('#agrupaRelator').length > 0) {
+    $('#agrupaRelator').click(() => {
+      if (agrupadoRelator == false) {
+        tablePauta.setGroupBy(['relator']);
+        agrupadoRelator = true;
+      } else {
+        tablePauta.setGroupBy();
+        agrupadoRelator = false;
+      }
+    });
+  }
 }
 function retornoPauta(termo) {
   if (
@@ -230,7 +270,8 @@ function initSelect() {
 
 function pegaPauta() {
   let pauta = JSON.parse($('#pauta').attr('data-pauta'));
-
+  let dadosColegiado = JSON.parse($('#pauta').attr('data-colegiado'));
+  $('#colegiadoNome').text(dadosColegiado);
   let pautaConsolidada = [];
   pauta.forEach((p) => {
     pautaConsolidada.push(p.processos);
@@ -259,9 +300,13 @@ function tabelaPauta(dados) {
     height: '1000px',
     minHeight: '300px',
     maxHeight: '1000px',
-    layout: 'fitDataStretch',
+    layout: 'fitData',
     movableRows: true,
-    responsiveLayout: 'collapse',
+    movableColumns: true,
+    persistence: {
+      columns: true, //persist column layout
+    },
+    //responsiveLayout: 'collapse',
     initialSort: [],
     groupStartOpen: false,
     responsiveLayoutCollapseStartOpen: false,
@@ -276,30 +321,17 @@ function tabelaPauta(dados) {
         download: false,
         responsive: 0,
       },
-      {
-        title: 'Expandir',
-        formatter: 'responsiveCollapse',
-        width: 60,
-        minWidth: 60,
-        hozAlign: 'center',
-        resizable: false,
-        headerSort: false,
-        responsive: 0,
-        download: false,
-      },
-      {
-        title: 'Processo Apto?',
-        field: 'apto',
-        sorter: 'boolean',
-        hozAlign: 'center',
-        editor: false,
-        formatter: 'tickCross',
-        responsive: 0,
-        download: true,
-        headerTooltip:
-          'Verificação automática baseada nas respostas das colunas.',
-      },
-
+      // {
+      //   title: 'Expandir',
+      //   formatter: 'responsiveCollapse',
+      //   width: 60,
+      //   minWidth: 60,
+      //   hozAlign: 'center',
+      //   resizable: false,
+      //   headerSort: false,
+      //   responsive: 0,
+      //   download: false,
+      // },
       {
         title: 'Processo',
         field: 'processo',
@@ -324,110 +356,6 @@ function tabelaPauta(dados) {
         responsive: 0,
         download: true,
       },
-      {
-        title: 'Retorno?',
-        field: 'retorno',
-        sorter: 'string',
-        hozAlign: 'center',
-        headerFilter: 'input',
-        editor: false,
-        responsive: 0,
-        download: true,
-      },
-      {
-        title: `Abaixo de ${minimoAptoString}`,
-        field: 'abaixo',
-        sorter: 'boolean',
-        hozAlign: 'center',
-        editor: false,
-        formatter: 'tickCross',
-        responsive: 0,
-
-        download: true,
-        headerTooltip: `O valor originário do processo é inferior a ${minimoAptoString}`,
-      },
-      {
-        title: 'Súmula?',
-        field: 'sumula',
-        sorter: 'boolean',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 0,
-
-        download: true,
-        formatter: 'tickCross',
-        headerTooltip:
-          'O processo é objeto de súmula/ resolução do CARF ou tem decisão definitiva do STF /STJ conforme art. 53, § 2º RICARF?',
-      },
-      {
-        title: 'Vinculação?',
-        field: 'vinculacao',
-        sorter: 'boolean',
-        hozAlign: 'center',
-
-        editor: false,
-        responsive: 0,
-        download: true,
-        formatter: 'tickCross',
-        headerTooltip:
-          'O processo apto para sessão virtual tem vinculação por decorrência ou reflexo (art. 6º, §1º, II e III) a outro processo de sua relatoria que seja não apto?',
-      },
-      {
-        title: 'Dec./Liminar?',
-        field: 'liminar',
-        sorter: 'boolean',
-
-        formatter: 'tickCross',
-        hozAlign: 'center',
-        editor: false,
-        responsive: 0,
-        download: true,
-        headerTooltip:
-          'Trata-se de decisão/liminar judicial para julgamento imediato?',
-      },
-      {
-        title: 'Valor do Processo',
-        field: 'valor',
-        sorter: 'number',
-        hozAlign: 'center',
-        editor: false,
-        formatter: formatValor,
-        accessorDownload: numberConvert,
-        responsive: 0,
-        download: true,
-      },
-      // {
-      //   title: 'Valor Original',
-      //   field: 'valorOriginal',
-      //   sorter: 'number',
-      //   hozAlign: 'center',
-      //   editor: false,
-      //   formatter: formatValor,
-      //   accessorDownload: numberConvert,
-      //   responsive: 0,
-      //   download: true,
-      // },
-      {
-        title: 'Horas CARF',
-        field: 'HE',
-        sorter: 'number',
-        hozAlign: 'center',
-        headerFilter: 'input',
-        topCalc: somaCalc,
-        editor: false,
-        responsive: 2,
-        download: true,
-      },
-
-      // {
-      //   title: 'Questionamento',
-      //   field: 'questionamento',
-      //   sorter: 'string',
-      //   hozAlign: 'left',
-      //   editor: false,
-      //   responsive: 0,
-      //   download: true,
-      // },
       {
         title: 'Questionamento Correto?',
         field: 'questionamento',
@@ -472,12 +400,81 @@ function tabelaPauta(dados) {
           defaultValue: 'Corrigido',
         },
         responsive: 0,
+        download: false,
+        headerTooltip:
+          'Verificação automática baseada nas respostas das colunas.',
+      },
+      {
+        title: 'Retorno?',
+        field: 'retorno',
+        sorter: 'string',
+        hozAlign: 'center',
+        headerFilter: 'input',
+        editor: false,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Processo Apto?',
+        field: 'apto',
+        sorter: 'boolean',
+        hozAlign: 'center',
+        editor: false,
+        formatter: 'tickCross',
+        responsive: 0,
         download: true,
         headerTooltip:
           'Verificação automática baseada nas respostas das colunas.',
       },
       {
-        title: 'Alegação Princpal',
+        title: `Abaixo de ${minimoAptoString}`,
+        field: 'abaixo',
+        sorter: 'boolean',
+        hozAlign: 'center',
+        editor: false,
+        formatter: 'tickCross',
+        responsive: 0,
+        download: true,
+        headerTooltip: `O valor originário do processo é inferior a ${minimoAptoString}`,
+      },
+      {
+        title: 'Súmula?',
+        field: 'sumula',
+        sorter: 'boolean',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 0,
+        download: true,
+        formatter: 'tickCross',
+        headerTooltip:
+          'O processo é objeto de súmula/ resolução do CARF ou tem decisão definitiva do STF /STJ conforme art. 53, § 2º RICARF?',
+      },
+      {
+        title: 'Vinculação?',
+        field: 'vinculacao',
+        sorter: 'boolean',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 0,
+        download: true,
+        formatter: 'tickCross',
+        headerTooltip:
+          'O processo apto para sessão virtual tem vinculação por decorrência ou reflexo (art. 6º, §1º, II e III) a outro processo de sua relatoria que seja não apto?',
+      },
+      {
+        title: 'Dec./Liminar?',
+        field: 'liminar',
+        sorter: 'boolean',
+        formatter: 'tickCross',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 0,
+        download: true,
+        headerTooltip:
+          'Trata-se de decisão/liminar judicial para julgamento imediato?',
+      },
+      {
+        title: 'Alegação Principal',
         field: 'alegaPrim',
         sorter: 'string',
         hozAlign: 'left',
@@ -515,6 +512,28 @@ function tabelaPauta(dados) {
         sorter: 'string',
         hozAlign: 'left',
         editor: false,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Horas CARF',
+        field: 'HE',
+        sorter: 'number',
+        hozAlign: 'center',
+        headerFilter: 'input',
+        topCalc: somaCalc,
+        editor: false,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Valor do Processo',
+        field: 'valor',
+        sorter: 'number',
+        hozAlign: 'center',
+        editor: false,
+        formatter: formatValor,
+        accessorDownload: numberConvert,
         responsive: 0,
         download: true,
       },
@@ -610,7 +629,7 @@ function tabelaRetornos(dados) {
         download: true,
       },
       {
-        title: 'Alegação Princpal',
+        title: 'Alegação Principal',
         field: 'alegaPrim',
         sorter: 'string',
         topCalc: countCalc,
@@ -897,7 +916,7 @@ function tabelaVirtual(dados) {
         },
       },
       {
-        title: 'Alegação Princpal',
+        title: 'Alegação Principal',
         field: 'alegaPrim',
         sorter: 'string',
         topCalc: countCalc,
