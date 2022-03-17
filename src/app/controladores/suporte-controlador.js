@@ -255,6 +255,7 @@ class SuporteControlador {
         //req.body.processos = JSON.parse(req.body.processos);
         console.log(req.body);
         req.body.tipoPauta = 'Consolidada';
+        req.body.usuarioSEPAJ = req.user.cpf;
         const suporteDAO = new SuporteDAO(conn);
         suporteDAO.inserePautaConsolidada(req.body).then((res) => {
           console.log(res);
