@@ -903,7 +903,7 @@ class JulgamentoControlador {
   carregaPaginaIndicacoes() {
     return function (req, resp) {
       const pessoalDao = new PessoalDao(conn);
-      const julgamentoDao = new JulgamentoDao(conn);
+      //const julgamentoDao = new JulgamentoDao(conn);
       const suporteDao = new SuporteDao(conn);
       let cor = CSVHandler.semanaCores(req.user.unidade);
       let tipoColegiado = CSVHandler.tipoColegiado(req.user.unidade);
