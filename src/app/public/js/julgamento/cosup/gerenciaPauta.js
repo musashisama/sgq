@@ -139,6 +139,7 @@ function controleBotoes() {
           data: { processos: processosAleg },
           type: 'POST',
           success: function (result) {
+            //console.log(result);
             result.forEach((res) => {
               dataRetornos.forEach((dr) => {
                 if (res.processo.numero == dr.processo) {
@@ -150,7 +151,9 @@ function controleBotoes() {
                   dr.comParadigma =
                     res.indicadorParadigma == true
                       ? 'Processo Paradigma'
-                      : 'Processo não é Paradigma';
+                      : res.indicadorParadigma == false
+                      ? 'Processo não é Paradigma'
+                      : 'Não preenchido';
                   dr.HE = res.horasEstimadas;
                   dr.apto = true;
                 }
@@ -202,9 +205,11 @@ function controleBotoes() {
           dr.alegTema = tab.tema_descricao;
           dr.alegMateria = tab.materia_nome;
         }
-        if (dr.comParadigma.includes('não é')) {
-          dr.indParadigma = 'N';
-        } else dr.indParadigma = 'S';
+        if (dr.comParadigma) {
+          if (dr.comParadigma.includes('não é')) {
+            dr.indParadigma = 'N';
+          } else dr.indParadigma = 'S';
+        }
       });
     });
 
