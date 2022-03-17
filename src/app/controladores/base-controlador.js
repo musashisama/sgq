@@ -156,7 +156,7 @@ http://${URL.host}/altera-senha/${registro.controle}
             msg: {
               cor: 'login_error',
               alert: 'error',
-              text: 'Endereço não encontrado na base. Entre em contato com o administrador do sistema.',
+              text: 'Endereço não encontrado na base. Entre em contato com o SEGEP/COGEC.',
             },
           });
       });
