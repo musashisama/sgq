@@ -14,6 +14,8 @@ let semanaAzul = [
   '1ª TE-2ªSEÇÃO-2001-CARF-MF-DF',
   '2ª TE-2ªSEÇÃO-2002-CARF-MF-DF',
   '3ª TE-2ªSEÇÃO-2003-CARF-MF-DF',
+  '4ª TE-2ªSEÇÃO-2004-CARF-MF-DF',
+  '5ª TE-2ªSEÇÃO-2005-CARF-MF-DF',
   '3ª SEÇÃO-CARF-MF-DF',
   '1ª TO-2ªCÂMARA-3ªSEÇÃO-CARF-MF-DF',
   '2ª TO-2ªCÂMARA-3ªSEÇÃO-CARF-MF-DF',
@@ -110,6 +112,16 @@ class CSVHandler {
     if (semanaAzul.includes(turma)) {
       return 'Azul';
     }
+  }
+
+  static tipoColegiado(colegiado) {
+    if (
+      colegiado.includes('1ª TE') ||
+      colegiado.includes('2ª TE') ||
+      colegiado.includes('3ª TE')
+    ) {
+      return 'TE';
+    } else return 'TOCSRF';
   }
 
   static periodos(semana) {
