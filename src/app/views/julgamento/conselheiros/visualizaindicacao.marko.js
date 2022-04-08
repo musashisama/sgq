@@ -47,25 +47,25 @@ function render(input, out, __component, component, state) {
       class: "sidenav"
     }, out, __component, "5");
 
-  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Visualização da Indicação para Pauta</h3><br><div class=\"row conteudoPrincipal\"></div><br><div class=\"row\"><h4 id=\"h4Periodo\">Período de Indicação: <span id=\"periodoIndica\"></span></h4></div><div class=\"row\"><div class=\"col s12 right-align\"><div class=\"row\">");
+  out.w("<div class=\"container\"><h3 class=\"center-align titulo\">Visualização da Indicação para Pauta</h3><br><div class=\"row conteudoPrincipal\"></div><br><div class=\"row\"><h4 id=\"h4Periodo\">Período de Indicação: <span id=\"periodoIndica\"></span></h4><h5 id=\"h5Periodo\" class=\"white-text\">Para este período foram indicados <strong><span id=\"qtdeProc\"></span></strong> processos, perfazendo um total de <strong><span id=\"somaHE\"></span></strong> horas CARF.</h5></div><div class=\"row\"><div class=\"col s12 right-align\"><div class=\"row\">");
 
-  app_drop_download_tag({}, out, __component, "17");
+  app_drop_download_tag({}, out, __component, "22");
 
   out.w("</div><div id=\"tabelaIndicacao\"" +
     marko_attr("data-indicacao", "" + data.indicacao) +
     "></div></div></div><div class=\"row\"><div id=\"cardsColegiados\"></div></div></div></main>");
 
-  app_footer_tag({}, out, __component, "21");
+  app_footer_tag({}, out, __component, "26");
 
-  app_modal_tag({}, out, __component, "22");
+  app_modal_tag({}, out, __component, "27");
 
-  app_scripts_js_tag({}, out, __component, "23");
+  app_scripts_js_tag({}, out, __component, "28");
 
   out.w("<script src=\"/estatico/js/libs/plotly-latest.min.js\"></script><script src=\"/estatico/js/libs/plotly-locale-pt-br.js\"></script><script>Plotly.setPlotConfig({locale: 'pt-BR'})</script><script src=\"/estatico/js/julgamento/helpers/configTabelaNovoRegap.js\"></script><script src=\"/estatico/js/julgamento/conselheiros/paginaVisualizaIndicacao.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "29");
+  await_reorderer_tag({}, out, __component, "34");
 
   out.w("</body></html>");
 }

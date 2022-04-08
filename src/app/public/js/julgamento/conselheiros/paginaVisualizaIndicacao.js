@@ -9,12 +9,14 @@ function inicializaComponentes() {
   $(document).ready(function () {
     if (!indicacao == false) {
       tabelaIndicacoes();
+      somaHE();
       $('#periodoIndica').text(indicacao.mesIndicacao);
     } else {
       $('#h4Periodo').text(
         'Não foram encontradas indicações para este período',
       );
       $('.dropdownDownload').toggle();
+      $('#h5Periodo').toggle();
     }
   });
 }
@@ -25,6 +27,21 @@ function initModal() {
 
 function initSelect() {
   $('select').formSelect();
+}
+
+function somaHE() {
+  let somaHE = 0;
+  let qtde = 0;
+  indicacao.processos.forEach((i) => {
+    console.log(i.HE);
+    somaHE += +i.HE;
+    qtde += 1;
+  });
+  if (somaHE >= 126) {
+    $('#h5Periodo').addClass('green');
+  } else $('#h5Periodo').addClass('orange');
+  $('#qtdeProc').text(qtde);
+  $('#somaHE').text(somaHE.toFixed(2));
 }
 
 function tabelaIndicacoes() {
@@ -192,17 +209,6 @@ function tabelaIndicacoes() {
         responsive: 0,
         download: true,
       },
-      // {
-      //   title: 'Valor Original',
-      //   field: 'valorOriginal',
-      //   sorter: 'number',
-      //   hozAlign: 'center',
-      //   editor: false,
-      //   formatter: formatValor,
-      //   accessorDownload: numberConvert,
-      //   responsive: 0,
-      //   download: true,
-      // },
       {
         title: 'Horas CARF',
         field: 'HE',
@@ -214,16 +220,6 @@ function tabelaIndicacoes() {
         responsive: 2,
         download: true,
       },
-
-      // {
-      //   title: 'Questionamento',
-      //   field: 'questionamento',
-      //   sorter: 'string',
-      //   hozAlign: 'left',
-      //   editor: false,
-      //   responsive: 0,
-      //   download: true,
-      // },
       {
         title: 'Questionamento Correto?',
         field: 'questionamento',

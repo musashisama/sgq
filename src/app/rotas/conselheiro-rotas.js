@@ -109,6 +109,12 @@ module.exports = (app) => {
     rotasJulgamento.reinpindividual,
     julgControlador.carregaReinpIndividual(),
   );
+
+  app
+    .route(rotasJulgamento.pegareinpindividual)
+    .get(julgControlador.carregaPaginaReinp())
+    .post(julgControlador.carregaPaginaReinp());
+
   app.get(
     rotasJulgamento.ocorrencias,
     julgControlador.carregaOcorrenciasCons(),
