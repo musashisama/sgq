@@ -105,6 +105,7 @@ class JulgamentoControlador {
       arquivos: '/julgamento/conselheiros/arquivos',
       regapindividual: '/julgamento/conselheiros/regap',
       pegaAlegacao: '/julgamento/conselheiros/pega-alegacao',
+      pegareinpindividual: '/julgamento/conselheiros/getreinp',
       reinpindividual: '/julgamento/conselheiros/reinp',
       listaregapindividual: '/julgamento/conselheiros/listaregap',
       regapcons: '/julgamento/conselheiros/:id',

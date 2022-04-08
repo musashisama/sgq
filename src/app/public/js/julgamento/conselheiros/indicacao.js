@@ -541,18 +541,39 @@ function controleTabs() {
     };
     dadosIndicacao = tableAptidao.getData();
     let alegacaoNula = 0;
+    let alegacaoErrada = 0;
     dadosIndicacao.forEach((p) => {
+      console.log(p.alegTributo);
       if (p.confirmaQuest != 'Correto') {
         p.questionamento = p.confirmaQuest;
       }
       if (p.alegaPrim == '' || p.alegaPrim == null) {
         alegacaoNula += 1;
       }
+      if (p.alegMateria == '' || p.alegTema == '' || p.alegTributo == '') {
+        alegacaoNula += 1;
+      }
+      if (
+        p.alegMateria == 'Não encontrado' ||
+        p.alegTema == 'Não encontrado' ||
+        p.alegTributo == 'Não encontrado'
+      ) {
+        alegacaoErrada += 1;
+      }
+      if (
+        typeof p.alegMateria == 'undefined' ||
+        typeof p.alegTema == 'undefined' ||
+        typeof p.alegTributo == 'undefined'
+      ) {
+        alegacaoErrada += 1;
+      }
     });
-    if (alegacaoNula > 0) {
-      var toastHTML = `<span>Há ${alegacaoNula} processos com alegação(ões) não preenchida(s).</span>`;
-      M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 5000 });
-      var toastHTML2 = `É necessário preencher as alegações faltantes para efetuar a confirmação da indicação para pauta.</span>`;
+    if (alegacaoNula > 0 || alegacaoErrada > 0) {
+      var toastHTML0 = `<span>Há ${alegacaoErrada} processos com alegação(ões) incorreta(s) ou não preenchida(s).</span>`;
+      M.toast({ html: toastHTML0, classes: 'rounded', timeRemaining: 5000 });
+      // var toastHTML = `<span>Há ${alegacaoNula} processo(s) com alegação(ões) não preenchida(s) e ${alegacaoErrada} processos com alegações erradas.</span>`;
+      // M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 5000 });
+      var toastHTML2 = `É necessário preencher as alegações faltantes e corrigir as erradas para efetuar a confirmação da indicação para pauta.</span>`;
       M.toast({ html: toastHTML2, classes: 'rounded', timeRemaining: 5000 });
     } //AQUI VERIFICAÇÂO DE JUNTADA
     else {
@@ -801,13 +822,13 @@ function dataTableAptidao() {
         field: 'alegaPrim',
         sorter: 'string',
         hozAlign: 'left',
-        editorParams: {
-          search: true,
-          mask: '99.999.9999',
-          elementAttributes: {
-            maxlength: '11', //set the maximum character length of the input element to 10 characters
-          },
-        },
+        //  editorParams: {
+        //     search: true,
+        //     mask: '99.999.9999',
+        //     elementAttributes: {
+        //       maxlength: '11', //set the maximum character length of the input element to 10 characters
+        //     },
+        //   },
         cellEdited: alegEdita,
         //accessor: alegaPrim,
         //validator: 'required',

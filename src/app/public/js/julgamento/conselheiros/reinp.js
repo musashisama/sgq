@@ -70,7 +70,7 @@ function inicializaComponentes() {
 
   function getRelatoriosInd(tipo) {
     $.ajax({
-      url: `/julgamento/restrito/reinp/`,
+      url: `/julgamento/conselheiros/getreinp/`,
       type: 'POST',
       data: {
         get: 'listagem',
@@ -103,7 +103,7 @@ function inicializaComponentes() {
 
   function selectRelatoriosInd(ano, tipo) {
     $.ajax({
-      url: `/julgamento/restrito/reinp/`,
+      url: `/julgamento/conselheiros/getreinp/`,
       type: 'POST',
       data: {
         get: 'relatorio',
@@ -121,6 +121,8 @@ function inicializaComponentes() {
         $('.progressReinp').toggle();
       })
       .fail(function (jqXHR, textStatus, msg) {
+        console.log(textStatus);
+        console.log(msg);
         var toastHTML = `<span>Ocorreu um erro.</span>`;
         M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
       });
