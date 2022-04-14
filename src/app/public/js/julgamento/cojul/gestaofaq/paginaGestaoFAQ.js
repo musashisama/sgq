@@ -2,7 +2,7 @@ inicializaComponentes();
 function inicializaComponentes() {
   $(document).ready(function () {
     initModal();
-    tabelaPopups();
+    tabelaFAQ();
   });
 }
 
@@ -10,9 +10,9 @@ function initModal() {
   $('.modal').modal();
 }
 
-function tabelaPopups() {
-  tabledata = JSON.parse($('#dataPopups').attr('data-popup'));
-  table = new Tabulator('#tabelaPopups', {
+function tabelaFAQ() {
+  tabledata = JSON.parse($('#tabelaFAQ').attr('data-faq'));
+  table = new Tabulator('#tabelaFAQ', {
     data: tabledata,
     pagination: 'local',
     height: '1000px',
@@ -37,30 +37,8 @@ function tabelaPopups() {
         visible: false,
       },
       {
-        title: 'Data do Popup',
-        field: 'dataPopup',
-        sorter: 'date',
-        sorterParams: { format: 'DD/MM/YYYY' },
-        hozAlign: 'left',
-        editor: false,
-        headerFilter: 'input',
-        responsive: 0,
-        download: true,
-      },
-      {
-        title: 'Título',
-        field: 'titulo',
-        formatter: formataPergunta,
-        sorter: 'string',
-        hozAlign: 'left',
-        editor: false,
-        headerFilter: 'input',
-        responsive: 0,
-        download: true,
-      },
-      {
-        title: 'Conteúdo',
-        field: 'conteudo',
+        title: 'Pergunta',
+        field: 'pergunta',
         sorter: 'string',
         formatter: formataPergunta,
         hozAlign: 'left',
@@ -70,20 +48,28 @@ function tabelaPopups() {
         download: true,
       },
       {
-        title: 'Ativo?',
-        field: 'ativo',
-        formatter: 'tickCross',
-        cellClick: clickAtivoPopup,
-        hozAlign: 'center',
-        // formatterParams: {
-        //   allowEmpty: false,
-        //   allowTruthy: true,
-        //   tickElement: "<i class='fa fa-check'></i>",
-        //   crossElement: "<i class='fa fa-times'></i>",
-        // },
+        title: 'Resposta',
+        field: 'resposta',
+        formatter: formataPergunta,
+        sorter: 'string',
+        hozAlign: 'left',
+        editor: false,
+        headerFilter: 'input',
+        responsive: 0,
+        download: true,
       },
       {
-        title: 'Excluir Popup',
+        title: 'Seção FAQ',
+        field: 'secaoFAQ',
+        sorter: 'string',
+        hozAlign: 'left',
+        editor: false,
+        headerFilter: 'input',
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Excluir Pergunta',
         formatter: formatDeletaPopup,
         cellClick: clickExcluiPopup,
         width: 140,
@@ -94,16 +80,10 @@ function tabelaPopups() {
 }
 
 let formatEditaPopup = function formatEditaPopup(cell) {
-  return `<a class='black-text btndetalha' href=/julgamento/restrito/gestaopopup/${
+  return `<a class='black-text btndetalha' href=/julgamento/restrito/cadastrafaqdipaj/${
     cell.getRow().getData().uniqueId
-  } title='Editar popup'><i class='material-icons'>details</i></a>`;
+  } title='Editar Pergunta'><i class='material-icons'>details</i></a>`;
 };
-
-function clickEditaPopup(e, cell) {
-  e.preventDefault();
-  $('.btndetalha').addClass('modal-trigger');
-  montaModal(e, cell, 'Detalhamento do Popup');
-}
 
 let formataPergunta = function formataPergunta(cell) {
   let regex = /(<([^>]+)>)/gi,
@@ -111,28 +91,19 @@ let formataPergunta = function formataPergunta(cell) {
   return body.replace(regex, '');
 };
 
-function clickAtivoPopup(e, cell) {
+function clickEditaPopup(e, cell) {
   e.preventDefault();
-  console.log(cell.getRow().getData().ativo);
-  handlePopup(
-    (dados = {
-      uniqueId: cell.getRow().getData().uniqueId,
-      ativo:
-        cell.getRow().getData().ativo == 'false' ||
-        cell.getRow().getData().ativo == false
-          ? true
-          : false,
-    }),
-    'POST',
-  );
+  $('.btndetalha').addClass('modal-trigger');
+  montaModal(e, cell, 'Detalhamento da Pergunta');
 }
 
 function clickExcluiPopup(e, cell) {
   e.preventDefault();
+  console.log(cell.getRow().getData().uniqueId);
   handlePopup(
     (dados = {
       uniqueId: cell.getRow().getData().uniqueId,
-      status: 'Popup Excluído',
+      status: 'Pergunta Excluída',
     }),
     'DELETE',
   );
@@ -144,14 +115,14 @@ let formatDeletaPopup = function formatDeletaPopup(cell) {
 
 function handlePopup(registro, metodo) {
   $.ajax({
-    url: '/julgamento/restrito/gestaopopup/atualiza',
+    url: '/julgamento/restrito/cadastrafaqdipaj/atualiza',
     data: registro,
     type: metodo,
     success: function (result) {
       var toastHTML = `<span>Dados atualizados com sucesso!</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
       console.log(result);
-      window.location.replace('/julgamento/restrito/paginagestaopopup/');
+      window.location.replace('/julgamento/restrito/gestaoFAQ/');
     },
     error: function (result) {
       var toastHTML = `<span>Ocorreu um erro.</span>`;

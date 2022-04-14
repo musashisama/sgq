@@ -186,14 +186,14 @@ function controleBotoes() {
   $('#botaoCriaVirtual').click(() => {
     let dadosCons = [];
     let parcial = tablePauta.getData();
-    parcial.forEach((p) => {
-      if (p.apto == 'true' || p.apto == true) {
-        dadosCons.push(p);
-      }
-    });
+    // parcial.forEach((p) => {
+    //   if (p.apto == 'true' || p.apto == true) {
+    //     dadosCons.push(p);
+    //   }
+    // });
     $('.tabs').tabs('select', 'retornos');
     //tableVirtual.addData(dadosCons, true);
-    tabelaVirtual(dadosCons);
+    tabelaVirtual(parcial);
     tableVirtual.redraw();
   });
   $('#botaoAddRetornos').click(() => {

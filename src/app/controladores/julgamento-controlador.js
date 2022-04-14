@@ -66,6 +66,7 @@ class JulgamentoControlador {
       gestaosolicitacoes: '/julgamento/restrito/gestaosolicitacoes',
       gestaoregsolicitacoes: '/julgamento/restrito/gestaoregsolicitacoes',
       detalhasolicitacao: '/julgamento/restrito/detalhasolicitacao/:id',
+      gestaoFAQ: '/julgamento/restrito/gestaoFAQ/',
       cadastrafaqdipaj: '/julgamento/restrito/cadastrafaqdipaj/:id',
       gestaoGC: '/julgamento/restrito/gestaoGC/:id',
       arqdown: '/julgamento/restrito/arqdown/:id',
@@ -433,6 +434,54 @@ class JulgamentoControlador {
             });
         }
       }
+    };
+  }
+
+  handleFAQ() {
+    return function (req, resp) {
+      const julgamentoDao = new JulgamentoDao(conn);
+      if (req.method == 'GET') {
+        julgamentoDao
+          .getFAQ(req.params.id == 'new' ? {} : { uniqueId: req.params.id })
+          .then((faq) => {
+            if (req.params.id != 'new') {
+              faq[0].tipo = 'update';
+            }
+
+            resp.marko(templates.julgamento.cadastrafaqdipaj, {
+              faq: JSON.stringify(faq[0]),
+            });
+          });
+      } else if (req.method == 'POST' || req.method == 'PUT') {
+        julgamentoDao.getFAQ({ uniqueId: req.body.uniqueId }).then((msg) => {
+          if (!msg[0]) {
+            julgamentoDao.insereFAQ(req.body).then((msg) => {
+              resp.json(msg);
+            });
+          } else {
+            julgamentoDao
+              .atualizaFAQ({ uniqueId: req.body.uniqueId }, req.body)
+              .then((msg) => {
+                resp.json(msg);
+              });
+          }
+        });
+      } else if (req.method == 'DELETE') {
+        julgamentoDao.excluiFAQ({ uniqueId: req.body.uniqueId }).then((msg) => {
+          resp.json(msg);
+        });
+      }
+    };
+  }
+
+  carregaGestaoFAQ() {
+    return function (req, resp) {
+      const julgamentoDao = new JulgamentoDao(conn);
+      julgamentoDao.getFAQ().then((faq) => {
+        resp.marko(templates.julgamento.gestaoFAQ, {
+          faq: JSON.stringify(faq),
+        });
+      });
     };
   }
 

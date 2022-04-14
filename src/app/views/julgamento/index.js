@@ -21,6 +21,7 @@ module.exports = {
   faqdipaj: require('./faqdipaj/faqdipaj.marko'),
   cadastrafaqdipaj: require('./faqdipaj/cadastrafaqdipaj.marko'),
   formFAQ: require('./faqdipaj/formFAQ.marko'),
+  gestaoFAQ: require('./faqdipaj/gestaoFAQ.marko'),
   calendario: require('./calendario/calendario.marko'),
   calendarioView: require('./calendario/calendarioView.marko'),
   gestaoconhecimento: require('./gestaoconhecimento/gestaoconhecimento.marko'),

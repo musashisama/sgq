@@ -95,7 +95,8 @@ function tabelaIndicacoes() {
         editor: false,
         formatter: 'tickCross',
         responsive: 0,
-        download: true,
+        download: false,
+        visible: false,
         headerTooltip:
           'Verificação automática baseada nas respostas das colunas.',
       },
@@ -144,8 +145,8 @@ function tabelaIndicacoes() {
         editor: false,
         formatter: 'tickCross',
         responsive: 0,
-
-        download: true,
+        download: false,
+        visible: false,
         headerTooltip: `O valor originário do processo é inferior a ${minimoAptoString}`,
       },
       {
@@ -155,8 +156,8 @@ function tabelaIndicacoes() {
         hozAlign: 'center',
         editor: false,
         responsive: 0,
-
-        download: true,
+        download: false,
+        visible: false,
         formatter: 'tickCross',
         headerTooltip:
           'O processo é objeto de súmula/ resolução do CARF ou tem decisão definitiva do STF /STJ conforme art. 53, § 2º RICARF?',
@@ -169,7 +170,8 @@ function tabelaIndicacoes() {
 
         editor: false,
         responsive: 0,
-        download: true,
+        download: false,
+        visible: false,
         formatter: 'tickCross',
         headerTooltip:
           'O processo apto para sessão virtual tem vinculação por decorrência ou reflexo (art. 6º, §1º, II e III) a outro processo de sua relatoria que seja não apto?',
