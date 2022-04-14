@@ -121,12 +121,21 @@ module.exports = (app) => {
     }
   });
 
+  // app
+  //   .route(rotasJulgamento.cadastrafaqdipaj)
+  //   .get(julgControlador.handleFAQDipaj())
+  //   .post(julgControlador.handleFAQDipaj())
+  //   .put(julgControlador.handleFAQDipaj())
+  //   .delete(julgControlador.handleFAQDipaj());
+
   app
     .route(rotasJulgamento.cadastrafaqdipaj)
-    .get(julgControlador.handleFAQDipaj())
-    .post(julgControlador.handleFAQDipaj())
-    .put(julgControlador.handleFAQDipaj())
-    .delete(julgControlador.handleFAQDipaj());
+    .get(julgControlador.handleFAQ())
+    .post(julgControlador.handleFAQ())
+    .put(julgControlador.handleFAQ())
+    .delete(julgControlador.handleFAQ());
+
+  app.route(rotasJulgamento.gestaoFAQ).get(julgControlador.carregaGestaoFAQ());
 
   app
     .route(rotasJulgamento.arquivos)

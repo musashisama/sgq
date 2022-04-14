@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <app-scripts-css/>
+  <body>
+    <app-header/>
+    <main class="conteudoPrincipal">
+      <app-navbar id="slide-out" class="sidenav"/>
+      <div class="container">
+        <h3 class="center-align titulo">Gestão de Perguntas e Respostas da COJUL</h3>
+        <br/>
+        <div class="row conteudoPrincipal"/>
+        <div class="row">
+          <a class="waves-effect waves-light btn btn-cria" href=`/julgamento/restrito/cadastrafaqdipaj/new`>
+            <i class="material-icons right ">cloud</i>Criar Nova Pergunta e Resposta
+          </a>
+        </div>
+        <br/>
+        <div class="row">
+          <h4>Gerenciar Perguntas e Respostas da COJUL</h4>
+        </div>
+        <div class="row">
+          <div class="col s12 right-align">
+            <div class="row">
+              <app-drop-download/>
+            </div>
+            <div id="tabelaFAQ" data-faq=`${data.faq}`/>
+          </div>
+        </div>
+        <div class="row">
+          <div id="cardsColegiados"/>
+        </div>
+      </div>
+    </main>
+    <app-footer/>
+    <app-modal/>
+    <app-scripts-js/>
+    <script src="/estatico/js/julgamento/cojul/gestaofaq/paginaGestaoFAQ.js"/>
+  </body>
+</html>

@@ -1,32 +1,32 @@
-let faqTexto = JSON.parse($('#dataFAQ').attr('data-faq'));
-let toolbarOptions = [
+let popupTexto = JSON.parse($('#dataPopups').attr('data-popup'));
+let quillOptions = [
   ['bold', 'italic', 'underline', 'strike'],
   ['link'],
   [{ color: [] }, { background: [] }],
   [{ align: [] }],
   [{ list: 'ordered' }, { list: 'bullet' }],
-  [{ script: 'sub' }, { script: 'super' }], // superscript/subscript
+  [{ script: 'sub' }, { script: 'super' }],
   [{ indent: '-1' }, { indent: '+1' }],
   ['clean'],
 ];
 (options = {
   modules: {
-    toolbar: toolbarOptions,
+    toolbar: quillOptions,
     history: {
-      // Enable with custom configurations
       delay: 2500,
       userOnly: true,
     },
   },
   theme: 'snow',
 }),
-  (quillPerg = new Quill('#editorPergunta', options));
-quillPerg.formatText(0, 1000, {
-  // unbolds 'hello' and set its color to blue
+  (quillTitulo = new Quill('#tituloPopup', options));
+quillTitulo.formatText(0, 1000, {
   bold: true,
   italic: true,
 });
-quillResp = new Quill('#editorResposta', options);
+
+quillDesc = new Quill('#conteudoPopup', options);
+
 inicializaComponentes();
 function inicializaComponentes() {
   $(document).ready(function () {
@@ -37,72 +37,61 @@ function inicializaComponentes() {
   });
 }
 
+function verificaUpdate() {
+  if (popupTexto.tipo == 'update') {
+    console.log(popupTexto);
+    quillTitulo.root.innerHTML = popupTexto.titulo;
+    quillDesc.root.innerHTML = popupTexto.conteudo;
+    $('#rowArquivo').remove();
+  }
+}
+
 function initModal() {
   $('.modal').modal();
 }
 
 function initSelect() {
-  $('#secaoFAQ').formSelect();
-}
-
-function verificaUpdate() {
-  if (faqTexto.tipo == 'update') {
-    console.log(faqTexto);
-    quillPerg.root.innerHTML = faqTexto.pergunta;
-    quillResp.root.innerHTML = faqTexto.resposta;
-    $('#secaoFAQ').val(faqTexto.secaoFAQ);
-    $('#rowArquivo').remove();
-  }
+  $('#secaoGC').formSelect();
 }
 
 function btnInsere() {
   $('.btn-insere').click((e) => {
-    var valid = document.getElementById('secaoFAQ');
-    // for demonstration purposes only, will always b "true" here, in this case, since HTML5 validation will block this "click" event if form invalid (i.e. if "required" field "foo" is empty)
-
-    if (valid.checkValidity()) {
-      $('#aModal').addClass('modal-trigger');
-      montaModal();
-    } else {
-      var toastHTML = `<span>Preencha todos os campos</span>`;
-      M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
-    }
+    $('#aModal').addClass('modal-trigger');
+    montaModal();
   });
 }
 
 function montaModal() {
-  $('.hModal').text('Confirmação no FAQ');
+  $('.hModal').text('Confirmação de inclusão de item do para o Popup do SGI');
   $('.pModal').append(
     `<p class="pModal ">
             <br/>
             Verifique se os dados abaixo estão corretos e clique em "Confirma" para efetuar o registro.<br/><br/>
-            <h5>Pergunta:</h5>
-            ${quillPerg.root.innerHTML}
-           <h5>Resposta:</h5>
-            ${quillResp.root.innerHTML}
-            </p>
+            <h5>Título do Item:</h5>
+            ${quillTitulo.root.innerHTML}
+            <h5>Descrição do Item:</h5>
+            ${quillDesc.root.innerHTML}
             <p><strong>Arquivos:</strong>${pegaArquivos(true)}</p>
-            `,
+           `,
   );
   $('.concorda').click(function () {
     let data = {};
-    if (faqTexto.tipo == 'update') {
+    if (popupTexto.tipo == 'update') {
       data = {
-        pergunta: quillPerg.root.innerHTML,
-        resposta: quillResp.root.innerHTML,
-        secaoFAQ: $('#secaoFAQ option:selected').val(),
-        uniqueId: faqTexto.uniqueId,
+        titulo: quillTitulo.root.innerHTML,
+        conteudo: quillDesc.root.innerHTML,
+        uniqueId: popupTexto.uniqueId,
       };
     } else {
       data = {
-        pergunta: quillPerg.root.innerHTML,
-        resposta: quillResp.root.innerHTML,
-        secaoFAQ: $('#secaoFAQ option:selected').val(),
+        dataPopup: moment().format('DD/MM/YYYY'),
+        titulo: quillTitulo.root.innerHTML,
+        conteudo: quillDesc.root.innerHTML,
         arquivos: pegaArquivos(),
         uniqueId: moment.now(),
       };
     }
-    handleFAQ(data, 'POST');
+    handlePopup(data, 'POST');
     $('.pModal').text('');
   });
   $('.cancela').click(function () {
@@ -110,18 +99,18 @@ function montaModal() {
   });
 }
 
-function handleFAQ(registro, metodo) {
+function handlePopup(registro, metodo) {
   $.ajax({
-    url: '/julgamento/restrito/cadastrafaqdipaj/1',
+    url: '/julgamento/restrito/gestaopopup/atualiza',
     data: registro,
     type: metodo,
     success: function (result) {
       var toastHTML = `<span>Dados atualizados com sucesso!</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
       console.log(result);
-      quillPerg.setContents('');
-      quillResp.setContents('');
-      window.location.replace('/julgamento/restrito/gestaoFAQ/');
+      quillTitulo.setContents('');
+      quillDesc.setContents('');
+      window.location.replace('/julgamento/restrito/paginagestaopopup/');
     },
     error: function (result) {
       var toastHTML = `<span>Ocorreu um erro.</span>`;
