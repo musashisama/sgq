@@ -78,6 +78,7 @@ function getRelatorios(data) {
     .fail(function (jqXHR, textStatus, msg) {
       var toastHTML = `<span>Ocorreu um erro.</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+      console.log(textStatus, msg);
     });
 }
 
@@ -124,6 +125,7 @@ function elementosTabelas() {
       .fail(function (jqXHR, textStatus, msg) {
         var toastHTML = `<span>Ocorreu um erro.</span>`;
         M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
+        console.log(textStatus, msg);
       });
   });
 }
