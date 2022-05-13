@@ -64,6 +64,9 @@ function tabelaIndicacoes() {
     responsiveLayout: 'collapse',
     initialSort: [],
     groupStartOpen: false,
+    persistence: {
+      columns: true, //persist column layout
+    },
     responsiveLayoutCollapseStartOpen: false,
     columns: [
       //   {

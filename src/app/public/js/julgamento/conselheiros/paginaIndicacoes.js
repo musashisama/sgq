@@ -178,7 +178,7 @@ let linksIndica = function linksIndica(cell) {
     return `
     <a class='black-text btnVisualiza' href='/julgamento/conselheiros/visualiza-pauta/${
       cell.getRow().getData()._id
-    }'title='Indicar Processos para Pauta'><i class='material-icons'>find_in_page</i></a>
+    }'title='Visualizar Indicação para Pauta'><i class='material-icons'>find_in_page</i></a>
     &nbsp;
   <a class='black-text btnedita' href='/julgamento/conselheiros/indicacao-pauta/${
     cell.getRow().getData()._id
@@ -193,7 +193,7 @@ let linksIndica = function linksIndica(cell) {
     return `
   <a class='black-text btnVisualiza' href='/julgamento/conselheiros/visualiza-pauta/${
     cell.getRow().getData()._id
-  }'title='Indicar Processos para Pauta'><i class='material-icons'>find_in_page</i></a>
+  }'title='Visualizar Indicação para Pauta'><i class='material-icons'>find_in_page</i></a>
   `;
   }
 };

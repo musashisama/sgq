@@ -131,7 +131,8 @@ function montaReinp(msg) {
 function somaMes(mes, processos) {
   let soma = 0;
   processos.forEach((p) => {
-    if (p.mes == mes && p.retorno == 'NÃO') {
+    //if (p.mes == mes && p.retorno == 'NÃO') {
+    if (p.mes == mes) {
       if (p.he == 7.8) {
         p.he = 8;
       }
@@ -144,7 +145,8 @@ function somaMes(mes, processos) {
 function somaTrimestre(trimestre, processos) {
   let soma = 0;
   processos.forEach((p) => {
-    if (p.trimestre == trimestre && p.retorno == 'NÃO') {
+    // if (p.trimestre == trimestre && p.retorno == 'NÃO') {
+    if (p.trimestre == trimestre) {
       if (p.he == 7.8) {
         p.he = 8;
       }

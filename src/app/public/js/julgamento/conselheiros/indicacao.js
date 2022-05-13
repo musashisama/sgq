@@ -127,6 +127,9 @@ function dataTable(data) {
     minHeight: '200px',
     maxHeight: '100%',
     layout: 'fitData',
+    persistence: {
+      columns: true, //persist column layout
+    },
     //responsiveLayout: 'collapse',
     groupStartOpen: false,
     selectable: true,
@@ -576,6 +579,10 @@ function controleTabs() {
       var toastHTML2 = `É necessário preencher as alegações faltantes e corrigir as erradas para efetuar a confirmação da indicação para pauta.</span>`;
       M.toast({ html: toastHTML2, classes: 'rounded', timeRemaining: 5000 });
     } //AQUI VERIFICAÇÂO DE JUNTADA
+
+    //  <h6><strong>Processo:</strong> ${
+    //       t.processo
+    //     } - <strong>Contribuinte:</strong> ${t.contribuinte}</h6>
     else {
       dadosIndicacao.forEach((t) => {
         $('#tabelaConfirmacao').append(
@@ -583,7 +590,7 @@ function controleTabs() {
         <div class='row'>
         <h6><strong>Processo:</strong> ${
           t.processo
-        } - <strong>Contribuinte:</strong> ${t.contribuinte}</h6>
+        } - <strong>Contribuinte:</strong> ${t.contribuinte} </h6>
         <p><strong>Horas CARF:</strong> ${t.HE}</p>
         <p><strong>Valor Original:</strong> ${t.valorOriginal.toLocaleString(
           'pt-BR',
@@ -645,6 +652,9 @@ function dataTableAptidao() {
     layout: 'fitData',
     responsiveLayout: 'collapse',
     groupStartOpen: false,
+    persistence: {
+      columns: true, //persist column layout
+    },
     index: 'processo',
     responsiveLayoutCollapseStartOpen: false,
     initialSort: [

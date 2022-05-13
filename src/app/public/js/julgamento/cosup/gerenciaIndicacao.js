@@ -232,7 +232,7 @@ let formatGerencia = function formatGerencia(cell) {
       cell.getRow().getData().id
     }&${cell.getRow().getData().colegiado}&${
       cell.getRow().getData().tipoPauta
-    }'title='Indicar Processos para Pauta'><i class='material-icons'>find_in_page</i></a>
+    }'title='Visualizar Pauta'><i class='material-icons'>find_in_page</i></a>
     &nbsp;
   <a class='black-text btnedita' href='/suporte/restrito/gerencia-colegiado/${
     cell.getRow().getData().id
