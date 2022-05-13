@@ -80,6 +80,7 @@ class JulgamentoControlador {
       escolhecsvanaliseestoque:
         '/julgamento/restrito/escolhe-csv-analiseEstoque',
       reinp: '/julgamento/restrito/reinp/',
+      novoReinpCOJUL: '/julgamento/restrito/reinp-mip/',
       enviacorrigereinp: '/julgamento/restrito/corrigereinp/envia',
       corrigereinp: '/julgamento/restrito/corrigereinp/:id',
       detalhareinp: '/julgamento/restrito/reinp/detalha/:id',
@@ -108,6 +109,7 @@ class JulgamentoControlador {
       pegaAlegacao: '/julgamento/conselheiros/pega-alegacao',
       pegareinpindividual: '/julgamento/conselheiros/getreinp',
       reinpindividual: '/julgamento/conselheiros/reinp',
+      novoReinp: '/julgamento/conselheiros/reinp-mip/',
       listaregapindividual: '/julgamento/conselheiros/listaregap',
       regapcons: '/julgamento/conselheiros/:id',
       indicapauta: '/julgamento/conselheiros/indicacao-pauta/:id',
@@ -1606,6 +1608,57 @@ class JulgamentoControlador {
           });
         }
       }
+    };
+  }
+
+  carregaPaginaNovoReinp() {
+    return function (req, resp) {
+      const julgamentoDao = new JulgamentoDao(conn);
+      const suporteDao = new SuporteDao(conn);
+      let cpf = req.user.cpf;
+      suporteDao.getIndicacoesPauta({ cpf: cpf }).then((indicacoes) => {
+        const pessoalDao = new PessoalDao(conn);
+        pessoalDao
+          .getRegSolicitacoes({
+            $and: [
+              { cpf: cpf },
+              { status: 'Aprovada' },
+              { tipo: { $regex: 'REINP', $options: 'i' } },
+            ],
+          })
+          .then((solicitacoes) => {
+            resp.marko(templates.julgamento.novoreinp, {
+              indicacoes: JSON.stringify(indicacoes),
+              solicitacoes: JSON.stringify(solicitacoes),
+            });
+          });
+      });
+    };
+  }
+
+  carregaPaginaNovoReinpCOJUL() {
+    return function (req, resp) {
+      const julgamentoDao = new JulgamentoDao(conn);
+      const suporteDao = new SuporteDao(conn);
+      let cpf = req.user.cpf;
+      suporteDao.getIndicacoesPauta().then((indicacoes) => {
+        const pessoalDao = new PessoalDao(conn);
+        pessoalDao
+          .getRegSolicitacoes({
+            $and: [
+              { status: 'Aprovada' },
+              { tipo: { $regex: 'REINP', $options: 'i' } },
+              { 'dados.trimestreREINP': { $exists: true } },
+            ],
+          })
+          .then((solicitacoes) => {
+            console.log(solicitacoes);
+            resp.marko(templates.julgamento.novoreinpcojul, {
+              indicacoes: JSON.stringify(indicacoes),
+              solicitacoes: JSON.stringify(solicitacoes),
+            });
+          });
+      });
     };
   }
 

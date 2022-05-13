@@ -115,6 +115,11 @@ module.exports = (app) => {
     .get(julgControlador.carregaPaginaReinp())
     .post(julgControlador.carregaPaginaReinp());
 
+  app
+    .route(rotasJulgamento.novoReinp)
+    .get(julgControlador.carregaPaginaNovoReinp())
+    .post(julgControlador.carregaPaginaNovoReinp());
+
   app.get(
     rotasJulgamento.ocorrencias,
     julgControlador.carregaOcorrenciasCons(),

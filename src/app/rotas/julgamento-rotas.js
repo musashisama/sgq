@@ -66,7 +66,6 @@ module.exports = (app) => {
   );
 
   //Novo REGAP
-
   app
     .route(rotasJulgamento.regap_consolidado)
     .get(julgControlador.carregaRegapConsolidado())
@@ -76,6 +75,12 @@ module.exports = (app) => {
     .route(rotasJulgamento.reinp)
     .get(julgControlador.carregaPaginaReinp())
     .post(julgControlador.carregaPaginaReinp());
+
+  //NOVO REINP COJUL
+  app
+    .route(rotasJulgamento.novoReinpCOJUL)
+    .get(julgControlador.carregaPaginaNovoReinpCOJUL())
+    .post(julgControlador.carregaPaginaNovoReinpCOJUL());
 
   app
     .route(rotasJulgamento.regap_individual_cojul)

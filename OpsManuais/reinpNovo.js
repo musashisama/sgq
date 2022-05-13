@@ -4,7 +4,7 @@ const d3 = require('d3');
 let reinp2020,
   conselheiros = [];
 reinp2020 = fs.readFileSync(
-  './relatorios/Reinp_2021_total_Atualizado.csv',
+  './relatorios/REINP_Primeiro_Trimestre_2022.v4.csv',
   'utf8',
 );
 conselheiros = fs.readFileSync('./relatorios/usuarios-novo.csv', 'utf8');
@@ -18,6 +18,7 @@ rel.forEach((r) => {
   r.he = +r.he;
   r.apes749 = r.apes749.replace(',', '.');
   r.apes749 = +r.apes749;
+  r.mes = r.mes.replace('-', '/');
 
   if (r.multiplicador != '1' || r.multiplicador != 1) {
     r.obs += '. Multiplicador 2/3 aplicado.';
@@ -36,7 +37,11 @@ rel.forEach((r) => {
   if (r.mes.includes('2021')) {
     r.ano = '2021';
   }
+  if (r.mes.includes('2022')) {
+    r.ano = '2022';
+  }
   delete r.heregap;
+  delete r.REGAP;
   delete r.multiplicador;
   delete r.apes749;
   cons.forEach((c) => {
@@ -48,6 +53,6 @@ rel.forEach((r) => {
 });
 
 fs.writeFileSync(
-  './relatorios/REINP_COMPLETO_FORMATADO_2021.csv',
+  './relatorios/REINP_COMPLETO_FORMATADO_2022.csv',
   d3.csvFormat(rel),
 );
