@@ -65,11 +65,15 @@ function getRelatorios(data) {
     },
   })
     .done(function (msg) {
-      msg.forEach((m) => {
+      msg.reverse().forEach((m) => {
         $('#dataRelRegap').append(
+          // $('<option>', {
+          //   value: m._id,
+          //   text: moment.unix(m.dtRel).format('DD/MM/YYYY'),
+          // }),
           $('<option>', {
-            value: m._id,
-            text: moment.unix(m.dtRel).format('DD/MM/YYYY'),
+            value: m,
+            text: moment.unix(m).format('DD/MM/YYYY'),
           }),
         );
         $('#dataRelRegap').formSelect();
@@ -100,27 +104,38 @@ function elementosTabelas() {
       },
     })
       .done(function (msg) {
-        $('.classProcessos').show();
-        console.log(msg[0].relatorio);
-        msg[0].relatorio.forEach((r) => {
-          r.Dias_na_Atividade = retornaDias(r.entradaAtividade);
-          r.Dias_da_Dist = retornaDias(r.dtUltDist);
-          r.Dias_da_SJ = retornaDias(r.dtSessao);
-          r.DAAPS = parseInt($('#daps').text()) + r.Dias_na_Atividade;
-          r.diff = +r.apesHE - +r.HE;
-        });
-        // msg[0].relatorio.forEach((d) => {
-        //   apes.forEach((a) => {
-        //     if (a.Processo == d.processo) {
-        //       d.solicitacao = a.solicitacao;
-        //     }
-        //   });
-        // });
-        dadosPlot = msg[0].relatorio;
-        dataTable(msg[0].relatorio);
-        //dataTableApes(msg[0].relatorio);
-        grafico(msg[0].relatorio);
-        $('.progressRegap').toggle();
+        //console.log(msg);
+        if (msg.length == 0) {
+          $('.notFound').html(
+            `<div class="card hoverable cardVermelho">
+            <div class="card-content">
+              Não foram encontrados processos em sua carga na data selecionada. Favor selecionar outra data.
+            </div>
+          </div>`,
+          );
+          $('#tabelaRegap').html('');
+        } else {
+          $('.notFound').html('');
+          msg[0].relatorio.forEach((r) => {
+            r.Dias_na_Atividade = retornaDias(r.entradaAtividade);
+            r.Dias_da_Dist = retornaDias(r.dtUltDist);
+            r.Dias_da_SJ = retornaDias(r.dtSessao);
+            r.DAAPS = parseInt($('#daps').text()) + r.Dias_na_Atividade;
+            r.diff = +r.apesHE - +r.HE;
+          });
+          // msg[0].relatorio.forEach((d) => {
+          //   apes.forEach((a) => {
+          //     if (a.Processo == d.processo) {
+          //       d.solicitacao = a.solicitacao;
+          //     }
+          //   });
+          // });
+          dadosPlot = msg[0].relatorio;
+          dataTable(msg[0].relatorio);
+          //dataTableApes(msg[0].relatorio);
+          grafico(msg[0].relatorio);
+          $('.progressRegap').toggle();
+        }
       })
       .fail(function (jqXHR, textStatus, msg) {
         var toastHTML = `<span>Ocorreu um erro.</span>`;

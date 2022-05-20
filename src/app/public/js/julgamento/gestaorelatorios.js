@@ -40,7 +40,7 @@ function tabelaRelatorios() {
     maxHeight: '1000px',
     layout: 'fitColumns',
     responsiveLayout: 'collapse',
-    initialSort: [{ column: 'dtCriacao', dir: 'desc' }],
+    initialSort: [{ column: 'dtRel', dir: 'desc' }],
     groupStartOpen: false,
     responsiveLayoutCollapseStartOpen: false,
     columns: [
@@ -55,6 +55,26 @@ function tabelaRelatorios() {
         download: true,
       },
       {
+        title: 'id',
+        field: 'dtRel',
+        sorter: 'string',
+        hozAlign: 'left',
+        editor: false,
+        headerFilter: 'input',
+        responsive: 0,
+        //sorterParams: { format: 'DD/MM/YYYY' },
+      },
+      {
+        title: 'Data do Envio',
+        field: 'dtEnvio',
+        sorter: 'date',
+        hozAlign: 'left',
+        editor: false,
+        headerFilter: 'input',
+        responsive: 0,
+        sorterParams: { format: 'DD/MM/YYYY' },
+      },
+      {
         title: 'Data da Extração',
         field: 'dtExtracao',
         sorter: 'date',
@@ -65,7 +85,7 @@ function tabelaRelatorios() {
         sorterParams: { format: 'DD/MM/YYYY' },
       },
       {
-        title: 'Tipo Reltatório',
+        title: 'Tipo Relatório',
         field: 'tipoRel',
         sorter: 'string',
         hozAlign: 'left',
@@ -74,19 +94,19 @@ function tabelaRelatorios() {
         topCalc: 'count',
         responsive: 0,
       },
-      {
-        title: 'Semana',
-        field: 'semana',
-        sorter: 'string',
-        hozAlign: 'left',
-        editor: false,
-        headerFilter: 'input',
-        topCalc: 'count',
-        responsive: 0,
-      },
+      // {
+      //   title: 'Semana',
+      //   field: 'semana',
+      //   sorter: 'string',
+      //   hozAlign: 'left',
+      //   editor: false,
+      //   headerFilter: 'input',
+      //   topCalc: 'count',
+      //   responsive: 0,
+      // },
       {
         title: 'Enviado por:',
-        field: 'usuarioLogado',
+        field: 'nomeUsuarioLogado',
         sorter: 'string',
         hozAlign: 'left',
         editor: false,
@@ -149,7 +169,7 @@ function clickDeleta(e, cell) {
   e.preventDefault();
   $('.btn-rel-deleta').addClass('modal-trigger');
   montaModal(e, cell);
-  initSelect();
+  //initSelect();
 }
 
 function montaModal(e, cell) {
@@ -158,10 +178,11 @@ function montaModal(e, cell) {
     `<p class="pModal">
       <h6>Confirma exclusão do seguinte relatório?</h6>
               <br/>
+              <strong>id:</strong> ${cell.getRow().getData().dtRel}<br />
               <strong>Tipo:</strong> ${cell.getRow().getData().tipoRel}<br/>
               <strong>Data de Extração:</strong> ${
                 cell.getRow().getData().dtExtracao
-              }<br/>                      
+              }<br/>
               <strong>Semana:</strong> ${
                 cell.getRow().getData().semana
                   ? cell.getRow().getData().semana
@@ -180,20 +201,21 @@ function montaModal(e, cell) {
 }
 
 function exclui(e, cell) {
-  let id = cell.getRow().getData()._id;
+  let id = cell.getRow().getData().dtRel;
   $.ajax({
     type: 'DELETE',
     url: `/julgamento/restrito/relatorios/`,
+    //data: { id: id },
     data: { id: id },
-    done: function (result) {
-      console.log(result);
-      var toastHTML = `<span>Usuário excluído com sucesso!</span>`;
+    success: function (result) {
+      var toastHTML = `<span>${result.msg.deletedCount} Relatório excluído com sucesso! Este relatório continha ${result.regap.deletedCount} conselheiros. Aguarde a recarga da página.</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
-      location.reload(true);
+      setInterval(() => {
+        location.reload();
+      }, 3000);
     },
     error: function (result) {
       console.log(`Erro: ${result}`);
     },
   });
-  location.reload(true);
 }

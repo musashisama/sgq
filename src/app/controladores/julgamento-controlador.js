@@ -111,6 +111,7 @@ class JulgamentoControlador {
       reinpindividual: '/julgamento/conselheiros/reinp',
       novoReinp: '/julgamento/conselheiros/reinp-mip/',
       listaregapindividual: '/julgamento/conselheiros/listaregap',
+      //listaregaps: '/julgamento/conselheiros/listagemregaps',
       regapcons: '/julgamento/conselheiros/:id',
       indicapauta: '/julgamento/conselheiros/indicacao-pauta/:id',
       gravaIndicacao: '/julgamento/conselheiros/grava-indicacao-pauta/',
@@ -1019,28 +1020,99 @@ class JulgamentoControlador {
     };
   }
 
+  listagemRegaps() {
+    return function (req, resp) {
+      const julgamentoDao = new JulgamentoDao(conn);
+      let carga = [];
+      julgamentoDao.getRegapDistinct('dtRel').then((regaps) => {
+        regaps.forEach((r) => {
+          let registro = {};
+          registro['dtRel'] = r;
+          registro['dtExtracao'] = moment.unix(r).format('DD/MM/YYYY');
+          registro['dtEnvio'] = moment.unix(r).format('DD/MM/YYYY');
+          registro['clientIP'] = [
+            'Carga Manual SGI',
+            'Carga Manual SGI',
+            'Carga Manual SGI',
+          ];
+          registro['tipoRel'] = 'novoREGAP';
+          registro['usuarioLogado'] = 'Carga Manual SGI';
+          registro['nomeUsuarioLogado'] = 'Carga Manual SGI';
+          carga.push(registro);
+        });
+        // registro['usuarioLogado'] = req.user.cpf;
+        // let ip =
+        //   (req.headers['x-forwarded-for'] || '').split(',').pop().trim() ||
+        //   req.connection.remoteAddress ||
+        //   req.socket.remoteAddress ||
+        //   req.connection.socket.remoteAddress;
+        // const clientIPWare = get_ip(req);
+        // const clientIp = requestIp.getClientIp(req);
+        // registro['clientIP'] = [clientIp, clientIPWare, ip];
+        // registro['tipoRel'] = fields.tipoRel;
+        // registro['dtExtracao'] = moment(fields.dataExt, 'DD/MM/YYYY').format(
+        //   'DD/MM/YYYY',
+        // );
+        // registro['dtEnvio'] = moment().format('DD/MM/YYYY');
+        // console.log(regaps);
+        //console.log(carga);
+        console.log(carga);
+        // julgamentoDao.insereVariosRelatorios(carga).then((resposta) => {
+        //   console.log(resposta);
+        // });
+      });
+    };
+  }
+
   listaRegapIndividual() {
     return function (req, resp) {
       const julgamentoDao = new JulgamentoDao(conn);
       let filtro, sort, projecao;
+      // if (req.body.get == 'listagem') {
+      //   filtro = { 'conselheiro.cpf': req.user.cpf };
+      //   projecao = { dtRel: 1, _id: -1 };
+      //   sort = { dtRel: -1 };
+      // }
       if (req.body.get == 'listagem') {
-        filtro = { 'conselheiro.cpf': req.user.cpf };
-        projecao = { dtRel: 1, _id: -1 };
-        sort = { dtRel: -1 };
+        filtro = { tipoRel: 'novoREGAP' };
+        projecao = { dtRel: 1, _id: 0 };
+        sort = { dtRel: 1 };
+        julgamentoDao.getRelatorios(filtro, sort, projecao).then((regap) => {
+          let relatorio = [];
+          regap.forEach((r) => {
+            relatorio.push(r.dtRel);
+          });
+          resp.json(relatorio);
+        });
       }
+      // if (req.body.get == 'relatorio') {
+      //   filtro = {
+      //     $and: [
+      //       { 'conselheiro.cpf': req.user.cpf },
+      //       { _id: new ObjectID(req.body.idRel) },
+      //     ],
+      //   };
+      //   projecao = { relatorio: 1, _id: 0 };
+      //   sort = { 'relatorio.processo': 1 };
+      // }
+      // julgamentoDao.getRegap(filtro, sort, projecao).then((regap) => {
+      //   resp.json(regap);
+      // });
       if (req.body.get == 'relatorio') {
         filtro = {
           $and: [
-            { 'conselheiro.cpf': req.user.cpf },
-            { _id: new ObjectID(req.body.idRel) },
+            { dtRel: +req.body.idRel },
+            {
+              'conselheiro.cpf': req.user.cpf,
+            },
           ],
         };
-        projecao = { relatorio: 1, _id: 0 };
+        projecao = {};
         sort = { 'relatorio.processo': 1 };
+        julgamentoDao.getRegap(filtro, sort, projecao).then((regap) => {
+          resp.json(regap);
+        });
       }
-      julgamentoDao.getRegap(filtro, sort, projecao).then((regap) => {
-        resp.json(regap);
-      });
     };
   }
 
@@ -1052,15 +1124,27 @@ class JulgamentoControlador {
       if (req.method === 'POST') {
         const julgamentoDao = new JulgamentoDao(conn);
         let filtro, sort, projecao;
+        // if (req.body.get == 'listagem') {
+        //   filtro = 'dtRel';
+        //   projecao = {};
+        //   sort = { dtRel: -1 };
+        //   julgamentoDao
+        //     .getRegapDistinct(filtro, sort, projecao)
+        //     .then((regap) => {
+        //       resp.json(regap);
+        //     });
+        // }
         if (req.body.get == 'listagem') {
-          filtro = 'dtRel';
-          projecao = {};
-          sort = { dtRel: -1 };
-          julgamentoDao
-            .getRegapDistinct(filtro, sort, projecao)
-            .then((regap) => {
-              resp.json(regap);
+          filtro = { tipoRel: 'novoREGAP' };
+          projecao = { dtRel: 1, _id: 0 };
+          sort = { dtRel: 1 };
+          julgamentoDao.getRelatorios(filtro, sort, projecao).then((regap) => {
+            let relatorio = [];
+            regap.forEach((r) => {
+              relatorio.push(r.dtRel);
             });
+            resp.json(relatorio);
+          });
         }
         if (req.body.get == 'relatorio') {
           req.body.semana == 'Todas'
@@ -1161,9 +1245,14 @@ class JulgamentoControlador {
       }
       if (req.method == 'DELETE') {
         julgamentoDao
-          .excluiRelatorio({ _id: new ObjectID(req.body.id) })
+          //.excluiRelatorio({ _id: new ObjectID(req.body.id) })
+          .excluiRelatorio({ dtRel: +req.body.id })
           .then((msg) => {
-            resp.json(msg);
+            julgamentoDao
+              .excluiRegap({ dtRel: +req.body.id })
+              .then((excluiregap) => {
+                resp.json({ msg: msg, regap: excluiregap });
+              });
           });
       }
     };
@@ -1249,6 +1338,7 @@ class JulgamentoControlador {
                 julgamentoDao.insereVariosRegap(regap).then((respo) => {
                   if (req.isAuthenticated()) {
                     registro['usuarioLogado'] = req.user.cpf;
+                    registro['nomeUsuarioLogado'] = req.user.nome;
                   }
                   let ip =
                     (req.headers['x-forwarded-for'] || '')
@@ -1267,6 +1357,7 @@ class JulgamentoControlador {
                     'DD/MM/YYYY',
                   ).format('DD/MM/YYYY');
                   registro['dtEnvio'] = moment().format('DD/MM/YYYY');
+                  registro['dtRel'] = dataRel;
                   julgamentoDao.insereDadosCSV(registro).then((dados) => {
                     resp.send(respo);
                   });

@@ -283,7 +283,15 @@ function dataTable(msg) {
         responsive: 2,
         download: true,
       },
-
+      {
+        title: 'Questionamento',
+        field: 'questionamento',
+        sorter: 'string',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 2,
+        download: true,
+      },
       {
         title: 'Dias da Sessão de Julgamento',
         field: 'Dias_da_SJ',
