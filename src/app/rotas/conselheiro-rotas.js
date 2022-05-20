@@ -110,6 +110,8 @@ module.exports = (app) => {
     julgControlador.carregaReinpIndividual(),
   );
 
+  //app.get(rotasJulgamento.listaregaps, julgControlador.listagemRegaps());
+
   app
     .route(rotasJulgamento.pegareinpindividual)
     .get(julgControlador.carregaPaginaReinp())

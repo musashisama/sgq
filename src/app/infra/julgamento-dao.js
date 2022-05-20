@@ -16,6 +16,17 @@ class JulgamentoDao {
     });
   }
 
+  insereVariosRelatorios(registro) {
+    return new Promise((resolve, reject) => {
+      this._db.relatorios.insertMany(registro, function (erro, res) {
+        if (erro) {
+          return reject('Não foi possível inserir o registro.\n' + erro);
+        }
+        return resolve(res);
+      });
+    });
+  }
+
   getFAQ(filtro) {
     return new Promise((resolve, reject) => {
       this._db.faq
@@ -118,12 +129,12 @@ class JulgamentoDao {
     });
   }
 
-  getRelatorios(filtro) {
+  getRelatorios(filtro, sort, projecao) {
     return new Promise((resolve, reject) => {
       this._db.relatorios
         .find(filtro)
-        .sort({ _id: -1 })
-        .project()
+        .sort(sort)
+        .project(projecao)
         .toArray(function (erro, res) {
           if (erro) {
             return reject(
@@ -284,6 +295,17 @@ class JulgamentoDao {
           }
           return resolve(res);
         });
+    });
+  }
+
+  excluiRegap(registro) {
+    return new Promise((resolve, reject) => {
+      this._db.regap.deleteMany(registro, function (erro, res) {
+        if (erro) {
+          return reject('Não foi possível removver o registro de eventos.');
+        }
+        return resolve(res);
+      });
     });
   }
 
