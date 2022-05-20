@@ -104,7 +104,7 @@ function elementosTabelas() {
       },
     })
       .done(function (msg) {
-        console.log(msg);
+        //console.log(msg);
         if (msg.length == 0) {
           $('.notFound').html(
             `<div class="card hoverable cardVermelho">

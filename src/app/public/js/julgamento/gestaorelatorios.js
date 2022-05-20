@@ -208,7 +208,6 @@ function exclui(e, cell) {
     //data: { id: id },
     data: { id: id },
     success: function (result) {
-      console.log(result);
       var toastHTML = `<span>${result.msg.deletedCount} Relatório excluído com sucesso! Este relatório continha ${result.regap.deletedCount} conselheiros. Aguarde a recarga da página.</span>`;
       M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
       setInterval(() => {
