@@ -107,9 +107,6 @@ function inicializaComponentes() {
         });
       });
     }
-    console.log(indicacoes);
-    console.log(solicitacoes);
-    console.log(processos);
     let T1 = somaTrimestre('1', processos);
     let T2 = somaTrimestre('2', processos);
     let T3 = somaTrimestre('3', processos);
@@ -118,6 +115,10 @@ function inicializaComponentes() {
     $('#horas2T').text(+T2.toFixed(2));
     $('#horas3T').text(+T3.toFixed(2));
     $('#horas4T').text(+T4.toFixed(2));
+    $('#extratoREINP').append(`${separaProcSol('1', processos)}</br>`);
+    $('#extratoREINP').append(`${separaProcSol('2', processos)}</br>`);
+    $('#extratoREINP').append(`${separaProcSol('3', processos)}</br>`);
+    $('#extratoREINP').append(`${separaProcSol('4', processos)}</br>`);
     dataTableReinpDet(processos);
     //formataDados();
     //graficoReinp();
@@ -241,6 +242,25 @@ function dataTableReinpDet(msg) {
     locale: true,
     langs: langs,
   });
+  tableReinp = table;
+  separaProcSol(tableReinp.getData());
+}
+
+function separaProcSol(trimestre, processos) {
+  let solicitacoes = [],
+    indicados = [];
+  processos.forEach((p) => {
+    if (p.tipo == 'SGI') {
+      solicitacoes.push(p);
+    } else indicados.push(p);
+  });
+  return `${trimestre}º trimestre: ${somaTrimestre(
+    trimestre,
+    indicados,
+  )} horas indicadas e ${somaTrimestre(
+    trimestre,
+    solicitacoes,
+  )} horas de solicitações.`;
 }
 
 let downloadValorReinp = function (value, data, type, params, column) {

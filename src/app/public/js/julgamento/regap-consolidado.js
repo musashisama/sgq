@@ -251,6 +251,9 @@ function dataTable(msg) {
   let tabledata = msg;
   table = new Tabulator('#tabelaRegap', {
     data: tabledata,
+    downloadComplete: function () {
+      //console.log('Download OK');
+    },
     pagination: 'local',
     height: '1000px',
     minHeight: '300px',
