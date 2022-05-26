@@ -48,7 +48,11 @@ app.use('/*', function (req, resp, next) {
       ? (registro['usuarioLogado'] = req.user.cpf)
       : (registro['usuarioLogado'] = 'Não Logado');
     const requestIp = require('request-ip');
-    registro['clientIP'] = requestIp.getClientIp(req);
+    registro['clientIP'] = [
+      requestIp.getClientIp(req),
+      req.socket.remoteAddress,
+      req.headers['x-forwarded-for'],
+    ];
     const baseDao = new BaseDao(conn);
     baseDao
       .logger(registro)

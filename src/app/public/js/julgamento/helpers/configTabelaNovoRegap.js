@@ -432,13 +432,21 @@ function coloreApes(cell, formatterParams, valor) {
 
 function formataTESuperior(cell, formatterParams, valor) {
   if (
+    cell.getValue() == '4ª TE-1ªSEÇÃO-1004-CARF-MF-DF' ||
+    cell.getValue() == '5ª TE-1ªSEÇÃO-1005-CARF-MF-DF' ||
     cell.getValue() == '4ª TE-2ªSEÇÃO-2004-CARF-MF-DF' ||
-    cell.getValue() == '5ª TE-2ªSEÇÃO-2005-CARF-MF-DF'
+    cell.getValue() == '5ª TE-2ªSEÇÃO-2005-CARF-MF-DF' ||
+    cell.getValue() == '4ª TE-3ªSEÇÃO-3004-CARF-MF-DF' ||
+    cell.getValue() == '5ª TE-3ªSEÇÃO-3005-CARF-MF-DF'
   ) {
     cell.getElement().style.color = 'rgb(245, 131, 0)';
     cell.getElement().style.fontWeight = 'bolder';
   }
-  if (cell.getValue() == '2ª TURMA-CSRF-CARF-MF-DF') {
+  if (
+    cell.getValue() == '1ª TURMA-CSRF-CARF-MF-DF' ||
+    cell.getValue() == '2ª TURMA-CSRF-CARF-MF-DF' ||
+    cell.getValue() == '3ª TURMA-CSRF-CARF-MF-DF'
+  ) {
     cell.getElement().style.color = 'rgb(63, 138, 2)';
     cell.getElement().style.fontWeight = 'bolder';
   }
