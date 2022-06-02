@@ -237,7 +237,11 @@ function retornaSecao(equipe) {
     if (equipe.includes('1ªS') || equipe.includes('1ª TURMA')) {
       return '1ª Seção';
     }
-    if (equipe.includes('2ªS') || equipe.includes('2ª TURMA')) {
+    if (
+      equipe.includes('2ªS') ||
+      equipe.includes('2ª TURMA') ||
+      equipe.includes('2ª TURMA')
+    ) {
       return '2ª Seção';
     }
     if (equipe.includes('3ªS') || equipe.includes('3ª TURMA')) {
