@@ -45,17 +45,17 @@ function render(input, out, __component, component, state) {
 
   out.w("<div class=\"container\"><h3 id=\"inicio\" class=\"center-align titulo\">Perguntas & Respostas - COJUL</h3><br><div class=\"row\"><div class=\"col s12\"><div class=\"row\"><div class=\"input-field col s12\"><i class=\"material-icons prefix\">textsms</i><input type=\"text\" id=\"autocomplete-input\" class=\"autocomplete\"><label for=\"autocomplete-input\">Digite aqui sua pergunta</label></div></div></div></div><div class=\"row\"><div id=\"faq\"" +
     marko_attr("data-faq", "" + data.faq) +
-    "></div><h5 id=\"mprod\" class=\"scrollspy n\">Meta de Produtividade</h5><ul class=\"collapsible popout prod\"></ul><h5 id=\"idregap\" class=\" scrollspy \">REGAP</h5><ul class=\"collapsible popout regap\"></ul><h5 id=\"idreinp\" class=\" scrollspy \">REINP</h5><ul class=\"collapsible popout reinp\"></ul><h5 id=\"idsessaovirtual\" class=\"scrollspy \">Sessões Virtuais</h5><ul class=\"collapsible  popout sessaovirtual\"></ul><h5 id=\"idrejul\" class=\"scrollspy \">REJUL</h5><ul class=\"collapsible popout rejul\"></ul><h5 id=\"idsorteio\" class=\"scrollspy \">Dispensa de Sorteio</h5><ul class=\"collapsible popout sorteio\"></ul><h5 id=\"idnotificacao\" class=\"scrollspy \">Notificações</h5><ul class=\"collapsible popout notificacao\"></ul></div><div class=\"row\"><p class=\"center\">Caso não tenha solucionado sua dúvida, <a href=\"/julgamento/restrito/formFAQ\">clique aqui</a>.</p></div></div><div class=\"scspy2 col hide-on-small-only m3 l2 right\"><ul class=\"section table-of-contents\"><li><a href=\"#inicio\">Início</a></li><li><a href=\"#mprod\">Meta de Produtividade</a></li><li><a href=\"#idregap\">REGAP</a></li><li><a href=\"#idreinp\">REINP</a></li><li><a href=\"#idsessaovirtual\">Sessões Virtuais</a></li><li><a href=\"#idrejul\">REJUL</a></li><li><a href=\"#idsorteio\">Dispensa de Sorteio</a></li><li><a href=\"#idnotificacao\">Notificações</a></li></ul></div></main>");
+    "></div><h5 id=\"mprod\" class=\"scrollspy n\">Meta de Produtividade</h5><ul class=\"collapsible popout prod\"></ul><h5 id=\"idregap\" class=\" scrollspy \">REGAP</h5><ul class=\"collapsible popout regap\"></ul><h5 id=\"idreinp\" class=\" scrollspy \">REINP</h5><ul class=\"collapsible popout reinp\"></ul><h5 id=\"idrejul\" class=\"scrollspy \">REJUL</h5><ul class=\"collapsible popout rejul\"></ul><h5 id=\"idsorteio\" class=\"scrollspy \">Dispensa de Sorteio</h5><ul class=\"collapsible popout sorteio\"></ul><h5 id=\"idnotificacao\" class=\"scrollspy \">Notificações</h5><ul class=\"collapsible popout notificacao\"></ul></div><div class=\"row\"><p class=\"center\">Caso não tenha solucionado sua dúvida, <a href=\"/julgamento/restrito/formFAQ\">clique aqui</a>.</p></div></div><div class=\"scspy2 col hide-on-small-only m3 l2 right\"><ul class=\"section table-of-contents\"><li><a href=\"#inicio\">Início</a></li><li><a href=\"#mprod\">Meta de Produtividade</a></li><li><a href=\"#idregap\">REGAP</a></li><li><a href=\"#idreinp\">REINP</a></li><li><a href=\"#idrejul\">REJUL</a></li><li><a href=\"#idsorteio\">Dispensa de Sorteio</a></li><li><a href=\"#idnotificacao\">Notificações</a></li></ul></div></main>");
 
-  app_footer_tag({}, out, __component, "53");
+  app_footer_tag({}, out, __component, "49");
 
-  app_scripts_js_tag({}, out, __component, "54");
+  app_scripts_js_tag({}, out, __component, "50");
 
   out.w("<script src=\"/estatico/js/julgamento/faq_dipaj.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "56");
+  await_reorderer_tag({}, out, __component, "52");
 
   out.w("</body></html>");
 }

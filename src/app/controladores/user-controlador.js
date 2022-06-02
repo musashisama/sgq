@@ -196,6 +196,7 @@ class UserControlador {
             req.user.cargo.includes('Presidente de TE', 0) ||
             req.user.cargo.includes('Presidente de TE Substituto', 0) ||
             req.user.cargo.includes('Presidente de Seção de Julgamento', 0) ||
+            req.user.cargo.includes('Presidente do CARF', 0) ||
             req.user.cargo.includes(
               'Presidente de Seção de Julgamento Substituto',
               0,
