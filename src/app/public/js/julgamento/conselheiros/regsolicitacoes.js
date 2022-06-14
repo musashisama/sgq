@@ -2154,6 +2154,7 @@ function controleForm() {
               dtSorteio: $('#dataSorteio').val(),
               dtindicacao: $('#dataIndicacao').val(),
               diasCorridos: diff,
+              somatorioHoras: 126,
               trimestreREINP:
                 $('#trimestreReducao').val() + '/' + $('#anoReducao').val(),
               observacoes: $('#observacoes').val(),

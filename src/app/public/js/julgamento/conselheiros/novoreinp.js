@@ -81,6 +81,9 @@ function inicializaComponentes() {
       indicacoes.forEach((i) => {
         i.processos.forEach((p) => {
           processos.push({
+            // multiplicador: retornaMultiplicador(
+            //   retornaTrimestre(i.mesIndicacao),
+            // ),
             processo: p.processo,
             he: +p.HE,
             mes: i.mesIndicacao,
@@ -94,14 +97,18 @@ function inicializaComponentes() {
     if (solicitacoes.length > 0) {
       solicitacoes.forEach((s) => {
         processos.push({
+          // multiplicador: retornaMultiplicador(
+          //   retornaTrimestre(retornaMes(s.dados.trimestreREINP)),
+          // ),
           processo: s.uniqueId,
           he: s.dados.horasReducao
             ? +s.dados.horasReducao
             : 0 + s.dados.somatorioHoras
             ? +s.dados.somatorioHoras
             : 0,
-          mes: s.dados.trimestreREINP,
-          trimestre: retornaTrimestre(s.dados.trimestreREINP),
+          mes: retornaMes(s.dados.trimestreREINP),
+          //trimestre: '0' + s.dados.trimestreREINP,
+          trimestre: retornaTrimestre(retornaMes(s.dados.trimestreREINP)),
           contribuinte: s.tipo,
           tipo: 'Solicitação SGI',
         });
@@ -123,6 +130,50 @@ function inicializaComponentes() {
     //formataDados();
     //graficoReinp();
   });
+}
+
+function retornaMultiplicador(trimestre) {
+  let indicacoes = JSON.parse($('#idProdutividade').attr('data-indicacoes'));
+  indicacoes.forEach((i) => {
+    console.log(retornaTrimestre(i.mesIndicacao));
+    if (retornaTrimestre(i.mesIndicacao) == trimestre) {
+      console.log(i.funcao);
+      // if (i.funcao != 'undefined') {
+      //   if (!i.funcao.includes('Vice', 0)) {
+      //     if (
+      //       i.funcao.includes('Presidente de TO', 0) ||
+      //       i.funcao.includes('Presidente de TO Substituto', 0) ||
+      //       i.funcao.includes('Presidente de TE', 0) ||
+      //       i.funcao.includes('Presidente de TE Substituto', 0) ||
+      //       i.funcao.includes('Presidente de Seção de Julgamento', 0) ||
+      //       i.funcao.includes('Presidente do CARF', 0) ||
+      //       i.funcao.includes('Presidente de Seção de Julgamento Substituto', 0)
+      //     ) {
+      //       console.log('1.5');
+      //     } else console.log('1');
+      //   }
+      // }
+    }
+  });
+}
+
+function retornaMes(trimestre) {
+  if (trimestre.includes('1/')) {
+    ano = trimestre.split('/');
+    return `01/${ano[1]}`;
+  }
+  if (trimestre.includes('2/')) {
+    ano = trimestre.split('/');
+    return `04/${ano[1]}`;
+  }
+  if (trimestre.includes('3/')) {
+    ano = trimestre.split('/');
+    return `07/${ano[1]}`;
+  }
+  if (trimestre.includes('4/')) {
+    ano = trimestre.split('/');
+    return `10/${ano[1]}`;
+  }
 }
 
 function retornaTrimestre(mes) {
@@ -186,6 +237,17 @@ function dataTableReinpDet(msg) {
         download: true,
       },
       {
+        title: 'Trimestre de Indicação',
+        field: 'trimestre',
+        sorter: 'string',
+        hozAlign: 'center',
+        topCalc: countCalc,
+        headerFilter: 'input',
+        editor: false,
+        responsive: 0,
+        download: true,
+      },
+      {
         title: 'Mês de Indicação',
         field: 'mes',
         sorter: 'string',
@@ -243,14 +305,14 @@ function dataTableReinpDet(msg) {
     langs: langs,
   });
   tableReinp = table;
-  separaProcSol(tableReinp.getData());
+  //separaProcSol(tableReinp.getData());
 }
 
 function separaProcSol(trimestre, processos) {
   let solicitacoes = [],
     indicados = [];
   processos.forEach((p) => {
-    if (p.tipo == 'SGI') {
+    if (p.tipo.includes('SGI')) {
       solicitacoes.push(p);
     } else indicados.push(p);
   });
