@@ -546,7 +546,6 @@ function controleTabs() {
     let alegacaoNula = 0;
     let alegacaoErrada = 0;
     dadosIndicacao.forEach((p) => {
-      console.log(p.alegTributo);
       if (p.confirmaQuest != 'Correto') {
         p.questionamento = p.confirmaQuest;
       }
@@ -627,11 +626,11 @@ function controleTabs() {
     let dadosGravacao = {};
     dadosGravacao.cpf = dadosUser.cpf;
     dadosGravacao.nome = dadosUser.nome;
+    dadosGravacao.funcao = dadosUser.funcao;
     dadosGravacao.colegiado = dadosIndicacao[0].equipeProcesso;
     dadosGravacao.mesIndicacao = dadosPauta.mes + '/' + dadosPauta.ano;
     dadosGravacao.idIndicacao = dadosPauta._id;
     dadosGravacao.processos = dadosIndicacao;
-    console.log(dadosGravacao);
     gravaIndicacao(dadosGravacao);
     tableAptidao.redraw();
   });
@@ -912,7 +911,6 @@ let alegaPrim = function alegaPrim(cell) {
 };
 
 let alegEdita = function alegEdita(cell) {
-  console.log(cell.getRow().getData().processo);
   alegMateria(cell), alegTema(cell), alegTributo(cell);
   tableAptidao.redraw();
 };
