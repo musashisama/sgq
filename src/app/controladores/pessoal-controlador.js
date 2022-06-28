@@ -236,8 +236,8 @@ class PessoalControlador {
               }
             });
         } else if (req.method == 'DELETE') {
-          console.log('delete');
-          console.log(req.body);
+          //console.log('delete');
+          //console.log(req.body);
           julgamentoDao
             .excluiPortal({ uniqueId: req.body.uniqueId })
             .then((msg) => {
@@ -392,8 +392,8 @@ class PessoalControlador {
             }
           });
         } else if (req.method == 'DELETE') {
-          console.log('delete');
-          console.log(req.body);
+          // console.log('delete');
+          //console.log(req.body);
           pessoalDao
             .excluiPortal({ uniqueId: req.body.uniqueId })
             .then((msg) => {
@@ -444,7 +444,7 @@ class PessoalControlador {
   editaPessoa() {
     return function (req, resp) {
       const pessoalDao = new PessoalDao(conn);
-      console.log(req.body);
+      //console.log(req.body);
       pessoalDao
         .editaPessoa(req.body)
         .then((pessoa) => {

@@ -22,7 +22,7 @@ class NCControlador {
 
   static ajustaData(data) {
     const arrayData = data.split('-');
-    console.log(arrayData[2] + ' ' + arrayData[1] + ' ' + arrayData[0]);
+    //console.log(arrayData[2] + ' ' + arrayData[1] + ' ' + arrayData[0]);
     //const dataAjustada = new Date(arrayData[2], arrayData[1] - 1, arrayData[0], new Date().getHours()).toUTCString();
     const dataAjustada = new Date(arrayData[2], arrayData[1] - 1, arrayData[0]);
     console.log('Data Ajustada: ', dataAjustada);
@@ -63,7 +63,7 @@ class NCControlador {
       ncDao
         .listaNC({}, { _id: 0 })
         .then((lista) => {
-          console.log(lista);
+          //console.log(lista);
           resp.json(lista);
         })
         .catch((erro) => console.log(erro));
