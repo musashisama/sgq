@@ -287,7 +287,7 @@ class SuporteControlador {
           });
       } else {
         if (req.method == 'POST' || req.method == 'PUT') {
-          console.log(req.body);
+          //console.log(req.body);
           // suporteDAO.criaIndicacao(req.body).then((result) => {
           //   resp.send(result);
           // });

@@ -251,8 +251,8 @@ class JulgamentoControlador {
               }
             });
         } else if (req.method == 'DELETE') {
-          console.log('delete');
-          console.log(req.body);
+          //console.log('delete');
+          //console.log(req.body);
           julgamentoDao
             .excluiPortal({ uniqueId: req.body.uniqueId })
             .then((msg) => {
@@ -277,7 +277,7 @@ class JulgamentoControlador {
   testeSASJ() {
     return function (req, resp) {
       let urlSASJ = 'http://10.202.24.29/sasj/api/v1/sgi/informacaoEProcesso/';
-      console.log(req.body);
+      //console.log(req.body);
       let data = [
         '10120001070200919',
         '10215720824201107',
@@ -292,7 +292,7 @@ class JulgamentoControlador {
       axios
         .post(urlSASJ, data, options)
         .then((res) => {
-          console.log(res.data);
+          //console.log(res.data);
           resp.send(res.data);
         })
         .catch((error) => {
@@ -390,8 +390,8 @@ class JulgamentoControlador {
               }
             });
         } else if (req.method == 'DELETE') {
-          console.log('delete');
-          console.log(req.body);
+          //console.log('delete');
+          //console.log(req.body);
           julgamentoDao
             .excluiPortal({ uniqueId: req.body.uniqueId })
             .then((msg) => {
@@ -428,8 +428,8 @@ class JulgamentoControlador {
             }
           });
         } else if (req.method == 'DELETE') {
-          console.log('delete');
-          console.log(req.body);
+          //console.log('delete');
+          //console.log(req.body);
           julgamentoDao
             .excluiFAQ({ uniqueId: req.body.uniqueId })
             .then((msg) => {
@@ -551,8 +551,8 @@ class JulgamentoControlador {
             }
           });
         } else if (req.method == 'DELETE') {
-          console.log('delete');
-          console.log(req.body);
+          // console.log('delete');
+          //console.log(req.body);
           julgamentoDao
             .excluiGC({ uniqueId: req.body.uniqueId })
             .then((msg) => {
@@ -861,7 +861,7 @@ class JulgamentoControlador {
         });
       }
       if (req.method == 'POST') {
-        console.log(req.body);
+        //console.log(req.body);
       }
     };
   }
@@ -1056,7 +1056,7 @@ class JulgamentoControlador {
         // registro['dtEnvio'] = moment().format('DD/MM/YYYY');
         // console.log(regaps);
         //console.log(carga);
-        console.log(carga);
+        //console.log(carga);
         // julgamentoDao.insereVariosRelatorios(carga).then((resposta) => {
         //   console.log(resposta);
         // });
@@ -1743,7 +1743,7 @@ class JulgamentoControlador {
             ],
           })
           .then((solicitacoes) => {
-            console.log(solicitacoes);
+            //console.log(solicitacoes);
             resp.marko(templates.julgamento.novoreinpcojul, {
               indicacoes: JSON.stringify(indicacoes),
               solicitacoes: JSON.stringify(solicitacoes),

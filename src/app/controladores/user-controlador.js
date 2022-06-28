@@ -140,7 +140,7 @@ class UserControlador {
   editaOco() {
     return function (req, resp) {
       let registro = req.body;
-      console.log(registro);
+      // console.log(registro);
       const userDao = new UserDao(conn);
       userDao
         .editaOco(registro)
