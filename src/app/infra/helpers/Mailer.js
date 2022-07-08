@@ -15,21 +15,26 @@ class Mailer {
       return resolve(baseDao.getConfig('mail'));
     })
       .then((conf) => {
+        // let mail = {
+        //   host: conf[0].host,
+        //   service: conf[0].service,
+        //   port: +conf[0].port,
+        //   secure: true,
+        //   auth: {
+        //     user: conf[0].user,
+        //     pass: conf[0].pass,
+        //   },
         let mail = {
-          host: conf[0].host,
-          service: conf[0].service,
-          port: +conf[0].port,
+          host: 'mail-apl.serpro.gov.br',
+          service: 'mail-apl.serpro.gov.br',
+          port: +465,
           secure: true,
-          auth: {
-            user: conf[0].user,
-            pass: conf[0].pass,
-          },
         };
         let cabecalho = '<h2>Sistema de Gestão Integrada do CARF</h2>';
         let rodape =
           '<p><em>Este e-mail foi enviado de forma automática. Favor não respondê-lo.</em></p>';
         let mensagem = {
-          from: conf[0].from,
+          from: 'sgi.carf@economia.gov.br',
           to: para,
           subject: assunto,
           html: cabecalho.concat(corpo, rodape),
