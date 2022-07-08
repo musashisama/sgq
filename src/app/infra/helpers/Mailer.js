@@ -26,9 +26,9 @@ class Mailer {
         //   },
         let mail = {
           host: 'mail-apl.serpro.gov.br',
-          service: 'mail-apl.serpro.gov.br',
+          //service: 'mail-apl.serpro.gov.br',
           port: +25,
-          secure: true,
+          secure: false,
         };
         let cabecalho = '<h2>Sistema de Gestão Integrada do CARF</h2>';
         let rodape =
