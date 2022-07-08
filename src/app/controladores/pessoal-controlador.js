@@ -116,7 +116,7 @@ class PessoalControlador {
                 );
                 pessoalDao.cadastraSolicitacao(req.body).then((msg) => {
                   Mailer.enviaMail(
-                    'dipaj@carf.economia.gov.br',
+                    'dipaj.carf@economia.gov.br',
                     `[SGI] Novo status de solicitação - ${req.body.nome}`,
                     `<strong>Solicitação:</strong> ${req.body.tipoSolicitacao}<br/>
                     <strong>Detalhes:</strong> ${req.body.tipoAfastamento}<br/>

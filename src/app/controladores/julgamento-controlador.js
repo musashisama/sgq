@@ -515,7 +515,7 @@ class JulgamentoControlador {
                     <em>${req.body.pergunta}</em>`;
           const Mailer = require('../infra/helpers/Mailer');
           Mailer.enviaMail(
-            'dipaj@carf.economia.gov.br',
+            'dipaj.carf@economia.gov.br',
             '[SGI-CARF] Sugestão de pergunta para o FAQ',
             corpo,
           );
@@ -695,8 +695,8 @@ class JulgamentoControlador {
                 pessoalDao.cadastraSolicitacao(req.body).then((msg) => {
                   let endereco =
                     req.body.setor == 'dipaj'
-                      ? 'dipaj@carf.economia.gov.br'
-                      : 'segep@carf.economia.gov.br';
+                      ? 'dipaj.carf@economia.gov.br'
+                      : 'segep.carf@economia.gov.br';
                   let urlMail =
                     req.body.setor == 'dipaj' ? 'julgamento' : 'pessoal';
                   Mailer.enviaMail(
@@ -779,8 +779,8 @@ class JulgamentoControlador {
           );
           let endereco =
             req.body.setor == 'DIPAJ'
-              ? 'dipaj@carf.economia.gov.br'
-              : 'segep@carf.economia.gov.br';
+              ? 'dipaj.carf@economia.gov.br'
+              : 'segep.carf@economia.gov.br';
           let urlMail = req.body.setor == 'DIPAJ' ? 'julgamento' : 'pessoal';
           Mailer.enviaMail(
             endereco,
