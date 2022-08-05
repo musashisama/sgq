@@ -28,7 +28,7 @@ function montaModal() {
             <form action="/enviamail" id="formEmail" name="formEmail" method="post">
             <p>Caso seu endereço de email esteja cadastrado na base, você receberá instruções para criação de uma nova senha.</p>
             <label for="cpf">Qual seu endereço de email?</label>
-            <input type="text" required autocomplete="email" id="email" name="email" value="@carf.economia.gov.br" placeholder="Digite seu endereço de email." class="form-control tooltipped" data-position="bottom" data-tooltip="Somente números."/>
+            <input type="text" required autocomplete="email" id="email" name="email" value="@economia.gov.br" placeholder="Digite seu endereço de email." class="form-control tooltipped" data-position="bottom" data-tooltip="Somente números."/>
 
             `,
   );
