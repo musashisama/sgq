@@ -118,7 +118,9 @@ class CSVHandler {
     if (
       colegiado.includes('1ª TE') ||
       colegiado.includes('2ª TE') ||
-      colegiado.includes('3ª TE')
+      colegiado.includes('3ª TE') ||
+      colegiado.includes('4ª TE') ||
+      colegiado.includes('5ª TE')
     ) {
       return 'TE';
     } else return 'TOCSRF';
