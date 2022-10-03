@@ -60,6 +60,7 @@ function sendVote() {
         terc: $('#nomeTerc').text(),
         uniqueId: moment.now(),
         dtVoto: moment().format('DD/MM/YYYY'),
+        anoPremio: moment().year(),
       };
       $.ajax({
         url: `/votacao-premio`,
@@ -72,7 +73,7 @@ function sendVote() {
         .done(function (msg) {
           var toastHTML = `<span>Voto registrado com sucesso!<br/> Aguarde redirecionamento.</span>`;
           M.toast({ html: toastHTML, classes: 'rounded', timeRemaining: 500 });
-          document.cookie = `voto=true;max-age=${3600 * 24 * 30}`;
+          document.cookie = `voto=true;max-age=${3600 * 24 * 45}`;
           setTimeout(function () {
             location.href = `/`;
           }, 2500);
