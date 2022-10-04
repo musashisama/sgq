@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <app-scripts-css/>
+  <style>
+body {
+  background-image: url('/estatico/imagens/backgroundpremio.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+}
+</style>
+  <body>
+    <app-header/>
+    <main class="conteudoPrincipal">
+      <app-navbar/>
+      <div id="idVotos" data-votos=`${data.votos}`/>
+      <div class="container">
+        <div class="row">
+          <h3>Prêmio Mérito Funcional Ministro Leopoldo de Bulhões</h3>
+          <h4>
+            Total de Votos:
+            <span id="qtdeVotos"/>
+          </h4>
+          <p>Total de Usuários na Base: 434 em 04/10/2022.</p>
+          <p>
+            Total de Usuários <strong>excluindo conselheiros com mandato não ativo</strong>: 351
+          </p>
+        </div>
+        <div class="row">
+          <h5 class="center">Conselheiros</h5>
+        </div>
+        <div class="row">
+          <div id="grafCons"/>
+        </div>
+        <div class="row">
+          <h5 class="center">Servidores</h5>
+        </div>
+        <div class="row">
+          <div id="grafServ"/>
+        </div>
+        <div class="row">
+          <h5 class="center">Terceirizados</h5>
+        </div>
+        <div class="row">
+          <div id="grafTerc"/>
+        </div>
+      </div>
+    </main>
+    <app-footer/>
+    <app-scripts-js/>
+    <script src="/estatico/js/libs/plotly-latest.min.js"/>
+    <script src="/estatico/js/libs/plotly-locale-pt-br.js"/>
+    <script>Plotly.setPlotConfig({locale: 'pt-BR'})</script>
+    <script src="/estatico/js/base/votacao-premio.js"/>
+  </body>
+</html>

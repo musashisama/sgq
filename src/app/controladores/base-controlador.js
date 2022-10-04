@@ -13,6 +13,7 @@ const axios = require('axios');
 class BaseControlador {
   static rotas() {
     return {
+      autenticadas: '/base/restrito*',
       principal: '/',
       login: '/login',
       logout: '/logout',
@@ -25,6 +26,7 @@ class BaseControlador {
       arqdown: '/arqdown/:id',
       popups: '/popups',
       alegaRetorno: '/alegacoes-retorno',
+      votacaopremio: '/base/restrito/votacao-premio/',
     };
   }
 
@@ -292,6 +294,16 @@ http://${URL.host}/altera-senha/${registro.controle}
             });
           });
       }
+    };
+  }
+  votacaoPremio() {
+    return function (req, resp, next) {
+      let baseDao = new BaseDao(conn);
+      baseDao.getVote().then((msg) => {
+        resp.marko(templates.base.votacaoPremio, {
+          votos: JSON.stringify(msg),
+        });
+      });
     };
   }
 

@@ -238,6 +238,12 @@ function montaModal(e, cell) {
         </p>
         <p>
           <label>
+            <input type="checkbox" id='premio' value='premio' name="perfis"/>
+            <span>Prêmio Mérito Funcional</span>
+          </label>
+        </p>
+        <p>
+          <label>
             <input type="checkbox" id='teste' value='teste' name="perfis"/>
             <span>Teste</span>
           </label>
