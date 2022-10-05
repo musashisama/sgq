@@ -42,17 +42,17 @@ function render(input, out, __component, component, state) {
 
   out.w("<div id=\"idVotos\"" +
     marko_attr("data-votos", "" + data.votos) +
-    "></div><div class=\"container\"><div class=\"row\"><h3>Prêmio Mérito Funcional Ministro Leopoldo de Bulhões</h3><h4>Total de Votos: <span id=\"qtdeVotos\"></span></h4><p>Total de Usuários na Base: 434 em 04/10/2022.</p><p>Total de Usuários <strong>excluindo conselheiros com mandato não ativo</strong>: 351</p></div><div class=\"row\"><h5 class=\"center\">Conselheiros</h5></div><div class=\"row\"><div id=\"grafCons\"></div></div><div class=\"row\"><h5 class=\"center\">Servidores</h5></div><div class=\"row\"><div id=\"grafServ\"></div></div><div class=\"row\"><h5 class=\"center\">Terceirizados</h5></div><div class=\"row\"><div id=\"grafTerc\"></div></div></div></main>");
+    "></div><div class=\"container\"><div class=\"row\"><h3>Prêmio Mérito Funcional Ministro Leopoldo de Bulhões</h3><h4>Total de Votos: <span id=\"qtdeVotos\"></span></h4><p>Total de Usuários na Base: 434 em 04/10/2022.</p><p>Total de Usuários <strong>excluindo conselheiros com mandato não ativo</strong>: 351</p></div><div class=\"row\"><h5 class=\"center\">Conselheiros</h5></div><div class=\"row\"><div class=\"col s6\" id=\"grafCons\"></div><div class=\"col s6\" id=\"grafConsCount\"></div></div><div class=\"row\"><h5 class=\"center\">Servidores</h5></div><div class=\"row\"><div class=\"col s6\" id=\"grafServ\"></div><div class=\"col s6\" id=\"grafServCount\"></div></div><div class=\"row\"><h5 class=\"center\">Terceirizados</h5></div><div class=\"row\"><div class=\"col s6\" id=\"grafTerc\"></div><div class=\"col s6\" id=\"grafTercCount\"></div></div></div></main>");
 
-  app_footer_tag({}, out, __component, "28");
+  app_footer_tag({}, out, __component, "31");
 
-  app_scripts_js_tag({}, out, __component, "29");
+  app_scripts_js_tag({}, out, __component, "32");
 
   out.w("<script src=\"/estatico/js/libs/plotly-latest.min.js\"></script><script src=\"/estatico/js/libs/plotly-locale-pt-br.js\"></script><script>Plotly.setPlotConfig({locale: 'pt-BR'})</script><script src=\"/estatico/js/base/votacao-premio.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "34");
+  await_reorderer_tag({}, out, __component, "37");
 
   out.w("</body></html>");
 }
