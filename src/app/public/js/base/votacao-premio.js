@@ -6,7 +6,20 @@ $('#qtdeVotos').text(votos.length);
 inicializaComponentes();
 
 function inicializaComponentes() {
+  cons = votoBranco(cons);
+  serv = votoBranco(serv);
+  terc = votoBranco(terc);
   graficos();
+}
+
+function votoBranco(arrayVoto) {
+  let novoArray = [];
+  arrayVoto.forEach((el) => {
+    if (el == '' || el == ' ') {
+      novoArray.push('Voto em Branco');
+    } else novoArray.push(el);
+  });
+  return novoArray;
 }
 function graficos() {
   let traceCons = { y: cons.reverse(), type: 'histogram', histnorm: 'percent' };
