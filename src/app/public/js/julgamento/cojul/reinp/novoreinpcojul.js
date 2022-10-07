@@ -76,7 +76,6 @@ function inicializaComponentes() {
     let solicitacoes = JSON.parse(
       $('#idProdutividade').attr('data-solicitacoes'),
     );
-    console.log(solicitacoes);
     let processos = [];
     if (indicacoes.length > 0) {
       indicacoes.forEach((i) => {
@@ -107,16 +106,17 @@ function inicializaComponentes() {
             : 0 + s.dados.somatorioHoras
             ? +s.dados.somatorioHoras
             : 0,
-          mes: s.dados.trimestreREINP,
-          trimestre: retornaTrimestre(s.dados.trimestreREINP),
+          mes: s.dados.trimestreREINP
+            ? retornaMes(s.dados.trimestreREINP)
+            : s.dtCriacao.slice(3, 10),
+          trimestre: s.dados.trimestreREINP
+            ? retornaTrimestre(s.dados.trimestreREINP)
+            : retornaTrimestre(s.dtCriacao.slice(3, 10)),
           contribuinte: s.tipo,
           tipo: 'Solicitação SGI',
         });
       });
     }
-    console.log(indicacoes);
-    console.log(solicitacoes);
-    console.log(processos);
     let T1 = somaTrimestre('1', processos);
     let T2 = somaTrimestre('2', processos);
     let T3 = somaTrimestre('3', processos);
@@ -131,7 +131,54 @@ function inicializaComponentes() {
   });
 }
 
+function retornaMultiplicador(trimestre) {
+  let indicacoes = JSON.parse($('#idProdutividade').attr('data-indicacoes'));
+  indicacoes.forEach((i) => {
+    console.log(retornaTrimestre(i.mesIndicacao));
+    if (retornaTrimestre(i.mesIndicacao) == trimestre) {
+      console.log(i.funcao);
+      // if (i.funcao != 'undefined') {
+      //   if (!i.funcao.includes('Vice', 0)) {
+      //     if (
+      //       i.funcao.includes('Presidente de TO', 0) ||
+      //       i.funcao.includes('Presidente de TO Substituto', 0) ||
+      //       i.funcao.includes('Presidente de TE', 0) ||
+      //       i.funcao.includes('Presidente de TE Substituto', 0) ||
+      //       i.funcao.includes('Presidente de Seção de Julgamento', 0) ||
+      //       i.funcao.includes('Presidente do CARF', 0) ||
+      //       i.funcao.includes('Presidente de Seção de Julgamento Substituto', 0)
+      //     ) {
+      //       console.log('1.5');
+      //     } else console.log('1');
+      //   }
+      // }
+    }
+  });
+}
+
+function retornaMes(trimestre) {
+  if (trimestre.includes('1/')) {
+    ano = trimestre.split('/');
+    return `01/${ano[1]}`;
+  }
+  if (trimestre.includes('2/')) {
+    ano = trimestre.split('/');
+    return `04/${ano[1]}`;
+  }
+  if (trimestre.includes('3/')) {
+    ano = trimestre.split('/');
+    return `07/${ano[1]}`;
+  }
+  if (trimestre.includes('4/')) {
+    ano = trimestre.split('/');
+    return `10/${ano[1]}`;
+  }
+}
+
 function retornaTrimestre(mes) {
+  if (mes.includes('10/') || mes.includes('11/') || mes.includes('12/')) {
+    return '4';
+  }
   if (mes.includes('1/') || mes.includes('2/') || mes.includes('3/')) {
     return '1';
   }
@@ -140,9 +187,6 @@ function retornaTrimestre(mes) {
   }
   if (mes.includes('7/') || mes.includes('8/') || mes.includes('9/')) {
     return '3';
-  }
-  if (mes.includes('10/') || mes.includes('11/') || mes.includes('12/')) {
-    return '4';
   }
 }
 
