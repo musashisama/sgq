@@ -1739,11 +1739,11 @@ class JulgamentoControlador {
             $and: [
               { status: 'Aprovada' },
               { tipo: { $regex: 'REINP', $options: 'i' } },
-              { 'dados.trimestreREINP': { $exists: true } },
+              //{ 'dados.trimestreREINP': { $exists: true } },
             ],
           })
           .then((solicitacoes) => {
-            //console.log(solicitacoes);
+            console.log(solicitacoes);
             resp.marko(templates.julgamento.novoreinpcojul, {
               indicacoes: JSON.stringify(indicacoes),
               solicitacoes: JSON.stringify(solicitacoes),
