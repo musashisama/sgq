@@ -177,6 +177,9 @@ function retornaMes(trimestre) {
 }
 
 function retornaTrimestre(mes) {
+  if (mes.includes('10/') || mes.includes('11/') || mes.includes('12/')) {
+    return '4';
+  }
   if (mes.includes('1/') || mes.includes('2/') || mes.includes('3/')) {
     return '1';
   }
@@ -185,9 +188,6 @@ function retornaTrimestre(mes) {
   }
   if (mes.includes('7/') || mes.includes('8/') || mes.includes('9/')) {
     return '3';
-  }
-  if (mes.includes('10/') || mes.includes('11/') || mes.includes('12/')) {
-    return '4';
   }
 }
 
