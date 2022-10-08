@@ -1743,7 +1743,6 @@ class JulgamentoControlador {
             ],
           })
           .then((solicitacoes) => {
-            console.log(solicitacoes);
             resp.marko(templates.julgamento.novoreinpcojul, {
               indicacoes: JSON.stringify(indicacoes),
               solicitacoes: JSON.stringify(solicitacoes),
