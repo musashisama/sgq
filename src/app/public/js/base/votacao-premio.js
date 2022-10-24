@@ -31,10 +31,11 @@ function graficos() {
   let layout = {
     title: 'Percentual de Votos',
     autosize: false,
+    height: 10 * votos.length,
     margin: {
       //l: 150,
       //r: 150,
-      b: 0.5,
+      b: 0.1,
       //t: 150,
       //pad: 10,
     },
@@ -51,10 +52,11 @@ function graficos() {
   let layoutCount = {
     title: 'Contagem de Votos',
     autosize: false,
+    height: 10 * votos.length,
     margin: {
       //l: 150,
       //r: 150,
-      b: 0.5,
+      b: 0.1,
       //t: 150,
       //pad: 10,
     },
