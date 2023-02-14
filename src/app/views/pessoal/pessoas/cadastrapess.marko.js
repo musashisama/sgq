@@ -51,11 +51,11 @@ function render(input, out, __component, component, state) {
     marko_attr("value", "") +
     " type=\"text\" class=\"validate\"><label class=\"active\" for=\"nome\">Nome:</label></div><div class=\"input-field col s5\"><i class=\"material-icons prefix\">contact_mail</i><input id=\"email\" name=\"email\"" +
     marko_attr("value", "") +
-    " type=\"email\" class=\"validate\"><label class=\"active\" for=\"email\">e-mail:</label></div></div><div class=\"row\"><div class=\"input-field col s2\"><i class=\"material-icons prefix\">info</i><input id=\"cpf\" name=\"cpf\"" +
+    " type=\"email\" class=\"validate\"><label class=\"active\" for=\"email\">e-mail:</label></div></div><div class=\"row\"><div class=\"input-field col s4\"><i class=\"material-icons prefix\">info</i><input id=\"cpf\" name=\"cpf\"" +
     marko_attr("value", "") +
-    " type=\"text\" class=\"validate\"><label class=\"active\" for=\"cpf\">CPF:</label></div><div class=\"input-field col s2\"><i class=\"material-icons prefix\">info_outline</i><input id=\"siape\" name=\"siape\"" +
+    " type=\"text\" class=\"validate\"><label class=\"active\" for=\"cpf\">CPF (SOMENTE NÚMEROS):</label></div><div class=\"input-field col s2\"><i class=\"material-icons prefix\">info_outline</i><input id=\"siape\" name=\"siape\"" +
     marko_attr("value", "") +
-    " type=\"text\" class=\"validate\"><label class=\"active\" for=\"siape\">Siape:</label></div><div class=\"input field col s3\"><input id=\"dtNasc\" name=\"dtNasc\"" +
+    " type=\"text\" class=\"validate\"><label class=\"active\" for=\"siape\">Siape:</label></div></div><div class=\"row\"><div class=\"input field col s3\"><input id=\"dtNasc\" name=\"dtNasc\"" +
     marko_attr("value", "") +
     " type=\"text\" class=\"datepicker\"><label for=\"dtNasc\">Data de Nascimento</label></div><div class=\"input-field col s2\"><i class=\"material-icons prefix\">contact_phone</i><input id=\"telefone\" name=\"telefone\"" +
     marko_attr("value", "") +
@@ -75,9 +75,9 @@ function render(input, out, __component, component, state) {
       "</option>");
   });
 
-  out.w("</select><label for=\"setor\">Unidade/Setor:</label></div> <div class=\"input-field col s3\"><i class=\"material-icons prefix\">gps_fixed</i><input id=\"origem\" name=\"origem\"" +
+  out.w("</select><label for=\"setor\">Unidade/Setor:</label></div><div class=\"input-field col s3\"><i class=\"material-icons prefix\">gps_fixed</i><input id=\"origem\" name=\"origem\"" +
     marko_attr("value", "") +
-    " type=\"text\" class=\"validate\"><label class=\"active\" for=\"origem\">Origem:</label></div></div><div class=\"row\"> <div class=\"input field col s3\"><input id=\"dtInicio\" name=\"dtInicio\"" +
+    " type=\"text\" class=\"validate\"><label class=\"active\" for=\"origem\">Origem:</label></div></div><div class=\"row\"><div class=\"input field col s3\"><input id=\"dtInicio\" name=\"dtInicio\"" +
     marko_attr("value", "") +
     " type=\"text\" class=\"datepicker\"><label for=\"dtInicio\">Início do exercício no CARF:</label></div><div class=\"input-field col s2\"><i class=\"material-icons prefix\">info</i><input id=\"cargo\" name=\"cargo\"" +
     marko_attr("value", "") +
@@ -95,17 +95,17 @@ function render(input, out, __component, component, state) {
       "</option>");
   });
 
-  out.w("</select><label for=\"funcao\">Função:</label></div><div class=\"input-field col s3\"><i class=\"material-icons prefix\">event_note</i><select id=\"exercicioCARF\" name=\"exercicioCARF\"><option value>Sim</option><option>Não</option></select><label>Pessoa em exercício no CARF?</label></div></div><div class=\"card-action right-align\"> <a class=\"btn-cons-salva btn-floating blue waves-effect waves-light hoverable z-depth-3\" type=\"submit\" title=\"Salvar\"><i class=\"material-icons\">save</i></a></div></form></div></div><div></div></div></main>");
+  out.w("</select><label for=\"funcao\">Função:</label></div><div class=\"input-field col s3\"><i class=\"material-icons prefix\">event_note</i><select id=\"exercicioCARF\" name=\"exercicioCARF\"><option value>Sim</option><option>Não</option></select><label>Pessoa em exercício no CARF?</label></div></div><div class=\"card-action right-align\"><a class=\"btn-cons-salva btn-floating blue waves-effect waves-light hoverable z-depth-3\" type=\"submit\" title=\"Salvar\"><i class=\"material-icons\">save</i></a></div></form></div></div><div></div></div></main>");
 
-  app_footer_tag({}, out, __component, "76");
+  app_footer_tag({}, out, __component, "77");
 
-  app_scripts_js_tag({}, out, __component, "77");
+  app_scripts_js_tag({}, out, __component, "78");
 
   out.w("<script src=\"/estatico/js/pessoal/cadpess.js\"></script>");
 
   init_components_tag({}, out);
 
-  await_reorderer_tag({}, out, __component, "79");
+  await_reorderer_tag({}, out, __component, "80");
 
   out.w("</body></html>");
 }
