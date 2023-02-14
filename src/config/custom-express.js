@@ -13,10 +13,10 @@ const conn = require('./mongodb').dados;
 
 app.use('/estatico', express.static('src/app/public'));
 app.use(favicon(path.join('../', 'sgq/src/app/public/imagens/favicon.ico')));
-app.use(bodyParser.json({ limit: '200mb' }));
+app.use(bodyParser.json({ limit: '1200mb' }));
 app.use(
   bodyParser.urlencoded({
-    limit: '200mb',
+    limit: '1200mb',
     extended: true,
   }),
 );
