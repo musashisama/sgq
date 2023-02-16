@@ -258,6 +258,14 @@ class regapHandler {
           d['HORAS_ESTIMADAS_DECIMAL'] = +d['HORAS_ESTIMADAS_DECIMAL']; //
           d['Valor_do_Processo_18'] = +d['Valor_do_Processo_18'];
 
+          //Agrega colunas de questionamentos. "Questionamento_2_CARF_20","Questionamento_3_CARF_21"
+          d['Questionamento_1_CARF_19'] +=
+            d['Questionamento_2_CARF_20'] != ''
+              ? ', ' + d['Questionamento_2_CARF_20']
+              : '' + d['Questionamento_3_CARF_21'] != ''
+              ? ', ' + d['Questionamento_2_CARF_21']
+              : '';
+
           if (
             d['Assuntos/Objetos_31'].includes('Projeto minuta de pequeno valor')
           ) {
@@ -273,7 +281,7 @@ class regapHandler {
               !d['Nome_Equipe_Atual_2'].includes('CSRF') &&
               d['HORAS_ESTIMADAS_DECIMAL'] == 0
             ) {
-              d['HORAS_ESTIMADAS_DECIMAL'] = 8;
+              d['HORAS_ESTIMADAS_DECIMAL'] = 7.8;
             }
             // ITEM III e IV e VI da PORTARIA CARF 2370-2019
             if (
