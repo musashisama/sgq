@@ -115,6 +115,10 @@ module.exports = (app) => {
   );
   app.get(rotasJulgamento.detalhaestoque, julgControlador.carregaPaginaDiag());
   app.get(rotasJulgamento.carregacsv, julgControlador.carregaPaginaInsereCSV());
+  app.get(
+    rotasJulgamento.carregarelatorio,
+    julgControlador.carregaPaginaRelatorio(),
+  );
   app.get(rotasJulgamento.portalCojul, julgControlador.carregaPortalCojul());
   app.post(rotasPessoal.getcadastro, julgControlador.getCadastro());
 
@@ -222,6 +226,7 @@ module.exports = (app) => {
     .get(julgControlador.carregaRelAntigos());
 
   app.post(rotasJulgamento.carregacsv, julgControlador.carregaCSV());
+  app.post(rotasJulgamento.carregarelatorio, julgControlador.carregaREGAP());
 
   app
     .route(rotasJulgamento.calendario)

@@ -74,6 +74,7 @@ class JulgamentoControlador {
       estoque: '/julgamento/restrito/diagnostico-carga',
       estoque_conselheiros: '/julgamento/restrito/estoque_conselheiros',
       carregacsv: '/julgamento/restrito/carrega-csv',
+      carregarelatorio: '/julgamento/restrito/carrega-relatorio',
       escolhecsv: '/julgamento/restrito/escolhe-csv',
       escolhecsvregap: '/julgamento/restrito/escolhe-csv-regap',
       escolhecsvreinp: '/julgamento/restrito/escolhe-csv-reinp',
@@ -1318,7 +1319,51 @@ class JulgamentoControlador {
         .catch((erro) => console.log(erro));
     };
   }
-
+  carregaREGAP() {
+    return function (req, resp) {
+      const pessoalDao = new PessoalDao(conn);
+      let retorno;
+      pessoalDao.getUsers({ cargo: 'Conselheiro' }).then((cons) => {
+        let dataRel = moment().unix();
+        regapHandler
+          .montaRegap(req.body.relatorio, cons, dataRel, true)
+          .then((regap) => {
+            const julgamentoDao = new JulgamentoDao(conn);
+            try {
+              registro['_id'] = null;
+              registro['usuarioLogado'] = req.user.cpf;
+              registro['nomeUsuarioLogado'] = req.user.nome;
+              let ip =
+                (req.headers['x-forwarded-for'] || '')
+                  .split(',')
+                  .pop()
+                  .trim() ||
+                req.connection.remoteAddress ||
+                req.socket.remoteAddress ||
+                req.connection.socket.remoteAddress;
+              const clientIPWare = get_ip(req);
+              const clientIp = requestIp.getClientIp(req);
+              registro['clientIP'] = [clientIp, clientIPWare, ip];
+              registro['tipoRel'] = req.body.tipoRel;
+              registro['dtExtracao'] = moment(
+                req.body.dataExt,
+                'DD/MM/YYYY',
+              ).format('DD/MM/YYYY');
+              registro['dtEnvio'] = moment().format('DD/MM/YYYY');
+              registro['dtRel'] = dataRel;
+              julgamentoDao.insereDadosCSV(registro).then((dados) => {
+                julgamentoDao.insereVariosRegap(regap).then((respo) => {
+                  retorno = respo;
+                  resp.send(retorno);
+                });
+              });
+            } catch (e) {
+              console.log(e);
+            }
+          });
+      });
+    };
+  }
   carregaCSV() {
     return function (req, resp) {
       let form = formidable.IncomingForm({ keepExtensions: true });
@@ -1326,6 +1371,7 @@ class JulgamentoControlador {
         if (err) {
           console.log(err);
         }
+        registro['_id'] = null;
         registro['nome'] = files.file.name;
         let oldpath = files.file.path;
         if (fields.tipoRel == 'novoREGAP') {
@@ -1333,36 +1379,42 @@ class JulgamentoControlador {
             const pessoalDao = new PessoalDao(conn);
             pessoalDao.getUsers({ cargo: 'Conselheiro' }).then((cons) => {
               let dataRel = moment().unix();
-              regapHandler.montaRegap(data, cons, dataRel).then((regap) => {
-                const julgamentoDao = new JulgamentoDao(conn);
-                julgamentoDao.insereVariosRegap(regap).then((respo) => {
-                  if (req.isAuthenticated()) {
-                    registro['usuarioLogado'] = req.user.cpf;
-                    registro['nomeUsuarioLogado'] = req.user.nome;
-                  }
-                  let ip =
-                    (req.headers['x-forwarded-for'] || '')
-                      .split(',')
-                      .pop()
-                      .trim() ||
-                    req.connection.remoteAddress ||
-                    req.socket.remoteAddress ||
-                    req.connection.socket.remoteAddress;
-                  const clientIPWare = get_ip(req);
-                  const clientIp = requestIp.getClientIp(req);
-                  registro['clientIP'] = [clientIp, clientIPWare, ip];
-                  registro['tipoRel'] = fields.tipoRel;
-                  registro['dtExtracao'] = moment(
-                    fields.dataExt,
-                    'DD/MM/YYYY',
-                  ).format('DD/MM/YYYY');
-                  registro['dtEnvio'] = moment().format('DD/MM/YYYY');
-                  registro['dtRel'] = dataRel;
-                  julgamentoDao.insereDadosCSV(registro).then((dados) => {
-                    resp.send(respo);
+              regapHandler
+                .montaRegap(data, cons, dataRel, false)
+                .then((regap) => {
+                  const julgamentoDao = new JulgamentoDao(conn);
+                  julgamentoDao.insereVariosRegap(regap).then((respo) => {
+                    if (req.isAuthenticated()) {
+                      registro['usuarioLogado'] = req.user.cpf;
+                      registro['nomeUsuarioLogado'] = req.user.nome;
+                    }
+                    let ip =
+                      (req.headers['x-forwarded-for'] || '')
+                        .split(',')
+                        .pop()
+                        .trim() ||
+                      req.connection.remoteAddress ||
+                      req.socket.remoteAddress ||
+                      req.connection.socket.remoteAddress;
+                    const clientIPWare = get_ip(req);
+                    const clientIp = requestIp.getClientIp(req);
+                    registro['clientIP'] = [clientIp, clientIPWare, ip];
+                    registro['tipoRel'] = fields.tipoRel;
+                    registro['dtExtracao'] = moment(
+                      fields.dataExt,
+                      'DD/MM/YYYY',
+                    ).format('DD/MM/YYYY');
+                    registro['dtEnvio'] = moment().format('DD/MM/YYYY');
+                    registro['dtRel'] = dataRel;
+                    try {
+                      julgamentoDao.insereDadosCSV(registro).then((dados) => {
+                        resp.send(respo);
+                      });
+                    } catch (e) {
+                      console.log(e);
+                    }
                   });
                 });
-              });
             });
           });
         } else {
@@ -1607,6 +1659,11 @@ class JulgamentoControlador {
   carregaPaginaInsereCSV() {
     return function (req, resp) {
       resp.marko(templates.julgamento.carregacsv, { dados: '' });
+    };
+  }
+  carregaPaginaRelatorio() {
+    return function (req, resp) {
+      resp.marko(templates.julgamento.carregarelatorio, { dados: '' });
     };
   }
   //ESTOQUE

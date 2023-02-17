@@ -19,11 +19,11 @@ function triggerValidation(el) {
     }
 }
 function initBtnSubmit() {
-  var formularioCSV = $('#formCSV');
+  let formularioCSV = $('#formCSV');
   formularioCSV.on('submit', function (event) {
     event.preventDefault();
-    var fd = new FormData(formCSV);
-    var files = $('#file')[0].files[0];
+    let fd = new FormData(formCSV);
+    let files = $('#file')[0].files[0];
     $('.concorda').toggle();
     $('.progress').show();
     fd.append('file', files);

@@ -4,6 +4,7 @@ module.exports = {
   estoque_conselheiros: require('./estoque/estoque_conselheiros.marko'),
   analiseEstoque: require('./estoque/analiseEstoque.marko'),
   carregacsv: require('./carregacsv/carregacsv.marko'),
+  carregarelatorio: require('./carregacsv/carregarelatorio.marko'),
   escolhecsv: require('./escolhecsv/escolhecsv.marko'),
   escolhecsvregap: require('./escolhecsv/escolhecsvregap.marko'),
   escolhecsvanaliseestoque: require('./escolhecsv/escolhecsvanaliseestoque.marko'),
