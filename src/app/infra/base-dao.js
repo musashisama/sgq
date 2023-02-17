@@ -53,7 +53,7 @@ class BaseDao {
     return new Promise((resolve, reject) => {
       this._db.registroLogs.insertOne(registro, function (erro, res) {
         if (erro) {
-          return reject('Não foi possível inserir o registro.');
+          return reject('Não foi possível inserir o registro de log.');
         }
         return resolve(res);
       });

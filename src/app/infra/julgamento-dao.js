@@ -7,14 +7,25 @@ class JulgamentoDao {
 
   insereDadosCSV(registro) {
     return new Promise((resolve, reject) => {
-      this._db.relatorios.insertOne(registro, function (erro, res) {
-        if (erro) {
-          return reject('Não foi possível inserir o registro.');
-        }
-        return resolve(res);
-      });
+      try {
+        this._db.relatorios.insertOne(registro, function (erro, res) {
+          if (erro) {
+            return reject(erro);
+          }
+          return resolve(res);
+        });
+      } catch (e) {
+        return reject(e);
+      }
     });
   }
+  // insereDadosCSV(registro) {
+  //   try {
+  //     this._db.relatorios.insertOne(registro);
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // }
 
   insereVariosRelatorios(registro) {
     return new Promise((resolve, reject) => {
@@ -260,12 +271,16 @@ class JulgamentoDao {
   }
   insereVariosRegap(registro) {
     return new Promise((resolve, reject) => {
-      this._db.regap.insertMany(registro, function (erro, res) {
-        if (erro) {
-          return reject(erro);
-        }
-        return resolve(res);
-      });
+      try {
+        this._db.regap.insertMany(registro, function (erro, res) {
+          if (erro) {
+            return reject(erro);
+          }
+          return resolve(res);
+        });
+      } catch (e) {
+        return reject(e);
+      }
     });
   }
 

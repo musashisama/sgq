@@ -39,9 +39,12 @@ app.use('/*', function (req, resp, next) {
   if (req.baseUrl != '') {
     let registro = {};
     registro.url = req.baseUrl;
-    req.baseUrl == '/login'
-      ? (registro.corpo = null)
-      : (registro.corpo = req.body);
+    // req.baseUrl == '/login' ||
+    // req.baseUrl == '/julgamento/restrito/carrega-relatorio' ||
+    // req.baseUrl == '/julgamento/restrito/carrega-csv'
+    //   ? (registro.corpo = null)
+    //   : (registro.corpo = req.body);
+
     registro.metodo = req.method;
     registro.timestamp = new Date().toISOString();
     req.isAuthenticated()

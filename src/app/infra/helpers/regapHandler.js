@@ -1,4 +1,5 @@
 const d3 = require('d3');
+const { parse } = require('uuid');
 
 let semanaAzul = [
   '2ª TURMA-CSRF-CARF-MF-DF',
@@ -67,14 +68,17 @@ class regapHandler {
     );
   }
 
-  static montaRegap(relatorio, conselheiros, dataRel) {
+  static montaRegap(relatorio, conselheiros, dataRel, parsed) {
     return new Promise((resolve, reject) => {
       let cpfs = new Set();
       let cons = conselheiros;
       let saida = [{}];
       let parcial = [];
       let regap = [];
-      let entrada = d3.csvParse(relatorio);
+      let entrada;
+      if (parsed == false) {
+        entrada = d3.csvParse(relatorio);
+      } else entrada = relatorio;
       regapHandler.HorasCARF(entrada).then((horasAjustadas) => {
         regapHandler.renomeiaColunas(horasAjustadas).then((parcial) => {
           parcial.forEach((p) => {
