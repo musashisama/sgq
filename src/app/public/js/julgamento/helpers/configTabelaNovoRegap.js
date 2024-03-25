@@ -522,7 +522,9 @@ function coloreDias(cell, formatterParams, valor) {
 }
 
 function retornaDias(atividade) {
-  return +moment().diff(moment(atividade, 'DD/MM/YYYY'), 'days') + 1;
+  if (atividade == '') {
+    return -1;
+  } else return +moment().diff(moment(atividade, 'DD/MM/YYYY'), 'days') + 1;
 }
 
 function mediaCalc(values, data, calcParams) {

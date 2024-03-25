@@ -695,6 +695,17 @@ function tabelaRetornos(dados) {
         download: true,
       },
       {
+        title: 'Horas CARF',
+        field: 'HE',
+        sorter: 'number',
+        hozAlign: 'center',
+        headerFilter: 'input',
+        topCalc: somaCalc,
+        editor: false,
+        responsive: 0,
+        download: true,
+      },
+      {
         title: 'Alegacoes',
         field: 'alegacoes',
         //formatter: coloreProc,
@@ -954,6 +965,17 @@ function tabelaVirtual(dados) {
         download: true,
         headerTooltip:
           'Trata-se de decisão/liminar judicial para julgamento imediato?',
+      },
+      {
+        title: 'Horas CARF',
+        field: 'HE',
+        sorter: 'number',
+        hozAlign: 'center',
+        headerFilter: 'input',
+        topCalc: somaCalc,
+        editor: false,
+        responsive: 0,
+        download: true,
       },
       {
         title: 'Dia',

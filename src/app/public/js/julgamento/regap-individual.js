@@ -17,6 +17,11 @@ function dataTable(msg) {
     element.Dias_da_Dist = retornaDias(element.dtUltDist);
     element.Dias_da_SJ = retornaDias(element.dtSessao);
     element.DAAPS = parseInt($('#daps').text()) + element.Dias_na_Atividade;
+    element.Dias_na_Situacao =
+      retornaDias(element.dataSituacao) == -1
+        ? retornaDias(element.entradaAtividade)
+        : retornaDias(element.dataSituacao);
+    element.DSAPS = parseInt($('#daps').text()) + element.Dias_na_Situacao;
   });
 
   // tabledata.forEach((d) => {
@@ -136,6 +141,15 @@ function dataTable(msg) {
         download: true,
       },
       {
+        title: 'Entrada na Situacao',
+        field: 'dataSituacao',
+        sorter: 'date',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 2,
+        download: true,
+      },
+      {
         title: 'Horas CARF',
         field: 'HE',
         sorter: 'number',
@@ -144,6 +158,29 @@ function dataTable(msg) {
         accessorDownload: numberConvert,
         topCalc: somaCalc,
         editor: false,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Dias na Situação',
+        field: 'Dias_na_Situacao',
+        sorter: 'number',
+        hozAlign: 'center',
+        width: 140,
+        topCalc: mediaCalc,
+        editor: false,
+        formatter: coloreDias,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Dias na Situação na Próxima Sessão',
+        field: 'DSAPS',
+        sorter: 'number',
+        width: 140,
+        hozAlign: 'center',
+        editor: false,
+        formatter: coloreDias,
         responsive: 0,
         download: true,
       },

@@ -142,6 +142,7 @@ class regapHandler {
                   paradigma: p.Ind_Paradigma,
                   agrupamento: p.Nome_Agrupamento,
                   qtdeProc: p.Qtde_Processos,
+                  dataSituacao: p.Data_Situacao,
                 });
               }
             });
@@ -227,6 +228,7 @@ class regapHandler {
         Indicador_de_Paradigma_de__37: 'Ind_Paradigma',
         Nome_do_Agrupamento_no_CAR_38: 'Nome_Agrupamento',
         Quantidade_de_Processos_no_39: 'Qtde_Processos',
+        Data_da_Situação_de_Julgam_40: 'Data_Situacao',
       };
       //Renomeia as colunas e exclui as não utilizadas
       dados.forEach((d) => {

@@ -387,6 +387,7 @@ function dataTable(data) {
   });
   table.addFilter('atividade', '=', 'Para Relatar');
   table.addFilter('situacao', '=', 'AGUARDANDO PAUTA');
+  table.addFilter(returnRep);
   table.setSort('Dias_na_Atividade', 'desc');
 }
 let formatValorDAPS = function (value, data, type, params, column) {
@@ -837,16 +838,8 @@ function dataTableAptidao() {
         field: 'alegaPrim',
         sorter: 'string',
         hozAlign: 'left',
-        //  editorParams: {
-        //     search: true,
-        //     mask: '99.999.9999',
-        //     elementAttributes: {
-        //       maxlength: '11', //set the maximum character length of the input element to 10 characters
-        //     },
-        //   },
+        //formatter: coloreAleg,
         cellEdited: alegEdita,
-        //accessor: alegaPrim,
-        //validator: 'required',
         editor: true,
         width: 180,
         responsive: 0,
@@ -904,6 +897,19 @@ function dataTableAptidao() {
   });
 }
 
+function coloreAleg(cell, formatterParams, valor) {
+  let value = cell.getValue() ? cell.getValue() : '';
+  if (
+    cell.getRow().getData().alegTributo == 'Não encontrado' ||
+    cell.getRow().getData().alegTributo == ''
+  ) {
+    let elem = document.querySelector('.LegEmbargo');
+    let estilo = getComputedStyle(elem);
+    cell.getElement().style.backgroundColor = estilo.backgroundColor;
+  }
+  return value;
+}
+
 let alegaPrim = function alegaPrim(cell) {
   if (cell.getValue() != null || cell.getValue() != '') {
     return cell.getValue();
@@ -929,6 +935,12 @@ let alegTributo = function alegTributo(cell) {
         });
     }
   });
+  if (nome == 'Não encontrado') {
+    let elem = document.querySelector('.LegPrioridade');
+    let estilo = getComputedStyle(elem);
+    cell.getElement().style.color = estilo.color;
+    cell.getElement().style.backgroundColor = estilo.backgroundColor;
+  }
   return nome;
 };
 
@@ -946,7 +958,12 @@ let alegMateria = function alegMateria(cell) {
         });
     }
   });
-
+  if (nome == 'Não encontrado') {
+    let elem = document.querySelector('.LegPrioridade');
+    let estilo = getComputedStyle(elem);
+    cell.getElement().style.color = estilo.color;
+    cell.getElement().style.backgroundColor = estilo.backgroundColor;
+  }
   return nome;
 };
 let alegTema = function alegTema(cell) {
@@ -963,7 +980,12 @@ let alegTema = function alegTema(cell) {
         });
     }
   });
-
+  if (nome == 'Não encontrado') {
+    let elem = document.querySelector('.LegPrioridade');
+    let estilo = getComputedStyle(elem);
+    cell.getElement().style.color = estilo.color;
+    cell.getElement().style.backgroundColor = estilo.backgroundColor;
+  }
   return nome;
 };
 
