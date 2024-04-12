@@ -206,6 +206,11 @@ function selectRelatorios() {
             paradigma: r.paradigma,
             agrupamento: r.agrupamento,
             qtdeProc: r.qtdeProc,
+            dataSituacao: r.dataSituacao,
+            Dias_na_Situacao:
+              retornaDias(r.dataSituacao) == -1
+                ? retornaDias(r.entradaAtividade)
+                : retornaDias(r.dataSituacao),
           });
         });
       });
@@ -251,7 +256,7 @@ function retornaSecao(equipe) {
 }
 
 function dataTable(msg) {
-  console.log(msg);
+  //console.log(msg);
   let tabledata = msg;
   table = new Tabulator('#tabelaRegap', {
     data: tabledata,
@@ -382,6 +387,15 @@ function dataTable(msg) {
         download: true,
       },
       {
+        title: 'Entrada na Situacao',
+        field: 'dataSituacao',
+        sorter: 'date',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 2,
+        download: true,
+      },
+      {
         title: 'Horas CARF',
         field: 'HE',
         sorter: 'number',
@@ -396,6 +410,18 @@ function dataTable(msg) {
       {
         title: 'Dias na Atividade',
         field: 'Dias_na_Atividade',
+        sorter: 'number',
+        hozAlign: 'center',
+        width: 140,
+        topCalc: mediaCalc,
+        editor: false,
+        formatter: coloreDias,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Dias na Situação',
+        field: 'Dias_na_Situacao',
         sorter: 'number',
         hozAlign: 'center',
         width: 140,

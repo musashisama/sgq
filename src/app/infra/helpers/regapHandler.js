@@ -9,6 +9,8 @@ let semanaAzul = [
   '4ª TE-2ªSEÇÃO-2004-CARF-MF-DF',
   '5ª TE-2ªSEÇÃO-2005-CARF-MF-DF',
   '3ª SEÇÃO-CARF-MF-DF',
+  '1ª TO-1ªCÂMARA-3ªSEÇÃO-CARF-MF-DF',
+  '2ª TO-1ªCÂMARA-3ªSEÇÃO-CARF-MF-DF',
   '1ª TO-2ªCÂMARA-3ªSEÇÃO-CARF-MF-DF',
   '2ª TO-2ªCÂMARA-3ªSEÇÃO-CARF-MF-DF',
   '1ª TO-3ªCÂMARA-3ªSEÇÃO-CARF-MF-DF',
@@ -28,6 +30,8 @@ let semanaVerde = [
   '4ª TE-1ªSEÇÃO-1004-CARF-MF-DF',
   '5ª TE-1ªSEÇÃO-1005-CARF-MF-DF',
   '2ª SEÇÃO-CARF-MF-DF',
+  '1ª TO-1ªCÂMARA-2ªSEÇÃO-CARF-MF-DF',
+  '2ª TO-1ªCÂMARA-2ªSEÇÃO-CARF-MF-DF',
   '1ª TO-2ªCÂMARA-2ªSEÇÃO-CARF-MF-DF',
   '1ª TO-2ªCÂMARA-2ªSEÇÃO-CARF-MF-DF',
   '2ª TO-2ªCÂMARA-2ªSEÇÃO-CARF-MF-DF',
@@ -49,6 +53,8 @@ let semanaAmarela = [
   '4ª TE-3ªSEÇÃO-3004-CARF-MF-DF',
   '5ª TE-3ªSEÇÃO-3005-CARF-MF-DF',
   '1ª SEÇÃO-CARF-MF-DF',
+  '1ª TO-1ªCÂMARA-1ªSEÇÃO-CARF-MF-DF',
+  '2ª TO-1ªCÂMARA-1ªSEÇÃO-CARF-MF-DF',
   '1ª TO-2ªCÂMARA-1ªSEÇÃO-CARF-MF-DF',
   '2ª TO-2ªCÂMARA-1ªSEÇÃO-CARF-MF-DF',
   '1ª TO-3ªCÂMARA-1ªSEÇÃO-CARF-MF-DF',
@@ -142,6 +148,7 @@ class regapHandler {
                   paradigma: p.Ind_Paradigma,
                   agrupamento: p.Nome_Agrupamento,
                   qtdeProc: p.Qtde_Processos,
+                  dataSituacao: p.Data_Situacao,
                 });
               }
             });
@@ -227,6 +234,7 @@ class regapHandler {
         Indicador_de_Paradigma_de__37: 'Ind_Paradigma',
         Nome_do_Agrupamento_no_CAR_38: 'Nome_Agrupamento',
         Quantidade_de_Processos_no_39: 'Qtde_Processos',
+        Data_da_Situação_de_Julgam_40: 'Data_Situacao',
       };
       //Renomeia as colunas e exclui as não utilizadas
       dados.forEach((d) => {

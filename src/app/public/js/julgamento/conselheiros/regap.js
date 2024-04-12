@@ -122,6 +122,11 @@ function elementosTabelas() {
             r.Dias_da_SJ = retornaDias(r.dtSessao);
             r.DAAPS = parseInt($('#daps').text()) + r.Dias_na_Atividade;
             r.diff = +r.apesHE - +r.HE;
+            r.Dias_na_Situacao =
+              retornaDias(r.dataSituacao) == -1
+                ? retornaDias(r.entradaAtividade)
+                : retornaDias(r.dataSituacao);
+            r.DSAPS = parseInt($('#daps').text()) + r.Dias_na_Situacao;
           });
           // msg[0].relatorio.forEach((d) => {
           //   apes.forEach((a) => {
@@ -147,7 +152,7 @@ function elementosTabelas() {
 
 //TABELA REGAP
 function dataTable(dados) {
-  console.log(dados);
+  //console.log(dados);
   let tabledata = dados;
   table = new Tabulator('#tabelaRegap', {
     data: tabledata,
@@ -254,6 +259,15 @@ function dataTable(dados) {
         download: true,
       },
       {
+        title: 'Entrada na Situacao',
+        field: 'dataSituacao',
+        sorter: 'date',
+        hozAlign: 'center',
+        editor: false,
+        responsive: 2,
+        download: true,
+      },
+      {
         title: 'Horas CARF',
         field: 'HE',
         sorter: 'number',
@@ -262,6 +276,29 @@ function dataTable(dados) {
         topCalc: somaCalc,
         accessorDownload: numberConvert,
         editor: false,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Dias na Situação',
+        field: 'Dias_na_Situacao',
+        sorter: 'number',
+        hozAlign: 'center',
+        width: 140,
+        topCalc: mediaCalc,
+        editor: false,
+        formatter: coloreDias,
+        responsive: 0,
+        download: true,
+      },
+      {
+        title: 'Dias na Situação na Próxima Sessão',
+        field: 'DSAPS',
+        sorter: 'number',
+        width: 140,
+        hozAlign: 'center',
+        editor: false,
+        formatter: coloreDias,
         responsive: 0,
         download: true,
       },
