@@ -1,7 +1,9 @@
 let semanaAzulTOCSRF = [
   '2ª TURMA-CSRF-CARF-MF-DF',
+  '1ª TO-1ªCÂMARA-3ªSEÇÃO-CARF-MF-DF',
+  '2ª TO-1ªCÂMARA-3ªSEÇÃO-CARF-MF-DF',
   '1ª TO-2ªCÂMARA-3ªSEÇÃO-CARF-MF-DF',
-  //'2ª TO-2ªCÂMARA-3ªSEÇÃO-CARF-MF-DF',
+  '2ª TO-2ªCÂMARA-3ªSEÇÃO-CARF-MF-DF',
   '1ª TO-3ªCÂMARA-3ªSEÇÃO-CARF-MF-DF',
   '2ª TO-3ªCÂMARA-3ªSEÇÃO-CARF-MF-DF',
   '1ª TO-4ªCÂMARA-3ªSEÇÃO-CARF-MF-DF',
@@ -16,10 +18,12 @@ let semanaAzulTE = [
 ];
 let semanaVerdeTOCSRF = [
   '1ª TURMA-CSRF-CARF-MF-DF',
+  '1ª TO-1ªCÂMARA-2ªSEÇÃO-CARF-MF-DF',
+  '2ª TO-1ªCAMARA-2ªSEÇÃO-CARF-MF-DF',
   '1ª TO-2ªCÂMARA-2ªSEÇÃO-CARF-MF-DF',
   '2ª TO-2ªCAMARA-2ªSEÇÃO-CARF-MF-DF',
   '1ª TO-3ªCÂMARA-2ªSEÇÃO-CARF-MF-DF',
-  //'2ª TO-3ªCÂMARA-2ªSEÇÃO-CARF-MF-DF',
+  '2ª TO-3ªCÂMARA-2ªSEÇÃO-CARF-MF-DF',
   '1ª TO-4ªCÂMARA-2ªSEÇÃO-CARF-MF-DF',
   '2ª TO-4ªCÂMARA-2ªSEÇÃO-CARF-MF-DF',
   '4ª TE-1ªSEÇÃO-1004-CARF-MF-DF',
@@ -32,8 +36,10 @@ let semanaVerdeTE = [
 ];
 let semanaAmarelaTOCSRF = [
   '3ª TURMA-CSRF-CARF-MF-DF',
+  '1ª TO-1ªCÂMARA-1ªSEÇÃO-CARF-MF-DF',
+  '2ª TO-1ªCÂMARA-1ªSEÇÃO-CARF-MF-DF',
   '1ª TO-2ªCÂMARA-1ªSEÇÃO-CARF-MF-DF',
-  //'2ª TO-2ªCÂMARA-1ªSEÇÃO-CARF-MF-DF',
+  '2ª TO-2ªCÂMARA-1ªSEÇÃO-CARF-MF-DF',
   '1ª TO-3ªCÂMARA-1ªSEÇÃO-CARF-MF-DF',
   '2ª TO-3ªCÂMARA-1ªSEÇÃO-CARF-MF-DF',
   '1ª TO-4ªCÂMARA-1ªSEÇÃO-CARF-MF-DF',

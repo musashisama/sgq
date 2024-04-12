@@ -9,6 +9,8 @@ let sj1 = [
   '2ª TE-1ªSEÇÃO-1002-CARF-MF-DF',
   '3ª TE-1ªSEÇÃO-1003-CARF-MF-DF',
   '1ª SEÇÃO-CARF-MF-DF',
+  '1ª TO-1ªCÂMARA-1ªSEÇÃO-CARF-MF-DF',
+  '2ª TO-1ªCÂMARA-1ªSEÇÃO-CARF-MF-DF',
   '1ª TO-2ªCÂMARA-1ªSEÇÃO-CARF-MF-DF',
   '2ª TO-2ªCÂMARA-1ªSEÇÃO-CARF-MF-DF',
   '1ª TO-3ªCÂMARA-1ªSEÇÃO-CARF-MF-DF',
@@ -26,6 +28,8 @@ let sj2 = [
   '3ª TE-2ªSEÇÃO-2003-CARF-MF-DF',
   '3ª SEÇÃO - CARF - MF - DF',
   '2ª SEÇÃO-CARF-MF-DF',
+  '1ª TO-1ªCÂMARA-2ªSEÇÃO-CARF-MF-DF',
+  '2ª TO-1ªCAMARA-2ªSEÇÃO-CARF-MF-DF',
   '1ª TO-2ªCÂMARA-2ªSEÇÃO-CARF-MF-DF',
   '2ª TO-2ªCAMARA-2ªSEÇÃO-CARF-MF-DF',
   '1ª TO-3ªCÂMARA-2ªSEÇÃO-CARF-MF-DF',
@@ -41,6 +45,8 @@ let sj3 = [
   '1ª TE-3ªSEÇÃO-3001-CARF-MF-DF',
   '2ª TE-3ªSEÇÃO-3002-CARF-MF-DF',
   '3ª TE-3ªSEÇÃO-3003-CARF-MF-DF',
+  '1ª TO-1ªCÂMARA-3ªSEÇÃO-CARF-MF-DF',
+  '2ª TO-1ªCÂMARA-3ªSEÇÃO-CARF-MF-DF',
   '1ª TO-2ªCÂMARA-3ªSEÇÃO-CARF-MF-DF',
   '2ª TO-2ªCÂMARA-3ªSEÇÃO-CARF-MF-DF',
   '1ª TO-3ªCÂMARA-3ªSEÇÃO-CARF-MF-DF',
@@ -67,6 +73,8 @@ let corsj1 = {
   '2ª TE-1ªSEÇÃO-1002-CARF-MF-DF': 'rgb(114, 181, 204)',
   '3ª TE-1ªSEÇÃO-1003-CARF-MF-DF': 'rgb(144, 204, 204)',
   '1ª SEÇÃO-CARF-MF-DF': 'rgb(174, 181, 204)',
+  '1ª TO-1ªCÂMARA-1ªSEÇÃO-CARF-MF-DF': 'rgb(204, 204, 204)',
+  '2ª TO-1ªCÂMARA-1ªSEÇÃO-CARF-MF-DF': 'rgb(254, 181, 204)',
   '1ª TO-2ªCÂMARA-1ªSEÇÃO-CARF-MF-DF': 'rgb(204, 204, 204)',
   '2ª TO-2ªCÂMARA-1ªSEÇÃO-CARF-MF-DF': 'rgb(254, 181, 204)',
   '1ª TO-3ªCÂMARA-1ªSEÇÃO-CARF-MF-DF': 'rgb(104,204, 204)',
@@ -85,6 +93,8 @@ let corsj2 = {
   '3ª TE-2ªSEÇÃO-2003-CARF-MF-DF': 'rgb(144, 204, 204)',
   '3ª SEÇÃO - CARF - MF - DF': 'rgb(174, 181, 204)',
   '2ª SEÇÃO-CARF-MF-DF': 'rgb(204, 181, 204)',
+  '1ª TO-1ªCÂMARA-2ªSEÇÃO-CARF-MF-DF': 'rgb(254, 181, 204)',
+  '2ª TO-1ªCAMARA-2ªSEÇÃO-CARF-MF-DF': 'rgb(104, 204, 204)',
   '1ª TO-2ªCÂMARA-2ªSEÇÃO-CARF-MF-DF': 'rgb(254, 181, 204)',
   '2ª TO-2ªCAMARA-2ªSEÇÃO-CARF-MF-DF': 'rgb(104, 204, 204)',
   '1ª TO-3ªCÂMARA-2ªSEÇÃO-CARF-MF-DF': 'rgb(124, 181, 204)',
@@ -101,6 +111,8 @@ let corsj3 = {
   '1ª TE-3ªSEÇÃO-3001-CARF-MF-DF': 'rgb(24, 204, 204)',
   '2ª TE-3ªSEÇÃO-3002-CARF-MF-DF': 'rgb(64, 181, 204)',
   '3ª TE-3ªSEÇÃO-3003-CARF-MF-DF': 'rgb(244, 204, 204)',
+  '1ª TO-1ªCÂMARA-3ªSEÇÃO-CARF-MF-DF': 'rgb(224, 181, 204)',
+  '2ª TO-1ªCÂMARA-3ªSEÇÃO-CARF-MF-DF': 'rgb(204, 204, 204)',
   '1ª TO-2ªCÂMARA-3ªSEÇÃO-CARF-MF-DF': 'rgb(224, 181, 204)',
   '2ª TO-2ªCÂMARA-3ªSEÇÃO-CARF-MF-DF': 'rgb(204, 204, 204)',
   '1ª TO-3ªCÂMARA-3ªSEÇÃO-CARF-MF-DF': 'rgb(184, 181, 204)',
@@ -880,7 +892,7 @@ function separaSJCons(secao, cor) {
         parcial.orientation = 'h';
         parcial.type = 'bar';
         parcial.fillcolor = 'cls';
-        parcial.hovertemplate = `<i>Carga</i>: %{x:.2f} horas<br>                         
+        parcial.hovertemplate = `<i>Carga</i>: %{x:.2f} horas<br>
                         <b>%{text}</b>`;
         parcial.text.push(turma);
         parcial.marker = {
