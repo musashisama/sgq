@@ -5,6 +5,7 @@ const BaseDao = require('../infra/base-dao');
 const FileDao = require('../infra/file-dao');
 const { ObjectID } = require('mongodb');
 const Mailer = require('../infra/helpers/Mailer');
+const moment = require('moment');
 const requestIp = require('request-ip');
 const bcrypt = require('bcryptjs');
 const url = require('url');
@@ -300,7 +301,8 @@ http://${URL.host}/altera-senha/${registro.controle}
   votacaoPremio() {
     return function (req, resp, next) {
       let baseDao = new BaseDao(conn);
-      baseDao.getVote().then((msg) => {
+      let filtro = { anoPremio: moment().year().toString()};
+      baseDao.getVote(filtro).then((msg) => {
         resp.marko(templates.base.votacaoPremio, {
           votos: JSON.stringify(msg),
         });

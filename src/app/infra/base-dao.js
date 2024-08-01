@@ -71,10 +71,10 @@ class BaseDao {
     });
   }
 
-  getVote() {
+  getVote(filtro) {
     return new Promise((resolve, reject) => {
       this._db.votacaoPremio
-        .find()
+        .find(filtro)
         .sort()
         .project()
         .toArray(function (erro, res) {
