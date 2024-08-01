@@ -4,3 +4,5 @@ package-lock.json
 src/app/arquivos/csv
 src/config/dbConfig.json
 OpsManuais/relatorios
+package.json
+package-lock.json
